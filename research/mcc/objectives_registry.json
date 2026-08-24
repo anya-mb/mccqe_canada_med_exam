@@ -1,0 +1,120 @@
+{
+  "objectives_registry": {
+    "title": "Complete MCC Examination Objectives Registry",
+    "source": "MCC Examination Objectives Online Web Service",
+    "source_url": "https://mcc.ca/objectives/",
+    "technical_documentation_url": "https://mcc.ca/objectives/ (Read the technical documentation)",
+    "accessed_date": "2026-08-24",
+    "verification_status": "NEEDS_API_RETRIEVAL",
+    "status": "PLACEHOLDER - REQUIRES_WEB_SERVICE_EXTRACTION"
+  },
+
+  "retrieval_plan": {
+    "step_1": "Access the technical documentation for MCC Objectives Online Web Service at https://mcc.ca/objectives/",
+    "step_2": "Identify documented public endpoints (JSON/XML)",
+    "step_3": "Attempt retrieval without assuming credentials are required (API may be public)",
+    "step_4": "For each available objective, capture:",
+    [
+      "mcc_id (current official ID)",
+      "legacy_id (when available and verified from official source)",
+      "title",
+      "canmeds_role",
+      "version",
+      "group_id/title",
+      "official_url",
+      "content or concise structured extraction",
+      "retrieval_date"
+    ],
+    "step_5": "Record any retrieval failures with: URL, HTTP status, date/time, error"
+  },
+
+  "field_requirements": {
+    "mcc_id": {
+      "required": true,
+      "source": "Official MCC current identifier",
+      "validation": "Do not invent or infer missing IDs"
+    },
+
+    "legacy_id": {
+      "required_when_available": true,
+      "source": "Official MCC historical identifier",
+      "provenance_required": true,
+      "note": "Only include if retrieved from separate official source with documented provenance"
+    },
+
+    "title": {
+      "required": true,
+      "source": "Official objective statement"
+    },
+
+    "canmeds_role": {
+      "required": true,
+      "valid_values": [
+        "Medical Expert",
+        "Collaborator",
+        "Communicator",
+        "Health Advocate",
+        "Leader/Manager",
+        "Professional",
+        "Scholar"
+      ],
+      "source": "Official MCC role assignment"
+    },
+
+    "version": {
+      "required": true,
+      "source": "Official version information from MCC"
+    },
+
+    "group_id": {
+      "required_when_available": true,
+      "source": "MCC category/group hierarchy"
+    },
+
+    "group_title": {
+      "required_when_available": true,
+      "source": "Title of the grouping (e.g., 'Clinical presentation/diagnosis')"
+    },
+
+    "official_url": {
+      "required": true,
+      "source": "Official MCC URL for the objective"
+    },
+
+    "content": {
+      "required": true,
+      "note": "Full objective text or concise structured extraction"
+    },
+
+    "retrieval_date": {
+      "required": true,
+      "format": "YYYY-MM-DD"
+    }
+  },
+
+  "expected_structure": {
+    "objectives": [
+      {
+        "mcc_id": "string",
+        "legacy_id": "string_or_null",
+        "title": "string",
+        "canmeds_role": "string",
+        "version": "string",
+        "group_id": "string",
+        "group_title": "string",
+        "official_url": "string",
+        "content": "string",
+        "retrieval_date": "2026-08-24"
+      }
+    ]
+  },
+
+  "web_service_notes": {
+    "public_endpoints": "MCC publicly documents JSON/XML web-service endpoints",
+    "credentials": "Do not assume credentials are required - attempt documented public endpoints first",
+    "failure_recording": "If API endpoint fails, record: URL, HTTP status, date/time, and error message",
+    "no_invention": "Do not invent or infer missing objective IDs"
+  },
+
+  "data_integrity_notes": "This registry will be populated deterministically from official MCC web service. Every field must contain provenance from official MCC sources."
+}

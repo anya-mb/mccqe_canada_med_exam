@@ -1,0 +1,153 @@
+{
+  "unresolved_mcc_evidence": {
+    "title": "Unresolved MCC Evidence Items",
+    "last_updated": "2026-08-24",
+    "note": "Items that cannot be definitively resolved from current publicly available official MCC sources or require explicit confirmation from current post-2025 specifications"
+  },
+
+  "resolved_items": {
+    "note": "The following items are NO LONGER unresolved - they have been confirmed from official MCC sources and should not appear as unresolved:",
+
+    "exam_name": {
+      "status": "CONFIRMED",
+      "value": "Medical Council of Canada Qualifying Examination (MCCQE)",
+      "source": "https://mcc.ca/examinations-assessments/mccqe/",
+      "accessed_date": "2026-08-24"
+    },
+
+    "total_questions": {
+      "status": "CONFIRMED",
+      "value": 230,
+      "source": "https://mcc.ca/examinations-assessments/mccqe/",
+      "accessed_date": "2026-08-24"
+    },
+
+    "section_count": {
+      "status": "CONFIRMED",
+      "value": 2,
+      "questions_per_section": 115,
+      "source": "https://mcc.ca/examinations-assessments/mccqe/",
+      "accessed_date": "2026-08-24"
+    },
+
+    "time_per_section": {
+      "status": "CONFIRMED",
+      "value": "2 hours 40 minutes",
+      "value_minutes": 160,
+      "source": "https://mcc.ca/examinations-assessments/mccqe/",
+      "accessed_date": "2026-08-24"
+    },
+
+    "optional_break": {
+      "status": "CONFIRMED",
+      "value": "45-minute optional break",
+      "source": "https://mcc.ca/examinations-assessments/mccqe/",
+      "accessed_date": "2026-08-24"
+    },
+
+    "pilot_items_total": {
+      "status": "CONFIRMED",
+      "value": 20,
+      "scorable_items": 210,
+      "pilot_items_not_identified": true,
+      "source": "MCC documentation and Deep Research memo (verified against MCC specs)",
+      "accessed_date": "2026-08-24"
+    },
+
+    "blueprint_categories": {
+      "status": "CONFIRMED",
+      "dimensions_of_care": "confirmed",
+      "physician_activities": "confirmed",
+      "source": "https://mcc.ca/examinations-assessments/mccqe/",
+      "accessed_date": "2026-08-24"
+    },
+
+    "study_smarter_guide": {
+      "status": "CONFIRMED",
+      "version": "2026",
+      "launch_date": "April 2, 2026",
+      "non_exhaustive": true,
+      "source": "MCC documentation",
+      "accessed_date": "2026-08-24"
+    },
+
+    "objectives_web_service": {
+      "status": "CONFIRMED_PUBLIC",
+      "public_endpoints": "Documented and publicly available",
+      "credentials_required": false,
+      "source": "https://mcc.ca/objectives/ - Read the technical documentation",
+      "note": "Public web service endpoints exist; no credentials assumed necessary",
+      "accessed_date": "2026-08-24"
+    },
+
+    "mcq_guidelines": {
+      "status": "CONFIRMED_PUBLIC",
+      "publicly_available": true,
+      "source": "MCC public MCQ-writing guidelines",
+      "note": "Formal MCC item-writing guidance is publicly documented, not purely internal",
+      "accessed_date": "2026-08-24"
+    }
+  },
+
+  "genuinely_unresolved_items": {
+    "note": "The following items remain unresolved or require confirmation from current official sources beyond what is publicly documented:",
+
+    "pilot_distribution_by_section": {
+      "status": "UNRESOLVED",
+      "question": "How are 20 pilot items distributed between Section 1 and Section 2?",
+      "deep_research_claim": "One-third of each section consists of pilot items (INCORRECT)",
+      "corrected_understanding": "Unknown distribution - not confirmed from current official specification",
+      "required_source": "Current official MCC specification or FAQ",
+      "impact": "LOW - for simulation purposes only; actual pilot item placement is unknown to candidates"
+    },
+
+    "all_items_five_options": {
+      "status": "UNRESOLVED",
+      "question": "Do all current live MCCQE items have exactly 5 options?",
+      "official_guideline": "5-option construction is recommended for generation",
+      "historical_specification": "2024 official technical documentation described 3–5 response options since 2020",
+      "current_specification": "Not explicitly confirmed in current post-2025 specification",
+      "required_source": "Current official MCC post-2025 technical specification",
+      "action": "Confirm whether all live items now require exactly 5 options or if 3–5 remains valid",
+      "impact": "MODERATE - affects generation guideline"
+    },
+
+    "study_smarter_complete_mapping": {
+      "status": "UNRESOLVED",
+      "question": "What is the complete, current MCC Study Smarter discipline mapping?",
+      "required_source": "Current 2026 MCC Study Smarter guide (April 2, 2026 version or later)",
+      "action": "Extract full discipline assignments from official Study Smarter guide",
+      "impact": "HIGH - needed for building study_smarter_discipline_mapping.json"
+    },
+
+    "objectives_registry_complete": {
+      "status": "UNRESOLVED",
+      "question": "Can all current MCC objectives be retrieved from the public web service?",
+      "required_source": "MCC Objectives Online Web Service",
+      "technical_documentation": "Needs to be accessed at https://mcc.ca/objectives/",
+      "action": "Retrieve complete registry via documented JSON/XML endpoints; record any failures",
+      "impact": "CRITICAL - needed for building objectives_registry.json"
+    },
+
+    "blueprint_percentages_official_source": {
+      "status": "PARTIALLY_RESOLVED",
+      "question": "What is the authoritative source for blueprint percentages?",
+      "claimed_values": "Assessment/Diagnosis 45±5%, Management 35±5%, Communication 10±5%, Professional Behaviours 10±5%, Health Promotion 20±5%, Acute 35±5%, Chronic 30±5%, Psychosocial 15±5%",
+      "source_authority": "Official MCC Blueprint documentation",
+      "retrieved_from": "https://mcc.ca/examinations-assessments/mccqe/",
+      "verification_status": "CONFIRMED_UNOFFICIAL_SUMMARY",
+      "action": "Locate official downloadable blueprint document or standards-setting report for formal verification",
+      "impact": "MODERATE - percentages are working values but benefit from official source verification"
+    },
+
+    "legacy_objective_ids": {
+      "status": "UNRESOLVED",
+      "question": "Which objectives have legacy IDs and what are they?",
+      "required_source": "Official MCC documentation or web service",
+      "action": "Determine which objectives have legacy identifiers and include in objectives_registry.json",
+      "impact": "MODERATE - useful for historical tracking but not critical"
+    }
+  },
+
+  "data_integrity_notes": "This document distinguishes between items that HAVE been confirmed from official sources (resolved) and items that genuinely remain unresolved. It does not list claims merely because the original Deep Research memo called them unresolved if they have since been verified."
+}
