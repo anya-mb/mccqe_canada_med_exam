@@ -2,6 +2,9 @@ import copy
 from datetime import datetime, timezone
 from pathlib import Path
 
+import pytest
+
+from qbank.errors import SchemaValidationError
 from qbank.jsonio import read_json, write_json_atomic
 from qbank.progress import build_progress, write_progress
 
@@ -19,9 +22,10 @@ def _question(identifier: str, status: str) -> dict:
         "CANDIDATE": "PENDING",
         "QA_PASS": "QA_PASS",
         "QUARANTINE": "QUARANTINE",
+        "HUMAN_REVIEWED": "HUMAN_REVIEWED",
     }[status]
     question["verification"]["final_status"] = final_status
-    if status == "QA_PASS":
+    if status in {"QA_PASS", "HUMAN_REVIEWED"}:
         question["verification"].update(
             blind_verifier_answer="A",
             blind_verifier_confidence=0.95,
@@ -138,3 +142,45 @@ def test_write_progress_emits_schema_valid_json_and_deterministic_markdown(tmp_p
         "## Coverage gaps\n\n"
         "- Synthetic Chapter: 39 questions remain\n"
     )
+
+
+def test_progress_rejects_human_review_without_complete_reviewer_metadata(tmp_path):
+    """Catches HUMAN_REVIEWED counts derived from status without review evidence."""
+    _populate(tmp_path)
+    human = _question("SYN-UNIT-004", "HUMAN_REVIEWED")
+    human["human_review"] = {
+        "reviewer_name": "Synthetic Reviewer",
+        "credentials": "   ",
+        "reviewed_at": "2026-08-24T11:00:00Z",
+        "scope": "Full synthetic item review",
+    }
+    write_json_atomic(tmp_path / "verified" / "SYN-UNIT-004.json", human)
+
+    with pytest.raises(SchemaValidationError, match="human review metadata"):
+        build_progress(tmp_path, now=FIXED_NOW)
+
+
+def test_progress_rejects_qa_pass_question_under_candidates(tmp_path):
+    """Catches publication coverage inferred from status in the wrong lifecycle tree."""
+    _populate(tmp_path)
+    write_json_atomic(
+        tmp_path / "candidates" / "SYN-UNIT-004.json",
+        _question("SYN-UNIT-004", "QA_PASS"),
+    )
+
+    with pytest.raises(SchemaValidationError, match="candidates.*QA_PASS"):
+        build_progress(tmp_path, now=FIXED_NOW)
+
+
+def test_progress_rejects_status_that_disagrees_with_verification_final_status(
+    tmp_path,
+):
+    """Catches QA coverage inferred without matching final verification evidence."""
+    _populate(tmp_path)
+    question_path = tmp_path / "verified" / "SYN-UNIT-002.json"
+    question = read_json(question_path)
+    question["verification"]["final_status"] = "PENDING"
+    write_json_atomic(question_path, question)
+
+    with pytest.raises(SchemaValidationError, match="final_status.*QA_PASS"):
+        build_progress(tmp_path, now=FIXED_NOW)

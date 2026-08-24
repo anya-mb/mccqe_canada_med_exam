@@ -245,8 +245,14 @@ def _install_stage(stage: Path, target: Path) -> None:
                 f"unable to install staged production output: {install_error}"
             ) from install_error
         if backup is not None:
-            shutil.rmtree(backup)
-            backup = None
+            try:
+                shutil.rmtree(backup)
+            except OSError:
+                # The new directory is already live. Keep the old tree as a
+                # recoverable sibling rather than reporting a false rollback.
+                pass
+            else:
+                backup = None
     finally:
         if stage.exists():
             shutil.rmtree(stage)

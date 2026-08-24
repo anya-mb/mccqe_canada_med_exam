@@ -2,6 +2,7 @@ import copy
 from datetime import datetime, timezone
 import os
 from pathlib import Path
+import shutil
 
 import pytest
 
@@ -238,3 +239,31 @@ def test_stage_rename_failure_restores_live_output(tmp_path, monkeypatch):
         build_production(tmp_path, "2026.1", FIXED_NOW)
 
     assert marker.read_text(encoding="utf-8") == "old production"
+
+
+def test_backup_cleanup_failure_is_nonfatal_after_live_swap(tmp_path, monkeypatch):
+    """Catches reporting export failure after the new output is already committed."""
+    _populate(tmp_path)
+    old_marker = _seed_live_output(tmp_path)
+    output_parent = old_marker.parent.parent
+    real_rmtree = shutil.rmtree
+
+    def fail_backup_cleanup(path, *args, **kwargs):
+        candidate = Path(path)
+        if candidate.name.startswith(".qbank-backup-"):
+            raise OSError("synthetic backup cleanup failure")
+        return real_rmtree(path, *args, **kwargs)
+
+    monkeypatch.setattr(export_module.shutil, "rmtree", fail_backup_cleanup)
+
+    result = build_production(tmp_path, "2026.1", FIXED_NOW)
+
+    live = output_parent / "qbank"
+    assert result["manifest"]["question_count"] == 2
+    assert read_json(live / "manifest.json") == result["manifest"]
+    assert not (live / "old-marker.txt").exists()
+    backups = sorted(output_parent.glob(".qbank-backup-*"))
+    assert len(backups) == 1
+    assert (backups[0] / "old-marker.txt").read_text(encoding="utf-8") == (
+        "old production"
+    )

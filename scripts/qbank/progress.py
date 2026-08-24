@@ -8,14 +8,39 @@ import os
 from pathlib import Path
 import tempfile
 
-from .errors import QbankError, SchemaValidationError
+from .errors import QbankError, SchemaValidationError, TransitionError
 from .jsonio import read_json, write_json_atomic
 from .manifests import validate_manifest_set
 from .schema import validate_instance
+from .states import validate_transition
 
 
 _REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 _QUESTION_DIRECTORIES = ("candidates", "verified", "quarantine", "rejected", "retired")
+_DIRECTORY_STATUSES = {
+    "candidates": frozenset(
+        {"DRAFT", "CANDIDATE", "STRUCTURE_PASS", "BLIND_PASS", "MEDICAL_PASS", "REVISED"}
+    ),
+    "verified": frozenset({"QA_PASS", "HUMAN_REVIEWED"}),
+    "quarantine": frozenset({"QUARANTINE"}),
+    "rejected": frozenset({"REJECTED"}),
+    "retired": frozenset({"RETIRED"}),
+}
+_FINAL_STATUSES = {
+    "DRAFT": frozenset({"PENDING"}),
+    "CANDIDATE": frozenset({"PENDING"}),
+    "STRUCTURE_PASS": frozenset({"PENDING"}),
+    "BLIND_PASS": frozenset({"BLIND_PASS"}),
+    "MEDICAL_PASS": frozenset({"MEDICAL_PASS"}),
+    "QA_PASS": frozenset({"QA_PASS"}),
+    "QUARANTINE": frozenset({"QUARANTINE"}),
+    "REVISED": frozenset({"PENDING"}),
+    "REJECTED": frozenset({"REJECTED"}),
+    "HUMAN_REVIEWED": frozenset({"HUMAN_REVIEWED"}),
+    # The verification enum has no RETIRED value, so retirement preserves the
+    # last terminal verification designation instead of inventing one.
+    "RETIRED": frozenset({"QA_PASS", "HUMAN_REVIEWED", "REJECTED"}),
+}
 _JOB_STATES = ("pending", "running", "completed", "failed")
 _BLIND_PASSED = frozenset(
     {"BLIND_PASS", "MEDICAL_PASS", "QA_PASS", "HUMAN_REVIEWED", "PUBLISHED"}
@@ -53,11 +78,31 @@ def _manifests(root: Path) -> list[dict]:
     return values
 
 
-def _validated_question(path: Path) -> dict:
+def _validated_question(path: Path, directory_name: str) -> dict:
     value = _read_object(path, "question")
     public_value = dict(value)
-    public_value.pop("human_review", None)
+    human_review = public_value.pop("human_review", None)
     validate_instance(_REPOSITORY_ROOT, "question", public_value)
+    status = public_value["status"]
+    if status not in _DIRECTORY_STATUSES[directory_name]:
+        raise SchemaValidationError(
+            f"{directory_name} question {path} has incompatible status {status!r}"
+        )
+    final_status = public_value["verification"]["final_status"]
+    if final_status not in _FINAL_STATUSES[status]:
+        raise SchemaValidationError(
+            f"verification.final_status {final_status!r} disagrees with status {status!r} "
+            f"in question {path}"
+        )
+    if status == "HUMAN_REVIEWED":
+        try:
+            validate_transition(
+                "QA_PASS", "HUMAN_REVIEWED", human_review=human_review
+            )
+        except TransitionError as exc:
+            raise SchemaValidationError(
+                f"invalid human review metadata in question {path}: {exc}"
+            ) from exc
     return public_value
 
 
@@ -66,7 +111,7 @@ def _questions(root: Path) -> list[dict]:
     questions: list[dict] = []
     for directory_name in _QUESTION_DIRECTORIES:
         for path in _json_files(root / directory_name):
-            question = _validated_question(path)
+            question = _validated_question(path, directory_name)
             identifier = question["id"]
             if identifier in seen:
                 raise SchemaValidationError(
