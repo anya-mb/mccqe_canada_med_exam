@@ -1,5 +1,8 @@
 import json
 
+import pytest
+
+from qbank.errors import QbankError
 from qbank.jsonio import read_json, write_json_atomic
 
 
@@ -16,3 +19,17 @@ def test_read_json_returns_decoded_value(tmp_path):
     target.write_text(json.dumps({"answer": [1, 2, 3]}), encoding="utf-8")
 
     assert read_json(target) == {"answer": [1, 2, 3]}
+
+
+@pytest.mark.parametrize("token", ["NaN", "Infinity", "-Infinity"])
+def test_read_json_rejects_non_finite_number_tokens(tmp_path, token):
+    target = tmp_path / "data.json"
+    target.write_text(f'{{"value": {token}}}', encoding="utf-8")
+
+    with pytest.raises(QbankError, match="non-finite"):
+        read_json(target)
+
+
+def test_write_json_rejects_non_finite_float(tmp_path):
+    with pytest.raises(QbankError, match="non-finite"):
+        write_json_atomic(tmp_path / "data.json", {"value": float("nan")})
