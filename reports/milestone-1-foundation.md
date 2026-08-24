@@ -2,8 +2,8 @@
 
 ## Checkpoint
 
-Branch: `codex/qbank-foundation`  
-HEAD: `b81f83eca5f972aa0483fabf56b5c05d5765f730` (`fix: preserve manifest sources across CLI jobs`)
+Branch: `codex/qbank-foundation`
+HEAD: `d24fc83` (`docs: checkpoint qbank foundation milestone`)
 
 The foundation is deterministic, fail-closed, and configured for `CODEX_NATIVE` research. No questions were generated, verified, or published. The empty filesystem is the source of truth: `reports/progress.json` records planned `0`, generated `0`, blind passed `0`, QA passed `0`, human reviewed `0`, rejected `0`, quarantined `0`; all discipline/chapter breakdowns and all queue states are empty/zero; and coverage gaps are empty because no manifests are planned yet.
 
