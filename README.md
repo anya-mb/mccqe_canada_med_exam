@@ -36,6 +36,23 @@ the already synchronized repository environment:
 .venv/bin/pytest -q
 ```
 
+## Create a searchable private PDF
+
+Use the local OCR page records to add an invisible text layer while leaving
+the rendered PDF pages unchanged. The command also writes one normalized UTF-8
+text file per page under the ignored `derived/` tree:
+
+```bash
+.worktrees/qbank-production/.venv/bin/python scripts/qbank/searchable_pdf.py \
+  --pdf Toronto_Notes_with_search.pdf \
+  --ocr-dir derived/toronto-notes-2025/ocr/pages \
+  --output Toronto_Notes_searchable.pdf \
+  --clean-ocr-dir derived/toronto-notes-2025/clean-ocr
+```
+
+The output PDF is private source material and must not be committed or placed
+under a deploy directory.
+
 Portable policy and expected source metadata live in `config/project.json`.
 Machine-local paths never belong in committed configuration.
 
