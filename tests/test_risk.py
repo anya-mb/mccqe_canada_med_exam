@@ -65,6 +65,9 @@ def test_numerical_threshold_detects_decision_comparisons(valid_question, text):
     [
         "The patient's blood pressure is 140/90 mm Hg at triage.",
         "The patient is 65 years old.",
+        "The sample size was n = 30 participants.",
+        "At baseline, heart rate = 80 beats/min.",
+        "The study reported a risk ratio = 1.2.",
     ],
 )
 def test_ordinary_numbers_without_a_decision_threshold_are_not_flagged(

@@ -40,7 +40,7 @@ _STRUCTURED_FIELD_FLAGS = {
 
 _TEXT_PATTERNS = {
     "NUMERICAL_THRESHOLD": re.compile(
-        r"(?:\b(?:threshold|cut[- ]?off|upper limit|lower limit|target)\b[^.]{0,40}?\b\d+(?:\.\d+)?\b|\b\d+(?:\.\d+)?\b[^.]{0,40}?\b(?:threshold|cut[- ]?off|upper limit|lower limit|target)\b|\b(?:at least|at most|no more than|not more than|greater than|less than|equal to)\s+\d+(?:\.\d+)?|(?:≥|≤|>=|<=|>|<|=)\s*\d+(?:\.\d+)?|\b(?:age|aged)\s*(?:≥|≤|>=|<=|>|<|=)\s*\d+(?:\.\d+)?)",
+        r"(?:\b(?:threshold|cut[- ]?off|upper limit|lower limit|target)\b[^.]{0,40}?\b\d+(?:\.\d+)?\b|\b\d+(?:\.\d+)?\b[^.]{0,40}?\b(?:threshold|cut[- ]?off|upper limit|lower limit|target)\b|\b(?:at least|at most|no more than|not more than|greater than|less than|equal to)\s+\d+(?:\.\d+)?)",
         re.IGNORECASE,
     ),
     "DOSE": re.compile(
@@ -80,6 +80,12 @@ _TEXT_PATTERNS = {
         re.IGNORECASE,
     ),
 }
+
+_NUMERICAL_COMPARISON = re.compile(r"(?:≥|≤|>=|<=|>|<|=)\s*\d+(?:\.\d+)?")
+_CLINICAL_DECISION = re.compile(
+    r"\b(?:start|initiat\w*|treat\w*|therapy|investigat\w*|refer\w*|screen\w*|diagnos\w*|admit\w*|discharg\w*|recommend\w*|consider\w*|should|indicat\w*|eligib\w*|contraindicat\w*|manage\w*)\b",
+    re.IGNORECASE,
+)
 
 
 def _normalize_key(value: str) -> str:
@@ -129,6 +135,14 @@ def _question_text(question: dict) -> str:
     return "\n".join(values)
 
 
+def _has_clinical_comparison(text: str) -> bool:
+    """Require a decision context so ordinary equality statements stay unflagged."""
+    return any(
+        _NUMERICAL_COMPARISON.search(sentence) and _CLINICAL_DECISION.search(sentence)
+        for sentence in re.split(r"[.!?\n]+", text)
+    )
+
+
 def classify_risk(question: dict) -> list[str]:
     """Return fixed high-risk flags in their declared deterministic order."""
     if not isinstance(question, dict):
@@ -136,4 +150,6 @@ def classify_risk(question: dict) -> list[str]:
     flags = _structured_flags(question)
     text = _question_text(question)
     flags.update(flag for flag, pattern in _TEXT_PATTERNS.items() if pattern.search(text))
+    if _has_clinical_comparison(text):
+        flags.add("NUMERICAL_THRESHOLD")
     return [flag for flag in RISK_FLAGS if flag in flags]

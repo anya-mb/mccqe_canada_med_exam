@@ -47,3 +47,17 @@ TDD evidence:
 - RED: `PYTHONPATH=scripts python -m pytest -q tests/test_references.py tests/test_risk.py` — 5 failed, 21 passed (Unicode slug, two comparative threshold forms, and two public-health reporting forms).
 - GREEN: `PYTHONPATH=scripts python -m pytest -q tests/test_references.py tests/test_risk.py` — 26 passed.
 - Full: `PYTHONPATH=scripts python -m pytest -q` — 349 passed.
+
+## Review round 2
+
+Symbol comparisons, including bare equality, now require a clinical decision
+context in the same sentence. Explicit threshold/cutoff and verbal-comparison
+markers remain supported. This preserves treatment-triggered BP and creatinine
+comparisons while rejecting ordinary sample-size, baseline-measurement, and
+statistical equality statements.
+
+TDD evidence:
+
+- RED: `PYTHONPATH=scripts python -m pytest -q tests/test_risk.py` — 3 failed, 19 passed (ordinary equality false positives).
+- GREEN: `PYTHONPATH=scripts python -m pytest -q tests/test_risk.py` — 22 passed.
+- Full: `PYTHONPATH=scripts python -m pytest -q` — 352 passed.
