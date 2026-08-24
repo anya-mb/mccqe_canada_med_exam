@@ -2,6 +2,7 @@
 
 from copy import deepcopy
 from dataclasses import dataclass
+from numbers import Real
 from pathlib import Path
 from typing import Literal
 
@@ -9,6 +10,7 @@ from .schema import validate_instance
 
 
 _REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
+_MINIMUM_CONFIDENCE = 0.85
 
 
 @dataclass(frozen=True)
@@ -43,10 +45,21 @@ def _quarantine(reason: str) -> BlindDecision:
     return BlindDecision(status="QUARANTINE", reason=reason)
 
 
+def _effective_threshold(threshold: float) -> float:
+    if (
+        isinstance(threshold, bool)
+        or not isinstance(threshold, Real)
+        or not 0 <= threshold <= 1
+    ):
+        raise ValueError("threshold must be a number from 0 through 1")
+    return max(_MINIMUM_CONFIDENCE, threshold)
+
+
 def evaluate_blind_result(
     candidate: dict, result: dict, threshold: float = 0.85
 ) -> BlindDecision:
     """Compare an independent result without ever changing the candidate key."""
+    threshold = _effective_threshold(threshold)
     if result["question_id"] != candidate["id"]:
         return _quarantine("BLIND_QUESTION_ID_MISMATCH")
     if result["independent_answer"] != candidate["correct_answer"]:

@@ -128,12 +128,36 @@ def test_each_nonmatching_blind_gate_quarantines(
     assert decision == BlindDecision(status="QUARANTINE", reason=reason)
 
 
-def test_confidence_threshold_is_configurable(valid_question, valid_blind_result):
+def test_lower_threshold_cannot_admit_less_than_default_floor(
+    valid_question, valid_blind_result
+):
     valid_blind_result["confidence"] = 0.84
 
     decision = evaluate_blind_result(valid_question, valid_blind_result, threshold=0.84)
 
-    assert decision.status == "BLIND_PASS"
+    assert decision == BlindDecision(
+        status="QUARANTINE", reason="BLIND_LOW_CONFIDENCE"
+    )
+
+
+def test_stricter_threshold_can_quarantine_an_otherwise_passing_result(
+    valid_question, valid_blind_result
+):
+    valid_blind_result["confidence"] = 0.90
+
+    decision = evaluate_blind_result(valid_question, valid_blind_result, threshold=0.91)
+
+    assert decision == BlindDecision(
+        status="QUARANTINE", reason="BLIND_LOW_CONFIDENCE"
+    )
+
+
+@pytest.mark.parametrize("threshold", ["0.85", None, True, -0.01, 1.01])
+def test_invalid_confidence_threshold_is_rejected(
+    valid_question, valid_blind_result, threshold
+):
+    with pytest.raises(ValueError, match="threshold"):
+        evaluate_blind_result(valid_question, valid_blind_result, threshold=threshold)
 
 
 def test_result_for_another_question_quarantines(valid_question, valid_blind_result):
