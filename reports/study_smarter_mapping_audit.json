@@ -1,0 +1,31 @@
+{
+  "audit_date": "2026-08-24",
+  "total_listing_rows": 291,
+  "rows_per_discipline": {
+    "Medicine": 66,
+    "OBGYN": 26,
+    "Psychiatry": 31,
+    "Pediatrics": 82,
+    "Surgery": 63,
+    "PHELO": 23
+  },
+  "unique_legacy_ids_across_all_disciplines": 111,
+  "legacy_ids_appearing_in_more_than_one_discipline": 67,
+  "reconciliation_status_counts": {
+    "CONFIRMED": 291
+  },
+  "unmatched_records": [],
+  "title_version_discrepancies": [],
+  "duplicate_extraction_errors": {},
+  "malformed_ids": [],
+  "known_source_anomaly": {
+    "location": "Surgery discipline list, last entry (page 10)",
+    "printed_text_verbatim": "Weakness (not caused by cerebrovascular accident), 117 118",
+    "issue": "Two Legacy ID numbers ('117' and '118') are printed after this single title, unlike every other entry in the guide which has exactly one Legacy ID. Confirmed by direct visual inspection of the PDF page (not a text-extraction artifact) — the anomaly exists in the official source document itself.",
+    "context": "Legacy ID 117 = 'Weakness (not caused by cerebrovascular accident)' (matches this title, consistent with Medicine and Pediatrics lists). Legacy ID 118 belongs to a DIFFERENT Medical Expert group (Group-118: Obesity=118-1, Weight loss/eating disorders/anorexia=118-2, Intrauterine growth restriction=118-3) — none of those titles appear elsewhere in the Surgery list.",
+    "resolution": "Recorded as-is (both IDs preserved) in the raw list below. Treated as UNRESOLVED for the '118' portion in reconciliation — not silently dropped, not silently assigned to a guessed title.",
+    "does_not_block": "Master scope crosswalk generation - affects one line item's Surgery/weight-topic reconciliation only."
+  },
+  "important_caveat": "Absence of a Medical Expert objective from all six Study Smarter discipline lists does NOT mean it is missing from MCC scope. Study Smarter is explicitly non-exhaustive per its own printed caveats (see study_smarter_discipline_mapping.json.limitations). Absence means only 'not explicitly represented in this non-exhaustive study aid.'",
+  "overall_status": "PASS"
+}

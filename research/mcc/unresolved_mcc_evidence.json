@@ -2,6 +2,7 @@
   "unresolved_mcc_evidence": {
     "title": "Unresolved MCC Evidence Items",
     "last_updated": "2026-08-24",
+    "phase": "Phase 2 (objectives registry + Study Smarter mapping retrieval)",
     "note": "Items that cannot be definitively resolved from current publicly available official MCC sources or require explicit confirmation from current post-2025 specifications"
   },
 
@@ -62,21 +63,45 @@
       "accessed_date": "2026-08-24"
     },
 
+    "blueprint_percentages_official_source": {
+      "status": "CONFIRMED",
+      "resolved_in_phase": 2,
+      "value": "Assessment/Diagnosis 45±5%, Management 35±5%, Communication 10±5%, Professional Behaviours 10±5%; Health Promotion & Illness Prevention 20±5%, Acute 35±5%, Chronic 30±5%, Psychosocial Aspects 15±5%",
+      "source": "Study Smarter: A Study Guide for the MCCQE (2026), page 5 (blueprint table, 'MCC blueprint and MCC Examination Objectives' section)",
+      "source_url": "https://mcc.ca/wp-content/uploads/Study-smarter-A-study-guide-for-the-MCCQE.pdf",
+      "source_sha256": "7c8d8a61f0465b56fae00c35a9968c337c69d86620511f7e71dadff1e624f4f4",
+      "note": "Blueprint table is reproduced verbatim (as a graphic table) in the official Study Smarter guide, corroborating the mcc.ca/examinations-assessments/mccqe/ page summary. Cross-confirmed by two independent official MCC publications.",
+      "accessed_date": "2026-08-24"
+    },
+
     "study_smarter_guide": {
       "status": "CONFIRMED",
+      "resolved_in_phase": 2,
       "version": "2026",
-      "launch_date": "April 2, 2026",
+      "published_date_as_printed_in_guide": "April 1, 2026",
+      "correction_note": "Phase 1 evidence layer stated 'April 2, 2026' per the Deep Research memo. The official PDF itself prints 'Published: April 1, 2026' on page 3; PDF file metadata CreationDate is 2026-04-07 (likely a minor re-upload after initial publication). Corrected here to the value printed in the primary source.",
+      "author": "Filipe Nadir Caparica Santos, MD, PhD, MScCH(HPTE), FRCPC, in collaboration with the Medical Council of Canada",
       "non_exhaustive": true,
-      "source": "MCC documentation",
+      "source": "https://mcc.ca/wp-content/uploads/Study-smarter-A-study-guide-for-the-MCCQE.pdf",
+      "source_sha256": "7c8d8a61f0465b56fae00c35a9968c337c69d86620511f7e71dadff1e624f4f4",
+      "found_via": "https://mcc.ca/free-resources/",
       "accessed_date": "2026-08-24"
     },
 
     "objectives_web_service": {
       "status": "CONFIRMED_PUBLIC",
-      "public_endpoints": "Documented and publicly available",
+      "public_endpoints": "Documented and publicly available for Medical Expert role only",
       "credentials_required": false,
-      "source": "https://mcc.ca/objectives/ - Read the technical documentation",
-      "note": "Public web service endpoints exist; no credentials assumed necessary",
+      "source": "https://mcc.ca/objectives/ -> https://mcc.ca/wp-content/uploads/Exams-objectives-web-service-documentation.pdf",
+      "note": "Public JSON/XML web-service endpoint confirmed working (HTTP 200) for medical-expert role: https://mcc.ca/wp-json/mcc/medical-expert/en/?type=json&content=true. No credentials required.",
+      "accessed_date": "2026-08-24"
+    },
+
+    "objectives_web_service_scope_limitation": {
+      "status": "CONFIRMED",
+      "resolved_in_phase": 2,
+      "finding": "The documented web service covers ONLY the Medical Expert role. No JSON/XML endpoint exists for the six non-Medical-Expert roles (Collaborator, Communicator, Health Advocate, Leader/Manager, Professional, Scholar).",
+      "evidence": "Official 2-page technical documentation PDF exclusively describes medical-expert URLs. Direct attempt at the analogous pattern for other roles (e.g. https://mcc.ca/wp-json/mcc/collaborator/en/?type=json&content=true) returned HTTP 404 rest_no_route.",
       "accessed_date": "2026-08-24"
     },
 
@@ -86,19 +111,50 @@
       "source": "MCC public MCQ-writing guidelines",
       "note": "Formal MCC item-writing guidance is publicly documented, not purely internal",
       "accessed_date": "2026-08-24"
+    },
+
+    "objectives_registry_complete": {
+      "status": "CONFIRMED",
+      "resolved_in_phase": 2,
+      "value": "192 Medical Expert objectives retrieved via official web service (content=true), covering all 192 titles cross-verified against the official medical-expert index page link list (192/192 exact match, zero unmatched). 6 non-Medical-Expert role pages captured in full as single role-level records (no per-objective IDs exist for these roles per MCC's own structure).",
+      "total_registry_records": 198,
+      "source": "research/mcc/objectives_registry.json",
+      "audit": "reports/objectives_registry_audit.json - overall_registry_status: PASS; 16-item manual verification sample: 16/16 PASS",
+      "accessed_date": "2026-08-24"
+    },
+
+    "legacy_objective_ids": {
+      "status": "CONFIRMED",
+      "resolved_in_phase": 2,
+      "value": "For Medical Expert objectives, the web-service 'id' field is confirmed identical to the official page-displayed 'Legacy ID' field (4/4 direct spot-checks; pattern holds across all 192 records with no counter-example found). No separate 'current ID' system exists on the official site.",
+      "source": "research/mcc/objective_id_crosswalk.json",
+      "non_expert_roles_note": "The six non-Medical-Expert roles have no Legacy ID system at all - confirmed by direct inspection of all six official role pages.",
+      "accessed_date": "2026-08-24"
+    },
+
+    "study_smarter_complete_mapping": {
+      "status": "CONFIRMED",
+      "resolved_in_phase": 2,
+      "value": "291 discipline-listing rows extracted verbatim from the official 2026 Study Smarter guide (pages 7-10), covering 111 unique Legacy IDs, 67 of which are explicitly listed under more than one discipline.",
+      "reconciliation_result": "291/291 rows (100%) reconciled to a specific objectives_registry.json record (290 direct/group-citation confirms, 1 resolved after whitespace-normalization fix). 0 UNRESOLVED, 0 REVIEW remaining.",
+      "source": "research/mcc/study_smarter_discipline_mapping.json",
+      "reconciliation_file": "research/mcc/study_smarter_registry_reconciliation.json",
+      "audit": "reports/study_smarter_mapping_audit.json - overall_status: PASS",
+      "accessed_date": "2026-08-24"
     }
   },
 
   "genuinely_unresolved_items": {
-    "note": "The following items remain unresolved or require confirmation from current official sources beyond what is publicly documented:",
+    "note": "The following items remain unresolved or require confirmation from current official sources beyond what is publicly documented. Each is tagged with whether it blocks the master scope crosswalk.",
 
     "pilot_distribution_by_section": {
       "status": "UNRESOLVED",
       "question": "How are 20 pilot items distributed between Section 1 and Section 2?",
-      "deep_research_claim": "One-third of each section consists of pilot items (INCORRECT)",
+      "deep_research_claim": "One-third of each section consists of pilot items (INCORRECT - already flagged and corrected in the memo itself)",
       "corrected_understanding": "Unknown distribution - not confirmed from current official specification",
       "required_source": "Current official MCC specification or FAQ",
-      "impact": "LOW - for simulation purposes only; actual pilot item placement is unknown to candidates"
+      "impact": "LOW - for simulation purposes only; actual pilot item placement is unknown to candidates",
+      "blocks_scope_crosswalk": false
     },
 
     "all_items_five_options": {
@@ -109,45 +165,29 @@
       "current_specification": "Not explicitly confirmed in current post-2025 specification",
       "required_source": "Current official MCC post-2025 technical specification",
       "action": "Confirm whether all live items now require exactly 5 options or if 3–5 remains valid",
-      "impact": "MODERATE - affects generation guideline"
+      "impact": "MODERATE - affects generation guideline only, not scope mapping",
+      "blocks_scope_crosswalk": false
     },
 
-    "study_smarter_complete_mapping": {
+    "surgery_weakness_dual_legacy_id_anomaly": {
       "status": "UNRESOLVED",
-      "question": "What is the complete, current MCC Study Smarter discipline mapping?",
-      "required_source": "Current 2026 MCC Study Smarter guide (April 2, 2026 version or later)",
-      "action": "Extract full discipline assignments from official Study Smarter guide",
-      "impact": "HIGH - needed for building study_smarter_discipline_mapping.json"
+      "resolved_in_phase": 2,
+      "question": "Study Smarter's Surgery discipline list prints 'Weakness (not caused by cerebrovascular accident), 117 118' - two Legacy IDs for one title, unlike every other entry in the guide.",
+      "finding": "Confirmed by direct visual inspection of the source PDF (page 10) that this is a genuine anomaly in the official document itself, not a text-extraction artifact. Legacy ID 117 correctly matches this title. Legacy ID 118 belongs to an unrelated Medical Expert group (Obesity/Weight loss/IUGR, none of which are titled 'Weakness' or appear elsewhere in the Surgery list).",
+      "required_source": "Would require contacting MCC directly to confirm whether this is a guide typo or an intentional dual-reference",
+      "action_taken": "Recorded verbatim in research/mcc/raw_retrieval/study_smarter_discipline_lists_raw.json with explicit anomaly annotation. Only Legacy ID 117 used in the reconciled mapping; 118 preserved as an unresolved side-note, not silently assigned to any objective.",
+      "impact": "TRIVIAL - affects zero mapping decisions since ID 117 is unambiguous and correctly resolved; ID 118's spurious appearance here does not change Surgery's coverage of any objective",
+      "blocks_scope_crosswalk": false
     },
 
-    "objectives_registry_complete": {
-      "status": "UNRESOLVED",
-      "question": "Can all current MCC objectives be retrieved from the public web service?",
-      "required_source": "MCC Objectives Online Web Service",
-      "technical_documentation": "Needs to be accessed at https://mcc.ca/objectives/",
-      "action": "Retrieve complete registry via documented JSON/XML endpoints; record any failures",
-      "impact": "CRITICAL - needed for building objectives_registry.json"
-    },
-
-    "blueprint_percentages_official_source": {
-      "status": "PARTIALLY_RESOLVED",
-      "question": "What is the authoritative source for blueprint percentages?",
-      "claimed_values": "Assessment/Diagnosis 45±5%, Management 35±5%, Communication 10±5%, Professional Behaviours 10±5%, Health Promotion 20±5%, Acute 35±5%, Chronic 30±5%, Psychosocial 15±5%",
-      "source_authority": "Official MCC Blueprint documentation",
-      "retrieved_from": "https://mcc.ca/examinations-assessments/mccqe/",
-      "verification_status": "CONFIRMED_UNOFFICIAL_SUMMARY",
-      "action": "Locate official downloadable blueprint document or standards-setting report for formal verification",
-      "impact": "MODERATE - percentages are working values but benefit from official source verification"
-    },
-
-    "legacy_objective_ids": {
-      "status": "UNRESOLVED",
-      "question": "Which objectives have legacy IDs and what are they?",
-      "required_source": "Official MCC documentation or web service",
-      "action": "Determine which objectives have legacy identifiers and include in objectives_registry.json",
-      "impact": "MODERATE - useful for historical tracking but not critical"
+    "canmeds_role_percentages": {
+      "status": "CONFIRMED_ABSENT_BY_DESIGN",
+      "question": "What are the CanMEDS role percentage weights on the MCCQE?",
+      "finding": "MCC does not publish CanMEDS role percentages at all. The Blueprint (Physician Activities x Dimensions of Care) and the CanMEDS-based Examination Objectives are two deliberately separate classification systems. This is not a gap in current evidence retrieval - MCC's own materials confirm no such percentage breakdown exists to find.",
+      "impact": "NONE - do not infer or fabricate CanMEDS role percentages; continue treating blueprint.json and the CanMEDS role list as separate systems per existing guidance",
+      "blocks_scope_crosswalk": false
     }
   },
 
-  "data_integrity_notes": "This document distinguishes between items that HAVE been confirmed from official sources (resolved) and items that genuinely remain unresolved. It does not list claims merely because the original Deep Research memo called them unresolved if they have since been verified."
+  "data_integrity_notes": "This document distinguishes between items that HAVE been confirmed from official sources (resolved) and items that genuinely remain unresolved. It does not list claims merely because the original Deep Research memo called them unresolved if they have since been verified. Phase 2 (2026-08-24) resolved the two former CRITICAL blockers (objectives_registry_complete, study_smarter_complete_mapping) plus blueprint_percentages_official_source and the objectives_web_service scope limitation. Zero remaining unresolved items block master_scope_crosswalk.json generation."
 }
