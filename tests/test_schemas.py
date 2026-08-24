@@ -231,6 +231,67 @@ def test_job_failure_class_uses_fixed_enum(repo_root):
         validate_instance(repo_root, "job", instance)
 
 
+def test_pending_job_is_valid_without_timestamps(repo_root):
+    instance = copy.deepcopy(read_json(VALID_FIXTURES / "job.json"))
+    instance.pop("timestamps")
+
+    validate_instance(repo_root, "job", instance)
+
+
+@pytest.mark.parametrize("status", ["RUNNING", "COMPLETED", "FAILED"])
+def test_non_pending_jobs_require_timestamps(repo_root, status):
+    instance = copy.deepcopy(read_json(VALID_FIXTURES / "job.json"))
+    instance["status"] = status
+    instance["timestamps"]["started_at"] = "2026-08-23T12:01:00Z"
+    if status == "COMPLETED":
+        instance["timestamps"]["completed_at"] = "2026-08-23T12:02:00Z"
+    if status == "FAILED":
+        instance["failure"] = {
+            "class": "SOURCE_FAILURE",
+            "message": "Synthetic source failure.",
+        }
+    instance.pop("timestamps")
+
+    with pytest.raises(SchemaValidationError, match="timestamps"):
+        validate_instance(repo_root, "job", instance)
+
+
+@pytest.mark.parametrize(
+    ("status", "field"),
+    [
+        ("RUNNING", "started_at"),
+        ("COMPLETED", "started_at"),
+        ("COMPLETED", "completed_at"),
+    ],
+)
+def test_active_and_completed_jobs_require_state_timestamp(repo_root, status, field):
+    instance = copy.deepcopy(read_json(VALID_FIXTURES / "job.json"))
+    instance["status"] = status
+    instance["timestamps"]["started_at"] = "2026-08-23T12:01:00Z"
+    if status == "COMPLETED":
+        instance["timestamps"]["completed_at"] = "2026-08-23T12:02:00Z"
+    instance["timestamps"][field] = None
+
+    with pytest.raises(SchemaValidationError, match=field):
+        validate_instance(repo_root, "job", instance)
+
+
+@pytest.mark.parametrize("status", ["RUNNING", "FAILED"])
+def test_unfinished_jobs_reject_completed_timestamp(repo_root, status):
+    instance = copy.deepcopy(read_json(VALID_FIXTURES / "job.json"))
+    instance["status"] = status
+    instance["timestamps"]["started_at"] = "2026-08-23T12:01:00Z"
+    instance["timestamps"]["completed_at"] = "2026-08-23T12:02:00Z"
+    if status == "FAILED":
+        instance["failure"] = {
+            "class": "SOURCE_FAILURE",
+            "message": "Synthetic source failure.",
+        }
+
+    with pytest.raises(SchemaValidationError, match="completed_at"):
+        validate_instance(repo_root, "job", instance)
+
+
 def test_reference_requires_claim_level_support(repo_root):
     reference = copy.deepcopy(read_json(VALID_FIXTURES / "reference.json"))
     reference["supports"] = []

@@ -5,11 +5,12 @@
   "$defs": {
     "failureClass": {"enum": ["TECHNICAL_FAILURE", "SOURCE_FAILURE", "MEDICAL_AMBIGUITY", "REFERENCE_FAILURE", "SCHEMA_FAILURE", "DUPLICATE", "COPYRIGHT_SIMILARITY"]},
     "failure": {"type": "object", "additionalProperties": false, "required": ["class", "message"], "properties": {"class": {"$ref": "#/$defs/failureClass"}, "message": {"type": "string", "minLength": 1}}},
+    "timestamp": {"type": "string", "format": "date-time"},
     "nullableTimestamp": {"type": ["string", "null"], "format": "date-time"}
   },
   "type": "object",
   "additionalProperties": false,
-  "required": ["job_id", "batch_id", "job_type", "status", "attempt", "max_attempts", "inputs", "question_ids", "requested_roles", "artifacts", "timestamps", "failure"],
+  "required": ["job_id", "batch_id", "job_type", "status", "attempt", "max_attempts", "inputs", "question_ids", "requested_roles", "artifacts", "failure"],
   "properties": {
     "job_id": {"type": "string", "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)+$"},
     "batch_id": {"type": "string", "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)+$"},
@@ -33,11 +34,15 @@
     "timestamps": {
       "type": "object", "additionalProperties": false,
       "required": ["created_at", "updated_at", "started_at", "completed_at"],
-      "properties": {"created_at": {"type": "string", "format": "date-time"}, "updated_at": {"type": "string", "format": "date-time"}, "started_at": {"$ref": "#/$defs/nullableTimestamp"}, "completed_at": {"$ref": "#/$defs/nullableTimestamp"}}
+      "properties": {"created_at": {"$ref": "#/$defs/timestamp"}, "updated_at": {"$ref": "#/$defs/timestamp"}, "started_at": {"$ref": "#/$defs/nullableTimestamp"}, "completed_at": {"$ref": "#/$defs/nullableTimestamp"}}
     },
     "failure": {"anyOf": [{"$ref": "#/$defs/failure"}, {"type": "null"}]}
   },
   "allOf": [
-    {"if": {"properties": {"status": {"const": "FAILED"}}, "required": ["status"]}, "then": {"properties": {"failure": {"$ref": "#/$defs/failure"}}}, "else": {"properties": {"failure": {"type": "null"}}}}
+    {"if": {"properties": {"status": {"const": "FAILED"}}, "required": ["status"]}, "then": {"properties": {"failure": {"$ref": "#/$defs/failure"}}}, "else": {"properties": {"failure": {"type": "null"}}}},
+    {"if": {"properties": {"status": {"const": "PENDING"}}, "required": ["status"]}, "else": {"required": ["timestamps"]}},
+    {"if": {"properties": {"status": {"const": "RUNNING"}}, "required": ["status"]}, "then": {"properties": {"timestamps": {"properties": {"started_at": {"$ref": "#/$defs/timestamp"}, "completed_at": {"type": "null"}}}}}},
+    {"if": {"properties": {"status": {"const": "COMPLETED"}}, "required": ["status"]}, "then": {"properties": {"timestamps": {"properties": {"started_at": {"$ref": "#/$defs/timestamp"}, "completed_at": {"$ref": "#/$defs/timestamp"}}}}}},
+    {"if": {"properties": {"status": {"const": "FAILED"}}, "required": ["status"]}, "then": {"properties": {"timestamps": {"properties": {"completed_at": {"type": "null"}}}}}}
   ]
 }

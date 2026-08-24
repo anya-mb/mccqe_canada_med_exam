@@ -43,6 +43,7 @@ def test_generation_jobs_use_stable_paths_and_schema_shaped_content(
     assert value["attempt"] == 0
     assert value["max_attempts"] == 3
     assert "timestamps" not in value
+    validate_instance(REPO_ROOT, "job", value)
 
 
 def test_generation_jobs_are_deterministic(tmp_path, valid_manifest):
@@ -142,6 +143,23 @@ def test_failure_requires_a_schema_valid_classification(tmp_path, pending_job):
 
     assert (tmp_path / f"jobs/pending/{pending_job['job_id']}.json").is_file()
     assert not (tmp_path / f"jobs/failed/{pending_job['job_id']}.json").exists()
+
+
+def test_retry_is_a_schema_valid_timestamp_free_pending_job(tmp_path, pending_job):
+    transition_job(
+        tmp_path,
+        pending_job["job_id"],
+        "failed",
+        {"class": "SOURCE_FAILURE", "message": "unavailable"},
+    )
+
+    retried = transition_job(tmp_path, pending_job["job_id"], "pending")
+    value = read_json(retried)
+
+    assert value["status"] == "PENDING"
+    assert value["attempt"] == 1
+    assert "timestamps" not in value
+    validate_instance(REPO_ROOT, "job", value)
 
 
 def test_transition_moves_atomically_and_adds_deterministic_timestamps(

@@ -22,33 +22,10 @@ _TRANSITIONS = {
     "failed": frozenset({"pending"}),
     "completed": frozenset(),
 }
-_SCHEMA_ONLY_TIMESTAMPS = {
-    "created_at": "1970-01-01T00:00:00Z",
-    "updated_at": "1970-01-01T00:00:00Z",
-    "started_at": None,
-    "completed_at": None,
-}
 
 
 def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
-
-
-def _validate_job(value: object) -> None:
-    """Validate a job, adapting deterministic pending storage to the schema.
-
-    Pending files deliberately omit timestamps.  The canonical schema still
-    requires the timestamp object, so validation uses a private in-memory
-    placeholder without changing the durable bytes.
-    """
-    candidate = deepcopy(value)
-    if (
-        isinstance(candidate, dict)
-        and candidate.get("status") == "PENDING"
-        and "timestamps" not in candidate
-    ):
-        candidate["timestamps"] = deepcopy(_SCHEMA_ONLY_TIMESTAMPS)
-    validate_instance(_REPO_ROOT, "job", candidate)
 
 
 def _max_attempts(root: Path) -> int:
@@ -112,7 +89,7 @@ def create_generation_jobs(root: Path, manifests: list[dict]) -> list[Path]:
 
     planned: list[tuple[Path, dict, bool]] = []
     for job in expected_jobs:
-        _validate_job(job)
+        validate_instance(_REPO_ROOT, "job", job)
         pending_path = root / "jobs" / "pending" / f"{job['job_id']}.json"
         existing = _existing_job_paths(root, job["job_id"])
         if len(existing) > 1:
@@ -122,7 +99,7 @@ def create_generation_jobs(root: Path, manifests: list[dict]) -> list[Path]:
         if existing:
             existing_path = existing[0]
             existing_value = read_json(existing_path)
-            _validate_job(existing_value)
+            validate_instance(_REPO_ROOT, "job", existing_value)
             if existing_path != pending_path:
                 raise TransitionError(
                     f"job {job['job_id']!r} already exists in "
@@ -160,7 +137,7 @@ def _load_source_job(root: Path, job_id: str) -> tuple[Path, dict, str]:
     source = existing[0]
     source_state = source.parent.name
     value = read_json(source)
-    _validate_job(value)
+    validate_instance(_REPO_ROOT, "job", value)
     if not isinstance(value, dict):
         raise SchemaValidationError(f"job {job_id!r} must be a JSON object")
     if value["job_id"] != job_id:
@@ -215,7 +192,7 @@ def _transitioned_value(
             "completed_at": now if target == "completed" else None,
         }
 
-    _validate_job(transitioned)
+    validate_instance(_REPO_ROOT, "job", transitioned)
     return transitioned
 
 
