@@ -8,8 +8,8 @@
       "additionalProperties": false,
       "required": ["claim", "locator"],
       "properties": {
-        "claim": {"type": "string", "minLength": 1},
-        "locator": {"type": "string", "minLength": 1}
+        "claim": {"type": "string", "minLength": 1, "pattern": "\\S"},
+        "locator": {"type": "string", "minLength": 1, "pattern": "\\S"}
       }
     },
     "reference": {
@@ -18,8 +18,8 @@
       "required": ["reference_id", "title", "organization", "url", "publication_or_update_date", "accessed_date", "source_tier", "supports"],
       "properties": {
         "reference_id": {"type": "string", "pattern": "^REF-[A-Z0-9]+(?:-[A-Z0-9]+)*$"},
-        "title": {"type": "string", "minLength": 1},
-        "organization": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1, "pattern": "\\S"},
+        "organization": {"type": "string", "minLength": 1, "pattern": "\\S"},
         "url": {"type": "string", "format": "uri", "pattern": "^https://"},
         "publication_or_update_date": {"type": "string", "format": "date"},
         "accessed_date": {"type": "string", "format": "date"},

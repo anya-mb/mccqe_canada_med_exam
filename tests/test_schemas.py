@@ -239,6 +239,63 @@ def test_reference_requires_claim_level_support(repo_root):
         validate_instance(repo_root, "reference", reference)
 
 
+def test_reference_registry_rejects_distinct_records_with_the_same_id(repo_root):
+    registry = copy.deepcopy(read_json(VALID_FIXTURES / "reference-registry.json"))
+    duplicate_id = copy.deepcopy(registry["references"][0])
+    duplicate_id["title"] = "Different Synthetic Practice Standard"
+    duplicate_id["url"] = "https://example.invalid/different-synthetic-standard"
+    registry["references"].append(duplicate_id)
+
+    with pytest.raises(
+        SchemaValidationError, match=r"references\[1\]\.reference_id"
+    ):
+        validate_instance(repo_root, "reference-registry", registry)
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("clinical_reasoning", "   \t"),
+        (
+            "distractor_rationales",
+            {
+                "B": " \n",
+                "C": "Synthetic rationale C.",
+                "D": "Synthetic rationale D.",
+                "E": "Synthetic rationale E.",
+            },
+        ),
+    ],
+)
+def test_question_rejects_whitespace_only_required_rationales(
+    valid_question, repo_root, field, value
+):
+    valid_question["explanation"][field] = value
+
+    with pytest.raises(SchemaValidationError, match="explanation"):
+        validate_instance(repo_root, "question", valid_question)
+
+
+@pytest.mark.parametrize(
+    ("path", "field"),
+    [
+        ((), "title"),
+        ((), "organization"),
+        (("supports", 0), "claim"),
+        (("supports", 0), "locator"),
+    ],
+)
+def test_reference_rejects_whitespace_only_required_text(repo_root, path, field):
+    reference = copy.deepcopy(read_json(VALID_FIXTURES / "reference.json"))
+    target = reference
+    for part in path:
+        target = target[part]
+    target[field] = " \t\n"
+
+    with pytest.raises(SchemaValidationError, match=field):
+        validate_instance(repo_root, "reference", reference)
+
+
 def test_validation_errors_are_sorted_and_have_json_paths(valid_question, repo_root):
     valid_question["question"]["options"] = []
     valid_question["mcc"]["objectives"] = []

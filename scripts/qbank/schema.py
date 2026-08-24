@@ -20,6 +20,38 @@ def _json_path(parts: Iterable[str | int]) -> str:
     return path
 
 
+def _path_sort_key(parts: Iterable[str | int]) -> tuple[tuple[int, int | str], ...]:
+    return tuple(
+        (0, part) if isinstance(part, int) else (1, str(part)) for part in parts
+    )
+
+
+def _reference_id_errors(instance: object) -> list[tuple[tuple[str | int, ...], str]]:
+    if not isinstance(instance, dict) or not isinstance(instance.get("references"), list):
+        return []
+
+    seen: dict[str, int] = {}
+    errors: list[tuple[tuple[str | int, ...], str]] = []
+    for index, reference in enumerate(instance["references"]):
+        if not isinstance(reference, dict) or not isinstance(
+            reference.get("reference_id"), str
+        ):
+            continue
+        reference_id = reference["reference_id"]
+        if reference_id in seen:
+            path = ("references", index, "reference_id")
+            first_path = f"references[{seen[reference_id]}].reference_id"
+            errors.append(
+                (
+                    path,
+                    f"duplicate reference_id {reference_id!r}; first used at {first_path}",
+                )
+            )
+        else:
+            seen[reference_id] = index
+    return errors
+
+
 def validate_instance(root: Path, schema_name: str, instance: object) -> None:
     """Validate *instance* against a named Draft 2020-12 schema.
 
@@ -40,18 +72,15 @@ def validate_instance(root: Path, schema_name: str, instance: object) -> None:
     except (SchemaError, TypeError) as exc:
         raise SchemaValidationError(f"invalid schema {schema_name}: {exc}") from exc
 
-    errors = sorted(
-        validator.iter_errors(instance),
-        key=lambda error: (
-            tuple(
-                (0, part) if isinstance(part, int) else (1, str(part))
-                for part in error.absolute_path
-            ),
-            error.message,
-        ),
-    )
+    errors = [
+        (tuple(error.absolute_path), error.message)
+        for error in validator.iter_errors(instance)
+    ]
+    if schema_name == "reference-registry":
+        errors.extend(_reference_id_errors(instance))
+    errors.sort(key=lambda error: (_path_sort_key(error[0]), error[1]))
     if errors:
         details = "\n".join(
-            f"{_json_path(error.absolute_path)}: {error.message}" for error in errors
+            f"{_json_path(path)}: {message}" for path, message in errors
         )
         raise SchemaValidationError(f"{schema_name} validation failed:\n{details}")

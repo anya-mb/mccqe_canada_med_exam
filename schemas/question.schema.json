@@ -3,7 +3,7 @@
   "$id": "https://mccqe-qbank.invalid/schemas/question.schema.json",
   "title": "Canonical qbank question",
   "$defs": {
-    "nonempty": {"type": "string", "minLength": 1},
+    "nonempty": {"type": "string", "minLength": 1, "pattern": "\\S"},
     "answerKey": {"enum": ["A", "B", "C", "D", "E"]},
     "status": {"enum": ["DRAFT", "CANDIDATE", "STRUCTURE_PASS", "BLIND_PASS", "MEDICAL_PASS", "QA_PASS", "PUBLISHED", "QUARANTINE", "REVISED", "REJECTED", "HUMAN_REVIEWED", "RETIRED"]},
     "verificationStatus": {"enum": ["PENDING", "BLIND_PASS", "MEDICAL_PASS", "QA_PASS", "HUMAN_REVIEWED", "QUARANTINE", "REJECTED"]},
