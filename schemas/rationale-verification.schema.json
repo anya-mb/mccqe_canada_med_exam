@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mccqe-qbank.invalid/schemas/rationale-verification.schema.json",
+  "title": "Full-rationale verification result",
+  "$defs": {
+    "failureClass": {"enum": ["TECHNICAL_FAILURE", "SOURCE_FAILURE", "MEDICAL_AMBIGUITY", "REFERENCE_FAILURE", "SCHEMA_FAILURE", "DUPLICATE", "COPYRIGHT_SIMILARITY"]},
+    "concern": {
+      "type": "object", "additionalProperties": false, "required": ["class", "message"],
+      "properties": {"class": {"$ref": "#/$defs/failureClass"}, "message": {"type": "string", "minLength": 1}}
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["question_id", "medical_accuracy", "reference_support", "distractor_quality", "rationale_consistency", "canadian_context", "risk_checks", "concerns", "recommendation", "verifier_role", "verified_at"],
+  "properties": {
+    "question_id": {"type": "string", "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)+$"},
+    "medical_accuracy": {"type": "boolean"},
+    "reference_support": {"type": "boolean"},
+    "distractor_quality": {"type": "boolean"},
+    "rationale_consistency": {"type": "boolean"},
+    "canadian_context": {"type": "boolean"},
+    "risk_checks": {"type": "object", "propertyNames": {"pattern": "^[A-Z][A-Z0-9_]*$"}, "additionalProperties": {"type": "boolean"}},
+    "concerns": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/concern"}},
+    "recommendation": {"enum": ["PASS", "QUARANTINE", "REJECT"]},
+    "verifier_role": {"type": "string", "minLength": 1},
+    "verified_at": {"type": "string", "format": "date-time"}
+  }
+}

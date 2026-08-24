@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mccqe-qbank.invalid/schemas/progress.schema.json",
+  "title": "Filesystem-derived progress report",
+  "$defs": {
+    "count": {"type": "integer", "minimum": 0},
+    "breakdown": {
+      "type": "object", "additionalProperties": false,
+      "required": ["planned", "generated", "blind_passed", "qa_passed"],
+      "properties": {"planned": {"$ref": "#/$defs/count"}, "generated": {"$ref": "#/$defs/count"}, "blind_passed": {"$ref": "#/$defs/count"}, "qa_passed": {"$ref": "#/$defs/count"}}
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["generated_at", "planned", "generated", "blind_passed", "qa_passed", "rejected", "quarantined", "human_reviewed", "disciplines", "chapters", "jobs", "coverage_gaps"],
+  "properties": {
+    "generated_at": {"type": "string", "format": "date-time"},
+    "planned": {"$ref": "#/$defs/count"},
+    "generated": {"$ref": "#/$defs/count"},
+    "blind_passed": {"$ref": "#/$defs/count"},
+    "qa_passed": {"$ref": "#/$defs/count"},
+    "rejected": {"$ref": "#/$defs/count"},
+    "quarantined": {"$ref": "#/$defs/count"},
+    "human_reviewed": {"$ref": "#/$defs/count"},
+    "disciplines": {"type": "object", "additionalProperties": {"$ref": "#/$defs/breakdown"}},
+    "chapters": {"type": "object", "additionalProperties": {"$ref": "#/$defs/breakdown"}},
+    "jobs": {
+      "type": "object", "additionalProperties": false,
+      "required": ["pending", "running", "completed", "failed"],
+      "properties": {"pending": {"$ref": "#/$defs/count"}, "running": {"$ref": "#/$defs/count"}, "completed": {"$ref": "#/$defs/count"}, "failed": {"$ref": "#/$defs/count"}}
+    },
+    "coverage_gaps": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+  }
+}

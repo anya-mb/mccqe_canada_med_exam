@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mccqe-qbank.invalid/schemas/blind-packet.schema.json",
+  "title": "Answer-key-free verification packet",
+  "$defs": {
+    "nonempty": {"type": "string", "minLength": 1},
+    "answerKey": {"enum": ["A", "B", "C", "D", "E"]},
+    "option": {"type": "object", "additionalProperties": false, "required": ["id", "text"], "properties": {"id": {"$ref": "#/$defs/answerKey"}, "text": {"$ref": "#/$defs/nonempty"}}},
+    "options": {
+      "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true,
+      "prefixItems": [
+        {"allOf": [{"$ref": "#/$defs/option"}, {"properties": {"id": {"const": "A"}}}]},
+        {"allOf": [{"$ref": "#/$defs/option"}, {"properties": {"id": {"const": "B"}}}]},
+        {"allOf": [{"$ref": "#/$defs/option"}, {"properties": {"id": {"const": "C"}}}]},
+        {"allOf": [{"$ref": "#/$defs/option"}, {"properties": {"id": {"const": "D"}}}]},
+        {"allOf": [{"$ref": "#/$defs/option"}, {"properties": {"id": {"const": "E"}}}]}
+      ],
+      "items": false
+    },
+    "torontoNotes": {
+      "type": "object", "additionalProperties": false,
+      "required": ["edition", "chapter", "chapter_code", "section", "subsection", "tn_pages", "pdf_pages"],
+      "properties": {"edition": {"$ref": "#/$defs/nonempty"}, "chapter": {"$ref": "#/$defs/nonempty"}, "chapter_code": {"$ref": "#/$defs/nonempty"}, "section": {"$ref": "#/$defs/nonempty"}, "subsection": {"$ref": "#/$defs/nonempty"}, "tn_pages": {"$ref": "#/$defs/nonempty"}, "pdf_pages": {"$ref": "#/$defs/nonempty"}}
+    },
+    "mcc": {
+      "type": "object", "additionalProperties": false,
+      "required": ["objectives", "physician_activity", "dimension_of_care"],
+      "properties": {"objectives": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/nonempty"}}, "physician_activity": {"$ref": "#/$defs/nonempty"}, "dimension_of_care": {"$ref": "#/$defs/nonempty"}}
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["question_id", "stem", "lead_in", "options", "mcc", "toronto_notes", "references"],
+  "properties": {
+    "question_id": {"type": "string", "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)+$"},
+    "stem": {"$ref": "#/$defs/nonempty"},
+    "lead_in": {"$ref": "#/$defs/nonempty"},
+    "options": {"$ref": "#/$defs/options"},
+    "mcc": {"$ref": "#/$defs/mcc"},
+    "toronto_notes": {"$ref": "#/$defs/torontoNotes"},
+    "references": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^REF-[A-Z0-9]+(?:-[A-Z0-9]+)*$"}}
+  }
+}

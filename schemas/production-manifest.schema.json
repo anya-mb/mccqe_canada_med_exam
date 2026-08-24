@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mccqe-qbank.invalid/schemas/production-manifest.schema.json",
+  "title": "Student-facing production manifest",
+  "$defs": {
+    "discipline": {
+      "type": "object", "additionalProperties": false, "required": ["file", "question_count"],
+      "properties": {"file": {"type": "string", "minLength": 1}, "question_count": {"type": "integer", "minimum": 0}}
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "generated_at", "question_count", "reference_count", "disciplines", "references_file"],
+  "properties": {
+    "version": {"type": "string", "minLength": 1},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "question_count": {"type": "integer", "minimum": 0},
+    "reference_count": {"type": "integer", "minimum": 0},
+    "disciplines": {"type": "object", "propertyNames": {"pattern": "^[a-z][a-z0-9-]*$"}, "additionalProperties": {"$ref": "#/$defs/discipline"}},
+    "references_file": {"type": "string", "minLength": 1}
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mccqe-qbank.invalid/schemas/manifest.schema.json",
+  "title": "Discipline production manifest",
+  "$defs": {
+    "nonempty": {"type": "string", "minLength": 1},
+    "torontoNotes": {
+      "type": "object", "additionalProperties": false,
+      "required": ["edition", "chapter", "chapter_code", "section", "subsection", "tn_pages", "pdf_pages"],
+      "properties": {"edition": {"$ref": "#/$defs/nonempty"}, "chapter": {"$ref": "#/$defs/nonempty"}, "chapter_code": {"$ref": "#/$defs/nonempty"}, "section": {"$ref": "#/$defs/nonempty"}, "subsection": {"$ref": "#/$defs/nonempty"}, "tn_pages": {"$ref": "#/$defs/nonempty"}, "pdf_pages": {"$ref": "#/$defs/nonempty"}}
+    },
+    "section": {
+      "type": "object", "additionalProperties": false, "required": ["chapter", "target_questions"],
+      "properties": {"chapter": {"$ref": "#/$defs/nonempty"}, "target_questions": {"type": "integer", "minimum": 1}}
+    },
+    "batch": {
+      "type": "object", "additionalProperties": false,
+      "required": ["batch_id", "chapter", "section", "subtopics", "toronto_notes", "mcc_objectives", "target_questions", "question_ids"],
+      "properties": {
+        "batch_id": {"type": "string", "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)+$"},
+        "chapter": {"$ref": "#/$defs/nonempty"},
+        "section": {"$ref": "#/$defs/nonempty"},
+        "subtopics": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/nonempty"}},
+        "toronto_notes": {"$ref": "#/$defs/torontoNotes"},
+        "mcc_objectives": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/nonempty"}},
+        "target_questions": {"type": "integer", "minimum": 1},
+        "question_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)+$"}}
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifest_id", "discipline", "discipline_code", "content_version", "target_questions", "sections", "batches"],
+  "properties": {
+    "manifest_id": {"type": "string", "pattern": "^[A-Z0-9]+(?:[-.][A-Z0-9]+)+$"},
+    "discipline": {"$ref": "#/$defs/nonempty"},
+    "discipline_code": {"type": "string", "pattern": "^[A-Z0-9]+$"},
+    "content_version": {"$ref": "#/$defs/nonempty"},
+    "target_questions": {"type": "integer", "minimum": 1},
+    "sections": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/section"}},
+    "batches": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/batch"}}
+  }
+}

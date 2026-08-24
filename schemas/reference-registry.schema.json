@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mccqe-qbank.invalid/schemas/reference-registry.schema.json",
+  "title": "Canonical reference registry",
+  "$defs": {
+    "support": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim", "locator"],
+      "properties": {
+        "claim": {"type": "string", "minLength": 1},
+        "locator": {"type": "string", "minLength": 1}
+      }
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference_id", "title", "organization", "url", "publication_or_update_date", "accessed_date", "source_tier", "supports"],
+      "properties": {
+        "reference_id": {"type": "string", "pattern": "^REF-[A-Z0-9]+(?:-[A-Z0-9]+)*$"},
+        "title": {"type": "string", "minLength": 1},
+        "organization": {"type": "string", "minLength": 1},
+        "url": {"type": "string", "format": "uri", "pattern": "^https://"},
+        "publication_or_update_date": {"type": "string", "format": "date"},
+        "accessed_date": {"type": "string", "format": "date"},
+        "source_tier": {"type": "integer", "minimum": 1, "maximum": 4},
+        "supports": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/support"}}
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "updated_at", "references"],
+  "properties": {
+    "version": {"type": "string", "minLength": 1},
+    "updated_at": {"type": "string", "format": "date-time"},
+    "references": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/reference"}}
+  }
+}

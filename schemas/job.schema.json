@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mccqe-qbank.invalid/schemas/job.schema.json",
+  "title": "Durable qbank job",
+  "$defs": {
+    "failureClass": {"enum": ["TECHNICAL_FAILURE", "SOURCE_FAILURE", "MEDICAL_AMBIGUITY", "REFERENCE_FAILURE", "SCHEMA_FAILURE", "DUPLICATE", "COPYRIGHT_SIMILARITY"]},
+    "failure": {"type": "object", "additionalProperties": false, "required": ["class", "message"], "properties": {"class": {"$ref": "#/$defs/failureClass"}, "message": {"type": "string", "minLength": 1}}},
+    "nullableTimestamp": {"type": ["string", "null"], "format": "date-time"}
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["job_id", "batch_id", "job_type", "status", "attempt", "max_attempts", "inputs", "question_ids", "requested_roles", "artifacts", "timestamps", "failure"],
+  "properties": {
+    "job_id": {"type": "string", "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)+$"},
+    "batch_id": {"type": "string", "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)+$"},
+    "job_type": {"enum": ["GENERATION", "BLIND_VERIFICATION", "RATIONALE_VERIFICATION", "FINAL_AUDIT"]},
+    "status": {"enum": ["PENDING", "RUNNING", "COMPLETED", "FAILED"]},
+    "attempt": {"type": "integer", "minimum": 0},
+    "max_attempts": {"type": "integer", "minimum": 1},
+    "inputs": {
+      "type": "object", "additionalProperties": false,
+      "required": ["manifest_path", "toronto_notes_pages", "mcc_objectives", "prompt_template"],
+      "properties": {
+        "manifest_path": {"type": "string", "minLength": 1},
+        "toronto_notes_pages": {"type": "string", "minLength": 1},
+        "mcc_objectives": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "prompt_template": {"type": "string", "minLength": 1}
+      }
+    },
+    "question_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)+$"}},
+    "requested_roles": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "artifacts": {"type": "object", "minProperties": 1, "propertyNames": {"pattern": "^[a-z][a-z0-9_]*$"}, "additionalProperties": {"type": "string", "minLength": 1}},
+    "timestamps": {
+      "type": "object", "additionalProperties": false,
+      "required": ["created_at", "updated_at", "started_at", "completed_at"],
+      "properties": {"created_at": {"type": "string", "format": "date-time"}, "updated_at": {"type": "string", "format": "date-time"}, "started_at": {"$ref": "#/$defs/nullableTimestamp"}, "completed_at": {"$ref": "#/$defs/nullableTimestamp"}}
+    },
+    "failure": {"anyOf": [{"$ref": "#/$defs/failure"}, {"type": "null"}]}
+  },
+  "allOf": [
+    {"if": {"properties": {"status": {"const": "FAILED"}}, "required": ["status"]}, "then": {"properties": {"failure": {"$ref": "#/$defs/failure"}}}, "else": {"properties": {"failure": {"type": "null"}}}}
+  ]
+}
