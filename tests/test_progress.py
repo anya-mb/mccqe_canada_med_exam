@@ -1,6 +1,7 @@
 import copy
 from datetime import datetime, timezone
 from pathlib import Path
+import shutil
 
 import pytest
 
@@ -48,6 +49,9 @@ def _job(identifier: str) -> dict:
 
 
 def _populate(root: Path) -> None:
+    schema = root / "schemas" / "manifest.schema.json"
+    schema.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(REPO_ROOT / "schemas" / "manifest.schema.json", schema)
     manifest = read_json(FIXTURES / "manifest.json")
     write_json_atomic(root / "manifests" / "synthetic.json", manifest)
     write_json_atomic(

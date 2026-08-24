@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 
 from qbank.errors import SchemaValidationError
-from qbank.jsonio import read_json
+from qbank.jsonio import read_json, write_json_atomic
 from qbank.manifests import ManifestSummary, validate_manifest_set
 
 
@@ -39,7 +39,9 @@ def resize_single_batch(manifest, size):
 
 
 def test_manifest_set_returns_totals_derived_from_valid_manifests(valid_manifest):
-    summary = validate_manifest_set([valid_manifest, second_manifest(valid_manifest)])
+    summary = validate_manifest_set(
+        REPO_ROOT, [valid_manifest, second_manifest(valid_manifest)]
+    )
 
     assert summary == ManifestSummary(
         manifest_count=2,
@@ -53,7 +55,18 @@ def test_manifest_set_applies_the_canonical_schema(valid_manifest):
     valid_manifest["batches"][0].pop("mcc_objectives")
 
     with pytest.raises(SchemaValidationError, match="mcc_objectives"):
-        validate_manifest_set([valid_manifest])
+        validate_manifest_set(REPO_ROOT, [valid_manifest])
+
+
+def test_manifest_set_uses_the_selected_root_schema(tmp_path, valid_manifest):
+    target_schema = copy.deepcopy(
+        read_json(REPO_ROOT / "schemas" / "manifest.schema.json")
+    )
+    target_schema["properties"]["batches"]["maxItems"] = 0
+    write_json_atomic(tmp_path / "schemas" / "manifest.schema.json", target_schema)
+
+    with pytest.raises(SchemaValidationError, match="batches"):
+        validate_manifest_set(tmp_path, [valid_manifest])
 
 
 @pytest.mark.parametrize("size", [39, 61])
@@ -61,14 +74,14 @@ def test_manifest_set_rejects_batch_targets_outside_40_to_60(valid_manifest, siz
     resize_single_batch(valid_manifest, size)
 
     with pytest.raises(SchemaValidationError, match="40 and 60"):
-        validate_manifest_set([valid_manifest])
+        validate_manifest_set(REPO_ROOT, [valid_manifest])
 
 
 def test_manifest_set_rejects_target_and_question_id_count_mismatch(valid_manifest):
     valid_manifest["batches"][0]["question_ids"].pop()
 
     with pytest.raises(SchemaValidationError, match="target/question ID count"):
-        validate_manifest_set([valid_manifest])
+        validate_manifest_set(REPO_ROOT, [valid_manifest])
 
 
 @pytest.mark.parametrize("field", ["tn_pages", "pdf_pages"])
@@ -76,7 +89,7 @@ def test_manifest_set_rejects_missing_page_mappings(valid_manifest, field):
     valid_manifest["batches"][0]["toronto_notes"].pop(field)
 
     with pytest.raises(SchemaValidationError, match=field):
-        validate_manifest_set([valid_manifest])
+        validate_manifest_set(REPO_ROOT, [valid_manifest])
 
 
 def test_manifest_set_rejects_duplicate_manifest_id(valid_manifest):
@@ -84,7 +97,7 @@ def test_manifest_set_rejects_duplicate_manifest_id(valid_manifest):
     duplicate["manifest_id"] = valid_manifest["manifest_id"]
 
     with pytest.raises(SchemaValidationError, match="duplicate manifest ID"):
-        validate_manifest_set([valid_manifest, duplicate])
+        validate_manifest_set(REPO_ROOT, [valid_manifest, duplicate])
 
 
 def test_manifest_set_rejects_duplicate_batch_id_across_manifests(valid_manifest):
@@ -92,7 +105,7 @@ def test_manifest_set_rejects_duplicate_batch_id_across_manifests(valid_manifest
     duplicate["batches"][0]["batch_id"] = valid_manifest["batches"][0]["batch_id"]
 
     with pytest.raises(SchemaValidationError, match="duplicate batch ID"):
-        validate_manifest_set([valid_manifest, duplicate])
+        validate_manifest_set(REPO_ROOT, [valid_manifest, duplicate])
 
 
 def test_manifest_set_rejects_cross_discipline_id_collision(valid_manifest):
@@ -102,7 +115,7 @@ def test_manifest_set_rejects_cross_discipline_id_collision(valid_manifest):
     ][0]
 
     with pytest.raises(SchemaValidationError, match="duplicate question ID"):
-        validate_manifest_set([valid_manifest, duplicate])
+        validate_manifest_set(REPO_ROOT, [valid_manifest, duplicate])
 
 
 def test_manifest_set_rejects_manifest_target_that_disagrees_with_sections(
@@ -111,7 +124,7 @@ def test_manifest_set_rejects_manifest_target_that_disagrees_with_sections(
     valid_manifest["target_questions"] = 41
 
     with pytest.raises(SchemaValidationError, match="section target total"):
-        validate_manifest_set([valid_manifest])
+        validate_manifest_set(REPO_ROOT, [valid_manifest])
 
 
 def test_manifest_set_rejects_manifest_target_that_disagrees_with_batches(
@@ -121,18 +134,18 @@ def test_manifest_set_rejects_manifest_target_that_disagrees_with_batches(
     valid_manifest["sections"][0]["target_questions"] = 41
 
     with pytest.raises(SchemaValidationError, match="batch target total"):
-        validate_manifest_set([valid_manifest])
+        validate_manifest_set(REPO_ROOT, [valid_manifest])
 
 
 def test_manifest_set_rejects_section_without_matching_batch_allocation(valid_manifest):
     valid_manifest["sections"][0]["chapter"] = "Unallocated Synthetic Chapter"
 
     with pytest.raises(SchemaValidationError, match="section/batch target total"):
-        validate_manifest_set([valid_manifest])
+        validate_manifest_set(REPO_ROOT, [valid_manifest])
 
 
 def test_manifest_set_rejects_non_contiguous_question_ids(valid_manifest):
     valid_manifest["batches"][0]["question_ids"][20] = "SYN-UNIT-099"
 
     with pytest.raises(SchemaValidationError, match="contiguous question IDs"):
-        validate_manifest_set([valid_manifest])
+        validate_manifest_set(REPO_ROOT, [valid_manifest])

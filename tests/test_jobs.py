@@ -1,5 +1,6 @@
 import copy
 from pathlib import Path
+import shutil
 
 import pytest
 
@@ -7,6 +8,7 @@ import qbank.jobs as jobs_module
 from qbank.errors import SchemaValidationError, TransitionError
 from qbank.jobs import create_generation_jobs, transition_job
 from qbank.jsonio import read_json, write_json_atomic
+from qbank.manifests import ManifestDocument
 from qbank.schema import validate_instance
 
 
@@ -20,25 +22,33 @@ def valid_manifest():
     return copy.deepcopy(read_json(VALID_MANIFEST))
 
 
+def manifest_document(value, relative_path="manifests/synthetic.json"):
+    return ManifestDocument(relative_path=relative_path, value=value)
+
+
 @pytest.fixture(autouse=True)
-def fixed_clock(monkeypatch):
+def project_schema_and_fixed_clock(tmp_path, monkeypatch):
     monkeypatch.setattr(jobs_module, "_utc_now", lambda: NOW)
+    schema = tmp_path / "schemas" / "manifest.schema.json"
+    schema.parent.mkdir(parents=True)
+    shutil.copyfile(REPO_ROOT / "schemas" / "manifest.schema.json", schema)
 
 
 @pytest.fixture
 def pending_job(tmp_path, valid_manifest):
-    path = create_generation_jobs(tmp_path, [valid_manifest])[0]
+    path = create_generation_jobs(tmp_path, [manifest_document(valid_manifest)])[0]
     return read_json(path)
 
 
 def test_generation_jobs_use_stable_paths_and_schema_shaped_content(
     tmp_path, valid_manifest
 ):
-    [path] = create_generation_jobs(tmp_path, [valid_manifest])
+    [path] = create_generation_jobs(tmp_path, [manifest_document(valid_manifest)])
     value = read_json(path)
 
     assert path == tmp_path / "jobs/pending/JOB-GEN-SYN-BATCH-001.json"
     assert value["job_id"] == "JOB-GEN-SYN-BATCH-001"
+    assert value["inputs"]["manifest_path"] == "manifests/synthetic.json"
     assert value["question_ids"] == valid_manifest["batches"][0]["question_ids"]
     assert value["attempt"] == 0
     assert value["max_attempts"] == 3
@@ -47,10 +57,11 @@ def test_generation_jobs_use_stable_paths_and_schema_shaped_content(
 
 
 def test_generation_jobs_are_deterministic(tmp_path, valid_manifest):
-    first = create_generation_jobs(tmp_path, [valid_manifest])
+    documents = [manifest_document(valid_manifest)]
+    first = create_generation_jobs(tmp_path, documents)
     first_bytes = [path.read_bytes() for path in first]
 
-    second = create_generation_jobs(tmp_path, [valid_manifest])
+    second = create_generation_jobs(tmp_path, documents)
 
     assert second == first
     assert [path.read_bytes() for path in second] == first_bytes
@@ -67,7 +78,7 @@ def test_generation_jobs_use_the_project_root_revision_limit(
         },
     )
 
-    [path] = create_generation_jobs(tmp_path, [valid_manifest])
+    [path] = create_generation_jobs(tmp_path, [manifest_document(valid_manifest)])
 
     assert read_json(path)["max_attempts"] == 5
 
@@ -84,7 +95,13 @@ def test_generation_job_order_is_independent_of_manifest_input_order(
         f"ALT-UNIT-{number:03d}" for number in range(1, 41)
     ]
 
-    paths = create_generation_jobs(tmp_path, [valid_manifest, other])
+    paths = create_generation_jobs(
+        tmp_path,
+        [
+            manifest_document(valid_manifest),
+            manifest_document(other, "manifests/alternative.json"),
+        ],
+    )
 
     assert [path.stem for path in paths] == [
         "JOB-GEN-ALT-BATCH-001",
@@ -95,13 +112,14 @@ def test_generation_job_order_is_independent_of_manifest_input_order(
 def test_existing_pending_job_with_different_content_is_a_conflict(
     tmp_path, valid_manifest
 ):
-    [path] = create_generation_jobs(tmp_path, [valid_manifest])
+    documents = [manifest_document(valid_manifest)]
+    [path] = create_generation_jobs(tmp_path, documents)
     changed = read_json(path)
     changed["artifacts"]["candidate"] = "candidates/conflicting.json"
     write_json_atomic(path, changed)
 
     with pytest.raises(TransitionError, match="different content"):
-        create_generation_jobs(tmp_path, [valid_manifest])
+        create_generation_jobs(tmp_path, documents)
 
 
 def test_failed_job_preserves_artifacts_and_increments_attempt(

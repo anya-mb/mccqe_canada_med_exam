@@ -74,7 +74,7 @@ def _json_files(directory: Path) -> list[Path]:
 
 def _manifests(root: Path) -> list[dict]:
     values = [_read_object(path, "manifest") for path in _json_files(root / "manifests")]
-    validate_manifest_set(values)
+    validate_manifest_set(root, values)
     return values
 
 

@@ -9,7 +9,6 @@ from .errors import SchemaValidationError
 from .schema import validate_instance
 
 
-_REPO_ROOT = Path(__file__).resolve().parents[2]
 _QUESTION_ID = re.compile(r"^(?P<prefix>.+-)(?P<number>[0-9]+)$")
 
 
@@ -21,6 +20,14 @@ class ManifestSummary:
     batch_count: int
     target_questions: int
     question_count: int
+
+
+@dataclass(frozen=True)
+class ManifestDocument:
+    """A validated manifest value paired with its repository-relative path."""
+
+    relative_path: str
+    value: dict
 
 
 def _fail(message: str) -> None:
@@ -88,13 +95,13 @@ def _validate_manifest_totals(manifest: dict) -> None:
         )
 
 
-def validate_manifest_set(manifests: list[dict]) -> ManifestSummary:
+def validate_manifest_set(root: Path, manifests: list[dict]) -> ManifestSummary:
     """Validate schemas, mappings, totals, allocation, and global identifiers."""
     if not isinstance(manifests, list):
         _fail("manifests must be a list")
 
     for manifest in manifests:
-        validate_instance(_REPO_ROOT, "manifest", manifest)
+        validate_instance(root, "manifest", manifest)
 
     manifest_ids: dict[str, str] = {}
     batch_ids: dict[str, str] = {}

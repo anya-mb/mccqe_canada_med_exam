@@ -22,7 +22,7 @@ from .errors import (
 from .export import build_production
 from .jobs import create_generation_jobs
 from .jsonio import read_json, write_json_atomic
-from .manifests import ManifestSummary, validate_manifest_set
+from .manifests import ManifestDocument, ManifestSummary, validate_manifest_set
 from .progress import write_progress
 from .schema import validate_instance
 from .source import scan_deploy_leaks, validate_source
@@ -84,15 +84,22 @@ def _display_path(root: Path, path: Path) -> str:
         return str(path)
 
 
-def _load_manifests(root: Path) -> tuple[list[dict], ManifestSummary]:
+def _load_manifests(root: Path) -> tuple[list[ManifestDocument], ManifestSummary]:
     directory = root / "manifests"
     paths = [] if not directory.exists() else sorted(directory.rglob("*.json"))
-    manifests = []
+    manifests: list[ManifestDocument] = []
     for path in paths:
         if path.is_symlink() or not path.is_file():
             raise SchemaValidationError(f"manifest must be a regular file: {path}")
-        manifests.append(_read_object(path, "manifest"))
-    return manifests, validate_manifest_set(manifests)
+        manifests.append(
+            ManifestDocument(
+                relative_path=path.relative_to(root).as_posix(),
+                value=_read_object(path, "manifest"),
+            )
+        )
+    return manifests, validate_manifest_set(
+        root, [document.value for document in manifests]
+    )
 
 
 def _validate_prompts(root: Path) -> None:

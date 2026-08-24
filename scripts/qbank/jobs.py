@@ -9,7 +9,7 @@ import re
 from .config import load_config
 from .errors import SchemaValidationError, TransitionError
 from .jsonio import read_json, write_json_atomic
-from .manifests import validate_manifest_set
+from .manifests import ManifestDocument, validate_manifest_set
 from .schema import validate_instance
 
 
@@ -39,7 +39,10 @@ def _max_attempts(root: Path) -> int:
     return maximum_revisions + 1
 
 
-def _generation_job(manifest: dict, batch: dict, max_attempts: int) -> dict:
+def _generation_job(
+    document: ManifestDocument, batch: dict, max_attempts: int
+) -> dict:
+    manifest = document.value
     batch_id = batch["batch_id"]
     return {
         "job_id": f"JOB-GEN-{batch_id}",
@@ -49,7 +52,7 @@ def _generation_job(manifest: dict, batch: dict, max_attempts: int) -> dict:
         "attempt": 0,
         "max_attempts": max_attempts,
         "inputs": {
-            "manifest_path": f"manifests/{manifest['manifest_id']}.json",
+            "manifest_path": document.relative_path,
             "toronto_notes_pages": batch["toronto_notes"]["tn_pages"],
             "mcc_objectives": list(batch["mcc_objectives"]),
             "prompt_template": "prompts/generate_batch.md",
@@ -72,17 +75,19 @@ def _existing_job_paths(root: Path, job_id: str) -> list[Path]:
     return [path for path in _job_paths(root, job_id) if path.exists()]
 
 
-def create_generation_jobs(root: Path, manifests: list[dict]) -> list[Path]:
+def create_generation_jobs(
+    root: Path, manifests: list[ManifestDocument]
+) -> list[Path]:
     """Create deterministic pending generation jobs, idempotently."""
     root = Path(root)
-    validate_manifest_set(manifests)
+    validate_manifest_set(root, [document.value for document in manifests])
     max_attempts = _max_attempts(root)
 
     expected_jobs = sorted(
         (
-            _generation_job(manifest, batch, max_attempts)
-            for manifest in manifests
-            for batch in manifest["batches"]
+            _generation_job(document, batch, max_attempts)
+            for document in manifests
+            for batch in document.value["batches"]
         ),
         key=lambda job: job["job_id"],
     )

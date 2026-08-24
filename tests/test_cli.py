@@ -151,7 +151,17 @@ def test_six_valid_manifests_create_one_job_per_batch(project_copy):
 
     assert result.returncode == 0, result.stderr
     assert result.stdout == "JOBS_CREATED: 6\n"
-    assert len(list((project_copy / "jobs" / "pending").glob("*.json"))) == 6
+    jobs = [
+        read_json(path)
+        for path in (project_copy / "jobs" / "pending").glob("*.json")
+    ]
+    assert len(jobs) == 6
+    assert {job["inputs"]["manifest_path"] for job in jobs} == {
+        f"manifests/s{index}.json" for index in range(1, 7)
+    }
+    assert all(
+        (project_copy / job["inputs"]["manifest_path"]).is_file() for job in jobs
+    )
 
 
 @pytest.mark.parametrize("command", COMMANDS)
