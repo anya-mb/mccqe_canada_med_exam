@@ -76,7 +76,7 @@ def _organization_slug(organization: str) -> str:
 def _stable_id(record: dict) -> str:
     encoded_identity = json.dumps(_identity(record), separators=(",", ":"), ensure_ascii=True)
     digest = hashlib.sha256(encoded_identity.encode("utf-8")).hexdigest()[:12].upper()
-    return f"REF-{_organization_slug(record['organization'])}-{digest}"
+    return f"REF-{_organization_slug(_identity(record)[0])}-{digest}"
 
 
 def _normalize_supports(value: object) -> list[dict[str, str]]:

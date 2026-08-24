@@ -41,6 +41,28 @@ def test_same_canonical_guideline_reuses_stable_id(empty_registry, reference):
     assert merged["references"][0]["url"] == "https://example.invalid/synthetic-standard"
 
 
+def test_unicode_casefold_equivalent_organizations_allocate_the_same_stable_id(
+    empty_registry, reference
+):
+    unicode_organization = {
+        **reference,
+        "reference_id": "TEMP-UNICODE",
+        "organization": "Straße Health",
+    }
+    casefold_equivalent_organization = {
+        **reference,
+        "reference_id": "TEMP-CASEFOLD",
+        "organization": "STRASSE HEALTH",
+    }
+
+    _, unicode_mapping = merge_references(empty_registry, [unicode_organization])
+    _, casefold_mapping = merge_references(
+        empty_registry, [casefold_equivalent_organization]
+    )
+
+    assert unicode_mapping["TEMP-UNICODE"] == casefold_mapping["TEMP-CASEFOLD"]
+
+
 def test_claim_supports_merge_only_for_exact_normalized_pairs(empty_registry, reference):
     first, _ = merge_references(empty_registry, [reference])
     duplicate = {

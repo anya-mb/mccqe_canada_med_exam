@@ -49,7 +49,51 @@ def test_numerical_threshold_requires_a_threshold_marker(valid_question):
 @pytest.mark.parametrize(
     "text",
     [
+        "Start therapy when BP is ≥140/90 mm Hg.",
+        "Investigate a creatinine value > 150 micromol/L.",
+        "Use an age cutoff of 65 years to determine eligibility.",
+    ],
+)
+def test_numerical_threshold_detects_decision_comparisons(valid_question, text):
+    valid_question["question"]["stem"] = text
+
+    assert "NUMERICAL_THRESHOLD" in classify_risk(valid_question)
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "The patient's blood pressure is 140/90 mm Hg at triage.",
+        "The patient is 65 years old.",
+    ],
+)
+def test_ordinary_numbers_without_a_decision_threshold_are_not_flagged(
+    valid_question, text
+):
+    valid_question["question"]["stem"] = text
+
+    assert "NUMERICAL_THRESHOLD" not in classify_risk(valid_question)
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "Public health must be notified immediately.",
+        "Notify the medical officer of health immediately.",
+        "This condition must be reported to public health.",
+    ],
+)
+def test_public_health_reporting_detects_both_reporting_word_orders(valid_question, text):
+    valid_question["question"]["stem"] = text
+
+    assert "PUBLIC_HEALTH_REPORTING" in classify_risk(valid_question)
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
         "Public health programs improve population outcomes.",
+        "The medical officer of health led a training session.",
         "The legal team reviewed the hospital contract.",
         "The emergency department is busy today.",
     ],

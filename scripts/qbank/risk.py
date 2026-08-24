@@ -40,7 +40,7 @@ _STRUCTURED_FIELD_FLAGS = {
 
 _TEXT_PATTERNS = {
     "NUMERICAL_THRESHOLD": re.compile(
-        r"(?:\b(?:threshold|cut[- ]?off|upper limit|lower limit|target)\b[^.]{0,40}?\b\d+(?:\.\d+)?\b|\b\d+(?:\.\d+)?\b[^.]{0,40}?\b(?:threshold|cut[- ]?off|upper limit|lower limit|target)\b|\b(?:at least|at most|no more than|not more than|greater than|less than|equal to)\s+\d+(?:\.\d+)?)",
+        r"(?:\b(?:threshold|cut[- ]?off|upper limit|lower limit|target)\b[^.]{0,40}?\b\d+(?:\.\d+)?\b|\b\d+(?:\.\d+)?\b[^.]{0,40}?\b(?:threshold|cut[- ]?off|upper limit|lower limit|target)\b|\b(?:at least|at most|no more than|not more than|greater than|less than|equal to)\s+\d+(?:\.\d+)?|(?:≥|≤|>=|<=|>|<|=)\s*\d+(?:\.\d+)?|\b(?:age|aged)\s*(?:≥|≤|>=|<=|>|<|=)\s*\d+(?:\.\d+)?)",
         re.IGNORECASE,
     ),
     "DOSE": re.compile(
@@ -72,7 +72,7 @@ _TEXT_PATTERNS = {
         re.IGNORECASE,
     ),
     "PUBLIC_HEALTH_REPORTING": re.compile(
-        r"\b(?:report(?:ed|ing)?|notify|notification|notifi(?:able|cation)|mandatory report(?:ing)?)\b[^.]{0,50}\b(?:to\s+)?public health\b|\b(?:notifiable|reportable) disease\b",
+        r"\b(?:report(?:ed|ing)?|notify|notified|notification|notifi(?:able|cation)|mandatory report(?:ing)?)\b[^.]{0,50}\b(?:to\s+)?(?:public health|medical officer of health)\b|\b(?:public health|medical officer of health)\b[^.]{0,50}\b(?:report(?:ed|ing)?|notify|notified|notification|notifi(?:able|cation)|mandatory report(?:ing)?)\b|\b(?:notifiable|reportable) disease\b",
         re.IGNORECASE,
     ),
     "EMERGENCY_TREATMENT": re.compile(
