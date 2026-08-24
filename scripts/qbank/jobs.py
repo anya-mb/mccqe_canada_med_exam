@@ -1,7 +1,9 @@
 """Deterministic durable job creation and queue state transitions."""
 
 from copy import deepcopy
+from contextlib import contextmanager
 from datetime import datetime, timezone
+import fcntl
 import os
 from pathlib import Path
 import re
@@ -10,10 +12,10 @@ from .config import load_config
 from .errors import SchemaValidationError, TransitionError
 from .jsonio import read_json, write_json_atomic
 from .manifests import ManifestDocument, validate_manifest_set
+from .paths import RootPathError, canonical_root, resolve_root_path
 from .schema import validate_instance
 
 
-_REPO_ROOT = Path(__file__).resolve().parents[2]
 _QUEUE_STATES = ("pending", "running", "completed", "failed")
 _JOB_ID = re.compile(r"^[A-Z0-9]+(?:-[A-Z0-9]+)+$")
 _TRANSITIONS = {
@@ -29,8 +31,7 @@ def _utc_now() -> str:
 
 
 def _max_attempts(root: Path) -> int:
-    config_root = root if (root / "config" / "project.json").is_file() else _REPO_ROOT
-    config = load_config(config_root)
+    config = load_config(root)
     maximum_revisions = config.get("limits", {}).get("maximum_revisions")
     if not isinstance(maximum_revisions, int) or isinstance(maximum_revisions, bool):
         raise SchemaValidationError(
@@ -68,7 +69,17 @@ def _generation_job(
 
 
 def _job_paths(root: Path, job_id: str) -> list[Path]:
-    return [root / "jobs" / state / f"{job_id}.json" for state in _QUEUE_STATES]
+    try:
+        return [
+            resolve_root_path(
+                root,
+                Path("jobs") / state / f"{job_id}.json",
+                label="job queue path",
+            )
+            for state in _QUEUE_STATES
+        ]
+    except RootPathError as exc:
+        raise TransitionError(str(exc)) from exc
 
 
 def _existing_job_paths(root: Path, job_id: str) -> list[Path]:
@@ -79,7 +90,10 @@ def create_generation_jobs(
     root: Path, manifests: list[ManifestDocument]
 ) -> list[Path]:
     """Create deterministic pending generation jobs, idempotently."""
-    root = Path(root)
+    try:
+        root = canonical_root(root)
+    except RootPathError as exc:
+        raise TransitionError(str(exc)) from exc
     validate_manifest_set(root, [document.value for document in manifests])
     max_attempts = _max_attempts(root)
 
@@ -94,8 +108,8 @@ def create_generation_jobs(
 
     planned: list[tuple[Path, dict, bool]] = []
     for job in expected_jobs:
-        validate_instance(_REPO_ROOT, "job", job)
-        pending_path = root / "jobs" / "pending" / f"{job['job_id']}.json"
+        validate_instance(root, "job", job)
+        pending_path = _job_paths(root, job["job_id"])[0]
         existing = _existing_job_paths(root, job["job_id"])
         if len(existing) > 1:
             raise TransitionError(
@@ -104,7 +118,7 @@ def create_generation_jobs(
         if existing:
             existing_path = existing[0]
             existing_value = read_json(existing_path)
-            validate_instance(_REPO_ROOT, "job", existing_value)
+            validate_instance(root, "job", existing_value)
             if existing_path != pending_path:
                 raise TransitionError(
                     f"job {job['job_id']!r} already exists in "
@@ -130,9 +144,43 @@ def _normalize_target(target: str) -> str:
     return target.lower()
 
 
-def _load_source_job(root: Path, job_id: str) -> tuple[Path, dict, str]:
+def _validate_job_id(job_id: object) -> str:
     if not isinstance(job_id, str) or _JOB_ID.fullmatch(job_id) is None:
         raise TransitionError(f"invalid job ID: {job_id!r}")
+    return job_id
+
+
+@contextmanager
+def _job_lock(root: Path, job_id: str):
+    """Claim one job non-blockingly for the complete read/transition/move."""
+    try:
+        lock_path = resolve_root_path(
+            root,
+            Path("jobs") / ".locks" / f"{job_id}.lock",
+            label="job lock path",
+        )
+    except RootPathError as exc:
+        raise TransitionError(str(exc)) from exc
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        descriptor = os.open(lock_path, os.O_CREAT | os.O_RDWR, 0o600)
+    except OSError as exc:
+        raise TransitionError(f"unable to open job lock: {lock_path}") from exc
+    with os.fdopen(descriptor, "a+") as lock_file:
+        try:
+            fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError as exc:
+            raise TransitionError(f"job {job_id!r} transition already in progress") from exc
+        except OSError as exc:
+            raise TransitionError(f"unable to claim job {job_id!r}") from exc
+        try:
+            yield
+        finally:
+            fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
+
+
+def _load_source_job(root: Path, job_id: str) -> tuple[Path, dict, str]:
+    _validate_job_id(job_id)
     existing = _existing_job_paths(root, job_id)
     if not existing:
         raise TransitionError(f"job not found: {job_id!r}")
@@ -142,7 +190,7 @@ def _load_source_job(root: Path, job_id: str) -> tuple[Path, dict, str]:
     source = existing[0]
     source_state = source.parent.name
     value = read_json(source)
-    validate_instance(_REPO_ROOT, "job", value)
+    validate_instance(root, "job", value)
     if not isinstance(value, dict):
         raise SchemaValidationError(f"job {job_id!r} must be a JSON object")
     if value["job_id"] != job_id:
@@ -197,29 +245,38 @@ def _transitioned_value(
             "completed_at": now if target == "completed" else None,
         }
 
-    validate_instance(_REPO_ROOT, "job", transitioned)
     return transitioned
+
+
+def _validate_transitioned_value(root: Path, transitioned: dict) -> None:
+    validate_instance(root, "job", transitioned)
 
 
 def transition_job(
     root: Path, job_id: str, target: str, failure: dict | None = None
 ) -> Path:
     """Validate, atomically update, and move one job between queue states."""
-    root = Path(root)
-    target = _normalize_target(target)
-    source, value, source_state = _load_source_job(root, job_id)
-    transitioned = _transitioned_value(value, source_state, target, failure)
-    destination = root / "jobs" / target / f"{job_id}.json"
-    if destination.exists():
-        raise TransitionError(f"destination job already exists: {destination}")
-    destination.parent.mkdir(parents=True, exist_ok=True)
-
-    write_json_atomic(source, transitioned)
     try:
-        os.replace(source, destination)
-    except OSError as exc:
-        write_json_atomic(source, value)
-        raise TransitionError(
-            f"unable to move job {job_id!r} from {source_state} to {target}: {exc}"
-        ) from exc
-    return destination
+        root = canonical_root(root)
+    except RootPathError as exc:
+        raise TransitionError(str(exc)) from exc
+    job_id = _validate_job_id(job_id)
+    target = _normalize_target(target)
+    with _job_lock(root, job_id):
+        source, value, source_state = _load_source_job(root, job_id)
+        transitioned = _transitioned_value(value, source_state, target, failure)
+        _validate_transitioned_value(root, transitioned)
+        destination = _job_paths(root, job_id)[_QUEUE_STATES.index(target)]
+        if destination.exists():
+            raise TransitionError(f"destination job already exists: {destination}")
+        destination.parent.mkdir(parents=True, exist_ok=True)
+
+        write_json_atomic(source, transitioned)
+        try:
+            os.replace(source, destination)
+        except OSError as exc:
+            write_json_atomic(source, value)
+            raise TransitionError(
+                f"unable to move job {job_id!r} from {source_state} to {target}: {exc}"
+            ) from exc
+        return destination

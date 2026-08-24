@@ -2,8 +2,9 @@
 
 from pathlib import Path
 
-from .errors import ConfigError
+from .errors import ConfigError, QbankError
 from .jsonio import read_json
+from .paths import RootPathError, resolve_root_path
 
 _RESEARCH_MODES = {"CODEX_NATIVE", "MANUAL_RESEARCH", "API_AUTOMATED"}
 
@@ -20,12 +21,18 @@ def _merge(base: dict, override: dict) -> dict:
 
 def load_config(root: Path) -> dict:
     """Load committed project config and recursively apply its local override."""
-    root = Path(root)
-    committed_path = root / "config" / "project.json"
-    local_path = root / "config" / "project.local.json"
+    try:
+        committed_path = resolve_root_path(
+            root, "config/project.json", label="project configuration"
+        )
+        local_path = resolve_root_path(
+            root, "config/project.local.json", label="local project configuration"
+        )
+    except RootPathError as exc:
+        raise ConfigError(str(exc)) from exc
     try:
         config = read_json(committed_path)
-    except (OSError, ValueError, TypeError) as exc:
+    except (OSError, QbankError, TypeError) as exc:
         raise ConfigError(f"unable to read project configuration: {committed_path}") from exc
     if not isinstance(config, dict):
         raise ConfigError("project configuration must be a JSON object")
@@ -33,7 +40,7 @@ def load_config(root: Path) -> dict:
     if local_path.is_file():
         try:
             local = read_json(local_path)
-        except (OSError, ValueError, TypeError) as exc:
+        except (OSError, QbankError, TypeError) as exc:
             raise ConfigError(f"unable to read local configuration: {local_path}") from exc
         if not isinstance(local, dict):
             raise ConfigError("local project configuration must be a JSON object")

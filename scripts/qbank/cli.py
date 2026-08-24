@@ -23,6 +23,7 @@ from .export import build_production
 from .jobs import create_generation_jobs
 from .jsonio import read_json, write_json_atomic
 from .manifests import ManifestDocument, ManifestSummary, validate_manifest_set
+from .paths import RootPathError, canonical_root, resolve_root_path
 from .progress import write_progress
 from .schema import validate_instance
 from .source import scan_deploy_leaks, validate_source
@@ -46,13 +47,23 @@ _SCHEMA_FIXTURES = (
     ("reference", "reference.json"),
     ("reference-registry", "reference-registry.json"),
     ("question", "question.json"),
+    ("public-question", "public-question.json"),
     ("blind-packet", "blind-packet.json"),
     ("blind-verification", "blind-verification.json"),
     ("rationale-verification", "rationale-verification.json"),
     ("progress", "progress.json"),
     ("production-manifest", "production-manifest.json"),
 )
-_EXPECTED_MANIFESTS = 6
+_EXPECTED_DISCIPLINES = frozenset(
+    {
+        ("Medicine", "MED"),
+        ("Obstetrics & Gynecology", "OBGYN"),
+        ("Pediatrics", "PED"),
+        ("PHELO", "PHELO"),
+        ("Psychiatry", "PSY"),
+        ("Surgery", "SURG"),
+    }
+)
 
 
 class CommandError(QbankError):
@@ -73,8 +84,12 @@ def _read_object(path: Path, kind: str) -> dict:
     return value
 
 
-def _resolve_input(root: Path, value: Path) -> Path:
-    return value if value.is_absolute() else root / value
+def _resolve_input(root: Path, value: Path, *, label: str) -> Path:
+    return resolve_root_path(root, value, label=label)
+
+
+def _selected_root(args: argparse.Namespace) -> Path:
+    return canonical_root(args.root)
 
 
 def _display_path(root: Path, path: Path) -> str:
@@ -85,11 +100,14 @@ def _display_path(root: Path, path: Path) -> str:
 
 
 def _load_manifests(root: Path) -> tuple[list[ManifestDocument], ManifestSummary]:
-    directory = root / "manifests"
+    directory = resolve_root_path(root, "manifests", label="manifest root")
     paths = [] if not directory.exists() else sorted(directory.rglob("*.json"))
     manifests: list[ManifestDocument] = []
-    for path in paths:
-        if path.is_symlink() or not path.is_file():
+    for discovered in paths:
+        path = resolve_root_path(
+            root, discovered.relative_to(root), label="manifest file"
+        )
+        if not path.is_file():
             raise SchemaValidationError(f"manifest must be a regular file: {path}")
         manifests.append(
             ManifestDocument(
@@ -102,9 +120,35 @@ def _load_manifests(root: Path) -> tuple[list[ManifestDocument], ManifestSummary
     )
 
 
+def _has_expected_disciplines(manifests: list[ManifestDocument]) -> bool:
+    identities = [
+        (document.value["discipline"], document.value["discipline_code"])
+        for document in manifests
+    ]
+    return len(identities) == len(_EXPECTED_DISCIPLINES) and set(identities) == set(
+        _EXPECTED_DISCIPLINES
+    )
+
+
+def _require_expected_disciplines(manifests: list[ManifestDocument]) -> None:
+    if _has_expected_disciplines(manifests):
+        return
+    found = sorted(
+        (document.value["discipline"], document.value["discipline_code"])
+        for document in manifests
+    )
+    raise SchemaValidationError(
+        "generation requires six manifests with each expected discipline "
+        "identity exactly once; "
+        f"expected={sorted(_EXPECTED_DISCIPLINES)!r}, found={found!r}"
+    )
+
+
 def _validate_prompts(root: Path) -> None:
     for name in _PROMPTS:
-        path = root / "prompts" / name
+        path = resolve_root_path(
+            root, Path("prompts") / name, label="required prompt"
+        )
         if path.is_symlink() or not path.is_file():
             raise CommandError("PROMPT_FAILURE", f"required prompt is missing: {name}")
         try:
@@ -116,10 +160,17 @@ def _validate_prompts(root: Path) -> None:
 
 
 def _validate_schema_catalog(root: Path) -> None:
-    fixture_root = root / "tests" / "fixtures" / "valid"
     for schema_name, fixture_name in _SCHEMA_FIXTURES:
-        schema_path = root / "schemas" / f"{schema_name}.schema.json"
-        fixture_path = fixture_root / fixture_name
+        schema_path = resolve_root_path(
+            root,
+            Path("schemas") / f"{schema_name}.schema.json",
+            label="schema catalog entry",
+        )
+        fixture_path = resolve_root_path(
+            root,
+            Path("tests/fixtures/valid") / fixture_name,
+            label="schema fixture",
+        )
         if schema_path.is_symlink() or not schema_path.is_file():
             raise SchemaValidationError(f"schema not found: {schema_path}")
         if fixture_path.is_symlink() or not fixture_path.is_file():
@@ -178,13 +229,13 @@ def _validated_config(root: Path) -> dict:
 
 
 def _command_validate_project(args: argparse.Namespace) -> None:
-    root = args.root.resolve()
+    root = _selected_root(args)
     config = _validated_config(root)
     _validate_prompts(root)
     _validate_schema_catalog(root)
     _validate_deploy_exclusion(root)
     report = validate_source(_source_repository_root(root, config), config)
-    _, summary = _load_manifests(root)
+    manifests, summary = _load_manifests(root)
 
     lines = [
         "CONFIG_VALID",
@@ -193,19 +244,19 @@ def _command_validate_project(args: argparse.Namespace) -> None:
         "DEPLOY_EXCLUSION_VALID",
         f"SOURCE_VALID: {report.pages} pages",
     ]
-    if summary.manifest_count == _EXPECTED_MANIFESTS:
+    if _has_expected_disciplines(manifests):
         lines.append("GENERATION_READY: six valid manifests")
     else:
         lines.append(
-            "GENERATION_BLOCKED: exactly six valid manifests are required; "
-            f"found {summary.manifest_count}"
+            "GENERATION_BLOCKED: each expected discipline identity is required "
+            f"exactly once; found {summary.manifest_count} manifests"
         )
     lines.append("PROJECT_VALID")
     print("\n".join(lines))
 
 
 def _command_validate_source(args: argparse.Namespace) -> None:
-    root = args.root.resolve()
+    root = _selected_root(args)
     config = _validated_config(root)
     _validate_deploy_exclusion(root)
     report = validate_source(_source_repository_root(root, config), config)
@@ -213,7 +264,7 @@ def _command_validate_source(args: argparse.Namespace) -> None:
 
 
 def _command_validate_manifests(args: argparse.Namespace) -> None:
-    _, summary = _load_manifests(args.root.resolve())
+    _, summary = _load_manifests(_selected_root(args))
     print(
         f"MANIFESTS_VALID: {summary.manifest_count} manifests, "
         f"{summary.batch_count} batches, {summary.question_count} questions"
@@ -221,47 +272,54 @@ def _command_validate_manifests(args: argparse.Namespace) -> None:
 
 
 def _command_create_jobs(args: argparse.Namespace) -> None:
-    root = args.root.resolve()
+    root = _selected_root(args)
     manifests, summary = _load_manifests(root)
-    if summary.manifest_count != _EXPECTED_MANIFESTS:
-        raise SchemaValidationError(
-            "create-jobs requires exactly six manifests; "
-            f"found {summary.manifest_count}"
-        )
+    _require_expected_disciplines(manifests)
     paths = create_generation_jobs(root, manifests)
     print(f"JOBS_CREATED: {len(paths)}")
 
 
 def _command_create_blind(args: argparse.Namespace) -> None:
-    root = args.root.resolve()
-    candidate_path = _resolve_input(root, args.candidate)
+    root = _selected_root(args)
+    candidate_path = _resolve_input(root, args.candidate, label="candidate input")
     candidate = _read_object(candidate_path, "candidate")
     validate_instance(root, "question", candidate)
-    packet = build_blind_packet(candidate)
+    packet = build_blind_packet(candidate, root=root)
     validate_instance(root, "blind-packet", packet)
     output = (
-        _resolve_input(root, args.output)
+        _resolve_input(root, args.output, label="blind packet output")
         if args.output is not None
-        else root / "blind" / f"{candidate['id']}.json"
+        else resolve_root_path(
+            root,
+            Path("blind") / f"{candidate['id']}.json",
+            label="blind packet output",
+        )
     )
     write_json_atomic(output, packet)
     print(f"BLIND_PACKET_CREATED: {_display_path(root, output)}")
 
 
 def _command_evaluate_blind(args: argparse.Namespace) -> None:
-    root = args.root.resolve()
-    candidate = _read_object(_resolve_input(root, args.candidate), "candidate")
-    result = _read_object(_resolve_input(root, args.result), "blind verification")
+    root = _selected_root(args)
+    candidate = _read_object(
+        _resolve_input(root, args.candidate, label="candidate input"), "candidate"
+    )
+    result = _read_object(
+        _resolve_input(root, args.result, label="blind verification input"),
+        "blind verification",
+    )
     validate_instance(root, "question", candidate)
     validate_instance(root, "blind-verification", result)
     config = _validated_config(root)
     threshold = config["blind_verification"]["minimum_confidence"]
-    decision = evaluate_blind_result(candidate, result, threshold=threshold)
+    decision = evaluate_blind_result(
+        candidate, result, threshold=threshold, root=root
+    )
     print(f"BLIND_DECISION: {decision.status} {decision.reason}")
 
 
 def _command_progress(args: argparse.Namespace) -> None:
-    root = args.root.resolve()
+    root = _selected_root(args)
     json_path, markdown_path = write_progress(root)
     print(
         "PROGRESS_WRITTEN: "
@@ -271,7 +329,7 @@ def _command_progress(args: argparse.Namespace) -> None:
 
 def _command_export(args: argparse.Namespace) -> None:
     result = build_production(
-        args.root.resolve(), args.version, datetime.now(timezone.utc)
+        _selected_root(args), args.version, datetime.now(timezone.utc)
     )
     print(
         f"EXPORT_COMPLETE: {len(result['questions'])} questions, "
@@ -353,6 +411,8 @@ def _failure_class(error: QbankError) -> str:
         return "EXPORT_FAILURE"
     if isinstance(error, TransitionError):
         return "TRANSITION_FAILURE"
+    if isinstance(error, RootPathError):
+        return "SCHEMA_FAILURE"
     return "QBANK_FAILURE"
 
 

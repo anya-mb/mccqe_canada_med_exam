@@ -5,6 +5,7 @@ import shutil
 
 import pytest
 
+import qbank.progress as progress_module
 from qbank.errors import SchemaValidationError
 from qbank.jsonio import read_json, write_json_atomic
 from qbank.progress import build_progress, write_progress
@@ -13,6 +14,11 @@ from qbank.progress import build_progress, write_progress
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = REPO_ROOT / "tests" / "fixtures" / "valid"
 FIXED_NOW = datetime(2026, 8, 24, 12, 30, tzinfo=timezone.utc)
+
+
+@pytest.fixture(autouse=True)
+def selected_root_schemas(tmp_path):
+    shutil.copytree(REPO_ROOT / "schemas", tmp_path / "schemas", dirs_exist_ok=True)
 
 
 def _question(identifier: str, status: str) -> dict:
@@ -24,9 +30,11 @@ def _question(identifier: str, status: str) -> dict:
         "QA_PASS": "QA_PASS",
         "QUARANTINE": "QUARANTINE",
         "HUMAN_REVIEWED": "HUMAN_REVIEWED",
+        "PUBLISHED": "PUBLISHED",
+        "RETIRED": "RETIRED",
     }[status]
     question["verification"]["final_status"] = final_status
-    if status in {"QA_PASS", "HUMAN_REVIEWED"}:
+    if status in {"QA_PASS", "HUMAN_REVIEWED", "PUBLISHED", "RETIRED"}:
         question["verification"].update(
             blind_verifier_answer="A",
             blind_verifier_confidence=0.95,
@@ -36,6 +44,13 @@ def _question(identifier: str, status: str) -> dict:
             guideline_check=True,
             duplicate_check=True,
         )
+    if status == "HUMAN_REVIEWED":
+        question["human_review"] = {
+            "reviewer_name": "Synthetic Reviewer",
+            "credentials": "Synthetic Credential",
+            "reviewed_at": "2026-08-24T11:00:00Z",
+            "scope": "Full synthetic item review",
+        }
     return question
 
 
@@ -176,6 +191,24 @@ def test_progress_rejects_qa_pass_question_under_candidates(tmp_path):
         build_progress(tmp_path, now=FIXED_NOW)
 
 
+def test_retired_question_has_a_persistable_directory_and_verification_contract(
+    tmp_path,
+):
+    """Catches retirement discarding the item's completed verification history."""
+    _populate(tmp_path)
+    write_json_atomic(
+        tmp_path / "retired" / "SYN-UNIT-004.json",
+        _question("SYN-UNIT-004", "RETIRED"),
+    )
+
+    report = build_progress(tmp_path, now=FIXED_NOW)
+
+    assert report["generated"] == 4
+    assert report["blind_passed"] == 2
+    assert report["qa_passed"] == 2
+    assert report["coverage_gaps"] == ["Synthetic Chapter: 39 questions remain"]
+
+
 def test_progress_rejects_status_that_disagrees_with_verification_final_status(
     tmp_path,
 ):
@@ -188,3 +221,65 @@ def test_progress_rejects_status_that_disagrees_with_verification_final_status(
 
     with pytest.raises(SchemaValidationError, match="final_status.*QA_PASS"):
         build_progress(tmp_path, now=FIXED_NOW)
+
+
+def test_progress_rejects_relabelled_candidate_as_qa_coverage(tmp_path):
+    """Catches coverage counts based only on spoofed status labels."""
+    _populate(tmp_path)
+    relabelled = read_json(
+        REPO_ROOT / "tests/fixtures/adversarial/relabeled-candidate.json"
+    )
+    write_json_atomic(tmp_path / "verified/relabelled.json", relabelled)
+
+    with pytest.raises(SchemaValidationError, match="publication eligibility"):
+        build_progress(tmp_path, now=FIXED_NOW)
+
+
+def test_progress_uses_selected_root_question_schema(tmp_path):
+    """Catches lifecycle validation against module-relative question schemas."""
+    _populate(tmp_path)
+    schema_path = tmp_path / "schemas/question.schema.json"
+    schema = read_json(schema_path)
+    schema["required"].append("selected_root_marker")
+    write_json_atomic(schema_path, schema)
+
+    with pytest.raises(SchemaValidationError, match="selected_root_marker"):
+        build_progress(tmp_path, now=FIXED_NOW)
+
+
+def test_markdown_failure_leaves_canonical_progress_json_unchanged(
+    tmp_path, monkeypatch
+):
+    """Catches half-written report pairs with a newer canonical JSON snapshot."""
+    _populate(tmp_path)
+    json_path = tmp_path / "reports/progress.json"
+    write_json_atomic(json_path, {"sentinel": "old canonical report"})
+
+    def fail_markdown(*_args, **_kwargs):
+        raise OSError("synthetic markdown failure")
+
+    monkeypatch.setattr(progress_module, "_write_text_atomic", fail_markdown)
+
+    with pytest.raises(OSError, match="markdown failure"):
+        write_progress(tmp_path, now=FIXED_NOW)
+
+    assert read_json(json_path) == {"sentinel": "old canonical report"}
+
+
+def test_progress_rejects_symlinked_report_ancestor_without_external_write(tmp_path):
+    """Catches reports/ redirecting canonical progress writes externally."""
+    _populate(tmp_path)
+    reports = tmp_path / "reports"
+    if reports.exists():
+        shutil.rmtree(reports)
+    external = tmp_path.parent / f"{tmp_path.name}-external-reports"
+    external.mkdir()
+    marker = external / "marker.txt"
+    marker.write_text("external unchanged", encoding="utf-8")
+    reports.symlink_to(external, target_is_directory=True)
+
+    with pytest.raises(SchemaValidationError, match="symlink"):
+        write_progress(tmp_path, now=FIXED_NOW)
+
+    assert marker.read_text(encoding="utf-8") == "external unchanged"
+    assert not (external / "progress.json").exists()

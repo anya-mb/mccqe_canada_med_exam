@@ -1,11 +1,13 @@
 import copy
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 import shutil
+from threading import Barrier
 
 import pytest
 
 import qbank.jobs as jobs_module
-from qbank.errors import SchemaValidationError, TransitionError
+from qbank.errors import ConfigError, SchemaValidationError, TransitionError
 from qbank.jobs import create_generation_jobs, transition_job
 from qbank.jsonio import read_json, write_json_atomic
 from qbank.manifests import ManifestDocument
@@ -29,9 +31,13 @@ def manifest_document(value, relative_path="manifests/synthetic.json"):
 @pytest.fixture(autouse=True)
 def project_schema_and_fixed_clock(tmp_path, monkeypatch):
     monkeypatch.setattr(jobs_module, "_utc_now", lambda: NOW)
-    schema = tmp_path / "schemas" / "manifest.schema.json"
-    schema.parent.mkdir(parents=True)
-    shutil.copyfile(REPO_ROOT / "schemas" / "manifest.schema.json", schema)
+    for name in ("manifest", "job"):
+        schema = tmp_path / "schemas" / f"{name}.schema.json"
+        schema.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(REPO_ROOT / "schemas" / f"{name}.schema.json", schema)
+    config = tmp_path / "config/project.json"
+    config.parent.mkdir(parents=True)
+    shutil.copyfile(REPO_ROOT / "config/project.json", config)
 
 
 @pytest.fixture
@@ -81,6 +87,27 @@ def test_generation_jobs_use_the_project_root_revision_limit(
     [path] = create_generation_jobs(tmp_path, [manifest_document(valid_manifest)])
 
     assert read_json(path)["max_attempts"] == 5
+
+
+def test_generation_jobs_fail_when_selected_root_config_is_missing(
+    tmp_path, valid_manifest
+):
+    """Catches fallback to the package repository's revision limit."""
+    (tmp_path / "config/project.json").unlink()
+
+    with pytest.raises(ConfigError, match="project configuration"):
+        create_generation_jobs(tmp_path, [manifest_document(valid_manifest)])
+
+
+def test_generation_jobs_use_selected_root_job_schema(tmp_path, valid_manifest):
+    """Catches generated-job validation against a module-relative schema."""
+    schema_path = tmp_path / "schemas/job.schema.json"
+    schema = read_json(schema_path)
+    schema["required"].append("selected_root_marker")
+    write_json_atomic(schema_path, schema)
+
+    with pytest.raises(SchemaValidationError, match="selected_root_marker"):
+        create_generation_jobs(tmp_path, [manifest_document(valid_manifest)])
 
 
 def test_generation_job_order_is_independent_of_manifest_input_order(
@@ -244,3 +271,59 @@ def test_invalid_job_transitions_leave_source_unchanged(
         transition_job(tmp_path, pending_job["job_id"], target, failure)
 
     assert source.read_bytes() == before
+
+
+def test_concurrent_job_transitions_have_exactly_one_winner(
+    tmp_path, pending_job, monkeypatch
+):
+    """Catches two workers reading one PENDING job and committing different states."""
+    barrier = Barrier(2)
+    real_job_lock = jobs_module._job_lock
+
+    def synchronized_job_lock(root, job_id):
+        barrier.wait(timeout=5)
+        return real_job_lock(root, job_id)
+
+    monkeypatch.setattr(jobs_module, "_job_lock", synchronized_job_lock)
+
+    def run(target):
+        failure = (
+            {"class": "TECHNICAL_FAILURE", "message": "synthetic contender"}
+            if target == "failed"
+            else None
+        )
+        try:
+            return transition_job(tmp_path, pending_job["job_id"], target, failure)
+        except TransitionError as exc:
+            return exc
+
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        outcomes = list(executor.map(run, ("running", "failed")))
+
+    winners = [outcome for outcome in outcomes if isinstance(outcome, Path)]
+    losers = [outcome for outcome in outcomes if isinstance(outcome, TransitionError)]
+    assert len(winners) == 1
+    assert len(losers) == 1
+    assert "already in progress" in str(losers[0])
+    queue_files = [
+        path
+        for state in ("pending", "running", "completed", "failed")
+        for path in (tmp_path / "jobs" / state).glob("*.json")
+    ]
+    assert queue_files == winners
+
+
+def test_generation_queue_rejects_symlinked_ancestor_without_external_write(
+    tmp_path, valid_manifest
+):
+    """Catches jobs/pending redirecting deterministic queue writes externally."""
+    pending = tmp_path / "jobs/pending"
+    pending.parent.mkdir(parents=True)
+    external = tmp_path.parent / f"{tmp_path.name}-external-jobs"
+    external.mkdir()
+    pending.symlink_to(external, target_is_directory=True)
+
+    with pytest.raises(TransitionError, match="symlink"):
+        create_generation_jobs(tmp_path, [manifest_document(valid_manifest)])
+
+    assert not list(external.iterdir())

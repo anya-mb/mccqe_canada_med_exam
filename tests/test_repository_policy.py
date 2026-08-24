@@ -18,7 +18,15 @@ def test_required_directories_exist():
 
 def test_private_source_patterns_are_ignored():
     ignore = (ROOT / ".gitignore").read_text()
-    for pattern in ("*.pdf", "config/project.local.json", "derived/"):
+    for pattern in (
+        "*.pdf",
+        "config/project.local.json",
+        "derived/",
+        "__pycache__/",
+        "*.py[cod]",
+        ".qbank-export-work/",
+        "jobs/.locks/",
+    ):
         assert pattern in ignore
 
 

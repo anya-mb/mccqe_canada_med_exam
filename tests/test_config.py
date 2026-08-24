@@ -48,3 +48,37 @@ def test_api_automated_is_allowed_with_exact_true(tmp_path):
     )
 
     assert load_config(tmp_path)["research_mode"] == "API_AUTOMATED"
+
+
+def test_malformed_config_is_normalized_to_config_error(tmp_path):
+    """Catches JSON decoder failures leaking as a generic qbank failure."""
+    path = tmp_path / "config/project.json"
+    path.parent.mkdir(parents=True)
+    path.write_text('{"research_mode": "CODEX_NATIVE",', encoding="utf-8")
+
+    with pytest.raises(ConfigError, match="unable to read project configuration"):
+        load_config(tmp_path)
+
+
+def test_duplicate_config_keys_are_normalized_to_config_error(tmp_path):
+    """Catches last-key-wins operating-mode overrides."""
+    path = tmp_path / "config/project.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(
+        '{"research_mode":"CODEX_NATIVE","research_mode":"API_AUTOMATED"}',
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ConfigError, match="unable to read project configuration"):
+        load_config(tmp_path)
+
+
+def test_config_loader_rejects_symlinked_config_ancestor(tmp_path):
+    """Catches config/ redirecting selected-root reads externally."""
+    external = tmp_path.parent / f"{tmp_path.name}-external-config"
+    external.mkdir()
+    write_json(external / "project.json", {"research_mode": "CODEX_NATIVE"})
+    (tmp_path / "config").symlink_to(external, target_is_directory=True)
+
+    with pytest.raises(ConfigError, match="symlink"):
+        load_config(tmp_path)

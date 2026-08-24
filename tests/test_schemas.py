@@ -36,6 +36,7 @@ def valid_blind():
         ("reference", "reference.json"),
         ("reference-registry", "reference-registry.json"),
         ("question", "question.json"),
+        ("public-question", "public-question.json"),
         ("blind-packet", "blind-packet.json"),
         ("blind-verification", "blind-verification.json"),
         ("rationale-verification", "rationale-verification.json"),
@@ -233,24 +234,44 @@ def test_job_failure_class_uses_fixed_enum(repo_root):
 
 def test_pending_job_is_valid_without_timestamps(repo_root):
     instance = copy.deepcopy(read_json(VALID_FIXTURES / "job.json"))
-    instance.pop("timestamps")
+    instance.pop("timestamps", None)
 
     validate_instance(repo_root, "job", instance)
+
+
+def test_pending_job_rejects_timestamps(repo_root):
+    """Catches stale execution timestamps being retained on a pending claim."""
+    instance = copy.deepcopy(read_json(VALID_FIXTURES / "job.json"))
+    instance["timestamps"] = {
+        "created_at": "2026-08-23T12:00:00Z",
+        "updated_at": "2026-08-23T12:00:00Z",
+        "started_at": None,
+        "completed_at": None,
+    }
+
+    with pytest.raises(SchemaValidationError, match="timestamps"):
+        validate_instance(repo_root, "job", instance)
+
+
+def test_job_attempt_cannot_exceed_max_attempts(repo_root):
+    """Catches exhausted jobs that remain schema-valid and retryable."""
+    instance = copy.deepcopy(read_json(VALID_FIXTURES / "job.json"))
+    instance.pop("timestamps", None)
+    instance["attempt"] = instance["max_attempts"] + 1
+
+    with pytest.raises(SchemaValidationError, match="attempt.*max_attempts"):
+        validate_instance(repo_root, "job", instance)
 
 
 @pytest.mark.parametrize("status", ["RUNNING", "COMPLETED", "FAILED"])
 def test_non_pending_jobs_require_timestamps(repo_root, status):
     instance = copy.deepcopy(read_json(VALID_FIXTURES / "job.json"))
     instance["status"] = status
-    instance["timestamps"]["started_at"] = "2026-08-23T12:01:00Z"
-    if status == "COMPLETED":
-        instance["timestamps"]["completed_at"] = "2026-08-23T12:02:00Z"
     if status == "FAILED":
         instance["failure"] = {
             "class": "SOURCE_FAILURE",
             "message": "Synthetic source failure.",
         }
-    instance.pop("timestamps")
 
     with pytest.raises(SchemaValidationError, match="timestamps"):
         validate_instance(repo_root, "job", instance)
@@ -267,7 +288,12 @@ def test_non_pending_jobs_require_timestamps(repo_root, status):
 def test_active_and_completed_jobs_require_state_timestamp(repo_root, status, field):
     instance = copy.deepcopy(read_json(VALID_FIXTURES / "job.json"))
     instance["status"] = status
-    instance["timestamps"]["started_at"] = "2026-08-23T12:01:00Z"
+    instance["timestamps"] = {
+        "created_at": "2026-08-23T12:00:00Z",
+        "updated_at": "2026-08-23T12:01:00Z",
+        "started_at": "2026-08-23T12:01:00Z",
+        "completed_at": None,
+    }
     if status == "COMPLETED":
         instance["timestamps"]["completed_at"] = "2026-08-23T12:02:00Z"
     instance["timestamps"][field] = None
@@ -280,8 +306,12 @@ def test_active_and_completed_jobs_require_state_timestamp(repo_root, status, fi
 def test_unfinished_jobs_reject_completed_timestamp(repo_root, status):
     instance = copy.deepcopy(read_json(VALID_FIXTURES / "job.json"))
     instance["status"] = status
-    instance["timestamps"]["started_at"] = "2026-08-23T12:01:00Z"
-    instance["timestamps"]["completed_at"] = "2026-08-23T12:02:00Z"
+    instance["timestamps"] = {
+        "created_at": "2026-08-23T12:00:00Z",
+        "updated_at": "2026-08-23T12:01:00Z",
+        "started_at": "2026-08-23T12:01:00Z",
+        "completed_at": "2026-08-23T12:02:00Z",
+    }
     if status == "FAILED":
         instance["failure"] = {
             "class": "SOURCE_FAILURE",
@@ -368,3 +398,157 @@ def test_validation_errors_are_sorted_and_have_json_paths(valid_question, repo_r
     assert "mcc.objectives" in message
     assert "question.options" in message
     assert message.index("mcc.objectives") < message.index("question.options")
+
+
+def test_relabelled_candidate_is_not_publication_eligible(repo_root):
+    """Catches admission based only on status and verification.final_status labels."""
+    candidate = read_json(
+        REPO_ROOT / "tests/fixtures/adversarial/relabeled-candidate.json"
+    )
+
+    with pytest.raises(SchemaValidationError, match="publication eligibility"):
+        validate_instance(repo_root, "question", candidate)
+
+
+def test_complete_human_review_metadata_is_part_of_the_stored_question_schema(
+    valid_question, repo_root
+):
+    """Catches consumers that strip reviewer metadata before validating storage."""
+    valid_question["status"] = "HUMAN_REVIEWED"
+    valid_question["verification"].update(
+        blind_verifier_answer="A",
+        blind_verifier_confidence=0.95,
+        key_match=True,
+        ambiguity=False,
+        reference_check=True,
+        guideline_check=True,
+        duplicate_check=True,
+        final_status="HUMAN_REVIEWED",
+    )
+    valid_question["human_review"] = {
+        "reviewer_name": "Synthetic Reviewer",
+        "credentials": "Synthetic Credential",
+        "reviewed_at": "2026-08-24T11:00:00Z",
+        "scope": "Full synthetic item review",
+        "reviewer_id": "SYNTHETIC-REVIEWER-001",
+    }
+
+    validate_instance(repo_root, "question", valid_question)
+
+
+def test_human_reviewed_status_requires_reviewer_metadata(valid_question, repo_root):
+    """Catches HUMAN_REVIEWED labels without item-specific review provenance."""
+    valid_question["status"] = "HUMAN_REVIEWED"
+    valid_question["verification"].update(
+        blind_verifier_answer="A",
+        blind_verifier_confidence=0.95,
+        key_match=True,
+        ambiguity=False,
+        reference_check=True,
+        guideline_check=True,
+        duplicate_check=True,
+        final_status="HUMAN_REVIEWED",
+    )
+
+    with pytest.raises(SchemaValidationError, match="human_review"):
+        validate_instance(repo_root, "question", valid_question)
+
+
+@pytest.mark.parametrize(
+    ("status", "final_status"),
+    [("PUBLISHED", "PUBLISHED"), ("RETIRED", "RETIRED")],
+)
+def test_published_and_retired_questions_have_persistable_final_statuses(
+    valid_question, repo_root, status, final_status
+):
+    """Catches lifecycle states that the canonical schema cannot persist."""
+    valid_question["status"] = status
+    valid_question["verification"]["final_status"] = final_status
+    valid_question["verification"].update(
+        blind_verifier_answer="A",
+        blind_verifier_confidence=0.95,
+        key_match=True,
+        ambiguity=False,
+        reference_check=True,
+        guideline_check=True,
+        duplicate_check=True,
+    )
+
+    validate_instance(repo_root, "question", valid_question)
+
+
+def test_retired_question_retains_human_review_provenance(valid_question, repo_root):
+    """Catches retirement making a human-reviewed publication unpersistable."""
+    valid_question["status"] = "RETIRED"
+    valid_question["verification"].update(
+        blind_verifier_answer="A",
+        blind_verifier_confidence=0.95,
+        key_match=True,
+        ambiguity=False,
+        reference_check=True,
+        guideline_check=True,
+        duplicate_check=True,
+        final_status="RETIRED",
+    )
+    valid_question["human_review"] = {
+        "reviewer_name": "Synthetic Reviewer",
+        "credentials": "Synthetic Credential",
+        "reviewed_at": "2026-08-24T11:00:00Z",
+        "scope": "Full synthetic item review",
+    }
+
+    validate_instance(repo_root, "question", valid_question)
+
+
+def test_relabelled_candidate_cannot_claim_retired_publication_history(
+    valid_question, repo_root
+):
+    """Catches a candidate relabelled as RETIRED without prior publication evidence."""
+    valid_question["status"] = "RETIRED"
+    valid_question["verification"]["final_status"] = "RETIRED"
+
+    with pytest.raises(SchemaValidationError, match="retired publication history"):
+        validate_instance(repo_root, "question", valid_question)
+
+
+@pytest.mark.parametrize(
+    ("path", "field", "value"),
+    [
+        ((), "verification", {"final_status": "QA_PASS"}),
+        ((), "human_review", {"reviewer_name": "Private Reviewer"}),
+        (("toronto_notes",), "pdf_pages", "10-11"),
+        ((), "toronto_notes_gap_fill", False),
+        ((), "guideline_updated_since_tn2025", False),
+    ],
+)
+def test_public_question_schema_rejects_internal_fields(
+    repo_root, path, field, value
+):
+    """Catches public schemas that accept stored QA or source-only internals."""
+    public_question = copy.deepcopy(read_json(VALID_FIXTURES / "public-question.json"))
+    target = public_question
+    for part in path:
+        target = target[part]
+    target[field] = value
+
+    with pytest.raises(SchemaValidationError, match=field):
+        validate_instance(repo_root, "public-question", public_question)
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        '{"type": "object",',
+        '{"type": "object", "type": "array"}',
+    ],
+)
+def test_malformed_schema_is_normalized_to_schema_validation_error(
+    tmp_path, payload
+):
+    """Catches unreadable schema catalogs leaking generic QbankError failures."""
+    schema = tmp_path / "schemas/synthetic.schema.json"
+    schema.parent.mkdir(parents=True)
+    schema.write_text(payload, encoding="utf-8")
+
+    with pytest.raises(SchemaValidationError, match="invalid schema synthetic"):
+        validate_instance(tmp_path, "synthetic", {})

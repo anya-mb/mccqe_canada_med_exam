@@ -140,3 +140,89 @@ def test_registry_identity_collision_fails_closed(empty_registry, reference):
 
     with pytest.raises(ReferenceMergeError, match="canonical identity"):
         merge_references(empty_registry, [])
+
+
+def test_url_fragments_do_not_create_distinct_sources_and_are_preserved_in_locators(
+    empty_registry, reference
+):
+    """Catches anchor-only URLs allocating multiple guideline identities."""
+    first = {
+        **reference,
+        "reference_id": "TEMP-ANCHOR-A",
+        "url": reference["url"] + "#recommendation-1",
+    }
+    second = {
+        **reference,
+        "reference_id": "TEMP-ANCHOR-B",
+        "url": reference["url"] + "#recommendation-2",
+    }
+
+    merged, mapping = merge_references(empty_registry, [first, second])
+
+    assert len(merged["references"]) == 1
+    assert mapping["TEMP-ANCHOR-A"] == mapping["TEMP-ANCHOR-B"]
+    record = merged["references"][0]
+    assert record["url"] == reference["url"]
+    assert {support["locator"] for support in record["supports"]} == {
+        "Synthetic recommendation 1 (URL fragment: #recommendation-1)",
+        "Synthetic recommendation 1 (URL fragment: #recommendation-2)",
+    }
+
+
+def test_default_https_port_is_removed_from_canonical_identity(
+    empty_registry, reference
+):
+    """Catches :443 allocating a second ID for the same HTTPS source."""
+    with_default_port = {
+        **reference,
+        "reference_id": "TEMP-PORT",
+        "url": "https://example.invalid:443/synthetic-standard",
+    }
+
+    merged, mapping = merge_references(
+        empty_registry, [reference, with_default_port]
+    )
+
+    assert len(merged["references"]) == 1
+    assert mapping[reference["reference_id"]] == mapping["TEMP-PORT"]
+    assert merged["references"][0]["url"] == reference["url"]
+
+
+@pytest.mark.parametrize(
+    "url",
+    [
+        "https://user@example.invalid/synthetic-standard",
+        "https://user:password@example.invalid/synthetic-standard",
+    ],
+)
+def test_reference_url_rejects_userinfo(empty_registry, reference, url):
+    """Catches credentials or misleading authorities in canonical URLs."""
+    candidate = {**reference, "url": url}
+
+    with pytest.raises(ReferenceMergeError, match="userinfo"):
+        merge_references(empty_registry, [candidate])
+
+
+def test_query_is_preserved_and_participates_in_source_identity(
+    empty_registry, reference
+):
+    """Defines a conservative policy that never conflates query-selected sources."""
+    first = {
+        **reference,
+        "reference_id": "TEMP-QUERY-A",
+        "url": reference["url"] + "?version=1&lang=en",
+    }
+    second = {
+        **reference,
+        "reference_id": "TEMP-QUERY-B",
+        "url": reference["url"] + "?version=2&lang=en",
+    }
+
+    merged, mapping = merge_references(empty_registry, [first, second])
+
+    assert len(merged["references"]) == 2
+    assert mapping["TEMP-QUERY-A"] != mapping["TEMP-QUERY-B"]
+    assert {record["url"] for record in merged["references"]} == {
+        first["url"],
+        second["url"],
+    }

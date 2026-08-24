@@ -1,48 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://mccqe-qbank.invalid/schemas/question.schema.json",
-  "title": "Canonical qbank question",
+  "$id": "https://mccqe-qbank.invalid/schemas/public-question.schema.json",
+  "title": "Strict public qbank question",
   "$defs": {
     "nonempty": {"type": "string", "minLength": 1, "pattern": "\\S"},
     "answerKey": {"enum": ["A", "B", "C", "D", "E"]},
-    "status": {"enum": ["DRAFT", "CANDIDATE", "STRUCTURE_PASS", "BLIND_PASS", "MEDICAL_PASS", "QA_PASS", "PUBLISHED", "QUARANTINE", "REVISED", "REJECTED", "HUMAN_REVIEWED", "RETIRED"]},
-    "verificationStatus": {"enum": ["PENDING", "BLIND_PASS", "MEDICAL_PASS", "QA_PASS", "PUBLISHED", "HUMAN_REVIEWED", "QUARANTINE", "REJECTED", "RETIRED"]},
-    "humanReview": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["reviewer_name", "credentials", "reviewed_at", "scope"],
-      "properties": {
-        "reviewer_name": {"$ref": "#/$defs/nonempty"},
-        "credentials": {"$ref": "#/$defs/nonempty"},
-        "reviewed_at": {"type": "string", "format": "date-time"},
-        "scope": {"$ref": "#/$defs/nonempty"},
-        "reviewer_id": {"$ref": "#/$defs/nonempty"}
-      }
-    },
-    "torontoNotes": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["edition", "chapter", "chapter_code", "section", "subsection", "tn_pages", "pdf_pages"],
-      "properties": {
-        "edition": {"$ref": "#/$defs/nonempty"},
-        "chapter": {"$ref": "#/$defs/nonempty"},
-        "chapter_code": {"$ref": "#/$defs/nonempty"},
-        "section": {"$ref": "#/$defs/nonempty"},
-        "subsection": {"$ref": "#/$defs/nonempty"},
-        "tn_pages": {"$ref": "#/$defs/nonempty"},
-        "pdf_pages": {"$ref": "#/$defs/nonempty"}
-      }
-    },
-    "mcc": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["objectives", "physician_activity", "dimension_of_care"],
-      "properties": {
-        "objectives": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/nonempty"}},
-        "physician_activity": {"$ref": "#/$defs/nonempty"},
-        "dimension_of_care": {"$ref": "#/$defs/nonempty"}
-      }
-    },
     "option": {
       "type": "object",
       "additionalProperties": false,
@@ -94,37 +56,40 @@
         "what_happens_next": {"$ref": "#/$defs/nonempty"},
         "clinical_pearl": {"$ref": "#/$defs/nonempty"}
       }
-    },
-    "verification": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["source_packet_complete", "blind_verifier_answer", "blind_verifier_confidence", "key_match", "ambiguity", "reference_check", "guideline_check", "duplicate_check", "final_status"],
-      "properties": {
-        "source_packet_complete": {"type": "boolean"},
-        "blind_verifier_answer": {"anyOf": [{"$ref": "#/$defs/answerKey"}, {"type": "null"}]},
-        "blind_verifier_confidence": {"anyOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"type": "null"}]},
-        "key_match": {"type": ["boolean", "null"]},
-        "ambiguity": {"type": ["boolean", "null"]},
-        "reference_check": {"type": ["boolean", "null"]},
-        "guideline_check": {"type": ["boolean", "null"]},
-        "duplicate_check": {"type": ["boolean", "null"]},
-        "final_status": {"$ref": "#/$defs/verificationStatus"}
-      }
     }
   },
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "status", "discipline", "chapter", "subtopic", "toronto_notes", "toronto_notes_gap_fill", "guideline_updated_since_tn2025", "mcc", "difficulty", "question", "correct_answer", "explanation", "references", "verification", "content_version"],
+  "required": ["id", "status", "discipline", "chapter", "subtopic", "toronto_notes", "mcc", "difficulty", "question", "correct_answer", "explanation", "references", "content_version"],
   "properties": {
     "id": {"type": "string", "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)+$"},
-    "status": {"$ref": "#/$defs/status"},
+    "status": {"enum": ["QA_PASS", "HUMAN_REVIEWED", "PUBLISHED"]},
     "discipline": {"$ref": "#/$defs/nonempty"},
     "chapter": {"$ref": "#/$defs/nonempty"},
     "subtopic": {"$ref": "#/$defs/nonempty"},
-    "toronto_notes": {"$ref": "#/$defs/torontoNotes"},
-    "toronto_notes_gap_fill": {"type": "boolean"},
-    "guideline_updated_since_tn2025": {"type": "boolean"},
-    "mcc": {"$ref": "#/$defs/mcc"},
+    "toronto_notes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edition", "chapter", "chapter_code", "section", "subsection", "tn_pages"],
+      "properties": {
+        "edition": {"$ref": "#/$defs/nonempty"},
+        "chapter": {"$ref": "#/$defs/nonempty"},
+        "chapter_code": {"$ref": "#/$defs/nonempty"},
+        "section": {"$ref": "#/$defs/nonempty"},
+        "subsection": {"$ref": "#/$defs/nonempty"},
+        "tn_pages": {"$ref": "#/$defs/nonempty"}
+      }
+    },
+    "mcc": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["objectives", "physician_activity", "dimension_of_care"],
+      "properties": {
+        "objectives": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/nonempty"}},
+        "physician_activity": {"$ref": "#/$defs/nonempty"},
+        "dimension_of_care": {"$ref": "#/$defs/nonempty"}
+      }
+    },
     "difficulty": {"enum": ["easy", "moderate", "difficult"]},
     "question": {
       "type": "object",
@@ -139,17 +104,13 @@
     "correct_answer": {"$ref": "#/$defs/answerKey"},
     "explanation": {"$ref": "#/$defs/explanation"},
     "references": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^REF-[A-Z0-9]+(?:-[A-Z0-9]+)*$"}},
-    "verification": {"$ref": "#/$defs/verification"},
-    "content_version": {"$ref": "#/$defs/nonempty"},
-    "human_review": {"$ref": "#/$defs/humanReview"}
+    "content_version": {"$ref": "#/$defs/nonempty"}
   },
   "allOf": [
     {"if": {"properties": {"correct_answer": {"const": "A"}}, "required": ["correct_answer"]}, "then": {"properties": {"explanation": {"properties": {"distractor_rationales": {"$ref": "#/$defs/distractorsForA"}}}}}},
     {"if": {"properties": {"correct_answer": {"const": "B"}}, "required": ["correct_answer"]}, "then": {"properties": {"explanation": {"properties": {"distractor_rationales": {"$ref": "#/$defs/distractorsForB"}}}}}},
     {"if": {"properties": {"correct_answer": {"const": "C"}}, "required": ["correct_answer"]}, "then": {"properties": {"explanation": {"properties": {"distractor_rationales": {"$ref": "#/$defs/distractorsForC"}}}}}},
     {"if": {"properties": {"correct_answer": {"const": "D"}}, "required": ["correct_answer"]}, "then": {"properties": {"explanation": {"properties": {"distractor_rationales": {"$ref": "#/$defs/distractorsForD"}}}}}},
-    {"if": {"properties": {"correct_answer": {"const": "E"}}, "required": ["correct_answer"]}, "then": {"properties": {"explanation": {"properties": {"distractor_rationales": {"$ref": "#/$defs/distractorsForE"}}}}}},
-    {"if": {"properties": {"status": {"const": "HUMAN_REVIEWED"}}, "required": ["status"]}, "then": {"required": ["human_review"]}},
-    {"if": {"properties": {"status": {"enum": ["HUMAN_REVIEWED", "PUBLISHED", "RETIRED"]}}, "required": ["status"]}, "else": {"not": {"required": ["human_review"]}}}
+    {"if": {"properties": {"correct_answer": {"const": "E"}}, "required": ["correct_answer"]}, "then": {"properties": {"explanation": {"properties": {"distractor_rationales": {"$ref": "#/$defs/distractorsForE"}}}}}}
   ]
 }

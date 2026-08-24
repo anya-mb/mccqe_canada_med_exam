@@ -37,22 +37,25 @@ def _normalize_text(value: object, field: str) -> str:
     return normalized
 
 
-def _normalize_url(value: object) -> str:
+def _normalize_url(value: object) -> tuple[str, str | None]:
     url = _normalize_text(value, "url")
     parsed = urlsplit(url)
     if parsed.scheme.casefold() != "https" or not parsed.hostname:
         raise ReferenceMergeError("reference url must be an absolute https URL")
+    if parsed.username is not None or parsed.password is not None:
+        raise ReferenceMergeError("reference url must not contain userinfo")
 
     hostname = parsed.hostname.casefold()
     try:
         port = parsed.port
     except ValueError as exc:
         raise ReferenceMergeError("reference url has an invalid port") from exc
-    authority = hostname if port is None else f"{hostname}:{port}"
-    if parsed.username is not None:
-        authority = f"{parsed.username}@{authority}"
+    if ":" in hostname and not hostname.startswith("["):
+        hostname = f"[{hostname}]"
+    authority = hostname if port in {None, 443} else f"{hostname}:{port}"
     path = parsed.path.rstrip("/")
-    return urlunsplit(("https", authority, path, parsed.query, parsed.fragment))
+    canonical = urlunsplit(("https", authority, path, parsed.query, ""))
+    return canonical, parsed.fragment or None
 
 
 def _identity(record: dict) -> tuple[str, str, str, str]:
@@ -79,19 +82,19 @@ def _stable_id(record: dict) -> str:
     return f"REF-{_organization_slug(_identity(record)[0])}-{digest}"
 
 
-def _normalize_supports(value: object) -> list[dict[str, str]]:
+def _normalize_supports(
+    value: object, *, url_fragment: str | None = None
+) -> list[dict[str, str]]:
     if not isinstance(value, list) or not value:
         raise ReferenceMergeError("reference supports must be a non-empty list")
     pairs: set[tuple[str, str]] = set()
     for support in value:
         if not isinstance(support, dict):
             raise ReferenceMergeError("reference support must be an object")
-        pairs.add(
-            (
-                _normalize_text(support.get("claim"), "support claim"),
-                _normalize_text(support.get("locator"), "support locator"),
-            )
-        )
+        locator = _normalize_text(support.get("locator"), "support locator")
+        if url_fragment is not None:
+            locator = f"{locator} (URL fragment: #{url_fragment})"
+        pairs.add((_normalize_text(support.get("claim"), "support claim"), locator))
     return [
         {"claim": claim, "locator": locator}
         for claim, locator in sorted(pairs, key=lambda pair: (pair[0].casefold(), pair[1].casefold(), pair))
@@ -107,17 +110,20 @@ def _canonicalize(record: object) -> dict:
     source_tier = record["source_tier"]
     if type(source_tier) is not int or not 1 <= source_tier <= 4:
         raise ReferenceMergeError("reference source_tier must be an integer from 1 through 4")
+    url, url_fragment = _normalize_url(record["url"])
     return {
         "reference_id": _normalize_text(record["reference_id"], "reference_id"),
         "title": _normalize_text(record["title"], "title"),
         "organization": _normalize_text(record["organization"], "organization"),
-        "url": _normalize_url(record["url"]),
+        "url": url,
         "publication_or_update_date": _normalize_text(
             record["publication_or_update_date"], "publication_or_update_date"
         ),
         "accessed_date": _normalize_text(record["accessed_date"], "accessed_date"),
         "source_tier": source_tier,
-        "supports": _normalize_supports(record["supports"]),
+        "supports": _normalize_supports(
+            record["supports"], url_fragment=url_fragment
+        ),
     }
 
 

@@ -23,6 +23,7 @@ ALLOWED = {
     ("QA_PASS", "HUMAN_REVIEWED"),
     ("HUMAN_REVIEWED", "PUBLISHED"),
     ("QA_PASS", "PUBLISHED"),
+    ("PUBLISHED", "RETIRED"),
 }
 
 DISALLOWED = sorted(set(itertools.product(STATUSES, repeat=2)) - ALLOWED)

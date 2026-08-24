@@ -8,45 +8,40 @@ import os
 from pathlib import Path
 import tempfile
 
-from .errors import QbankError, SchemaValidationError, TransitionError
+from .errors import QbankError, SchemaValidationError
 from .jsonio import read_json, write_json_atomic
 from .manifests import validate_manifest_set
+from .paths import RootPathError, canonical_root, resolve_root_path
+from .publication import (
+    FINAL_STATUS_BY_STATUS,
+    PUBLICATION_ELIGIBLE_STATUSES,
+    validate_publication_eligibility,
+)
 from .schema import validate_instance
-from .states import validate_transition
 
 
-_REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 _QUESTION_DIRECTORIES = ("candidates", "verified", "quarantine", "rejected", "retired")
 _DIRECTORY_STATUSES = {
     "candidates": frozenset(
         {"DRAFT", "CANDIDATE", "STRUCTURE_PASS", "BLIND_PASS", "MEDICAL_PASS", "REVISED"}
     ),
-    "verified": frozenset({"QA_PASS", "HUMAN_REVIEWED"}),
+    "verified": frozenset({"QA_PASS", "HUMAN_REVIEWED", "PUBLISHED"}),
     "quarantine": frozenset({"QUARANTINE"}),
     "rejected": frozenset({"REJECTED"}),
     "retired": frozenset({"RETIRED"}),
 }
-_FINAL_STATUSES = {
-    "DRAFT": frozenset({"PENDING"}),
-    "CANDIDATE": frozenset({"PENDING"}),
-    "STRUCTURE_PASS": frozenset({"PENDING"}),
-    "BLIND_PASS": frozenset({"BLIND_PASS"}),
-    "MEDICAL_PASS": frozenset({"MEDICAL_PASS"}),
-    "QA_PASS": frozenset({"QA_PASS"}),
-    "QUARANTINE": frozenset({"QUARANTINE"}),
-    "REVISED": frozenset({"PENDING"}),
-    "REJECTED": frozenset({"REJECTED"}),
-    "HUMAN_REVIEWED": frozenset({"HUMAN_REVIEWED"}),
-    # The verification enum has no RETIRED value, so retirement preserves the
-    # last terminal verification designation instead of inventing one.
-    "RETIRED": frozenset({"QA_PASS", "HUMAN_REVIEWED", "REJECTED"}),
-}
 _JOB_STATES = ("pending", "running", "completed", "failed")
 _BLIND_PASSED = frozenset(
-    {"BLIND_PASS", "MEDICAL_PASS", "QA_PASS", "HUMAN_REVIEWED", "PUBLISHED"}
+    {
+        "BLIND_PASS",
+        "MEDICAL_PASS",
+        "QA_PASS",
+        "HUMAN_REVIEWED",
+        "PUBLISHED",
+        "RETIRED",
+    }
 )
-_QA_PASSED = frozenset({"QA_PASS", "PUBLISHED"})
-_PUBLICATION_ELIGIBLE = frozenset({"QA_PASS", "HUMAN_REVIEWED", "PUBLISHED"})
+_QA_PASSED = frozenset({"QA_PASS", "PUBLISHED", "RETIRED"})
 
 
 def _timestamp(now: datetime | None) -> str:
@@ -66,52 +61,68 @@ def _read_object(path: Path, kind: str) -> dict:
     return value
 
 
-def _json_files(directory: Path) -> list[Path]:
+def _json_files(root: Path, relative_directory: str | Path) -> list[Path]:
+    try:
+        directory = resolve_root_path(
+            root, relative_directory, label="progress input directory"
+        )
+    except RootPathError as exc:
+        raise SchemaValidationError(str(exc)) from exc
     if not directory.exists():
         return []
-    return sorted(path for path in directory.rglob("*.json") if path.is_file())
+    paths: list[Path] = []
+    for discovered in directory.rglob("*.json"):
+        try:
+            path = resolve_root_path(
+                root,
+                discovered.relative_to(root),
+                label="progress input file",
+            )
+        except (RootPathError, ValueError) as exc:
+            raise SchemaValidationError(str(exc)) from exc
+        if path.is_file():
+            paths.append(path)
+    return sorted(paths)
 
 
 def _manifests(root: Path) -> list[dict]:
-    values = [_read_object(path, "manifest") for path in _json_files(root / "manifests")]
+    values = [_read_object(path, "manifest") for path in _json_files(root, "manifests")]
     validate_manifest_set(root, values)
     return values
 
 
-def _validated_question(path: Path, directory_name: str) -> dict:
+def _validated_question(root: Path, path: Path, directory_name: str) -> dict:
     value = _read_object(path, "question")
-    public_value = dict(value)
-    human_review = public_value.pop("human_review", None)
-    validate_instance(_REPOSITORY_ROOT, "question", public_value)
-    status = public_value["status"]
+    try:
+        validate_instance(root, "question", value)
+    except SchemaValidationError as exc:
+        if value.get("status") == "HUMAN_REVIEWED" and "human_review" in str(exc):
+            raise SchemaValidationError(
+                f"invalid human review metadata in question {path}: {exc}"
+            ) from exc
+        raise
+    status = value["status"]
     if status not in _DIRECTORY_STATUSES[directory_name]:
         raise SchemaValidationError(
             f"{directory_name} question {path} has incompatible status {status!r}"
         )
-    final_status = public_value["verification"]["final_status"]
-    if final_status not in _FINAL_STATUSES[status]:
+    final_status = value["verification"]["final_status"]
+    if final_status != FINAL_STATUS_BY_STATUS[status]:
         raise SchemaValidationError(
             f"verification.final_status {final_status!r} disagrees with status {status!r} "
             f"in question {path}"
         )
-    if status == "HUMAN_REVIEWED":
-        try:
-            validate_transition(
-                "QA_PASS", "HUMAN_REVIEWED", human_review=human_review
-            )
-        except TransitionError as exc:
-            raise SchemaValidationError(
-                f"invalid human review metadata in question {path}: {exc}"
-            ) from exc
-    return public_value
+    if status in PUBLICATION_ELIGIBLE_STATUSES:
+        validate_publication_eligibility(value)
+    return value
 
 
 def _questions(root: Path) -> list[dict]:
     seen: dict[str, Path] = {}
     questions: list[dict] = []
     for directory_name in _QUESTION_DIRECTORIES:
-        for path in _json_files(root / directory_name):
-            question = _validated_question(path, directory_name)
+        for path in _json_files(root, directory_name):
+            question = _validated_question(root, path, directory_name)
             identifier = question["id"]
             if identifier in seen:
                 raise SchemaValidationError(
@@ -127,9 +138,9 @@ def _jobs(root: Path) -> dict[str, int]:
     counts = {state: 0 for state in _JOB_STATES}
     seen: dict[str, Path] = {}
     for state in _JOB_STATES:
-        for path in _json_files(root / "jobs" / state):
+        for path in _json_files(root, Path("jobs") / state):
             job = _read_object(path, "job")
-            validate_instance(_REPOSITORY_ROOT, "job", job)
+            validate_instance(root, "job", job)
             identifier = job["job_id"]
             if identifier in seen:
                 raise SchemaValidationError(
@@ -151,7 +162,10 @@ def _empty_breakdown() -> dict[str, int]:
 
 def build_progress(root: Path, now: datetime | None = None) -> dict:
     """Build a schema-valid progress report exclusively from repository files."""
-    root = Path(root)
+    try:
+        root = canonical_root(root)
+    except RootPathError as exc:
+        raise SchemaValidationError(str(exc)) from exc
     manifests = _manifests(root)
     questions = _questions(root)
     disciplines: defaultdict[str, dict[str, int]] = defaultdict(_empty_breakdown)
@@ -195,7 +209,7 @@ def build_progress(root: Path, now: datetime | None = None) -> dict:
             quarantined += 1
         if status == "HUMAN_REVIEWED":
             human_reviewed += 1
-        if status in _PUBLICATION_ELIGIBLE:
+        if status in PUBLICATION_ELIGIBLE_STATUSES:
             chapter_eligible[chapter] += 1
 
     coverage_gaps = []
@@ -219,7 +233,7 @@ def build_progress(root: Path, now: datetime | None = None) -> dict:
         "jobs": _jobs(root),
         "coverage_gaps": coverage_gaps,
     }
-    validate_instance(_REPOSITORY_ROOT, "progress", report)
+    validate_instance(root, "progress", report)
     return report
 
 
@@ -308,10 +322,19 @@ def write_progress(
     root: Path, now: datetime | None = None
 ) -> tuple[Path, Path]:
     """Regenerate deterministic JSON and Markdown reports from one snapshot."""
-    root = Path(root)
+    try:
+        root = canonical_root(root)
+        json_path = resolve_root_path(
+            root, "reports/progress.json", label="progress JSON output"
+        )
+        markdown_path = resolve_root_path(
+            root, "reports/progress.md", label="progress Markdown output"
+        )
+    except RootPathError as exc:
+        raise SchemaValidationError(str(exc)) from exc
     report = build_progress(root, now=now)
-    json_path = root / "reports" / "progress.json"
-    markdown_path = root / "reports" / "progress.md"
-    write_json_atomic(json_path, report)
+    # JSON is canonical.  Publish it only after the derived Markdown write
+    # succeeds, so a Markdown failure cannot advance canonical progress state.
     _write_text_atomic(markdown_path, _markdown(report))
+    write_json_atomic(json_path, report)
     return json_path, markdown_path

@@ -12,10 +12,23 @@ def _reject_non_finite(value: str) -> None:
     raise ValueError(f"non-finite JSON number is not allowed: {value}")
 
 
+def _reject_duplicate_keys(pairs: list[tuple[str, object]]) -> dict:
+    value: dict[str, object] = {}
+    for key, child in pairs:
+        if key in value:
+            raise ValueError(f"duplicate JSON object key is not allowed: {key!r}")
+        value[key] = child
+    return value
+
+
 def read_json(path: Path) -> object:
     """Read and decode a JSON document from *path*."""
     try:
-        return json.loads(path.read_text(encoding="utf-8"), parse_constant=_reject_non_finite)
+        return json.loads(
+            path.read_text(encoding="utf-8"),
+            parse_constant=_reject_non_finite,
+            object_pairs_hook=_reject_duplicate_keys,
+        )
     except ValueError as exc:
         raise QbankError(f"invalid JSON: {exc}") from exc
 

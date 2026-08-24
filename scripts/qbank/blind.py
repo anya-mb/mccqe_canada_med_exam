@@ -7,9 +7,10 @@ from pathlib import Path
 from typing import Literal
 
 from .schema import validate_instance
+from .states import validate_transition
+from .errors import TransitionError
 
 
-_REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 _MINIMUM_CONFIDENCE = 0.85
 
 
@@ -21,13 +22,22 @@ class BlindDecision:
     reason: str
 
 
-def build_blind_packet(candidate: dict) -> dict:
+def _require_structure_pass(candidate: dict) -> None:
+    status = candidate.get("status") if isinstance(candidate, dict) else None
+    if status != "STRUCTURE_PASS":
+        raise TransitionError(
+            f"blind work requires STRUCTURE_PASS; got {status!r}"
+        )
+
+
+def build_blind_packet(candidate: dict, *, root: Path) -> dict:
     """Return the schema-validated, answer-key-free projection of *candidate*.
 
     Every value is copied from a fixed set of permitted candidate paths.  This
     intentionally avoids copying the candidate first and deleting private data:
     unknown or nested generator fields can never enter the blind packet.
     """
+    _require_structure_pass(candidate)
     packet = {
         "question_id": deepcopy(candidate["id"]),
         "stem": deepcopy(candidate["question"]["stem"]),
@@ -37,12 +47,17 @@ def build_blind_packet(candidate: dict) -> dict:
         "toronto_notes": deepcopy(candidate["toronto_notes"]),
         "references": deepcopy(candidate["references"]),
     }
-    validate_instance(_REPOSITORY_ROOT, "blind-packet", packet)
+    validate_instance(root, "blind-packet", packet)
     return packet
 
 
-def _quarantine(reason: str) -> BlindDecision:
-    return BlindDecision(status="QUARANTINE", reason=reason)
+def _decision(candidate: dict, status: str, reason: str) -> BlindDecision:
+    validate_transition(candidate["status"], status)
+    return BlindDecision(status=status, reason=reason)
+
+
+def _quarantine(candidate: dict, reason: str) -> BlindDecision:
+    return _decision(candidate, "QUARANTINE", reason)
 
 
 def _effective_threshold(threshold: float) -> float:
@@ -56,26 +71,33 @@ def _effective_threshold(threshold: float) -> float:
 
 
 def evaluate_blind_result(
-    candidate: dict, result: dict, threshold: float = 0.85
+    candidate: dict,
+    result: dict,
+    threshold: float = 0.85,
+    *,
+    root: Path,
 ) -> BlindDecision:
     """Compare an independent result without ever changing the candidate key."""
     threshold = _effective_threshold(threshold)
+    validate_instance(root, "question", candidate)
+    validate_instance(root, "blind-verification", result)
+    _require_structure_pass(candidate)
     if result["question_id"] != candidate["id"]:
-        return _quarantine("BLIND_QUESTION_ID_MISMATCH")
+        return _quarantine(candidate, "BLIND_QUESTION_ID_MISMATCH")
     if result["independent_answer"] != candidate["correct_answer"]:
-        return _quarantine("BLIND_KEY_MISMATCH")
+        return _quarantine(candidate, "BLIND_KEY_MISMATCH")
     if result["confidence"] < threshold:
-        return _quarantine("BLIND_LOW_CONFIDENCE")
+        return _quarantine(candidate, "BLIND_LOW_CONFIDENCE")
     if result["single_best_answer"] is not True:
-        return _quarantine("BLIND_NOT_SINGLE_BEST_ANSWER")
+        return _quarantine(candidate, "BLIND_NOT_SINGLE_BEST_ANSWER")
     if result["other_defensible_options"]:
-        return _quarantine("BLIND_OTHER_DEFENSIBLE_OPTIONS")
+        return _quarantine(candidate, "BLIND_OTHER_DEFENSIBLE_OPTIONS")
     if result["stem_sufficient"] is not True:
-        return _quarantine("BLIND_STEM_INSUFFICIENT")
+        return _quarantine(candidate, "BLIND_STEM_INSUFFICIENT")
     if result["guideline_support"] is not True:
-        return _quarantine("BLIND_GUIDELINE_UNSUPPORTED")
+        return _quarantine(candidate, "BLIND_GUIDELINE_UNSUPPORTED")
     if result["uncertainty_concern"] is not None:
-        return _quarantine("BLIND_UNCERTAINTY_CONCERN")
+        return _quarantine(candidate, "BLIND_UNCERTAINTY_CONCERN")
     if result["recommendation"] != "PASS":
-        return _quarantine("BLIND_RECOMMENDATION_NOT_PASS")
-    return BlindDecision(status="BLIND_PASS", reason="BLIND_PASS")
+        return _quarantine(candidate, "BLIND_RECOMMENDATION_NOT_PASS")
+    return _decision(candidate, "BLIND_PASS", "BLIND_PASS")

@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass
 import hashlib
+import os
 from pathlib import Path
 import subprocess
 
@@ -14,6 +15,7 @@ _PRIVATE_DIRECTORY_NAMES = {
     "blind",
     "blind_verification",
     "candidates",
+    "config",
     "derived",
     "extracted",
     "jobs",
@@ -25,11 +27,15 @@ _PRIVATE_DIRECTORY_NAMES = {
     "quarantine",
     "rationale_verification",
     "rejected",
+    "references",
     "retired",
     "source",
     "verifier",
     "verifier_reasoning",
+    "verified",
 }
+_PRIVATE_FILE_NAMES = {"project.json", "project.local.json", "registry.json"}
+_EXPORT_WORK_PREFIXES = (".qbank-stage-", ".qbank-backup-")
 
 
 @dataclass(frozen=True)
@@ -133,7 +139,15 @@ def validate_source(root: Path, config: dict) -> SourceReport:
         raise SourceValidationError("source SHA-256 does not match configured hash")
 
     metadata = _pdfinfo(path)
-    edition = metadata.get("Title")
+    metadata_edition = metadata.get("Title")
+    expected_edition = source["expected_edition"]
+    if not isinstance(expected_edition, str) or not expected_edition.strip():
+        raise SourceValidationError("source expected edition must be a non-empty string")
+    if metadata_edition and " ".join(metadata_edition.split()).casefold() != " ".join(
+        expected_edition.split()
+    ).casefold():
+        raise SourceValidationError("source PDF edition does not match configuration")
+    edition = metadata_edition or expected_edition
     try:
         reported_size = int(metadata["File size"].split()[0])
     except (KeyError, ValueError, IndexError) as exc:
@@ -153,22 +167,70 @@ def validate_source(root: Path, config: dict) -> SourceReport:
 def scan_deploy_leaks(root: Path) -> list[Path]:
     """Return deploy-root files that could expose private source material."""
     root = Path(root)
-    deploy_roots = sorted(
-        (
-            candidate
-            for candidate in root.rglob("*")
-            if candidate.is_dir() and candidate.name.lower() in _DEPLOY_DIRECTORY_NAMES
-        ),
-        key=lambda path: (len(path.parts), str(path)),
-    )
     leaks: set[Path] = set()
-    for deploy_root in deploy_roots:
-        for candidate in deploy_root.rglob("*"):
-            if not candidate.is_file():
+
+    def walk(directory: Path, deploy_root: Path | None) -> None:
+        try:
+            with os.scandir(directory) as iterator:
+                entries = sorted(iterator, key=lambda entry: entry.name)
+        except (FileNotFoundError, NotADirectoryError):
+            return
+        except OSError as exc:
+            raise SourceValidationError(f"unable to scan deploy artifacts: {directory}") from exc
+        for entry in entries:
+            candidate = Path(entry.path)
+            name = entry.name.casefold()
+            is_deploy_root = name in _DEPLOY_DIRECTORY_NAMES
+            child_deploy_root = deploy_root or (candidate if is_deploy_root else None)
+            try:
+                is_symlink = entry.is_symlink()
+            except OSError:
+                is_symlink = True
+            if is_symlink:
+                if child_deploy_root is not None:
+                    leaks.add(candidate)
                 continue
-            relative_parts = candidate.relative_to(deploy_root).parts
-            if candidate.suffix.lower() == ".pdf" or any(
-                part.lower() in _PRIVATE_DIRECTORY_NAMES for part in relative_parts
+            try:
+                is_directory = entry.is_dir(follow_symlinks=False)
+            except OSError as exc:
+                raise SourceValidationError(
+                    f"unable to inspect deploy artifact: {candidate}"
+                ) from exc
+            if is_directory:
+                leak_count = len(leaks)
+                walk(candidate, child_deploy_root)
+                if (
+                    child_deploy_root is not None
+                    and candidate != child_deploy_root
+                    and len(leaks) == leak_count
+                    and (
+                        name in _PRIVATE_DIRECTORY_NAMES
+                        or any(
+                            name.startswith(prefix)
+                            for prefix in _EXPORT_WORK_PREFIXES
+                        )
+                    )
+                ):
+                    leaks.add(candidate)
+                continue
+            if child_deploy_root is None:
+                continue
+            relative_names = tuple(
+                part.casefold()
+                for part in candidate.relative_to(child_deploy_root).parts
+            )
+            if (
+                candidate.suffix.casefold() == ".pdf"
+                or name in _PRIVATE_FILE_NAMES
+                or any(part in _PRIVATE_DIRECTORY_NAMES for part in relative_names)
+                or any(
+                    part.startswith(prefix)
+                    for part in relative_names
+                    for prefix in _EXPORT_WORK_PREFIXES
+                )
             ):
                 leaks.add(candidate)
+
+    initial_deploy_root = root if root.name.casefold() in _DEPLOY_DIRECTORY_NAMES else None
+    walk(root, initial_deploy_root)
     return sorted(leaks)

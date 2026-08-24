@@ -154,7 +154,19 @@ def test_source_without_optional_pdf_title_uses_verified_size_metadata(tmp_path)
         }
     }
 
-    assert validate_source(tmp_path, config).valid
+    report = validate_source(tmp_path, config)
+
+    assert report.valid
+    assert report.edition == "Synthetic Edition"
+
+
+def test_available_pdf_title_must_match_expected_edition(source_repo):
+    """Catches expected_edition being required in config but never enforced."""
+    config = {"source": dict(source_repo.config["source"])}
+    config["source"]["expected_edition"] = "Different Synthetic Edition"
+
+    with pytest.raises(SourceValidationError, match="edition"):
+        validate_source(source_repo.root, config)
 
 
 def test_tracked_pdf_and_source_in_deploy_root_fail(source_repo):
@@ -219,3 +231,73 @@ def test_deploy_scan_discovers_every_deploy_root(tmp_path, deploy_root):
     leaked.write_text("private", encoding="utf-8")
 
     assert scan_deploy_leaks(tmp_path) == [leaked]
+
+
+@pytest.mark.parametrize("link_target_kind", ["file", "directory", "broken"])
+def test_deploy_scan_rejects_every_symlink_without_following_it(
+    tmp_path, link_target_kind
+):
+    """Catches symlinked deploy content that redirects leakage scans externally."""
+    deploy = tmp_path / "app/public"
+    deploy.mkdir(parents=True)
+    external = tmp_path / "external"
+    if link_target_kind == "file":
+        external.write_text("external private data", encoding="utf-8")
+    elif link_target_kind == "directory":
+        external.mkdir()
+        (external / "private.json").write_text("external private data", encoding="utf-8")
+    link = deploy / "linked-artifact"
+    target = external if link_target_kind != "broken" else tmp_path / "missing"
+    link.symlink_to(target, target_is_directory=link_target_kind != "file")
+
+    assert scan_deploy_leaks(tmp_path) == [link]
+
+
+@pytest.mark.parametrize(
+    "relative",
+    [
+        "verified/raw-question.json",
+        "config/project.json",
+        ".qbank-stage-deadbeef/staged.json",
+        ".qbank-backup-deadbeef/old.json",
+    ],
+)
+def test_deploy_scan_rejects_raw_private_and_export_work_artifacts(
+    tmp_path, relative
+):
+    """Catches private raw data or recoverable export trees beneath assets."""
+    leaked = tmp_path / "dist" / relative
+    leaked.parent.mkdir(parents=True)
+    leaked.write_text("private", encoding="utf-8")
+
+    assert scan_deploy_leaks(tmp_path) == [leaked]
+
+
+@pytest.mark.parametrize(
+    "relative",
+    [
+        "verified",
+        "config",
+        ".qbank-stage-deadbeef",
+        ".qbank-backup-deadbeef",
+    ],
+)
+def test_deploy_scan_rejects_empty_private_and_export_work_directories(
+    tmp_path, relative
+):
+    """Catches private deploy categories even before a file is written."""
+    leaked = tmp_path / "dist" / relative
+    leaked.mkdir(parents=True)
+
+    assert scan_deploy_leaks(tmp_path) == [leaked]
+
+
+def test_symlinked_deploy_root_is_itself_a_leak(tmp_path):
+    """Catches app/public redirected to an external directory."""
+    external = tmp_path / "external-public"
+    external.mkdir()
+    (tmp_path / "app").mkdir()
+    link = tmp_path / "app/public"
+    link.symlink_to(external, target_is_directory=True)
+
+    assert scan_deploy_leaks(tmp_path) == [link]

@@ -40,7 +40,7 @@
   },
   "allOf": [
     {"if": {"properties": {"status": {"const": "FAILED"}}, "required": ["status"]}, "then": {"properties": {"failure": {"$ref": "#/$defs/failure"}}}, "else": {"properties": {"failure": {"type": "null"}}}},
-    {"if": {"properties": {"status": {"const": "PENDING"}}, "required": ["status"]}, "else": {"required": ["timestamps"]}},
+    {"if": {"properties": {"status": {"const": "PENDING"}}, "required": ["status"]}, "then": {"not": {"required": ["timestamps"]}}, "else": {"required": ["timestamps"]}},
     {"if": {"properties": {"status": {"const": "RUNNING"}}, "required": ["status"]}, "then": {"properties": {"timestamps": {"properties": {"started_at": {"$ref": "#/$defs/timestamp"}, "completed_at": {"type": "null"}}}}}},
     {"if": {"properties": {"status": {"const": "COMPLETED"}}, "required": ["status"]}, "then": {"properties": {"timestamps": {"properties": {"started_at": {"$ref": "#/$defs/timestamp"}, "completed_at": {"$ref": "#/$defs/timestamp"}}}}}},
     {"if": {"properties": {"status": {"const": "FAILED"}}, "required": ["status"]}, "then": {"properties": {"timestamps": {"properties": {"completed_at": {"type": "null"}}}}}}

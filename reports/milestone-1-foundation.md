@@ -3,7 +3,11 @@
 ## Checkpoint
 
 Branch: `codex/qbank-foundation`
-HEAD: `d24fc83` (`docs: checkpoint qbank foundation milestone`)
+Reviewed implementation range (exclusive base, inclusive head):
+`f632213bd33d54efda867e72d201b74905b3058f..238be4dd7775ec7efbe1247fdfbcebb31aef2f7e`.
+This range deliberately names the reviewed head instead of trying to include the
+commit containing this report. Final-review remediation is recorded separately
+in `.superpowers/sdd/2026-08-23-qbank-foundation/final-fix-report.md`.
 
 The foundation is deterministic, fail-closed, and configured for `CODEX_NATIVE` research. No questions were generated, verified, or published. The empty filesystem is the source of truth: `reports/progress.json` records planned `0`, generated `0`, blind passed `0`, QA passed `0`, human reviewed `0`, rejected `0`, quarantined `0`; all discipline/chapter breakdowns and all queue states are empty/zero; and coverage gaps are empty because no manifests are planned yet.
 
@@ -32,6 +36,8 @@ b3d978be6d61d683c127bffce842b5f1e841aa75 fix: constrain numerical threshold symb
 2cafda122f60c0f776c82d9af77680f8ccca14ac fix: validate progress lifecycle evidence
 e10bf62acdbfdccc88b92a78fc5ef85b22368c20 feat: complete deterministic qbank foundation
 b81f83eca5f972aa0483fabf56b5c05d5765f730 fix: preserve manifest sources across CLI jobs
+d24fc839dfba8bd94ef1899109a0e9f764fb0887 docs: checkpoint qbank foundation milestone
+238be4dd7775ec7efbe1247fdfbcebb31aef2f7e docs: fix milestone handoff evidence
 ```
 
 ## Source validation
@@ -45,11 +51,11 @@ The private local source is Toronto Notes 2025, 41st Edition. `qbank validate-so
 
 ## Implemented controls
 
-The milestone provides portable policy/configuration, canonical Draft 2020-12 schemas, atomic JSON I/O, source metadata/hash/page/deploy-leak validation, deterministic manifest and job validation, lifecycle transition enforcement, answer-key-free blind packets with confidence gates, reference normalization and risk flags, filesystem-derived progress, and production export restricted to QA-passed or documented human-reviewed items. Python is deterministic orchestration only: no OpenAI or other model API calls, no API key, and no external model billing. `API_AUTOMATED` is disabled.
+The milestone provides portable policy/configuration, canonical Draft 2020-12 schemas, atomic JSON I/O, source metadata/hash/page/deploy-leak validation, deterministic manifest and job validation, lifecycle transition enforcement, answer-key-free blind packets with confidence gates, reference normalization and risk flags, filesystem-derived progress, and production export restricted to substantively verified QA-passed, documented human-reviewed, or persisted published items. Python is deterministic orchestration only: no OpenAI or other model API calls, no API key, and no external model billing. `API_AUTOMATED` is disabled.
 
 ## Verification evidence
 
-The installed repository environment ran the full suite with `.venv/bin/pytest -q`: **385 passed in 4.66s**. `qbank validate-project` returned `PROJECT_VALID`, `CONFIG_VALID`, `PROMPTS_VALID: 9`, `SCHEMAS_VALID: 11`, `DEPLOY_EXCLUSION_VALID`, and `SOURCE_VALID: 1595 pages`; it explicitly reported `GENERATION_BLOCKED` because zero manifests exist. `git diff --check` returned success, and the tracked-file leakage scan found no PDF, `derived/`, or source-derived deploy artifact.
+The installed repository environment ran the post-review full suite with `.venv/bin/pytest -q`: **457 passed**. `qbank validate-project` returned `PROJECT_VALID`, `CONFIG_VALID`, `PROMPTS_VALID: 9`, `SCHEMAS_VALID: 12`, `DEPLOY_EXCLUSION_VALID`, and `SOURCE_VALID: 1595 pages`; it explicitly reported `GENERATION_BLOCKED` because the six exact discipline identities are not yet present. `git diff --check` returned success, the tracked-file leakage scan found no PDF, `derived/`, or local source configuration, and the deploy scan reported zero leaks.
 
 ## Next authorized milestone
 

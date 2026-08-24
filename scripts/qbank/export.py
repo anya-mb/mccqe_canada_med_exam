@@ -14,14 +14,18 @@ from uuid import uuid4
 
 from .errors import ExportError, QbankError, SchemaValidationError, TransitionError
 from .jsonio import read_json, write_json_atomic
+from .paths import RootPathError, canonical_root, resolve_root_path
+from .publication import (
+    PUBLICATION_ELIGIBLE_STATUSES,
+    public_question_projection,
+    validate_publication_eligibility,
+)
 from .references import ReferenceMergeError, merge_references
 from .schema import validate_instance
 from .source import scan_deploy_leaks
 from .states import validate_transition
 
 
-_REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
-_ELIGIBLE = frozenset({"QA_PASS", "HUMAN_REVIEWED"})
 _REVIEW_FIELDS = frozenset({"reviewer_name", "credentials", "reviewed_at", "scope"})
 _FORBIDDEN_PRIVATE_FIELDS = frozenset(
     {
@@ -94,7 +98,7 @@ def _review_metadata(value: object, path: Path) -> None:
         raise ExportError(f"invalid human review metadata timestamp in {path}")
 
 
-def _public_question(path: Path) -> dict:
+def _public_question(root: Path, path: Path) -> dict:
     source = _read_object(path, "verified question")
     private_paths = _private_paths(source)
     if private_paths:
@@ -102,38 +106,49 @@ def _public_question(path: Path) -> dict:
             f"forbidden private field in verified question {path}: {private_paths[0]}"
         )
 
-    public = deepcopy(source)
-    human_review = public.pop("human_review", None)
-    status = public.get("status")
-    if status == "HUMAN_REVIEWED":
-        _review_metadata(human_review, path)
-    elif human_review is not None:
-        raise ExportError(f"unexpected human review metadata in {path}")
-
     try:
-        validate_instance(_REPOSITORY_ROOT, "question", public)
+        validate_instance(root, "question", source)
     except SchemaValidationError as exc:
+        if source.get("status") == "HUMAN_REVIEWED" and "human_review" in str(exc):
+            raise ExportError(f"incomplete human review metadata in {path}: {exc}") from exc
         raise ExportError(f"invalid verified question {path}: {exc}") from exc
-    if status not in _ELIGIBLE:
+    status = source.get("status")
+    if status not in PUBLICATION_ELIGIBLE_STATUSES:
         raise ExportError(f"ineligible status {status!r} in verified question {path}")
-    if public["verification"]["final_status"] != status:
-        raise ExportError(
-            f"verified question status disagrees with final verification status: {path}"
-        )
+    try:
+        validate_publication_eligibility(source)
+    except SchemaValidationError as exc:
+        raise ExportError(str(exc)) from exc
+    if status == "HUMAN_REVIEWED":
+        _review_metadata(source.get("human_review"), path)
+    public = public_question_projection(source)
+    try:
+        validate_instance(root, "public-question", public)
+    except SchemaValidationError as exc:
+        raise ExportError(f"invalid public question projection for {path}: {exc}") from exc
     return public
 
 
 def _load_questions(root: Path) -> list[dict]:
-    verified = root / "verified"
+    try:
+        verified = resolve_root_path(root, "verified", label="verified question root")
+    except RootPathError as exc:
+        raise ExportError(str(exc)) from exc
     paths = [] if not verified.exists() else sorted(
         path for path in verified.rglob("*.json") if path.is_file()
     )
     questions: list[dict] = []
     seen: dict[str, Path] = {}
-    for path in paths:
-        if path.is_symlink():
-            raise ExportError(f"verified question must not be a symlink: {path}")
-        question = _public_question(path)
+    for discovered in paths:
+        try:
+            path = resolve_root_path(
+                root,
+                discovered.relative_to(root),
+                label="verified question",
+            )
+        except (RootPathError, ValueError) as exc:
+            raise ExportError(str(exc)) from exc
+        question = _public_question(root, path)
         identifier = question["id"]
         if identifier in seen:
             raise ExportError(
@@ -146,15 +161,25 @@ def _load_questions(root: Path) -> list[dict]:
     return sorted(questions, key=lambda question: question["id"])
 
 
-def _load_registry(root: Path) -> dict:
-    path = root / "references" / "registry.json"
+def _load_registry(root: Path, version: str) -> dict:
+    try:
+        path = resolve_root_path(
+            root, "references/registry.json", label="reference registry"
+        )
+    except RootPathError as exc:
+        raise ExportError(str(exc)) from exc
     registry = _read_object(path, "reference registry")
     try:
-        validate_instance(_REPOSITORY_ROOT, "reference-registry", registry)
+        validate_instance(root, "reference-registry", registry)
         canonical, _ = merge_references(registry, [])
-        validate_instance(_REPOSITORY_ROOT, "reference-registry", canonical)
+        validate_instance(root, "reference-registry", canonical)
     except (SchemaValidationError, ReferenceMergeError) as exc:
         raise ExportError(f"invalid reference registry {path}: {exc}") from exc
+    if canonical["version"] != version:
+        raise ExportError(
+            "reference registry version does not match export version: "
+            f"{canonical['version']!r} != {version!r}"
+        )
     return canonical
 
 
@@ -212,13 +237,13 @@ def _write_stage(
     write_json_atomic(stage / "manifest.json", manifest)
 
 
-def _install_stage(stage: Path, target: Path) -> None:
+def _install_stage(stage: Path, target: Path, backup_parent: Path) -> None:
     backup: Path | None = None
     try:
         if target.exists():
             if target.is_symlink() or not target.is_dir():
                 raise ExportError(f"production target must be a directory: {target}")
-            backup = target.parent / f".qbank-backup-{uuid4().hex}"
+            backup = backup_parent / f".qbank-backup-{uuid4().hex}"
             try:
                 os.replace(target, backup)
             except OSError as exc:
@@ -260,7 +285,10 @@ def _install_stage(stage: Path, target: Path) -> None:
 
 def build_production(root: Path, version: str, now: datetime) -> dict:
     """Validate, stage, and atomically replace the public qbank data directory."""
-    root = Path(root)
+    try:
+        root = canonical_root(root)
+    except RootPathError as exc:
+        raise ExportError(str(exc)) from exc
     if not isinstance(version, str) or not version.strip():
         raise ExportError("production version must be a non-empty string")
     generated_at = _timestamp(now)
@@ -274,7 +302,7 @@ def build_production(root: Path, version: str, now: datetime) -> dict:
         raise ExportError(
             f"question content version does not match export version: {', '.join(mismatched)}"
         )
-    registry = _load_registry(root)
+    registry = _load_registry(root, version)
     references = _public_references(registry, questions)
     groups = _group_questions(questions)
     public_registry = {
@@ -283,7 +311,7 @@ def build_production(root: Path, version: str, now: datetime) -> dict:
         "references": references,
     }
     try:
-        validate_instance(_REPOSITORY_ROOT, "reference-registry", public_registry)
+        validate_instance(root, "reference-registry", public_registry)
     except SchemaValidationError as exc:
         raise ExportError(f"invalid public reference registry: {exc}") from exc
 
@@ -303,17 +331,30 @@ def build_production(root: Path, version: str, now: datetime) -> dict:
         "references_file": "references.json",
     }
     try:
-        validate_instance(_REPOSITORY_ROOT, "production-manifest", manifest)
+        validate_instance(root, "production-manifest", manifest)
     except SchemaValidationError as exc:
         raise ExportError(f"invalid production manifest: {exc}") from exc
 
-    target = root / "app" / "public" / "data" / "qbank"
+    try:
+        target = resolve_root_path(
+            root, "app/public/data/qbank", label="production export target"
+        )
+        staging_parent = resolve_root_path(
+            root, ".qbank-export-work/staging", label="export staging root"
+        )
+        backup_parent = resolve_root_path(
+            root, ".qbank-export-work/backups", label="export backup root"
+        )
+    except RootPathError as exc:
+        raise ExportError(str(exc)) from exc
     target.parent.mkdir(parents=True, exist_ok=True)
-    stage = Path(tempfile.mkdtemp(prefix=".qbank-stage-", dir=target.parent))
+    staging_parent.mkdir(parents=True, exist_ok=True)
+    backup_parent.mkdir(parents=True, exist_ok=True)
+    stage = Path(tempfile.mkdtemp(prefix=".qbank-stage-", dir=staging_parent))
     try:
         _write_stage(stage, groups, public_registry, manifest)
         _check_no_deploy_leaks(root)
-        _install_stage(stage, target)
+        _install_stage(stage, target, backup_parent)
     except Exception:
         if stage.exists():
             shutil.rmtree(stage)

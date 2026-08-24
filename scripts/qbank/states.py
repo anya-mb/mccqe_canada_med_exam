@@ -30,6 +30,7 @@ _ADJACENCY = {
     "QUARANTINE": frozenset({"REVISED", "REJECTED"}),
     "REVISED": frozenset({"CANDIDATE"}),
     "HUMAN_REVIEWED": frozenset({"PUBLISHED"}),
+    "PUBLISHED": frozenset({"RETIRED"}),
 }
 
 _REVIEW_FIELDS = ("reviewer_name", "credentials", "reviewed_at", "scope")
@@ -56,7 +57,7 @@ def validate_transition(
     """Raise :class:`TransitionError` unless a lifecycle transition is allowed.
 
     The status graph is deliberately explicit.  In particular, statuses with no
-    adjacency entry (including ``PUBLISHED``, ``REJECTED``, and ``RETIRED``)
+    adjacency entry (including ``REJECTED`` and ``RETIRED``)
     have no outgoing transitions.
     """
     current = _status(current, "current")

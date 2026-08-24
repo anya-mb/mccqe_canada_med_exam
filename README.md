@@ -61,27 +61,34 @@ qbank export --version 2026.1
   required nonempty prompts, the complete schema/valid-fixture catalog, private
   deploy exclusion, source integrity and Git exclusion, and the current
   manifest set. A sound foundation exits successfully with `PROJECT_VALID`.
-  Until exactly six valid discipline manifests exist, it also reports
-  `GENERATION_BLOCKED`; that milestone status is explicit but is not a
-  foundation-validation failure.
+  Until the exact six discipline identities exist once each—Medicine/MED,
+  Obstetrics & Gynecology/OBGYN, Pediatrics/PED, PHELO/PHELO,
+  Psychiatry/PSY, and Surgery/SURG—it also reports `GENERATION_BLOCKED`; that
+  milestone status is explicit but is not a foundation-validation failure.
 - `validate-source` verifies source presence, size, SHA-256, page count,
   `pdfinfo` metadata, Git exclusion, and deploy exclusion.
 - `validate-manifests` validates every JSON manifest and all cross-manifest
   totals, mappings, allocations, and global IDs. An empty foundation is a valid
   set of zero manifests.
-- `create-jobs` fails closed until exactly six valid manifests exist, then
-  creates deterministic, idempotent pending generation jobs.
-- `create-blind` schema-validates a candidate and writes an allowlisted,
-  answer-key-free packet. `--output PATH` overrides its default path under
-  `blind/`.
-- `evaluate-blind` validates the candidate and independent result, applies the
-  configured confidence floor, and reports `BLIND_PASS` or `QUARANTINE` without
+- `create-jobs` fails closed until those exact six identities exist once each,
+  then creates deterministic, idempotent pending generation jobs.
+- `create-blind` requires a `STRUCTURE_PASS` candidate and writes an
+  allowlisted, answer-key-free packet. `--output PATH` overrides its default
+  path under `blind/`.
+- `evaluate-blind` requires `STRUCTURE_PASS`, validates the candidate and
+  independent result, applies the configured confidence floor and shared
+  lifecycle transition rules, and reports `BLIND_PASS` or `QUARANTINE` without
   changing the candidate answer.
 - `progress` regenerates `reports/progress.json` and `reports/progress.md` from
   filesystem truth.
 - `export` validates and atomically replaces `app/public/data/qbank/` for the
-  requested content version. Only publication-eligible verified questions and
-  their referenced public records are included.
+  requested uniform content version. Only publication-eligible `QA_PASS`,
+  `HUMAN_REVIEWED`, or already-`PUBLISHED` verified questions and their
+  referenced public records are included.
+
+All command input/output paths other than the selected `--root` are strictly
+root-relative: absolute paths, parent traversal, and symlink ancestors fail
+closed.
 
 ## Lifecycle and publication boundary
 
@@ -91,13 +98,17 @@ The canonical path is:
 DRAFT → CANDIDATE → STRUCTURE_PASS → BLIND_PASS → MEDICAL_PASS → QA_PASS → PUBLISHED
                     CANDIDATE → QUARANTINE → REVISED → CANDIDATE
                                              QUARANTINE → REJECTED
+MEDICAL_PASS or QA_PASS → HUMAN_REVIEWED → PUBLISHED → RETIRED
 ```
 
 `HUMAN_REVIEWED` requires real item-specific reviewer metadata and is reachable
-only from `MEDICAL_PASS` or `QA_PASS`. Unlisted transitions fail. `PUBLISHED`,
-`REJECTED`, and `RETIRED` are terminal. Production export reads only
-`verified/` and admits `QA_PASS` items or documented `HUMAN_REVIEWED` items;
-candidates, blind results, QA notes, source text, quarantine, rejected, and
+only from `MEDICAL_PASS` or `QA_PASS`. `PUBLISHED` may move only to `RETIRED`;
+`REJECTED` and `RETIRED` are terminal, and all unlisted transitions fail.
+Production export reads only `verified/` and admits `QA_PASS`, documented
+`HUMAN_REVIEWED`, or persisted `PUBLISHED` items. A separate strict public
+schema validates an allowlist projection that omits reviewer identity,
+verification internals, private physical-PDF mapping, and source-only QA flags.
+Candidates, blind results, QA notes, source text, quarantine, rejected, and
 retired artifacts are private and never exported.
 
 ## Private source rules
@@ -128,8 +139,10 @@ research, and write only the job's declared artifact paths. The controller then
 validates the returned JSON before moving the job through
 `pending → running → completed` or `failed`. Failures retain logs and artifacts,
 carry a supported failure class, increment attempts, and may retry only within
-the configured limit. Completed jobs are immutable. Stable question IDs are
-allocated before dispatch, so concurrent work cannot claim overlapping IDs.
+the configured limit. Each transition holds an exclusive per-job claim across
+read, validation, write, and move; completed jobs are immutable. Stable question
+IDs are allocated before dispatch, so concurrent work cannot claim overlapping
+IDs.
 
 When no Codex task is active, no agent work runs. Durable queue files make the
 workflow resumable at the next active task without an unattended service or

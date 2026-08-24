@@ -23,15 +23,24 @@ REVIEW = {
 }
 
 
+@pytest.fixture(autouse=True)
+def selected_root_schemas(tmp_path):
+    """Every export test supplies the schemas its selected root owns."""
+    shutil.copytree(REPO_ROOT / "schemas", tmp_path / "schemas", dirs_exist_ok=True)
+
+
 def _question(identifier: str, status: str, reference_id: str = "REF-SYN-001") -> dict:
     question = copy.deepcopy(read_json(FIXTURES / "question.json"))
     question["id"] = identifier
     question["status"] = status
     question["references"] = [reference_id]
-    question["verification"]["final_status"] = (
-        status if status in {"QA_PASS", "HUMAN_REVIEWED"} else "PENDING"
-    )
-    if status in {"QA_PASS", "HUMAN_REVIEWED"}:
+    question["verification"]["final_status"] = {
+        "QA_PASS": "QA_PASS",
+        "HUMAN_REVIEWED": "HUMAN_REVIEWED",
+        "PUBLISHED": "PUBLISHED",
+        "RETIRED": "RETIRED",
+    }.get(status, "PENDING")
+    if status in {"QA_PASS", "HUMAN_REVIEWED", "PUBLISHED", "RETIRED"}:
         question["verification"].update(
             blind_verifier_answer="A",
             blind_verifier_confidence=0.95,
@@ -111,6 +120,13 @@ def test_export_includes_only_verified_publication_eligible_items(tmp_path):
         "HUMAN_REVIEWED",
     }
     assert all("human_review" not in question for question in result["questions"])
+    assert all("verification" not in question for question in result["questions"])
+    assert all("pdf_pages" not in question["toronto_notes"] for question in result["questions"])
+    assert all("toronto_notes_gap_fill" not in question for question in result["questions"])
+    assert all(
+        "guideline_updated_since_tn2025" not in question
+        for question in result["questions"]
+    )
     output = tmp_path / "app" / "public" / "data" / "qbank"
     assert read_json(output / "synthetic-discipline" / "questions.json") == result[
         "questions"
@@ -185,6 +201,80 @@ def test_malformed_eligible_question_fails_closed_before_replacement(tmp_path):
         build_production(tmp_path, "2026.1", FIXED_NOW)
 
     assert marker.read_text(encoding="utf-8") == "old production"
+
+
+def test_relabelled_candidate_cannot_export(tmp_path):
+    """Catches admission after changing only status and final_status to QA_PASS."""
+    _populate(tmp_path)
+    marker = _seed_live_output(tmp_path)
+    relabelled = read_json(
+        REPO_ROOT / "tests/fixtures/adversarial/relabeled-candidate.json"
+    )
+    write_json_atomic(tmp_path / "verified/relabelled.json", relabelled)
+
+    with pytest.raises(ExportError, match="publication eligibility"):
+        build_production(tmp_path, "2026.1", FIXED_NOW)
+
+    assert marker.read_text(encoding="utf-8") == "old production"
+
+
+def test_export_uses_selected_root_question_schema(tmp_path):
+    """Catches verified input validation against package-relative schemas."""
+    _populate(tmp_path)
+    schema_path = tmp_path / "schemas/question.schema.json"
+    schema = read_json(schema_path)
+    schema["required"].append("selected_root_marker")
+    write_json_atomic(schema_path, schema)
+
+    with pytest.raises(ExportError, match="selected_root_marker"):
+        build_production(tmp_path, "2026.1", FIXED_NOW)
+
+
+def test_export_fails_when_selected_root_question_schema_is_missing(tmp_path):
+    """Catches fallback to the installed repository schema catalog."""
+    _populate(tmp_path)
+    (tmp_path / "schemas/question.schema.json").unlink()
+
+    with pytest.raises(ExportError, match="schema not found"):
+        build_production(tmp_path, "2026.1", FIXED_NOW)
+
+
+def test_export_requires_uniform_registry_and_question_content_version(tmp_path):
+    """Catches mixed-version reference data in a production snapshot."""
+    _populate(tmp_path)
+    registry_path = tmp_path / "references/registry.json"
+    registry = read_json(registry_path)
+    registry["version"] = "2025.9"
+    write_json_atomic(registry_path, registry)
+
+    with pytest.raises(ExportError, match="registry.*version"):
+        build_production(tmp_path, "2026.1", FIXED_NOW)
+
+
+def test_export_rejects_mixed_question_content_versions(tmp_path):
+    """Characterizes the one-version contract across every exported question."""
+    _populate(tmp_path)
+    question_path = tmp_path / "verified/human.json"
+    question = read_json(question_path)
+    question["content_version"] = "2025.9"
+    write_json_atomic(question_path, question)
+
+    with pytest.raises(ExportError, match="content version.*SYN-UNIT-002"):
+        build_production(tmp_path, "2026.1", FIXED_NOW)
+
+
+def test_published_question_remains_persistable_and_exportable(tmp_path):
+    """Catches a PUBLISHED state that cannot survive the next export rebuild."""
+    _populate(tmp_path)
+    (tmp_path / "verified/qa.json").unlink()
+    write_json_atomic(
+        tmp_path / "verified/published.json",
+        _question("SYN-PUBLISHED-001", "PUBLISHED"),
+    )
+
+    result = build_production(tmp_path, "2026.1", FIXED_NOW)
+
+    assert "SYN-PUBLISHED-001" in {question["id"] for question in result["questions"]}
 
 
 def test_recursive_private_field_scan_blocks_verifier_reasoning(tmp_path):
@@ -262,8 +352,31 @@ def test_backup_cleanup_failure_is_nonfatal_after_live_swap(tmp_path, monkeypatc
     assert result["manifest"]["question_count"] == 2
     assert read_json(live / "manifest.json") == result["manifest"]
     assert not (live / "old-marker.txt").exists()
-    backups = sorted(output_parent.glob(".qbank-backup-*"))
+    assert not list(output_parent.glob(".qbank-backup-*"))
+    backups = sorted((tmp_path / ".qbank-export-work/backups").glob(".qbank-backup-*"))
     assert len(backups) == 1
     assert (backups[0] / "old-marker.txt").read_text(encoding="utf-8") == (
         "old production"
     )
+
+
+def test_export_rejects_deploy_symlink_ancestor_without_touching_external_data(
+    tmp_path
+):
+    """Catches app/public/data redirecting stage/install writes externally."""
+    _populate(tmp_path)
+    data = tmp_path / "app/public/data"
+    if data.exists():
+        shutil.rmtree(data)
+    data.parent.mkdir(parents=True, exist_ok=True)
+    external = tmp_path.parent / f"{tmp_path.name}-external-data"
+    external.mkdir()
+    marker = external / "marker.txt"
+    marker.write_text("external unchanged", encoding="utf-8")
+    data.symlink_to(external, target_is_directory=True)
+
+    with pytest.raises(ExportError, match="symlink|deploy"):
+        build_production(tmp_path, "2026.1", FIXED_NOW)
+
+    assert marker.read_text(encoding="utf-8") == "external unchanged"
+    assert not (external / "qbank").exists()

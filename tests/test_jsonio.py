@@ -33,3 +33,19 @@ def test_read_json_rejects_non_finite_number_tokens(tmp_path, token):
 def test_write_json_rejects_non_finite_float(tmp_path):
     with pytest.raises(QbankError, match="non-finite"):
         write_json_atomic(tmp_path / "data.json", {"value": float("nan")})
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        '{"status": "CANDIDATE", "status": "QA_PASS"}',
+        '{"outer": {"answer": "A", "answer": "B"}}',
+    ],
+)
+def test_read_json_rejects_duplicate_object_keys(tmp_path, payload):
+    """Catches last-key-wins relabeling in untrusted JSON artifacts."""
+    target = tmp_path / "duplicate.json"
+    target.write_text(payload, encoding="utf-8")
+
+    with pytest.raises(QbankError, match="duplicate JSON object key"):
+        read_json(target)
