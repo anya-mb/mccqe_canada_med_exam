@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mccqe-qbank-pipeline"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = ["jsonschema>=4.23,<5"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9"]
+
+[project.scripts]
+qbank = "qbank.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "scripts"}
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
