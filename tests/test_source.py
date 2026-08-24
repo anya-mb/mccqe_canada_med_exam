@@ -57,6 +57,7 @@ def source_repo(tmp_path) -> SourceRepo:
                 "path": str(pdf),
                 "expected_edition": "Synthetic Edition",
                 "expected_pages": 1,
+                "expected_size_bytes": pdf.stat().st_size,
                 "expected_sha256": hashlib.sha256(pdf.read_bytes()).hexdigest(),
             }
         },
@@ -71,6 +72,7 @@ def minimal_config():
             "path": "/does/not/exist.pdf",
             "expected_edition": "Synthetic Edition",
             "expected_pages": 1,
+            "expected_size_bytes": 0,
             "expected_sha256": "0" * 64,
         }
     }
@@ -109,6 +111,32 @@ def test_source_metadata_hash_and_page_mismatches_fail(source_repo):
         config["source"][key] = value
         with pytest.raises(SourceValidationError):
             validate_source(source_repo.root, config)
+
+
+def test_missing_expected_size_fails_closed(source_repo):
+    """Catches validators that permit a source without size integrity metadata."""
+    config = {"source": dict(source_repo.config["source"])}
+    del config["source"]["expected_size_bytes"]
+
+    with pytest.raises(SourceValidationError, match="missing required"):
+        validate_source(source_repo.root, config)
+
+
+def test_git_tracking_check_fails_closed_when_supplied_root_is_not_a_repository(tmp_path):
+    """Catches Git failures that are incorrectly treated as an untracked source."""
+    pdf = tmp_path / "source.pdf"
+    write_pdf(pdf)
+    config = {
+        "source": {
+            "path": str(pdf),
+            "expected_edition": "Synthetic Edition",
+            "expected_pages": 1,
+            "expected_size_bytes": pdf.stat().st_size,
+            "expected_sha256": hashlib.sha256(pdf.read_bytes()).hexdigest(),
+        }
+    }
+    with pytest.raises(SourceValidationError, match="Git tracking"):
+        validate_source(tmp_path, config)
 
 
 def test_source_without_optional_pdf_title_uses_verified_size_metadata(tmp_path):
@@ -150,5 +178,44 @@ def test_deploy_scan_finds_private_derived_artifacts(tmp_path):
     leaked = tmp_path / "dist" / "derived" / "pages.json"
     leaked.parent.mkdir(parents=True)
     leaked.write_text("private source extraction", encoding="utf-8")
+
+    assert scan_deploy_leaks(tmp_path) == [leaked]
+
+
+@pytest.mark.parametrize(
+    "private_directory",
+    [
+        "batches",
+        "candidates",
+        "blind",
+        "blind_verification",
+        "quarantine",
+        "rejected",
+        "retired",
+        "derived",
+        "jobs",
+        "manifests",
+        "verifier",
+        "verifier_reasoning",
+        "qa",
+        "qa_notes",
+        "rationale_verification",
+    ],
+)
+def test_deploy_scan_finds_every_private_lifecycle_artifact(tmp_path, private_directory):
+    """Catches omission of any private lifecycle artifact from public assets."""
+    leaked = tmp_path / "app" / "public" / private_directory / "artifact.json"
+    leaked.parent.mkdir(parents=True)
+    leaked.write_text("private", encoding="utf-8")
+
+    assert scan_deploy_leaks(tmp_path) == [leaked]
+
+
+@pytest.mark.parametrize("deploy_root", ["app/public", "public", "dist"])
+def test_deploy_scan_discovers_every_deploy_root(tmp_path, deploy_root):
+    """Catches deploy-root discovery limited to one public-assets convention."""
+    leaked = tmp_path / deploy_root / "derived" / "artifact.json"
+    leaked.parent.mkdir(parents=True)
+    leaked.write_text("private", encoding="utf-8")
 
     assert scan_deploy_leaks(tmp_path) == [leaked]

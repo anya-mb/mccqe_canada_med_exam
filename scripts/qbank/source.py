@@ -9,7 +9,27 @@ from .errors import SourceValidationError
 
 
 _DEPLOY_DIRECTORY_NAMES = {"public", "dist"}
-_PRIVATE_DIRECTORY_NAMES = {"derived", "source", "private", "extracted", "ocr"}
+_PRIVATE_DIRECTORY_NAMES = {
+    "batches",
+    "blind",
+    "blind_verification",
+    "candidates",
+    "derived",
+    "extracted",
+    "jobs",
+    "manifests",
+    "ocr",
+    "private",
+    "qa",
+    "qa_notes",
+    "quarantine",
+    "rationale_verification",
+    "rejected",
+    "retired",
+    "source",
+    "verifier",
+    "verifier_reasoning",
+}
 
 
 @dataclass(frozen=True)
@@ -47,17 +67,26 @@ def _pdfinfo(path: Path) -> dict[str, str]:
     return metadata
 
 
-def _is_tracked_by_git(path: Path) -> bool:
-    """Return whether the file is tracked by the repository containing it."""
+def _is_tracked_by_git(root: Path, path: Path) -> bool:
+    """Return whether the supplied repository root tracks the source file."""
+    try:
+        relative_path = path.relative_to(root)
+    except ValueError as exc:
+        raise SourceValidationError("source is outside the supplied repository root") from exc
     try:
         result = subprocess.run(
-            ["git", "-C", str(path.parent), "ls-files", "--error-unmatch", "--", path.name],
+            ["git", "ls-files", "--error-unmatch", "--", str(relative_path)],
+            cwd=root,
             capture_output=True,
             text=True,
         )
     except OSError as exc:
         raise SourceValidationError("unable to check source Git tracking") from exc
-    return result.returncode == 0
+    if result.returncode == 0:
+        return True
+    if result.returncode == 1:
+        return False
+    raise SourceValidationError("unable to check source Git tracking")
 
 
 def _is_deploy_path(path: Path) -> bool:
@@ -68,7 +97,13 @@ def _source_settings(config: dict) -> dict:
     source = config.get("source") if isinstance(config, dict) else None
     if not isinstance(source, dict):
         raise SourceValidationError("missing source configuration")
-    required = ("path", "expected_edition", "expected_pages", "expected_sha256")
+    required = (
+        "path",
+        "expected_edition",
+        "expected_pages",
+        "expected_size_bytes",
+        "expected_sha256",
+    )
     if any(key not in source for key in required):
         raise SourceValidationError("missing required source configuration")
     return source
@@ -86,11 +121,11 @@ def validate_source(root: Path, config: dict) -> SourceReport:
         raise SourceValidationError(f"source is missing: {path}")
     if _is_deploy_path(path):
         raise SourceValidationError(f"source is inside a deploy root: {path}")
-    if _is_tracked_by_git(path):
+    if _is_tracked_by_git(root, path):
         raise SourceValidationError(f"source PDF is Git-tracked: {path}")
 
-    expected_size = source.get("expected_size_bytes")
-    if expected_size is not None and path.stat().st_size != expected_size:
+    expected_size = source["expected_size_bytes"]
+    if path.stat().st_size != expected_size:
         raise SourceValidationError("source size does not match configured size")
 
     digest = _sha256(path)
@@ -99,13 +134,12 @@ def validate_source(root: Path, config: dict) -> SourceReport:
 
     metadata = _pdfinfo(path)
     edition = metadata.get("Title")
-    if expected_size is not None:
-        try:
-            reported_size = int(metadata["File size"].split()[0])
-        except (KeyError, ValueError, IndexError) as exc:
-            raise SourceValidationError("source PDF does not report a valid file size") from exc
-        if reported_size != expected_size:
-            raise SourceValidationError("source PDF metadata size does not match configuration")
+    try:
+        reported_size = int(metadata["File size"].split()[0])
+    except (KeyError, ValueError, IndexError) as exc:
+        raise SourceValidationError("source PDF does not report a valid file size") from exc
+    if reported_size != expected_size:
+        raise SourceValidationError("source PDF metadata size does not match configuration")
     try:
         pages = int(metadata["Pages"])
     except (KeyError, ValueError) as exc:
