@@ -43,7 +43,7 @@ def test_load_ocr_pages_requires_one_record_per_pdf_page(tmp_path):
         load_ocr_pages(ocr_dir, page_count=2)
 
 
-def test_build_searchable_pdf_writes_clean_text_and_searchable_invisible_layer(tmp_path):
+def test_build_searchable_pdf_writes_clean_text_and_searchable_white_layer(tmp_path):
     source = tmp_path / "source.pdf"
     output = tmp_path / "searchable.pdf"
     clean_dir = tmp_path / "clean-ocr"
@@ -62,4 +62,7 @@ def test_build_searchable_pdf_writes_clean_text_and_searchable_invisible_layer(t
     assert "needle" in document[0].get_text().lower()
     assert "page has needle" in document[0].get_text().lower()
     assert document[0].get_text("words")
+    content = b"".join(document.xref_stream(xref) or b"" for xref in document[0].get_contents())
+    assert b"3 Tr" not in content
+    assert b"1 1 1" in content
     document.close()

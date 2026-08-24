@@ -38,8 +38,9 @@ the already synchronized repository environment:
 
 ## Create a searchable private PDF
 
-Use the local OCR page records to add an invisible text layer while leaving
-the rendered PDF pages unchanged. The command also writes one normalized UTF-8
+Use the local OCR page records to add a tiny white searchable text layer. The
+text is placed over the existing page without changing the source PDF. The
+command also writes one normalized UTF-8
 text file per page under the ignored `derived/` tree:
 
 ```bash

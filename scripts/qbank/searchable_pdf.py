@@ -63,8 +63,8 @@ def _chunks(text: str, limit: int = _MAX_TEXTBOX_CHARS) -> list[str]:
     return chunks
 
 
-def _insert_invisible_text(page: pymupdf.Page, text: str) -> None:
-    """Insert searchable text using PDF rendering mode 3 (invisible)."""
+def _insert_searchable_text(page: pymupdf.Page, text: str) -> None:
+    """Insert tiny white text for broad PDF-viewer search compatibility."""
     if not text:
         return
     for chunk in _chunks(text):
@@ -75,7 +75,6 @@ def _insert_invisible_text(page: pymupdf.Page, text: str) -> None:
             fontsize=0.5,
             lineheight=0.5,
             color=(1, 1, 1),
-            render_mode=3,
             overlay=True,
         )
 
@@ -97,7 +96,7 @@ def build_searchable_pdf(
             (clean_ocr_dir / f"{page_number:04d}.txt").write_text(
                 text + "\n" if text else "", encoding="utf-8"
             )
-            _insert_invisible_text(document[page_number - 1], text)
+            _insert_searchable_text(document[page_number - 1], text)
         document.save(output_pdf, garbage=4, deflate=True)
         return argparse.Namespace(page_count=document.page_count)
     finally:
