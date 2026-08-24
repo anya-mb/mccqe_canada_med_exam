@@ -176,6 +176,7 @@ def test_transition_moves_atomically_and_adds_deterministic_timestamps(
         "completed_at": None,
     }
     assert not (tmp_path / f"jobs/pending/{pending_job['job_id']}.json").exists()
+    validate_instance(REPO_ROOT, "job", read_json(running))
 
     completed = transition_job(tmp_path, pending_job["job_id"], "completed")
     completed_value = read_json(completed)
