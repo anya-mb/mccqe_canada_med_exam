@@ -19,7 +19,7 @@ then continue.
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | *(pending — see PROGRESS.md / git log for the commit created for this checkpoint)* |
+| Last completed commit | `539da16` — scope: map E Endocrinology |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
