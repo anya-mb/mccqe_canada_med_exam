@@ -26,6 +26,13 @@ from .manifests import ManifestDocument, ManifestSummary, validate_manifest_set
 from .paths import RootPathError, canonical_root, resolve_root_path
 from .progress import write_progress
 from .schema import validate_instance
+from .scope_packet import (
+    DEFAULT_MAX_CANDIDATES,
+    packet_output_path,
+    prepare_chapter_packet,
+    search_objectives,
+)
+from .scope_validate import report_output_path, validate_scope_chapter
 from .source import scan_deploy_leaks, validate_source
 
 
@@ -337,6 +344,62 @@ def _command_export(args: argparse.Namespace) -> None:
     )
 
 
+def _command_prepare_scope_chapter(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    try:
+        packet, report = prepare_chapter_packet(
+            root, args.chapter_code, max_candidates=args.max_candidates
+        )
+    except QbankError as exc:
+        raise CommandError("SCOPE_PACKET_FAILURE", str(exc)) from exc
+    output = packet_output_path(root, args.chapter_code)
+    write_json_atomic(output, packet)
+    print(
+        "\n".join(
+            [
+                f"Chapter: {report.chapter_code}",
+                f"Source nodes: {report.source_node_count}",
+                f"Candidate MCC objectives: {report.candidate_objective_count}",
+                f"Explicit Study Smarter candidates: {report.explicit_study_smarter_count}",
+                f"Unresolved source headings: {report.unresolved_heading_count}",
+                f"Packet bytes: {report.packet_bytes}",
+                f"Estimated tokens: {report.estimated_tokens}",
+                f"Candidate set truncated: {'true' if report.candidate_set_truncated else 'false'}",
+                f"SCOPE_PACKET_WRITTEN: {_display_path(root, output)}",
+            ]
+        )
+    )
+
+
+def _command_validate_scope_chapter(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    try:
+        result = validate_scope_chapter(root, args.chapter_code)
+    except QbankError as exc:
+        raise CommandError("SCOPE_VALIDATION_FAILURE", str(exc)) from exc
+    output = report_output_path(root, args.chapter_code)
+    write_json_atomic(output, result.to_dict())
+    lines = [f"CHAPTER_VALIDATION: {result.chapter} {result.status}"]
+    for name, status in result.checks.items():
+        lines.append(f"  {name}: {status}")
+    for warning in result.warnings:
+        lines.append(f"WARNING: {warning}")
+    for error in result.errors:
+        lines.append(f"ERROR: {error}")
+    lines.append(f"REPORT_WRITTEN: {_display_path(root, output)}")
+    print("\n".join(lines))
+    if result.status != "PASS":
+        raise CommandError("SCOPE_VALIDATION_FAILED", f"{result.chapter}: {len(result.errors)} error(s)")
+
+
+def _command_search_mcc_objectives(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    matches = search_objectives(root, args.query, limit=args.limit)
+    print(f"MATCHES: {len(matches)}")
+    for match in matches:
+        print(f"  {match['mcc_id']}\t{match['role']}\t{match['title']}")
+
+
 def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--root",
@@ -382,6 +445,21 @@ def _parser() -> argparse.ArgumentParser:
         ),
         ("progress", "regenerate progress reports", _command_progress),
         ("export", "build validated production data", _command_export),
+        (
+            "prepare-scope-chapter",
+            "build a compact deterministic scope packet for one TN chapter",
+            _command_prepare_scope_chapter,
+        ),
+        (
+            "validate-scope-chapter",
+            "run deterministic structural validation for one completed scope chapter",
+            _command_validate_scope_chapter,
+        ),
+        (
+            "search-mcc-objectives",
+            "on-demand deterministic full-registry MCC objective search",
+            _command_search_mcc_objectives,
+        ),
     )
     parsers = {}
     for name, help_text, handler in commands:
@@ -395,6 +473,13 @@ def _parser() -> argparse.ArgumentParser:
     parsers["evaluate-blind"].add_argument("candidate", type=Path)
     parsers["evaluate-blind"].add_argument("result", type=Path)
     parsers["export"].add_argument("--version", required=True)
+    parsers["prepare-scope-chapter"].add_argument("chapter_code")
+    parsers["prepare-scope-chapter"].add_argument(
+        "--max-candidates", type=int, default=DEFAULT_MAX_CANDIDATES
+    )
+    parsers["validate-scope-chapter"].add_argument("chapter_code")
+    parsers["search-mcc-objectives"].add_argument("query")
+    parsers["search-mcc-objectives"].add_argument("--limit", type=int, default=20)
     return parser
 
 

@@ -25,6 +25,21 @@ Study Smarter:
 Frozen scope schema:
 <actual schema path>
 
+## Chapter helper commands
+
+Use these deterministic (non-LLM) helpers per chapter, see
+`docs/scope-chapter-workflow.md`:
+
+- `python -m scripts.qbank prepare-scope-chapter <CODE>` builds a compact
+  context packet at `derived/scope_packets/<CODE>.json`. Use the packet, not
+  the full TOC inventory or objectives registry, for study-unit derivation
+  and MCC mapping.
+- `python -m scripts.qbank validate-scope-chapter <CODE>` replaces manual
+  deterministic rechecking (schema, source accounting, MCC ID existence,
+  hygiene). Only review what it flags as WEAK/UNCERTAIN/warning.
+- `python -m scripts.qbank search-mcc-objectives "<query>"` searches the full
+  registry when a packet's candidate set doesn't contain the right objective.
+
 ## Accuracy rules
 
 - Never invent Toronto Notes headings.

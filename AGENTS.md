@@ -36,6 +36,12 @@
 - Resume from `reports/scope_scaling_progress.json`.
 - Use the frozen scope schema.
 - Use deterministic validation for structural checks.
+- Use compact per-chapter packets (`python -m scripts.qbank prepare-scope-chapter <CODE>`)
+  and the deterministic validator (`python -m scripts.qbank validate-scope-chapter <CODE>`)
+  instead of loading the full TOC inventory/objectives registry or manually
+  rechecking machine-verifiable facts. See `docs/scope-chapter-workflow.md`.
+- Give risk-based second review only to what the validator flags
+  (WEAK/UNCERTAIN/warnings).
 - Use LLM review only for judgment-heavy mappings and flagged risks.
 - Commit every completed chapter before starting another chapter.
 - Stop after the requested chapter unless explicitly instructed to continue.
