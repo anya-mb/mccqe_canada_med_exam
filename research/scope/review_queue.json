@@ -5,13 +5,14 @@
     "ELOM",
     "A",
     "CP",
-    "D"
+    "D",
+    "ER"
   ],
   "chapters_without_review_items_file": [
     "C",
     "ELOM"
   ],
-  "total_items": 12,
+  "total_items": 17,
   "items": [
     {
       "issue_type": "structural_ambiguity",
@@ -132,6 +133,52 @@
       "recommended_action": "No action required for chapter D itself (fully resolved). Flagged informational so the coordinator is aware that chapter D's toc_inventory.json node titles are less reliable as literal section titles than other chapters if they are ever consumed directly (e.g. by tooling) rather than through study_units.json's resolved titles.",
       "affects_global_toc": false,
       "chapter_code": "D"
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "informational",
+      "study_unit_id": "ER.S05-ER.S08 (SU-ER-28 through SU-ER-33)",
+      "title": "Section-boundary page numbers lag their true body content by one page for pdf 285-290",
+      "summary": "For the contiguous run of toc_inventory.json nodes ER.S04 (tail)/ER.S05/ER.S06/ER.S07/ER.S08 (Otolaryngological, Gynecologic, Ophthalmologic, Dermatologic Emergencies), each node's recorded start_pdf_page is one page earlier than where its titled content actually begins in body OCR: ER.S05 states start_pdf_page 285 but pdf 285 body text is Stroke/TIA (belongs to ER.S04.T12); Epistaxis (ER.S05.T01) actually starts pdf 286 (inside ER.S06's stated range); Nephrolithiasis (ER.S06.T03) actually starts pdf 288 (inside ER.S07's stated range); Ophthalmologic content actually starts pdf 289 (inside ER.S08's stated range); Dermatologic content is a single real page at pdf 290 against a stated 289-290 range. This is a distinct defect class from the two-column TOC-OCR title merges documented elsewhere in this chapter - it affects page-boundary numbers on already-correctly-titled nodes, not the titles themselves.",
+      "resolution_status": "INDEPENDENTLY RESOLVED for chapter ER's own crosswalk - all 6 affected study units (SU-ER-28 through SU-ER-33) cite the toc_inventory.json node whose title is the correct structural match, but record the true confirmed pdf_page_range from body-heading confirmation rather than the node's stated range, with page_mapping_precision set to SECTION_INHERITED and the discrepancy noted in structural_rationale.",
+      "recommended_action": "Coordinator should consider a targeted re-run or manual correction of the TOC-extraction pipeline's page-boundary assignment for chapter ER nodes S05-S08 in toc_inventory.json (shift each node's start_pdf_page/end_pdf_page forward by one page), since this is a distinct, previously undocumented class of extraction defect that could plausibly recur in other chapters with similar TOC layouts. Flagged informational/low-priority since chapter ER's own crosswalk is unaffected (all 6 units are fully resolved and validated against confirmed body pages).",
+      "affects_global_toc": true,
+      "chapter_code": "ER"
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "informational",
+      "study_unit_id": "N/A (unresolved TOC fragments, no study unit)",
+      "title": "Three TOC section-title fragments have no corresponding body content anywhere in chapter ER",
+      "summary": "Chapter ER's TOC page (pdf 247) is a badly OCR'd two-column layout; most of its garbling could be resolved by matching each fragment to real body content elsewhere in the chapter (documented per-unit and in study_units.json's same_page_merge_resolutions). Three fragments could not be resolved: (1) ER.S11's 'opine and Spinal Cord Trauma' fragment (paired in the section title with the real 'Psychiatric Emergencies' heading) - no matching body content found in pdf 253-308; possibly a fragment of 'Meperidine' or similar drug name plus a genuine 'Spinal Cord Trauma' subheading that was never captured as its own toc_inventory.json node (chapter ER's Traumatology section covers head/chest/abdominal/GU/extremity trauma but no distinct spinal-cord-trauma subsection was found in body OCR, despite spinal trauma being MCC objective 109-13). (2) ER.S13's 'Joint Pain' fragment (paired with the real 'Common Medications' heading) - no matching body content found in pdf 306-307; possibly a cross-chapter TOC bleed from another discipline's TOC column. (3) ER.S14's 'Shortness of Breath' fragment (paired with the real 'References' heading) - no matching body content found anywhere in pdf 247-308; possibly belongs to Respirology's TOC column.",
+      "resolution_status": "NOT independently resolved - these three fragments are not assigned to any ER study unit. If real content exists (especially 'Spinal Cord Trauma', which would otherwise leave MCC objective 109-13 under-represented in this chapter despite Traumatology being ER.S02's core content), it was not locatable within this chapter's declared pdf 247-308 page range via body-heading confirmation.",
+      "recommended_action": "Coordinator should check whether a genuine 'Spinal Cord Trauma' subsection exists in the source PDF near ER.S02 (Traumatology, pdf 253-263) or ER.S11 (pdf 302) that this pass's page-by-page body scan missed, and whether 'Joint Pain' / 'Shortness of Breath' are genuine TOC entries for a different chapter (Rheumatology/Orthopedic Surgery for Joint Pain; Respirology for Shortness of Breath) that bled into ER's TOC OCR due to physical page adjacency in the printed book.",
+      "affects_global_toc": true,
+      "chapter_code": "ER"
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-ER-29",
+      "title": "Epistaxis has no dedicated MCC objective and is left UNCERTAIN",
+      "summary": "No MCC objective in the candidate packet, nor any hit from targeted registry searches ('epistaxis', 'nosebleed'), names epistaxis. The retained WEAK evidence (15-1, 'Bleeding, bruising') is a generic bleeding-symptom anchor rather than a confirmed match.",
+      "recommended_action": "Coordinator/reviewer to confirm whether epistaxis is intended to be tested under Otolaryngology's OT27 cross-reference instead (Toronto Notes itself cross-references this content there), in which case this ER unit's classification could remain UNCERTAIN/low-coverage-weight by design, or whether a dedicated MCC objective exists under different title vocabulary not yet found by keyword search."
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-ER-34",
+      "title": "Heat-related illness (heat exhaustion/heat stroke) has no MCC objective found",
+      "summary": "Targeted registry searches ('heat', 'heatstroke', 'environmental', 'hyperthermia') found no MCC objective addressing environmental heat illness specifically; 'Fever and hyperthermia' (107-1) covers hyperthermia only as a fever-differential symptom, not exertional/environmental heat illness, so it was not retained even as WEAK evidence. mcc_evidence is left empty per the classification's UNCERTAIN status.",
+      "recommended_action": "Coordinator/reviewer to confirm no MCC objective covers environmental heat illness before accepting zero MCC-linked question coverage for this content; if genuinely absent from MCC's objective set, this should be documented as a confirmed scope gap rather than left as an open search TODO."
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-ER-19, SU-ER-22, SU-ER-27, SU-ER-37, SU-ER-44",
+      "title": "Five COMPONENT units retain a secondary WEAK MCC evidence citation alongside a stronger primary anchor",
+      "summary": "SU-ER-19 (Cardiac Dysrhythmias) cites 68/Palpitations at MODERATE plus 62/Abnormal heart sounds at WEAK; SU-ER-22 (VTE) cites 27/Dyspnea at MODERATE plus 15-2/Prevention of venous thrombosis at WEAK; SU-ER-27 (Sepsis) cites 9-2/Shock at STRONG plus 107-1/Fever and hyperthermia at WEAK; SU-ER-37 (Bites) cites 109-12/Skin wounds at WEAK as its only anchor; SU-ER-44 (Approach to Psychiatric Presentations) cites 86/Psychosis at WEAK as its only anchor, since the unit's actual scope (general safety/history/MSE approach) is broader than any single psychiatric-presentation objective.",
+      "recommended_action": "Coordinator/reviewer to confirm whether each WEAK secondary citation adds question-writing value or should be dropped in favor of the stronger primary evidence alone (where one exists), and for SU-ER-37/SU-ER-44 specifically, whether a better-fitting MCC objective exists under vocabulary not yet found by this pass's keyword searches ('bite', 'psychiatric' both returned zero matches)."
     }
   ]
 }

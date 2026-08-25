@@ -1,0 +1,1177 @@
+{
+  "schema_version": "1.0",
+  "chapter_code": "ER",
+  "chapter_title": "Emergency Medicine",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes SOURCE STRUCTURE (toc_inventory.json), cross-checked against body-page OCR (derived/toronto-notes-2025/ocr/pages/) per the documented source-recovery protocol. Emergency Medicine's TOC page (pdf 247) is a two-column layout whose OCR interleaved adjacent-column text onto single lines; nearly all of the chapter's 45 level-3 topic nodes therefore carry titles that concatenate two unrelated real headings (documented individually in same_page_merge_resolutions below). A separate, unrelated defect was found in the section-boundary page numbers themselves: for the contiguous run of nodes ER.S05-ER.S08 (Otolaryngological, Gynecologic, Ophthalmologic, Dermatologic), each node's recorded start_pdf_page is one page earlier than where its titled content actually begins in the body OCR (documented in section_boundary_lag below); node titles remain the correct structural match despite the page-number offset. Two nodes (ER.S09.T06, and the un-title-matched 'opine...Spinal Cord Trauma' / 'Joint Pain' / 'Shortness of Breath' TOC fragments) have no corresponding real content anywhere in this chapter's body pages and are treated as OCR artifacts or cross-chapter TOC bleed - see excluded_artifact_nodes and the coordinator-review flags noted in individual study units' structural_rationale.",
+  "same_page_merge_resolutions": {
+    "ER.S02.T01": "Garbled title concatenates 'Considerations for Traumatic Injury' (real, general trauma-approach content, see SU-ER-02) with 'G - Give Specific Antidotes and Treatments' (real, step G of the unrelated Toxicology ABCD3EFG mnemonic, see SU-ER-42).",
+    "ER.S02.T02": "Garbled title concatenates 'Head Trauma' (real, see SU-ER-03) with 'Alcohol Related Emergencies' (real, belongs to ER.S10/Toxicology, see SU-ER-43).",
+    "ER.S02.T03": "Garbled title concatenates 'Mild Traumatic Brain Injury' with 'Disposition from the Emergency Department' - both real and both describing the same content (see SU-ER-03).",
+    "ER.S03.T01": "Garbled title concatenates 'Abdominal Pain' (real, see SU-ER-08) with 'Respiratory Distress' (real, belongs to ER.S12 pediatric content, see SU-ER-47).",
+    "ER.S03.T02": "Garbled title concatenates 'Acute Pelvic Pain' (real, see SU-ER-09) with 'Febrile Infant and Febrile Seizures' (real, belongs to ER.S12, see SU-ER-48).",
+    "ER.S03.T03": "Garbled title concatenates 'Altered Level of Consciousness' (real, see SU-ER-10) with 'Abdominal Pain' [pediatric] (real, belongs to ER.S12, see SU-ER-49).",
+    "ER.S03.T04": "Garbled title concatenates 'Chest Pain' (real, see SU-ER-11) with 'Common Infections' (real, belongs to the pediatric febrile-illness DDx table in ER.S12, see SU-ER-48).",
+    "ER.S03.T05": "Garbled title concatenates 'Headache' (real, see SU-ER-12) with 'Child Abuse and Neglect' (real, belongs to ER.S13, see SU-ER-50).",
+    "ER.S10.T01-T06": "All six T-nodes under ER.S10 (Toxicology) are garbled fragments of the same real ABCD3EFG primary/secondary-survey mnemonic content spanning pdf 295-298; none introduce independent topics beyond SU-ER-39 and SU-ER-40.",
+    "ER.S11 (section title)": "Garbled title concatenates an unresolved 'opine ... Spinal Cord Trauma' left-column fragment (no matching body content found; flagged for coordinator review) with the real right-column heading 'Psychiatric Emergencies' (see SU-ER-44/45/46).",
+    "ER.S11.T02, T03, T05": "Duplicate ghost TOC entries for already-covered Traumatology content (Abdominal Trauma -> SU-ER-05, GU Tract Injuries -> SU-ER-05, Orthopedic Injuries -> SU-ER-06), interleaved with the real 'Acute Psychosis' fragment in T03 (see SU-ER-45).",
+    "ER.S13 (section title)": "Garbled title concatenates an unresolved 'Joint Pain' fragment (no matching body content found in this chapter's pdf 306-307 range; flagged for coordinator review, possibly a cross-chapter TOC bleed) with the real 'Common Medications' heading (see SU-ER-51).",
+    "ER.S13.T01, T02": "Duplicate ghost TOC entries for already-covered ER.S03 content (Back Pain -> SU-ER-13, Seizures -> SU-ER-14).",
+    "ER.S14 (section title)": "Garbled title concatenates an unresolved 'Shortness of Breath' fragment (no matching body content found anywhere in this chapter; flagged for coordinator review, possibly belonging to Respirology) with the real 'References' heading (see SU-ER-52).",
+    "ER.S14.T01, T02": "Both nodes carry real content, but with page numbers misassigned by the TOC merge to pdf 308 (References) instead of their true locations: Syncope is actually at pdf 273 (duplicate of SU-ER-15, already covered under ER.S03), Sexual Assault is actually at pdf 274 (primary citation at SU-ER-16, within ER.S03's confirmed range)."
+  },
+  "section_boundary_lag": "For nodes ER.S05 through ER.S08 (pdf 285-290 per toc_inventory.json), body-heading confirmation shows each node's recorded start_pdf_page/end_pdf_page is one page earlier than where its titled real content actually begins: ER.S04's Stroke/TIA topic (T12) actually starts on pdf 285, inside ER.S05's stated range (SU-ER-28); Epistaxis (ER.S05.T01) actually starts on pdf 286, inside ER.S06's stated range (SU-ER-29); Nephrolithiasis (ER.S06.T03) actually starts on pdf 288, inside ER.S07's stated range (SU-ER-31); Ophthalmologic content actually starts on pdf 289, inside ER.S08's stated range (SU-ER-32); Dermatologic content is a single real page at pdf 290 against a stated 289-290 range (SU-ER-33). No lag was found before pdf 285 or after pdf 290 - the boundary is self-correcting by ER.S09 (pdf 291). Study units in this range cite the node id that is the correct title match and record the true confirmed pdf_page_range; the discrepancy is noted per-unit and summarized once here rather than repeated in full each time.",
+  "total_study_units": 52,
+  "organizational_header_nodes": {
+    "ER": "Chapter root container - represented by all study units below."
+  },
+  "excluded_artifact_nodes": {
+    "ER.S09.T06": "Title ('Toronto Notes 2025 Emergency Medicine ERI') is a running-header/page-footer OCR artifact with no distinct content of its own, confirmed against pdf 291-295 body text; not assigned to any study unit."
+  },
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-01",
+      "title": "Acronyms (Chapter Glossary)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S01"
+      ],
+      "tn_page_range": "ER2-ER6",
+      "pdf_page_range": [
+        248,
+        252
+      ],
+      "source_hierarchy_path": [
+        "ER.S01 (Acromyms)"
+      ],
+      "structural_rationale": "ER.S01 corresponds to the printed TOC heading 'Acromyms' (OCR-garbled 'Acronyms'), confirmed via body OCR of pdf 248 which opens with a full-page acronym-definition list (AAA, ABG, ACEI ... RSI, RUSH, SAH) continuing onto pdf 249-252. Pure glossary content, no independent clinical competency.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-02",
+      "title": "Approach to Trauma: Epidemiology and Primary/Secondary Survey",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S02",
+        "ER.S02.T01"
+      ],
+      "tn_page_range": "ER7-ER8",
+      "pdf_page_range": [
+        253,
+        254
+      ],
+      "source_hierarchy_path": [
+        "ER.S02 (Traumatology) > Approach to Trauma"
+      ],
+      "structural_rationale": "Body OCR pdf 253 confirms heading 'Traumatology' followed by epidemiology bullet points (global/Canadian injury mortality burden) and pdf 254 covers initial investigations (labs, CT head, imaging). This is the chapter's general approach-to-trauma content preceding organ-system-specific trauma topics. ER.S02.T01's title garbles two real fragments across the TOC's two-column merge: 'Considerations for Traumatic Injury' (this unit's general-approach content) and 'G - Give Specific Antidotes and Treatments' (the G step of the unrelated toxicology ABCD3EFG mnemonic, see SU-ER-42); both are cited from this single node rather than inventing a separate trauma-specific antidotes unit.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-03",
+      "title": "Head Trauma and Mild Traumatic Brain Injury",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S02",
+        "ER.S02.T02",
+        "ER.S02.T03"
+      ],
+      "tn_page_range": "ER9-ER10",
+      "pdf_page_range": [
+        255,
+        256
+      ],
+      "source_hierarchy_path": [
+        "ER.S02 (Traumatology) > ER.S02.T03 (garbled: 'Mild Traumatic Brain Injury Disposition from the Emergency Department')"
+      ],
+      "structural_rationale": "Body OCR pdf 255 confirms real heading 'Mild Traumatic Brain Injury' with epidemiology and GCS-based severity content, continuing through pdf 256 (GCS <8, imaging). ER.S02.T02's title 'Head Trauma Alcohol Related Emergencies' is a two-column TOC-page OCR merge (the chapter's TOC page, pdf 247, interleaves left/right column entries onto single lines): 'Head Trauma' is the real left-column entry for this content, while 'Alcohol Related Emergencies' is a distant right-column entry belonging to ER.S10/Toxicology (see SU-ER-43). ER.S02.T03's title merges the real 'Mild Traumatic Brain Injury' entry with a real 'Disposition from the Emergency Department' subheading, both of which describe this same unit's content, so both nodes are cited here rather than invented as separate units.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-04",
+      "title": "Chest Trauma (incl. Penetrating Neck Trauma)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S02"
+      ],
+      "tn_page_range": "ER11-ER12",
+      "pdf_page_range": [
+        257,
+        258
+      ],
+      "source_hierarchy_path": [
+        "ER.S02 (Traumatology) > Chest Trauma"
+      ],
+      "structural_rationale": "Body OCR pdf 257 confirms heading 'Chest Trauma' (Table 6, Life-Threatening Chest Injuries Found in Primary Survey) continuing to pdf 258 heading 'Other Potentially Life-Threatening Injuries Related to the Chest' > 'Penetrating Neck Trauma'.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-05",
+      "title": "Abdominal and Genitourinary Trauma",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S02",
+        "ER.S11.T02",
+        "ER.S11.T03"
+      ],
+      "tn_page_range": "ER13-ER16",
+      "pdf_page_range": [
+        259,
+        261
+      ],
+      "source_hierarchy_path": [
+        "ER.S02 (Traumatology) > Abdominal Trauma"
+      ],
+      "structural_rationale": "Body OCR pdf 259 confirms heading 'Abdominal Trauma' (blunt vs. penetrating mechanism), continuing through pdf 260-261 (ureter/bladder/urethral injury management). ER.S11.T02 ('Abdominal Trauma') and ER.S11.T03's genitourinary fragment ('Genitourinary Tract Injuries') are duplicate ghost entries produced by the same TOC two-column OCR merge documented for ER.S11 (see SU-ER-44/45/46 rationale) - they reference this same real content, not independent topics, and are cited here rather than spawning duplicate units.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-06",
+      "title": "Orthopedic (Extremity) Trauma",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S02",
+        "ER.S11.T05"
+      ],
+      "tn_page_range": "ER16",
+      "pdf_page_range": [
+        262,
+        262
+      ],
+      "source_hierarchy_path": [
+        "ER.S02 (Traumatology) > Extremity Injuries"
+      ],
+      "structural_rationale": "Body OCR pdf 262 confirms headings 'UPPER EXTREMITY INJURIES' and 'LOWER EXTREMITY INJURIES' (dislocations, fractures). ER.S11.T05 ('Orthopedic Injuries') is a duplicate ghost TOC entry from the same S11 two-column merge (see SU-ER-44 rationale) referencing this same content.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-07",
+      "title": "Wound Management (ED Basics)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S02"
+      ],
+      "tn_page_range": "ER17",
+      "pdf_page_range": [
+        263,
+        263
+      ],
+      "source_hierarchy_path": [
+        "ER.S02 (Traumatology) > Wound Management"
+      ],
+      "structural_rationale": "Body OCR pdf 263 confirms heading 'Wound Management' > 'Goals of ED Treatment' (bleeding control, pain management, wound exploration/cleansing) as the closing topic of the Traumatology section's page range per toc_inventory.json (ends pdf 263/ER17).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-08",
+      "title": "Acute Abdominal Pain (ED Approach)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S03",
+        "ER.S03.T01"
+      ],
+      "tn_page_range": "ER18",
+      "pdf_page_range": [
+        264,
+        264
+      ],
+      "source_hierarchy_path": [
+        "ER.S03 (Approach to Common ED Presentations) > Abdominal Pain"
+      ],
+      "structural_rationale": "Body OCR pdf 264 confirms heading 'Approach to Common ED Presentations' > 'Abdominal Pain' with Table 11 (Selected Differential Diagnosis of Abdominal Pain, emergent vs. less emergent). ER.S03.T01's title 'Abdominal Pain Respiratory Distress' is a TOC two-column OCR merge; 'Abdominal Pain' is this unit's real left-column entry, 'Respiratory Distress' is a distant right-column entry belonging to the pediatric respiratory distress content in ER.S12 (see SU-ER-47).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-09",
+      "title": "Acute Pelvic Pain (ED Approach)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S03",
+        "ER.S03.T02"
+      ],
+      "tn_page_range": "ER19",
+      "pdf_page_range": [
+        265,
+        265
+      ],
+      "source_hierarchy_path": [
+        "ER.S03 (Approach to Common ED Presentations) > Acute Pelvic Pain"
+      ],
+      "structural_rationale": "Body OCR pdf 265 confirms heading 'Acute Pelvic Pain' (gynecological/GI/urologic etiology list). ER.S03.T02's title merges this real entry with 'Febrile Infant and Febrile Seizures', a distant right-column TOC entry belonging to ER.S12 pediatric content (see SU-ER-48).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-10",
+      "title": "Altered Level of Consciousness / Coma (incl. Empiric Antidotes)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S03",
+        "ER.S03.T03"
+      ],
+      "tn_page_range": "ER20-ER21",
+      "pdf_page_range": [
+        266,
+        267
+      ],
+      "source_hierarchy_path": [
+        "ER.S03 (Approach to Common ED Presentations) > Coma (GCS<8)"
+      ],
+      "structural_rationale": "Body OCR pdf 266 confirms heading 'Coma (GCS <8)' with the MEATBOLIC-style differential mnemonic and toxic/metabolic vs. primary CNS branching; pdf 267 continues with toxic-metabolic causes of fixed pupils and universal empiric antidotes ('DONT': D50W etc.). ER.S03.T03's title merges this real 'Altered Level of Consciousness' entry with a distant 'Abdominal Pain' TOC fragment (duplicate of SU-ER-08 / SU-ER-49).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-11",
+      "title": "Chest Pain (ED Approach, incl. Life-Threatening ECG Changes)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S03",
+        "ER.S03.T04"
+      ],
+      "tn_page_range": "ER22-ER23",
+      "pdf_page_range": [
+        268,
+        269
+      ],
+      "source_hierarchy_path": [
+        "ER.S03 (Approach to Common ED Presentations) > Chest Pain"
+      ],
+      "structural_rationale": "Body OCR pdf 268 confirms Table 14 'Comparison of Chest Pain Diagnoses' (ACS, PE, pericarditis, pneumothorax, aortic dissection, etc.) and pdf 269 Table 15 'Common Life-Threatening ECG Changes'. ER.S03.T04's title merges this real 'Chest Pain' entry with a distant 'Common Infections' TOC fragment belonging to the pediatric febrile-illness DDx table in ER.S12 (see SU-ER-48).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-12",
+      "title": "Headache (ED Approach, incl. Meningitis Red Flags)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S03",
+        "ER.S03.T05"
+      ],
+      "tn_page_range": "ER24",
+      "pdf_page_range": [
+        270,
+        270
+      ],
+      "source_hierarchy_path": [
+        "ER.S03 (Approach to Common ED Presentations) > Headache"
+      ],
+      "structural_rationale": "Body OCR pdf 270 confirms headache red-flag physical exam/imaging content and meningitis-specific features (fever, neck stiffness, altered mental status). ER.S03.T05's title merges this real 'Headache' entry with a distant 'Child Abuse and Neglect' TOC fragment belonging to ER.S13 (see SU-ER-50).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-13",
+      "title": "Back Pain (ED Approach)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S03",
+        "ER.S13.T01"
+      ],
+      "tn_page_range": "ER25",
+      "pdf_page_range": [
+        271,
+        271
+      ],
+      "source_hierarchy_path": [
+        "ER.S03 (Approach to Common ED Presentations) > Back Pain"
+      ],
+      "structural_rationale": "Body OCR pdf 271 confirms heading 'Back Pain' (CORE Back Tool, red-flag extraspinal/spinal emergencies). ER.S13.T01 ('Back Pain') is a duplicate ghost TOC entry from the ER.S13 two-column merge referencing this same real content.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-14",
+      "title": "Seizures / Status Epilepticus (ED Approach)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S03",
+        "ER.S13.T02"
+      ],
+      "tn_page_range": "ER26",
+      "pdf_page_range": [
+        272,
+        272
+      ],
+      "source_hierarchy_path": [
+        "ER.S03 (Approach to Common ED Presentations) > Status Epilepticus"
+      ],
+      "structural_rationale": "Body OCR pdf 272 confirms Table 16 'Concurrent Investigation and Management of Status Epilepticus'. ER.S13.T02 ('Seizures') is a duplicate ghost TOC entry from the ER.S13 two-column merge referencing this same real content.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-15",
+      "title": "Syncope (ED Approach)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S03",
+        "ER.S14.T01"
+      ],
+      "tn_page_range": "ER27",
+      "pdf_page_range": [
+        273,
+        273
+      ],
+      "source_hierarchy_path": [
+        "ER.S03 (Approach to Common ED Presentations) > Syncope"
+      ],
+      "structural_rationale": "Body OCR pdf 273 confirms heading 'Syncope' with definition and cardiogenic/non-cardiogenic etiology. ER.S14.T01 ('Syncope') is a duplicate ghost TOC entry produced by the same chapter-wide TOC two-column OCR merge (the printed page number attached to this TOC line was misassigned to pdf 308, the References page, rather than its true location at pdf 273) and is cited here as the same real content rather than a separate unit.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-16",
+      "title": "Sexual Assault (ED Approach)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S03",
+        "ER.S14.T02"
+      ],
+      "tn_page_range": "ER28",
+      "pdf_page_range": [
+        274,
+        274
+      ],
+      "source_hierarchy_path": [
+        "ER.S03 (Approach to Common ED Presentations) > Sexual Assault"
+      ],
+      "structural_rationale": "Body OCR pdf 274 confirms sexual-assault-specific history (gynecologic Hx, last voluntary intercourse) and physical exam guidance (avoiding re-traumatization, forensic evidence chain-of-custody). ER.S14.T02 ('Sexual Assault') is the toc_inventory.json node whose title textually matches this content, but whose start_pdf_page (308) is a TOC two-column OCR misassignment - the real content sits within ER.S03's confirmed page range (264-274), immediately after Syncope. Both node ids are cited for full traceability.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-17",
+      "title": "Anaphylaxis and Allergic Reactions",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S04",
+        "ER.S04.T01"
+      ],
+      "tn_page_range": "ER29",
+      "pdf_page_range": [
+        275,
+        275
+      ],
+      "source_hierarchy_path": [
+        "ER.S04 (Medical Emergencies) > Anaphylaxis and Allergic Reactions"
+      ],
+      "structural_rationale": "Body OCR pdf 275 confirms heading 'Medical Emergencies' > 'Anaphylaxis and Allergic Reactions' with etiology (exaggerated immune-mediated hypersensitivity, histamine/vasodilation).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-18",
+      "title": "Asthma (Acute Severe Exacerbation)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S04",
+        "ER.S04.T02"
+      ],
+      "tn_page_range": "ER29-ER30",
+      "pdf_page_range": [
+        275,
+        276
+      ],
+      "source_hierarchy_path": [
+        "ER.S04 (Medical Emergencies) > Asthma"
+      ],
+      "structural_rationale": "Body OCR pdf 276 confirms Table 18 'Asthma Assessment and Management' with investigations (peak flow, VBG, CXR) and severity classification.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-19",
+      "title": "Cardiac Dysrhythmias (SVT, Atrial Fibrillation, Ventricular Tachydysrhythmias)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S04",
+        "ER.S04.T03"
+      ],
+      "tn_page_range": "ER31",
+      "pdf_page_range": [
+        277,
+        277
+      ],
+      "source_hierarchy_path": [
+        "ER.S04 (Medical Emergencies) > Cardiac Dysrhythmias"
+      ],
+      "structural_rationale": "Body OCR pdf 277 confirms cardioversion/rate-control content for narrow- and wide-complex dysrhythmias, Atrial Fibrillation (etiology, CHADS2-guided cardioversion safety), and Ventricular Tachydysrhythmias.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-20",
+      "title": "Acute Exacerbation of COPD",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S04",
+        "ER.S04.T04"
+      ],
+      "tn_page_range": "ER32",
+      "pdf_page_range": [
+        278,
+        278
+      ],
+      "source_hierarchy_path": [
+        "ER.S04 (Medical Emergencies) > Acute Exacerbation of COPD"
+      ],
+      "structural_rationale": "Body OCR pdf 278 (top portion) confirms COPD-exacerbation antibiotic/ventilation/disposition content preceding the page's transition to the 'Heart Failure' heading (see SU-ER-21).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-21",
+      "title": "Heart Failure (Acute Decompensated)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S04",
+        "ER.S04.T05"
+      ],
+      "tn_page_range": "ER32",
+      "pdf_page_range": [
+        278,
+        278
+      ],
+      "source_hierarchy_path": [
+        "ER.S04 (Medical Emergencies) > Heart Failure"
+      ],
+      "structural_rationale": "Body OCR pdf 278 (lower portion) confirms heading 'Heart Failure' with ADHF precipitants, left- vs. right-sided presentation, and CXR/BNP investigations, sharing pdf 278 with the tail of the COPD topic (SU-ER-20).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-22",
+      "title": "Venous Thromboembolism: DVT and Pulmonary Embolism",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S04",
+        "ER.S04.T06"
+      ],
+      "tn_page_range": "ER33-ER34",
+      "pdf_page_range": [
+        279,
+        280
+      ],
+      "source_hierarchy_path": [
+        "ER.S04 (Medical Emergencies) > Venous Thromboembolism"
+      ],
+      "structural_rationale": "Body OCR pdf 279 confirms headings 'DEEP VEIN THROMBOSIS' (Wells' criteria, D-dimer, U/S, DOAC/LMWH management) continuing to pdf 280 (compression U/S algorithm, PE content).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-23",
+      "title": "Diabetic Emergencies (DKA and HHS)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S04",
+        "ER.S04.T07"
+      ],
+      "tn_page_range": "ER35",
+      "pdf_page_range": [
+        281,
+        281
+      ],
+      "source_hierarchy_path": [
+        "ER.S04 (Medical Emergencies) > Diabetic Emergencies"
+      ],
+      "structural_rationale": "Body OCR pdf 281 confirms DKA insulin-dosing management content and heading 'Hyperosmolar Hyperglycemic State' (HHS clinical features, T2DM population).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-24",
+      "title": "Electrolyte Disturbances (ED Approach)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S04",
+        "ER.S04.T08"
+      ],
+      "tn_page_range": "ER36",
+      "pdf_page_range": [
+        282,
+        282
+      ],
+      "source_hierarchy_path": [
+        "ER.S04 (Medical Emergencies) > Electrolyte Disturbances"
+      ],
+      "structural_rationale": "Body OCR pdf 282 confirms heading 'Electrolyte Disturbances' with cross-reference to Nephrology NP8 and Table 19 (common disturbances, causes, symptoms, treatment).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-25",
+      "title": "Hypertensive Emergencies (incl. Asymptomatic Severe Hypertension)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S04",
+        "ER.S04.T09"
+      ],
+      "tn_page_range": "ER37",
+      "pdf_page_range": [
+        283,
+        283
+      ],
+      "source_hierarchy_path": [
+        "ER.S04 (Medical Emergencies) > Asymptomatic Hypertension / Hypertensive Crisis"
+      ],
+      "structural_rationale": "Body OCR pdf 283 (top/middle portion) confirms heading 'Asymptomatic Hypertension' and Table 21 'Commonly Used Agents for the Treatment of Hypertensive Crisis', sharing the page with the Acute Coronary Syndrome topic that follows (SU-ER-26).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-26",
+      "title": "Acute Coronary Syndrome (ED Approach)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S04",
+        "ER.S04.T10"
+      ],
+      "tn_page_range": "ER37",
+      "pdf_page_range": [
+        283,
+        283
+      ],
+      "source_hierarchy_path": [
+        "ER.S04 (Medical Emergencies) > Acute Coronary Syndrome"
+      ],
+      "structural_rationale": "Body OCR pdf 283 (lower portion) confirms heading 'Acute Coronary Syndrome' with UA/NSTEMI/STEMI definitions, investigations, and reperfusion-strategy management, sharing the page with the Hypertensive Emergencies topic (SU-ER-25).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-27",
+      "title": "Sepsis and Septic Shock (ED Approach)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S04",
+        "ER.S04.T11"
+      ],
+      "tn_page_range": "ER38",
+      "pdf_page_range": [
+        284,
+        284
+      ],
+      "source_hierarchy_path": [
+        "ER.S04 (Medical Emergencies) > Sepsis"
+      ],
+      "structural_rationale": "Body OCR pdf 284 confirms heading 'Sepsis' with SIRS/sepsis/septic-shock definitional spectrum, qSOFA, and cross-reference to Infectious Diseases ID20 and Respirology R32.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-28",
+      "title": "Stroke and Transient Ischemic Attack (ED Approach)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S04",
+        "ER.S04.T12"
+      ],
+      "tn_page_range": "ER39",
+      "pdf_page_range": [
+        285,
+        285
+      ],
+      "source_hierarchy_path": [
+        "ER.S04 (Medical Emergencies) > Stroke and Transient Ischaemic Attack"
+      ],
+      "structural_rationale": "Body OCR pdf 285 confirms stroke/TIA investigations (CT angiography, ECG) and thrombolysis/thrombectomy eligibility management. toc_inventory.json assigns this page to the start of node ER.S05 (Otolaryngological, start_pdf_page 285), but its real content is Medical Emergencies' Stroke/TIA topic; body-heading confirmation shows the chapter's section-boundary page numbers lag their true content start by one page across nodes ER.S05-ER.S08 (documented once here and referenced from SU-ER-29 through SU-ER-33 rather than repeated in full).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-29",
+      "title": "Epistaxis",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S05",
+        "ER.S05.T01"
+      ],
+      "tn_page_range": "ER40",
+      "pdf_page_range": [
+        286,
+        286
+      ],
+      "source_hierarchy_path": [
+        "ER.S05 (Otolaryngological Presentations and Emergencies) > Epistaxis"
+      ],
+      "structural_rationale": "Body OCR pdf 286 confirms heading 'Epistaxis' (cross-reference to Otolaryngology OT27, Kiesselbach's plexus etiology). Per the one-page boundary lag documented at SU-ER-28, toc_inventory.json's start_pdf_page for ER.S05 (285) is one page earlier than this topic's true location (286); the node id is still the correct structural match by title.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-30",
+      "title": "Vaginal Bleeding and the Pregnant Patient in the ED",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S06",
+        "ER.S06.T01",
+        "ER.S06.T02"
+      ],
+      "tn_page_range": "ER40-ER41",
+      "pdf_page_range": [
+        286,
+        287
+      ],
+      "source_hierarchy_path": [
+        "ER.S06 (Gynecologic) > Vaginal Bleeding"
+      ],
+      "structural_rationale": "Body OCR pdf 286-287 confirms vaginal-bleeding etiology/workup content including pregnancy-specific physical exam (speculum/bimanual exam contraindications by trimester), B-hCG/transvaginal U/S investigations, and Rh-immune-globulin/ectopic-pregnancy management - the 'Pregnant Patient in the ED' (T02) content is not a separately headed topic but is integrated throughout the Vaginal Bleeding workup, so both nodes are represented by this single unit.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-31",
+      "title": "Nephrolithiasis (Renal Colic)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S06",
+        "ER.S06.T03"
+      ],
+      "tn_page_range": "ER42",
+      "pdf_page_range": [
+        288,
+        288
+      ],
+      "source_hierarchy_path": [
+        "ER.S06 (Gynecologic) > Nephrolithiasis (Renal Colic)"
+      ],
+      "structural_rationale": "Body OCR pdf 288 confirms heading 'Nephrolithiasis (Renal Colic)' (cross-reference to Urology U19, epidemiology/risk factors). Per the one-page boundary lag documented at SU-ER-28, this page falls within toc_inventory.json's stated range for ER.S06 (286-287) plus one page overflow; the T03 node id is the correct title match.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-32",
+      "title": "Ophthalmologic Emergencies (Red Eye Differential)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S07"
+      ],
+      "tn_page_range": "ER43",
+      "pdf_page_range": [
+        289,
+        289
+      ],
+      "source_hierarchy_path": [
+        "ER.S07 (Ophthalmologic Emergencies)"
+      ],
+      "structural_rationale": "Body OCR pdf 289 confirms Table 25 'Differential Diagnosis of Red Eye in the Emergency Department' (light sensitivity, unilateral involvement, discharge pattern by serious etiology). Per the one-page boundary lag documented at SU-ER-28, the real Ophthalmologic content sits one page after toc_inventory.json's stated start_pdf_page (288) for this node.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-33",
+      "title": "Dermatologic Emergencies (SJS/TEN, DRESS Syndrome)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S08"
+      ],
+      "tn_page_range": "ER44",
+      "pdf_page_range": [
+        290,
+        290
+      ],
+      "source_hierarchy_path": [
+        "ER.S08 (Dermatologic Emergencies)"
+      ],
+      "structural_rationale": "Body OCR pdf 290 confirms DRESS syndrome content (cross-reference to Dermatology D25) and SJS/TEN body-surface-area severity thresholds (captured in the page's OCR-detected headings 'SJS/TEN = 10-30% BSA' / 'TEN =>30% BSA'). Per the one-page boundary lag documented at SU-ER-28, this is the single real content page for this node (toc_inventory.json states range 289-290).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-34",
+      "title": "Heat-Related Illness (Heat Exhaustion and Heat Stroke)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S09",
+        "ER.S09.T01"
+      ],
+      "tn_page_range": "ER45",
+      "pdf_page_range": [
+        291,
+        291
+      ],
+      "source_hierarchy_path": [
+        "ER.S09 (Environmental Injuries) > Heat Exhaustion and Heat Stroke"
+      ],
+      "structural_rationale": "Body OCR pdf 291 confirms heading 'Environmental Injuries' > 'Heat Exhaustion and Heat Stroke' with sub-headings HEAT EXHAUSTION and HEAT STROKE. No page-boundary lag observed for this section - the node's stated start_pdf_page (291) matches the true content start exactly.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-35",
+      "title": "Hypothermia and Cold-Related Injury (incl. Frostbite)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S09",
+        "ER.S09.T02"
+      ],
+      "tn_page_range": "ER45-ER46",
+      "pdf_page_range": [
+        291,
+        292
+      ],
+      "source_hierarchy_path": [
+        "ER.S09 (Environmental Injuries) > Hypothermia / Frostbite"
+      ],
+      "structural_rationale": "Body OCR pdf 291 confirms 'HYPOTHERMIA' sub-heading continuing to pdf 292 (active/passive re-warming methods and 'FROSTBITE' heading).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-36",
+      "title": "Burns (incl. Inhalation Injury)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S09",
+        "ER.S09.T03"
+      ],
+      "tn_page_range": "ER47",
+      "pdf_page_range": [
+        292,
+        293
+      ],
+      "source_hierarchy_path": [
+        "ER.S09 (Environmental Injuries) > Inhalation Injury / Burns"
+      ],
+      "structural_rationale": "Body OCR pdf 293 confirms burn-wound-care content (escharotomy indications, TBSA-based admission criteria) and heading 'Inhalation Injury' (CO/cyanide etiology, thermal injury).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-37",
+      "title": "Bites (Animal and Human, Wound Prophylaxis)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S09",
+        "ER.S09.T04"
+      ],
+      "tn_page_range": "ER48",
+      "pdf_page_range": [
+        293,
+        294
+      ],
+      "source_hierarchy_path": [
+        "ER.S09 (Environmental Injuries) > Bites"
+      ],
+      "structural_rationale": "Body OCR pdf 293-294 confirms 'MAMMALIAN BITES' heading-array content and prophylactic-antibiotic guidance by bite type (dog/cat: Pasteurella multocida; human: Eikenella corrodens).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-38",
+      "title": "Non-Fatal Drowning / Submersion Injury",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S09",
+        "ER.S09.T05"
+      ],
+      "tn_page_range": "ER48-ER49",
+      "pdf_page_range": [
+        294,
+        295
+      ],
+      "source_hierarchy_path": [
+        "ER.S09 (Environmental Injuries) > Non-Fatal Drowning"
+      ],
+      "structural_rationale": "Body OCR pdf 295 confirms drowning-specific resuscitation guidance (rescue ventilation/CPR despite hypothermia) and a discharge/admission disposition algorithm, continuing from crush-injury/bite content on pdf 294. ER.S09.T06 ('Toronto Notes 2025 Emergency Medicine ERI') is excluded as a running-header/page-footer OCR artifact with no distinct content of its own (see excluded_artifact_nodes).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-39",
+      "title": "Approach to the Overdose/Poisoned Patient (History, Primary/Secondary Survey, Universal Antidotes)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S10",
+        "ER.S10.T01",
+        "ER.S10.T02",
+        "ER.S10.T03",
+        "ER.S10.T04"
+      ],
+      "tn_page_range": "ER49-ER50",
+      "pdf_page_range": [
+        295,
+        296
+      ],
+      "source_hierarchy_path": [
+        "ER.S10 (Toxicology) > Approach to the Overdose Patient"
+      ],
+      "structural_rationale": "Body OCR pdf 295 confirms heading 'Toxicology' > 'Approach to the Overdose Patient' (history, indications to suspect overdose) and the 'ABCD3EFG' primary/secondary survey mnemonic, continuing to pdf 296 (naloxone administration under 'D1 - Universal Antidotes', and 'D2 - Draw Bloods' essential/toxic-gap labs). The four T-node titles are garbled two-column TOC merges of this same real ABCD3EFG mnemonic content (e.g. T02's 'I Primary Suro agement ... ABCD3EFG of Toxicology', T03's '2 Resuscitation D1-Universal Antidotes', T04's '3. Secondary Survey D2-Draw Bloods'), confirmed against the body text rather than treated as independent topics.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-40",
+      "title": "Decontamination and Enhanced Elimination",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S10",
+        "ER.S10.T05",
+        "ER.S10.T06"
+      ],
+      "tn_page_range": "ER51-ER52",
+      "pdf_page_range": [
+        297,
+        298
+      ],
+      "source_hierarchy_path": [
+        "ER.S10 (Toxicology) > D3 - Decontamination and Enhanced Elimination"
+      ],
+      "structural_rationale": "Body OCR pdf 297 confirms heading 'D3 - Decontamination and Enhanced Elimination' (ocular/dermal/GI decontamination, activated charcoal, whole bowel irrigation) continuing to pdf 298 heading 'E - Expose and Examine the Patient' and Table 31 'Specific Toxidromes'. T05's garbled title ('Ethical Considerations D3 - Decontamination...') and T06 ('E- Expose and Examine the Patient') are both confirmed against this same real content.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-41",
+      "title": "Specific Toxidromes",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S10"
+      ],
+      "tn_page_range": "ER52",
+      "pdf_page_range": [
+        298,
+        298
+      ],
+      "source_hierarchy_path": [
+        "ER.S10 (Toxicology) > Table 31, Specific Toxidromes"
+      ],
+      "structural_rationale": "Body OCR pdf 298 confirms Table 31 'Specific Toxidromes' (anticholinergic, cholinergic/DUMBELS, extrapyramidal, opioid/sedative, sympathomimetic, serotonin syndrome), sharing the page with the Decontamination/Expose content of SU-ER-40.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-42",
+      "title": "Antidotes and Treatment of Specific Toxins (incl. Warfarin Overdose Protocol)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S10",
+        "ER.S02.T01"
+      ],
+      "tn_page_range": "ER53",
+      "pdf_page_range": [
+        299,
+        299
+      ],
+      "source_hierarchy_path": [
+        "ER.S10 (Toxicology) > Table 32/33, Antidotes and Warfarin Overdose Protocol"
+      ],
+      "structural_rationale": "Body OCR pdf 299 confirms Table 32 'Protocol for Warfarin Overdose' (INR-stratified vitamin K/PCC management) and Table 33 'Specific Antidotes and Treatments for Common Toxins' (acetaminophen, TCAs, organophosphates, CO, etc.). ER.S02.T01's 'G - Give Specific Antidotes and Treatments' fragment (the remainder of that garbled node is cited at SU-ER-02) is this unit's real content.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-43",
+      "title": "Alcohol-Related Emergencies (incl. Toxic Alcohols)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S10"
+      ],
+      "tn_page_range": "ER54-ER55",
+      "pdf_page_range": [
+        300,
+        301
+      ],
+      "source_hierarchy_path": [
+        "ER.S10 (Toxicology) > Alcohol Related Emergencies"
+      ],
+      "structural_rationale": "Body OCR pdf 300 confirms heading 'Alcohol Related Emergencies' (cross-reference to Psychiatry PS38, acute intoxication signs/symptoms) continuing to pdf 301 (toxic-alcohol osmolar-gap-to-anion-gap pathophysiology, hemodialysis). This is the real content behind the 'Alcohol Related Emergencies' fragment garbled into ER.S02.T02's title (see SU-ER-03 rationale).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-44",
+      "title": "Approach to Common Psychiatric Presentations",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S11",
+        "ER.S11.T01"
+      ],
+      "tn_page_range": "ER56",
+      "pdf_page_range": [
+        302,
+        302
+      ],
+      "source_hierarchy_path": [
+        "ER.S11 (Psychiatric Emergencies) > Approach to Common Psychiatric Presentations"
+      ],
+      "structural_rationale": "Body OCR pdf 302 confirms heading 'Psychiatric Emergencies' > 'Approach to Common Psychiatric Presentations' (safety-first history, suicidality/homicidality screening, mental status exam). toc_inventory.json's section title for ER.S11 ('opine and Spinal Cord Trauma Psychiatric Emergencies') is a TOC two-column OCR merge: 'Psychiatric Emergencies' is the real right-column section heading confirmed here; 'opine ... Spinal Cord Trauma' is a distant, unrelated left-column fragment with no corresponding content found in this chapter's body pages and is flagged for coordinator review rather than assigned to any unit. T02 (Abdominal Trauma), T03's GU-injury fragment, and T05 (Orthopedic Injuries) under this node are likewise duplicate ghost entries of already-covered Traumatology content (SU-ER-05, SU-ER-06), not independent psychiatric topics.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-45",
+      "title": "Acute Psychosis (ED Approach)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S11",
+        "ER.S11.T03"
+      ],
+      "tn_page_range": "ER56",
+      "pdf_page_range": [
+        302,
+        303
+      ],
+      "source_hierarchy_path": [
+        "ER.S11 (Psychiatric Emergencies) > Acute Psychosis"
+      ],
+      "structural_rationale": "Body OCR pdf 302 confirms heading 'Acute Psychosis' with differential diagnosis (primary psychotic disorder, secondary to medical condition, substance-induced, autoimmune), continuing onto pdf 303. This is the real content behind the 'Acute Psychosis' fragment in ER.S11.T03's garbled title (paired there with an unrelated GU-trauma fragment, see SU-ER-05).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-46",
+      "title": "Suicidal Patient (Risk Assessment and Management)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S11",
+        "ER.S11.T04"
+      ],
+      "tn_page_range": "ER57",
+      "pdf_page_range": [
+        303,
+        303
+      ],
+      "source_hierarchy_path": [
+        "ER.S11 (Psychiatric Emergencies) > Suicidal Patient"
+      ],
+      "structural_rationale": "Body OCR pdf 303 confirms suicide-risk management content (safety observation, admission criteria, certification under local mental health legislation) matching the SAD PERSONS scale referenced on pdf 302. ER.S11.T04's garbled title ('Ce Suicidal Patient') is confirmed against this same real content.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-47",
+      "title": "Common Pediatric ED Presentations: Respiratory Distress (Croup, Bacterial Tracheitis, Epiglottitis)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S12",
+        "ER.S03.T01"
+      ],
+      "tn_page_range": "ER57-ER58",
+      "pdf_page_range": [
+        303,
+        304
+      ],
+      "source_hierarchy_path": [
+        "ER.S12 (Common Pediatric ED Presentations) > Modified GCS / Respiratory Distress"
+      ],
+      "structural_rationale": "Body OCR pdf 303 confirms heading 'Common Pediatric ED Presentations' > Table 35 'Modified GCS' and 'Respiratory Distress' (cross-reference to Pediatrics P80/P93), continuing to pdf 304 croup/bacterial-tracheitis/epiglottitis management. The 'Respiratory Distress' fragment garbled into ER.S03.T01's title (paired there with the real Abdominal Pain entry, see SU-ER-08) is this same real content.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-48",
+      "title": "Febrile Infant and Febrile Seizures (incl. Common Pediatric Febrile Infections)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S12",
+        "ER.S03.T02",
+        "ER.S03.T04"
+      ],
+      "tn_page_range": "ER58-ER59",
+      "pdf_page_range": [
+        304,
+        305
+      ],
+      "source_hierarchy_path": [
+        "ER.S12 (Common Pediatric ED Presentations) > Febrile Infant and Febrile Seizures"
+      ],
+      "structural_rationale": "Body OCR pdf 304 confirms heading 'Febrile Infant and Febrile Seizures' (age-stratified septic-workup/antibiotic protocol, PECARN/Step-by-Step risk stratification) continuing to pdf 305 heading array (FEBRILE INFANT, FEBRILE SEIZURES, MENINGITIS/SEPSIS, OTITIS MEDIA, STREP PHARYNGITIS, PNEUMONIA), i.e. the common-infections DDx table for pediatric fever. This is the real content behind the fragments garbled into ER.S03.T02 ('Febrile Infant and Febrile Seizures', paired there with the real Acute Pelvic Pain entry, see SU-ER-09) and ER.S03.T04 ('Common Infections', paired there with the real Chest Pain entry, see SU-ER-11).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-49",
+      "title": "Pediatric Abdominal Pain (ED Approach)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S12",
+        "ER.S03.T03"
+      ],
+      "tn_page_range": "ER59",
+      "pdf_page_range": [
+        305,
+        305
+      ],
+      "source_hierarchy_path": [
+        "ER.S12 (Common Pediatric ED Presentations) > Abdominal Pain"
+      ],
+      "structural_rationale": "Body OCR pdf 305 confirms heading 'Abdominal Pain' (cross-reference to Pediatrics P47) with pediatric-specific history/exam content and a DDx table (Table 38), distinct from the adult Acute Abdominal Pain unit (SU-ER-08). This is the real content behind the 'Abdominal Pain' fragment garbled into ER.S03.T03's title (paired there with the real Altered Level of Consciousness entry, see SU-ER-10).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-50",
+      "title": "Child Abuse and Neglect (ED Approach)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S13",
+        "ER.S03.T05"
+      ],
+      "tn_page_range": "ER60",
+      "pdf_page_range": [
+        306,
+        306
+      ],
+      "source_hierarchy_path": [
+        "ER.S13 (Joint Pain Common Medications) > Child Abuse and Neglect"
+      ],
+      "structural_rationale": "Body OCR pdf 306 confirms heading 'Child Abuse and Neglect' (cross-reference to Pediatrics P61, mandatory reporting obligation, skeletal survey/ophthalmology consult). This is the real content behind the fragment garbled into ER.S03.T05's title (paired there with the real Headache entry, see SU-ER-12). toc_inventory.json's section title for ER.S13 ('Joint Pain Common Medications') is itself a TOC two-column merge whose 'Joint Pain' fragment has no corresponding content in this chapter's actual page range (306-307, which covers Child Abuse and the medications table, SU-ER-51) - 'Joint Pain' most likely belongs to another chapter's TOC column and is flagged for coordinator review rather than assigned here.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-51",
+      "title": "Commonly Used Medications (ED Reference Table)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S13"
+      ],
+      "tn_page_range": "ER61",
+      "pdf_page_range": [
+        307,
+        307
+      ],
+      "source_hierarchy_path": [
+        "ER.S13 (Joint Pain Common Medications) > Table 40, Commonly Used Medications"
+      ],
+      "structural_rationale": "Body OCR pdf 307 confirms Table 40 'Commonly Used Medications' (drug, dosing schedule, indications, comments - lorazepam, etc.), the real content behind the 'Common Medications' fragment of ER.S13's section title.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ER-52",
+      "title": "References (Chapter Bibliography)",
+      "chapter_code": "ER",
+      "chapter_title": "Emergency Medicine",
+      "source_node_ids": [
+        "ER.S14"
+      ],
+      "tn_page_range": "ER62",
+      "pdf_page_range": [
+        308,
+        308
+      ],
+      "source_hierarchy_path": [
+        "ER.S14 (Shortness of Breath References) > References"
+      ],
+      "structural_rationale": "Body OCR pdf 308 confirms heading 'References' followed by a numbered bibliography of journal citations, the real content behind the 'References' fragment of ER.S14's section title. ER.S14's 'Shortness of Breath' fragment and its T01 ('Syncope')/T02 ('Sexual Assault') children are ghost TOC entries whose real content is already represented elsewhere (Syncope at SU-ER-15, Sexual Assault at SU-ER-16); no chapter content matching 'Shortness of Breath' as a distinct heading was found in this chapter's body pages, and it is flagged for coordinator review as a possible cross-chapter TOC bleed (e.g. from Respirology) rather than assigned here.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    }
+  ]
+}
