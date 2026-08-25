@@ -19,7 +19,7 @@ then continue.
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `PENDING` — scope: map FM Family Medicine |
+| Last completed commit | `6be4263` — scope: map FM Family Medicine |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
