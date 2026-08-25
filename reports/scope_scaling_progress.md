@@ -19,7 +19,7 @@ then continue.
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `scope: map A Anesthesia` (see `git log` for hash) |
+| Last completed commit | `129c1f1` — scope: map A Anesthesia |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
