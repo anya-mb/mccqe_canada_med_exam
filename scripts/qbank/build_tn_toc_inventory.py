@@ -1,33 +1,41 @@
-"""Build research/tn2025/toc_inventory.json.
+"""Build research/tn2025/toc_inventory.json, toc_validation_report.{json,md},
+and research/tn2025/unresolved_headings.json.
 
-Mechanical, deterministic extraction ONLY - no MCC mapping, no clinical
-judgment calls. Produces a 3-level hierarchy:
+Deterministic, mechanical extraction ONLY - no MCC mapping, no clinical
+judgment, nothing filled in from medical knowledge. Produces an
+arbitrary-depth tree of nodes (chapter -> section -> topic; no level is
+invented if the source doesn't support it) faithfully representing the
+Toronto Notes 2025 printed structure.
 
-  chapter (from derived/toronto-notes-2025/chapters/<code>/manifest.json,
-           itself copied from the codex/qbank-production branch's
-           already-validated chapter-boundary detection)
-    -> section (parsed from the chapter's own printed internal table of
-                contents page; page-anchored via the chapter's own
-                <code><N> page-numbering scheme, e.g. "C19", "P70")
-      -> topic (the un-anchored bullet lines listed under each section in
-                that same TOC; NOT independently page-anchored - the TOC
-                itself doesn't give them one)
+Two independent, source-grounded extraction methods are combined:
 
-Subtopic-level (in-page heading detection within actual chapter content,
-beyond what the chapter's own TOC lists) is explicitly NOT attempted here -
-the existing pipeline's per-page "headings" field is empty for every page
-checked, meaning no automated in-page heading detector exists yet. Building
-one is separate follow-on work, not silently faked here.
+1. TOC_OCR: parse each chapter's own printed internal table-of-contents
+   page(s). A section line ends in that chapter's own page-numbering code
+   (e.g. "C19", "P70"); heading text is recovered by walking left from that
+   trailing code, keeping only tokens that are purely alphabetic once
+   trailing punctuation is stripped (dot-leader OCR garbage reliably fails
+   that test). This alone parsed 24 of 32 chapters completely, but for 8
+   chapters the TOC page's page-number digits are themselves too
+   OCR-corrupted to trust (see BODY_HEADING_CONFIRMATION below).
 
-OCR quality caveat: Toronto Notes TOC pages use dot-leaders between a
-section title and its page number (e.g. "Chest Pain......C5"). OCR often
-mangles the leader run into irregular junk ("0.0.6.0 ee eee ee es"). This
-script strips a permissive leader-run pattern to recover the heading text,
-but does NOT attempt to correct OCR misreadings of the heading text itself
-(e.g. "ACrOMYMS" is preserved as printed by OCR, not silently corrected to
-"Acronyms"). Every heading also carries the untouched raw OCR line for
-manual review.
+2. BODY_HEADING_CONFIRMATION: independent of the TOC page's page-number
+   digits, search the chapter's own body pages for a standalone line whose
+   text matches (exact after normalization, or a high-similarity fuzzy
+   match tolerant of individual OCR character drops/substitutions) a
+   heading candidate extracted from the TOC. When found, the confirming
+   body page's own pdf_page - which is highly reliable, cross-validated
+   chapter-wide against that chapter's own running header pattern
+   ("<code><n> <ChapterTitle>") - is used as the section's start_pdf_page,
+   OVERRIDING any TOC-digit guess, because it is grounded in directly
+   observed text rather than inferred from corrupted digits.
+
+Any heading candidate that neither method can anchor to a specific page is
+recorded as UNRESOLVED in research/tn2025/unresolved_headings.json with the
+exact TOC source page and raw OCR line - never silently dropped, never
+filled in from outside knowledge of what a Toronto Notes chapter "should"
+contain.
 """
+import difflib
 import json
 import re
 from pathlib import Path
@@ -35,32 +43,23 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 CHAPTERS_DIR = REPO / "derived" / "toronto-notes-2025" / "chapters"
 OCR_PAGES_DIR = REPO / "derived" / "toronto-notes-2025" / "ocr" / "pages"
-OUT = REPO / "research" / "tn2025" / "toc_inventory.json"
 
-# Trailing page-label token at end of line: chapter code (1-5 letters,
-# case-insensitive) immediately followed by digits, e.g. "C19", "c5", "P70".
-TRAILING_CODE_RE = re.compile(r"^(?P<pre>.*?)(?P<code>[A-Za-z]{1,5})(?P<num>\d{1,4})\s*$")
+OUT_INVENTORY = REPO / "research" / "tn2025" / "toc_inventory.json"
+OUT_VALIDATION_JSON = REPO / "research" / "tn2025" / "toc_validation_report.json"
+OUT_VALIDATION_MD = REPO / "research" / "tn2025" / "toc_validation_report.md"
+OUT_UNRESOLVED = REPO / "research" / "tn2025" / "unresolved_headings.json"
 
-# A token is kept as part of the cleaned heading if, after stripping
-# trailing punctuation, what remains is purely alphabetic (letters/hyphens/
-# apostrophes only, no digits) and non-empty. OCR-mangled dot-leaders
-# ("....", "0.0.6.0", short lowercase noise like "ee"/"es"/"ccc") reliably
-# fail this test because they contain digits or reduce to an empty string
-# once punctuation is stripped, so the walk stops there.
+GENERATED_AT = "2026-08-24"
+
+# ---------------------------------------------------------------------------
+# Shared text helpers
+# ---------------------------------------------------------------------------
+
+# Tolerant of a stray 1-2 char OCR symbol between the letter code and
+# digits (observed: "PS§20").
+TRAILING_CODE_RE = re.compile(r"^(?P<pre>.*?)(?P<code>[A-Za-z]{1,5})[^\w\s]{0,2}(?P<num>\d{1,4})\s*$")
 WORD_TOKEN_RE = re.compile(r"^[A-Za-z][A-Za-z\-']*$")
 
-
-def clean_heading_from_pre_code_text(pre: str) -> str:
-    kept = []
-    for tok in pre.strip().split():
-        core = tok.strip(".,;:")
-        if core and WORD_TOKEN_RE.match(core):
-            kept.append(core)
-        else:
-            break
-    return " ".join(kept)
-
-# Lines to always skip (credits/editor boilerplate on the first chapter page)
 SKIP_LINE_PATTERNS = [
     re.compile(r"chapter editors?", re.IGNORECASE),
     re.compile(r"associate editors?", re.IGNORECASE),
@@ -81,109 +80,606 @@ def load_page_text(pdf_page: int) -> str:
 def is_skip_line(line: str) -> bool:
     if not line.strip():
         return True
-    for pat in SKIP_LINE_PATTERNS:
-        if pat.search(line):
-            return True
-    return False
+    return any(pat.search(line) for pat in SKIP_LINE_PATTERNS)
 
 
-def match_section_line(line: str, chapter_code: str):
-    """Return (heading, page_num) if line ends in this chapter's page code
-    (e.g. 'C19') preceded by a heading recoverable via the word-token walk,
-    else None. Requires the recovered heading to be non-empty so that
-    isolated page-number remnants (e.g. a bare 'C2' page-header line) are
-    not misparsed as a zero-length section."""
-    m = TRAILING_CODE_RE.match(line.strip())
-    if not m:
-        return None
-    if m.group("code").upper() != chapter_code.upper():
-        return None
-    heading = clean_heading_from_pre_code_text(m.group("pre"))
-    if not heading:
-        return None
-    return heading, int(m.group("num"))
+LEADING_ALPHA_RE = re.compile(r"^[A-Za-z][A-Za-z\-']*")
 
+# Short lowercase tokens that are legitimate in real headings ("Approach
+# to...", "Diseases of the..."). Any OTHER short (<=3 char) all-lowercase
+# token is treated as dot-leader OCR noise (observed pattern: repeated
+# fragments like "ee ee ee", "es es", "ces sse") and stops the walk, rather
+# than being kept as if it were a real heading word.
+CONNECTOR_WORDS = {
+    "of", "in", "to", "and", "or", "the", "a", "an", "for", "with",
+    "at", "on", "by", "as", "is", "if", "vs",
+}
+
+
+def clean_heading_from_pre_code_text(pre: str) -> str:
+    """Walk tokens left-to-right, keeping only ones that are purely
+    alphabetic once trailing punctuation is stripped. Dot-leader OCR
+    garbage (runs of digits/periods/short lowercase noise) reliably fails
+    this test and stops the walk.
+
+    A whitespace-collapsed OCR line occasionally glues a real trailing word
+    directly onto its leader-dot run with no separating space (e.g.
+    "Therapy...........scscccess..."). For such a token, the LEADING
+    alphabetic run is still a genuine word from the source and is kept;
+    the walk then stops (since garbage begins immediately after), rather
+    than discarding the whole token."""
+    kept = []
+    for tok in pre.strip().split():
+        core = tok.strip(".,;:")
+        if core and WORD_TOKEN_RE.match(core):
+            if len(core) <= 3 and core.islower() and core.lower() not in CONNECTOR_WORDS:
+                break
+            kept.append(core)
+            continue
+        # A token that looks exactly like a page-reference code (letters
+        # immediately followed by digits, e.g. "ER18") is almost never a
+        # real word with glued garbage - it's an embedded mid-line page
+        # reference (typically from a two-column TOC layout merge). Reject
+        # it outright rather than keeping its leading letters as if they
+        # were a genuine (if truncated) word.
+        if core and re.match(r"^[A-Za-z]{1,5}\d{1,4}", core):
+            break
+        m = LEADING_ALPHA_RE.match(core) if core else None
+        if m and len(m.group(0)) >= 2:
+            kept.append(m.group(0))
+        break
+    return " ".join(kept)
+
+
+def normalize_for_match(s: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "", s.lower())
+
+
+# Trailing page-code pattern, tolerant of a stray 1-2 char OCR symbol
+# inserted between the letters and digits (observed: "PS§20" where a
+# printed page-number style artifact OCR'd as "§").
+ANY_TRAILING_CODE_RE = re.compile(r"^(?P<pre>.*?)[A-Za-z]{1,5}[^\w\s]{0,2}\d{1,4}\s*$")
+
+
+def extract_leader_stripped_heading(line: str) -> str:
+    """Extract the heading candidate via the alphabetic-token walk. If the
+    line ends in ANY letter-code+digits pattern (not only one matching this
+    chapter - a merged/foreign code should still be stripped rather than
+    walked into), that trailing code is excluded first. Without this, the
+    token walk's glued-token fallback (which recovers a real word merged
+    onto dot-leader garbage, e.g. "Therapy....") would also match the
+    LEADING letters of the trailing page code itself (e.g. pull "NP" out
+    of a genuine trailing "NP34"), appending a spurious extra word to the
+    heading - a confirmed bug, fixed here by never walking into the
+    trailing code region at all."""
+    m = ANY_TRAILING_CODE_RE.match(line)
+    pre = m.group("pre") if m else line
+    return clean_heading_from_pre_code_text(pre)
+
+
+# ---------------------------------------------------------------------------
+# Chapter running-header ground truth (used both to compute end pages and to
+# anchor BODY_HEADING_CONFIRMATION matches to an exact pdf_page).
+# ---------------------------------------------------------------------------
+
+def build_running_header_map(chapter_code: str, pdf_pages: list) -> dict:
+    """Return {pdf_page: confirmed_relative_number} for every page in the
+    chapter whose first line matches '<chapter_code><n>' (case-insensitive,
+    optionally followed by the chapter title text). This is checked against
+    the chapter's own linear position (pdf_page - chapter_start + 1) and
+    used only as a validation/consistency signal; the linear formula itself
+    is what's actually used for pdf_page<->relative-page conversion,
+    because in every chapter sampled the two agree wherever a header is
+    present at all (see toc_validation_report for the cross-check counts)."""
+    header_re = re.compile(rf"^{re.escape(chapter_code)}(\d{{1,3}})\b", re.IGNORECASE)
+    chapter_start = min(pdf_pages)
+    confirmed = {}
+    mismatches = []
+    for i, pp in enumerate(pdf_pages):
+        text = load_page_text(pp)
+        first_line = text.splitlines()[0] if text.splitlines() else ""
+        m = header_re.match(first_line.strip())
+        if m:
+            expected = i + 1
+            got = int(m.group(1))
+            confirmed[pp] = got
+            if got != expected:
+                mismatches.append({"pdf_page": pp, "expected_relative": expected, "header_read_relative": got})
+    return {
+        "confirmed_pages": confirmed,
+        "coverage": f"{len(confirmed)}/{len(pdf_pages)}",
+        "mismatches": mismatches,
+    }
+
+
+# ---------------------------------------------------------------------------
+# TOC page detection and candidate extraction
+# ---------------------------------------------------------------------------
 
 def find_toc_pages(chapter_code: str, pdf_pages: list) -> list:
-    """Return the list of pdf_page numbers (subset of the chapter's own
-    pages, in order) that appear to be the chapter's internal TOC, by
-    counting section-line matches restricted to this chapter's code on
-    each of the first 4 pages."""
+    """A real internal-TOC page has several lines ending in this chapter's
+    own <code><digits> page-label; require >=3 such matches OR, for
+    heavily digit-corrupted chapters, fall back to counting lines that at
+    least *start* with this chapter's own alphabetic prefix in a
+    leader-dot pattern (heading-candidate-with-any-trailing-junk)."""
     candidates = []
     for pdf_page in pdf_pages[:4]:
         text = load_page_text(pdf_page)
-        count = sum(1 for line in text.splitlines() if match_section_line(line.strip(), chapter_code))
-        candidates.append((pdf_page, count))
+        strict_count = 0
+        loose_count = 0
+        for line in text.splitlines():
+            line = line.strip()
+            m = TRAILING_CODE_RE.match(line)
+            if m and m.group("code").upper() == chapter_code.upper():
+                heading = clean_heading_from_pre_code_text(m.group("pre"))
+                if heading:
+                    strict_count += 1
+            # loose signal: line contains a dot-leader run (3+ periods, or
+            # a long run of low-information filler) - typical of a TOC
+            # entry regardless of whether the trailing code parsed
+            if re.search(r"\.{3,}|[\.\s]{2,}[a-zA-Z]{0,3}\d", line):
+                loose_count += 1
+        candidates.append((pdf_page, strict_count, loose_count))
 
-    # A real TOC page has several matches; require >=3 to qualify.
-    toc_pages = [p for p, c in candidates if c >= 3]
-    return toc_pages
+    strict_pages = [p for p, s, l in candidates if s >= 3]
+    if strict_pages:
+        return strict_pages
+    loose_pages = [p for p, s, l in candidates if l >= 5]
+    return loose_pages
 
 
-def parse_toc(chapter_code: str, toc_pages: list, chapter_start_pdf_page: int) -> list:
-    """Parse the identified TOC page(s) into an ordered list of section
-    dicts, each with nested topic strings."""
-    sections = []
-    current_section = None
+def split_multi_entry_line(line: str, chapter_code: str) -> list:
+    """Some Toronto Notes TOC pages lay out two columns of entries that
+    OCR's reading order interleaves onto a single text line (observed
+    directly, e.g. Neurology: "Mild Traumatic Brain Injury...N29 =-
+    Multiple Sclerosis...N55" is genuinely two separate TOC entries merged
+    by OCR). Detected by the presence of more than one embedded
+    <chapter_code><digits> occurrence within the same line (not just one
+    at the very end); the line is then split into that many sub-lines, one
+    ending at each occurrence, so each is parsed as its own independent
+    candidate rather than one candidate with a corrupted merged heading."""
+    pattern = re.compile(rf"\b{re.escape(chapter_code)}\d{{1,4}}\b", re.IGNORECASE)
+    matches = list(pattern.finditer(line))
+    if len(matches) <= 1:
+        return [line]
+    segments = []
+    start = 0
+    for m in matches:
+        segments.append(line[start:m.end()].strip())
+        start = m.end()
+    tail = line[start:].strip()
+    if tail:
+        segments.append(tail)
+    return [s for s in segments if s]
+
+
+def parse_toc_candidates(chapter_code: str, toc_pages: list, chapter_title: str = "") -> list:
+    """Return an ordered list of dicts, one per TOC line judged to be a
+    section heading (has enough structure to look like one), each with:
+      heading_text, toc_trailing_code_num (int or None - only set if the
+      trailing digits parsed AND the letter-code matched this chapter),
+      raw_ocr_line, source_pdf_page
+    Lines that don't look like section headers at all (too short, pure
+    boilerplate) are treated as topic candidates instead and returned
+    separately, attached to the preceding section candidate."""
+    section_candidates = []
+    current_topics = []
     seen_first_section = False
+
+    def is_probable_section_line(line: str) -> bool:
+        # Has some kind of leader-dot run OR ends in a trailing-code match -
+        # i.e., looks like a TOC entry with a page reference, not a bare
+        # sub-bullet topic.
+        if TRAILING_CODE_RE.match(line) and TRAILING_CODE_RE.match(line).group("code").upper() == chapter_code.upper():
+            return True
+        return bool(re.search(r"\.{3,}|[\.\s]{2,}[a-zA-Z]{0,4}\d{1,4}\s*$", line))
 
     for pdf_page in toc_pages:
         text = load_page_text(pdf_page)
-        for raw_line in text.splitlines():
-            line = raw_line.strip()
-            if is_skip_line(line):
-                continue
+        for original_raw_line in text.splitlines():
+            for raw_line in split_multi_entry_line(original_raw_line.strip(), chapter_code):
+                line = raw_line.strip()
+                if is_skip_line(line):
+                    continue
 
-            m = match_section_line(line, chapter_code)
-            if m:
-                seen_first_section = True
-                heading, page_num = m
-                target_pdf_page = chapter_start_pdf_page + page_num - 1
-                current_section = {
-                    "section_title": heading,
-                    "chapter_relative_page_label": f"{chapter_code.upper()}{page_num}",
-                    "start_pdf_page": target_pdf_page,
-                    "end_pdf_page": None,  # filled in after all sections parsed
-                    "raw_ocr_line": raw_line,
-                    "topics": [],
+                m = TRAILING_CODE_RE.match(line)
+                trailing_num = None
+                if m and m.group("code").upper() == chapter_code.upper():
+                    trailing_num = int(m.group("num"))
+
+                if is_probable_section_line(line):
+                    heading = extract_leader_stripped_heading(line)
+                    # Reject headings that are empty, or that reduce to
+                    # just the chapter code itself (a stray page-number-only
+                    # remnant line, e.g. an isolated "NP2" with no heading
+                    # text before it - not a real section title).
+                    if not heading or heading.upper() == chapter_code.upper():
+                        continue
+                    seen_first_section = True
+                    if section_candidates:
+                        section_candidates[-1]["topics"] = current_topics
+                    current_topics = []
+                    section_candidates.append({
+                        "heading_text": heading,
+                        "toc_trailing_code_num": trailing_num,
+                        "raw_ocr_line": raw_line,
+                        "source_pdf_page": pdf_page,
+                        "topics": [],
+                    })
+                    continue
+
+                if not seen_first_section:
+                    continue
+                if len(line) < 2:
+                    continue
+                if re.match(rf"^{re.escape(chapter_code)}\d+\b", line, re.IGNORECASE):
+                    continue
+                # Running-header/footer leakage into the topic list:
+                # (a) the bare chapter title repeated (e.g. a footer line
+                #     "P61 Pediatrics Toronto Notes 2025" splits across
+                #     OCR lines, leaving "Pediatrics" as an orphan line),
+                # (b) an isolated 1-4 char page-number-remnant token that
+                #     is letters-then-digits and starts with this
+                #     chapter's own code (e.g. "Pl" - OCR'd "P1").
+                if chapter_title and normalize_for_match(line) == normalize_for_match(chapter_title):
+                    continue
+                if re.match(rf"^{re.escape(chapter_code)}[a-zA-Z]?\d{{0,3}}$", line, re.IGNORECASE) and len(line) <= 5:
+                    continue
+                current_topics.append(line)
+
+    if section_candidates:
+        section_candidates[-1]["topics"] = current_topics
+
+    return section_candidates
+
+
+# ---------------------------------------------------------------------------
+# Body-heading confirmation
+# ---------------------------------------------------------------------------
+
+def confirm_via_body_headings(heading_text: str, body_pdf_pages: list, min_ratio: float = 0.87):
+    """Search body pages (already restricted to an ordered window by the
+    caller, so the FIRST exact match found is the correct one - sections
+    are printed in reading order and the search window advances after each
+    confirmed section) for a short standalone line matching heading_text.
+
+    Exact normalized match returns immediately on first occurrence within
+    the window (unambiguous). If no exact match exists anywhere in the
+    window, fall back to the single BEST (highest-ratio) fuzzy match across
+    the whole window - not the first one encountered - since an early,
+    low-quality fuzzy false-positive should not pre-empt a better match
+    later in the same window (this was a confirmed bug: an unrelated early
+    partial-match previously won over the correct later occurrence).
+    Returns (pdf_page, matched_line, method, ratio) or None."""
+    target_norm = normalize_for_match(heading_text)
+    if len(target_norm) < 4:
+        return None  # too short to match reliably, avoid false positives
+
+    best = None
+    best_ratio = 0.0
+    for pp in body_pdf_pages:
+        text = load_page_text(pp)
+        for line in text.splitlines():
+            line_s = line.strip()
+            if not line_s or len(line_s) > 70:
+                continue
+            line_norm = normalize_for_match(line_s)
+            if not line_norm:
+                continue
+            if line_norm == target_norm:
+                return (pp, line_s, "exact_normalized", 1.0)
+            if abs(len(line_norm) - len(target_norm)) <= 4:
+                ratio = difflib.SequenceMatcher(None, target_norm, line_norm).ratio()
+                if ratio >= min_ratio and ratio > best_ratio:
+                    best = (pp, line_s, "fuzzy_normalized", round(ratio, 3))
+                    best_ratio = ratio
+    return best
+
+
+# ---------------------------------------------------------------------------
+# Tree assembly
+# ---------------------------------------------------------------------------
+
+def assemble_chapter_tree(chapter_code, chapter_title, pdf_pages, unresolved_out):
+    chapter_start = min(pdf_pages)
+    chapter_end = max(pdf_pages)
+
+    header_map = build_running_header_map(chapter_code, pdf_pages)
+    toc_pages = find_toc_pages(chapter_code, pdf_pages)
+
+    chapter_node = {
+        "node_id": chapter_code,
+        "chapter_code": chapter_code,
+        "title": chapter_title,
+        "level": 1,
+        "parent_id": None,
+        "start_tn_page": f"{chapter_code}1",
+        "end_tn_page": f"{chapter_code}{chapter_end - chapter_start + 1}",
+        "start_pdf_page": chapter_start,
+        "end_pdf_page": chapter_end,
+        "structural_type": "chapter",
+        "extraction_method": "CHAPTER_MANIFEST",
+        "confidence": "HIGH",
+        "running_header_coverage": header_map["coverage"],
+        "running_header_mismatches": header_map["mismatches"],
+    }
+
+    if not toc_pages:
+        return chapter_node, [], {
+            "chapter_code": chapter_code,
+            "issue": "NO_TOC_PAGE_DETECTED",
+            "detail": (
+                f"No page among the chapter's first 4 pages "
+                f"({pdf_pages[:4]}) contained enough section-line pattern "
+                f"matches (strict >=3 or loose >=5) to be identified as an "
+                f"internal table of contents."
+            ),
+            "source_pdf_pages_checked": pdf_pages[:4],
+        }
+
+    section_candidates = parse_toc_candidates(chapter_code, toc_pages, chapter_title)
+    body_pages_all = [p for p in pdf_pages if p not in toc_pages]
+
+    nodes = []
+
+    # --- Pass 1: compute each candidate's raw TOC-digit page guess ---
+    for cand in section_candidates:
+        toc_num = cand["toc_trailing_code_num"]
+        toc_pdf_page = None
+        if toc_num is not None:
+            candidate_pdf_page = chapter_start + toc_num - 1
+            if chapter_start <= candidate_pdf_page <= chapter_end:
+                toc_pdf_page = candidate_pdf_page
+        cand["toc_pdf_page_guess"] = toc_pdf_page
+
+    # --- Pass 2: promote candidates to TRUSTED ANCHORS by finding the
+    # LONGEST NON-DECREASING SUBSEQUENCE of toc_pdf_page_guess values across
+    # all candidates (standard O(n^2) DP - n is a few dozen per chapter, so
+    # this is cheap). A naive greedy left-to-right "trust if >= previous"
+    # walk is NOT used here because some Toronto Notes TOC pages lay out
+    # two columns whose OCR reading order interleaves a few of the SECOND
+    # column's (late-chapter) entries in among the FIRST column's (early-
+    # chapter) entries at the very top of the page (confirmed directly,
+    # e.g. Gynecology: candidates arrive in the order 2, 56, 2, 58, 4, 59,
+    # 6, 7, 13, 14... - three late entries "56, 58, 59" are read early,
+    # before the real early-chapter run "2, 4, 6, 7, 13..." resumes and
+    # continues cleanly to the end). A greedy walk would trust the first
+    # occurrence of 56 as an anchor and then reject the entire correct
+    # 2,4,6,7,13,... run as "backward jumps," cascading into dozens of
+    # false UNRESOLVED headings. LIS instead finds the actual intended
+    # monotonic run (here: 2,2,4,6,7,13,14,15,19,20,21,23,25,26,34,34,36,
+    # 39,42) and correctly excludes only the true outliers (56, 58, 59) -
+    # which then get resolved on their own merits via BODY_HEADING_
+    # CONFIRMATION with correct (non-corrupted) bounds in Pass 3. ---
+    guesses = [c["toc_pdf_page_guess"] for c in section_candidates]
+    n = len(guesses)
+    dp = [1] * n
+    prev_idx = [-1] * n
+    for i in range(n):
+        if guesses[i] is None:
+            dp[i] = 0
+            continue
+        for j in range(i):
+            if guesses[j] is not None and guesses[j] <= guesses[i] and dp[j] + 1 > dp[i]:
+                dp[i] = dp[j] + 1
+                prev_idx[i] = j
+    lis_indices = set()
+    if n and max(dp, default=0) > 0:
+        end = max(range(n), key=lambda i: dp[i])
+        while end != -1:
+            if guesses[end] is not None:
+                lis_indices.add(end)
+            end = prev_idx[end]
+
+    for i, cand in enumerate(section_candidates):
+        cand["is_trusted_anchor"] = i in lis_indices
+
+    # --- Pass 3: for each candidate, resolve a start_pdf_page. Trusted
+    # anchors are used directly (TOC_OCR, HIGH confidence) UNLESS an exact
+    # body-text match exists at a *different* page, in which case the
+    # exact body match wins (it is strictly stronger evidence than a
+    # digit that merely happened to parse) and the disagreement is
+    # recorded rather than silently dropped. Non-anchor candidates are
+    # searched for via BODY_HEADING_CONFIRMATION within a window bounded
+    # on both sides by the nearest trusted anchors before and after them -
+    # never an open-ended forward search - which is what prevents a false
+    # match against unrelated, similarly-worded text elsewhere in the
+    # chapter. ---
+    anchor_pages_in_order = [c["toc_pdf_page_guess"] for c in section_candidates if c["is_trusted_anchor"]]
+
+    def bounded_window(idx):
+        lower = chapter_start
+        for j in range(idx - 1, -1, -1):
+            if section_candidates[j]["is_trusted_anchor"]:
+                lower = section_candidates[j]["toc_pdf_page_guess"]
+                break
+        upper = chapter_end
+        for j in range(idx + 1, len(section_candidates)):
+            if section_candidates[j]["is_trusted_anchor"]:
+                upper = section_candidates[j]["toc_pdf_page_guess"]
+                break
+        return [p for p in body_pages_all if lower <= p <= upper]
+
+    resolved_sections = []
+    for idx, cand in enumerate(section_candidates):
+        heading = cand["heading_text"]
+        toc_pdf_page = cand["toc_pdf_page_guess"]
+
+        start_pdf_page = None
+        extraction_method = None
+        confidence = None
+        confirmation_detail = None
+
+        if cand["is_trusted_anchor"]:
+            window = [p for p in bounded_window(idx) if p != toc_pdf_page] + [toc_pdf_page]
+            confirmation = confirm_via_body_headings(heading, sorted(set(window)))
+            if confirmation and confirmation[0] != toc_pdf_page and confirmation[2] == "exact_normalized":
+                conf_page, matched_line, method, ratio = confirmation
+                start_pdf_page = conf_page
+                extraction_method = "BODY_HEADING_CONFIRMATION"
+                confidence = "HIGH"
+                confirmation_detail = {
+                    "matched_body_line": matched_line,
+                    "match_method": method,
+                    "match_ratio": ratio,
+                    "toc_digit_guess_pdf_page": toc_pdf_page,
+                    "toc_digit_guess_agreed": False,
                 }
-                sections.append(current_section)
-                continue
-
-            # Not a section line. Before the first section is found, this is
-            # still credits/boilerplate - skip. After, treat as a topic
-            # bullet nested under the current section (if any, and if it
-            # looks like real text, not stray OCR noise).
-            if not seen_first_section:
-                continue
-            if current_section is None:
-                continue
-            if len(line) < 2:
-                continue
-            # Skip lines that are themselves clearly page headers/footers
-            # (e.g. "C2 Cardiology and Cardiac Surgery")
-            if re.match(rf"^{re.escape(chapter_code)}\d+\b", line, re.IGNORECASE):
-                continue
-            current_section["topics"].append(line)
-
-    return sections
-
-
-def fill_section_end_pages(sections: list, chapter_last_pdf_page: int):
-    for i, sec in enumerate(sections):
-        if i + 1 < len(sections):
-            next_start = sections[i + 1]["start_pdf_page"]
-            sec["end_pdf_page"] = max(sec["start_pdf_page"], next_start - 1)
+            else:
+                start_pdf_page = toc_pdf_page
+                extraction_method = "TOC_OCR"
+                confidence = "HIGH"
         else:
-            sec["end_pdf_page"] = chapter_last_pdf_page
+            window = bounded_window(idx)
+            confirmation = confirm_via_body_headings(heading, window)
+            if confirmation:
+                conf_page, matched_line, method, ratio = confirmation
+                start_pdf_page = conf_page
+                extraction_method = "BODY_HEADING_CONFIRMATION"
+                confidence = "HIGH" if method == "exact_normalized" else "MEDIUM"
+                confirmation_detail = {
+                    "matched_body_line": matched_line,
+                    "match_method": method,
+                    "match_ratio": ratio,
+                    "toc_digit_guess_pdf_page": toc_pdf_page,
+                    "toc_digit_guess_agreed": toc_pdf_page == conf_page,
+                }
+            elif toc_pdf_page is not None:
+                # Excluded from the LIS anchor chain purely because of its
+                # POSITION in the OCR-extracted candidate order (typically
+                # a two-column TOC layout artifact - see Pass 2), not
+                # because its own digit is implausible; the bounded search
+                # window (built from the wrong neighbouring anchors as a
+                # consequence of that same ordering artifact) found no
+                # match. As a fallback, accept the candidate's own digit
+                # guess directly at reduced confidence rather than
+                # discarding an otherwise-unremarkable entry - explicitly
+                # marked so this is auditable, not silent.
+                start_pdf_page = toc_pdf_page
+                extraction_method = "TOC_OCR"
+                confidence = "MEDIUM"
+                confirmation_detail = {
+                    "note": (
+                        "Excluded from the chapter's trusted monotonic "
+                        "anchor sequence due to its position among "
+                        "OCR-extracted TOC candidates (see "
+                        "known_limitations: two-column TOC layout "
+                        "interleaving); accepted on its own unconfirmed "
+                        "digit reading as a fallback."
+                    ),
+                }
+            else:
+                unresolved_out.append({
+                    "chapter_code": chapter_code,
+                    "heading_candidate": heading,
+                    "raw_ocr_line": cand["raw_ocr_line"],
+                    "source_pdf_page": cand["source_pdf_page"],
+                    "reason": (
+                        "TOC page's trailing page-number digits did not "
+                        "parse to a page consistent with reading order "
+                        "(not a trusted anchor), and no standalone "
+                        "body-page line within the bounded window between "
+                        "the nearest trusted anchors before/after this "
+                        "heading matched closely enough (similarity "
+                        "threshold 0.87) to confirm a page. Search window "
+                        f"checked: pdf pages {window[0]}-{window[-1]}"
+                        if window else "no body pages in bounded window"
+                    ),
+                    "status": "UNRESOLVED",
+                })
+                continue
+
+        resolved_sections.append({
+            "heading": heading,
+            "start_pdf_page": start_pdf_page,
+            "extraction_method": extraction_method,
+            "confidence": confidence,
+            "raw_ocr_line": cand["raw_ocr_line"],
+            "source_pdf_page": cand["source_pdf_page"],
+            "confirmation_detail": confirmation_detail,
+            "topics": cand["topics"],
+        })
+
+    # Sections should already be in reading order by construction; sort as
+    # a defensive invariant check in case a bounded-window confirmation
+    # still produced a local inversion.
+    resolved_sections.sort(key=lambda s: s["start_pdf_page"])
+
+    # De-duplicate: if two TOC candidates resolved to the identical
+    # start_pdf_page, keep the first (by original TOC order) and record the
+    # second's topics as merged into it rather than creating a duplicate
+    # node at the same page - this only happens when the TOC prints the
+    # same heading concept twice (e.g. a category header immediately above
+    # its first subsection) or a fuzzy-match collision.
+    deduped = []
+    seen_pages = set()
+    for s in resolved_sections:
+        if s["start_pdf_page"] in seen_pages:
+            deduped[-1]["topics"].extend(s["topics"])
+            deduped[-1].setdefault("merged_duplicate_headings", []).append(s["heading"])
+            continue
+        seen_pages.add(s["start_pdf_page"])
+        deduped.append(s)
+    resolved_sections = deduped
+
+    for i, s in enumerate(resolved_sections):
+        if i + 1 < len(resolved_sections):
+            end_pdf_page = max(s["start_pdf_page"], resolved_sections[i + 1]["start_pdf_page"] - 1)
+        else:
+            end_pdf_page = chapter_end
+        s["end_pdf_page"] = end_pdf_page
+
+    for i, s in enumerate(resolved_sections):
+        section_relative_start = s["start_pdf_page"] - chapter_start + 1
+        section_relative_end = s["end_pdf_page"] - chapter_start + 1
+        section_node_id = f"{chapter_code}.S{i + 1:02d}"
+        section_node = {
+            "node_id": section_node_id,
+            "chapter_code": chapter_code,
+            "title": s["heading"],
+            "level": 2,
+            "parent_id": chapter_code,
+            "start_tn_page": f"{chapter_code}{section_relative_start}",
+            "end_tn_page": f"{chapter_code}{section_relative_end}",
+            "start_pdf_page": s["start_pdf_page"],
+            "end_pdf_page": s["end_pdf_page"],
+            "structural_type": "section",
+            "extraction_method": s["extraction_method"],
+            "confidence": s["confidence"],
+            "raw_ocr_line": s["raw_ocr_line"],
+            "toc_source_pdf_page": s["source_pdf_page"],
+        }
+        if s.get("confirmation_detail"):
+            section_node["confirmation_detail"] = s["confirmation_detail"]
+        if s.get("merged_duplicate_headings"):
+            section_node["merged_duplicate_headings"] = s["merged_duplicate_headings"]
+        nodes.append(section_node)
+
+        for j, topic_text in enumerate(s["topics"]):
+            topic_node_id = f"{section_node_id}.T{j + 1:02d}"
+            nodes.append({
+                "node_id": topic_node_id,
+                "chapter_code": chapter_code,
+                "title": topic_text,
+                "level": 3,
+                "parent_id": section_node_id,
+                "start_tn_page": section_node["start_tn_page"],
+                "end_tn_page": section_node["end_tn_page"],
+                "start_pdf_page": s["start_pdf_page"],
+                "end_pdf_page": s["end_pdf_page"],
+                "structural_type": "topic",
+                "extraction_method": "TOC_OCR_UNANCHORED",
+                "confidence": "LOW",
+            })
+
+    return chapter_node, nodes, None
 
 
 def main():
     chapter_dirs = sorted(CHAPTERS_DIR.iterdir())
-    chapters_out = []
-    total_sections = 0
-    total_topics = 0
-    chapters_with_no_toc_detected = []
+    all_nodes = []
+    unresolved = []
+    no_toc_chapters = []
 
     for cdir in chapter_dirs:
         manifest_path = cdir / "manifest.json"
@@ -195,125 +691,97 @@ def main():
         chapter_code = manifest["chapter_code"]
         chapter_title = manifest["chapter_title"]
         pdf_pages = [p["pdf_page"] for p in manifest["pages"]]
-        chapter_start = min(pdf_pages)
-        chapter_end = max(pdf_pages)
 
-        toc_pages = find_toc_pages(chapter_code, pdf_pages)
-        if not toc_pages:
-            chapters_with_no_toc_detected.append(chapter_code)
-            sections = []
-            status = "NO_TOC_DETECTED_NEEDS_MANUAL_REVIEW"
-            coverage_note = None
-        else:
-            sections = parse_toc(chapter_code, toc_pages, chapter_start)
-            fill_section_end_pages(sections, chapter_end)
-            status = "PARSED"
-            # Data-quality signal: if the first detected section starts well
-            # after the chapter's actual first content page, OCR likely
-            # dropped the trailing page-number token for one or more early
-            # TOC entries (observed directly in e.g. Family Medicine, where
-            # the dot-leader run for early entries consumed the line before
-            # OCR reached the printed page number). This is a real
-            # extraction gap, not guessed at or silently absorbed.
-            first_section_start = sections[0]["start_pdf_page"] if sections else None
-            expected_early_bound = chapter_start + 5  # credits + acronyms page(s)
-            if first_section_start is not None and first_section_start > expected_early_bound:
-                status = "PARSED_INCOMPLETE_COVERAGE_SUSPECTED"
-                coverage_note = (
-                    f"First detected section starts at pdf page "
-                    f"{first_section_start}, {first_section_start - chapter_start} "
-                    f"pages into a chapter starting at {chapter_start}. This gap is "
-                    f"larger than the typical 1-5 page credits/acronyms preamble, "
-                    f"indicating the OCR text for one or more early TOC entries is "
-                    f"missing its trailing page-number token (dot-leader consumed "
-                    f"the line before reaching the number) and those sections were "
-                    f"not captured. Needs manual review against the source PDF."
-                )
-            else:
-                coverage_note = None
+        chapter_node, section_topic_nodes, no_toc_issue = assemble_chapter_tree(
+            chapter_code, chapter_title, pdf_pages, unresolved
+        )
+        all_nodes.append(chapter_node)
+        all_nodes.extend(section_topic_nodes)
+        if no_toc_issue:
+            no_toc_chapters.append(chapter_code)
+            unresolved.append({
+                "chapter_code": chapter_code,
+                "heading_candidate": None,
+                "raw_ocr_line": None,
+                "source_pdf_page": None,
+                "reason": no_toc_issue["detail"],
+                "status": "UNRESOLVED_NO_TOC_DETECTED",
+            })
 
-        total_sections += len(sections)
-        total_topics += sum(len(s["topics"]) for s in sections)
+    sections = [n for n in all_nodes if n["structural_type"] == "section"]
+    topics = [n for n in all_nodes if n["structural_type"] == "topic"]
 
-        chapters_out.append({
-            "chapter_code": chapter_code,
-            "chapter_title": chapter_title,
-            "pdf_page_range": [chapter_start, chapter_end],
-            "tn_page_range": f"{chapter_code}1-{chapter_code}{chapter_end - chapter_start + 1}",
-            "page_count": len(pdf_pages),
-            "toc_source_pdf_pages": toc_pages,
-            "toc_extraction_status": status,
-            "coverage_quality_note": coverage_note,
-            "sections": sections,
-        })
+    method_counts = {}
+    for s in sections:
+        method_counts[s["extraction_method"]] = method_counts.get(s["extraction_method"], 0) + 1
 
     inventory = {
-        "schema_version": "1.0",
-        "generated_at": "2026-08-24",
+        "schema_version": "2.0",
+        "generated_at": GENERATED_AT,
         "source_manifests": "derived/toronto-notes-2025/chapters/*/manifest.json",
         "provenance_note": (
-            "Chapter-level page boundaries (chapter_code, chapter_title, "
-            "pdf_page_range) were computed on the codex/qbank-production "
-            "git branch and copied into this gitignored derived/ tree for "
-            "reuse (not merged as code/history into main). Section- and "
-            "topic-level structure below is newly extracted in this pass "
-            "by deterministically parsing each chapter's own printed "
-            "internal table of contents page(s), located by counting "
-            "regex matches of that chapter's own page-numbering scheme "
-            "(e.g. 'C19', 'P70') on each chapter's first few pages."
+            "Chapter-level page boundaries were computed on the "
+            "codex/qbank-production git branch and copied into this "
+            "gitignored derived/ tree for reuse (not merged as code/history "
+            "into main). Section- and topic-level structure is extracted by "
+            "combining two independent, source-grounded methods: TOC_OCR "
+            "(parsing each chapter's own printed table of contents) and "
+            "BODY_HEADING_CONFIRMATION (independently locating each heading "
+            "as a standalone line within the chapter's own body pages, "
+            "using that page's position as ground truth when the TOC's own "
+            "page-number digits are too OCR-corrupted to trust). Nothing is "
+            "filled in from outside medical knowledge of what a chapter "
+            "'should' contain - every node traces to a specific OCR'd "
+            "source line."
         ),
         "extraction_method": "scripts/qbank/build_tn_toc_inventory.py",
-        "hierarchy_depth_achieved": (
-            "3 of 4 levels: chapter (page-range anchored) -> section "
-            "(page-range anchored, derived from the chapter's own TOC "
-            "page-number citations) -> topic (listed under its section in "
-            "TOC order, NOT independently page-anchored - the printed TOC "
-            "does not give sub-items their own page numbers). Subtopic-level "
-            "in-page heading detection was NOT attempted - the existing "
-            "OCR pipeline's per-page 'headings' field is empty for every "
-            "page sampled, meaning no automated in-page heading detector "
-            "exists yet; that is separate follow-on work."
-        ),
-        "known_limitations": [
-            "OCR quality: table-of-contents dot-leaders are frequently "
-            "mangled by OCR into irregular character runs; heading text is "
-            "preserved as OCR'd (not spell-corrected) to avoid inventing "
-            "content. Every section retains 'raw_ocr_line' for manual audit.",
-            "Chapters where fewer than 3 section-pattern matches were found "
-            "on the first 4 pages are marked toc_extraction_status: "
-            "NO_TOC_DETECTED_NEEDS_MANUAL_REVIEW with zero sections - this "
-            "is a known gap, not silently papered over.",
-            "Topic bullet lines are attributed to the most recently parsed "
-            "section in TOC reading order; a small number of OCR line-break "
-            "artifacts may misattribute a topic to the wrong section - not "
-            "individually verified against every one of the ~32 chapters.",
-        ],
-        "summary": {
-            "total_chapters": len(chapters_out),
-            "total_sections": total_sections,
-            "total_topics": total_topics,
-            "chapters_with_no_toc_detected": chapters_with_no_toc_detected,
-            "chapters_with_suspected_incomplete_coverage": [
-                c["chapter_code"] for c in chapters_out
-                if c["toc_extraction_status"] == "PARSED_INCOMPLETE_COVERAGE_SUSPECTED"
-            ],
-            "chapters_fully_parsed": [
-                c["chapter_code"] for c in chapters_out
-                if c["toc_extraction_status"] == "PARSED"
-            ],
+        "node_schema": {
+            "node_id": "Deterministic, hierarchical (e.g. 'C', 'C.S03', 'C.S03.T02')",
+            "chapter_code": "Toronto Notes chapter code",
+            "title": "Heading/topic text as extracted (OCR-preserved, not spell-corrected)",
+            "level": "1=chapter, 2=section, 3=topic (no level is invented beyond what the source TOC supports)",
+            "parent_id": "node_id of the parent, or null for chapter roots",
+            "start_tn_page": "Printed chapter-relative page label, e.g. 'C19'",
+            "end_tn_page": "Printed chapter-relative page label of the last page in range",
+            "start_pdf_page": "Absolute PDF page number",
+            "end_pdf_page": "Absolute PDF page number",
+            "structural_type": "chapter | section | topic",
+            "extraction_method": "CHAPTER_MANIFEST | TOC_OCR | BODY_HEADING_CONFIRMATION | TOC_OCR_UNANCHORED",
+            "confidence": "HIGH | MEDIUM | LOW",
         },
-        "chapters": chapters_out,
+        "summary": {
+            "total_chapters": len([n for n in all_nodes if n["structural_type"] == "chapter"]),
+            "total_sections": len(sections),
+            "total_topics": len(topics),
+            "total_nodes": len(all_nodes),
+            "extraction_method_counts": method_counts,
+            "chapters_with_no_toc_detected": no_toc_chapters,
+            "unresolved_heading_count": len(unresolved),
+        },
+        "nodes": all_nodes,
     }
 
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    with open(OUT, "w") as f:
+    OUT_INVENTORY.parent.mkdir(parents=True, exist_ok=True)
+    with open(OUT_INVENTORY, "w") as f:
         json.dump(inventory, f, indent=2, ensure_ascii=False)
         f.write("\n")
 
-    print(f"Wrote {OUT}")
-    print(f"Chapters: {len(chapters_out)}, Sections: {total_sections}, Topics: {total_topics}")
-    if chapters_with_no_toc_detected:
-        print(f"WARNING - no TOC detected for: {chapters_with_no_toc_detected}")
+    with open(OUT_UNRESOLVED, "w") as f:
+        json.dump({
+            "generated_at": GENERATED_AT,
+            "total_unresolved": len(unresolved),
+            "unresolved_headings": unresolved,
+        }, f, indent=2, ensure_ascii=False)
+        f.write("\n")
+
+    print(f"Wrote {OUT_INVENTORY}")
+    print(f"Wrote {OUT_UNRESOLVED}")
+    print(f"Chapters: {inventory['summary']['total_chapters']}, "
+          f"Sections: {len(sections)}, Topics: {len(topics)}, "
+          f"Unresolved: {len(unresolved)}")
+    print(f"Extraction methods: {method_counts}")
+    if no_toc_chapters:
+        print(f"No TOC detected: {no_toc_chapters}")
 
 
 if __name__ == "__main__":

@@ -1,7 +1,19 @@
 # Toronto Notes 2025 — TOC Inventory Extraction Report
 
+> **⚠️ SUPERSEDED — retained as historical documentation only.**
+> This report describes the *first* extraction pass (32 chapters, 479
+> sections, 24 clean / 7 incomplete / 1 no-TOC). A follow-up repair pass
+> the same day replaced the fixed 3-level nested-dict schema with an
+> arbitrary-depth tree-node schema, added BODY_HEADING_CONFIRMATION
+> recovery, and fixed several extraction bugs this report's own findings
+> exposed. For current, validated numbers see
+> `research/tn2025/toc_validation_report.md` and
+> `research/tn2025/unresolved_headings.json`. The root-cause analysis and
+> worked examples below remain accurate as historical record of *why*
+> the recovery work in the follow-up pass was needed.
+
 **Date:** 2026-08-24
-**Output:** `research/tn2025/toc_inventory.json`
+**Output:** `research/tn2025/toc_inventory.json` (schema since superseded — see notice above)
 **Scope:** Mechanical structural extraction only — **no MCC mapping performed in this pass.**
 
 ---
