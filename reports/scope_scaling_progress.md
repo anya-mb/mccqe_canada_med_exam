@@ -19,7 +19,7 @@ then continue.
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `PENDING` — scope: map D Dermatology |
+| Last completed commit | `36b4cc0` — scope: map D Dermatology |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
