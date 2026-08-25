@@ -14,44 +14,43 @@ then continue.
 
 | | |
 |---|---|
-| Completed | 4 / 32 (`C`, `ELOM`, `A`, `CP`) |
-| Next chapter | **D — Dermatology** |
+| Completed | 5 / 32 (`C`, `ELOM`, `A`, `CP`, `D`) |
+| Next chapter | **ER — Emergency Medicine** |
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `cc2d41d` — scope: map CP Clinical Pharmacology |
+| Last completed commit | `PENDING` — scope: map D Dermatology |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
 
-1. D — Dermatology *(next)*
-2. ER — Emergency Medicine
-3. E — Endocrinology
-4. FM — Family Medicine
-5. G — Gastroenterology
-6. GS — General and Thoracic Surgery
-7. GM — Geriatric Medicine
-8. GY — Gynecology
-9. H — Hematology
-10. ID — Infectious Diseases
-11. MG — Medical Genetics
-12. MI — Medical Imaging
-13. NP — Nephrology
-14. N — Neurology
-15. NS — Neurosurgery
-16. OB — Obstetrics
-17. OP — Ophthalmology
-18. OR — Orthopedic Surgery
-19. OT — Otolaryngology
-20. P — Pediatrics
-21. PM — Palliative Medicine
-22. PL — Plastic Surgery
-23. PS — Psychiatry
-24. PH — Public Health and Preventive Medicine
-25. R — Respirology
-26. RH — Rheumatology
-27. U — Urology
-28. VS — Vascular Surgery
+1. ER — Emergency Medicine *(next)*
+2. E — Endocrinology
+3. FM — Family Medicine
+4. G — Gastroenterology
+5. GS — General and Thoracic Surgery
+6. GM — Geriatric Medicine
+7. GY — Gynecology
+8. H — Hematology
+9. ID — Infectious Diseases
+10. MG — Medical Genetics
+11. MI — Medical Imaging
+12. NP — Nephrology
+13. N — Neurology
+14. NS — Neurosurgery
+15. OB — Obstetrics
+16. OP — Ophthalmology
+17. OR — Orthopedic Surgery
+18. OT — Otolaryngology
+19. P — Pediatrics
+20. PM — Palliative Medicine
+21. PL — Plastic Surgery
+22. PS — Psychiatry
+23. PH — Public Health and Preventive Medicine
+24. R — Respirology
+25. RH — Rheumatology
+26. U — Urology
+27. VS — Vascular Surgery
 
 ## Chapter notes
 
@@ -81,6 +80,26 @@ then continue.
   `research/mcc/objectives_registry.json` for missed better-fit
   objectives; none found). 0 invalid MCC IDs, 0 WEAK mappings, 0 hygiene
   violations, 0 UNCERTAIN classifications.
+- **D (Dermatology)**: 48 study units from 42 TOC nodes (largest chapter
+  processed so far). Chapter D's TOC page had unusually poor two-column
+  OCR: ~20 of 42 nodes carry titles that concatenate two real,
+  physically distant headings sharing a TOC line (e.g. `D.S06` merges a
+  pdf-196 subsection with a pdf-228 heading 32 pages away), and 7
+  headings were dropped entirely (`UNRESOLVED` in
+  `research/tn2025/unresolved_headings.json`) plus 2 more silently
+  dropped with no registry entry at all. All resolved via body-heading
+  confirmation against raw OCR (`derived/toronto-notes-2025/clean-ocr/`,
+  pdf 190-246); 9 study units carry synthetic `UNCATALOGUED:` source
+  ids. Flagged `affects_global_toc: true` in
+  `research/scope/chapters/D/review_items.json` for a future TOC-pass.
+  MCC evidence concentrates on objective 38 "Skin and integument
+  conditions" (39/41 citations) — the only Medical Expert objective
+  covering general dermatology under MCC's presentation-oriented
+  framework, per `CLAUDE.md` guidance; most named diagnoses therefore
+  map COMPONENT rather than DIRECT, with DIRECT reserved for cases the
+  objective names explicitly (e.g. melanoma) or with their own dedicated
+  objective (Pruritus=85, Urticaria/angioedema=97-2). 0 invalid MCC IDs,
+  0 WEAK mappings, 0 hygiene violations, 0 UNCERTAIN classifications.
 
 ## Resume protocol (per Phase 3C instructions)
 

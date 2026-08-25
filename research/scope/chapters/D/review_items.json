@@ -1,0 +1,29 @@
+{
+  "generated_at": "2026-08-25",
+  "chapter_code": "D",
+  "schema_note": "Chapter-local review-queue candidates only. This file is NOT the global research/scope/review_queue.json - it is merged into that coordinator-maintained file after this chapter passes validation.",
+  "items": [
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "informational",
+      "study_unit_id": "SU-D-02, SU-D-03, SU-D-13, SU-D-14, SU-D-34, SU-D-45, SU-D-46, SU-D-48",
+      "title": "9 real Dermatology headings have no toc_inventory.json node at all (dropped, not merged)",
+      "summary": "Chapter D's TOC page (pdf 189) is a two-column layout whose OCR interleaved adjacent-column text. 7 headings are recorded UNRESOLVED in research/tn2025/unresolved_headings.json (Introduction to Skin, Morphology, Patterns and Distribution, Differential Diagnoses for Common Presentations, Common Skin Lesions, Acneiform Eruptions, Papulosquamous Diseases); 2 further headings with real body content (Pre-Malignant Skin Conditions, Dermatologic Therapies) have no unresolved_headings.json entry either - they were silently dropped by the extraction pass rather than flagged. This is the same class of gap chapter A's 'Monitoring' heading exhibited (see review_queue.json's existing SU-A-07 entry).",
+      "resolution_status": "INDEPENDENTLY RESOLVED (not left open) - all 9 were located via body-heading confirmation (raw OCR + derived/toronto-notes-2025/clean-ocr/ normalized text, pdf 190-246) and assigned synthetic UNCATALOGUED:D-* source_node_ids per the documented convention. 2 of the 9 (Common Skin Lesions, Acneiform Eruptions) needed no standalone unit because their child subsections are already accounted for via existing merged nodes. The remaining 7 are represented as SU-D-02, SU-D-03, SU-D-13, SU-D-14, SU-D-34, SU-D-45, SU-D-46, and folded into SU-D-48 (Landmark Trials). See study_units.json's unresolved_heading_resolution field for the complete per-heading resolution.",
+      "recommended_action": "Coordinator should consider adding corresponding nodes to toc_inventory.json for chapter D in a future TOC-extraction pass (Introduction to Skin at pdf 190-192; Morphology/Patterns/DDx at pdf 192-196; Pre-Malignant Skin Conditions at pdf 227; Papulosquamous Diseases at pdf 208-211; Sunscreens and Preventative Therapy at pdf 240; Dermatologic Therapies at pdf 241-242; Landmark Dermatology Trials at pdf 244-245), since this confirms the extraction pipeline can silently drop headings entirely (not just merge them) on a badly-OCR'd two-column TOC page. Flagged informational/low-priority since chapter D's own crosswalk is unaffected (all 9 are fully resolved and validated).",
+      "affects_global_toc": true,
+      "chapter_code": "D"
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "informational",
+      "study_unit_id": "D.S06, D.S06.T01-T03, D.S07.T02, D.S09, D.S11, D.S12, D.S12.T01/T04, D.S15",
+      "title": "Unusually high rate of two-column TOC node-title merges (~20 of 42 nodes)",
+      "summary": "Beyond the 9 fully-dropped headings above, roughly 20 of chapter D's 42 toc_inventory.json nodes carry titles that concatenate two real, physically distant headings that happened to share a TOC line during OCR (e.g. D.S06's title 'Cysts Malignant Skin Tumours' merges a pdf-196 subsection with a pdf-228 major heading 32 pages away). This is a substantially higher merge rate than any previously completed chapter (C, ELOM, A, CP).",
+      "resolution_status": "INDEPENDENTLY RESOLVED for all 20 nodes - each was split into its constituent real fragments via body-heading confirmation, with the full per-node ledger recorded in study_units.json's same_page_merge_resolutions field. No mapping-quality impact: source_accounting passed with 0 unaccounted nodes and 0 WEAK mcc_evidence citations resulted.",
+      "recommended_action": "No action required for chapter D itself (fully resolved). Flagged informational so the coordinator is aware that chapter D's toc_inventory.json node titles are less reliable as literal section titles than other chapters if they are ever consumed directly (e.g. by tooling) rather than through study_units.json's resolved titles.",
+      "affects_global_toc": false,
+      "chapter_code": "D"
+    }
+  ]
+}
