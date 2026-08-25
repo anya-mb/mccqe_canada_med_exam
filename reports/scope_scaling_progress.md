@@ -19,7 +19,7 @@ then continue.
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `scope: map CP Clinical Pharmacology` (see `git log` for hash) |
+| Last completed commit | `cc2d41d` — scope: map CP Clinical Pharmacology |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
