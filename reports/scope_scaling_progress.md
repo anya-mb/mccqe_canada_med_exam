@@ -14,43 +14,41 @@ then continue.
 
 | | |
 |---|---|
-| Completed | 5 / 32 (`C`, `ELOM`, `A`, `CP`, `D`) |
-| Next chapter | **ER — Emergency Medicine** |
+| Completed | 7 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`) |
+| Next chapter | **FM — Family Medicine** |
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `36b4cc0` — scope: map D Dermatology |
+| Last completed commit | *(pending — see PROGRESS.md / git log for the commit created for this checkpoint)* |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
 
-1. ER — Emergency Medicine *(next)*
-2. E — Endocrinology
-3. FM — Family Medicine
-4. G — Gastroenterology
-5. GS — General and Thoracic Surgery
-6. GM — Geriatric Medicine
-7. GY — Gynecology
-8. H — Hematology
-9. ID — Infectious Diseases
-10. MG — Medical Genetics
-11. MI — Medical Imaging
-12. NP — Nephrology
-13. N — Neurology
-14. NS — Neurosurgery
-15. OB — Obstetrics
-16. OP — Ophthalmology
-17. OR — Orthopedic Surgery
-18. OT — Otolaryngology
-19. P — Pediatrics
-20. PM — Palliative Medicine
-21. PL — Plastic Surgery
-22. PS — Psychiatry
-23. PH — Public Health and Preventive Medicine
-24. R — Respirology
-25. RH — Rheumatology
-26. U — Urology
-27. VS — Vascular Surgery
+1. FM — Family Medicine *(next)*
+2. G — Gastroenterology
+3. GS — General and Thoracic Surgery
+4. GM — Geriatric Medicine
+5. GY — Gynecology
+6. H — Hematology
+7. ID — Infectious Diseases
+8. MG — Medical Genetics
+9. MI — Medical Imaging
+10. NP — Nephrology
+11. N — Neurology
+12. NS — Neurosurgery
+13. OB — Obstetrics
+14. OP — Ophthalmology
+15. OR — Orthopedic Surgery
+16. OT — Otolaryngology
+17. P — Pediatrics
+18. PM — Palliative Medicine
+19. PL — Plastic Surgery
+20. PS — Psychiatry
+21. PH — Public Health and Preventive Medicine
+22. R — Respirology
+23. RH — Rheumatology
+24. U — Urology
+25. VS — Vascular Surgery
 
 ## Chapter notes
 
@@ -100,6 +98,34 @@ then continue.
   objective names explicitly (e.g. melanoma) or with their own dedicated
   objective (Pruritus=85, Urticaria/angioedema=97-2). 0 invalid MCC IDs,
   0 WEAK mappings, 0 hygiene violations, 0 UNCERTAIN classifications.
+- **ER (Emergency Medicine)**: 53 study units. Source-boundary
+  page-number lag (`ER.S05`-`ER.S08`) resolved via body-heading
+  confirmation; see `research/scope/chapters/ER/review_items.json`.
+  Corrected in a follow-up commit (`fix(scope): resolve ER source
+  ambiguities`) after initial mapping.
+- **E (Endocrinology)**: 60 study units from 81 source nodes (clean
+  single-column TOC page — 0 unresolved headings, 0 two-column merges,
+  0 `UNCATALOGUED:` synthetic ids, a marked contrast with D). Only two
+  structural artifacts: `E.S03.T02`/`E.S03.T03` (a single "Pre-Diabetes"
+  heading split by OCR line-wrap, merged into `SU-E-08`) and
+  `E.S04.T04`/`E.S04.T05` (TSH/ACTH nodes whose entire body content is a
+  one-line cross-reference to the Thyroid/Adrenal Cortex sections,
+  folded into `SU-E-17`). The scope packet's bounded candidate MCC set
+  (27 entries) was mostly generic cross-discipline Study-Smarter noise
+  and lacked objectives for the chapter's core content; targeted
+  `search-mcc-objectives` full-registry searches surfaced 12 additional
+  relevant objectives (Hyperglycemia=130, Hypoglycemia=129, Stature
+  abnormal=101, Hypertension=9-1, Hypokalemia=79-2, Hyponatremia=99-2,
+  Fatigue=33, Obesity=118-1, Polyuria=110-2, Amenorrhea=56-1, Breast
+  masses/gynecomastia=10-1, Weight loss=118-2) — see
+  `research/scope/chapters/E/crosswalk_audit.md` for the full search log,
+  including confirmed-absent objectives (no dedicated MCC objective
+  exists for thyroid-disease specifics beyond the general neck-mass
+  objective, adrenal disorders, pituitary disorders, or osteoporosis).
+  18 distinct MCC objective IDs cited (vs. 3 for D), reflecting MCC's
+  granular presentation-based framework for this body system. 0 invalid
+  MCC IDs, 0 WEAK mappings, 0 hygiene violations, 0 UNCERTAIN
+  classifications, 553/553 project tests passing.
 
 ## Resume protocol (per Phase 3C instructions)
 

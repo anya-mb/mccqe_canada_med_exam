@@ -6,13 +6,14 @@
     "A",
     "CP",
     "D",
-    "ER"
+    "ER",
+    "E"
   ],
   "chapters_without_review_items_file": [
     "C",
     "ELOM"
   ],
-  "total_items": 17,
+  "total_items": 20,
   "items": [
     {
       "issue_type": "structural_ambiguity",
@@ -179,6 +180,39 @@
       "title": "Five COMPONENT units retain a secondary WEAK MCC evidence citation alongside a stronger primary anchor",
       "summary": "SU-ER-19 (Cardiac Dysrhythmias) cites 68/Palpitations at MODERATE plus 62/Abnormal heart sounds at WEAK; SU-ER-22 (VTE) cites 27/Dyspnea at MODERATE plus 15-2/Prevention of venous thrombosis at WEAK; SU-ER-27 (Sepsis) cites 9-2/Shock at STRONG plus 107-1/Fever and hyperthermia at WEAK; SU-ER-37 (Bites) cites 109-12/Skin wounds at WEAK as its only anchor; SU-ER-44 (Approach to Psychiatric Presentations) cites 86/Psychosis at WEAK as its only anchor, since the unit's actual scope (general safety/history/MSE approach) is broader than any single psychiatric-presentation objective.",
       "recommended_action": "Coordinator/reviewer to confirm whether each WEAK secondary citation adds question-writing value or should be dropped in favor of the stronger primary evidence alone (where one exists), and for SU-ER-37/SU-ER-44 specifically, whether a better-fitting MCC objective exists under vocabulary not yet found by this pass's keyword searches ('bite', 'psychiatric' both returned zero matches)."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "informational",
+      "study_unit_id": "SU-E-08",
+      "title": "E.S03.T02 / E.S03.T03 is one heading split by OCR line-wrap, not two topics",
+      "summary": "The TOC extraction pass parsed the single heading 'Pre-Diabetes (Impaired Glucose Tolerance/Impaired Fasting Glucose)' into two topic nodes (E.S03.T02 title truncates mid-phrase at 'Impaired Fasting'; E.S03.T03 is the orphaned closing fragment 'Glucose)'), because the heading text wrapped across two lines on the TOC page. This differs from Dermatology's two-column merges (which combine two unrelated distant headings); here it is the same single heading split in two.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - confirmed via body-heading OCR (clean-ocr/0315.txt, pdf 315) as one continuous Pre-Diabetes subsection and merged into a single study unit (SU-E-08).",
+      "recommended_action": "Coordinator may want a line-wrap-aware post-processing pass on TOC extraction (join two adjacent unanchored topic nodes when the second node's title has no capital-letter start / looks like a sentence continuation) to prevent this class of artifact in future chapters, though the rate is very low (1 of 81 nodes in this chapter).",
+      "affects_global_toc": true,
+      "chapter_code": "E"
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "informational",
+      "study_unit_id": "SU-E-17",
+      "title": "E.S04.T04 (TSH) and E.S04.T05 (ACTH) are real nodes whose entire content is a cross-reference stub",
+      "summary": "Unlike a merge or drop, these two TOC nodes are correctly extracted and unmerged, but their body content is a single line each ('see Thyroid, E24' and 'see Adrenal Cortex, E33', clean-ocr/0329.txt, pdf 329) with no independent material - the actual TSH/ACTH-axis disease content lives entirely under the Thyroid and Adrenal Cortex sections.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - folded into the pituitary-hormone-physiology unit (SU-E-17) as physiology framing rather than given two content-free standalone units; substantive content fully represented under SU-E-23 onward (Thyroid) and SU-E-36 onward (Adrenal Cortex).",
+      "recommended_action": "No action required; flagged informational so the coordinator is aware this chapter contains legitimate zero-content leaf nodes that are correctly extracted (not an OCR defect).",
+      "affects_global_toc": false,
+      "chapter_code": "E"
+    },
+    {
+      "issue_type": "mcc_registry_coverage_gap",
+      "severity": "informational",
+      "study_unit_id": "multiple (see crosswalk_audit.md MCC registry search note)",
+      "title": "MCC objectives registry has no dedicated objective for several high-yield endocrine topics",
+      "summary": "Full-registry keyword searches (search-mcc-objectives) for 'thyroid disease' subtypes beyond the general neck-mass objective, 'adrenal', 'Cushing', 'pituitary', 'hypogonadism', 'gynecomastia', 'hirsutism', 'osteoporosis', 'goiter/goitre', and several other core endocrinology terms returned zero matches. This is a genuine registry coverage gap, not a search-tooling failure (confirmed by successfully finding adjacent/related objectives like Hyperglycemia=130, Hypertension=9-1, Fatigue=33, Breast masses and enlargement=10-1 via the same search method).",
+      "resolution_status": "RESOLVED FOR THIS CHAPTER - affected units (e.g. thyroid-specific diagnoses under objective 63 'Neck masses and thyroid disease'; Cushing's/pheochromocytoma/primary aldosteronism under objective 9-1 'Hypertension'; adrenal insufficiency under objective 33 'Fatigue'; gynecomastia under objective 10-1 'Breast masses and enlargement') were mapped as COMPONENT or DIRECT (where the objective's own text explicitly names the mechanism) under the nearest genuinely-matching presentation-based objective, with mapping_strength never exceeding what the objective's actual text supports. See crosswalk_audit.md's 'MCC registry search note' for the full list of 12 additional objectives found beyond the scope packet's bounded candidate set, and the full list of confirmed zero-match search terms.",
+      "recommended_action": "Coordinator may want to flag this as a broader MCC-objectives-registry gap worth noting in the final scope-scaling report: several highly-tested Endocrinology topics (thyroid disease subtypes, adrenal disorders, pituitary disorders, osteoporosis) rely entirely on adjacent presentation-based objectives rather than a dedicated endocrine objective, which may be a pattern in other body-system chapters (e.g. Cardiology, Gastroenterology) worth checking when those are processed.",
+      "affects_global_toc": false,
+      "chapter_code": "E"
     }
   ]
 }
