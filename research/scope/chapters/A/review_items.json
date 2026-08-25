@@ -1,0 +1,65 @@
+{
+  "generated_at": "2026-08-25",
+  "chapter_code": "A",
+  "schema_note": "Chapter-local review-queue candidates only. This file is NOT the global research/scope/review_queue.json (which does not exist yet and is built later by the coordinator from all chapters' review_items.json files) - do not treat it as such.",
+  "items": [
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "informational",
+      "study_unit_id": "SU-A-07",
+      "title": "Patient Monitoring (Intraoperative Standards)",
+      "summary": "The 'Monitoring' heading (source_pdf_page 55 in research/tn2025/unresolved_headings.json, status UNRESOLVED) has NO corresponding node anywhere in toc_inventory.json's 59 chapter-A nodes - unlike the A.S01/A.S06 same-page merges, there was no existing node to split; the TOC-extraction pipeline dropped this heading entirely.",
+      "resolution_status": "INDEPENDENTLY RESOLVED (not left open) - raw OCR of pdf page 61 (derived/toronto-notes-2025/ocr/pages/0061.json) confirms the heading text is 'Canadian Guidelines to the Practice of Anesthesia and Patient Monitoring', immediately followed on the same page by the confirmed body-heading match already recorded for node A.S03 ('Airway Management'). Represented as SU-A-07 with source_node_ids ['UNCATALOGUED:Monitoring@pdf61'] since no real toc_inventory.json node id exists to cite.",
+      "recommended_action": "Coordinator should consider adding a corresponding node to toc_inventory.json for chapter A (between A.S02 and A.S03, pdf page 61) in a future TOC-extraction pass, since this confirms at least one heading is missing from the pipeline's output entirely (not merged, dropped) - the same class of gap that produced the ELOM reference-disclaimer reattribution case. Flagged informational/low-priority since chapter A's own crosswalk is unaffected (SU-A-07 is fully resolved and validated).",
+      "affects_global_toc": true
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-A-06",
+      "title": "Preoperative Hematologic and Endocrine Optimization",
+      "summary": "mcc_evidence cites objective 42-1 'Anemia' at WEAK strength (requires_scope_review: true) because this unit tests only the narrow perioperative-optimization slice of anemia management (preop Hb correction timing) rather than the objective's full diagnostic scope.",
+      "recommended_action": "Coordinator/reviewer to confirm whether 42-1 is the best available anchor or whether this content should instead rely solely on the MODERATE 74-3 evidence already present and drop the WEAK 42-1 citation."
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-A-09",
+      "title": "Methods of Supporting the Airway",
+      "summary": "mcc_evidence cites objective 13 'Cardiac arrest' at WEAK strength (requires_scope_review: true) - airway device selection for elective anesthesia is broader than the cardiac-arrest-specific advanced-airway skill the objective anchors elsewhere in this chapter (SU-A-10, SU-A-14, SU-A-36).",
+      "recommended_action": "Coordinator/reviewer to confirm whether this WEAK secondary citation adds value or should be dropped in favor of the MODERATE 74-3 evidence alone."
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-A-12",
+      "title": "Oxygen Therapy and Mechanical Ventilation",
+      "summary": "mcc_evidence cites objective 27 'Dyspnea' at WEAK strength (requires_scope_review: true) - mechanical ventilation is one management option among many for the broader dyspnea objective, and this unit's scope (perioperative ventilator strategies/complications) is a narrow procedural slice of it.",
+      "recommended_action": "Coordinator/reviewer to confirm whether this WEAK secondary citation adds value or should be dropped in favor of the MODERATE 19 (Cyanosis and hypoxia) evidence alone."
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-A-17",
+      "title": "Blood Products and Transfusion",
+      "summary": "mcc_evidence cites objective 9-2 'Shock' at WEAK strength (requires_scope_review: true) - blood product administration is one resuscitation option for hemorrhagic shock, a narrow procedural overlap with the broader shock objective already anchoring SU-A-15.",
+      "recommended_action": "Coordinator/reviewer to confirm whether this WEAK secondary citation adds value or should be dropped in favor of the MODERATE 15-1 (Bleeding, bruising) evidence alone."
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-A-18",
+      "title": "Induction Technique and Agents",
+      "summary": "mcc_evidence cites objective 9-2 'Shock' at WEAK strength (requires_scope_review: true) - induction-agent choice in a hemodynamically unstable patient touches the shock objective's management scope for only this one narrow decision point (e.g., etomidate preference).",
+      "recommended_action": "Coordinator/reviewer to confirm whether this WEAK secondary citation adds value or should be dropped in favor of the MODERATE 74-3 evidence alone."
+    },
+    {
+      "issue_type": "mcc_naming_gap",
+      "severity": "informational",
+      "study_unit_id": "SU-A-33",
+      "title": "Malignant Hyperthermia",
+      "summary": "No MCC objective names malignant hyperthermia verbatim, despite it being one of the highest-yield, most classically board-tested facts in anesthesia. The best available anchor, 107-1 'Fever and hyperthermia' (MODERATE strength), only lists the mechanistically-analogous 'drug-induced syndromes (e.g., neuroleptic malignant syndrome, serotonin syndrome)' in its causal_conditions, not MH itself. This is honestly documented in the crosswalk's mapping_rationale rather than forced to a false STRONG match.",
+      "recommended_action": "No action required for chapter A's own crosswalk (evidence is defensible at MODERATE); flagged for coordinator awareness in case future MCC objectives_registry.json updates add MH explicitly, or in case other chapters (e.g. Pediatrics, Surgery) encounter the same naming gap and a cross-chapter registry annotation would help."
+    }
+  ]
+}

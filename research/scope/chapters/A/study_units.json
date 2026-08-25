@@ -1,0 +1,886 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-25",
+  "chapter_code": "A",
+  "chapter_title": "Anesthesia",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes SOURCE STRUCTURE (toc_inventory.json), not from medical memory. Generic structural headings (organizational section umbrellas with no independent content) are NOT converted into standalone units - see organizational_header_nodes below for how each is accounted for.",
+  "page_range_inheritance_note": "Unlike some other chapters' study_units.json, most study units here use EXACT_SECTION/EXACT_TOPIC page_mapping_precision rather than SECTION_INHERITED, because chapter A's derivation involved reading the chapter's raw OCR pages directly (derived/toronto-notes-2025/ocr/pages/0055.json through 0090.json) rather than relying solely on toc_inventory.json's flat 3-level structure. Where a topic's exact body-heading position was not independently re-verified (SU-A-17, SU-A-25), SECTION_INHERITED/MEDIUM confidence is used instead, consistent with the documented TN TOC limitation that level-3 topic nodes are not independently page-anchored.",
+  "same_page_merge_resolutions": {
+    "A.S01": "Same-page merge of three real printed headings ('Acromyms', 'Overview of Anesthesia', 'Preoperative Assessment', all indexed to TN page A2 / pdf 56) confirmed via raw OCR of the TOC page (0055.json) and body pages (0056.json, 0057.json, 0058.json). Body-heading search additionally found that two of A.S01's three topic children ('Preoperative Investigations', 'American Society of Anesthesiology Classification') are physically printed on pdf page 58 (TN A4, within the nominal A.S02 range) rather than on pdf 56-57 as the TOC node's own declared A2-A3 range would suggest - a genuine page-boundary content overflow, not a TOC-extraction artifact. Split into SU-A-01 (Acronyms), SU-A-02 (Overview of Anesthesia), SU-A-03 (Preoperative Assessment, with its pdf_page_range tightened to [56,58] per the body-confirmed span).",
+    "A.S06": "Same-page merge of 'Maintenance' + 'Extubation' + 'Complications of Extubation' (all indexed to TN page A20 / pdf 74). Raw OCR of body page 0074.json shows the true printed structure differs from the TOC's implied three-way split: 'Maintenance' and 'Complications of Extubation' ARE both genuine, independently-bolded body headings, but 'Extubation' is NOT - its criteria/procedure content is nested, unlabeled, inside the 'Maintenance' heading's own bullet list. A.S06 has zero topic children in toc_inventory.json, so both resolved study units (SU-A-20: Maintenance+Extubation; SU-A-21: Complications of Extubation) necessarily cite the same parent node A.S06 as their source, per protocol guidance for a merged node with no finer-grained children to redistribute across."
+  },
+  "unresolved_heading_resolution": {
+    "heading": "Monitoring",
+    "unresolved_headings_json_entry": "chapter_code A, source_pdf_page 55, status UNRESOLVED, search window pdf 58-66 checked with no match at the pipeline's 0.87 similarity threshold",
+    "resolution": "Independently resolved via raw OCR of pdf page 61 (0061.json): the page opens with a heading reading 'Canadian Guidelines to the Practice of Anesthesia and Patient Monitoring', immediately followed by 'Routine Monitors for All Cases' and 'Elements to Monitor' sub-headings, and is in turn immediately followed on the SAME page by 'Airway Management'/'Airway Anatomy' - the confirmed body_line for node A.S03 (BODY_HEADING_CONFIRMATION, matched_body_line 'Airway Management'). This confirms the TOC's single-word abbreviated index entry 'Monitoring...A7' indexes this longer 9-word printed heading, explaining why the pipeline's literal-string search failed. This heading has NO corresponding node anywhere in toc_inventory.json's 59 chapter-A nodes (unlike A.S01/A.S06, there is no existing node to split - the heading was dropped entirely, not merged). Represented as SU-A-07, sourced from a synthetic id 'UNCATALOGUED:Monitoring@pdf61' rather than a real toc_inventory.json node id, since none exists to cite. This is an ADDITION beyond the 59 catalogued nodes, not a redistribution of one of them - see study_units_audit.md for how this affects the chapter's total study-unit count."
+  },
+  "total_study_units": 38,
+  "organizational_header_nodes": {
+    "A": "Chapter root container - represented by all study units below.",
+    "A.S03": "'Airway Management' - confirmed via raw OCR (pdf 61) to be a pure organizational header with zero independent content; heading is immediately followed by its first topic child 'Airway Anatomy'. Its 6 topic children became 5 study units (SU-A-08..SU-A-12; Oxygen Therapy and Ventilation combined into one).",
+    "A.S04": "'Intraoperative Management' - confirmed pure organizational header (pdf 66, heading immediately followed by 'Temperature'). Its 6 topic children became 5 study units (SU-A-13..SU-A-17; Fluid Balance and IV Fluids combined into one).",
+    "A.S05": "'Induction' - confirmed pure organizational header (pdf 70, heading immediately followed by 'Routine Induction vs. Rapid Sequence Induction'). Its 3 topic children became 2 study units (SU-A-18, SU-A-19; RSI-vs-routine and Induction Agents combined since agent choice is the direct consequence of the technique decision).",
+    "A.S08": "'LocalAnesthesia' [sic, OCR-glued] - no independent section-level content was confirmed distinct from its own first child topic; treated as organizational header. Its 4 topic children became 3 study units (SU-A-24..SU-A-26; Local Infiltration and Topical Anesthetics combined).",
+    "A.S09": "'Postoperative Care' - no independent content confirmed distinct from its single child topic. Its 1 topic child became SU-A-27.",
+    "A.S13": "'Uncommon Complications' - confirmed pure organizational header (pdf 83, heading immediately followed by 'Malignant Hyperthermia'). Its 2 topic children became SU-A-33, SU-A-34.",
+    "A.S14": "'Appendices' - confirmed pure organizational header (pdf 84, heading immediately followed by the first flowchart title). Its 3 topic children became 2 study units (SU-A-35, SU-A-36; the two difficult-airway flowcharts combined)."
+  },
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-01",
+      "title": "Acronyms (Chapter Glossary)",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S01"
+      ],
+      "tn_page_range": "A2",
+      "pdf_page_range": [
+        56,
+        56
+      ],
+      "source_hierarchy_path": [
+        "A.S01 (Acromyms) [same-page merge resolution: Acronyms portion]"
+      ],
+      "structural_rationale": "Toronto Notes' own chapter-opening acronym glossary (pdf page 56, cols of abbreviations e.g. 'ABG', 'ASA', 'BMV'). Same-page-merge protocol applied: A.S01's merged_duplicate_headings field lists 'Overview of Anesthesia' and 'Preoperative Assessment' as headings absorbed into this node because all three share the printed TOC page label A2 (pdf 56). Raw OCR of the TOC page (derived/toronto-notes-2025/ocr/pages/0055.json) confirms three separate printed entries all indexed to A2: 'Acromyms', 'Overview of Anesthesia', 'Preoperative Assessment'. Raw OCR of the body page (0056.json) confirms the Acronyms table occupies the top of pdf page 56, immediately followed by a distinct 'Overview of Anesthesia' heading. This unit represents ONLY the Acronyms portion; the other two resolved headings are SU-A-02 and SU-A-03.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-02",
+      "title": "Overview of Anesthesia",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S01"
+      ],
+      "tn_page_range": "A2",
+      "pdf_page_range": [
+        56,
+        56
+      ],
+      "source_hierarchy_path": [
+        "A.S01 (Acromyms) [same-page merge resolution: Overview of Anesthesia portion]"
+      ],
+      "structural_rationale": "Second of the three headings resolved from the A.S01 same-page merge (see SU-A-01). Raw OCR of body page 0056.json confirms a distinct 'Overview of Anesthesia' heading directly beneath the acronym table, containing the definition of anesthesia ('a collection of changes contributing to lack of sensation/perception...') and a three-column table (Preoperative / Preoperative-Intraoperative / Postoperative) listing the phases of anesthetic care (assessment, optimization, airway management, monitors, induction, maintenance, emergence, extubation, disposition, pain management). This is purely orientational/definitional content that frames the rest of the chapter; it has no disease-specific testable competency of its own.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-03",
+      "title": "Preoperative Assessment (History, Investigations, ASA Classification)",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S01",
+        "A.S01.T01",
+        "A.S01.T02",
+        "A.S01.T03"
+      ],
+      "tn_page_range": "A2-A4",
+      "pdf_page_range": [
+        56,
+        58
+      ],
+      "source_hierarchy_path": [
+        "A.S01 (Acromyms) [same-page merge resolution: Preoperative Assessment portion]",
+        "A.S01.T01 (History and Physical)",
+        "A.S01.T02 (Preoperative Investigations)",
+        "A.S01.T03 (American Society of Anesthesiology Classification)"
+      ],
+      "structural_rationale": "Third of the three headings resolved from the A.S01 same-page merge (see SU-A-01). Raw OCR of body page 0056.json confirms 'Preoperative Assessment' as a distinct heading (Purpose: identify concerns, allay fears, arrange investigations, 'plan and consent for anesthetic techniques'), immediately followed by its first child topic 'History and Physical' (confirmed heading, content spans pdf 56-57: History checklist, then 'Physical Exam' sub-heading on pdf 57 covering airway assessment - Mallampati, 3-3-2 rule, LEMON/BONES mnemonics). The other two TOC topic children of this section, 'Preoperative Investigations' and 'American Society of Anesthesiology Classification', are NOT found as body headings on pdf 56-57 despite the TOC node's declared A2-A3 range; independent body-heading search (per same-page-merge protocol step 3) located both headings verbatim on pdf page 58 (TN A4), printed immediately before the 'Preoperative Optimization' section begins on the same page. This is a genuine page-boundary content overflow (the printed book's two-column layout runs this subsection's text onto the next TOC-indexed page), not a TOC-extraction merge artifact - so per protocol step 4 the unit's pdf_page_range is tightened to [56,58] to reflect the body-confirmed span rather than the TOC node's nominal A2-A3 declaration. All four resolved/topic components (assessment purpose+consent, Hx&PE, investigations, ASA-PS classification) are combined into one study unit because they are the sequential, inseparable steps of a single clinical process (preoperative assessment) explicitly named as such by Toronto Notes' own 'Preoperative Assessment' heading.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-04",
+      "title": "Preoperative Medications and Fasting Guidelines",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S02",
+        "A.S02.T01",
+        "A.S02.T02"
+      ],
+      "tn_page_range": "A4-A5",
+      "pdf_page_range": [
+        58,
+        59
+      ],
+      "source_hierarchy_path": [
+        "A.S02 (Preoperative Optimization)",
+        "A.S02.T01 (Medications)",
+        "A.S02.T02 (Fasting Guidelines)"
+      ],
+      "structural_rationale": "A.S02's own heading has independent content confirmed on pdf 58 ('in general, prior to elective surgery: fluid/electrolyte correction, comorbidity optimization, medication adjustment') immediately preceding its first child topic 'Medications' (confirmed heading, pdf 58, continuing onto pdf 59 with herbal-supplement and insulin/steroid adjustment bullets). 'Fasting Guidelines' is confirmed as its own heading on pdf 59 (Canadian Anesthesiologists' Society fasting-duration table). Grouped together as the two 'universal, applies-to-every-patient' preoperative optimization steps, distinct from the comorbidity-specific optimization topics in SU-A-05/06.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-05",
+      "title": "Preoperative Cardiopulmonary and Airway-Risk Optimization",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S02.T03",
+        "A.S02.T04",
+        "A.S02.T05",
+        "A.S02.T06",
+        "A.S02.T09"
+      ],
+      "tn_page_range": "A4-A6",
+      "pdf_page_range": [
+        59,
+        60
+      ],
+      "source_hierarchy_path": [
+        "A.S02.T03 (Hypertension)",
+        "A.S02.T04 (Coronary Artery Disease)",
+        "A.S02.T05 (Respiratory Diseases)",
+        "A.S02.T06 (Aspiration)",
+        "A.S02.T09 (Obesity and Obstructive Sleep Apnea)"
+      ],
+      "structural_rationale": "Five of A.S02's nine topic children, grouped because they share one clinical skill (perioperative risk stratification and optimization by comorbidity) and one shared physiologic theme (airway/cardiopulmonary risk). 'Hypertension' and 'Coronary Artery Disease' headings are confirmed on pdf 59 (BP threshold, ACC/AHA 60-day post-MI rule). 'Aspiration' is confirmed as its own heading on pdf 60 (risk-factor list + RSI cross-reference). 'Respiratory Diseases' and 'Obesity and Obstructive Sleep Apnea' fall in the same pdf 59-60 span per the TOC node's own declared bounds for A.S02 (end_pdf_page 60) but their exact heading position was not independently re-verified line-by-line; bounded confidently within [59,60] by the confirmed neighbors on both sides (Fasting Guidelines before, Hematological Disorders after).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-06",
+      "title": "Preoperative Hematologic and Endocrine Optimization",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S02.T07",
+        "A.S02.T08"
+      ],
+      "tn_page_range": "A4-A6",
+      "pdf_page_range": [
+        60,
+        60
+      ],
+      "source_hierarchy_path": [
+        "A.S02.T07 (Hematological Disorders)",
+        "A.S02.T08 (Endocrine Disorders)"
+      ],
+      "structural_rationale": "Remaining two topic children of A.S02, both confirmed as headings on pdf 60 (Hematological Disorders: anemia/coagulopathy work-up and reversal-agent list; Endocrine Disorders: DM type/control/end-organ assessment). Grouped separately from SU-A-05 because they represent a distinct optimization skill (lab-based/metabolic risk correction) rather than airway/cardiopulmonary risk.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-07",
+      "title": "Patient Monitoring (Intraoperative Standards)",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "UNCATALOGUED:Monitoring@pdf61"
+      ],
+      "tn_page_range": "A7",
+      "pdf_page_range": [
+        61,
+        61
+      ],
+      "source_hierarchy_path": [
+        "[no toc_inventory.json node - see structural_rationale]"
+      ],
+      "structural_rationale": "This heading has NO corresponding node anywhere in toc_inventory.json's 59 chapter-A nodes - unlike the A.S01/A.S06 merges (which have an existing over-loaded node to split), the TOC-extraction pipeline dropped this heading entirely. research/tn2025/unresolved_headings.json records it as chapter_code 'A', heading_candidate 'Monitoring', source_pdf_page 55 (the TOC page), status UNRESOLVED, with search window pdf 58-66 checked and no match found at the pipeline's 0.87 similarity threshold. Independent resolution per the same-page-merge protocol's body-heading-search procedure: raw OCR of pdf page 61 (derived/toronto-notes-2025/ocr/pages/0061.json) shows the page opens with 'Canadian Guidelines to the Practice of Anesthesia and Patient Monitoring' as a heading, followed by 'Routine Monitors for All Cases' and 'Elements to Monitor' sub-headings, and is immediately followed on the SAME page by 'Airway Management' / 'Airway Anatomy' (which IS the confirmed body_line for node A.S03, extraction_method BODY_HEADING_CONFIRMATION, matched_body_line 'Airway Management'). This confirms the TOC's abbreviated index entry 'Monitoring...A7' refers to this longer printed heading, and explains why the automated pipeline's exact-string search for 'Monitoring' failed similarity threshold (the printed heading is 9 words, not the single word indexed). Represented as its own study unit sourced from a synthetic id (no real node exists to cite) since it is thematically distinct (intraoperative monitoring standards/equipment) from the airway content that follows it on the same page.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-08",
+      "title": "Airway Anatomy",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S03.T01"
+      ],
+      "tn_page_range": "A7-A11",
+      "pdf_page_range": [
+        61,
+        62
+      ],
+      "source_hierarchy_path": [
+        "A.S03 (Airway Management) [organizational header, no independent content]",
+        "A.S03.T01 (Airway Anatomy)"
+      ],
+      "structural_rationale": "A.S03 'Airway Management' is a pure organizational header: raw OCR of pdf 61 shows the heading is immediately followed by 'Airway Anatomy' with no intervening independent content (matches the BODY_HEADING_CONFIRMATION extraction_method already recorded for A.S03 itself). Airway Anatomy content (glottic opening, tracheal bifurcation, pharyngeal airway resistance) confirmed starting pdf 61, continuing briefly onto pdf 62 before the 'Methods of Supporting Airways' heading (confirmed pdf 62).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-09",
+      "title": "Methods of Supporting the Airway",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S03.T02"
+      ],
+      "tn_page_range": "A7-A11",
+      "pdf_page_range": [
+        62,
+        62
+      ],
+      "source_hierarchy_path": [
+        "A.S03 (Airway Management) [organizational header]",
+        "A.S03.T02 (Methods of Supporting Airways)"
+      ],
+      "structural_rationale": "Confirmed heading on pdf 62 with an explicit comparison table (bag-mask ventilation vs. LMA vs. ETT: indications, contraindications, sizing) - a self-contained decision-making unit distinct from the mechanics of intubation itself (SU-A-10).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-10",
+      "title": "Tracheal Intubation: Technique, Confirmation, and Complications",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S03.T03"
+      ],
+      "tn_page_range": "A7-A11",
+      "pdf_page_range": [
+        62,
+        64
+      ],
+      "source_hierarchy_path": [
+        "A.S03 (Airway Management) [organizational header]",
+        "A.S03.T03 (Tracheal Intubation)"
+      ],
+      "structural_rationale": "Confirmed content spans pdf 63 (Tube Insertion: sympathetic response to laryngoscopy, malposition risks, tube-depth landmarks) and pdf 63-64 (Confirmation of Tracheal Placement: direct/indirect methods, capnography as gold standard) through to just before the confirmed 'Difficult Airway' heading on pdf 64.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-11",
+      "title": "Difficult Airway: Recognition and Initial Management",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S03.T04"
+      ],
+      "tn_page_range": "A7-A11",
+      "pdf_page_range": [
+        64,
+        64
+      ],
+      "source_hierarchy_path": [
+        "A.S03 (Airway Management) [organizational header]",
+        "A.S03.T04 (Difficult Airway)"
+      ],
+      "structural_rationale": "Confirmed heading on pdf 64: predictors, preventative measures (preop assessment, pre-oxygenation), and the stepwise emergency algorithm ('CALL FOR HELP', 100% O2 via bag-mask, LMA rescue, emergency invasive airway). This unit captures the CORE decision points; the detailed Canadian Airway Focus Group flowcharts referenced here are separately represented at SPECIALIST_DETAIL depth in SU-A-35 (Appendices).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-12",
+      "title": "Oxygen Therapy and Mechanical Ventilation",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S03.T05",
+        "A.S03.T06"
+      ],
+      "tn_page_range": "A7-A11",
+      "pdf_page_range": [
+        64,
+        66
+      ],
+      "source_hierarchy_path": [
+        "A.S03 (Airway Management) [organizational header]",
+        "A.S03.T05 (Oxygen Therapy)",
+        "A.S03.T06 (Ventilation)"
+      ],
+      "structural_rationale": "'Oxygen Therapy' heading confirmed starting near the bottom of pdf 64; 'Ventilation' heading confirmed on pdf 65 (indications/complications of mechanical ventilation, ventilator strategies), with its End-Tidal CO2 abnormalities table continuing onto pdf 66 immediately before the 'Intraoperative Management' section boundary. Combined because both describe supporting gas exchange once an airway is secured, distinct from the airway-device-selection content in SU-A-09/10.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-13",
+      "title": "Intraoperative Temperature Management",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S04.T01"
+      ],
+      "tn_page_range": "A12-A15",
+      "pdf_page_range": [
+        66,
+        66
+      ],
+      "source_hierarchy_path": [
+        "A.S04 (Intraoperative Management) [organizational header, no independent content]",
+        "A.S04.T01 (Temperature)"
+      ],
+      "structural_rationale": "A.S04 'Intraoperative Management' confirmed as a pure organizational header on pdf 66 (heading immediately followed by 'Temperature' with no independent content). 'Temperature' heading confirmed pdf 66: causes of intraoperative hypothermia (<36.0C, mostly transcutaneous heat loss) and hyperthermia (>37.5-38.3C, including drug reactions, transfusion reaction, and hypermetabolic states) with their respective prevention/causes.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-14",
+      "title": "Intraoperative Cardiac Arrest and Arrhythmias",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S04.T02"
+      ],
+      "tn_page_range": "A12-A15",
+      "pdf_page_range": [
+        66,
+        67
+      ],
+      "source_hierarchy_path": [
+        "A.S04 (Intraoperative Management) [organizational header]",
+        "A.S04.T02 (Heart Rate)"
+      ],
+      "structural_rationale": "'Heart Rate' heading confirmed pdf 66, opening directly with 'Cardiac Arrest' (shockable vs. non-shockable rhythms) and continuing onto pdf 67 with intraoperative tachycardia causes and 'Intraoperative Bradycardia' (HR<50, Mobitz II/3rd-degree block risk of asystole, vagal-reflex and drug causes).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-15",
+      "title": "Intraoperative Hypotension and Shock",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S04.T03"
+      ],
+      "tn_page_range": "A12-A15",
+      "pdf_page_range": [
+        67,
+        67
+      ],
+      "source_hierarchy_path": [
+        "A.S04 (Intraoperative Management) [organizational header]",
+        "A.S04.T03 (Blood Pressure)"
+      ],
+      "structural_rationale": "'Blood Pressure' heading confirmed pdf 67, opening with 'Causes of Intraoperative Hypotension/Shock' organized by the standard shock-category framework (septic, spinal/neurogenic, hypovolemic/hemorrhagic, obstructive).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-16",
+      "title": "Perioperative Fluid Management",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S04.T04",
+        "A.S04.T05"
+      ],
+      "tn_page_range": "A12-A15",
+      "pdf_page_range": [
+        68,
+        69
+      ],
+      "source_hierarchy_path": [
+        "A.S04 (Intraoperative Management) [organizational header]",
+        "A.S04.T04 (Fluid Balance and Resuscitation)",
+        "A.S04.T05 (IV Fluids)"
+      ],
+      "structural_rationale": "'Fluid Balance and Resuscitation' confirmed pdf 68 (maintenance fluid formula, 4-2-1 rule, TBW/fluid-deficit calculation); 'IV Fluids' confirmed pdf 69 (crystalloid vs. colloid selection, 3:1 crystalloid and 1:1 colloid replacement ratios for blood loss). Combined as one fluid-management unit distinct from Blood Products (SU-A-17).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-17",
+      "title": "Blood Products and Transfusion",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S04.T06"
+      ],
+      "tn_page_range": "A12-A15",
+      "pdf_page_range": [
+        69,
+        69
+      ],
+      "source_hierarchy_path": [
+        "A.S04 (Intraoperative Management) [organizational header]",
+        "A.S04.T06 (Blood Products)"
+      ],
+      "structural_rationale": "Final topic child of A.S04; heading confirmed to fall within pdf 69, bounded by the confirmed IV Fluids content before it and the section's own declared end_pdf_page (69) after it. Exact intra-page heading position not independently re-verified (topic-level precision).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-18",
+      "title": "Induction Technique and Agents",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S05.T01",
+        "A.S05.T02"
+      ],
+      "tn_page_range": "A16-A17",
+      "pdf_page_range": [
+        70,
+        71
+      ],
+      "source_hierarchy_path": [
+        "A.S05 (Induction) [organizational header, no independent content]",
+        "A.S05.T01 (Routine Induction vs. Rapid Sequence Induction)",
+        "A.S05.T02 (Induction Agents)"
+      ],
+      "structural_rationale": "A.S05 'Induction' confirmed as a pure organizational header on pdf 70 (heading not independently visible before 'Routine Induction vs. Rapid Sequence Induction' begins). RSI-vs-routine comparison table confirmed pdf 70; the five-agent IV induction agent comparison table (propofol, thiopental, ketamine, etomidate, methohexital) confirmed pdf 71. Combined as one unit since agent selection is the direct consequence of the routine-vs-RSI technique decision.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-19",
+      "title": "Muscle Relaxants, Reversal Agents, and Induction Analgesia",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S05.T03"
+      ],
+      "tn_page_range": "A18-A20",
+      "pdf_page_range": [
+        72,
+        74
+      ],
+      "source_hierarchy_path": [
+        "A.S05 (Induction) [organizational header]",
+        "A.S05.T03 (Muscle Relaxants and Reversing Agents)"
+      ],
+      "structural_rationale": "'Muscle Relaxants and Reversing Agents' heading confirmed pdf 72 (NMJ physiology figure, depolarizing vs. non-depolarizing classes); succinylcholine detail table confirmed pdf 73; reversal-agent table (Table 12: pyridostigmine/neostigmine/edrophonium/sugammadex) confirmed continuing onto pdf 74. An additional heading, 'Analgesia' (opioid use as an induction adjunct for sedation and blunting laryngoscopy response), is confirmed printed on pdf 74 immediately after the reversal-agent table and before the 'Maintenance' heading (see SU-A-20) - this heading has NO corresponding node anywhere in toc_inventory.json (same uncatalogued-heading situation as SU-A-07's Monitoring, but here folded into this adjacent, thematically-continuous unit rather than split out separately, since its two-bullet content is too thin to warrant its own study unit). pdf_page_range extended to [72,74] to capture this confirmed but uncatalogued heading.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-20",
+      "title": "General Anesthesia Maintenance and Extubation Readiness",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S06"
+      ],
+      "tn_page_range": "A20",
+      "pdf_page_range": [
+        74,
+        74
+      ],
+      "source_hierarchy_path": [
+        "A.S06 (Maintenance) [same-page merge resolution: Maintenance + Extubation portion]"
+      ],
+      "structural_rationale": "Same-page-merge protocol applied to A.S06: its merged_duplicate_headings field lists 'Extubation' and 'Complications of Extubation' as headings absorbed into this node (all sharing printed TOC page label A20 / pdf 74; A.S06 has zero topic children in toc_inventory.json, so unlike A.S01 there is no existing child node to reassign the split content to - both resolved study units below necessarily cite the same parent node A.S06, mirroring how ELOM.S01 was split into multiple study units from one merged node). Raw OCR of body page 0074.json confirms the actual printed heading structure: a bold 'Maintenance' heading (general-anesthesia maintenance via volatile/IV agents + muscle relaxants) whose own bullet list continues directly into extubation-readiness criteria (patency, protection, spontaneous ventilation) and the extubation procedure itself - i.e., the TOC's separately-listed 'Extubation' entry does NOT correspond to its own independently-bolded body heading; its content is nested, unlabeled, inside the 'Maintenance' block. This study unit therefore represents both the TOC's 'Maintenance' and 'Extubation' entries together, matching the actual printed structure rather than inventing a heading split the source text does not contain (per protocol step 6: never infer a split heading not supported by the source).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-21",
+      "title": "Complications of Extubation (including Laryngospasm)",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S06"
+      ],
+      "tn_page_range": "A20",
+      "pdf_page_range": [
+        74,
+        74
+      ],
+      "source_hierarchy_path": [
+        "A.S06 (Maintenance) [same-page merge resolution: Complications of Extubation portion]"
+      ],
+      "structural_rationale": "Second resolved heading from the A.S06 merge (see SU-A-20). 'Complications of Extubation' IS confirmed as its own distinct bold body heading on pdf 74 (early: aspiration, laryngospasm; late: vocal cord incompetence, edema, pharyngitis, tracheitis), with 'Laryngospasm' as a further confirmed sub-heading (definition, prevention, stepwise treatment: suction, remove airway, CPAP, BMV, low-dose propofol/succinylcholine, re-intubate if hypoxic).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-22",
+      "title": "Regional Anesthesia: Principles and Neuraxial (Epidural/Spinal) Technique",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S07",
+        "A.S07.T01"
+      ],
+      "tn_page_range": "A21-A22",
+      "pdf_page_range": [
+        75,
+        76
+      ],
+      "source_hierarchy_path": [
+        "A.S07 (Regional Anesthesia)",
+        "A.S07.T01 (Epidural and Spinal Anesthesia)"
+      ],
+      "structural_rationale": "A.S07 'Regional Anesthesia' has genuine independent content confirmed on pdf 75 (definition, no-CNS-depression principle, three-way categorization into neuraxial/peripheral-nerve-block/IV-regional), immediately followed by 'Patient Preparation' and then 'Epidural and Spinal Anesthesia' (confirmed heading, spinal cord/dural sac landmarks, structures penetrated, epidural-vs-spinal comparison table). Contraindications table confirmed continuing onto pdf 76.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-23",
+      "title": "Peripheral Nerve Blocks",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S07.T02"
+      ],
+      "tn_page_range": "A21-A22",
+      "pdf_page_range": [
+        76,
+        76
+      ],
+      "source_hierarchy_path": [
+        "A.S07 (Regional Anesthesia)",
+        "A.S07.T02 (Peripheral Nerve Blocks)"
+      ],
+      "structural_rationale": "Confirmed heading on pdf 76: ultrasound/nerve-stimulator guided deposition of local anesthetic around target nerves/plexuses, with a note on late neurologic injury risk. Procedural/technique-level detail beyond expected graduating-MD depth for a generalist licensing exam.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-24",
+      "title": "Local Anesthetic Pharmacology",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S08.T01"
+      ],
+      "tn_page_range": "A22-A23",
+      "pdf_page_range": [
+        77,
+        77
+      ],
+      "source_hierarchy_path": [
+        "A.S08 (LocalAnesthesia) [organizational header - title restates its own first child topic, no independent content confirmed]",
+        "A.S08.T01 (Local Anesthetic Agents)"
+      ],
+      "structural_rationale": "'Definition and Mode of Action' confirmed as the opening content of pdf 77 (Na+ channel blockade mechanism), followed by absorption/distribution/metabolism (ester vs. amide LA classes) and LA selection criteria (onset via pKa, duration via protein binding, potency via lipid solubility), matching A.S08.T01's title. No distinct 'LocalAnesthesia' section-level heading text was independently confirmed on the page before this content begins, so A.S08 is treated as an organizational header (its printed title differs from any child topic only by the word 'Agents').",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-25",
+      "title": "Local Anesthetic Systemic Toxicity (LAST)",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S08.T02"
+      ],
+      "tn_page_range": "A22-A23",
+      "pdf_page_range": [
+        77,
+        77
+      ],
+      "source_hierarchy_path": [
+        "A.S08 (LocalAnesthesia) [organizational header]",
+        "A.S08.T02 (Systemic Toxicity)"
+      ],
+      "structural_rationale": "Bounded within pdf 77 by the confirmed Local Anesthetic Agents content before it and the confirmed 'Local Infiltration and Hematoma Blocks' heading on pdf 78 after it; exact intra-page position not independently re-verified (topic-level precision), but the single-page bound is confident given both neighbors are confirmed.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-26",
+      "title": "Local Infiltration, Hematoma Blocks, and Topical Anesthetics",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S08.T03",
+        "A.S08.T04"
+      ],
+      "tn_page_range": "A22-A23",
+      "pdf_page_range": [
+        78,
+        78
+      ],
+      "source_hierarchy_path": [
+        "A.S08 (LocalAnesthesia) [organizational header]",
+        "A.S08.T03 (Local Infiltration and Hematoma Blocks)",
+        "A.S08.T04 (Topical Anesthetics)"
+      ],
+      "structural_rationale": "Both headings confirmed on pdf 78: Local Infiltration (small-incision/suturing use, epinephrine-assisted vasoconstriction) and Fracture Hematoma Block as a special case, then Topical Anesthetics (EMLA-type combination preparations). Combined as minor, low-yield procedural techniques.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-27",
+      "title": "Common Postoperative Anesthetic Complications",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S09.T01"
+      ],
+      "tn_page_range": "A24",
+      "pdf_page_range": [
+        78,
+        78
+      ],
+      "source_hierarchy_path": [
+        "A.S09 (Postoperative Care) [organizational header, no independent content confirmed]",
+        "A.S09.T01 (Common Postoperative Anesthetic Complications)"
+      ],
+      "structural_rationale": "Confirmed heading on pdf 78, immediately following the Local Anesthesia content: pain (cross-referenced to SU-A-28) and Nausea and Vomiting (hypotension/bradycardia must be excluded first; standard antiemetic list). No independent 'Postoperative Care' section-level content was found distinct from this topic, so A.S09 is treated as an organizational header.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-28",
+      "title": "Acute Pain Management",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S10",
+        "A.S10.T01"
+      ],
+      "tn_page_range": "A25-A26",
+      "pdf_page_range": [
+        79,
+        80
+      ],
+      "source_hierarchy_path": [
+        "A.S10 (Pain Management)",
+        "A.S10.T01 (Acute Pain)"
+      ],
+      "structural_rationale": "A.S10 'Pain Management' has genuine independent content confirmed pdf 79 (IASP pain definition, nociception definition, temporal/mechanism pain classifications), directly followed by 'Acute Pain' (confirmed heading, pain mechanism figure, WHO analgesia ladder, analgesic comparison Table 15 continuing onto pdf 80, opioid comparison Table 16).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-29",
+      "title": "Neuropathic Pain (Cross-Reference to Neurology)",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S10.T02"
+      ],
+      "tn_page_range": "A25-A26",
+      "pdf_page_range": [
+        81,
+        81
+      ],
+      "source_hierarchy_path": [
+        "A.S10 (Pain Management)",
+        "A.S10.T02 (Neuropathic Pain)"
+      ],
+      "structural_rationale": "Confirmed on pdf 81: the entire content of this topic is the single line 'see Neurology, N43' - Toronto Notes itself has no independent neuropathic pain content in chapter A, deferring entirely to the Neurology chapter.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-30",
+      "title": "Chronic Pain and Central Sensitization",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S10.T03"
+      ],
+      "tn_page_range": "A25-A26",
+      "pdf_page_range": [
+        81,
+        81
+      ],
+      "source_hierarchy_path": [
+        "A.S10 (Pain Management)",
+        "A.S10.T03 (Chronic Pain)"
+      ],
+      "structural_rationale": "Confirmed heading on pdf 81, immediately after the Neuropathic Pain cross-reference: chronic pain definition (>3 months), perioperative continuation of long-acting analgesics, and Central Sensitization (hyperalgesia via CNS mechanisms).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-31",
+      "title": "Obstetrical Anesthesia",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S11"
+      ],
+      "tn_page_range": "A27-A28",
+      "pdf_page_range": [
+        81,
+        82
+      ],
+      "source_hierarchy_path": [
+        "A.S11 (Obstetrical Anesthesia)"
+      ],
+      "structural_rationale": "toc_inventory.json declares A.S11's own pdf_page_range as a single page (81, matching TN A27), but body-heading confirmation shows its content (systemic/inhalational/neuraxial labour analgesia options, maternal BP monitoring, options for Caesarean section) continues onto pdf 82, ending immediately before the confirmed 'Pediatric Anesthesia' heading on the same page. Per same-page-merge protocol step 4, the tighter body-confirmed range [81,82] is used in place of the TOC node's own single-page declaration.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-32",
+      "title": "Pediatric Anesthesia",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S12"
+      ],
+      "tn_page_range": "A28-A29",
+      "pdf_page_range": [
+        82,
+        83
+      ],
+      "source_hierarchy_path": [
+        "A.S12 (Pediatric Anesthesia)"
+      ],
+      "structural_rationale": "'Pediatric Anesthesia' heading confirmed pdf 82 (Respiratory System: anatomical airway differences vs. adults - large head, short trachea, obligate nasal breathing), continuing onto pdf 83 (muscle relaxant response differences, arrhythmia/hyperkalemia/malignant hyperthermia susceptibility) immediately before the confirmed 'Uncommon Complications' section boundary.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-33",
+      "title": "Malignant Hyperthermia",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S13.T01"
+      ],
+      "tn_page_range": "A29-A30",
+      "pdf_page_range": [
+        83,
+        84
+      ],
+      "source_hierarchy_path": [
+        "A.S13 (Uncommon Complications) [organizational header, no independent content confirmed]",
+        "A.S13.T01 (Malignant Hyperthermia)"
+      ],
+      "structural_rationale": "Confirmed heading on pdf 83, immediately following 'Uncommon Complications' with no intervening independent content (organizational header). Pathophysiology (ryanodine receptor, autosomal dominant), trigger agents, clinical picture, and complications confirmed pdf 83, with the treatment algorithm (dantrolene protocol, dysrhythmia management, ICU transfer) continuing onto pdf 84.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-34",
+      "title": "Abnormal Pseudocholinesterase",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S13.T02"
+      ],
+      "tn_page_range": "A29-A30",
+      "pdf_page_range": [
+        84,
+        84
+      ],
+      "source_hierarchy_path": [
+        "A.S13 (Uncommon Complications) [organizational header]",
+        "A.S13.T02 (Abnormal Pseudocholinesterase)"
+      ],
+      "structural_rationale": "Confirmed heading on pdf 84: pseudocholinesterase hydrolyzes succinylcholine/mivacurium; deficiency causes prolonged paralysis; management is supportive mechanical ventilation until function returns (cholinesterase inhibitors contraindicated - would cause rebound blockade).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-35",
+      "title": "Appendices: Difficult Tracheal Intubation Algorithms",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S14.T01",
+        "A.S14.T02"
+      ],
+      "tn_page_range": "A30-A31",
+      "pdf_page_range": [
+        84,
+        85
+      ],
+      "source_hierarchy_path": [
+        "A.S14 (Appendices) [organizational header, no independent content confirmed]",
+        "A.S14.T01 (Difficult Tracheal Intubation in Unconscious Patient)",
+        "A.S14.T02 (Difficult Tracheal Intubation)"
+      ],
+      "structural_rationale": "Both flowcharts confirmed: the unconscious-patient algorithm begins directly under 'Appendices' on pdf 84 (organizational header, no intervening content), and the (conscious/anticipated) difficult-intubation decision tree is confirmed on pdf 85, citing the Canadian Airway Focus Group's 2021 updated consensus recommendations. These are the detailed published flowcharts underlying the core decision points already tested in SU-A-11.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-36",
+      "title": "Appendices: Advanced Cardiac Life Support Guidelines",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S14.T03"
+      ],
+      "tn_page_range": "A32-A33",
+      "pdf_page_range": [
+        86,
+        87
+      ],
+      "source_hierarchy_path": [
+        "A.S14 (Appendices) [organizational header]",
+        "A.S14.T03 (Advanced Cardiac Life Support Guidelines)"
+      ],
+      "structural_rationale": "Confirmed heading on pdf 86: adult cardiac arrest algorithm (CPR quality, shock energy, drug therapy - epinephrine/amiodarone/lidocaine dosing, advanced airway, ROSC), continuing onto pdf 87 with the tachyarrhythmia algorithm (synchronized cardioversion, adenosine, antiarrhythmic infusions).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-37",
+      "title": "Landmark Anesthesiology Trials",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S15"
+      ],
+      "tn_page_range": "A34-A35",
+      "pdf_page_range": [
+        88,
+        89
+      ],
+      "source_hierarchy_path": [
+        "A.S15 (Landmark Anesthesiology Trials)"
+      ],
+      "structural_rationale": "Confirmed heading on pdf 88: tabulated summaries of named trials (MYRIAD, BAG-RECALL, POISE/POISE-2/POISE-3, GAS, RELIEF, WOMAN, ENIGMA-II, etc.) organized by intraoperative/postoperative/complications categories, continuing onto pdf 89. Historical trial-citation reference content, matching the treatment given to the equivalent Cardiology/ELOM landmark-trials sections.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-A-38",
+      "title": "References",
+      "chapter_code": "A",
+      "chapter_title": "Anesthesia",
+      "source_node_ids": [
+        "A.S16"
+      ],
+      "tn_page_range": "A36",
+      "pdf_page_range": [
+        90,
+        90
+      ],
+      "source_hierarchy_path": [
+        "A.S16 (References)"
+      ],
+      "structural_rationale": "Confirmed heading on pdf 90: full bibliography of chapter A's cited sources. Pure reference list, no independent content.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    }
+  ]
+}

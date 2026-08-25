@@ -14,46 +14,60 @@ then continue.
 
 | | |
 |---|---|
-| Completed | 2 / 32 (`C`, `ELOM`) |
-| Next chapter | **A — Anesthesia** |
+| Completed | 3 / 32 (`C`, `ELOM`, `A`) |
+| Next chapter | **CP — Clinical Pharmacology** |
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `19102a5` — fix: rename freshness.verification_type to verification_types |
+| Last completed commit | `scope: map A Anesthesia` (see `git log` for hash) |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
 
-1. A — Anesthesia *(next)*
-2. CP — Clinical Pharmacology
-3. D — Dermatology
-4. ER — Emergency Medicine
-5. E — Endocrinology
-6. FM — Family Medicine
-7. G — Gastroenterology
-8. GS — General and Thoracic Surgery
-9. GM — Geriatric Medicine
-10. GY — Gynecology
-11. H — Hematology
-12. ID — Infectious Diseases
-13. MG — Medical Genetics
-14. MI — Medical Imaging
-15. NP — Nephrology
-16. N — Neurology
-17. NS — Neurosurgery
-18. OB — Obstetrics
-19. OP — Ophthalmology
-20. OR — Orthopedic Surgery
-21. OT — Otolaryngology
-22. P — Pediatrics
-23. PM — Palliative Medicine
-24. PL — Plastic Surgery
-25. PS — Psychiatry
-26. PH — Public Health and Preventive Medicine
-27. R — Respirology
-28. RH — Rheumatology
-29. U — Urology
-30. VS — Vascular Surgery
+1. CP — Clinical Pharmacology *(next)*
+2. D — Dermatology
+3. ER — Emergency Medicine
+4. E — Endocrinology
+5. FM — Family Medicine
+6. G — Gastroenterology
+7. GS — General and Thoracic Surgery
+8. GM — Geriatric Medicine
+9. GY — Gynecology
+10. H — Hematology
+11. ID — Infectious Diseases
+12. MG — Medical Genetics
+13. MI — Medical Imaging
+14. NP — Nephrology
+15. N — Neurology
+16. NS — Neurosurgery
+17. OB — Obstetrics
+18. OP — Ophthalmology
+19. OR — Orthopedic Surgery
+20. OT — Otolaryngology
+21. P — Pediatrics
+22. PM — Palliative Medicine
+23. PL — Plastic Surgery
+24. PS — Psychiatry
+25. PH — Public Health and Preventive Medicine
+26. R — Respirology
+27. RH — Rheumatology
+28. U — Urology
+29. VS — Vascular Surgery
+
+## Chapter notes
+
+- **A (Anesthesia)**: 38 study units from 59 TOC nodes. Resolved two
+  same-page TOC merges (`A.S01` -> 3 units citing raw OCR pdf page 56;
+  `A.S06` -> 2 units citing raw OCR pdf page 74) and one heading dropped
+  entirely from `toc_inventory.json` ("Monitoring", previously
+  `UNRESOLVED` in `research/tn2025/unresolved_headings.json`), resolved
+  via body-heading confirmation against raw OCR pdf page 61 and recorded
+  as `SU-A-07` with a synthetic `UNCATALOGUED:` source id (documented in
+  full in `study_units.json` and flagged `affects_global_toc: true` in
+  `research/scope/chapters/A/review_items.json` for a future TOC-pass).
+  0 invalid MCC IDs, 0 unflagged WEAK mappings, 0 hygiene violations, 0
+  UNCERTAIN classifications. 2 WEAK mappings flagged for scope review
+  (see review queue).
 
 ## Resume protocol (per Phase 3C instructions)
 
