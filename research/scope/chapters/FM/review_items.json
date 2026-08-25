@@ -1,0 +1,52 @@
+{
+  "generated_at": "2026-08-25",
+  "chapter_code": "FM",
+  "schema_note": "Chapter-local review-queue candidates only. This file is NOT the global research/scope/review_queue.json - it is merged into that coordinator-maintained file after this chapter passes validation.",
+  "items": [
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "informational",
+      "study_unit_id": "SU-FM-01",
+      "title": "'Acronyms' TOC heading resolved via body-heading confirmation",
+      "summary": "TOC heading 'Acromyms' had unparseable trailing page-number digits (flagged UNRESOLVED in derived/scope_packets/FM.json source_quality.unresolved_headings). Resolved via body OCR (clean-ocr/0378.txt, pdf 378): the acronym table opens page FM2, the same page as FM.S01 (Four Principles of Family Medicine).",
+      "resolution_status": "INDEPENDENTLY RESOLVED - folded into SU-FM-01 as UNCATALOGUED:FM.ACRONYMS.",
+      "recommended_action": "None required for this chapter. Coordinator may want a heuristic that treats a bare 'Acronyms'-style heading immediately preceding a chapter's first real section as page-1-of-chapter-body by default, since this pattern (unparseable trailing digits on a very short glossary heading) has now recurred across at least two chapters (see chapter E's SU-E-01)."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "informational",
+      "study_unit_id": "SU-FM-56",
+      "title": "'Antimicrobial/Antiviral/Antifungal Quick Reference' TOC heading resolved via body-heading confirmation",
+      "summary": "TOC heading had unparseable trailing page-number digits (flagged UNRESOLVED). Resolved via body OCR (clean-ocr/0430.txt and clean-ocr/0431.txt, pdf 430-431): a two-page condition-by-microorganism empiric-therapy table spanning FM54-FM55, positioned between the Palliative Care section (ending FM55 per toc_inventory.json) and Landmark Family Medicine Trials (starting FM56).",
+      "resolution_status": "INDEPENDENTLY RESOLVED - represented as its own unit, SU-FM-56, node id UNCATALOGUED:FM.ANTIMICROBIAL_REF.",
+      "recommended_action": "None required for this chapter."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "informational",
+      "study_unit_id": "SU-FM-55",
+      "title": "'Complementary and Integrative Medicine' is a genuine distinct topic merged into FM.S05 by TOC extraction",
+      "summary": "toc_inventory.json records 'Complementary and Integrative Medicine' as a merged_duplicate_heading absorbed into the FM.S05 (Palliative Care) section node. Body OCR (clean-ocr/0429.txt, pdf 429) confirms this is Table 25 ('Common Herbal Products'), a structurally distinct reference table unrelated to palliative care that happens to fall within FM.S05's recorded page span (FM52-FM55).",
+      "resolution_status": "INDEPENDENTLY RESOLVED - represented as its own unit (SU-FM-55, node id UNCATALOGUED:FM.CAM) rather than folded into a Palliative Care unit, to avoid misrepresenting unrelated content as palliative-care testable competency.",
+      "recommended_action": "Coordinator may want a post-processing pass that gives structurally distinct merged_duplicate_headings their own synthetic node_id at TOC-extraction time rather than leaving downstream chapter-mapping to disambiguate via body OCR each time."
+    },
+    {
+      "issue_type": "cross_discipline_overlap_candidate",
+      "severity": "informational",
+      "study_unit_id": "MULTIPLE",
+      "title": "FM Common Presenting Problems / Health Promotion overlap candidates for the global chapter-overlap audit",
+      "summary": "Per the FM-specific task instructions (Family Medicine is cross-cutting), every FM study unit whose topic is also covered by an already-completed or not-yet-mapped chapter carries a cross_discipline_note in crosswalk.json rather than being silently duplicated or silently dropped. Consolidated list of overlap candidates for the later PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT global audit: SU-FM-04/05/06/07 (cancer screening) vs. R/G/GY/U; SU-FM-11 Dyslipidemia vs. E (completed, SU-E-02..06); SU-FM-15 Abdominal Pain vs. ER (completed, SU-ER-08) and GS; SU-FM-18 Anxiety vs. PS; SU-FM-19 Asthma/COPD vs. ER (completed, SU-ER-18/20); SU-FM-20 BPH vs. U; SU-FM-22 Chest Pain vs. ER (completed, SU-ER-11) and C; SU-FM-24 Concussion/mTBI vs. ER and NS; SU-FM-25 Contraception, SU-FM-17 Amenorrhea, SU-FM-44 Menopause, SU-FM-48 STI vs. GY; SU-FM-27 Dementia vs. GM and N; SU-FM-28 Depression vs. PS; SU-FM-29 Diabetes Mellitus vs. E (completed, SU-E-07..16); SU-FM-30 Dizziness vs. ER; SU-FM-32 Dyspepsia vs. G; SU-FM-33 Dyspnea vs. ER; SU-FM-34 Dysuria vs. U; SU-FM-39 Headache vs. ER (completed, SU-ER-12); SU-FM-40 Hearing Impairment vs. OT; SU-FM-42 Joint Pain and SU-FM-45 Osteoarthritis vs. RH and OR; SU-FM-46 Osteoporosis vs. E (completed, calcium/bone objective 12-2); SU-FM-47 Rash vs. D (completed); SU-FM-48 STI also vs. U and ID; SU-FM-52/54 Palliative Care content vs. PM and ELOM (completed). Each individual crosswalk entry's cross_discipline_note carries the specific FM-vs-other-chapter distinction (undifferentiated/primary-care presentation, longitudinal management, or preventive/counselling context vs. the other chapter's acute/specialist/procedural angle).",
+      "resolution_status": "NOT RESOLVED BY DESIGN - explicitly deferred per task instructions ('Final PRIMARY_OWNER / CROSS_LINK / DISTINCT_CONTEXT decisions happen only after all chapters are mapped').",
+      "recommended_action": "Coordinator should review this list (and each unit's cross_discipline_note) during the global cross-chapter audit once all 32 chapters are mapped, to decide final ownership/cross-link/distinct-context status and to avoid duplicate question pools for the same underlying MCC objective."
+    },
+    {
+      "issue_type": "mapping_quality",
+      "severity": "informational",
+      "study_unit_id": "SU-FM-48",
+      "title": "Sexually Transmitted Infections mapped to a female-presentation-only MCC objective (partial coverage gap)",
+      "summary": "The only MCC objective found for the TN STI subsection is 113 (Vaginal discharge / vulvar pruritus), which does not cover the male-presentation (urethral discharge) or asymptomatic-screening component of STI care. Mapped COMPONENT/MODERATE with the gap documented in mapping_rationale.",
+      "resolution_status": "NOT RESOLVED - acceptable per accuracy rules (documented gap rather than fabricated match); may be resolved once Urology (chapter U) or Infectious Diseases (chapter ID) are mapped and a male-presentation or STI-screening objective is found in the full registry.",
+      "recommended_action": "Re-run search-mcc-objectives against the full registry with additional terms once chapter ID or U packets are prepared, and update SU-FM-48's mcc_evidence if a better match is found."
+    }
+  ]
+}

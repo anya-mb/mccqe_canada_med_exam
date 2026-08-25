@@ -1,0 +1,1272 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-25T00:00:00Z",
+  "chapter_code": "FM",
+  "chapter_title": "Family Medicine",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes SOURCE STRUCTURE (toc_inventory.json / derived/scope_packets/FM.json), cross-checked against derived/scope_packets/FM.json source_quality.unresolved_headings (2 entries: Acronyms, Antimicrobial/Antiviral/Antifungal Quick Reference) and body-page OCR (derived/toronto-notes-2025/clean-ocr/) for both the unresolved headings and the structurally distinct merged_duplicate_headings recorded on FM.S05 (Complementary and Integrative Medicine) and FM.S06 (References). Both unresolved headings were independently resolved via body-heading confirmation: Acronyms opens page FM2 (pdf 378) immediately before Four Principles of Family Medicine (folded into SU-FM-01, node id UNCATALOGUED:FM.ACRONYMS); Antimicrobial/Antiviral/Antifungal Quick Reference spans FM54-FM55 (pdf 430-431), between the Palliative Care section and Landmark Family Medicine Trials (its own unit, SU-FM-56, node id UNCATALOGUED:FM.ANTIMICROBIAL_REF). Complementary and Integrative Medicine (FM53, pdf 429) is a genuine distinct topic (Table 25, herbal products) absorbed into the FM.S05 node by TOC extraction rather than given its own node_id; represented as its own unit (SU-FM-55, node id UNCATALOGUED:FM.CAM) rather than folded into the Palliative Care units, since its content (herbal-product safety) is unrelated to palliative care. Unlike prior chapters, FM required no line-wrap or two-column TOC merge repair beyond these three items; all 37 Common Presenting Problems and 5 screening-guideline topics were confirmed unmerged, one TOC node per named topic. Per the FM-specific instruction that Family Medicine is cross-cutting, every study unit whose topic is also covered by a completed or not-yet-mapped chapter carries a cross_discipline_note in crosswalk.json documenting the overlap and the distinguishing FM angle (undifferentiated/primary-care presentation, longitudinal management, or preventive/counselling context) for the later global chapter-overlap audit; only Power of Attorney/Instructional Advance Directives (SU-FM-53) was judged thin enough relative to its already-completed ELOM-chapter counterpart to classify CROSS_DISCIPLINE rather than DIRECT/COMPONENT.",
+  "total_study_units": 57,
+  "organizational_header_nodes": {
+    "FM": "Chapter root container - represented by all study units below.",
+    "FM.S02": "'Periodic Health Examination' umbrella heading (FM3); carries no independent content beyond its seven T-children (Purpose of the PHE, GRADE Classification, and five cancer-screening-guideline topics), each represented as its own study unit (SU-FM-02 through SU-FM-07).",
+    "FM.S03": "'Health Promotion and Counselling' umbrella heading (FM7); carries no independent content beyond its seven T-children, each represented as its own study unit (SU-FM-08 through SU-FM-14).",
+    "FM.S04": "'Common Presenting Problems' umbrella heading (FM16); carries no independent content beyond its thirty-seven T-children, each a distinct named primary-care presenting complaint represented as its own study unit (SU-FM-15 through SU-FM-51)."
+  },
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-01",
+      "title": "Acronyms and Four Principles of Family Medicine",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S01",
+        "UNCATALOGUED:FM.ACRONYMS"
+      ],
+      "tn_page_range": "FM2",
+      "pdf_page_range": [
+        378,
+        378
+      ],
+      "source_hierarchy_path": [
+        "FM.S01"
+      ],
+      "structural_rationale": "TOC heading 'Acromyms' (raw OCR, trailing page-number digits did not parse to a trusted anchor - listed as unresolved in derived/scope_packets/FM.json source_quality.unresolved_headings) is confirmed via body-heading OCR (clean-ocr/0378.txt, pdf 378) to be the acronym glossary table occupying the top of page FM2, immediately followed on the same page by the 'Four Principles of Family Medicine' section (FM.S01, College of Family Physicians of Canada four principles + 'Experts in Generalism' text). No toc_inventory.json node_id exists for the Acronyms heading; recorded as UNCATALOGUED:FM.ACRONYMS per the documented convention for a heading with no canonical node. Combined into one unit: pure glossary plus foundational professional-identity content, both non-disease background for the chapter.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-02",
+      "title": "Purpose of the Periodic Health Examination and Classification of Recommendations (GRADE)",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S02.T01",
+        "FM.S02.T02"
+      ],
+      "tn_page_range": "FM3",
+      "pdf_page_range": [
+        379,
+        379
+      ],
+      "source_hierarchy_path": [
+        "FM.S02",
+        "FM.S02.T01"
+      ],
+      "structural_rationale": "Two adjacent TOC topic nodes under 'Periodic Health Examination' (FM.S02); both are methodology/framework content (why a PHE is done; how the GRADE strength-of-recommendation system is used to grade the screening guidelines that follow) rather than a distinct clinical presentation, consolidated into one unit rather than given independent testable-competency status like the disease-specific screening topics that follow.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-03",
+      "title": "Breast Cancer Screening Guidelines",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S02.T03"
+      ],
+      "tn_page_range": "FM3-FM6",
+      "pdf_page_range": [
+        379,
+        382
+      ],
+      "source_hierarchy_path": [
+        "FM.S02",
+        "FM.S02.T03"
+      ],
+      "structural_rationale": "TOC topic node under Periodic Health Examination (FM.S02); confirmed unmerged screening-guideline subsection covering the applicable task-force/society recommendations for breast cancer screening.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-04",
+      "title": "Lung Cancer Screening Guidelines",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S02.T04"
+      ],
+      "tn_page_range": "FM3-FM6",
+      "pdf_page_range": [
+        379,
+        382
+      ],
+      "source_hierarchy_path": [
+        "FM.S02",
+        "FM.S02.T04"
+      ],
+      "structural_rationale": "TOC topic node under Periodic Health Examination (FM.S02); confirmed unmerged screening-guideline subsection covering the applicable task-force/society recommendations for lung cancer screening.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-05",
+      "title": "Colorectal Cancer Screening Guidelines",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S02.T05"
+      ],
+      "tn_page_range": "FM3-FM6",
+      "pdf_page_range": [
+        379,
+        382
+      ],
+      "source_hierarchy_path": [
+        "FM.S02",
+        "FM.S02.T05"
+      ],
+      "structural_rationale": "TOC topic node under Periodic Health Examination (FM.S02); confirmed unmerged screening-guideline subsection covering the applicable task-force/society recommendations for colorectal cancer screening.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-06",
+      "title": "Cervical Cancer Screening Guidelines",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S02.T06"
+      ],
+      "tn_page_range": "FM3-FM6",
+      "pdf_page_range": [
+        379,
+        382
+      ],
+      "source_hierarchy_path": [
+        "FM.S02",
+        "FM.S02.T06"
+      ],
+      "structural_rationale": "TOC topic node under Periodic Health Examination (FM.S02); confirmed unmerged screening-guideline subsection covering the applicable task-force/society recommendations for cervical cancer screening.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-07",
+      "title": "Prostate Cancer Screening Guidelines",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S02.T07"
+      ],
+      "tn_page_range": "FM3-FM6",
+      "pdf_page_range": [
+        379,
+        382
+      ],
+      "source_hierarchy_path": [
+        "FM.S02",
+        "FM.S02.T07"
+      ],
+      "structural_rationale": "TOC topic node under Periodic Health Examination (FM.S02); confirmed unmerged screening-guideline subsection covering the applicable task-force/society recommendations for prostate cancer screening.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-08",
+      "title": "Motivational Strategies for Behavioural Change",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S03.T01"
+      ],
+      "tn_page_range": "FM7-FM15",
+      "pdf_page_range": [
+        383,
+        391
+      ],
+      "source_hierarchy_path": [
+        "FM.S03",
+        "FM.S03.T01"
+      ],
+      "structural_rationale": "TOC topic node under Health Promotion and Counselling (FM.S03); confirmed unmerged subsection on motivational strategies for behavioural change.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-09",
+      "title": "Nutrition",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S03.T02"
+      ],
+      "tn_page_range": "FM7-FM15",
+      "pdf_page_range": [
+        383,
+        391
+      ],
+      "source_hierarchy_path": [
+        "FM.S03",
+        "FM.S03.T02"
+      ],
+      "structural_rationale": "TOC topic node under Health Promotion and Counselling (FM.S03); confirmed unmerged subsection on nutrition.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-10",
+      "title": "Obesity",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S03.T03"
+      ],
+      "tn_page_range": "FM7-FM15",
+      "pdf_page_range": [
+        383,
+        391
+      ],
+      "source_hierarchy_path": [
+        "FM.S03",
+        "FM.S03.T03"
+      ],
+      "structural_rationale": "TOC topic node under Health Promotion and Counselling (FM.S03); confirmed unmerged subsection on obesity.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-11",
+      "title": "Dyslipidemia",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S03.T04"
+      ],
+      "tn_page_range": "FM7-FM15",
+      "pdf_page_range": [
+        383,
+        391
+      ],
+      "source_hierarchy_path": [
+        "FM.S03",
+        "FM.S03.T04"
+      ],
+      "structural_rationale": "TOC topic node under Health Promotion and Counselling (FM.S03); confirmed unmerged subsection on dyslipidemia.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-12",
+      "title": "Exercise",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S03.T05"
+      ],
+      "tn_page_range": "FM7-FM15",
+      "pdf_page_range": [
+        383,
+        391
+      ],
+      "source_hierarchy_path": [
+        "FM.S03",
+        "FM.S03.T05"
+      ],
+      "structural_rationale": "TOC topic node under Health Promotion and Counselling (FM.S03); confirmed unmerged subsection on exercise.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-13",
+      "title": "Smoking Cessation",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S03.T06"
+      ],
+      "tn_page_range": "FM7-FM15",
+      "pdf_page_range": [
+        383,
+        391
+      ],
+      "source_hierarchy_path": [
+        "FM.S03",
+        "FM.S03.T06"
+      ],
+      "structural_rationale": "TOC topic node under Health Promotion and Counselling (FM.S03); confirmed unmerged subsection on smoking cessation.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-14",
+      "title": "Alcohol Use",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S03.T07"
+      ],
+      "tn_page_range": "FM7-FM15",
+      "pdf_page_range": [
+        383,
+        391
+      ],
+      "source_hierarchy_path": [
+        "FM.S03",
+        "FM.S03.T07"
+      ],
+      "structural_rationale": "TOC topic node under Health Promotion and Counselling (FM.S03); confirmed unmerged subsection on alcohol use.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-15",
+      "title": "Abdominal Pain",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T01"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T01"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Abdominal Pain') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-16",
+      "title": "Allergic Rhinitis",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T02"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T02"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Allergic Rhinitis') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-17",
+      "title": "Amenorrhea",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T03"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T03"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Amenorrhea') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-18",
+      "title": "Anxiety",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T04"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T04"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Anxiety') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-19",
+      "title": "Asthma/COPD",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T05"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T05"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Asthma/COPD') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-20",
+      "title": "Benign Prostatic Hyperplasia",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T06"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T06"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Benign Prostatic Hyperplasia') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-21",
+      "title": "Bronchitis (Acute)",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T07"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T07"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Bronchitis (Acute)') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-22",
+      "title": "Chest Pain",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T08"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T08"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Chest Pain') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-23",
+      "title": "Common Cold (Acute Rhinitis)",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T09"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T09"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Common Cold (Acute Rhinitis)') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-24",
+      "title": "Concussion/Mild Traumatic Brain Injury",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T10"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T10"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Concussion/Mild Traumatic Brain Injury') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-25",
+      "title": "Contraception",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T11"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T11"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Contraception') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-26",
+      "title": "Cough",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T12"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T12"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Cough') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-27",
+      "title": "Dementia (Major Neurocognitive Disorder)",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T13"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T13"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Dementia (Major Neurocognitive Disorder)') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-28",
+      "title": "Depression",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T14"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T14"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Depression') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-29",
+      "title": "Diabetes Mellitus",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T15"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T15"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Diabetes Mellitus') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-30",
+      "title": "Dizziness",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T16"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T16"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Dizziness') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-31",
+      "title": "Domestic Violence/Elder Abuse/Child Abuse",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T17"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T17"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Domestic Violence/Elder Abuse/Child Abuse') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-32",
+      "title": "Dyspepsia",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T18"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T18"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Dyspepsia') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-33",
+      "title": "Dyspnea",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T19"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T19"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Dyspnea') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-34",
+      "title": "Dysuria",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T20"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T20"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Dysuria') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-35",
+      "title": "Epistaxis",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T21"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T21"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Epistaxis') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-36",
+      "title": "Erectile Dysfunction",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T22"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T22"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Erectile Dysfunction') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-37",
+      "title": "Fatigue",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T23"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T23"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Fatigue') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-38",
+      "title": "Fever",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T24"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T24"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Fever') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-39",
+      "title": "Headache",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T25"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T25"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Headache') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-40",
+      "title": "Hearing Impairment",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T26"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T26"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Hearing Impairment') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-41",
+      "title": "Hypertension",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T27"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T27"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Hypertension') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-42",
+      "title": "Joint Pain",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T28"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T28"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Joint Pain') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-43",
+      "title": "Low Back Pain",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T29"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T29"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Low Back Pain') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-44",
+      "title": "Menopause/Hormone Therapy",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T30"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T30"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Menopause/Hormone Therapy') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-45",
+      "title": "Osteoarthritis",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T31"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T31"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Osteoarthritis') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-46",
+      "title": "Osteoporosis",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T32"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T32"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Osteoporosis') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-47",
+      "title": "Rash",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T33"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T33"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Rash') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-48",
+      "title": "Sexually Transmitted Infections",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T34"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T34"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Sexually Transmitted Infections') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-49",
+      "title": "Sinusitis",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T35"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T35"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Sinusitis') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-50",
+      "title": "Sleep Disorders",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T36"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T36"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Sleep Disorders') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-51",
+      "title": "Sore Throat (Pharyngitis)",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S04.T37"
+      ],
+      "tn_page_range": "FM16-FM51",
+      "pdf_page_range": [
+        392,
+        427
+      ],
+      "source_hierarchy_path": [
+        "FM.S04",
+        "FM.S04.T37"
+      ],
+      "structural_rationale": "TOC topic node under Common Presenting Problems (FM.S04); confirmed unmerged named presenting-problem subsection ('Sore Throat (Pharyngitis)') giving TN's primary-care/undifferentiated-presentation approach to this complaint.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-52",
+      "title": "Principles of Palliative Care and End-of-Life Care Discussions",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S05.T01",
+        "FM.S05.T02"
+      ],
+      "tn_page_range": "FM52",
+      "pdf_page_range": [
+        428,
+        428
+      ],
+      "source_hierarchy_path": [
+        "FM.S05",
+        "FM.S05.T01"
+      ],
+      "structural_rationale": "Two adjacent TOC topic nodes under Palliative Care (FM.S05), both confirmed via body OCR (clean-ocr/0428.txt, pdf 428) as the opening principles-of-palliative-care content and the associated end-of-life goals-of-care conversation guidance on the same page; consolidated as one communication/philosophy-of-care unit distinct from the procedural/legal Power of Attorney and Advance Directives units that follow.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-53",
+      "title": "Power of Attorney and Instructional Advance Directives",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S05.T03",
+        "FM.S05.T04"
+      ],
+      "tn_page_range": "FM52",
+      "pdf_page_range": [
+        428,
+        428
+      ],
+      "source_hierarchy_path": [
+        "FM.S05",
+        "FM.S05.T03"
+      ],
+      "structural_rationale": "Two adjacent TOC topic nodes under Palliative Care (FM.S05) covering the legal/documentation mechanisms of substitute decision-making (Power of Attorney for personal care) and instructional advance directives; consolidated as one unit since both are the same legal-planning competency (who decides, and what they are bound by) rather than two distinct clinical presentations.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-54",
+      "title": "Symptom Management in Palliative Care",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S05.T05",
+        "FM.S05"
+      ],
+      "tn_page_range": "FM52-FM55",
+      "pdf_page_range": [
+        428,
+        431
+      ],
+      "source_hierarchy_path": [
+        "FM.S05",
+        "FM.S05.T05"
+      ],
+      "structural_rationale": "TOC topic node under Palliative Care (FM.S05) covering pharmacologic/nonpharmacologic management of common end-of-life symptoms (pain, dyspnea, nausea, delirium). The parent FM.S05 section node itself (page range FM52-FM55) is also referenced here for the portion of its span not covered by any other T-child or by the Complementary/Integrative-Medicine and Antimicrobial-Reference units below.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-55",
+      "title": "Complementary and Integrative Medicine (Common Herbal Products)",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "UNCATALOGUED:FM.CAM"
+      ],
+      "tn_page_range": "FM53",
+      "pdf_page_range": [
+        429,
+        429
+      ],
+      "source_hierarchy_path": [
+        "FM.S05"
+      ],
+      "structural_rationale": "TOC heading 'Complementary and Integrative Medicine' is recorded in toc_inventory.json as a merged_duplicate_heading absorbed into the FM.S05 (Palliative Care) section node rather than given its own node_id, because it sits within FM.S05's page span (FM52-FM55) but is a structurally distinct topic (Table 25, 'Common Herbal Products': reported uses, adverse effects, and drug interactions of common natural health products) unrelated to palliative care, confirmed via body OCR (clean-ocr/0429.txt, pdf 429). No standalone toc_inventory.json node_id exists for it; recorded as UNCATALOGUED:FM.CAM per the documented convention.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-56",
+      "title": "Antimicrobial/Antiviral/Antifungal Quick Reference",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "UNCATALOGUED:FM.ANTIMICROBIAL_REF"
+      ],
+      "tn_page_range": "FM54-FM55",
+      "pdf_page_range": [
+        430,
+        431
+      ],
+      "source_hierarchy_path": [
+        "FM"
+      ],
+      "structural_rationale": "TOC heading 'Antimicrobial/Antiviral/Antifungal Quick Reference' (raw OCR, trailing page-number digits did not parse to a trusted anchor - listed as unresolved in derived/scope_packets/FM.json source_quality.unresolved_headings) is confirmed via body-heading OCR (clean-ocr/0430.txt and clean-ocr/0431.txt, pdf 430-431) as a two-page condition-by-microorganism-by-empiric-therapy reference table (respiratory/ENT and dermatologic conditions), positioned between the Palliative Care section (ending FM55) and Landmark Family Medicine Trials (starting FM56). No toc_inventory.json node_id exists for it; recorded as UNCATALOGUED:FM.ANTIMICROBIAL_REF per the documented convention.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-FM-57",
+      "title": "Landmark Family Medicine Trials and References",
+      "chapter_code": "FM",
+      "chapter_title": "Family Medicine",
+      "source_node_ids": [
+        "FM.S06"
+      ],
+      "tn_page_range": "FM56-FM58",
+      "pdf_page_range": [
+        432,
+        434
+      ],
+      "source_hierarchy_path": [
+        "FM.S06"
+      ],
+      "structural_rationale": "TOC section node 'Landmark Family Medicine Trials' (FM.S06), with toc_inventory.json recording 'References' as a merged_duplicate_heading absorbed into the same node (the References list immediately follows the landmark-trials table with no independent subheading of its own). Pure bibliographic/evidence-summary appendix content.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    }
+  ]
+}

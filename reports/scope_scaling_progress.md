@@ -14,41 +14,40 @@ then continue.
 
 | | |
 |---|---|
-| Completed | 7 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`) |
-| Next chapter | **FM — Family Medicine** |
+| Completed | 8 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`, `FM`) |
+| Next chapter | **G — Gastroenterology** |
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `539da16` — scope: map E Endocrinology |
+| Last completed commit | `PENDING` — scope: map FM Family Medicine |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
 
-1. FM — Family Medicine *(next)*
-2. G — Gastroenterology
-3. GS — General and Thoracic Surgery
-4. GM — Geriatric Medicine
-5. GY — Gynecology
-6. H — Hematology
-7. ID — Infectious Diseases
-8. MG — Medical Genetics
-9. MI — Medical Imaging
-10. NP — Nephrology
-11. N — Neurology
-12. NS — Neurosurgery
-13. OB — Obstetrics
-14. OP — Ophthalmology
-15. OR — Orthopedic Surgery
-16. OT — Otolaryngology
-17. P — Pediatrics
-18. PM — Palliative Medicine
-19. PL — Plastic Surgery
-20. PS — Psychiatry
-21. PH — Public Health and Preventive Medicine
-22. R — Respirology
-23. RH — Rheumatology
-24. U — Urology
-25. VS — Vascular Surgery
+1. G — Gastroenterology *(next)*
+2. GS — General and Thoracic Surgery
+3. GM — Geriatric Medicine
+4. GY — Gynecology
+5. H — Hematology
+6. ID — Infectious Diseases
+7. MG — Medical Genetics
+8. MI — Medical Imaging
+9. NP — Nephrology
+10. N — Neurology
+11. NS — Neurosurgery
+12. OB — Obstetrics
+13. OP — Ophthalmology
+14. OR — Orthopedic Surgery
+15. OT — Otolaryngology
+16. P — Pediatrics
+17. PM — Palliative Medicine
+18. PL — Plastic Surgery
+19. PS — Psychiatry
+20. PH — Public Health and Preventive Medicine
+21. R — Respirology
+22. RH — Rheumatology
+23. U — Urology
+24. VS — Vascular Surgery
 
 ## Chapter notes
 
@@ -126,6 +125,38 @@ then continue.
   granular presentation-based framework for this body system. 0 invalid
   MCC IDs, 0 WEAK mappings, 0 hygiene violations, 0 UNCERTAIN
   classifications, 553/553 project tests passing.
+- **FM (Family Medicine)**: 57 study units from 63 TOC nodes (63/63
+  accounted for: 4 organizational headers, 59 leaf/section nodes). Two
+  `UNRESOLVED` headings from `derived/scope_packets/FM.json`
+  (`Acronyms`, `Antimicrobial/Antiviral/Antifungal Quick Reference`) and
+  one structurally distinct `merged_duplicate_headings` entry
+  (`Complementary and Integrative Medicine`, absorbed into `FM.S05`)
+  resolved via body-heading confirmation against raw OCR
+  (`derived/toronto-notes-2025/clean-ocr/`, pdf 378, 429-431); all three
+  represented with synthetic `UNCATALOGUED:` source ids, flagged
+  `affects_global_toc: true` in
+  `research/scope/chapters/FM/review_items.json`. FM is explicitly
+  cross-cutting per task instructions: 33 `DIRECT`, 15 `COMPONENT`, 5
+  `SUPPORTING_KNOWLEDGE`, 2 `REFERENCE_ONLY`, 1 `CROSS_DISCIPLINE`
+  (`SU-FM-53` Power of Attorney/Advance Directives, deferring to the
+  already-completed ELOM chapter), 1 `UNCERTAIN` (`SU-FM-35` Epistaxis —
+  no MCC objective found after targeted registry search for
+  'epistaxis'/'nose bleed'/'nasal bleeding'/'hemorrhage'; left UNCERTAIN
+  rather than forced). 26 of 57 units carry a `cross_discipline_note`
+  documenting overlap with an already-completed or not-yet-mapped
+  chapter (ER, E, D, ELOM, and 10 not-yet-mapped disciplines) for the
+  later global chapter-overlap audit — full list in
+  `research/scope/chapters/FM/review_items.json`. Targeted
+  `search-mcc-objectives` searches surfaced non-obvious matches for
+  several presenting problems with no title-obvious objective (BPH →
+  "Lower urinary tract symptoms"=111-1; Depression → "Depressed
+  mood"=59-1; Diabetes Mellitus → "Hyperglycemia"=130; Rash → "Skin and
+  integument conditions"=38); confirmed-absent objectives include
+  osteoarthritis, osteoporosis, sinusitis, asthma/COPD, and a
+  comprehensive STI objective (mapped COMPONENT to the closest available
+  match with the coverage gap documented in `mapping_rationale`). 0
+  invalid MCC IDs, 0 WEAK mappings, 0 hygiene violations, 1 UNCERTAIN
+  classification, validator PASS, 553/553 project tests passing.
 
 ## Resume protocol (per Phase 3C instructions)
 
