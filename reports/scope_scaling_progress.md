@@ -19,7 +19,7 @@ then continue.
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `a8e2ff7` — feat: freeze MCC scope crosswalk schema |
+| Last completed commit | `19102a5` — fix: rename freshness.verification_type to verification_types |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
