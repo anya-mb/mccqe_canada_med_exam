@@ -3,7 +3,7 @@ shared schema (scope_schema_version 1.0), applying the six pilot findings:
 
 A. freshness normalization (fresh_guideline_required /
    fresh_legal_verification_required -> freshness.{verification_required,
-   verification_type})
+   verification_types})
 B. explicit evidence_type (OBJECTIVE_REFERENCE / ROLE_LEVEL_REFERENCE) on
    every mcc_evidence entry
 C. mcc_evidence hygiene: empty mcc_evidence enforced for
@@ -80,7 +80,7 @@ def migrate_freshness(entry: dict) -> dict:
     """Both pilots used a single boolean under a differently-named field:
     Cardiology fresh_guideline_required, ELOM fresh_legal_verification_required.
     Neither pilot recorded WHICH kind of freshness was needed beyond what's
-    inferable from chapter context, so verification_type is inferred here
+    inferable from chapter context, so verification_types is inferred here
     from the source field name and jurisdiction presence - not invented,
     just reclassified from information the pilot data already implies."""
     required = bool(entry.get("fresh_guideline_required") or entry.get("fresh_legal_verification_required"))
@@ -96,7 +96,7 @@ def migrate_freshness(entry: dict) -> dict:
             types.append("JURISDICTION")
     if not types:
         types = ["CLINICAL_GUIDELINE"]
-    return {"verification_required": True, "verification_type": types}
+    return {"verification_required": True, "verification_types": types}
 
 
 def migrate_crosswalk_entry(entry: dict) -> tuple:
