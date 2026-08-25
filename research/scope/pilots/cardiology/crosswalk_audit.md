@@ -8,10 +8,10 @@
 ## Classification Breakdown
 
 - DIRECT: 8
-- COMPONENT: 22
+- COMPONENT: 21
 - CROSS_DISCIPLINE: 0
 - SUPPORTING_KNOWLEDGE: 2
-- SPECIALIST_DETAIL: 3
+- SPECIALIST_DETAIL: 4
 - REFERENCE_ONLY: 4
 - UNCERTAIN: 0
 
@@ -38,11 +38,15 @@ Missing explicit reason: 0 ✅
 
 - MCC Objective IDs used: 8 — ['106', '13', '14', '27', '29-1', '29-2', '62', '68']
 - Invalid Objective IDs: 0 ✅
-- Unverified (WEAK-strength) mappings: 6 - flagged for reviewer attention, not treated as errors
+- Unverified (WEAK-strength) mappings: 2 - flagged for reviewer attention, not treated as errors
 
 ## Question Plan
 
-**Planned Cardiology questions (evidence-based, not forced to a predetermined total): 356**
+**Coverage-weight distribution (1=minimal .. 5=major/core):** {1: 11, 2: 7, 3: 12, 4: 6, 5: 3}
+
+**Total minimum_question_coverage across all units: 110** (a floor, not a final target)
+
+*Historical note: the Phase 3A pilot's sum of per-unit absolute target_questions was 352. This is NOT the canonical Cardiology allocation - it was computed before any cross-chapter discipline budget existed. Retained for reference only; use coverage_weight for relative priority instead.*
 
 ## Unresolved Mappings
 

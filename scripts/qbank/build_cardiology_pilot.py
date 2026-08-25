@@ -517,7 +517,7 @@ STUDY_UNITS = [
 
 def enrich_study_units(units, nodes_by_id):
     for u in units:
-        pdf_starts, pdf_ends, tn_starts, tn_ends, paths = [], [], [], [], []
+        pdf_starts, pdf_ends, tn_starts, tn_ends, paths, levels = [], [], [], [], [], []
         for nid in u["source_node_ids"]:
             n = nodes_by_id[nid]
             pdf_starts.append(n["start_pdf_page"])
@@ -525,11 +525,20 @@ def enrich_study_units(units, nodes_by_id):
             tn_starts.append(n["start_tn_page"])
             tn_ends.append(n["end_tn_page"])
             paths.append(f"{nid} ({n['title']})")
+            levels.append(n["level"])
         u["tn_page_range"] = f"{min(tn_starts, key=lambda x: int(''.join(c for c in x if c.isdigit())))}-{max(tn_ends, key=lambda x: int(''.join(c for c in x if c.isdigit())))}"
         u["pdf_page_range"] = [min(pdf_starts), max(pdf_ends)]
         u["chapter_code"] = CHAPTER_CODE
         u["chapter_title"] = "Cardiology and Cardiac Surgery"
         u["source_hierarchy_path"] = paths
+        # Page mapping precision (Phase 3B calibration): a unit sourced from
+        # at least one section-level (level 2) node has an independently
+        # TOC-extracted page anchor for that node (EXACT_SECTION). A unit
+        # sourced ONLY from topic-level (level 3) nodes inherits its ENTIRE
+        # range from the parent section - toc_inventory.json's own schema
+        # does not independently page-anchor topics - so it is marked
+        # SECTION_INHERITED, never presented as an exact topic range.
+        u["page_mapping_precision"] = "EXACT_SECTION" if 2 in levels else "SECTION_INHERITED"
     return units
 
 
@@ -546,8 +555,8 @@ def enrich_study_units(units, nodes_by_id):
 
 MCC_SOURCE_URL_BASE = "https://mcc.ca/objectives/medical-expert/"
 
-def obj_ref(mcc_id, title, role="Medical Expert", strength="STRONG", rationale=""):
-    return {
+def obj_ref(mcc_id, title, role="Medical Expert", strength="STRONG", rationale="", requires_scope_review=False):
+    ref = {
         "mcc_id": mcc_id,
         "legacy_id": mcc_id,
         "objective_title": title,
@@ -556,6 +565,9 @@ def obj_ref(mcc_id, title, role="Medical Expert", strength="STRONG", rationale="
         "mapping_strength": strength,
         "mapping_rationale": rationale,
     }
+    if requires_scope_review:
+        ref["requires_scope_review"] = True
+    return ref
 
 
 CROSSWALK = {
@@ -819,18 +831,25 @@ CROSSWALK = {
         "clinical_source_organizations": ["Heart and Stroke Foundation of Canada (resuscitation guidelines)"], "fresh_guideline_required": True,
     },
     "SU-C-19": {
-        "classification": "COMPONENT",
-        "mcc_evidence": [obj_ref("13", "Cardiac arrest", strength="WEAK",
-            rationale="ICDs are a secondary-prevention device for cardiac arrest survivors; not explicitly named in the objective text. Weak/indirect evidence - flagged for review."),
-            obj_ref("106", "Syncope and pre-syncope", strength="WEAK",
-            rationale="Device therapy is a downstream management consideration once arrhythmic syncope is diagnosed; not explicitly named.")],
-        "scope_depth": "RECOGNIZE",
+        # Phase 3B weak-mapping review disposition: DOWNGRADE_SPECIALIST.
+        # Full enabling_objectives text for both id=13 (Cardiac arrest) and
+        # id=106 (Syncope) was re-read in full (not truncated) - neither
+        # mentions pacemaker/ICD/device therapy at all, even indirectly.
+        # The prior COMPONENT classification overstated the textual
+        # evidence. Reclassified SPECIALIST_DETAIL (device-indication
+        # recognition is real but sits below the presentation-objective's
+        # own textual scope) and mcc_evidence cleared, consistent with
+        # sibling SPECIALIST_DETAIL units (SU-C-24, SU-C-36) which also
+        # carry no mcc_evidence. See weak_mapping_review.json.
+        "classification": "SPECIALIST_DETAIL",
+        "mcc_evidence": [],
+        "scope_depth": "CONTEXT_ONLY",
         "testable_competencies": {
-            "initial_management": "Recognize clinical indications for pacemaker (symptomatic bradycardia/heart block) and ICD (post-arrest survivors, reduced ejection fraction) placement.",
+            "initial_management": "Recognize that pacemaker (symptomatic bradycardia/heart block) and ICD (post-arrest survivors, reduced ejection fraction) placement are management options once the underlying arrhythmia/conduction disorder is diagnosed.",
         },
-        "do_not_test": ["Device programming, lead placement technique, implantation procedure."],
+        "do_not_test": ["Device programming, lead placement technique, implantation procedure, specific indication thresholds (e.g. exact EF cutoffs)."],
         "blueprint": {"physician_activities": ["Management"], "dimensions": ["Chronic"]},
-        "target_questions": 6, "item_forms": ["MOST_APPROPRIATE_NEXT_STEP"],
+        "target_questions": 2, "item_forms": ["MOST_APPROPRIATE_NEXT_STEP"],
         "clinical_source_organizations": ["Canadian Cardiovascular Society"], "fresh_guideline_required": True,
     },
     "SU-C-20": {
@@ -939,9 +958,16 @@ CROSSWALK = {
         "clinical_source_organizations": ["Canadian Cardiovascular Society"], "fresh_guideline_required": True,
     },
     "SU-C-27": {
+        # Phase 3B weak-mapping review disposition: DOWNGRADE_SPECIALIST
+        # (confirmed - was already SPECIALIST_DETAIL). Full enabling_
+        # objectives for id=29-1 re-read: only "determination as to
+        # whether the patient requires specialized care and/or
+        # consultation (e.g. ...advanced...cardiac...disease)" - real but
+        # generic escalation-to-specialist language, not specific to
+        # transplant/VAD/ECMO. mcc_evidence cleared for consistency with
+        # sibling SPECIALIST_DETAIL units (SU-C-19, SU-C-24, SU-C-36).
         "classification": "SPECIALIST_DETAIL",
-        "mcc_evidence": [obj_ref("29-1", "Generalized edema", strength="WEAK",
-            rationale="Downstream escalation of refractory heart failure management (heart failure named in this objective's causal_conditions); transplant/VAD/ECMO decision-making itself not addressed in the objective text.")],
+        "mcc_evidence": [],
         "scope_depth": "CONTEXT_ONLY",
         "testable_competencies": {
             "recognition": "Recognize that transplant, VAD, and ECMO are escalation options for refractory heart failure/cardiogenic shock.",
@@ -952,9 +978,15 @@ CROSSWALK = {
         "clinical_source_organizations": [], "fresh_guideline_required": False,
     },
     "SU-C-28": {
+        # Phase 3B weak-mapping review disposition: DOWNGRADE_SUPPORTING
+        # (confirmed - was already SUPPORTING_KNOWLEDGE). Full syncope
+        # causal_conditions re-read: cardiac arrhythmia, reduced cardiac
+        # output (aortic stenosis, MI), reflex/underfilling, cerebro-
+        # vascular, metabolic, drugs, psychiatric - no obstructive/mass
+        # lesion category at all. mcc_evidence cleared for consistency
+        # with sibling SUPPORTING_KNOWLEDGE unit (SU-C-02).
         "classification": "SUPPORTING_KNOWLEDGE",
-        "mcc_evidence": [obj_ref("106", "Syncope and pre-syncope", strength="WEAK",
-            rationale="Cardiac tumours (e.g., atrial myxoma) can present with obstructive syncope or embolic phenomena; not explicitly named in any reviewed objective.")],
+        "mcc_evidence": [],
         "scope_depth": "RECOGNIZE",
         "testable_competencies": {
             "recognition": "Recognize atrial myxoma as a rare cause of positional syncope, embolic events, or constitutional symptoms with a mobile mass on echocardiography.",
@@ -996,9 +1028,19 @@ CROSSWALK = {
         "clinical_source_organizations": ["AMMI Canada"], "fresh_guideline_required": True,
     },
     "SU-C-31": {
+        # Phase 3B weak-mapping review disposition: KEEP_COMPONENT_WEAK.
+        # Registry searched for any objective explicitly naming "rheumatic
+        # fever", "Jones criteria", or "streptococc*" - none found (checked
+        # Polyarthralgia id=50-2 as the next-best candidate; its causal_
+        # conditions name rheumatoid arthritis/JIA/OA/fibromyalgia, not
+        # rheumatic fever). No better anchor exists in the current
+        # registry, and the clinical link to valve disease (id=62) via its
+        # chronic sequela is genuine, so this is kept WEAK rather than
+        # downgraded or left unresolved.
         "classification": "COMPONENT",
         "mcc_evidence": [obj_ref("62", "Abnormal heart sounds and murmurs", strength="WEAK",
-            rationale="Rheumatic fever is a recognized cause of chronic valve disease (mitral stenosis); not explicitly named in the objective's causal_conditions text.")],
+            rationale="Rheumatic fever is a recognized cause of chronic valve disease (mitral stenosis); not explicitly named in the objective's causal_conditions text. No better-fitting objective exists in the current registry (checked Polyarthralgia id=50-2 and other joint/fever-related objectives).",
+            requires_scope_review=True)],
         "scope_depth": "RECOGNIZE",
         "testable_competencies": {
             "recognition": "Apply Jones criteria conceptually to recognize acute rheumatic fever.",
@@ -1054,9 +1096,20 @@ CROSSWALK = {
         "clinical_source_organizations": ["Canadian Cardiovascular Society"], "fresh_guideline_required": True,
     },
     "SU-C-35": {
+        # Phase 3B weak-mapping review disposition: KEEP_COMPONENT_WEAK.
+        # Full Dyspnea causal_conditions re-read: "Pericardial disease
+        # (e.g., tamponade, pericarditis)" explicitly establishes pericardial
+        # disease as a named cardiac cause of dyspnea, with tamponade and
+        # pericarditis given as EXAMPLES (not an exhaustive list per the
+        # objective's own "list not exhaustive" header). Constrictive
+        # pericarditis is a well-recognized member of the same named
+        # category and genuinely presents with dyspnea, so this is kept
+        # WEAK (member of an explicitly-named category, but not itself
+        # named) rather than downgraded.
         "classification": "COMPONENT",
         "mcc_evidence": [obj_ref("27", "Dyspnea", strength="WEAK",
-            rationale="Covered only generically under 'Pericardial disease' in causal_conditions; constrictive pericarditis not individually named.")],
+            rationale="Covered only generically under 'Pericardial disease' in causal_conditions; constrictive pericarditis not individually named (tamponade and pericarditis are the two given examples).",
+            requires_scope_review=True)],
         "scope_depth": "RECOGNIZE",
         "testable_competencies": {
             "differential": "Differentiate constrictive pericarditis from restrictive cardiomyopathy conceptually.",
@@ -1109,6 +1162,37 @@ CROSSWALK = {
 }
 
 
+def derive_coverage_weight(target_questions, classification):
+    """Phase 3B calibration: the Cardiology pilot's per-unit absolute
+    target_questions (summing to 356) was produced BEFORE any
+    cross-chapter/discipline budget existed - i.e. before the number that
+    actually constrains how many questions Cardiology as a whole should
+    get. Treating 356 as final would lock in an allocation made with no
+    visibility into the other 5 disciplines' relative size. This function
+    converts each unit's already-considered relative clinical importance
+    (which the original target_questions number encoded reasonably well,
+    even if the absolute scale wasn't yet calibrated) into a 1-5 coverage
+    weight, which is what should actually drive final allocation once a
+    genuine discipline-level budget exists."""
+    if classification in ("REFERENCE_ONLY",) or target_questions == 0:
+        return 1
+    if target_questions >= 25:
+        return 5
+    if target_questions >= 15:
+        return 4
+    if target_questions >= 8:
+        return 3
+    if target_questions >= 4:
+        return 2
+    return 1
+
+
+def derive_minimum_coverage(coverage_weight, target_questions):
+    if target_questions == 0:
+        return 0
+    return {1: 1, 2: 2, 3: 3, 4: 5, 5: 8}[coverage_weight]
+
+
 def build_crosswalk(units):
     entries = []
     unresolved = []
@@ -1120,6 +1204,7 @@ def build_crosswalk(units):
                 "reason": "No crosswalk entry defined - programming gap, not a genuine scope ambiguity.",
             })
             continue
+        coverage_weight = derive_coverage_weight(cw["target_questions"], cw["classification"])
         entry = {
             "study_unit_id": u["study_unit_id"],
             "title": u["title"],
@@ -1129,8 +1214,24 @@ def build_crosswalk(units):
             "testable_competencies": cw["testable_competencies"],
             "do_not_test": cw["do_not_test"],
             "blueprint": cw["blueprint"],
-            "target_questions": cw["target_questions"],
-            "item_forms": cw["item_forms"],
+            "question_planning": {
+                "coverage_weight": coverage_weight,
+                "minimum_question_coverage": derive_minimum_coverage(coverage_weight, cw["target_questions"]),
+                "preferred_item_forms": cw["item_forms"],
+            },
+            "historical_absolute_estimate": {
+                "target_questions": cw["target_questions"],
+                "note": (
+                    "Phase 3A pilot estimate, produced before any "
+                    "cross-chapter discipline budget existed. NOT the "
+                    "canonical production allocation - see "
+                    "question_planning.coverage_weight for the current "
+                    "relative-priority signal. Final absolute counts will "
+                    "be computed after all Cardiology study units and the "
+                    "discipline-level question budget are both available."
+                ),
+            },
+            "page_mapping_precision": u["page_mapping_precision"],
             "clinical_source_organizations": cw["clinical_source_organizations"],
             "fresh_guideline_required": cw["fresh_guideline_required"],
         }
@@ -1433,7 +1534,7 @@ def main():
     confidence_counts = Counter(
         m["extraction_confidence"] for m in units
     )
-    zero_q_units = [e for e in crosswalk_entries if e["target_questions"] == 0]
+    zero_q_units = [e for e in crosswalk_entries if e["historical_absolute_estimate"]["target_questions"] == 0]
     zero_q_no_reason = [e for e in zero_q_units if "zero_question_reason" not in e]
 
     all_obj_ids = set()
@@ -1452,7 +1553,9 @@ def main():
         if m["mapping_strength"] == "WEAK"
     ]
 
-    total_planned_questions = sum(e["target_questions"] for e in crosswalk_entries)
+    total_historical_estimate = sum(e["historical_absolute_estimate"]["target_questions"] for e in crosswalk_entries)
+    coverage_weight_distribution = Counter(e["question_planning"]["coverage_weight"] for e in crosswalk_entries)
+    total_minimum_coverage = sum(e["question_planning"]["minimum_question_coverage"] for e in crosswalk_entries)
 
     crosswalk_audit = {
         "generated_at": GENERATED_AT,
@@ -1476,7 +1579,18 @@ def main():
         "invalid_objective_id_count": len(invalid_ids),
         "unverified_weak_mappings": unverified_mappings,
         "unverified_weak_mapping_count": len(unverified_mappings),
-        "planned_cardiology_questions": total_planned_questions,
+        "historical_absolute_estimate_total": total_historical_estimate,
+        "historical_estimate_note": (
+            "356 was the Phase 3A pilot's sum of per-unit absolute "
+            "target_questions, produced before any cross-chapter "
+            "discipline budget existed. NOT the canonical Cardiology "
+            "production allocation - retained here for historical "
+            "reference only. See coverage_weight_distribution and "
+            "total_minimum_question_coverage for the current calibration "
+            "model."
+        ),
+        "coverage_weight_distribution": dict(sorted(coverage_weight_distribution.items())),
+        "total_minimum_question_coverage": total_minimum_coverage,
         "unresolved_mappings_count": len(unresolved_mappings),
         "gate_result": "PASS" if (
             len(invalid_ids) == 0
@@ -1526,7 +1640,17 @@ def main():
     md.append("")
     md.append("## Question Plan")
     md.append("")
-    md.append(f"**Planned Cardiology questions (evidence-based, not forced to a predetermined total): {total_planned_questions}**")
+    md.append(f"**Coverage-weight distribution (1=minimal .. 5=major/core):** {dict(sorted(coverage_weight_distribution.items()))}")
+    md.append("")
+    md.append(f"**Total minimum_question_coverage across all units: {total_minimum_coverage}** (a floor, not a final target)")
+    md.append("")
+    md.append(
+        f"*Historical note: the Phase 3A pilot's sum of per-unit absolute "
+        f"target_questions was {total_historical_estimate}. This is NOT the "
+        f"canonical Cardiology allocation - it was computed before any "
+        f"cross-chapter discipline budget existed. Retained for reference "
+        f"only; use coverage_weight for relative priority instead.*"
+    )
     md.append("")
     md.append("## Unresolved Mappings")
     md.append("")
@@ -1538,7 +1662,9 @@ def main():
 
     print(f"\nCrosswalk audit result: {crosswalk_audit['gate_result']}")
     print(f"Classification counts: {dict(classif_counts)}")
-    print(f"Planned questions: {total_planned_questions}")
+    print(f"Coverage weight distribution: {dict(sorted(coverage_weight_distribution.items()))}")
+    print(f"Total minimum question coverage: {total_minimum_coverage}")
+    print(f"(historical target_questions sum, not canonical: {total_historical_estimate})")
     print(f"Invalid objective IDs: {len(invalid_ids)}")
 
     return units, crosswalk_entries, crosswalk_audit

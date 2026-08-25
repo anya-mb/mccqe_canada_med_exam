@@ -1,0 +1,79 @@
+{
+  "generated_at": "2026-08-24",
+  "phase": "3B",
+  "chapter_code": "C",
+  "reviewed_from": "research/scope/pilots/cardiology/crosswalk.json (Phase 3A, 6 WEAK-strength mcc_evidence entries)",
+  "methodology": "Each WEAK mapping's cited MCC objective(s) had their FULL causal_conditions and enabling_objectives text re-read in full (not the truncated excerpts used during initial Phase 3A drafting), then compared against the study unit's actual clinical content to choose one of five dispositions: KEEP_COMPONENT_WEAK, DOWNGRADE_SUPPORTING, DOWNGRADE_SPECIALIST, REMAP, UNRESOLVED. No mapping was upgraded merely to reduce the WEAK count.",
+  "disposition_counts": {
+    "KEEP_COMPONENT_WEAK": 2,
+    "DOWNGRADE_SUPPORTING": 1,
+    "DOWNGRADE_SPECIALIST": 3,
+    "REMAP": 0,
+    "UNRESOLVED": 0
+  },
+  "reviews": [
+    {
+      "study_unit_id": "SU-C-19",
+      "title": "Cardiac Implantable Electronic Devices (Pacemakers and ICDs)",
+      "original_classification": "COMPONENT",
+      "weak_mappings_reviewed": ["13 (Cardiac arrest)", "106 (Syncope and pre-syncope)"],
+      "full_text_findings": "Full enabling_objectives for id=13 covers pulseless circulatory state, BLS/ACLS initiation, and family communication about outcome/organ donation/autopsy - no mention of device therapy at all. Full enabling_objectives for id=106 covers history/physical, ECG/echo investigation, medication management, fitness-to-drive counselling, and specialized referral - no mention of pacemaker/ICD either. Neither objective's causal_conditions or enabling text supports a COMPONENT-strength link.",
+      "disposition": "DOWNGRADE_SPECIALIST",
+      "action_taken": "Study unit reclassified COMPONENT -> SPECIALIST_DETAIL. Both WEAK mcc_evidence entries removed (mcc_evidence now empty, consistent with sibling SPECIALIST_DETAIL units SU-C-24 and SU-C-36). scope_depth downgraded RECOGNIZE -> CONTEXT_ONLY. target_questions reduced 6 -> 2.",
+      "requires_scope_review": false,
+      "rationale": "Device-therapy indication recognition is real clinical content, but it sits below the presentation objectives' own documented textual scope. Rather than keep an unsupported COMPONENT claim, it is more honest to represent this as specialist/low-testability content with no direct MCC objective anchor - consistent with how the pilot already treats similarly narrow-scope topics."
+    },
+    {
+      "study_unit_id": "SU-C-27",
+      "title": "Advanced Heart Failure Therapies (Transplant, VAD, ECMO)",
+      "original_classification": "SPECIALIST_DETAIL",
+      "weak_mappings_reviewed": ["29-1 (Generalized edema)"],
+      "full_text_findings": "Full enabling_objectives for id=29-1: 'determination as to whether the patient requires specialized care and/or consultation (e.g., patient with advanced renal, cardiac, or hepatic disease)'. This is real, generic escalation-to-specialist-care language that does genuinely gesture at this study unit's content, but does not name transplant/VAD/ECMO specifically.",
+      "disposition": "DOWNGRADE_SPECIALIST",
+      "action_taken": "Classification unchanged (was already SPECIALIST_DETAIL - confirmed correct). WEAK mcc_evidence entry removed (mcc_evidence now empty) for consistency with sibling SPECIALIST_DETAIL units that carry no mcc_evidence at all, since a SPECIALIST_DETAIL unit is by definition beyond the objective's testable scope and doesn't need a component citation to justify its (already minimal, 2-question) presence.",
+      "requires_scope_review": false,
+      "rationale": "The existing classification was already appropriate; the only issue was inconsistency in whether SPECIALIST_DETAIL units carry mcc_evidence. Resolved by removing it, matching the pattern used elsewhere."
+    },
+    {
+      "study_unit_id": "SU-C-28",
+      "title": "Cardiac Tumours",
+      "original_classification": "SUPPORTING_KNOWLEDGE",
+      "weak_mappings_reviewed": ["106 (Syncope and pre-syncope)"],
+      "full_text_findings": "Full syncope causal_conditions: cardiac arrhythmia, reduced cardiac output (aortic stenosis, MI), reflex/underfilling, cerebrovascular, metabolic, drugs, psychiatric. No obstructive-mass-lesion category exists in this objective at all, even generically.",
+      "disposition": "DOWNGRADE_SUPPORTING",
+      "action_taken": "Classification unchanged (was already SUPPORTING_KNOWLEDGE - confirmed correct). WEAK mcc_evidence entry removed (mcc_evidence now empty) for consistency with sibling SUPPORTING_KNOWLEDGE unit SU-C-02 (Cardiac Anatomy Review), which also carries no mcc_evidence.",
+      "requires_scope_review": false,
+      "rationale": "No genuine textual anchor exists in the registry for this rare topic. Confirmed the existing conservative classification and cleaned up the unsupported citation rather than retaining a WEAK claim with no real textual basis."
+    },
+    {
+      "study_unit_id": "SU-C-31",
+      "title": "Rheumatic Fever",
+      "original_classification": "COMPONENT",
+      "weak_mappings_reviewed": ["62 (Abnormal heart sounds and murmurs)"],
+      "full_text_findings": "Searched the entire Medical Expert objectives registry for any objective's title or content explicitly naming 'rheumatic fever', 'Jones criteria', or 'streptococc*'. None found. Closest candidate checked in detail: Polyarthralgia (id=50-2) - causal_conditions name rheumatoid arthritis, juvenile polyarthritis, osteoarthritis, fibromyalgia, polymyalgia rheumatica; rheumatic fever is not named. No better-fitting objective exists anywhere in the current registry.",
+      "disposition": "KEEP_COMPONENT_WEAK",
+      "action_taken": "Classification and mcc_id unchanged. requires_scope_review=true added to the mcc_evidence entry. Mapping rationale text updated to explicitly note the registry search performed.",
+      "requires_scope_review": true,
+      "rationale": "Rheumatic fever is a clinically important, MCC-relevant topic (Study Smarter lists it under multiple disciplines) whose only textual anchor in the current registry is its chronic valve-disease sequela (murmur objective, id=62). Downgrading or unresolving it would lose real content with no better alternative available. Kept WEAK and flagged for human review rather than either overstating confidence or discarding the mapping."
+    },
+    {
+      "study_unit_id": "SU-C-35",
+      "title": "Constrictive Pericarditis",
+      "original_classification": "COMPONENT",
+      "weak_mappings_reviewed": ["27 (Dyspnea)"],
+      "full_text_findings": "Full Dyspnea causal_conditions: 'Pericardial disease (e.g., tamponade, pericarditis)' - the category itself IS explicitly named, with tamponade and pericarditis given as non-exhaustive examples (the objective's own causal_conditions list is headed 'list not exhaustive'). Constrictive pericarditis is a standard, well-recognized member of this same named category.",
+      "disposition": "KEEP_COMPONENT_WEAK",
+      "action_taken": "Classification and mcc_id unchanged. requires_scope_review=true added to the mcc_evidence entry. Mapping rationale text updated to note that tamponade/pericarditis are the two given (non-exhaustive) examples.",
+      "requires_scope_review": true,
+      "rationale": "This is qualitatively different from a mapping with zero textual support: the parent category is explicitly named and explicitly marked non-exhaustive, and constrictive pericarditis genuinely presents with dyspnea. Kept WEAK (member of a named category, not itself named) rather than downgraded, and flagged for reviewer visibility since the distinction from a STRONG mapping (SU-C-33, SU-C-34, where the specific diagnosis IS named) matters for future confidence calibration."
+    }
+  ],
+  "summary": {
+    "weak_mappings_before_review": 6,
+    "weak_mappings_after_review": 2,
+    "units_reclassified": 1,
+    "units_confirmed_at_existing_classification_with_evidence_cleanup": 2,
+    "units_kept_weak_with_scope_review_flag": 2,
+    "no_mapping_upgraded_to_reduce_weak_count": true
+  }
+}
