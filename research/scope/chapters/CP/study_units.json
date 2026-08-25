@@ -1,0 +1,468 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-25",
+  "chapter_code": "CP",
+  "chapter_title": "Clinical Pharmacology",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes SOURCE STRUCTURE (toc_inventory.json), not from medical memory. Generic structural headings (organizational section umbrellas with no independent content) are NOT converted into standalone units - see organizational_header_nodes below for how each is accounted for.",
+  "same_page_merge_resolutions": {
+    "CP.S01": "Same-page merge of two real printed headings ('ACFOMYMS', 'General Principles', both indexed to TN page CP2 / pdf 176) confirmed via raw OCR of the TOC page (0175.json) and body page (0176.json). Split into SU-CP-01 (Acronyms) and SU-CP-02/SU-CP-03 (General Principles, further subdivided by its own three printed sub-headings: Drug Nomenclature + Phases of Clinical Drug Testing combined into SU-CP-02; Drug Administration kept separate as SU-CP-03 given its substantially deeper table-based content).",
+    "CP.S04": "Same-page merge of two real printed headings ('Adverse Drug Reactions', 'Autonomic Physiology & Pharmacology', both indexed to TN page CP11 / pdf 185) confirmed via raw OCR of the TOC page (0175.json) and body pages (0185.json, 0186.json). Split into SU-CP-13 (Adverse Drug Reactions + Approach to Suspected ADRs), SU-CP-14 (Drug Interactions, kept separate given its extensive named-interaction sidebar), and SU-CP-15 (Autonomic Physiology & Pharmacology, covering Parasympathetic NS + Sympathetic NS). The merge's third nested TOC sub-entry, 'Opioid Therapy and Chronic Non-Cancer Pain', is thematically unrelated to autonomic physiology despite its TOC indentation under that heading, and is represented separately as SU-CP-16.",
+    "CP.S06": "Same-page merge of two real printed headings ('Landmark Pharmacology Trials', 'References', both indexed to TN page CP14 / pdf 188) confirmed via raw OCR of the TOC page (0175.json) and body page (0188.json). Split into SU-CP-19 (Landmark Pharmacology Trials) and SU-CP-20 (References). UNLIKE the ELOM ELOM.S04 precedent (where a 'References'-labelled node turned out to be a misattributed disclaimer paragraph, not a genuine bibliography), raw OCR of pdf page 188 confirms CP.S06's 'References' heading here genuinely IS a correctly-attributed, >30-entry chapter bibliography with no clinical/testable content mixed in -- so no content was reattached elsewhere; SU-CP-20 is retained as a pure REFERENCE_ONLY unit, matching the treatment given to the equivalent genuine References sections in Chapters A and C."
+  },
+  "unresolved_heading_resolution": "None - research/tn2025/unresolved_headings.json records 0 entries for chapter_code CP (independently verified: filtering the 27 total unresolved_headings entries by chapter_code == 'CP' returns an empty list), and a sanity pass over all of CP's body pages (176-188) found no further structurally-off content beyond the three documented same-page merges above.",
+  "total_study_units": 20,
+  "organizational_header_nodes": {
+    "CP": "Chapter root container - represented by all study units below.",
+    "CP.S02": "'Pharmacokinetics' - confirmed via raw OCR (pdf 177) to carry only two brief definitional bullets before its first child topic 'Absorption' begins; its two bullets are folded into SU-CP-04's framing rather than given a separate unit. Its 10 topic children became 7 study units (SU-CP-04..SU-CP-11; Pharmacodynamics + Effectiveness and Safety + Therapeutic Indices combined into SU-CP-09)."
+  },
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-01",
+      "title": "Acronyms (Chapter Glossary)",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S01"
+      ],
+      "tn_page_range": "CP2",
+      "pdf_page_range": [
+        176,
+        176
+      ],
+      "source_hierarchy_path": [
+        "CP.S01 (ACFOMYMS) [same-page merge resolution: Acronyms portion]"
+      ],
+      "structural_rationale": "Same-page-merge protocol applied to CP.S01: its merged_duplicate_headings field lists 'General Principles' as a heading absorbed into this node because both share the printed TOC page label CP2 (pdf 176). Raw OCR of the TOC page (derived/toronto-notes-2025/ocr/pages/0175.json) confirms two separate printed TOC entries both indexed to CP2: 'ACFOMYMS . . . CP2' and 'General Principles. . . CP2' (the latter itself printing three further unindented sub-entries: Drug Nomenclature, Phases of Clinical Drug Testing, Drug Administration). Raw OCR of the body page (0176.json) confirms the printed structure exactly: the page opens with a multi-column acronym-definition table (ACE, ACh, ADE, ADME... through TI, Vd), immediately followed by a distinct bold 'General Principles' heading. This unit represents ONLY the acronym-table portion; the 'General Principles' portion (with its three sub-headings) is SU-CP-02.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-02",
+      "title": "General Principles: Drug Nomenclature and Phases of Clinical Drug Testing",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S01",
+        "CP.S01.T01",
+        "CP.S01.T02"
+      ],
+      "tn_page_range": "CP2",
+      "pdf_page_range": [
+        176,
+        176
+      ],
+      "source_hierarchy_path": [
+        "CP.S01 (ACFOMYMS) [same-page merge resolution: General Principles portion]",
+        "CP.S01.T01 (Drug Nomenclature)",
+        "CP.S01.T02 (Phases of Clinical Drug Testing)"
+      ],
+      "structural_rationale": "Second resolved heading from the CP.S01 same-page merge (see SU-CP-01). Raw OCR of body page 0176.json confirms 'General Principles' as a distinct bold heading directly beneath the acronym table, immediately followed by its own two confirmed sub-headings on the same page: 'Drug Nomenclature' (DIN/NDC/DIN-HM/NPN identifiers, chemical vs. non-proprietary/generic vs. proprietary/trade naming conventions) and 'Phases of Clinical Drug Testing' (pre-clinical through phase IV, including RCT design and post-marketing surveillance). Both are thin, definitional, orientation-level content that frame later chapter material (drug naming conventions recur throughout; trial-phase vocabulary underlies the 'Landmark Pharmacology Trials' section, SU-CP-19) rather than being independently testable clinical competencies of their own. The third sub-heading of 'General Principles', 'Drug Administration', has substantially deeper content (a full comparative table of 12+ routes) and is represented separately as SU-CP-03.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-03",
+      "title": "Drug Administration: Routes and Selection",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S01.T03"
+      ],
+      "tn_page_range": "CP2-CP3",
+      "pdf_page_range": [
+        176,
+        177
+      ],
+      "source_hierarchy_path": [
+        "CP.S01 (ACFOMYMS) [same-page merge resolution: General Principles > Drug Administration portion]",
+        "CP.S01.T03 (Drug Administration)"
+      ],
+      "structural_rationale": "Third sub-heading of 'General Principles' (see SU-CP-02). 'Drug Administration' heading confirmed at the bottom of pdf page 176 (0176.json), with its content -- Table 1, 'Routes of Drug Administration' (oral, buccal/sublingual, rectal, IV, IM, SC, intrathecal, inhalation, topical, transdermal, intraperitoneal/intra-articular, intranasal, vaginal, intraosseous), each with advantages/disadvantages -- confirmed continuing onto pdf page 177 (0177.json), ending immediately before the 'Pharmacokinetics' section heading on the same page. Represented as its own unit separate from SU-CP-02 because, unlike Nomenclature/Trial-Phases, route selection by patient context (e.g., NPO/vomiting/unconscious -> parenteral route; need for rapid onset -> IV/sublingual; avoiding first-pass -> sublingual/rectal/transdermal) is a genuine bedside decision point.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-04",
+      "title": "Pharmacokinetics Overview and Drug Absorption",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S02",
+        "CP.S02.T01"
+      ],
+      "tn_page_range": "CP3-CP4",
+      "pdf_page_range": [
+        177,
+        178
+      ],
+      "source_hierarchy_path": [
+        "CP.S02 (Pharmacokinetics) [thin organizational header: two definitional bullets, no further independent content]",
+        "CP.S02.T01 (Absorption)"
+      ],
+      "structural_rationale": "CP.S02's own heading has only two brief definitional bullets ('what the body does to the drug'; the ADME process list) confirmed on pdf page 177 (0177.json), immediately followed by the 'Absorption' heading with no other intervening content -- functionally an organizational header rather than independent testable content, so its two bullets are folded into this unit's framing rather than given a separate unit. 'Absorption' content (mechanisms of absorption, factors affecting rate/extent) is confirmed starting on pdf 177 and continuing onto pdf 178 (0178.json) with 'Bioavailability (F)', 'First-Pass Effect', and 'Drug Transporters' (P-glycoprotein substrates/inhibitors/inducers) as confirmed sub-headings, ending immediately before the 'Distribution' heading on the same page.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-05",
+      "title": "Drug Distribution (Volume of Distribution, Protein Binding, Depots, Barriers)",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S02.T02"
+      ],
+      "tn_page_range": "CP4-CP5",
+      "pdf_page_range": [
+        178,
+        179
+      ],
+      "source_hierarchy_path": [
+        "CP.S02 (Pharmacokinetics) [thin organizational header]",
+        "CP.S02.T02 (Distribution)"
+      ],
+      "structural_rationale": "'Distribution' heading confirmed on pdf page 178 (0178.json): body-fluid/tissue compartments, factors affecting distribution, plasma protein binding (albumin for acidic drugs, alpha-1-acid glycoprotein for basic drugs). Content continues onto pdf 179 (0179.json) with 'Volume of Distribution' (Vd formula, small vs. large Vd interpretation, age-related changes), 'Depot' (fat as a reservoir for lipophilic drugs, IM depot formulations), and 'Barriers' (BBB, placenta), ending immediately before the 'Metabolism (Biotransformation)' heading on the same page.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-06",
+      "title": "Drug Metabolism and Cytochrome P450-Mediated Interactions",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S02.T03"
+      ],
+      "tn_page_range": "CP5-CP6",
+      "pdf_page_range": [
+        179,
+        180
+      ],
+      "source_hierarchy_path": [
+        "CP.S02 (Pharmacokinetics) [thin organizational header]",
+        "CP.S02.T03 (Metabolism (Biotransformation))"
+      ],
+      "structural_rationale": "'Metabolism (Biotransformation)' heading confirmed on pdf page 179 (0179.json): sites of biotransformation, prodrug activation/toxic-metabolite examples, phase I (oxidation/reduction/hydrolysis, largely CYP-mediated) vs. phase II (conjugation) reactions, and genetic-polymorphism examples (CYP2D6 prodrug activators tamoxifen/tramadol/codeine, CYP2C9-metabolized warfarin). Content continues onto pdf 180 (0180.json) with CYP inhibition/induction mechanisms and named clinical examples (erythromycin+simvastatin, grapefruit juice+CYP3A4 substrates, carbamazepine auto-induction, phenobarbital+oral contraceptives, alcohol/smoking effects on CYP2E1/CYP1A2), plus liver/renal disease and extremes-of-age effects on biotransformation, ending immediately before the 'Excretion' heading on the same page.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-07",
+      "title": "Drug Excretion and Renal Elimination",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S02.T04"
+      ],
+      "tn_page_range": "CP6",
+      "pdf_page_range": [
+        180,
+        180
+      ],
+      "source_hierarchy_path": [
+        "CP.S02 (Pharmacokinetics) [thin organizational header]",
+        "CP.S02.T04 (Excretion)"
+      ],
+      "structural_rationale": "'Excretion' heading confirmed on pdf page 180 (0180.json): renal clearance formula (glomerular filtration + tubular secretion - tubular reabsorption), age/disease effects on renal function, mechanisms of each renal process (including transporter-mediated secretion competition, e.g., probenecid inhibiting penicillin excretion), and non-renal routes (biliary/enterohepatic recirculation, pulmonary, minor routes including breast milk), ending immediately before the 'Pharmacokinetic Considerations' heading on the same page.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-08",
+      "title": "Pharmacokinetic Parameters and Dosing Strategy (Half-Life, Clearance, Steady-State, Loading/Maintenance Dosing)",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S02.T05"
+      ],
+      "tn_page_range": "CP6-CP7",
+      "pdf_page_range": [
+        180,
+        181
+      ],
+      "source_hierarchy_path": [
+        "CP.S02 (Pharmacokinetics) [thin organizational header]",
+        "CP.S02.T05 (Pharmacokinetic Considerations)"
+      ],
+      "structural_rationale": "'Pharmacokinetic Considerations' heading confirmed on pdf page 180 (0180.json), opening with time-course-of-drug-action framing and 'Half-Life' (definition, first-order-kinetics dependence, 4-5 half-lives to steady state). Content continues onto pdf 181 (0181.json) with 'Steady-State Drug Concentration', 'Clearance' (Cl formula, total-body clearance), 'Elimination Kinetics' (first-order vs. zero-order/non-linear, with named zero-order examples: alcohol, phenytoin, high-dose ASA), and 'Loading and Maintenance Doses', ending immediately before the 'Pharmacodynamics' heading on the same page.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-09",
+      "title": "Pharmacodynamics: Dose-Response, Efficacy, Potency, and Therapeutic Index",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S02.T06",
+        "CP.S02.T08",
+        "CP.S02.T09"
+      ],
+      "tn_page_range": "CP7-CP9",
+      "pdf_page_range": [
+        181,
+        183
+      ],
+      "source_hierarchy_path": [
+        "CP.S02 (Pharmacokinetics) [thin organizational header]",
+        "CP.S02.T06 (Pharmacodynamics)",
+        "CP.S02.T08 (Effectiveness and Safety)",
+        "CP.S02.T09 (Therapeutic Indices)"
+      ],
+      "structural_rationale": "'Pharmacodynamics' heading confirmed opening pdf page 181 (0181.json): graded dose-response relationship, 'Efficacy' (Emax) and 'Potency' (EC50/ED50, with Figure 1's log-dose-response curve). The chapter's printed sequence then places 'Effects of Drugs on Receptors' (CP.S02.T07, confirmed pdf 182, 0182.json) between this unit's two halves; that content is thematically distinct (agonist/antagonist mechanism rather than dose-response magnitude) and is represented separately as SU-CP-10, per the same principle used to split closely-adjacent-but-distinct topics in the Cardiology/Anesthesia pilots. This unit's remaining content -- 'Effectiveness and Safety' (ED50/LD50/TD50 definitions) and 'Therapeutic Indices' (TI = TD50/ED50, narrow-TI drug list requiring TDM, Certain Safety Factor) -- is confirmed on pdf page 183 (0183.json), continuing the same dose-response-curve conceptual thread begun on pdf 181 (Figures 4-6 on pdf 183 directly extend Figure 1's framework from pdf 181). pdf_page_range spans [181,183] to reflect this non-contiguous-but-conceptually-unified content, with SU-CP-10's page (182) falling inside that span but assigned to the separate receptor-pharmacology unit.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-10",
+      "title": "Drug-Receptor Interactions: Agonists and Antagonists",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S02.T07"
+      ],
+      "tn_page_range": "CP8",
+      "pdf_page_range": [
+        182,
+        182
+      ],
+      "source_hierarchy_path": [
+        "CP.S02 (Pharmacokinetics) [thin organizational header]",
+        "CP.S02.T07 (Effects of Drugs on Receptors)"
+      ],
+      "structural_rationale": "'Effects of Drugs on Receptors' heading confirmed on pdf page 182 (0182.json): agonists (affinity vs. efficacy, full vs. partial agonists, with named opioid-receptor examples methadone/morphine vs. buprenorphine) and antagonists (chemical, physiological/functional, and pharmacological -- competitive reversible/irreversible and non-competitive -- with named examples naloxone, phenoxybenzamine), illustrated by Figures 2-5 (log-dose-response curve shifts under each antagonism type, continuing onto pdf 183's Figure 6). Kept as its own unit distinct from SU-CP-09 because it tests a different skill (predicting a graph shift or clinical effect from a receptor-binding mechanism) than dose-response magnitude/safety-margin calculation.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-11",
+      "title": "Variability in Drug Response",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S02.T10"
+      ],
+      "tn_page_range": "CP10",
+      "pdf_page_range": [
+        184,
+        184
+      ],
+      "source_hierarchy_path": [
+        "CP.S02 (Pharmacokinetics) [thin organizational header]",
+        "CP.S02.T10 (Variability in Drug Response)"
+      ],
+      "structural_rationale": "toc_inventory.json declares CP.S02.T10's pdf_page_range as the whole CP.S02 section span (177-183, since TN TOC topic-level nodes are not independently page-anchored), but raw OCR of pdf page 184 (0184.json) shows the 'Variability in Drug Response' heading is actually printed at the TOP of pdf 184 -- immediately after Figure 6's caption (the last item confirmed on pdf 183) and immediately before the 'Therapeutic Drug Monitoring' heading, which is itself independently body-confirmed to start on pdf 184 per CP.S03's own extraction record. Per same-page-merge protocol step 4, the tighter body-confirmed single-page bound [184,184] is used in place of the TOC node's nominal section-wide declaration. Content: intake/absorption/distribution/biotransformation/elimination/PD-level causes of interindividual dosing variability -- framed here as context that motivates the TDM content immediately following it (SU-CP-12), rather than as its own testable clinical action.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-12",
+      "title": "Therapeutic Drug Monitoring",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S03"
+      ],
+      "tn_page_range": "CP10",
+      "pdf_page_range": [
+        184,
+        184
+      ],
+      "source_hierarchy_path": [
+        "CP.S03 (Therapeutic Drug Monitoring)"
+      ],
+      "structural_rationale": "'Therapeutic Drug Monitoring' heading confirmed on pdf page 184 (0184.json) via BODY_HEADING_CONFIRMATION (matching toc_inventory.json's own extraction_method for this node): definition, indications for TDM (low TI, unpredictable dose-response, high-stakes toxicity/failure, wide interpatient PK variability), role of nomograms, and the named low-TI drug list (vancomycin, aminoglycosides, digoxin, phenytoin/anticonvulsants, warfarin, lithium), plus a sidebar of tips to reduce drug-related adverse events in the elderly.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-13",
+      "title": "Adverse Drug Reactions: Classification and Clinical Approach",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S04",
+        "CP.S04.T01"
+      ],
+      "tn_page_range": "CP11",
+      "pdf_page_range": [
+        185,
+        185
+      ],
+      "source_hierarchy_path": [
+        "CP.S04 (Adverse Drug Reactions) [same-page merge resolution: Adverse Drug Reactions portion]",
+        "CP.S04.T01 (Approach to Suspected Adverse Drug Reactions)"
+      ],
+      "structural_rationale": "Same-page-merge protocol applied to CP.S04: its merged_duplicate_headings field lists 'Autonomic Physiology' as a heading absorbed into this node because both share the printed TOC page label CP11 (pdf 185). Raw OCR of the TOC page (0175.json) confirms two separate printed TOC entries both indexed to CP11: 'Adverse Drug Reactions . . . CP11' (with sub-entries Approach to Suspected Adverse Drug Reactions, Drug Interactions) and 'Autonomic Physiology & Pharmacology . . . CP11' (with sub-entries Parasympathetic Nervous System, Sympathetic Nervous System, Opioid Therapy and Chronic Non-Cancer Pain). Raw OCR of body page 0185.json confirms the printed structure exactly: page opens with a distinct bold 'Adverse Drug Reactions' heading (ADE vs. ADR definitions, Table 2's Type A-E classification), immediately followed by the confirmed 'Approach to Suspected Adverse Drug Reactions' sub-heading (history/exam elements, treatment principles, reporting resources including Poison Control and the Canadian Adverse Drug Reaction Monitoring Program). This unit represents only the Adverse-Drug-Reactions portion of the merge; the Autonomic-Physiology portion is SU-CP-15, and the Drug-Interactions sub-topic (thematically distinct enough to warrant its own unit given its extensive sidebar content) is SU-CP-14.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-14",
+      "title": "Drug Interactions (Mechanisms and Clinically Significant Examples)",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S04.T02"
+      ],
+      "tn_page_range": "CP11",
+      "pdf_page_range": [
+        185,
+        185
+      ],
+      "source_hierarchy_path": [
+        "CP.S04 (Adverse Drug Reactions) [same-page merge resolution]",
+        "CP.S04.T02 (Drug Interactions)"
+      ],
+      "structural_rationale": "'Drug Interactions' confirmed as its own bold sub-heading on pdf page 185 (0185.json), directly following 'Approach to Suspected Adverse Drug Reactions': PK-interaction mechanisms (absorption/distribution/metabolism/excretion changes) vs. PD-interaction mechanisms (additive/synergistic/antagonistic effects), plus an extensive sidebar table of named clinically-relevant interactions (warfarin + ciprofloxacin/macrolides/metronidazole/TMP-SMX, warfarin + acetaminophen, OCP + rifampin, sildenafil + nitrates, SSRIs + St. John's wort or MAOIs [serotonin syndrome], statins + niacin/fibrates/macrolides/azoles [rhabdomyolysis], TMP-SMX + ACEi/ARB/spironolactone [hyperkalemia]). Kept as its own unit separate from SU-CP-13 because the sidebar's named-interaction content is a distinct, high-yield testable surface in its own right rather than an extension of the ADR-classification/reporting workflow.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-15",
+      "title": "Autonomic Nervous System Physiology and Pharmacology",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S04",
+        "CP.S04.T03",
+        "CP.S04.T04"
+      ],
+      "tn_page_range": "CP11-CP12",
+      "pdf_page_range": [
+        185,
+        186
+      ],
+      "source_hierarchy_path": [
+        "CP.S04 (Adverse Drug Reactions) [same-page merge resolution: Autonomic Physiology & Pharmacology portion]",
+        "CP.S04.T03 (Parasympathetic Nervous System)",
+        "CP.S04.T04 (Sympathetic Nervous System)"
+      ],
+      "structural_rationale": "Second resolved heading from the CP.S04 same-page merge (see SU-CP-13). 'Autonomic Physiology & Pharmacology' confirmed as its own bold heading near the bottom of pdf page 185 (0185.json), with Figure 7 (subdivisions of the peripheral nervous system) and general ACh/NE neurotransmitter/receptor-termination content. Content continues onto pdf 186 (0186.json) with confirmed 'Parasympathetic Nervous System' (craniosacral origin, M1/M2 muscarinic receptors) and 'Sympathetic Nervous System' (thoracolumbar origin, paravertebral/prevertebral ganglia, beta1/beta2/alpha1/alpha2/M3 receptor distribution) sub-headings, plus Table 3 (direct autonomic-receptor effects on the cardiorespiratory system) and Figure 8. This unit represents only the ANS-physiology portion of the merge; the third TOC sub-entry under this heading, 'Opioid Therapy and Chronic Non-Cancer Pain', is thematically unrelated to autonomic physiology (an opioid-prescribing clinical guideline, not ANS content) despite being nested under this heading in the printed TOC layout, so it is kept as its own separate unit, SU-CP-16, rather than folded in here.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-16",
+      "title": "Opioid Therapy for Chronic Non-Cancer Pain",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S04.T05"
+      ],
+      "tn_page_range": "CP12-CP13",
+      "pdf_page_range": [
+        186,
+        187
+      ],
+      "source_hierarchy_path": [
+        "CP.S04 (Adverse Drug Reactions) [same-page merge resolution]",
+        "CP.S04.T05 (Opioid Therapy and Chronic Non-Cancer Pain)"
+      ],
+      "structural_rationale": "'Opioid Therapy and Chronic Non-Cancer Pain' confirmed as its own bold heading near the bottom of pdf page 186 (0186.json) -- immediately following the Table-3/Figure-8 autonomic content, textually and thematically unconnected to it -- with 'General Management Principles' (optimize non-opioid therapy first; avoid high doses; restrict starting dose to <90 MME/day, ideally <50 MME/day; taper collaboratively for patients on >=90 MME/day), continuing onto pdf 187 (0187.json) with guidance on multidisciplinary tapering programs and a citation to the national (Canadian) opioid guideline (CMAJ 2017, also listed in the chapter's own References on pdf 188).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-17",
+      "title": "Common Drug Endings (Suffix-to-Class Recognition)",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S05"
+      ],
+      "tn_page_range": "CP13",
+      "pdf_page_range": [
+        187,
+        187
+      ],
+      "source_hierarchy_path": [
+        "CP.S05 (Common Drug Endings)"
+      ],
+      "structural_rationale": "'Common Drug Endings' heading confirmed on pdf page 187 (0187.json), directly following the Opioid Therapy content: Table 4, a 17-row suffix-to-drug-class mapping (e.g., -olol -> beta-blocker, -pril -> ACE inhibitor, -sartan -> ARB, -statin -> HMG-CoA reductase inhibitor, -mab -> monoclonal antibody, -caine -> local anesthetic), with a documented exception note (methimazole/itraconazole/nystatin do not follow the general -azole pattern).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-18",
+      "title": "Dangerous Abbreviations, Symbols, and Dose Designations",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S05.T01"
+      ],
+      "tn_page_range": "CP13",
+      "pdf_page_range": [
+        187,
+        187
+      ],
+      "source_hierarchy_path": [
+        "CP.S05 (Common Drug Endings)",
+        "CP.S05.T01 (Dangerous Abbreviations, Symbols, and Dose Designations)"
+      ],
+      "structural_rationale": "'Dangerous Abbreviations, Symbols, and Dose Designations' heading confirmed on pdf page 187 (0187.json), directly following Table 4: Table 5, the ISMP Canada error-prone abbreviation/symbol/dose-designation list (e.g., 'U' for unit mistaken for zero/four, trailing-zero and lack-of-leading-zero decimal errors, QD/QOD confusion, ambiguous eye-laterality abbreviations) with each entry's intended meaning, the specific error risk, and the ISMP-recommended correction.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-19",
+      "title": "Landmark Pharmacology Trials",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S06"
+      ],
+      "tn_page_range": "CP14",
+      "pdf_page_range": [
+        188,
+        188
+      ],
+      "source_hierarchy_path": [
+        "CP.S06 (Landmark Pharmacology Trials) [same-page merge resolution: Landmark Pharmacology Trials portion]"
+      ],
+      "structural_rationale": "Same-page-merge protocol applied to CP.S06: its merged_duplicate_headings field lists 'References' as a heading absorbed into this node because both share the printed TOC page label CP14 (pdf 188). Raw OCR of the TOC page (0175.json) confirms two separate printed TOC entries both indexed to CP14: 'Landmark Pharmacology Trials . . . CP14' and 'References . . . CP14'. Raw OCR of body page 0188.json confirms 'Landmark Pharmacology Trials' as a distinct heading with a two-trial summary table (CoumaGen-II pharmacogenetic-warfarin-dosing RCT; a rivaroxaban QT-interval crossover study), each with structured Purpose/Methods/Results/Conclusions fields matching the equivalent Cardiology/ELOM/Anesthesia landmark-trials sections' format. This unit represents only the trials portion of the merge; the References portion is SU-CP-20 -- see that unit's structural_rationale for the CP.S06-specific finding that, UNLIKE the ELOM ELOM.S04 'References' precedent (where nodes extracted as 'References' children turned out to be a misattributed disclaimer, not a genuine bibliography), CP.S06's 'References' heading here IS confirmed to be a genuine, correctly-attributed chapter bibliography.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-CP-20",
+      "title": "References / Bibliography",
+      "chapter_code": "CP",
+      "chapter_title": "Clinical Pharmacology",
+      "source_node_ids": [
+        "CP.S06"
+      ],
+      "tn_page_range": "CP14",
+      "pdf_page_range": [
+        188,
+        188
+      ],
+      "source_hierarchy_path": [
+        "CP.S06 (Landmark Pharmacology Trials) [same-page merge resolution: References portion]"
+      ],
+      "structural_rationale": "Second resolved heading from the CP.S06 same-page merge (see SU-CP-19). Raw OCR of body page 0188.json confirms 'References' as its own distinct heading immediately following the two landmark-trial summaries, opening with a full run-on bibliography of >30 alphabetically-ordered citations (e.g., ACOG Practice Bulletin on hormonal contraception; Boyer, 'The serotonin syndrome', NEJM 2005; Busse et al., opioid-therapy guideline, CMAJ 2017; multiple TMP-SMX/hyperkalemia case-control studies; Kalant/Grant/Mitchell, 'Principles of medical pharmacology'). This content genuinely IS a bibliography -- author names, journal/publisher citations, years, and page numbers throughout, with no clinical/testable prose interspersed -- and is correctly attributed to this location (unlike the ELOM ELOM.S04 case, where a 'References'-labelled node turned out to be a misattributed disclaimer paragraph, not a real reference list; the same-page-merge protocol's guidance to check this carefully before assuming a testable-content misattribution was followed, and here the straightforward reading -- genuine bibliography, not learner content -- is correct). No content was reattached elsewhere; there is nothing here beyond the citation list itself.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    }
+  ]
+}

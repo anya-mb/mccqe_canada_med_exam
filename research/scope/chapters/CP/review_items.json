@@ -1,0 +1,37 @@
+{
+  "generated_at": "2026-08-25",
+  "chapter_code": "CP",
+  "schema_note": "Chapter-local review-queue candidates only. This file is NOT the global research/scope/review_queue.json (which does not exist yet and is built later by the coordinator from all chapters' review_items.json files) - do not treat it as such.",
+  "items": [
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "informational",
+      "study_unit_id": "SU-CP-06",
+      "title": "References/Landmark-Trials merge pattern confirmed genuine (contrast with ELOM)",
+      "summary": "CP.S06's merged_duplicate_headings field lists 'References' alongside 'Landmark Pharmacology Trials' (both indexed to TOC page CP14 / pdf 188), structurally identical in shape to the ELOM ELOM.S04 case where a 'References'-labelled node turned out to be a misattributed disclaimer paragraph rather than a genuine bibliography.",
+      "resolution_status": "INDEPENDENTLY RESOLVED (not left open) - raw OCR of body page 0188.json (derived/toronto-notes-2025/ocr/pages/0188.json) confirms CP.S06's 'References' heading here genuinely IS a correctly-attributed, >30-entry chapter bibliography (author/journal/year citations throughout: e.g. Boyer, 'The serotonin syndrome', NEJM 2005; Busse et al., opioid-therapy guideline, CMAJ 2017), with no clinical/testable prose mixed in. No content was reattached elsewhere. Represented as SU-CP-19 (Landmark Pharmacology Trials) + SU-CP-20 (References/Bibliography), both REFERENCE_ONLY.",
+      "recommended_action": "No action required for chapter CP's own crosswalk. Flagged for coordinator awareness that the same_page_toc_merge_protocol.md 'References' detection signal (step to check whether a References node is genuine or a misattribution) produces DIFFERENT outcomes across chapters - genuine in Chapter CP, misattributed in Chapter ELOM - confirming the protocol's per-chapter case-by-case verification requirement is doing real work and should not be shortcut in future chapters that show this same merge shape.",
+      "affects_global_toc": false
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "informational",
+      "study_unit_id": "SU-CP-15",
+      "title": "Opioid Therapy nested under Autonomic Physiology heading despite thematic mismatch",
+      "summary": "CP.S04's same-page merge nests 'Opioid Therapy and Chronic Non-Cancer Pain' as a third printed TOC sub-bullet under 'Autonomic Physiology & Pharmacology' (alongside Parasympathetic/Sympathetic Nervous System), even though opioid-prescribing guideline content has no thematic connection to autonomic nervous system physiology.",
+      "resolution_status": "INDEPENDENTLY RESOLVED (not left open) - raw OCR of body pages 0185.json/0186.json confirms 'Opioid Therapy and Chronic Non-Cancer Pain' is its own genuine, independently-bolded body heading, printed immediately after the Autonomic Physiology content ends (Table 3 / Figure 8) with no textual continuity between the two. Represented as its own separate study unit, SU-CP-16, rather than folded into SU-CP-15 (Autonomic Nervous System Physiology and Pharmacology).",
+      "recommended_action": "No action required for chapter CP's own crosswalk. Flagged for coordinator awareness that Toronto Notes' own printed TOC layout occasionally nests a thematically-unrelated heading under a preceding section purely for column-space/typesetting reasons rather than genuine hierarchy - study-unit derivation should continue to prioritize confirmed body-heading structure and thematic coherence over raw TOC indentation, consistent with existing protocol guidance.",
+      "affects_global_toc": false
+    },
+    {
+      "issue_type": "mcc_naming_gap",
+      "severity": "informational",
+      "study_unit_id": "SU-CP-04",
+      "title": "No dedicated MCC 'clinical pharmacology principles' objective",
+      "summary": "16 of this chapter's 20 study units (13 of 17 total OBJECTIVE_REFERENCE citations) anchor on the single MCC objective 125 'Prescribing practices', because it is the only Medical Expert objective dedicated to safe/individualized prescribing broadly. However, 125's own enabling-objectives text does not name specific PK/PD mechanisms (bioavailability, volume of distribution, half-life, CYP-mediated metabolism, receptor agonism/antagonism, therapeutic index) verbatim - the mapping_rationale on each affected unit (e.g. SU-CP-04 through SU-CP-11) honestly documents this as a MODERATE-strength inference from 125's broader risk-benefit/comorbidity/genetics language rather than a verbatim match.",
+      "resolution_status": "No action required for chapter CP's own crosswalk - every affected unit still achieves at least MODERATE mapping_strength with a defensible textual anchor (0 WEAK mappings in this chapter).",
+      "recommended_action": "Flagged for coordinator awareness in case future MCC objectives_registry.json updates add a more granular pharmacology-principles objective, or in case other chapters (e.g., Medicine's own therapeutics content, Psychiatry's psychopharmacology sections) encounter the same single-objective concentration and a cross-chapter registry annotation would help distribute evidence more precisely.",
+      "affects_global_toc": false
+    }
+  ]
+}

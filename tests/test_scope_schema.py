@@ -198,7 +198,7 @@ class TestCrosswalkEntrySchema:
             validate_instance(REPO, "crosswalk-entry", entry)
 
 
-@pytest.mark.parametrize("chapter_code", ["C", "ELOM", "A"])
+@pytest.mark.parametrize("chapter_code", ["C", "ELOM", "A", "CP"])
 class TestMigratedChapterData:
     def test_all_study_units_validate(self, chapter_code):
         with open(CHAPTERS_DIR / chapter_code / "study_units.json") as f:

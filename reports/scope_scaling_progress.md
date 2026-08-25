@@ -14,45 +14,44 @@ then continue.
 
 | | |
 |---|---|
-| Completed | 3 / 32 (`C`, `ELOM`, `A`) |
-| Next chapter | **CP — Clinical Pharmacology** |
+| Completed | 4 / 32 (`C`, `ELOM`, `A`, `CP`) |
+| Next chapter | **D — Dermatology** |
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `129c1f1` — scope: map A Anesthesia |
+| Last completed commit | `scope: map CP Clinical Pharmacology` (see `git log` for hash) |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
 
-1. CP — Clinical Pharmacology *(next)*
-2. D — Dermatology
-3. ER — Emergency Medicine
-4. E — Endocrinology
-5. FM — Family Medicine
-6. G — Gastroenterology
-7. GS — General and Thoracic Surgery
-8. GM — Geriatric Medicine
-9. GY — Gynecology
-10. H — Hematology
-11. ID — Infectious Diseases
-12. MG — Medical Genetics
-13. MI — Medical Imaging
-14. NP — Nephrology
-15. N — Neurology
-16. NS — Neurosurgery
-17. OB — Obstetrics
-18. OP — Ophthalmology
-19. OR — Orthopedic Surgery
-20. OT — Otolaryngology
-21. P — Pediatrics
-22. PM — Palliative Medicine
-23. PL — Plastic Surgery
-24. PS — Psychiatry
-25. PH — Public Health and Preventive Medicine
-26. R — Respirology
-27. RH — Rheumatology
-28. U — Urology
-29. VS — Vascular Surgery
+1. D — Dermatology *(next)*
+2. ER — Emergency Medicine
+3. E — Endocrinology
+4. FM — Family Medicine
+5. G — Gastroenterology
+6. GS — General and Thoracic Surgery
+7. GM — Geriatric Medicine
+8. GY — Gynecology
+9. H — Hematology
+10. ID — Infectious Diseases
+11. MG — Medical Genetics
+12. MI — Medical Imaging
+13. NP — Nephrology
+14. N — Neurology
+15. NS — Neurosurgery
+16. OB — Obstetrics
+17. OP — Ophthalmology
+18. OR — Orthopedic Surgery
+19. OT — Otolaryngology
+20. P — Pediatrics
+21. PM — Palliative Medicine
+22. PL — Plastic Surgery
+23. PS — Psychiatry
+24. PH — Public Health and Preventive Medicine
+25. R — Respirology
+26. RH — Rheumatology
+27. U — Urology
+28. VS — Vascular Surgery
 
 ## Chapter notes
 
@@ -68,6 +67,20 @@ then continue.
   0 invalid MCC IDs, 0 unflagged WEAK mappings, 0 hygiene violations, 0
   UNCERTAIN classifications. 2 WEAK mappings flagged for scope review
   (see review queue).
+- **CP (Clinical Pharmacology)**: 20 study units from 26 TOC nodes (25
+  leaf nodes, all accounted for). Resolved three same-page TOC merges
+  (`CP.S01`, `CP.S04`, `CP.S06`) via raw OCR. `CP.S06`'s "References"
+  merge was checked against the ELOM `ELOM.S04` misattribution pattern
+  and confirmed to be a genuine bibliography (correctly attributed, kept
+  as its own zero-question REFERENCE_ONLY unit) rather than a
+  misattachment. MCC evidence concentrates on objective 125 "Prescribing
+  practices" (15/17 citations) with distinct, substantive per-unit
+  rationale for each — verified this reflects a real gap in MCC's
+  clinical-presentation-organized taxonomy for general pharmacology
+  content, not lazy mapping (cross-checked against
+  `research/mcc/objectives_registry.json` for missed better-fit
+  objectives; none found). 0 invalid MCC IDs, 0 WEAK mappings, 0 hygiene
+  violations, 0 UNCERTAIN classifications.
 
 ## Resume protocol (per Phase 3C instructions)
 
