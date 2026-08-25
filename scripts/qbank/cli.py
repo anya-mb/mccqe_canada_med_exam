@@ -382,6 +382,12 @@ def _command_validate_scope_chapter(args: argparse.Namespace) -> None:
     lines = [f"CHAPTER_VALIDATION: {result.chapter} {result.status}"]
     for name, status in result.checks.items():
         lines.append(f"  {name}: {status}")
+    counts = result.counts
+    lines.append(
+        f"MAPPING_STRENGTH_COUNTS: STRONG={counts.get('strong_evidence', 0)} "
+        f"MODERATE={counts.get('moderate_evidence', 0)} WEAK={counts.get('weak_evidence', 0)} "
+        f"UNCERTAIN={counts.get('uncertain', 0)}"
+    )
     for warning in result.warnings:
         lines.append(f"WARNING: {warning}")
     for error in result.errors:

@@ -234,6 +234,9 @@ def validate_scope_chapter(root: Path, chapter_code: str) -> ValidationResult:
 
     weak_count = 0
     uncertain_count = 0
+    strong_evidence_count = 0
+    moderate_evidence_count = 0
+    weak_evidence_count = 0
     mcc_ids_ok = True
     for index, entry in enumerate(crosswalk_entries):
         if not isinstance(entry, dict):
@@ -244,6 +247,16 @@ def validate_scope_chapter(root: Path, chapter_code: str) -> ValidationResult:
             weak_count += 1
         if entry.get("classification") == "UNCERTAIN":
             uncertain_count += 1
+        for ev in entry.get("mcc_evidence") or []:
+            if not isinstance(ev, dict):
+                continue
+            strength = ev.get("mapping_strength")
+            if strength == "STRONG":
+                strong_evidence_count += 1
+            elif strength == "MODERATE":
+                moderate_evidence_count += 1
+            elif strength == "WEAK":
+                weak_evidence_count += 1
         for ev_index, evidence in enumerate(entry.get("mcc_evidence") or []):
             if not isinstance(evidence, dict):
                 continue
@@ -327,6 +340,9 @@ def validate_scope_chapter(root: Path, chapter_code: str) -> ValidationResult:
         "study_units": len(study_units),
         "weak_mappings": weak_count,
         "uncertain": uncertain_count,
+        "strong_evidence": strong_evidence_count,
+        "moderate_evidence": moderate_evidence_count,
+        "weak_evidence": weak_evidence_count,
     }
     result.status = "FAIL" if errors else "PASS"
     return result
