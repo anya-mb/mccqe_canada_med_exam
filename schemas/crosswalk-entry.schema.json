@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mccqe-qbank.invalid/schemas/crosswalk-entry.schema.json",
+  "title": "Canonical MCC crosswalk entry (Phase 3C frozen schema)",
+  "description": "Maps one study unit to MCC scope. Schema version 1.0, frozen at Phase 3C. The same schema must support Medicine, Pediatrics, OBGYN, Surgery, Psychiatry, and PHELO without discipline-specific forks - jurisdiction and cross_discipline_note are optional precisely so clinical chapters can omit what doesn't apply to them, rather than needing a different shape.",
+  "$defs": {
+    "nonempty": {"type": "string", "minLength": 1, "pattern": "\\S"},
+    "classification": {
+      "enum": [
+        "DIRECT", "COMPONENT", "CROSS_DISCIPLINE", "SUPPORTING_KNOWLEDGE",
+        "SPECIALIST_DETAIL", "REFERENCE_ONLY", "UNCERTAIN"
+      ]
+    },
+    "scopeDepth": {
+      "enum": ["CORE_ACTION", "RECOGNIZE_AND_ACT", "RECOGNIZE", "CONTEXT_ONLY", "OUT_OF_SCOPE_DETAIL"]
+    },
+    "mappingStrength": {"enum": ["STRONG", "MODERATE", "WEAK"]},
+    "evidenceType": {"enum": ["OBJECTIVE_REFERENCE", "ROLE_LEVEL_REFERENCE"]},
+    "pagePrecision": {
+      "enum": ["EXACT_TOPIC", "EXACT_SECTION", "SECTION_INHERITED", "CHAPTER_INHERITED", "UNRESOLVED"]
+    },
+    "jurisdictionScope": {
+      "enum": [
+        "FEDERAL", "CANADA_WIDE_PROFESSIONAL_PRINCIPLE", "PROVINCIAL_TERRITORIAL",
+        "INSTITUTION_DEPENDENT", "NOT_APPLICABLE", "UNRESOLVED"
+      ]
+    },
+    "freshnessType": {
+      "enum": [
+        "CLINICAL_GUIDELINE", "LEGAL_REGULATORY", "PUBLIC_HEALTH",
+        "SCREENING", "IMMUNIZATION", "MEDICATION", "JURISDICTION"
+      ]
+    },
+    "mccEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_type", "mcc_id", "legacy_id", "objective_title",
+        "canmeds_role", "official_source", "mapping_strength", "mapping_rationale"
+      ],
+      "properties": {
+        "evidence_type": {"$ref": "#/$defs/evidenceType"},
+        "mcc_id": {
+          "description": "Required non-null for OBJECTIVE_REFERENCE. Must be null for ROLE_LEVEL_REFERENCE - MCC publishes no per-objective ID for the six non-Medical-Expert roles, so this is never fabricated to fill the field.",
+          "type": ["string", "null"]
+        },
+        "legacy_id": {"type": ["string", "null"]},
+        "objective_title": {"$ref": "#/$defs/nonempty"},
+        "canmeds_role": {
+          "enum": ["Medical Expert", "Collaborator", "Communicator", "Health Advocate", "Leader/Manager", "Professional", "Scholar"]
+        },
+        "official_source": {"$ref": "#/$defs/nonempty"},
+        "mapping_strength": {"$ref": "#/$defs/mappingStrength"},
+        "mapping_rationale": {"$ref": "#/$defs/nonempty"},
+        "requires_scope_review": {
+          "description": "Required true whenever mapping_strength is WEAK (enforced by semantic check, not just this field's own presence).",
+          "type": "boolean"
+        }
+      },
+      "if": {"properties": {"evidence_type": {"const": "OBJECTIVE_REFERENCE"}}},
+      "then": {"properties": {"mcc_id": {"type": "string", "minLength": 1}}},
+      "else": {"properties": {"mcc_id": {"const": null}, "legacy_id": {"const": null}}}
+    },
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["verification_required"],
+      "properties": {
+        "verification_required": {"type": "boolean"},
+        "verification_type": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/freshnessType"}
+        }
+      },
+      "if": {"properties": {"verification_required": {"const": true}}},
+      "then": {"required": ["verification_required", "verification_type"], "properties": {"verification_type": {"minItems": 1}}}
+    },
+    "jurisdiction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope", "province_required_in_question"],
+      "properties": {
+        "scope": {"$ref": "#/$defs/jurisdictionScope"},
+        "province_required_in_question": {"type": "boolean"}
+      }
+    },
+    "questionPlanning": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coverage_weight", "minimum_question_coverage", "preferred_item_forms"],
+      "properties": {
+        "coverage_weight": {"type": "integer", "minimum": 1, "maximum": 5},
+        "minimum_question_coverage": {"type": "integer", "minimum": 0},
+        "preferred_item_forms": {"type": "array", "items": {"$ref": "#/$defs/nonempty"}}
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "scope_schema_version", "study_unit_id", "title", "classification",
+    "mcc_evidence", "scope_depth", "testable_competencies",
+    "question_planning", "page_mapping_precision",
+    "clinical_source_organizations", "freshness"
+  ],
+  "properties": {
+    "scope_schema_version": {"const": "1.0"},
+    "study_unit_id": {"$ref": "#/$defs/nonempty"},
+    "title": {"$ref": "#/$defs/nonempty"},
+    "classification": {"$ref": "#/$defs/classification"},
+    "mcc_evidence": {
+      "description": "MUST be empty [] for SUPPORTING_KNOWLEDGE, SPECIALIST_DETAIL, and REFERENCE_ONLY classifications unless a documented reason exists to retain contextual evidence (enforced by semantic check, not just schema shape).",
+      "type": "array",
+      "items": {"$ref": "#/$defs/mccEvidence"}
+    },
+    "scope_depth": {"$ref": "#/$defs/scopeDepth"},
+    "testable_competencies": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/nonempty"}
+    },
+    "do_not_test": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/nonempty"}
+    },
+    "jurisdiction": {
+      "description": "Optional. Clinical chapters may omit entirely. ELOM/PHELO and jurisdiction-sensitive units elsewhere should include it.",
+      "$ref": "#/$defs/jurisdiction"
+    },
+    "question_planning": {"$ref": "#/$defs/questionPlanning"},
+    "page_mapping_precision": {"$ref": "#/$defs/pagePrecision"},
+    "clinical_source_organizations": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/nonempty"}
+    },
+    "freshness": {"$ref": "#/$defs/freshness"},
+    "zero_question_reason": {
+      "description": "Required whenever question_planning.minimum_question_coverage is 0 (enforced by semantic check).",
+      "$ref": "#/$defs/nonempty"
+    },
+    "cross_discipline_note": {"$ref": "#/$defs/nonempty"},
+    "mcc_evidence_retention_reason": {
+      "description": "Required if mcc_evidence is non-empty on a SUPPORTING_KNOWLEDGE/SPECIALIST_DETAIL/REFERENCE_ONLY unit (enforced by semantic check) - documents why contextual evidence is deliberately retained rather than cleared per the mcc_evidence hygiene rule.",
+      "$ref": "#/$defs/nonempty"
+    },
+    "uncertain_reason": {
+      "description": "Required whenever classification is UNCERTAIN (enforced by semantic check).",
+      "$ref": "#/$defs/nonempty"
+    }
+  }
+}

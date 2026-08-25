@@ -762,7 +762,8 @@ def build_crosswalk(units):
         if "cross_discipline_note" in cw:
             entry["cross_discipline_note"] = cw["cross_discipline_note"]
         if cw["classification"] == "UNCERTAIN":
-            unresolved.append({"study_unit_id": u["study_unit_id"], "title": u["title"], "reason": cw.get("uncertain_reason", "Insufficient evidence.")})
+            entry["uncertain_reason"] = cw.get("uncertain_reason", "Insufficient evidence.")
+            unresolved.append({"study_unit_id": u["study_unit_id"], "title": u["title"], "reason": entry["uncertain_reason"]})
         entries.append(entry)
     return entries, unresolved
 

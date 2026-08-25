@@ -54,6 +54,83 @@ def _reference_id_errors(instance: object) -> list[tuple[tuple[str | int, ...], 
     return errors
 
 
+_NON_TESTABLE_CLASSIFICATIONS = {"SUPPORTING_KNOWLEDGE", "SPECIALIST_DETAIL", "REFERENCE_ONLY"}
+
+
+def crosswalk_entry_semantic_errors(
+    instance: object,
+) -> list[tuple[tuple[str | int, ...], str]]:
+    """Cross-field rules for crosswalk-entry.schema.json that JSON Schema's
+    own shape-only validation cannot express, frozen at Phase 3C:
+
+    - WEAK mcc_evidence must carry requires_scope_review = true.
+    - Non-testable classifications (SUPPORTING_KNOWLEDGE, SPECIALIST_DETAIL,
+      REFERENCE_ONLY) must not carry mcc_evidence unless the entry documents
+      a reason (mcc_evidence_retention_reason) - a bare citation on a
+      non-testable unit falsely implies it is a tested MCC component.
+    - minimum_question_coverage == 0 requires zero_question_reason.
+    - classification == UNCERTAIN requires uncertain_reason.
+    - ROLE_LEVEL_REFERENCE evidence must have mcc_id/legacy_id both null;
+      OBJECTIVE_REFERENCE evidence must have a non-null mcc_id.
+    """
+    if not isinstance(instance, dict):
+        return []
+    errors: list[tuple[tuple[str | int, ...], str]] = []
+
+    mcc_evidence = instance.get("mcc_evidence")
+    if isinstance(mcc_evidence, list):
+        for i, ev in enumerate(mcc_evidence):
+            if not isinstance(ev, dict):
+                continue
+            if ev.get("mapping_strength") == "WEAK" and ev.get("requires_scope_review") is not True:
+                errors.append((
+                    ("mcc_evidence", i, "requires_scope_review"),
+                    "WEAK mapping_strength requires requires_scope_review: true",
+                ))
+            evidence_type = ev.get("evidence_type")
+            if evidence_type == "ROLE_LEVEL_REFERENCE":
+                if ev.get("mcc_id") is not None or ev.get("legacy_id") is not None:
+                    errors.append((
+                        ("mcc_evidence", i, "mcc_id"),
+                        "ROLE_LEVEL_REFERENCE must have mcc_id and legacy_id both null - no fabricated ID",
+                    ))
+            elif evidence_type == "OBJECTIVE_REFERENCE":
+                if not ev.get("mcc_id"):
+                    errors.append((
+                        ("mcc_evidence", i, "mcc_id"),
+                        "OBJECTIVE_REFERENCE requires a non-null mcc_id",
+                    ))
+
+        classification = instance.get("classification")
+        if (
+            classification in _NON_TESTABLE_CLASSIFICATIONS
+            and mcc_evidence
+            and not instance.get("mcc_evidence_retention_reason")
+        ):
+            errors.append((
+                ("mcc_evidence",),
+                f"classification {classification} must have empty mcc_evidence "
+                f"unless mcc_evidence_retention_reason documents why it is "
+                f"retained",
+            ))
+
+    planning = instance.get("question_planning")
+    if isinstance(planning, dict) and planning.get("minimum_question_coverage") == 0:
+        if not instance.get("zero_question_reason"):
+            errors.append((
+                ("zero_question_reason",),
+                "minimum_question_coverage of 0 requires zero_question_reason",
+            ))
+
+    if instance.get("classification") == "UNCERTAIN" and not instance.get("uncertain_reason"):
+        errors.append((
+            ("uncertain_reason",),
+            "classification UNCERTAIN requires uncertain_reason",
+        ))
+
+    return errors
+
+
 def _job_semantic_errors(
     instance: object,
 ) -> list[tuple[tuple[str | int, ...], str]]:
@@ -112,6 +189,8 @@ def validate_instance(root: Path, schema_name: str, instance: object) -> None:
         errors.extend(question_semantic_errors(instance))
     elif schema_name == "job":
         errors.extend(_job_semantic_errors(instance))
+    elif schema_name == "crosswalk-entry":
+        errors.extend(crosswalk_entry_semantic_errors(instance))
     errors.sort(key=lambda error: (_path_sort_key(error[0]), error[1]))
     if errors:
         details = "\n".join(

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mccqe-qbank.invalid/schemas/study-unit.schema.json",
+  "title": "Canonical curriculum study unit (Phase 3C frozen schema)",
+  "description": "A learner-meaningful unit derived from Toronto Notes TOC inventory source structure. Schema version 1.0, frozen at Phase 3C. Any change affecting already-processed chapters requires an explicit migration - see scope_schema_version.",
+  "$defs": {
+    "nonempty": {"type": "string", "minLength": 1, "pattern": "\\S"},
+    "pagePrecision": {
+      "enum": ["EXACT_TOPIC", "EXACT_SECTION", "SECTION_INHERITED", "CHAPTER_INHERITED", "UNRESOLVED"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "scope_schema_version", "study_unit_id", "title", "chapter_code",
+    "chapter_title", "source_node_ids", "tn_page_range", "pdf_page_range",
+    "source_hierarchy_path", "structural_rationale", "extraction_confidence",
+    "page_mapping_precision"
+  ],
+  "properties": {
+    "scope_schema_version": {"const": "1.0"},
+    "study_unit_id": {"$ref": "#/$defs/nonempty", "pattern": "^SU-[A-Z]+-\\d{2,3}$"},
+    "title": {"$ref": "#/$defs/nonempty"},
+    "chapter_code": {"$ref": "#/$defs/nonempty"},
+    "chapter_title": {"$ref": "#/$defs/nonempty"},
+    "source_node_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/nonempty"}
+    },
+    "tn_page_range": {"$ref": "#/$defs/nonempty"},
+    "pdf_page_range": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {"type": "integer", "minimum": 1}
+    },
+    "source_hierarchy_path": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/nonempty"}
+    },
+    "structural_rationale": {"$ref": "#/$defs/nonempty"},
+    "extraction_confidence": {"enum": ["HIGH", "MEDIUM", "LOW"]},
+    "page_mapping_precision": {"$ref": "#/$defs/pagePrecision"}
+  }
+}

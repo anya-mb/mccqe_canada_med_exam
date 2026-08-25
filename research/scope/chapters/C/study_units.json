@@ -1,0 +1,894 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24",
+  "chapter_code": "C",
+  "chapter_title": "Cardiology and Cardiac Surgery",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes SOURCE STRUCTURE (toc_inventory.json), not from medical memory. Generic structural headings (organizational section umbrellas with no independent content) are NOT converted into standalone units - see organizational_header_nodes below for how each is accounted for.",
+  "page_range_inheritance_note": "Per toc_inventory.json's own documented schema (level 3 'topic' nodes are not independently page-anchored - the printed Toronto Notes TOC does not give sub-items their own page numbers), any study unit built from topic-level nodes inherits its ENTIRE parent section's tn_page_range/pdf_page_range, not a topic-precise sub-range. This is why several sibling study units under the same TOC section (e.g. SU-C-03..SU-C-08, all children of 'Differential Diagnoses of Common Presentations') show identical, overlapping page ranges - an inherited limitation of the underlying TOC extraction, not a study-unit-derivation error.",
+  "total_study_units": 39,
+  "organizational_header_nodes": {
+    "C": "Chapter root container - represented by all study units below.",
+    "C.S02": "'Differential Diagnoses of Common Presentations' - a pure section umbrella; each of its 6 topic children is a clinically distinct presentation and became its own study unit (SU-C-03..SU-C-08).",
+    "C.S03": "'Cardiac Diagnostic Tests' - umbrella; its 10 topic children were consolidated into 5 investigation/interpretation study units (SU-C-09..SU-C-13) by clinical skill, not left as 10 micro-units.",
+    "C.S04": "'CARDIAC DISEASE' - a bare category header with ZERO topics of its own (confirmed in toc_inventory.json: 0 child topic nodes). Its 8 child SECTIONS (C.S05-C.S12: Arrhythmias, Ischemic Heart Disease, Heart Failure, Myocardial Disease, Cardiac Transplantation, Cardiac Tumours, Valvular Heart Disease, Pericardial Disease) are each independently represented by their own study units below.",
+    "C.S05": "'Arrhythmias' - umbrella; its 10 topic children were consolidated into 6 clinically distinct arrhythmia study units (SU-C-14..SU-C-19).",
+    "C.S06": "'Ischemic Heart Disease' - umbrella; its 4 topic children became 3 study units (SU-C-20..SU-C-22; ACS + its own treatment-algorithm subtopic were combined into one unit, SU-C-21).",
+    "C.S07": "'HeartFailure' [sic, OCR-glued] - umbrella; its 3 topic children became 2 study units (SU-C-23, SU-C-24).",
+    "C.S08": "'Myocardial Disease' - umbrella; its 5 topic children became 2 study units (SU-C-25 Myocarditis kept separate; SU-C-26 combines the 4 cardiomyopathy subtypes, which are classically taught and tested as one differential).",
+    "C.S12": "'Pericardial Disease' - umbrella; its 4 topic children became 3 study units (SU-C-33..SU-C-35; effusion and tamponade combined into one unit since recognizing progression from one to the other is the key testable skill)."
+  },
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-01",
+      "title": "Acronyms (Chapter Glossary)",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S01"
+      ],
+      "tn_page_range": "C2-C4",
+      "pdf_page_range": [
+        92,
+        94
+      ],
+      "source_hierarchy_path": [
+        "C.S01 (ACrOMYMS)"
+      ],
+      "structural_rationale": "Toronto Notes' own chapter-opening acronym glossary. Reference material only, no independent clinical content or testable competency. NOTE: TOC extraction merged this node with the immediately-following 'Basic Anatomy Review' heading because both share the printed page label C2 (a known 3-level-flattening artifact documented in toc_inventory.json's merged_duplicate_headings field). This study unit represents ONLY the Acronyms portion; the anatomy content is separately represented in SU-C-02 via C.S01's two topic children.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-02",
+      "title": "Cardiac Anatomy Review",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S01.T01",
+        "C.S01.T02"
+      ],
+      "tn_page_range": "C2-C4",
+      "pdf_page_range": [
+        92,
+        94
+      ],
+      "source_hierarchy_path": [
+        "C.S01.T01 (Coronary Circulation)",
+        "C.S01.T02 (Cardiac Anatomy)"
+      ],
+      "structural_rationale": "Coronary Circulation + Cardiac Anatomy are the two topic children of the 'Basic Anatomy Review' heading (see SU-C-01 note on the TOC merge artifact). Kept together as one background-anatomy unit since a learner reads/reviews cardiac and coronary anatomy as a single preparatory block before diagnostic/clinical content, primarily in service of downstream ECG-territory and catheterization-anatomy reasoning (see SU-C-09, SU-C-13).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-03",
+      "title": "Chest Pain (Cardiac Differential)",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S02.T01"
+      ],
+      "tn_page_range": "C5-C6",
+      "pdf_page_range": [
+        95,
+        96
+      ],
+      "source_hierarchy_path": [
+        "C.S02.T01 (Chest Pain)"
+      ],
+      "structural_rationale": "Distinct, independently MCC-mapped clinical presentation (see crosswalk: DIRECT to Chest pain, mcc_id 14).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-04",
+      "title": "Syncope and Loss of Consciousness (Cardiac Differential)",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S02.T02"
+      ],
+      "tn_page_range": "C5-C6",
+      "pdf_page_range": [
+        95,
+        96
+      ],
+      "source_hierarchy_path": [
+        "C.S02.T02 (Loss of Consciousness)"
+      ],
+      "structural_rationale": "Distinct clinical presentation, kept separate from other differentials.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-05",
+      "title": "Peripheral/Local Edema",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S02.T03"
+      ],
+      "tn_page_range": "C5-C6",
+      "pdf_page_range": [
+        95,
+        96
+      ],
+      "source_hierarchy_path": [
+        "C.S02.T03 (Local Edema)"
+      ],
+      "structural_rationale": "Distinct clinical presentation; note this presentation's primary drivers are often non-cardiac (venous/lymphatic) - see crosswalk cross-discipline note.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-06",
+      "title": "Generalized Edema",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S02.T04"
+      ],
+      "tn_page_range": "C5-C6",
+      "pdf_page_range": [
+        95,
+        96
+      ],
+      "source_hierarchy_path": [
+        "C.S02.T04 (Generalized Edema)"
+      ],
+      "structural_rationale": "Distinct clinical presentation, kept separate from local/peripheral edema per Toronto Notes' own split and the MCC objective's own explicit differentiation of the two.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-07",
+      "title": "Palpitations",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S02.T05"
+      ],
+      "tn_page_range": "C5-C6",
+      "pdf_page_range": [
+        95,
+        96
+      ],
+      "source_hierarchy_path": [
+        "C.S02.T05 (Palpitations)"
+      ],
+      "structural_rationale": "Distinct clinical presentation.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-08",
+      "title": "Dyspnea (Cardiac Differential)",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S02.T06"
+      ],
+      "tn_page_range": "C5-C6",
+      "pdf_page_range": [
+        95,
+        96
+      ],
+      "source_hierarchy_path": [
+        "C.S02.T06 (Dyspnea)"
+      ],
+      "structural_rationale": "Distinct clinical presentation.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-09",
+      "title": "ECG Interpretation Fundamentals",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S03.T01",
+        "C.S03.T02",
+        "C.S03.T03",
+        "C.S03.T05"
+      ],
+      "tn_page_range": "C7-C18",
+      "pdf_page_range": [
+        97,
+        108
+      ],
+      "source_hierarchy_path": [
+        "C.S03.T01 (Electrocardiography Basics)",
+        "C.S03.T02 (Classical Approach to ECGs)",
+        "C.S03.T03 (Alternative PQRSTU Approach to ECGs)",
+        "C.S03.T05 (Ambulatory ECG)"
+      ],
+      "structural_rationale": "'Electrocardiography Basics', 'Classical Approach to ECGs', and 'Alternative PQRSTU Approach to ECGs' are three Toronto Notes subheadings teaching ONE coherent skill (systematic ECG interpretation) via two alternative pedagogical frameworks - consolidated per the task's guidance not to fragment one skill into micro-units merely because the source subdivides its teaching approach. 'Ambulatory ECG' (Holter monitoring) folded in as an investigation-selection sub-topic of the same skill (when to extend monitoring beyond a resting ECG) rather than a standalone unit, since its own testable content is thin on its own.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-10",
+      "title": "Cardiac Biomarker Interpretation",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S03.T04"
+      ],
+      "tn_page_range": "C7-C18",
+      "pdf_page_range": [
+        97,
+        108
+      ],
+      "source_hierarchy_path": [
+        "C.S03.T04 (Cardiac Biomarkers)"
+      ],
+      "structural_rationale": "Distinct interpretive skill (troponin kinetics/interpretation) applicable beyond ACS alone (e.g., myocarditis, PE); kept as its own unit rather than folded into ACS since it is a genuinely separate investigation-interpretation competency.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-11",
+      "title": "Echocardiography and Advanced Cardiac Imaging",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S03.T06",
+        "C.S03.T10"
+      ],
+      "tn_page_range": "C7-C18",
+      "pdf_page_range": [
+        97,
+        108
+      ],
+      "source_hierarchy_path": [
+        "C.S03.T06 (Echocardiography)",
+        "C.S03.T10 (Magnetic Resonance Imaging)"
+      ],
+      "structural_rationale": "Echocardiography is the primary, high-yield structural/functional cardiac imaging modality - own unit. 'Magnetic Resonance Imaging' (cardiac MRI) folded in as a secondary, niche imaging modality within the same unit rather than standalone, since its own content is brief and its expected testable depth is minimal (see do_not_test).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-12",
+      "title": "Exercise/Pharmacologic Stress Testing",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S03.T07"
+      ],
+      "tn_page_range": "C7-C18",
+      "pdf_page_range": [
+        97,
+        108
+      ],
+      "source_hierarchy_path": [
+        "C.S03.T07 (Stress Testing)"
+      ],
+      "structural_rationale": "Distinct investigation with its own indications/interpretation logic (ischemia provocation testing).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-13",
+      "title": "Cardiac Catheterization and Coronary Angiography",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S03.T08",
+        "C.S03.T09"
+      ],
+      "tn_page_range": "C7-C18",
+      "pdf_page_range": [
+        97,
+        108
+      ],
+      "source_hierarchy_path": [
+        "C.S03.T08 (Cardiac Catheterization and Angiography)",
+        "C.S03.T09 (Coronary Angiography)"
+      ],
+      "structural_rationale": "'Cardiac Catheterization and Angiography' (general procedure) and its own topic child 'Coronary Angiography' (its main diagnostic application) are one coherent procedure/interpretation unit.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-14",
+      "title": "Bradyarrhythmias",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S05.T02"
+      ],
+      "tn_page_range": "C20-C29",
+      "pdf_page_range": [
+        110,
+        119
+      ],
+      "source_hierarchy_path": [
+        "C.S05.T02 (Bradyarrhythmias)"
+      ],
+      "structural_rationale": "Distinct clinical entity (sinus node dysfunction, AV block) with its own recognition/management logic, kept separate from tachyarrhythmias.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-15",
+      "title": "Wolff-Parkinson-White Syndrome / Pre-Excitation",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S05.T04"
+      ],
+      "tn_page_range": "C20-C29",
+      "pdf_page_range": [
+        110,
+        119
+      ],
+      "source_hierarchy_path": [
+        "C.S05.T04 (Pre-Excitation Syndromes)"
+      ],
+      "structural_rationale": "Kept as its own small unit despite being a Toronto Notes subtopic of the broader Arrhythmias section, because it is a classically distinct, independently testable entity (specific ECG pattern recognition; specific drug-avoidance rule that differs from ordinary SVT management).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-16",
+      "title": "Supraventricular Tachyarrhythmias",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S05.T01",
+        "C.S05.T03",
+        "C.S05.T10"
+      ],
+      "tn_page_range": "C20-C29",
+      "pdf_page_range": [
+        110,
+        119
+      ],
+      "source_hierarchy_path": [
+        "C.S05.T01 (Mechanisms of Arrhythmias)",
+        "C.S05.T03 (Supraventricular Tachyarrhythmias)",
+        "C.S05.T10 (Catheter Ablation)"
+      ],
+      "structural_rationale": "'Supraventricular Tachyarrhythmias' (AFib, AFlutter, AVNRT, etc.) is the core unit. 'Mechanisms of Arrhythmias' (generic pathophysiology background, shared context for all arrhythmia units) attached here as supporting source rather than its own unit, per the rule against standalone generic-pathophysiology units. 'Catheter Ablation' folded in as a management-option sub-topic (ablation is a genuine SVT/AFib treatment decision point) rather than a standalone procedural unit; detailed ablation technique itself is flagged do_not_test.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-17",
+      "title": "Ventricular Tachyarrhythmias",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S05.T05"
+      ],
+      "tn_page_range": "C20-C29",
+      "pdf_page_range": [
+        110,
+        119
+      ],
+      "source_hierarchy_path": [
+        "C.S05.T05 (Ventricular Tachyarrhythmias)"
+      ],
+      "structural_rationale": "Distinct high-acuity clinical entity, kept separate from SVT given materially different emergency management pathway.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-18",
+      "title": "Cardiac Arrest / Sudden Cardiac Death",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S05.T06"
+      ],
+      "tn_page_range": "C20-C29",
+      "pdf_page_range": [
+        110,
+        119
+      ],
+      "source_hierarchy_path": [
+        "C.S05.T06 (Sudden Cardiac Arrest)"
+      ],
+      "structural_rationale": "Distinct critical emergency topic; maps DIRECTLY to its own MCC presentation objective (Cardiac arrest, mcc_id 13).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-19",
+      "title": "Cardiac Implantable Electronic Devices (Pacemakers and ICDs)",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S05.T07",
+        "C.S05.T08",
+        "C.S05.T09"
+      ],
+      "tn_page_range": "C20-C29",
+      "pdf_page_range": [
+        110,
+        119
+      ],
+      "source_hierarchy_path": [
+        "C.S05.T07 (Electrophysiologic Studies)",
+        "C.S05.T08 (Electrical Pacing)",
+        "C.S05.T09 (Implantable Cardioverter Defibrillators)"
+      ],
+      "structural_rationale": "'Electrical Pacing' and 'Implantable Cardioverter Defibrillators' combined into one device-therapy unit since both share the same testable pattern (recognizing clinical indications for device therapy, not implantation technique). 'Electrophysiologic Studies' (a specialist diagnostic procedure that informs device/ablation decisions) attached here as supporting source, flagged do_not_test for procedural detail.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-20",
+      "title": "Chronic Stable Angina",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S06.T01"
+      ],
+      "tn_page_range": "C30-C39",
+      "pdf_page_range": [
+        120,
+        129
+      ],
+      "source_hierarchy_path": [
+        "C.S06.T01 (Chronic Stable Angina)"
+      ],
+      "structural_rationale": "Distinct, high-yield clinical entity, kept separate from acute presentations.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-21",
+      "title": "Acute Coronary Syndromes",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S06.T02",
+        "C.S06.T03"
+      ],
+      "tn_page_range": "C30-C39",
+      "pdf_page_range": [
+        120,
+        129
+      ],
+      "source_hierarchy_path": [
+        "C.S06.T02 (Acute Coronary Syndromes)",
+        "C.S06.T03 (Treatment Algorithm for Acute Coronary Syndrome)"
+      ],
+      "structural_rationale": "'Acute Coronary Syndromes' and its own topic child 'Treatment Algorithm for Acute Coronary Syndrome' are one clinical unit (a presentation plus its own management algorithm subtopic) per the task's canonical example of when to keep material together.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-22",
+      "title": "Coronary Revascularization (PCI vs CABG)",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S06.T04"
+      ],
+      "tn_page_range": "C30-C39",
+      "pdf_page_range": [
+        120,
+        129
+      ],
+      "source_hierarchy_path": [
+        "C.S06.T04 (Coronary Revascularization)"
+      ],
+      "structural_rationale": "Distinct decision-point (modality selection), kept separate from ACS acute management since it is tested as its own next-step/referral decision.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-23",
+      "title": "Congestive Heart Failure",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S07.T01",
+        "C.S07.T02"
+      ],
+      "tn_page_range": "C40-C44",
+      "pdf_page_range": [
+        130,
+        134
+      ],
+      "source_hierarchy_path": [
+        "C.S07.T01 (Congestive Heart Failure)",
+        "C.S07.T02 (Sleep-Disordered Breathing)"
+      ],
+      "structural_rationale": "Core Heart Failure content. 'Sleep-Disordered Breathing' attached as a supporting comorbidity sub-topic (relevant to CHF etiology/management) rather than a standalone unit, given its brief, narrowly-scoped Toronto Notes treatment here.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-24",
+      "title": "Cardio-Oncology",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S07.T03"
+      ],
+      "tn_page_range": "C40-C44",
+      "pdf_page_range": [
+        130,
+        134
+      ],
+      "source_hierarchy_path": [
+        "C.S07.T03 (Cardio-Oncology)"
+      ],
+      "structural_rationale": "Distinct emerging subtopic (chemotherapy cardiotoxicity); kept separate but flagged low-priority given narrow, specialist scope.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-25",
+      "title": "Myocarditis",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S08.T01"
+      ],
+      "tn_page_range": "C45-C50",
+      "pdf_page_range": [
+        135,
+        140
+      ],
+      "source_hierarchy_path": [
+        "C.S08.T01 (Myocarditis)"
+      ],
+      "structural_rationale": "Distinct clinical entity (inflammatory, often infectious etiology, distinct management from structural cardiomyopathies).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-26",
+      "title": "Cardiomyopathies (Dilated, Hypertrophic, Restrictive)",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S08.T02",
+        "C.S08.T03",
+        "C.S08.T04",
+        "C.S08.T05"
+      ],
+      "tn_page_range": "C45-C50",
+      "pdf_page_range": [
+        135,
+        140
+      ],
+      "source_hierarchy_path": [
+        "C.S08.T02 (Dilated Cardiomyopathy)",
+        "C.S08.T03 (Hypertrophic Cardiomyopathy)",
+        "C.S08.T04 (Restrictive Cardiomyopathy)",
+        "C.S08.T05 (Left Ventricular Noncompaction Cardiomyopathy)"
+      ],
+      "structural_rationale": "Dilated, Hypertrophic, and Restrictive cardiomyopathy are classically taught and tested AS A COMPARATIVE DIFFERENTIAL (distinguishing echo/hemodynamic findings between the three) - a textbook example of the task's 'clinically meaningful group of closely related disorders' consolidation rule, not three independent question pools. 'Left Ventricular Noncompaction Cardiomyopathy' (a rare subtype) folded in as a minor do_not_test mention rather than its own unit.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-27",
+      "title": "Advanced Heart Failure Therapies (Transplant, VAD, ECMO)",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S09",
+        "C.S09.T01",
+        "C.S09.T02"
+      ],
+      "tn_page_range": "C51-C52",
+      "pdf_page_range": [
+        141,
+        142
+      ],
+      "source_hierarchy_path": [
+        "C.S09 (Cardiac Transplantation)",
+        "C.S09.T01 (Ventricular Assist Devices)",
+        "C.S09.T02 (Extracorporeal Membrane Oxygenation)"
+      ],
+      "structural_rationale": "'Cardiac Transplantation' plus its own topic children 'Ventricular Assist Devices' and 'Extracorporeal Membrane Oxygenation' represent one coherent decision-tier: options when standard heart-failure therapy is refractory. Combined since a graduating student's expected competency is recognizing these exist as escalation options, not choosing among them in technical detail.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-28",
+      "title": "Cardiac Tumours",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S10"
+      ],
+      "tn_page_range": "C53-C53",
+      "pdf_page_range": [
+        143,
+        143
+      ],
+      "source_hierarchy_path": [
+        "C.S10 (Cardiac Tumours)"
+      ],
+      "structural_rationale": "Section itself is the content (0 topic children); a distinct, low-frequency but classically-tested entity (e.g., atrial myxoma).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-29",
+      "title": "Valvular Heart Disease (Stenotic and Regurgitant Lesions)",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S11",
+        "C.S11.T06"
+      ],
+      "tn_page_range": "C54-C60",
+      "pdf_page_range": [
+        144,
+        150
+      ],
+      "source_hierarchy_path": [
+        "C.S11 (Valvular Heart Disease)",
+        "C.S11.T06 (Summary of Valvular Disease)"
+      ],
+      "structural_rationale": "The section's own body (before its named subtopics) covers the major valve lesions (aortic/mitral stenosis and regurgitation); its 'Summary of Valvular Disease' topic child is a reference table for that same content, attached here rather than treated as independent material. Infective endocarditis, rheumatic fever, and valve intervention are distinct enough (see below) to warrant their own units rather than folding in here.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-30",
+      "title": "Infective Endocarditis",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S11.T01"
+      ],
+      "tn_page_range": "C54-C60",
+      "pdf_page_range": [
+        144,
+        150
+      ],
+      "source_hierarchy_path": [
+        "C.S11.T01 (Infective Endocarditis)"
+      ],
+      "structural_rationale": "Distinct, high-yield clinical entity with its own diagnostic criteria and prophylaxis considerations.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-31",
+      "title": "Rheumatic Fever",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S11.T02"
+      ],
+      "tn_page_range": "C54-C60",
+      "pdf_page_range": [
+        144,
+        150
+      ],
+      "source_hierarchy_path": [
+        "C.S11.T02 (Rheumatic Fever)"
+      ],
+      "structural_rationale": "Distinct clinical entity (Jones criteria, distinct epidemiology/prevention focus) kept separate from adult valve disease itself.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-32",
+      "title": "Valve Intervention: Repair/Replacement and Prosthetic Management",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S11.T03",
+        "C.S11.T04",
+        "C.S11.T05"
+      ],
+      "tn_page_range": "C54-C60",
+      "pdf_page_range": [
+        144,
+        150
+      ],
+      "source_hierarchy_path": [
+        "C.S11.T03 (Valve Repair and Valve Replacement)",
+        "C.S11.T04 (Choice of Valve Prosthesis)",
+        "C.S11.T05 (Prosthetic Valve Management)"
+      ],
+      "structural_rationale": "'Valve Repair and Valve Replacement', 'Choice of Valve Prosthesis', and 'Prosthetic Valve Management' are three Toronto Notes subheadings describing one coherent clinical decision pathway (intervene? repair or replace? which prosthesis? how to manage it afterward) - consolidated as one unit rather than three, per the task's core consolidation rule.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-33",
+      "title": "Acute Pericarditis",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S12.T01"
+      ],
+      "tn_page_range": "C61-C67",
+      "pdf_page_range": [
+        151,
+        157
+      ],
+      "source_hierarchy_path": [
+        "C.S12.T01 (Acute Pericarditis)"
+      ],
+      "structural_rationale": "Distinct clinical entity (inflammatory pain syndrome) with a management approach materially different from tamponade.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-34",
+      "title": "Pericardial Effusion and Cardiac Tamponade",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S12.T02",
+        "C.S12.T03"
+      ],
+      "tn_page_range": "C61-C67",
+      "pdf_page_range": [
+        151,
+        157
+      ],
+      "source_hierarchy_path": [
+        "C.S12.T02 (Pericardial Effusion)",
+        "C.S12.T03 (Cardiac Tamponade)"
+      ],
+      "structural_rationale": "Combined because recognizing WHEN an effusion has progressed to tamponade (the key testable clinical decision point) requires understanding both as one continuum, not two independent facts.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-35",
+      "title": "Constrictive Pericarditis",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S12.T04"
+      ],
+      "tn_page_range": "C61-C67",
+      "pdf_page_range": [
+        151,
+        157
+      ],
+      "source_hierarchy_path": [
+        "C.S12.T04 (Constrictive Pericarditis)"
+      ],
+      "structural_rationale": "Distinct chronic pathophysiology and management (surgical pericardiectomy consideration) kept separate from acute pericardial presentations.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-36",
+      "title": "Cardiopulmonary Bypass (Extracorporeal Circulation)",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S13",
+        "C.S13.T01",
+        "C.S13.T02",
+        "C.S13.T03"
+      ],
+      "tn_page_range": "C68-C69",
+      "pdf_page_range": [
+        158,
+        159
+      ],
+      "source_hierarchy_path": [
+        "C.S13 (Extracorporeal Circulation)",
+        "C.S13.T01 (Cardiopulmonary Bypass)",
+        "C.S13.T02 (Cardiac and Neurological Protection during Cardiopulmonary)",
+        "C.S13.T03 (Bypass)"
+      ],
+      "structural_rationale": "Highly specialist cardiac-surgery perfusion content. 'C.S13.T02'/'C.S13.T03' ('Cardiac and Neurological Protection during Cardiopulmonary' / 'Bypass') are a single topic split into two TOC lines by an OCR line-wrap artifact (the original heading is 'Cardiac and Neurological Protection during Cardiopulmonary Bypass') - both nodes are grouped into this one unit rather than treated as two.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-37",
+      "title": "Common Medications (Antiarrhythmic Drug Reference)",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S14",
+        "C.S14.T01"
+      ],
+      "tn_page_range": "C70-C73",
+      "pdf_page_range": [
+        160,
+        163
+      ],
+      "source_hierarchy_path": [
+        "C.S14 (Common Medications)",
+        "C.S14.T01 (Antiarrhythmics)"
+      ],
+      "structural_rationale": "Medication reference table. Drug-class reasoning for arrhythmia management is already captured within the relevant arrhythmia study units' testable competencies; this unit is the reference table itself.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-38",
+      "title": "Landmark Cardiac Trials",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S15"
+      ],
+      "tn_page_range": "C74-C80",
+      "pdf_page_range": [
+        164,
+        170
+      ],
+      "source_hierarchy_path": [
+        "C.S15 (Landmark Cardiac Trials)"
+      ],
+      "structural_rationale": "Historical trial summaries - reference material, not an independent testable competency.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-C-39",
+      "title": "References / Bibliography",
+      "chapter_code": "C",
+      "chapter_title": "Cardiology and Cardiac Surgery",
+      "source_node_ids": [
+        "C.S16"
+      ],
+      "tn_page_range": "C81-C84",
+      "pdf_page_range": [
+        171,
+        174
+      ],
+      "source_hierarchy_path": [
+        "C.S16 (References)"
+      ],
+      "structural_rationale": "Chapter bibliography - no independent content.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    }
+  ],
+  "scope_schema_version": "1.0",
+  "migrated_from": "research/scope/pilots/cardiology/study_units.json"
+}
