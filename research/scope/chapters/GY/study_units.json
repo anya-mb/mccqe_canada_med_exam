@@ -1,0 +1,864 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-25T00:00:00Z",
+  "chapter_code": "GY",
+  "chapter_title": "Gynecology",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes SOURCE STRUCTURE (toc_inventory.json / derived/scope_packets/GY.json). Chapter GY has 55 source nodes, 0 unresolved_headings, and no independent raw-OCR/body-heading corpus beyond toc_inventory.json (same limitation as chapters G, GS, GM). Three sections carry a title/merged-heading ambiguity resolved during this pass: (1) GY.S01 printed 'Acromyms' vs. merged 'Basic Anatomy Review' - the legible merged heading is used, mirroring the GM.S01 precedent. (2) GY.S04 ('Disorders of Menstruation') carries merged_duplicate_headings 'Endometriosis' and 'Adenomyosis' alongside its three T-children (Amenorrhea, Abnormal Uterine Bleeding, Dysmenorrhea); since these are clinically distinct diagnoses rather than alternate labels for the same content, both are broken out into their own study units cited against the parent node (SU-GY-08, SU-GY-09), rather than folded into an existing T-child unit. (3) GY.S05's printed title 'Fibroids' conflicts with all three of its own T-children (Hormonal Methods, IUD, Emergency Postcoital Contraception), which are unambiguously Contraception subtopics matching the section's merged_duplicate_headings entry 'Contraception'; the section is represented as Contraception (SU-GY-10), and Fibroids/uterine leiomyoma is NOT fabricated as a separate unit since no source node in this inventory carries fibroid content - flagged in study_units_audit.md as an unresolved coverage gap. (4) GY.S12's printed title 'SexualAbuse' with merged heading 'Sexuality and Sexual Dysfunction' names two clinically distinct topics (forensic sexual abuse/assault vs. clinical sexual dysfunction) rather than one topic under two labels, so it is split into two units (SU-GY-22, SU-GY-23), both cited against the shared parent node. (5) GY.S18's printed title 'References' is a structural mislabel: its four T-children (Menstrual Cycle, Stages of Puberty, Premenstrual Syndrome, Premenstrual Dysphoric Disorder) are real appendix-style clinical content, not a bibliography, unlike the genuine References sections seen in every other completed chapter; each is represented under its own real topic (with the Menstrual Cycle T-child consolidated into SU-GY-02 alongside GY.S02, and PMS/PMDD consolidated into SU-GY-39 since both share one MCC objective that explicitly differentiates them). GY.S15 ('Gynecological Oncology') is a genuine umbrella of 8 distinct organ-site malignancy topics (Pelvic Mass, Uterus, Ovary, Cervix, Fallopian Tube, Vulva, Vagina, Gestational Trophoblastic Disease), each represented as an independent study unit consistent with the GM.S03 broad-syndrome-split precedent. GY.S11 ('Gynecological Infections') consolidates its three discharge-differential T-children (Physiologic Discharge, Non-Physiologic Discharge, Vulvovaginitis) into one unit (SU-GY-16) while splitting its five clinically distinct T-children (STI, Bartholin Gland Abscess, PID, Toxic Shock Syndrome, Surgical Infections) into independent units, matching the GM.S04/S06-style selective-consolidation approach. GY.S03 ('Common Investigations and Procedures') consolidates Imaging + Endometrial Biopsy as the non-surgical-investigation pair (SU-GY-03) while splitting out Hysterectomy (SU-GY-04) as a distinct therapeutic procedure. GY.S07 (First Trimester Bleeding + Spontaneous Abortions) and GY.S09 (Female Factors + Male Factors under Infertility) are each consolidated as two facets of one MCC-tested competency, per the same not-fragmenting-shared-objective-content principle used in chapter GM.",
+  "total_study_units": 39,
+  "organizational_header_nodes": {
+    "GY": "Chapter root container - represented by all study units below, per the C/ELOM/A/CP/D/E/FM/G/GS/GM convention.",
+    "GY.S14": "'Urogynecology' umbrella heading (GY39-GY41); carries no independent content beyond its two T-children, represented as SU-GY-26 (Pelvic Organ Prolapse) and SU-GY-27 (Urinary Incontinence).",
+    "GY.S15": "'Gynecological Oncology' umbrella heading (GY42-GY55); carries no independent content beyond its eight organ-site T-children, represented as SU-GY-28 through SU-GY-35 (one study unit per distinct malignancy site, no consolidation, per the GM.S03 broad-syndrome-split precedent).",
+    "GY.S18": "Printed title 'References' (GY59-GY60) is a structural mislabel - unlike every other completed chapter's genuine terminal bibliography section, this node's four T-children are real appendix-style clinical content (Menstrual Cycle, Stages of Puberty, Premenstrual Syndrome, Premenstrual Dysphoric Disorder), represented as SU-GY-02 (Menstrual Cycle, consolidated with GY.S02), SU-GY-38 (Stages of Puberty), and SU-GY-39 (PMS + PMDD, consolidated since both share MCC objective 56-3)."
+  },
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-01",
+      "title": "Basic Anatomy Review",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S01"
+      ],
+      "tn_page_range": "GY2-GY3",
+      "pdf_page_range": [
+        596,
+        597
+      ],
+      "source_hierarchy_path": [
+        "GY.S01"
+      ],
+      "structural_rationale": "Level-2 section (HIGH confidence, TOC_OCR); printed title 'Acromyms' (an OCR/TOC-garbled rendering of 'Acronyms') carries merged_duplicate_headings 'Basic Anatomy Review'. The acronym-list content is a front-matter reading aid, not an independent clinical topic; the merged heading names the section's substantive content (pelvic anatomy review) and is used as the unit title, consistent with the project's convention of preferring a legible source-confirmed alternate over a garbled/trivial printed one.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-02",
+      "title": "Menstrual Cycle Physiology",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S02",
+        "GY.S18.T01"
+      ],
+      "tn_page_range": "GY4-GY5, GY59",
+      "pdf_page_range": [
+        598,
+        599
+      ],
+      "source_hierarchy_path": [
+        "GY.S02",
+        "GY.S18.T01"
+      ],
+      "structural_rationale": "GY.S02 ('Menstruation', HIGH confidence, TOC_OCR, level 2, no T-children) is the chapter's normal-physiology background for the menstrual-disorder units that follow. GY.S18.T01 ('Menstrual Cycle', LOW confidence, TOC_OCR_UNANCHORED) is a same-topic appendix/reference entry under the mislabeled terminal 'References' section (see GY.S18 organizational note); consolidated here rather than treated as an independent unit since it duplicates GY.S02's subject matter rather than adding a distinct testable competency.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-03",
+      "title": "Gynecologic Imaging and Endometrial Biopsy",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S03",
+        "GY.S03.T01",
+        "GY.S03.T02"
+      ],
+      "tn_page_range": "GY6",
+      "pdf_page_range": [
+        600,
+        600
+      ],
+      "source_hierarchy_path": [
+        "GY.S03",
+        "GY.S03.T01",
+        "GY.S03.T02"
+      ],
+      "structural_rationale": "GY.S03 ('Common Investigations and Procedures', LOW confidence, TOC_OCR_UNANCHORED for its T-children) groups the chapter's diagnostic-workup content. 'Imaging' and 'Endometrial Biopsy' are consolidated as the non-surgical investigation pair supporting the AUB/pelvic-mass units elsewhere in the chapter; 'Hysterectomy' (T03) is split out separately below since it is a therapeutic procedure rather than an investigation, with its own distinct indications/complications evidence.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-04",
+      "title": "Hysterectomy",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S03.T03"
+      ],
+      "tn_page_range": "GY6",
+      "pdf_page_range": [
+        600,
+        600
+      ],
+      "source_hierarchy_path": [
+        "GY.S03.T03"
+      ],
+      "structural_rationale": "TOC heading 'Hysterectomy' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Common Investigations and Procedures'. Kept distinct from Imaging/Endometrial Biopsy because it is a definitive surgical procedure with its own indications, routes, and complications; operative technique detail is out of scope for a generalist competency (see crosswalk do_not_test).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-05",
+      "title": "Amenorrhea and Oligomenorrhea",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S04.T01"
+      ],
+      "tn_page_range": "GY7-GY14",
+      "pdf_page_range": [
+        601,
+        608
+      ],
+      "source_hierarchy_path": [
+        "GY.S04.T01"
+      ],
+      "structural_rationale": "TOC heading 'Amenorrhea' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Disorders of Menstruation'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-06",
+      "title": "Abnormal Uterine Bleeding",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S04.T02"
+      ],
+      "tn_page_range": "GY7-GY14",
+      "pdf_page_range": [
+        601,
+        608
+      ],
+      "source_hierarchy_path": [
+        "GY.S04.T02"
+      ],
+      "structural_rationale": "TOC heading 'Abnormal Uterine Bleeding' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Disorders of Menstruation'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-07",
+      "title": "Dysmenorrhea",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S04.T03"
+      ],
+      "tn_page_range": "GY7-GY14",
+      "pdf_page_range": [
+        601,
+        608
+      ],
+      "source_hierarchy_path": [
+        "GY.S04.T03"
+      ],
+      "structural_rationale": "TOC heading 'Dysmenorrhea' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Disorders of Menstruation'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-08",
+      "title": "Endometriosis",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S04"
+      ],
+      "tn_page_range": "GY7-GY14",
+      "pdf_page_range": [
+        601,
+        608
+      ],
+      "source_hierarchy_path": [
+        "GY.S04"
+      ],
+      "structural_rationale": "'Disorders of Menstruation' (GY.S04, HIGH confidence at the section level) carries merged_duplicate_headings ['Endometriosis','Adenomyosis'] alongside its three TOC_OCR_UNANCHORED T-children (Amenorrhea, Abnormal Uterine Bleeding, Dysmenorrhea). Endometriosis and Adenomyosis are clinically distinct diagnoses from those three T-children and from each other, and are body-confirmed subtopics not cleanly represented as their own TOC nodes; each is broken out into its own study unit here, cited against the parent section node (no dedicated child node exists) per the instruction to split broad headings into clinically distinct topics only where source evidence supports it.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-09",
+      "title": "Adenomyosis",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S04"
+      ],
+      "tn_page_range": "GY7-GY14",
+      "pdf_page_range": [
+        601,
+        608
+      ],
+      "source_hierarchy_path": [
+        "GY.S04"
+      ],
+      "structural_rationale": "See SU-GY-08's structural_rationale: Adenomyosis is the second merged_duplicate_headings entry on the 'Disorders of Menstruation' (GY.S04) section node, split out as its own clinically distinct unit rather than folded into Endometriosis or Abnormal Uterine Bleeding.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-10",
+      "title": "Contraception",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S05",
+        "GY.S05.T01",
+        "GY.S05.T02",
+        "GY.S05.T03"
+      ],
+      "tn_page_range": "GY15-GY18",
+      "pdf_page_range": [
+        609,
+        612
+      ],
+      "source_hierarchy_path": [
+        "GY.S05",
+        "GY.S05.T01",
+        "GY.S05.T02",
+        "GY.S05.T03"
+      ],
+      "structural_rationale": "This section's printed title is 'Fibroids' (extraction_method BODY_HEADING_CONFIRMATION) but merged_duplicate_headings records 'Contraception', and all three T-children (Hormonal Methods, Intrauterine Device, Emergency Postcoital Contraception) are unambiguously contraception subtopics with no fibroid content among them. The section's true identity is therefore Contraception; the printed 'Fibroids' body-heading match is treated as a mis-extraction (e.g., a cross-reference or adjacent-page artifact) rather than this section's actual content, per the instruction to resolve ambiguity via body/T-children evidence over a printed title that conflicts with all of its own children. Uterine fibroids (leiomyoma) is NOT separately represented as a study unit: no distinct source node in this inventory carries fibroid content, and per the rule against inventing Toronto Notes headings, a Fibroids unit is not fabricated here - flagged instead in study_units_audit.md as an unresolved coverage gap for later global review against the raw source.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-11",
+      "title": "Termination of Pregnancy",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S06"
+      ],
+      "tn_page_range": "GY19",
+      "pdf_page_range": [
+        613,
+        613
+      ],
+      "source_hierarchy_path": [
+        "GY.S06"
+      ],
+      "structural_rationale": "Level-2 section (HIGH confidence, TOC_OCR) with no T-children.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-12",
+      "title": "Early Pregnancy Loss and First-Trimester Bleeding",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S07",
+        "GY.S07.T01",
+        "GY.S07.T02"
+      ],
+      "tn_page_range": "GY20",
+      "pdf_page_range": [
+        614,
+        614
+      ],
+      "source_hierarchy_path": [
+        "GY.S07",
+        "GY.S07.T01",
+        "GY.S07.T02"
+      ],
+      "structural_rationale": "'Pregnancy-Related Complications' (GY.S07) T-children 'First Trimester Bleeding' and 'Spontaneous Abortions' (both LOW confidence, TOC_OCR_UNANCHORED) are two facets of the same clinical presentation-to-diagnosis pathway (bleeding as the presenting complaint, spontaneous abortion/threatened abortion as the diagnosis), sharing the same MCC objective; consolidated per the project's convention of not fragmenting content that maps to a single tested competency. This content is genuine Gynecology-chapter source material (present in the GY TOC, not relocated from Obstetrics) and is mapped here rather than deferred to the OB chapter, per the GY/OB boundary rule against moving genuine chapter content.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-13",
+      "title": "Ectopic Pregnancy",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S08"
+      ],
+      "tn_page_range": "GY21",
+      "pdf_page_range": [
+        615,
+        615
+      ],
+      "source_hierarchy_path": [
+        "GY.S08"
+      ],
+      "structural_rationale": "Level-2 section (HIGH confidence, TOC_OCR) with no T-children; genuine GY-chapter source content, mapped here per the GY/OB boundary rule.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-14",
+      "title": "Infertility",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S09",
+        "GY.S09.T01",
+        "GY.S09.T02"
+      ],
+      "tn_page_range": "GY22-GY24",
+      "pdf_page_range": [
+        616,
+        618
+      ],
+      "source_hierarchy_path": [
+        "GY.S09",
+        "GY.S09.T01",
+        "GY.S09.T02"
+      ],
+      "structural_rationale": "'Infertility' (GY.S09, HIGH confidence, BODY_HEADING_CONFIRMATION) with T-children 'Female Factors' and 'Male Factors' (LOW confidence, TOC_OCR_UNANCHORED) consolidated as one unit: both are facets of the single couple-level infertility workup targeted by the same MCC objective, not independently tested sub-competencies.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-15",
+      "title": "Polycystic Ovarian Syndrome",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S10"
+      ],
+      "tn_page_range": "GY25",
+      "pdf_page_range": [
+        619,
+        619
+      ],
+      "source_hierarchy_path": [
+        "GY.S10"
+      ],
+      "structural_rationale": "Level-2 section (HIGH confidence, TOC_OCR) with no T-children.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-16",
+      "title": "Vaginal Discharge and Vulvovaginitis",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S11",
+        "GY.S11.T01",
+        "GY.S11.T02",
+        "GY.S11.T03"
+      ],
+      "tn_page_range": "GY26-GY33",
+      "pdf_page_range": [
+        620,
+        627
+      ],
+      "source_hierarchy_path": [
+        "GY.S11",
+        "GY.S11.T01",
+        "GY.S11.T02",
+        "GY.S11.T03"
+      ],
+      "structural_rationale": "'Gynecological Infections' (GY.S11) T-children 'Physiologic Discharge', 'Non-Physiologic Discharge', and 'Vulvovaginitis' (all LOW confidence, TOC_OCR_UNANCHORED) are three facets of the single vaginal-discharge presentation targeted by one MCC objective's differential (physiologic vs. infectious/non-physiologic causes); consolidated accordingly. The section's other T-children (STI, Bartholin Gland Abscess, PID, Toxic Shock Syndrome, Surgical Infections) are clinically distinct entities split into their own units below rather than folded in here, since each carries independent evidence/testing considerations.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-17",
+      "title": "Sexually Transmitted Infections (Gynecologic Presentation)",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S11.T04"
+      ],
+      "tn_page_range": "GY26-GY33",
+      "pdf_page_range": [
+        620,
+        627
+      ],
+      "source_hierarchy_path": [
+        "GY.S11.T04"
+      ],
+      "structural_rationale": "TOC heading 'Sexually Transmitted Infections' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Gynecological Infections'; split out from the discharge/vulvovaginitis unit because STI carries distinct public-health/reportability and partner-management considerations beyond a discharge differential.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-18",
+      "title": "Bartholin Gland Abscess",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S11.T05"
+      ],
+      "tn_page_range": "GY26-GY33",
+      "pdf_page_range": [
+        620,
+        627
+      ],
+      "source_hierarchy_path": [
+        "GY.S11.T05"
+      ],
+      "structural_rationale": "TOC heading 'Bartholin Gland Abscess' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Gynecological Infections'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-19",
+      "title": "Pelvic Inflammatory Disease",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S11.T06"
+      ],
+      "tn_page_range": "GY26-GY33",
+      "pdf_page_range": [
+        620,
+        627
+      ],
+      "source_hierarchy_path": [
+        "GY.S11.T06"
+      ],
+      "structural_rationale": "TOC heading 'Pelvic Inflammatory Disease' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Gynecological Infections'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-20",
+      "title": "Toxic Shock Syndrome",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S11.T07"
+      ],
+      "tn_page_range": "GY26-GY33",
+      "pdf_page_range": [
+        620,
+        627
+      ],
+      "source_hierarchy_path": [
+        "GY.S11.T07"
+      ],
+      "structural_rationale": "TOC heading 'Toxic Shock Syndrome' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Gynecological Infections'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-21",
+      "title": "Gynecologic Surgical Site Infections",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S11.T08"
+      ],
+      "tn_page_range": "GY26-GY33",
+      "pdf_page_range": [
+        620,
+        627
+      ],
+      "source_hierarchy_path": [
+        "GY.S11.T08"
+      ],
+      "structural_rationale": "TOC heading 'Surgical Infections' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Gynecological Infections'; covers postoperative infection recognition following gynecologic procedures.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-22",
+      "title": "Sexual Abuse and Assault",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S12"
+      ],
+      "tn_page_range": "GY34-GY38",
+      "pdf_page_range": [
+        628,
+        632
+      ],
+      "source_hierarchy_path": [
+        "GY.S12"
+      ],
+      "structural_rationale": "This section's printed title 'SexualAbuse' carries merged_duplicate_headings 'Sexuality and Sexual Dysfunction' - these name two clinically distinct topics (forensic/consent-oriented sexual abuse and assault vs. clinical sexual dysfunction), not one topic under two labels, so (unlike the GY.S05/GY.S13-style single-topic merges seen elsewhere) they are split into two separate units rather than combined into one title. Sexual Abuse and Assault is the forensic/safety/reporting-oriented half, cited against the parent section node since no distinct child node exists for it.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-23",
+      "title": "Sexual Dysfunction",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S12"
+      ],
+      "tn_page_range": "GY34-GY38",
+      "pdf_page_range": [
+        628,
+        632
+      ],
+      "source_hierarchy_path": [
+        "GY.S12"
+      ],
+      "structural_rationale": "The clinical half of the GY.S12 title split described in SU-GY-22's structural_rationale: 'Sexuality and Sexual Dysfunction' names the clinical sexual-function content, cited against the same parent section node.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-24",
+      "title": "Menopause",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S13"
+      ],
+      "tn_page_range": "GY36-GY38",
+      "pdf_page_range": [
+        630,
+        632
+      ],
+      "source_hierarchy_path": [
+        "GY.S13"
+      ],
+      "structural_rationale": "'Menopause' (GY.S13, HIGH confidence, TOC_OCR) covers physiologic menopause and its counselling/prevention content, independent of its T-child on hormone therapy which is split out below as a distinct decision-point competency.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-25",
+      "title": "Menopause Hormone Therapy",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S13.T01"
+      ],
+      "tn_page_range": "GY36-GY38",
+      "pdf_page_range": [
+        630,
+        632
+      ],
+      "source_hierarchy_path": [
+        "GY.S13.T01"
+      ],
+      "structural_rationale": "TOC heading 'Menopause Hormone Therapy' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Menopause'; kept distinct as a current-guidance-sensitive risk/benefit decision competency rather than folded into the general menopause-counselling unit.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-26",
+      "title": "Pelvic Organ Prolapse",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S14.T01"
+      ],
+      "tn_page_range": "GY39-GY41",
+      "pdf_page_range": [
+        633,
+        635
+      ],
+      "source_hierarchy_path": [
+        "GY.S14.T01"
+      ],
+      "structural_rationale": "TOC heading 'Pelvic Organ Prolapse' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Urogynecology'. The 'Urogynecology' parent section itself carries no independent content beyond its two T-children (see organizational_header_nodes).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-27",
+      "title": "Urinary Incontinence (Gynecologic)",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S14.T02"
+      ],
+      "tn_page_range": "GY39-GY41",
+      "pdf_page_range": [
+        633,
+        635
+      ],
+      "source_hierarchy_path": [
+        "GY.S14.T02"
+      ],
+      "structural_rationale": "TOC heading 'Urinary Incontinence' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Urogynecology'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-28",
+      "title": "Pelvic Mass",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S15.T01"
+      ],
+      "tn_page_range": "GY42-GY55",
+      "pdf_page_range": [
+        636,
+        649
+      ],
+      "source_hierarchy_path": [
+        "GY.S15.T01"
+      ],
+      "structural_rationale": "TOC heading 'Pelvic Mass' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Gynecological Oncology'. The parent section carries no independent content beyond its eight organ-site T-children (see organizational_header_nodes); each organ site is represented as its own unit below, consistent with the geriatrics-chapter precedent that broad umbrella oncology/syndrome headings may warrant per-site units where content and evidence support it.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-29",
+      "title": "Uterine (Endometrial) Cancer",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S15.T02"
+      ],
+      "tn_page_range": "GY42-GY55",
+      "pdf_page_range": [
+        636,
+        649
+      ],
+      "source_hierarchy_path": [
+        "GY.S15.T02"
+      ],
+      "structural_rationale": "TOC heading 'Uterus' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Gynecological Oncology'; represents uterine/endometrial malignancy content within this organ-site heading.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-30",
+      "title": "Ovarian Cancer",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S15.T03"
+      ],
+      "tn_page_range": "GY42-GY55",
+      "pdf_page_range": [
+        636,
+        649
+      ],
+      "source_hierarchy_path": [
+        "GY.S15.T03"
+      ],
+      "structural_rationale": "TOC heading 'Ovary' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Gynecological Oncology'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-31",
+      "title": "Cervical Cancer and Cervical Cancer Screening",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S15.T04"
+      ],
+      "tn_page_range": "GY42-GY55",
+      "pdf_page_range": [
+        636,
+        649
+      ],
+      "source_hierarchy_path": [
+        "GY.S15.T04"
+      ],
+      "structural_rationale": "TOC heading 'Cervix' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Gynecological Oncology'; includes both the malignancy and its screening pathway.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-32",
+      "title": "Fallopian Tube Malignancy",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S15.T05"
+      ],
+      "tn_page_range": "GY42-GY55",
+      "pdf_page_range": [
+        636,
+        649
+      ],
+      "source_hierarchy_path": [
+        "GY.S15.T05"
+      ],
+      "structural_rationale": "TOC heading 'Fallopian Tube' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Gynecological Oncology'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-33",
+      "title": "Vulvar Cancer",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S15.T06"
+      ],
+      "tn_page_range": "GY42-GY55",
+      "pdf_page_range": [
+        636,
+        649
+      ],
+      "source_hierarchy_path": [
+        "GY.S15.T06"
+      ],
+      "structural_rationale": "TOC heading 'Vulva' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Gynecological Oncology'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-34",
+      "title": "Vaginal Cancer",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S15.T07"
+      ],
+      "tn_page_range": "GY42-GY55",
+      "pdf_page_range": [
+        636,
+        649
+      ],
+      "source_hierarchy_path": [
+        "GY.S15.T07"
+      ],
+      "structural_rationale": "TOC heading 'Vagina' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Gynecological Oncology'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-35",
+      "title": "Gestational Trophoblastic Disease/Neoplasia",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S15.T08"
+      ],
+      "tn_page_range": "GY42-GY55",
+      "pdf_page_range": [
+        636,
+        649
+      ],
+      "source_hierarchy_path": [
+        "GY.S15.T08"
+      ],
+      "structural_rationale": "TOC heading 'Gestational Trophoblastic Disease/Neoplasia' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Gynecological Oncology'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-36",
+      "title": "Common Gynecologic Medications (Reference)",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S16"
+      ],
+      "tn_page_range": "GY56-GY58",
+      "pdf_page_range": [
+        650,
+        652
+      ],
+      "source_hierarchy_path": [
+        "GY.S16"
+      ],
+      "structural_rationale": "TOC heading 'Common Medications' (MEDIUM confidence, TOC_OCR), a level-2 leaf section with no T-children; a medication-class reference table duplicating management content already covered under each condition-specific unit above.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-37",
+      "title": "Landmark Gynecology Trials (Reference)",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S17"
+      ],
+      "tn_page_range": "GY58-GY60",
+      "pdf_page_range": [
+        652,
+        654
+      ],
+      "source_hierarchy_path": [
+        "GY.S17"
+      ],
+      "structural_rationale": "TOC heading 'Landmark Gynecology Trials' (MEDIUM confidence, TOC_OCR), a level-2 leaf section with no T-children; a bibliographic summary of major gynecology clinical trials.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-38",
+      "title": "Stages of Puberty",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S18.T02"
+      ],
+      "tn_page_range": "GY59",
+      "pdf_page_range": [
+        653,
+        653
+      ],
+      "source_hierarchy_path": [
+        "GY.S18.T02"
+      ],
+      "structural_rationale": "TOC heading 'Stages of Puberty' (LOW confidence, TOC_OCR_UNANCHORED), a T-child under GY.S18 (see organizational_header_nodes: the parent section's printed title 'References' is a mislabel - its T-children are real appendix-style clinical content, not a bibliography).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GY-39",
+      "title": "Premenstrual Syndrome and Premenstrual Dysphoric Disorder",
+      "chapter_code": "GY",
+      "chapter_title": "Gynecology",
+      "source_node_ids": [
+        "GY.S18.T03",
+        "GY.S18.T04"
+      ],
+      "tn_page_range": "GY59",
+      "pdf_page_range": [
+        653,
+        653
+      ],
+      "source_hierarchy_path": [
+        "GY.S18.T03",
+        "GY.S18.T04"
+      ],
+      "structural_rationale": "TOC headings 'Premenstrual Syndrome' and 'Premenstrual Dysphoric Disorder' (both LOW confidence, TOC_OCR_UNANCHORED), two T-children under the mislabeled GY.S18 ('References') section, consolidated because both are named and explicitly differentiated within the single MCC objective 56-3 ('the candidate will differentiate PMS from normal premenstrual symptoms... from other causes'), not independently tested sub-competencies.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    }
+  ]
+}

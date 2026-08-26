@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-25",
+  "chapter_code": "GY",
+  "source_node_accounting": {
+    "total_source_nodes_in_packet": 55,
+    "chapter_root": 1,
+    "organizational_sections_no_direct_unit": 3,
+    "total_study_units": 39,
+    "coverage_check": "PASS - every canonical source node in derived/scope_packets/GY.json (55 nodes) is represented in at least one study unit's source_node_ids or organizational_header_nodes; verified by scripts.qbank validate-scope-chapter GY (source_accounting: PASS)."
+  },
+  "confidence_counts": {
+    "HIGH": 13,
+    "MEDIUM": 2,
+    "LOW": 24
+  },
+  "page_precision_counts": {
+    "EXACT_SECTION": 9,
+    "SECTION_INHERITED": 30
+  },
+  "consolidation_summary": [
+    {
+      "study_unit_id": "SU-GY-02",
+      "consolidated_nodes": ["GY.S02", "GY.S18.T01"],
+      "reason": "'Menstruation' (main-chapter physiology section) and 'Menstrual Cycle' (a same-topic appendix entry under the mislabeled terminal GY.S18 'References' section) cover the same normal-physiology content; consolidated rather than duplicated as two units."
+    },
+    {
+      "study_unit_id": "SU-GY-03",
+      "consolidated_nodes": ["GY.S03", "GY.S03.T01", "GY.S03.T02"],
+      "reason": "'Imaging' and 'Endometrial Biopsy' are consolidated as the non-surgical investigation pair under 'Common Investigations and Procedures'; 'Hysterectomy' (T03) is split out separately since it is a therapeutic procedure with distinct indications/complications evidence, not an investigation."
+    },
+    {
+      "study_unit_id": "SU-GY-12",
+      "consolidated_nodes": ["GY.S07", "GY.S07.T01", "GY.S07.T02"],
+      "reason": "'First Trimester Bleeding' and 'Spontaneous Abortions' are two facets of one presentation-to-diagnosis pathway sharing MCC objective 81; consolidated rather than split since MCC has no per-facet objective."
+    },
+    {
+      "study_unit_id": "SU-GY-14",
+      "consolidated_nodes": ["GY.S09", "GY.S09.T01", "GY.S09.T02"],
+      "reason": "'Female Factors' and 'Male Factors' are two facets of the single couple-level infertility competency (MCC objective 46); consolidated rather than split."
+    },
+    {
+      "study_unit_id": "SU-GY-16",
+      "consolidated_nodes": ["GY.S11", "GY.S11.T01", "GY.S11.T02", "GY.S11.T03"],
+      "reason": "'Physiologic Discharge', 'Non-Physiologic Discharge', and 'Vulvovaginitis' are three facets of the single vaginal-discharge differential targeted by MCC objective 113; consolidated, while the section's five clinically distinct T-children (STI, Bartholin Gland Abscess, PID, Toxic Shock Syndrome, Surgical Infections) were each kept as independent units."
+    },
+    {
+      "study_unit_id": "SU-GY-39",
+      "consolidated_nodes": ["GY.S18.T03", "GY.S18.T04"],
+      "reason": "'Premenstrual Syndrome' and 'Premenstrual Dysphoric Disorder' are both named and explicitly differentiated within the single MCC objective 56-3; consolidated as one unit rather than two."
+    }
+  ],
+  "title_mismatch_notes": [
+    {
+      "study_unit_ids": ["SU-GY-01"],
+      "note": "GY.S01's printed TOC title 'Acromyms' is a garbled/trivial rendering of 'Acronyms' (an acronym list, not a clinical topic); merged_duplicate_headings records the legible alternate 'Basic Anatomy Review', used as the study-unit title, mirroring the GM.S01 precedent of preferring a legible source-confirmed alternate over a garbled/non-substantive printed one."
+    },
+    {
+      "study_unit_ids": ["SU-GY-08", "SU-GY-09"],
+      "note": "GY.S04 ('Disorders of Menstruation') carries merged_duplicate_headings 'Endometriosis' and 'Adenomyosis' alongside its three T-children (Amenorrhea, Abnormal Uterine Bleeding, Dysmenorrhea). Unlike the GM.S05/GM.S01-style merges (alternate labels for the SAME content), these are clinically distinct diagnoses with no dedicated child node; each is broken out into its own study unit cited against the parent section node rather than silently dropped or folded into an existing T-child."
+    },
+    {
+      "study_unit_ids": ["SU-GY-10"],
+      "note": "GY.S05's printed title 'Fibroids' (BODY_HEADING_CONFIRMATION) conflicts with all three of its own T-children (Hormonal Methods, IUD, Emergency Postcoital Contraception), which unambiguously match its merged_duplicate_headings entry 'Contraception'. The section is represented as Contraception; Fibroids/uterine leiomyoma is NOT fabricated as a separate study unit since no source node in this inventory carries fibroid content - see unrecoverable_coverage_gaps below."
+    },
+    {
+      "study_unit_ids": ["SU-GY-22", "SU-GY-23"],
+      "note": "GY.S12's printed title 'SexualAbuse' with merged_duplicate_headings 'Sexuality and Sexual Dysfunction' names two clinically distinct topics (forensic sexual abuse/assault vs. clinical sexual dysfunction), not one topic under two labels; split into two units, both cited against the shared parent node."
+    },
+    {
+      "study_unit_ids": ["SU-GY-02", "SU-GY-38", "SU-GY-39"],
+      "note": "GY.S18's printed title 'References' is a structural mislabel: unlike the genuine terminal bibliography sections in every other completed chapter, its four T-children (Menstrual Cycle, Stages of Puberty, Premenstrual Syndrome, Premenstrual Dysphoric Disorder) are real appendix-style clinical content. Each is represented under its own real topic rather than dismissed as bibliographic reference material."
+    }
+  ],
+  "unrecoverable_coverage_gaps": [
+    {
+      "heading_candidate": "Fibroids (uterine leiomyoma)",
+      "source": "derived/scope_packets/GY.json source_nodes[GY.S05].merged_duplicate_headings vs. printed title, plus source_quality.unresolved_headings (0)",
+      "status": "GY.S05's printed title is 'Fibroids' (body-heading-confirmed), but every one of its T-children is unambiguously Contraception content and the section's merged_duplicate_headings entry is 'Contraception'. No source node in this inventory's 55 nodes carries dedicated fibroid content, so Fibroids has no independent study unit here - not treated as unresolved_headings by the deterministic tool (which reports 0), but flagged here for global/raw-source review before question generation, per the instruction to use explicit unresolved status rather than invent a heading. Fibroid-adjacent testable content (AUB, pelvic mass) is already captured under SU-GY-06 and SU-GY-28."
+    }
+  ]
+}

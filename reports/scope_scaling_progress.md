@@ -14,37 +14,36 @@ then continue.
 
 | | |
 |---|---|
-| Completed | 11 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`, `FM`, `G`, `GS`, `GM`) |
-| Next chapter | **GY — Gynecology** |
+| Completed | 12 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`, `FM`, `G`, `GS`, `GM`, `GY`) |
+| Next chapter | **H — Hematology** |
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `e0c3b5c` — scope: map GM Geriatric Medicine |
+| Last completed commit | `PENDING_COMMIT` — scope: map GY Gynecology |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
 
-1. GY — Gynecology *(next)*
-2. H — Hematology
-3. ID — Infectious Diseases
-4. MG — Medical Genetics
-5. MI — Medical Imaging
-6. NP — Nephrology
-7. N — Neurology
-8. NS — Neurosurgery
-9. OB — Obstetrics
-10. OP — Ophthalmology
-11. OR — Orthopedic Surgery
-12. OT — Otolaryngology
-13. P — Pediatrics
-14. PM — Palliative Medicine
-15. PL — Plastic Surgery
-16. PS — Psychiatry
-17. PH — Public Health and Preventive Medicine
-18. R — Respirology
-19. RH — Rheumatology
-20. U — Urology
-21. VS — Vascular Surgery
+1. H — Hematology *(next)*
+2. ID — Infectious Diseases
+3. MG — Medical Genetics
+4. MI — Medical Imaging
+5. NP — Nephrology
+6. N — Neurology
+7. NS — Neurosurgery
+8. OB — Obstetrics
+9. OP — Ophthalmology
+10. OR — Orthopedic Surgery
+11. OT — Otolaryngology
+12. P — Pediatrics
+13. PM — Palliative Medicine
+14. PL — Plastic Surgery
+15. PS — Psychiatry
+16. PH — Public Health and Preventive Medicine
+17. R — Respirology
+18. RH — Rheumatology
+19. U — Urology
+20. VS — Vascular Surgery
 
 ## Chapter notes
 
@@ -293,6 +292,60 @@ then continue.
   independently). `MAPPING_STRENGTH_COUNTS: STRONG=7 MODERATE=7 WEAK=1`;
   0 `UNCERTAIN` classifications, 0 invalid MCC IDs, 0 hygiene
   violations, validator PASS, 553/553 project tests passing.
+
+- **GY (Gynecology)**: 39 study units from 55 source nodes (1 chapter
+  root + 3 organizational section headers + 51 leaf/topic nodes, all 55
+  accounted for). 0 `unresolved_headings` per the deterministic tool, but
+  three title/merged-heading conflicts more serious than a simple OCR
+  garble: (1) `GY.S04` ("Disorders of Menstruation") carries
+  `merged_duplicate_headings` 'Endometriosis' and 'Adenomyosis' in
+  addition to its three T-children — both clinically distinct diagnoses
+  with no dedicated child node, each broken out as its own unit
+  (`SU-GY-08`, `SU-GY-09`) cited against the parent section node; (2)
+  `GY.S05`'s printed title 'Fibroids' (body-heading-confirmed) conflicts
+  with all three of its own T-children (Hormonal Methods, IUD, Emergency
+  Postcoital Contraception), which unambiguously match its
+  `merged_duplicate_headings` entry 'Contraception' — represented as
+  Contraception (`SU-GY-10`); Fibroids/uterine leiomyoma was **not**
+  fabricated as a separate unit since no source node carries fibroid
+  content, flagged `affects_global_toc: true` for a future raw-source
+  check; (3) `GY.S12`'s printed title 'SexualAbuse' with merged heading
+  'Sexuality and Sexual Dysfunction' names two clinically distinct topics
+  (forensic abuse/assault vs. clinical sexual dysfunction), split into
+  `SU-GY-22`/`SU-GY-23`. `GY.S18`'s printed title 'References' is a
+  structural mislabel — unlike every other completed chapter's genuine
+  terminal bibliography, its four T-children (Menstrual Cycle, Stages of
+  Puberty, PMS, PMDD) are real clinical content, represented under
+  `SU-GY-02`/`SU-GY-38`/`SU-GY-39`. `GY.S15` ("Gynecological Oncology", 8
+  organ-site T-children) kept as 8 independent study units per the
+  GM.S03 broad-syndrome-split precedent. Pregnancy-related genuine
+  GY-chapter content (Termination of Pregnancy, Early Pregnancy
+  Loss/First-Trimester Bleeding, Ectopic Pregnancy) mapped here rather
+  than deferred to Obstetrics, per the GY/OB boundary rule; final
+  ownership deferred to a future global audit once OB is mapped. Targeted
+  `search-mcc-objectives` searches confirmed no dedicated MCC objective
+  for endometriosis, adenomyosis, fibroids, PCOS, PID, Bartholin gland
+  abscess, or any single gynecologic cancer site — the same
+  MCC-registry-coverage-gap pattern flagged in chapters E, G, GS, GM —
+  resolved via nearby presentation-based objectives (Pelvic pain=73,
+  Abdominal/pelvic masses=2, Vaginal bleeding=112, Vaginal
+  discharge/vulvar pruritus=113) except Bartholin Gland Abscess and
+  Gynecologic Surgical Site Infections, left `UNCERTAIN` rather than
+  forced. 2 `CROSS_DISCIPLINE`-classified units plus 4 more units
+  carrying a `cross_discipline_note` under other classifications (PCOS
+  vs. completed Endocrinology; STI vs. not-yet-mapped Infectious
+  Diseases/Public Health; Surgical Site Infections vs. completed GS;
+  Urinary Incontinence vs. not-yet-mapped Urology) recorded for the later
+  global overlap audit — none finalized. Termination of Pregnancy and
+  Sexual Abuse/Assault both retained as jurisdiction-sensitive
+  (`PROVINCIAL_TERRITORIAL`) with `verification_required: true` rather
+  than hard-coding a single province's rule; both also touch content
+  ELOM (completed) may partly own more generally (consent; abuse
+  reporting) — not finalized here. `MAPPING_STRENGTH_COUNTS: STRONG=14
+  MODERATE=23 WEAK=4`; 2 `UNCERTAIN` classifications (`SU-GY-18`
+  Bartholin Gland Abscess, `SU-GY-21` Gynecologic Surgical Site
+  Infections), 0 invalid MCC IDs, 0 hygiene violations, validator PASS,
+  553/553 project tests passing.
 
 ## Resume protocol (per Phase 3C instructions)
 

@@ -11,13 +11,14 @@
     "FM",
     "G",
     "GS",
-    "GM"
+    "GM",
+    "GY"
   ],
   "chapters_without_review_items_file": [
     "C",
     "ELOM"
   ],
-  "total_items": 37,
+  "total_items": 46,
   "items": [
     {
       "issue_type": "structural_ambiguity",
@@ -404,6 +405,105 @@
       "recommended_action": "Coordinator may want to continue folding this into the broader MCC-objectives-registry-gap note (now confirmed in four chapters: E, G, GS, GM); revisit if a future registry refresh adds relevant objectives.",
       "affects_global_toc": false,
       "chapter_code": "GM"
+    },
+    {
+      "issue_type": "structural_ocr_corruption",
+      "severity": "informational",
+      "study_unit_id": "SU-GY-01",
+      "title": "GY.S01 printed title 'Acromyms' is a trivial acronym list; merged_duplicate_headings gives the usable alternate 'Basic Anatomy Review'",
+      "summary": "The section's printed TOC title names a front-matter acronym list rather than a clinical topic. The legible merged_duplicate_headings alternate is used as the study-unit title instead.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - represented as SU-GY-01 using the merged alternate title.",
+      "recommended_action": "No action required for scope purposes.",
+      "affects_global_toc": false,
+      "chapter_code": "GY"
+    },
+    {
+      "issue_type": "broad_heading_multiple_diagnoses",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-GY-08, SU-GY-09",
+      "title": "GY.S04 ('Disorders of Menstruation') carries two additional distinct diagnoses (Endometriosis, Adenomyosis) not represented as their own TOC nodes",
+      "summary": "merged_duplicate_headings records 'Endometriosis' and 'Adenomyosis' alongside the section's three normal T-children. Both are clinically distinct diagnoses with no dedicated child node; each was split into its own study unit cited against the parent section node.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - represented as SU-GY-08 and SU-GY-09.",
+      "recommended_action": "Coordinator may want to confirm this split against raw source/body text in a later pass; no independent OCR corpus was available here.",
+      "affects_global_toc": false,
+      "chapter_code": "GY"
+    },
+    {
+      "issue_type": "merged_wrapped_toc_entry",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-GY-10",
+      "title": "GY.S05's printed title 'Fibroids' conflicts with all three of its own T-children, which are unambiguously Contraception subtopics",
+      "summary": "Printed title 'Fibroids' (body-heading-confirmed) does not match any T-child (Hormonal Methods, IUD, Emergency Postcoital Contraception), all matching the section's merged_duplicate_headings entry 'Contraception'. Represented as Contraception; Fibroids/uterine leiomyoma content was NOT fabricated as a separate unit since no source node carries it.",
+      "resolution_status": "PARTIALLY RESOLVED - Contraception represented as SU-GY-10; the missing Fibroids topic is an unrecoverable coverage gap pending raw-source verification.",
+      "recommended_action": "Coordinator should verify against raw source whether a distinct 'Fibroids' topic exists in the TN GY chapter body and, if so, add it to toc_inventory.json in a future refresh; not fabricated here per accuracy rules.",
+      "affects_global_toc": true,
+      "chapter_code": "GY"
+    },
+    {
+      "issue_type": "merged_wrapped_toc_entry",
+      "severity": "informational",
+      "study_unit_id": "SU-GY-22, SU-GY-23",
+      "title": "GY.S12's printed title 'SexualAbuse' bundles two clinically distinct topics with its merged heading 'Sexuality and Sexual Dysfunction'",
+      "summary": "Unlike single-topic title/merged-heading pairs elsewhere in this chapter, GY.S12's two titles name genuinely different content (forensic sexual abuse/assault vs. clinical sexual dysfunction). Split into two study units, both cited against the shared parent node.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - represented as SU-GY-22 and SU-GY-23.",
+      "recommended_action": "No action required for scope purposes.",
+      "affects_global_toc": false,
+      "chapter_code": "GY"
+    },
+    {
+      "issue_type": "structural_ocr_corruption",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-GY-02, SU-GY-38, SU-GY-39",
+      "title": "GY.S18's printed title 'References' is a structural mislabel - its T-children are real clinical content, not a bibliography",
+      "summary": "Unlike the genuine terminal References sections in every other completed chapter, GY.S18's four T-children (Menstrual Cycle, Stages of Puberty, PMS, PMDD) are real appendix-style clinical content. Each is represented under its own real topic instead of being classified as bibliographic REFERENCE_ONLY material.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - represented as SU-GY-02, SU-GY-38, SU-GY-39.",
+      "recommended_action": "Coordinator may want to note this TOC mislabeling pattern (a section titled 'References' whose T-children are real clinical content) for a future raw-source/TOC-inventory quality pass.",
+      "affects_global_toc": true,
+      "chapter_code": "GY"
+    },
+    {
+      "issue_type": "gy_ob_boundary",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-GY-11, SU-GY-12, SU-GY-13",
+      "title": "Pregnancy-related content (Termination of Pregnancy, Early Pregnancy Loss/First-Trimester Bleeding, Ectopic Pregnancy) genuinely appears in the GY chapter TOC",
+      "summary": "All three units cover content that could conceptually belong to Obstetrics, but each is a genuine GY-chapter source node and was mapped here per the instruction against moving genuine chapter content out of GY. Final PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT decisions against OB are deferred.",
+      "resolution_status": "NOT RESOLVED BY DESIGN - deferred per task instructions until OB is mapped.",
+      "recommended_action": "Coordinator should review during the global GY/OB boundary audit once the OB chapter is mapped.",
+      "affects_global_toc": false,
+      "chapter_code": "GY"
+    },
+    {
+      "issue_type": "cross_discipline_overlap_candidate",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-GY-15, SU-GY-17, SU-GY-21, SU-GY-27",
+      "title": "Candidate cross-discipline overlaps requiring later global resolution",
+      "summary": "SU-GY-15 (PCOS) may overlap Endocrinology (E, completed). SU-GY-17 (STI) may overlap Infectious Diseases and Public Health (both not yet mapped). SU-GY-21 (Surgical Site Infections) may overlap General and Thoracic Surgery (GS, completed, PRIMARY_OWNER candidate: GS). SU-GY-27 (Urinary Incontinence) may overlap Urology (not yet mapped).",
+      "resolution_status": "NOT RESOLVED BY DESIGN - deferred per task instructions until all relevant chapters are mapped.",
+      "recommended_action": "Coordinator should review during the global cross-chapter overlap audit once ID, PH, and U are mapped.",
+      "affects_global_toc": false,
+      "chapter_code": "GY"
+    },
+    {
+      "issue_type": "jurisdiction_legal_sensitive",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-GY-11, SU-GY-22",
+      "title": "Termination of Pregnancy and Sexual Abuse/Assault carry provincial/territorial jurisdiction-sensitive content",
+      "summary": "Both units' freshness/jurisdiction metadata flag LEGAL_REGULATORY verification and PROVINCIAL_TERRITORIAL scope. Neither hard-codes a specific province's rule. Both also touch content ELOM (completed) may partly own at a more general level (consent; abuse reporting).",
+      "resolution_status": "NOT RESOLVED BY DESIGN - jurisdiction/freshness metadata recorded; final ELOM/GY ownership deferred per task instructions.",
+      "recommended_action": "Coordinator should confirm jurisdiction/freshness metadata during a future province-specific verification pass; do not hard-code a single province's rule.",
+      "affects_global_toc": false,
+      "chapter_code": "GY"
+    },
+    {
+      "issue_type": "mcc_registry_coverage_gap",
+      "severity": "informational",
+      "study_unit_id": "SU-GY-18, SU-GY-21",
+      "title": "MCC objectives registry has no dedicated objective for Bartholin Gland Abscess or Gynecologic Surgical Site Infections",
+      "summary": "Targeted search-mcc-objectives queries ('bartholin gland', 'toxic shock syndrome', 'surgical infection') returned zero or clearly-unrelated matches, the same registry-coverage-gap pattern already flagged in chapters E, G, GS, GM. Rather than fabricate objectives, both units were classified UNCERTAIN with zero planned question coverage and a documented uncertain_reason.",
+      "resolution_status": "RESOLVED FOR THIS CHAPTER - no evidence fabricated.",
+      "recommended_action": "Coordinator may want to continue folding this into the broader MCC-objectives-registry-gap note (now confirmed in five chapters: E, G, GS, GM, GY); revisit if a future registry refresh adds relevant objectives.",
+      "affects_global_toc": false,
+      "chapter_code": "GY"
     }
   ]
 }
