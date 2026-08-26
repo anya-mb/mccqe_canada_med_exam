@@ -14,36 +14,34 @@ then continue.
 
 | | |
 |---|---|
-| Completed | 12 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`, `FM`, `G`, `GS`, `GM`, `GY`) |
-| Next chapter | **H — Hematology** |
+| Completed | 14 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`, `FM`, `G`, `GS`, `GM`, `GY`, `H`, `ID`) |
+| Next chapter | **MG — Medical Genetics** |
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `6cfd812` — scope: map GY Gynecology |
+| Last completed commit | see `reports/scope_scaling_progress.json` (`last_completed_commit`) — scope: map ID Infectious Diseases |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
 
-1. H — Hematology *(next)*
-2. ID — Infectious Diseases
-3. MG — Medical Genetics
-4. MI — Medical Imaging
-5. NP — Nephrology
-6. N — Neurology
-7. NS — Neurosurgery
-8. OB — Obstetrics
-9. OP — Ophthalmology
-10. OR — Orthopedic Surgery
-11. OT — Otolaryngology
-12. P — Pediatrics
-13. PM — Palliative Medicine
-14. PL — Plastic Surgery
-15. PS — Psychiatry
-16. PH — Public Health and Preventive Medicine
-17. R — Respirology
-18. RH — Rheumatology
-19. U — Urology
-20. VS — Vascular Surgery
+1. MG — Medical Genetics *(next)*
+2. MI — Medical Imaging
+3. NP — Nephrology
+4. N — Neurology
+5. NS — Neurosurgery
+6. OB — Obstetrics
+7. OP — Ophthalmology
+8. OR — Orthopedic Surgery
+9. OT — Otolaryngology
+10. P — Pediatrics
+11. PM — Palliative Medicine
+12. PL — Plastic Surgery
+13. PS — Psychiatry
+14. PH — Public Health and Preventive Medicine
+15. R — Respirology
+16. RH — Rheumatology
+17. U — Urology
+18. VS — Vascular Surgery
 
 ## Chapter notes
 
@@ -345,6 +343,81 @@ then continue.
   MODERATE=23 WEAK=4`; 2 `UNCERTAIN` classifications (`SU-GY-18`
   Bartholin Gland Abscess, `SU-GY-21` Gynecologic Surgical Site
   Infections), 0 invalid MCC IDs, 0 hygiene violations, validator PASS,
+  553/553 project tests passing.
+
+- **H (Hematology)**: 51 study units from 92 source nodes. Found and
+  resolved the most severe page-misattribution defect documented to that
+  point: `H.S22`/`H.S23` carried real clinical titles (Sickle Cell
+  Disease, Autoimmune Hemolytic Anemia, Microangiopathic Hemolytic
+  Anemia, Hereditary Spherocytosis/Elliptocytosis, G6PD Deficiency)
+  page-anchored ~40 pages away from their confirmed body content (raw
+  OCR, `derived/toronto-notes-2025/clean-ocr/`); the genuine content at
+  the toc-recorded location was a Landmark Hematology Trials bibliography
+  plus an uncatalogued References section (`SU-H-50`, `SU-H-51`). See
+  `research/scope/chapters/H/study_units.json` methodology_note for full
+  detail. `MAPPING_STRENGTH_COUNTS` and full audit in
+  `research/scope/chapters/H/`.
+
+- **ID (Infectious Diseases)**: 32 study units from 75 source nodes (all
+  accounted for, `source_accounting: PASS`). Surpassed H as the most
+  structurally corrupted chapter mapped to date, resolved via the
+  canonical raw-OCR corpus (`derived/toronto-notes-2025/clean-ocr/`, pdf
+  719-778) rather than raw `pdftotext` of the source PDF (found
+  significantly noisier for this densely two-column-formatted chapter).
+  Six defects found: (1) `ID.S04`'s printed title 'Gastrointestinal
+  Infections' is a pure cross-reference-only entry (see Gastroenterology
+  G13/G18/G19/G31, Pediatrics P44) merged with a genuine 'Bone and Joint
+  Infections' section (Septic Arthritis, Diabetic Foot Infections,
+  Osteomyelitis) — split into `SU-ID-06` (REFERENCE_ONLY) and `SU-ID-07`
+  (DIRECT); (2) `ID.S07` ('Systemic Infections') was missing a genuine
+  T-child, 'Cat Scratch Disease' (confirmed pdf 741-742/ID23-24 within
+  the section's own range; its title had instead been concatenated onto
+  unrelated node `ID.S17`) — `SU-ID-16`; (3) a substantial Syphilis
+  section (pdf 742-743/ID24-25) has **no** `toc_inventory.json` node at
+  all anywhere in the chapter's 75 nodes — represented as
+  `UNCATALOGUED:ID.SYPHILIS` (`SU-ID-17`), a more severe gap than any
+  prior mislabeled-node case since even a wrong page range does not
+  exist for it; (4) `ID.S08` 'Tuberculosis' was recorded spanning a
+  7-page range (pdf 743-749) that actually contains two chapter topics —
+  TB itself occupies only pdf 743-744/ID25-26 (`SU-ID-18`), and the
+  remaining pdf 745-749/ID27-31 is a substantial, genuine HIV/AIDS
+  section with no node of its own at its true location; (5) the largest
+  single defect: nodes `ID.S17`-`ID.S23` (toc-recorded pdf 764-778/
+  ID46-60, HIGH-confidence titles) are a two-column TOC merge spanning
+  ~26 pages, concatenating genuine HIV disease-topic subheadings
+  (Epidemiology, Modes of Transmission, Natural History, Prevention,
+  Types of Testing, HIV Pre-/Post-Test Counselling — confirmed at their
+  true pdf 745-750/ID27-32 location, `SU-ID-19`/`SU-ID-20`) with an
+  unrelated antimicrobial-reference-appendix column (Antibiotics/
+  Antifungals/Antiparasitics tables, Landmark ID Trials, chapter
+  References — confirmed at the nodes' own toc-recorded pdf 764-778
+  location, `SU-ID-32`, REFERENCE_ONLY); Rocky Mountain Spotted Fever/
+  West Nile Virus (part of `ID.S18`'s title) were searched for as
+  standalone body headings across the full chapter and not found (only
+  table-row mentions in a travel-exposure table), so no separate unit
+  was fabricated for them; (6) `ID.S09`/`ID.S14` each repeat the
+  cross-reference-only pattern of finding (1) (Superficial Fungal
+  Infections/Dermatophytes → Dermatology; Ectoparasites → Dermatology
+  D33), and `ID.S10`'s printed title 'Endemic Mycoses' is merged with
+  its real `merged_duplicate_headings` entry 'Opportunistic Fungi' — two
+  genuine adjacent sections sharing one node, split into `SU-ID-21`/
+  `SU-ID-22` per the GY-Fibroids/H-Sickle-Cell dual-unit precedent. No
+  heading was invented; all findings documented in
+  `research/scope/chapters/ID/study_units.json` methodology_note and
+  flagged `affects_global_toc: true` in
+  `research/scope/chapters/ID/review_items.json`. MCC's presentation-
+  based framework has no dedicated objective for HIV, TB, syphilis,
+  sepsis, meningitis, or several other named ID topics — resolved via
+  explicit causal_conditions/enabling_objectives text where possible
+  (e.g. 'Sepsis' named under objective 9-2; 'meningitis, encephalitis'
+  named under objective 58-1; 'Plasmodium' named under objective 107-1;
+  'immunocompromised state due to HIV' named in objective 107-1's
+  enabling objectives; objective 107-4 is a near-exact match for
+  HIV/opportunistic-infection content) — continuing the same
+  MCC-registry-coverage-gap pattern documented in chapters E, G, GS, GM,
+  GY, H. `MAPPING_STRENGTH_COUNTS: STRONG=13 MODERATE=21 WEAK=5`; 2
+  `UNCERTAIN` classifications (`SU-ID-10` Generalized Tetanus, `SU-ID-11`
+  Rabies), 0 invalid MCC IDs, 0 hygiene violations, validator PASS,
   553/553 project tests passing.
 
 ## Resume protocol (per Phase 3C instructions)

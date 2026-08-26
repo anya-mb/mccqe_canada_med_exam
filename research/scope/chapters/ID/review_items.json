@@ -1,0 +1,67 @@
+{
+  "generated_at": "2026-08-25",
+  "chapter_code": "ID",
+  "schema_note": "Chapter-local review-queue candidates only. This file is NOT the global research/scope/review_queue.json - it is merged into that coordinator-maintained file after this chapter passes validation.",
+  "items": [
+    {
+      "issue_type": "structural_severe_two_column_toc_merge",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-ID-16, SU-ID-17, SU-ID-18, SU-ID-19, SU-ID-20, SU-ID-32",
+      "title": "toc_inventory.json nodes ID.S07/S08/S17-S23 misattribute a genuine HIV section, a genuine Syphilis section, and a genuine Cat Scratch Disease topic by 15-26 pages, merged with an antimicrobial reference appendix",
+      "summary": "Raw-OCR verification (derived/toronto-notes-2025/clean-ocr/, pdf pages 719-778) found the most extensive structural defect of any completed chapter to date. (1) ID.S07 ('Systemic Infections') is missing its fifth T-child, 'Cat Scratch Disease' (real, confirmed pdf 741-742/ID23-24, within S07's own declared range); the title was instead concatenated onto unrelated node ID.S17. (2) A substantial Syphilis section (pdf 742-743/ID24-25) has NO toc_inventory.json node anywhere in the chapter's 75 nodes - a more severe gap than any prior Fibroids/Sickle-Cell-style mislabeling, since no node at all carries even a wrong page range for it. (3) ID.S08 'Tuberculosis' is recorded spanning pdf 743-749/ID25-31, but TB itself occupies only pdf 743-744/ID25-26; the remaining pdf 745-749/ID27-31 is a substantial, genuine HIV/AIDS section (Epidemiology, Etiology, Modes of Transmission, Natural History, Antiretroviral Drugs) with no node of its own. (4) Nodes ID.S17-ID.S23 (toc-recorded pdf 764-778/ID46-60, HIGH-confidence TOC_OCR titles) are a two-column TOC merge: their titles concatenate genuine HIV disease-topic subheadings (confirmed at the true pdf 745-750/ID27-32 location) with an unrelated antimicrobial-reference-appendix column (confirmed at the nodes' own toc-recorded pdf 764-778/ID46-60 location). This is the same class of defect already documented in chapters GY (Fibroids/Contraception) and H (Sickle Cell/Landmark Trials), but affects a larger page span (~26 pages) and a larger number of nodes (9) than either prior case.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - each real topic is represented as its own study unit citing the node(s) whose title names it, with page_mapping_precision corrected to the confirmed body location: SU-ID-16 (Cat Scratch Disease, citing ID.S07+ID.S17); SU-ID-17 (Syphilis, UNCATALOGUED:ID.SYPHILIS since no node exists); SU-ID-18 (Tuberculosis, page range corrected down from the toc-recorded 7 pages to its confirmed 2-page extent); SU-ID-19 and SU-ID-20 (HIV, citing ID.S20.T01/S21/S22/S22.T01 and ID.S23/S23.T01/S23.T02 respectively, page ranges corrected to pdf 745-750); SU-ID-32 (the genuine antimicrobial-reference-appendix and chapter bibliography, citing ID.S17-S23 at their own toc-recorded pdf 764-778 range, REFERENCE_ONLY).",
+      "recommended_action": "Coordinator should consider re-running or manually correcting the TOC-extraction pipeline for chapter ID nodes S07/S08/S17-S23 in toc_inventory.json: add a Cat Scratch Disease T-child to S07, add a new Syphilis node between S07 and S08, correct S08's page range to pdf 743-744, and split S17-S23 into their real HIV-disease-topic identities (at pdf 745-750) versus their real antimicrobial-appendix identities (at their own recorded pdf 764-778). This is now the largest single page-misattribution defect found across all completed chapters (surpassing chapter H's H.S22/H.S23 case) and reinforces that a similarly long TOC late in a chapter warrants targeted raw-OCR spot-checking as standard practice.",
+      "affects_global_toc": true
+    },
+    {
+      "issue_type": "cross_reference_only_entries",
+      "severity": "informational",
+      "study_unit_id": "SU-ID-06, SU-ID-23, SU-ID-28",
+      "title": "Three nodes (Gastrointestinal Infections, superficial Fungal Infections/Dermatophytes, Ectoparasites) carry no independent ID-chapter content - pure cross-references to other chapters",
+      "summary": "Body confirmation shows ID.S04's 'Gastrointestinal Infections' (pdf 731/ID13, see Gastroenterology G13/G18/G19/G31 and Pediatrics P44), two of ID.S09's three T-children ('Superficial Fungal Infections' and 'Dermatophytes', pdf 750/ID32, see Dermatology D31-D49), and ID.S14's 'Ectoparasites' (pdf 759/ID41, see Dermatology D33) each carry zero independent clinical content in this chapter - each is a single-line cross-reference immediately followed by unrelated, genuine ID content that TOC extraction merged into the same node (Bone and Joint Infections; Subcutaneous Fungal Infections; Travel Medicine, respectively).",
+      "resolution_status": "RESOLVED - each cross-reference-only fragment represented as its own REFERENCE_ONLY study unit (SU-ID-06, SU-ID-23, SU-ID-28) with zero planned question coverage and a cross_discipline_note pointing to the owning chapter; the genuine adjacent content is represented separately (SU-ID-07, SU-ID-24, SU-ID-29).",
+      "recommended_action": "No action required for this chapter; consistent with the same pattern already seen in chapters G, GS, GY.",
+      "affects_global_toc": false
+    },
+    {
+      "issue_type": "unresolved_heading_not_body_confirmed",
+      "severity": "informational",
+      "study_unit_id": "SU-ID-29",
+      "title": "Rocky Mountain Spotted Fever and West Nile Virus (ID.S18/ID.S18.T01 title fragments) could not be body-confirmed as standalone disease sections anywhere in the chapter",
+      "summary": "A full-chapter search (pdf 719-778, clean-ocr corpus) for 'Rocky Mountain' and 'West Nile Virus' as standalone body headings found no matches; both terms appear only as row entries within Table 29 (Important Exposures), a vector-borne-disease exposure table inside the genuine Travel Medicine section (SU-ID-29).",
+      "resolution_status": "UNRESOLVED PER ACCURACY RULES - per the rule against inventing headings, no separate Rocky Mountain Spotted Fever or West Nile Virus study unit was fabricated. ID.S18 and ID.S18.T01 are accounted for in SU-ID-32 (their confirmed content is the continuing Antimicrobials reference table on the same physical pages).",
+      "recommended_action": "Revisit if a future raw-OCR pass locates a dedicated body section for either disease elsewhere in the chapter or in an adjacent chapter (e.g., Dermatology for the rash differential).",
+      "affects_global_toc": false
+    },
+    {
+      "issue_type": "mcc_registry_coverage_gap",
+      "severity": "informational",
+      "study_unit_id": "SU-ID-10, SU-ID-11, SU-ID-13, SU-ID-14, SU-ID-17, SU-ID-18, SU-ID-21, SU-ID-24, SU-ID-27",
+      "title": "MCC objectives registry has no dedicated objective for many named Infectious Diseases topics",
+      "summary": "MCC's Medical Expert objectives (198 total) are almost entirely presentation-based (fever, shock, cough, skin conditions) rather than disease-based, so no objective is titled 'HIV', 'Tuberculosis', 'Syphilis', 'Sepsis', 'Meningitis', 'Malaria', 'Lyme disease', 'Leprosy', 'Rabies', 'Tetanus', 'Cat Scratch Disease', or 'Endemic/Opportunistic Fungi'. This is the same registry-coverage-gap pattern already flagged in chapters E, G, GS, GM, GY, H, but is especially pronounced here given how disease-centric this chapter's structure is. Every affected topic was still mapped to the closest presentation-based objective whose causal_conditions/enabling_objectives text names it explicitly where possible (e.g., 'Sepsis' named under objective 9-2's Distributive shock; 'meningitis, encephalitis' named under objective 58-1's Coma causal_conditions; 'Plasmodium' named under objective 107-1's fever causal_conditions; 'immunocompromised state due to HIV' named in objective 107-1's enabling objectives), with mapping_strength never exceeding what the retrieved text actually supports.",
+      "resolution_status": "RESOLVED FOR THIS CHAPTER - no evidence fabricated; see crosswalk.json's per-unit mapping_rationale.",
+      "recommended_action": "Coordinator may want to continue folding this into the broader MCC-objectives-registry-gap note (now confirmed in seven chapters: E, G, GS, GM, GY, H, ID).",
+      "affects_global_toc": false
+    },
+    {
+      "issue_type": "cross_discipline_overlap_candidate",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-ID-17, SU-ID-25",
+      "title": "Candidate cross-discipline overlaps requiring later global resolution",
+      "summary": "SU-ID-17 (Syphilis) overlaps Gynecology (GY, completed - SU-GY-17 Sexually Transmitted Infections already flagged this same gap from the GY side) and Family Medicine (FM, not yet mapped, cited in-text for generalized STI workup). SU-ID-25 (Trichomonas vaginalis, part of Parasitic Infections: Protozoa) also overlaps Gynecology's vaginal-discharge/STI content.",
+      "resolution_status": "NOT RESOLVED BY DESIGN - deferred per task instructions until all relevant chapters are mapped.",
+      "recommended_action": "Coordinator should review during the global cross-chapter overlap audit once FM is mapped and reconcile against GY's existing SU-GY-17 cross-discipline note.",
+      "affects_global_toc": false
+    },
+    {
+      "issue_type": "current_guidance_sensitive_content",
+      "severity": "informational",
+      "study_unit_id": "SU-ID-19, SU-ID-20, SU-ID-22, SU-ID-32",
+      "title": "HIV antiretroviral therapy, PrEP/PEP regimens, and the antimicrobial reference appendix are current-guidance-sensitive",
+      "summary": "Per project instructions, exact antibiotic/antifungal/antiparasitic/antiretroviral choice, dose, and duration are not encoded into the scope layer even where Toronto Notes provides them (e.g., specific PrEP dosing regimens, RIPE doses, vancomycin dosing). freshness.verification_required is set to true on SU-ID-19, SU-ID-20, SU-ID-22, and SU-ID-32 accordingly.",
+      "resolution_status": "RESOLVED - competencies are mapped at the recognition/initiation level only; clinical answers will be researched from current Canadian guidance during question generation.",
+      "recommended_action": "No action required; standard practice per chapter workflow instructions.",
+      "affects_global_toc": false
+    }
+  ]
+}

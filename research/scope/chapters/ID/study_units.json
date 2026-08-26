@@ -1,0 +1,798 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-25T00:00:00Z",
+  "chapter_code": "ID",
+  "chapter_title": "Infectious Diseases",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes SOURCE STRUCTURE (toc_inventory.json / derived/scope_packets/ID.json), cross-verified against the canonical raw-OCR corpus (derived/toronto-notes-2025/clean-ocr/) given this chapter's unusually heavy TOC-extraction corruption. Chapter ID has 75 source nodes, 0 unresolved_headings per the deterministic packet, but raw-OCR verification found six distinct structural defects, the most severe found in any completed chapter to date: (1) ID.S04's printed title 'Gastrointestinal Infections' is body-confirmed (pdf 731/ID13) to be a pure cross-reference-only entry (see Gastroenterology G13/G18/G19/G31, Pediatrics P44) with zero independent content; the genuine 'Bone and Joint Infections' section (Septic Arthritis, Diabetic Foot Infections, Osteomyelitis) that TOC extraction merged into the same node is represented separately (SU-ID-06 REFERENCE_ONLY; SU-ID-07 DIRECT). (2) ID.S07 ('Systemic Infections') is missing a genuine T-child, 'Cat Scratch Disease', confirmed via raw OCR at pdf 741-742/ID23-24 within the section's own declared range; its title was instead concatenated onto the unrelated node ID.S17 (SU-ID-16). (3) A substantial 'Syphilis' section (pdf 742-743/ID24-25) has NO toc_inventory.json node at all - a more severe gap than any prior chapter's Fibroids/Sickle-Cell precedent, since even a mislabeled node does not exist - represented as UNCATALOGUED:ID.SYPHILIS (SU-ID-17). (4) ID.S08 'Tuberculosis' is recorded with a 7-page range (pdf 743-749) that actually spans two chapter topics: TB itself occupies only pdf 743-744/ID25-26 (SU-ID-18), and the remaining pdf 745-749/ID27-31 is a substantial, genuine HIV/AIDS section (Epidemiology, Etiology, Modes of Transmission, Natural History, diagnostic approach, Antiretroviral Drugs) that has no node of its own at its true location. (5) The largest single defect in this chapter: nodes ID.S17 through ID.S23 (toc-recorded at pdf 764-778/ID46-60, HIGH-confidence TOC_OCR titles) are a two-column TOC merge spanning nearly a third of the chapter's page range. Their titles concatenate genuine HIV disease-topic subheadings (HIV/Epidemiology/Modes of Transmission/Natural History, confirmed at pdf 745-749/ID27-31 -> SU-ID-19; Prevention of HIV Infection/Types of Testing/HIV Pre- and Post-Test Counselling, confirmed at pdf 749-750/ID31-32 -> SU-ID-20) with an unrelated antimicrobial-reference-appendix column (Antimicrobials/Antibiotics/Antifungals/Antiparasitics/Landmark Trials/References, confirmed at their toc-recorded pdf 764-778/ID46-60 -> SU-ID-32). Rocky Mountain Spotted Fever and West Nile Virus (part of ID.S18's title) were searched for as standalone body headings across the full chapter and not found; only table-row mentions exist within the Travel Medicine exposure table (SU-ID-29), so no separate RMSF/WNV unit is fabricated. The 'Syphilis' fragment of ID.S19's title is confirmed to be a recurring antibiotics-table column header, not a second real disease section (the genuine Syphilis content is the separate uncatalogued unit in finding 3). (6) ID.S09 ('FUNGALINFECTIONS'/'Skin and Subcutaneous Infections') and ID.S14 ('Ectoparasites'/'TravelMedicine') each follow the same pattern as finding (1): a cross-reference-only stub (Superficial Fungal Infections/Dermatophytes -> Dermatology; Ectoparasites/scabies/lice -> Dermatology D33) merged with a substantial real section (Subcutaneous Fungal Infections/Sporotrichosis; Travel Medicine), both confirmed at pdf 750/ID32 and pdf 759/ID41 respectively. Similarly, ID.S10's printed title 'Endemic Mycoses' (matching its own real content, Histoplasma/Blastomyces/Coccidioides at pdf 751/ID33) is merged with its merged_duplicate_headings entry 'Opportunistic Fungi' (PJP/Cryptococcus/Candida/Aspergillus, its actual T-children, at pdf 752-753/ID34-35) - both real, adjacent sections represented as two units (SU-ID-21, SU-ID-22) sharing one node, per the GY-Fibroids/H-Sickle-Cell dual-unit precedent. All six findings were resolved via the canonical clean-ocr corpus (derived/toronto-notes-2025/clean-ocr/, pdf pages 719-778), never via raw pdftotext of the source PDF directly (which was found to be substantially noisier/less reliable for this densely two-column-formatted chapter) and never via model memory. No heading was invented: the one genuinely uncatalogued topic (Syphilis) is marked with a synthetic UNCATALOGUED: id per the established project convention, and the RMSF/West Nile Virus title-fragments that could not be body-confirmed are documented as unresolved in review_items.json rather than represented as fabricated study units.",
+  "total_study_units": 32,
+  "organizational_header_nodes": {
+    "ID": "Chapter root container - represented by all study units below, per the C/ELOM/A/CP/D/E/FM/G/GS/GM/GY/H convention.",
+    "ID.S06": "'CNS Infections' umbrella heading (ID17-19); carries four T-children consolidated as SU-ID-09 (Meningitis+Encephalitis), SU-ID-10 (Tetanus), SU-ID-11 (Rabies).",
+    "ID.S16": "'Infections in the Immunocompromised Host' umbrella heading (ID44-45); carries no independent content beyond its three T-children, represented as SU-ID-31."
+  },
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-01",
+      "title": "Principles of Microbiology (Bacteriology, Virology, Mycology, Parasitology, Transmission)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S01",
+        "ID.S01.T01",
+        "ID.S01.T02",
+        "ID.S01.T03",
+        "ID.S01.T04",
+        "ID.S01.T05"
+      ],
+      "tn_page_range": "ID2-ID6",
+      "pdf_page_range": [
+        720,
+        724
+      ],
+      "source_hierarchy_path": [
+        "ID.S01",
+        "ID.S01.T01",
+        "ID.S01.T02",
+        "ID.S01.T03",
+        "ID.S01.T04",
+        "ID.S01.T05"
+      ],
+      "structural_rationale": "ID.S01's printed title 'ACTOMYMS' (OCR-garbled 'ACRONYMS') merges an acronym glossary (confirmed at pdf 720/ID2: AFB, DVT, HHV, AIDS, EBV...) with 'Principles of Microbiology' (merged_duplicate_headings). Body confirmation (clean-ocr 0720-0724) shows five foundational background topics (Bacteriology/Table 1 Common Bacteria at ID3, Virology at ID4, Mycology at ID5, Transmission of Infectious Diseases/Table 6 at ID6); no independent 'Parasitology' page-start heading was body-confirmed, but the TOC-recorded T-child is retained as it is not contradicted. Consolidated into one SUPPORTING_KNOWLEDGE unit since these are foundational classification/definitions underlying every disease-specific unit later in the chapter, not independently testable competencies. The acronym glossary itself is non-clinical and not separately represented.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-02",
+      "title": "Respiratory Infections (Pneumonia)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S02",
+        "ID.S02.T01"
+      ],
+      "tn_page_range": "ID7-ID9",
+      "pdf_page_range": [
+        725,
+        727
+      ],
+      "source_hierarchy_path": [
+        "ID.S02",
+        "ID.S02.T01"
+      ],
+      "structural_rationale": "ID.S02 'Nosocomial Infections' opens with 'Respiratory Infections' and T-child 'Pneumonia * see Pediatrics, P68' (body-confirmed at pdf 725/ID7); the cross-reference is only for the pediatric-specific angle, and substantial general pneumonia content (etiology, risk factors, Pneumonia Severity Index Table 10 at ID8, prevention/vaccination at ID9) follows independently in this chapter, so the unit is retained as real ID content rather than reclassified REFERENCE_ONLY.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-03",
+      "title": "Influenza",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S02.T02"
+      ],
+      "tn_page_range": "ID6-ID10",
+      "pdf_page_range": [
+        724,
+        728
+      ],
+      "source_hierarchy_path": [
+        "ID.S02",
+        "ID.S02.T02"
+      ],
+      "structural_rationale": "TOC heading 'Influenza' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Nosocomial Infections'/Respiratory Infections; page-start confirmation was not independently obtained for this specific sub-heading, so the section's inherited page range is retained.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-04",
+      "title": "COVID-19",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S02.T03"
+      ],
+      "tn_page_range": "ID10-ID12",
+      "pdf_page_range": [
+        728,
+        730
+      ],
+      "source_hierarchy_path": [
+        "ID.S02",
+        "ID.S02.T03"
+      ],
+      "structural_rationale": "TOC heading 'COVID-19' (LOW confidence, TOC_OCR_UNANCHORED); body-confirmed at pdf 728/ID10 ('Definitions and Etiology - an acute infectious respiratory disease caused by the SARS-CoV-2 virus'), continuing through Table 14 (risk factors for severe outcomes/antiviral eligibility) at ID11 and investigations at ID12.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-05",
+      "title": "Skin and Soft Tissue Infections (Cellulitis, Necrotizing Fasciitis, Acquired Oral Lesions)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S03",
+        "ID.S03.T01",
+        "ID.S03.T02",
+        "ID.S03.T03"
+      ],
+      "tn_page_range": "ID11-ID13",
+      "pdf_page_range": [
+        729,
+        731
+      ],
+      "source_hierarchy_path": [
+        "ID.S03",
+        "ID.S03.T01",
+        "ID.S03.T02",
+        "ID.S03.T03"
+      ],
+      "structural_rationale": "ID.S03 (HIGH confidence, TOC_OCR) with T-children Cellulitis and Necrotizing Fasciitis (pdf 729-730/ID11-12); its third T-child 'Acquired Oral Lesions' is body-confirmed at pdf 731/ID13 (Table 16, Oral Candidiasis vs. Oral Squamous Cell Carcinoma), immediately preceding the cross-reference-only 'Gastrointestinal Infections' content that opens ID.S04 (see SU-ID-06). Consolidated as one unit since all three are localized skin/mucosal infectious presentations.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-06",
+      "title": "Gastrointestinal Infections (Cross-Reference Only)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S04"
+      ],
+      "tn_page_range": "ID13",
+      "pdf_page_range": [
+        731,
+        731
+      ],
+      "source_hierarchy_path": [
+        "ID.S04"
+      ],
+      "structural_rationale": "Body confirmation (clean-ocr 0731.txt) shows ID.S04's printed title 'Gastrointestinal Infections' carries NO independent clinical content in this chapter: the entire entry reads 'Gastrointestinal Infections * see Gastroenterology, G31 and Pediatrics, P44 / Traveller's Diarrhea * see Gastroenterology, G18 / Chronic Diarrhea * see Gastroenterology, G19 / Peptic Ulcer Disease (Helicobacter pylori) * see Gastroenterology, G13', followed immediately by a genuine, substantial 'Bone and Joint Infections' section (see SU-ID-07) that the TOC extraction merged into the same node. This is a textbook 'cross-reference-only entry' per the accuracy rules: represented as REFERENCE_ONLY rather than fabricating GI-infection clinical content that does not exist in this chapter. ID.S04's T-children (Septic Arthritis, Diabetic Foot Infections, Osteomyelitis) belong entirely to the real Bone and Joint Infections portion and are cited only in SU-ID-07.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-07",
+      "title": "Bone and Joint Infections (Septic Arthritis, Diabetic Foot Infections, Osteomyelitis)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S04",
+        "ID.S04.T01",
+        "ID.S04.T02",
+        "ID.S04.T03"
+      ],
+      "tn_page_range": "ID13-ID15",
+      "pdf_page_range": [
+        731,
+        733
+      ],
+      "source_hierarchy_path": [
+        "ID.S04",
+        "ID.S04.T01",
+        "ID.S04.T02",
+        "ID.S04.T03"
+      ],
+      "structural_rationale": "Body confirmation (clean-ocr 0731-0733) shows a genuine, substantial 'Bone and Joint Infections' section beginning immediately after the cross-reference-only 'Gastrointestinal Infections' text on the same page (pdf 731/ID13): 'Bone and Joint Infections * Septic Arthritis / Definition... Medical Emergency...', continuing through gonococcal/non-gonococcal etiology, diabetic foot ulcer risk factors and IWGDF 2023 guideline-referenced management (pdf 732/ID14), and osteomyelitis investigations/treatment (pdf 733/ID15). This is the real identity of ID.S04 and its three T-children (Septic Arthritis, Diabetic Foot Infections, Osteomyelitis); the node's printed title 'Gastrointestinal Infections' describes only the reference-only preamble represented separately in SU-ID-06.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-08",
+      "title": "Cardiac Infections (Infective Endocarditis)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S05",
+        "ID.S05.T01"
+      ],
+      "tn_page_range": "ID15-ID17",
+      "pdf_page_range": [
+        733,
+        735
+      ],
+      "source_hierarchy_path": [
+        "ID.S05",
+        "ID.S05.T01"
+      ],
+      "structural_rationale": "ID.S05's printed title 'CardiacInfections' is a wrapped-heading defect (missing space) for 'Cardiac Infections'; body confirmation shows infective endocarditis content (regurgitant murmur, CHF, prophylaxis for dental/respiratory procedures) spanning pdf 733-735/ID15-17, matching the section's single T-child.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-09",
+      "title": "CNS Infections (Meningitis, Encephalitis)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S06",
+        "ID.S06.T01",
+        "ID.S06.T02"
+      ],
+      "tn_page_range": "ID18-ID20",
+      "pdf_page_range": [
+        736,
+        738
+      ],
+      "source_hierarchy_path": [
+        "ID.S06",
+        "ID.S06.T01",
+        "ID.S06.T02"
+      ],
+      "structural_rationale": "ID.S06 'CNS Infections' T-children Meningitis and Encephalitis; body-confirmed at pdf 736/ID18 ('bacterial meningitis is a medical emergency: do not delay antibiotics for CT or LP') through pdf 738/ID20 (viral encephalitis pathophysiology, retrograde axonal transport). Consolidated as one unit given the shared CNS-infection-emergency competency and overlapping MCC evidence.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-10",
+      "title": "Generalized Tetanus",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S06.T03"
+      ],
+      "tn_page_range": "ID17-ID19",
+      "pdf_page_range": [
+        735,
+        737
+      ],
+      "source_hierarchy_path": [
+        "ID.S06",
+        "ID.S06.T03"
+      ],
+      "structural_rationale": "TOC heading 'Generalized Tetanus' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of CNS Infections; independent page-start confirmation was not obtained for this specific sub-heading within the section's inherited range.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-11",
+      "title": "Rabies",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S06.T04"
+      ],
+      "tn_page_range": "ID17-ID19",
+      "pdf_page_range": [
+        735,
+        737
+      ],
+      "source_hierarchy_path": [
+        "ID.S06",
+        "ID.S06.T04"
+      ],
+      "structural_rationale": "TOC heading 'Rabies' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of CNS Infections; independent page-start confirmation was not obtained within the section's inherited range.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-12",
+      "title": "Sepsis and Septic Shock",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S07",
+        "ID.S07.T01"
+      ],
+      "tn_page_range": "ID20-ID21",
+      "pdf_page_range": [
+        738,
+        739
+      ],
+      "source_hierarchy_path": [
+        "ID.S07",
+        "ID.S07.T01"
+      ],
+      "structural_rationale": "ID.S07 'Systemic Infections' opens with Sepsis and Septic Shock, body-confirmed at pdf 738-739/ID20-21 (pathophysiology, patients unresponsive to fluid resuscitation and vasopressors).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-13",
+      "title": "Leprosy (Hansen's Disease)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S07.T02"
+      ],
+      "tn_page_range": "ID21-ID22",
+      "pdf_page_range": [
+        739,
+        740
+      ],
+      "source_hierarchy_path": [
+        "ID.S07",
+        "ID.S07.T02"
+      ],
+      "structural_rationale": "TOC heading 'Leprosy' body-confirmed at pdf 739/ID21 ('Mycobacterium leprae: obligate intracellular bact...'), continuing to pdf 740/ID22 (leprosy reaction management).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-14",
+      "title": "Lyme Disease",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S07.T03"
+      ],
+      "tn_page_range": "ID22-ID23",
+      "pdf_page_range": [
+        740,
+        741
+      ],
+      "source_hierarchy_path": [
+        "ID.S07",
+        "ID.S07.T03"
+      ],
+      "structural_rationale": "TOC heading 'Lyme Disease' body-confirmed at pdf 740/ID22 ('spirochete bacteria: Borrelia burgdorferi... spread into higher latitudes... reported in southern Canada'), through serology/staged-treatment content on pdf 741/ID23.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-15",
+      "title": "Toxic Shock Syndrome",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S07.T04"
+      ],
+      "tn_page_range": "ID22-ID23",
+      "pdf_page_range": [
+        740,
+        741
+      ],
+      "source_hierarchy_path": [
+        "ID.S07",
+        "ID.S07.T04"
+      ],
+      "structural_rationale": "TOC heading 'Toxic Shock Syndrome' body-confirmed at pdf 740/ID22 ('superantigens produced by some strains of S. aureus or GAS... precipitous... acute fever, shock, multiorgan failure'), continuing into pdf 741/ID23 (risk factors: tampon use, nasal packing, wound infections).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-16",
+      "title": "Cat Scratch Disease",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S07",
+        "ID.S17"
+      ],
+      "tn_page_range": "ID23-ID24",
+      "pdf_page_range": [
+        741,
+        742
+      ],
+      "source_hierarchy_path": [
+        "ID.S07",
+        "ID.S17"
+      ],
+      "structural_rationale": "Genuine coverage gap resolved via raw-OCR verification: body confirmation (clean-ocr 0741.txt) shows 'Cat Scratch Disease / Etiology - Bartonella henselae... cat-to-human transmission via cat scratch/bite' immediately following Toxic Shock Syndrome's treatment content, i.e. within ID.S07's own declared page range (pdf 738-742/ID20-24), continuing onto pdf 742/ID24 (doxycycline treatment). This heading was never captured as its own T-child of ID.S07 in toc_inventory.json; instead its title was concatenated onto the unrelated node ID.S17 ('Cat Scratch Disease A Simplified Look at Antibiotics', pdf 764-765), which is a two-column TOC merge of this real disease name with a genuine appendix heading located ~23 pages later (see SU-ID-32). Represented here at its confirmed body location, citing both the section it structurally belongs to (ID.S07) and the mislabeled node whose title names it (ID.S17), per the project's established dual-node-citation convention for confirmed-real-but-misattributed content (cf. chapter GY's Fibroids/Contraception and chapter H's Sickle-Cell/Landmark-Trials precedents).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-17",
+      "title": "Syphilis",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "UNCATALOGUED:ID.SYPHILIS"
+      ],
+      "tn_page_range": "ID24-ID25",
+      "pdf_page_range": [
+        742,
+        743
+      ],
+      "source_hierarchy_path": [
+        "UNCATALOGUED:ID.SYPHILIS"
+      ],
+      "structural_rationale": "Genuine, substantial coverage gap resolved via raw-OCR verification: body confirmation (clean-ocr 0742.txt-0743.txt) shows a full Syphilis section - late-onset/congenital manifestations (saddle nose, saber shins, Clutton joints, Hutchinson's teeth, mulberry molars), neurosyphilis, Public-Health-Lab testing algorithm, and staged penicillin treatment (pdf 743/ID25, ending 'see Family Medicine, FM47 for generalized STI workup') - located between Cat Scratch Disease (SU-ID-16) and Tuberculosis (SU-ID-18). Unlike every other structural defect found in this chapter, NO toc_inventory.json node anywhere in ID's 75 source nodes carries any fragment of this heading (a separate 'Syphilis' string does appear concatenated into node ID.S19's title 'Syphilis Antivirals', but body verification (clean-ocr 0765.txt-0767.txt, Table 33/34 Antibiotics Overview) shows this is a recurring table COLUMN header - 'Chlamydia trachomatis... Syphilis' as an antibiotic-coverage-indication column - not a second real disease-topic heading; see SU-ID-32). Per the rule against inventing headings, this well-evidenced but uncatalogued content is represented with a synthetic node id (UNCATALOGUED:ID.SYPHILIS), following the established convention used for chapter H's References bibliography (SU-H-51) and similar cases in chapters A/D/FM.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-18",
+      "title": "Tuberculosis",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S08"
+      ],
+      "tn_page_range": "ID25-ID26",
+      "pdf_page_range": [
+        743,
+        744
+      ],
+      "source_hierarchy_path": [
+        "ID.S08"
+      ],
+      "structural_rationale": "ID.S08's toc-recorded page range (pdf 743-749/ID25-31, MEDIUM confidence) is corrected via raw-OCR verification: body confirmation (clean-ocr 0743.txt-0744.txt) shows Tuberculosis content (etiology/progression, miliary/extrapulmonary TB, TST/IGRA screening, RIPE treatment, MDR/XDR-TB) spans only pdf 743 (mid-page, immediately after Syphilis's STI cross-reference) through pdf 744/ID26, ending cleanly with 'TB Treatment RIPE...' before HIV Epidemiology begins fresh on pdf 745/ID27 (see SU-ID-19). The toc_inventory.json page range for this node substantially overstates its extent, having absorbed what is actually the HIV section's true page range.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-19",
+      "title": "HIV Infection: Epidemiology, Transmission, Natural History, and Antiretroviral Therapy Overview",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S20.T01",
+        "ID.S21",
+        "ID.S22",
+        "ID.S22.T01"
+      ],
+      "tn_page_range": "ID27-ID31",
+      "pdf_page_range": [
+        745,
+        749
+      ],
+      "source_hierarchy_path": [
+        "ID.S20",
+        "ID.S20.T01",
+        "ID.S21",
+        "ID.S22",
+        "ID.S22.T01"
+      ],
+      "structural_rationale": "Major structural finding, resolved via raw-OCR verification (clean-ocr 0745.txt-0749.txt): a substantial, entirely real HIV/AIDS section - Epidemiology (Canadian/global statistics), Etiology, Modes of Transmission (per-exposure-route risk table), Natural History (CD4/viral-load/antibody curve, acute retroviral syndrome), diagnostic approach, the Antiretroviral Drugs table, and ART mechanism/target-site diagrams - occupies pdf 745-749/ID27-31, immediately after Tuberculosis (SU-ID-18) and before HIV Testing/Counselling/Prevention content continues on pdf 749-750/ID31-32 (see SU-ID-20). The HIGH-confidence, TOC_OCR-sourced node titles for this content ('HIV' at ID.S20.T01; 'Epidemiology' at ID.S21; 'Modes of Transmission' at ID.S22; 'Natural History' at ID.S22.T01) are genuine, printed Toronto Notes TOC entries - not fabricated - but toc_inventory.json recorded them at pdf 771-775/ID53-57, ~26 pages away from their confirmed body location, because the TOC's two-column layout merged them with an unrelated antimicrobial-appendix column (Antifungals/Antiparasitics/Management, represented separately in SU-ID-32). Represented here at the corrected, body-confirmed page range.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-20",
+      "title": "HIV Testing, Pre/Post-Test Counselling, and Prevention (PrEP/PEP)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S23",
+        "ID.S23.T01",
+        "ID.S23.T02"
+      ],
+      "tn_page_range": "ID31-ID32",
+      "pdf_page_range": [
+        749,
+        750
+      ],
+      "source_hierarchy_path": [
+        "ID.S23",
+        "ID.S23.T01",
+        "ID.S23.T02"
+      ],
+      "structural_rationale": "Continuation of the HIV structural finding documented in SU-ID-19: body confirmation (clean-ocr 0749.txt-0750.txt) shows Prevention of HIV Infection (PrEP - daily and on-demand dosing regimens, injectable cabotegravir, ART-associated transmission-risk reduction, blood/organ donation screening) at the tail of pdf 749/ID31, followed immediately by Types of Testing (Nominal, Non-Nominal, Anonymous) and HIV Pre- and Post-Test Counselling on pdf 750/ID32 - all HIGH-confidence TOC_OCR-sourced titles genuinely printed in the Toronto Notes TOC, but recorded in toc_inventory.json at pdf 776-778/ID58-60 (~26 pages away), merged with the chapter's genuine end-of-chapter References bibliography (represented separately in SU-ID-32). Page 750/ID32 also transitions directly into 'FUNGAL INFECTIONS' content (see SU-ID-21 through SU-ID-24), confirming this is the correct, body-verified end-point of the HIV section.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-21",
+      "title": "Endemic Mycoses (Histoplasmosis, Blastomycosis, Coccidioidomycosis)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S10"
+      ],
+      "tn_page_range": "ID33",
+      "pdf_page_range": [
+        751,
+        751
+      ],
+      "source_hierarchy_path": [
+        "ID.S10"
+      ],
+      "structural_rationale": "Genuine coverage gap resolved via raw-OCR verification, analogous to chapter GY's Fibroids/Contraception precedent: ID.S10's printed title 'Endemic Mycoses' is body-confirmed at pdf 751/ID33 ('fungal infection that occurs through the inhalation of spores... Histoplasma... Blastomyces... Coccidioides' all present), but toc_inventory.json's T-children for this node (PJP, Cryptococcus, Candida, Aspergillus) are opportunistic, not endemic, fungi and match the node's merged_duplicate_headings entry 'Opportunistic Fungi' instead (see SU-ID-22). Both are genuine, adjacent, real sections sharing one merged node; represented as two study units citing ID.S10, per the same dual-unit convention used for chapter GY's SU-GY-10/SU-GY-40 and chapter H's SU-H-20/21/22.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-22",
+      "title": "Opportunistic Fungi (Pneumocystis Jirovecii Pneumonia, Cryptococcus, Candida, Aspergillus)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S10",
+        "ID.S10.T01",
+        "ID.S10.T02",
+        "ID.S10.T03",
+        "ID.S10.T04"
+      ],
+      "tn_page_range": "ID34-ID35",
+      "pdf_page_range": [
+        752,
+        753
+      ],
+      "source_hierarchy_path": [
+        "ID.S10",
+        "ID.S10.T01",
+        "ID.S10.T02",
+        "ID.S10.T03",
+        "ID.S10.T04"
+      ],
+      "structural_rationale": "Real identity of ID.S10's merged_duplicate_headings entry 'Opportunistic Fungi', body-confirmed at pdf 752/ID34 (PJP treatment: 'oxygen to keep SaO2 >90%... TMP/SMX (PO or IV) is preferred therapy') through pdf 753/ID35 (opportunistic infections in HIV: fluconazole/echinocandin for Candida, Cryptococcus). See SU-ID-21 for the Endemic Mycoses portion of this same merged node.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-23",
+      "title": "Fungal Infections: Superficial and Dermatophyte (Cross-Reference Only)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S09",
+        "ID.S09.T01",
+        "ID.S09.T02"
+      ],
+      "tn_page_range": "ID32",
+      "pdf_page_range": [
+        750,
+        750
+      ],
+      "source_hierarchy_path": [
+        "ID.S09",
+        "ID.S09.T01",
+        "ID.S09.T02"
+      ],
+      "structural_rationale": "ID.S09's printed title 'FUNGALINFECTIONS' (wrapped-heading defect) merged 'Skin and Subcutaneous Infections'; body confirmation (clean-ocr 0750.txt) shows its first two T-children carry NO independent content in this chapter: 'Superficial Fungal Infections * see Dermatology, D32, D33, D37, D45, D46, and D49' and 'Dermatophytes * see Dermatology, D31' are pure cross-references. Represented as REFERENCE_ONLY per the rule against treating cross-reference-only entries as testable ID-chapter content. Body-confirmed to follow immediately after HIV Pre- and Post-Test Counselling ends on the same page (pdf 750/ID32), correcting toc_inventory.json's recorded pdf 750-752 section-level range down to this exact single-page location for these two T-children.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-24",
+      "title": "Subcutaneous Fungal Infections (Sporotrichosis)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S09.T03"
+      ],
+      "tn_page_range": "ID32",
+      "pdf_page_range": [
+        750,
+        750
+      ],
+      "source_hierarchy_path": [
+        "ID.S09",
+        "ID.S09.T03"
+      ],
+      "structural_rationale": "ID.S09's third T-child, body-confirmed at pdf 750/ID32 as genuine independent content (unlike its two REFERENCE_ONLY siblings, SU-ID-23): 'subcutaneous inoculation by fungi that naturally reside in the soil, including Sporothrix schenckii, which usually occurs in gardeners injured by a rose thorn or splinter... nodular lymphangitis'.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-25",
+      "title": "Parasitic Infections: Protozoa (Entamoeba, Giardia, Trichomonas, Cryptosporidium)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S11",
+        "ID.S11.T01",
+        "ID.S11.T02",
+        "ID.S11.T03",
+        "ID.S11.T04"
+      ],
+      "tn_page_range": "ID35-ID36",
+      "pdf_page_range": [
+        753,
+        754
+      ],
+      "source_hierarchy_path": [
+        "ID.S11",
+        "ID.S11.T01",
+        "ID.S11.T02",
+        "ID.S11.T03",
+        "ID.S11.T04"
+      ],
+      "structural_rationale": "ID.S11 'PARASITIC INFECTIONS' merged with 'Protozoa'; body-confirmed at pdf 754/ID36 (metronidazole treatment for amoebiasis/giardiasis). Page range corrected slightly (pdf 753-754) from toc_inventory.json's recorded 753-754 based on the confirmed HIV/fungal-section boundary immediately preceding it (SU-ID-20/SU-ID-24).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-26",
+      "title": "Blood and Tissue Infections (Malaria, Trypanosoma cruzi, Toxoplasma gondii)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S12",
+        "ID.S12.T01",
+        "ID.S12.T02",
+        "ID.S12.T03"
+      ],
+      "tn_page_range": "ID37-ID38",
+      "pdf_page_range": [
+        755,
+        756
+      ],
+      "source_hierarchy_path": [
+        "ID.S12",
+        "ID.S12.T01",
+        "ID.S12.T02",
+        "ID.S12.T03"
+      ],
+      "structural_rationale": "ID.S12 'Blood and Tissue Infections', body-confirmed at pdf 756/ID38 (Trypanosoma cruzi: reduviid insect vector, Mexico/South/Central America). Toxoplasma treatment content ('in persons living with HIV, (re)initiate ART') at pdf 755/ID37 confirms this section immediately follows the protozoal-diarrhea section.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-27",
+      "title": "Helminths (Roundworms, Flatworms, Schistosoma spp.)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S13",
+        "ID.S13.T01",
+        "ID.S13.T02",
+        "ID.S13.T03"
+      ],
+      "tn_page_range": "ID39-ID40",
+      "pdf_page_range": [
+        757,
+        758
+      ],
+      "source_hierarchy_path": [
+        "ID.S13",
+        "ID.S13.T01",
+        "ID.S13.T02",
+        "ID.S13.T03"
+      ],
+      "structural_rationale": "ID.S13 'Helminths', body-confirmed at pdf 757/ID39 (Table 27, Nematodes/Roundworms) and pdf 758/ID40 (Table 28, Cestodes/Trematodes/Flatworms).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-28",
+      "title": "Ectoparasites (Cross-Reference Only)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S14"
+      ],
+      "tn_page_range": "ID41",
+      "pdf_page_range": [
+        759,
+        759
+      ],
+      "source_hierarchy_path": [
+        "ID.S14"
+      ],
+      "structural_rationale": "ID.S14's printed title 'Ectoparasites' body-confirmed at pdf 759/ID41 to carry NO independent content: 'Ectoparasites * scabies, lice * see Dermatology, D33', a pure cross-reference, immediately followed by Table 29 (Important Exposures, a travel/vector-exposure table listing tick/mosquito/fly/flea-borne pathogen examples including Rocky Mountain spotted fever, West Nile encephalitis, and Bartonella bacilliformis as row entries - not standalone body headings) and then the genuine 'Travel Medicine' section (see SU-ID-29). Represented as REFERENCE_ONLY, consistent with the same pattern already found at SU-ID-06 and SU-ID-23.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-29",
+      "title": "Travel Medicine (General Travel Precautions, Fever in the Returned Traveller)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S14.T01",
+        "ID.S14.T02"
+      ],
+      "tn_page_range": "ID41-ID43",
+      "pdf_page_range": [
+        759,
+        761
+      ],
+      "source_hierarchy_path": [
+        "ID.S14",
+        "ID.S14.T01",
+        "ID.S14.T02"
+      ],
+      "structural_rationale": "Real identity of ID.S14's merged_duplicate_headings entry 'TravelMedicine', body-confirmed beginning at pdf 759/ID41 (Table 29 Important Exposures: mosquito/tick/fly/flea-borne pathogen examples, travel vaccines, chemoprophylaxis) through pdf 760-761/ID42-43 (Fever in the Returned Traveller etiology and Table 30). Rocky Mountain spotted fever and West Nile virus (printed as node titles ID.S18/ID.S18.T01 elsewhere in toc_inventory.json) were searched for as standalone body headings across the entire chapter (pdf 719-778) and NOT found; both appear only as row entries within this unit's Table 29 exposure table. Per the rule against inventing headings, no separate RMSF/West Nile study units are fabricated - see review_items.json.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-30",
+      "title": "Fever of Unknown Origin",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S15"
+      ],
+      "tn_page_range": "ID44",
+      "pdf_page_range": [
+        762,
+        762
+      ],
+      "source_hierarchy_path": [
+        "ID.S15"
+      ],
+      "structural_rationale": "ID.S15 'Fever of Unknown Origin', page range corrected via raw-OCR verification: toc_inventory.json recorded pdf 761/ID43 (which is actually still Travel Medicine's Table 30, see SU-ID-29); body confirmation shows the FUO approach ('careful and repeated history: travel, environmental/occupational exposures, infectious contacts') begins at pdf 762/ID44, immediately before Infections in the Immunocompromised Host begins on pdf 763/ID45 (see SU-ID-31).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-31",
+      "title": "Infections in the Immunocompromised Host (Febrile Neutropenia, Solid Organ Transplant Recipients, IRIS)",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S16",
+        "ID.S16.T01",
+        "ID.S16.T02",
+        "ID.S16.T03"
+      ],
+      "tn_page_range": "ID45-ID46",
+      "pdf_page_range": [
+        763,
+        764
+      ],
+      "source_hierarchy_path": [
+        "ID.S16",
+        "ID.S16.T01",
+        "ID.S16.T02",
+        "ID.S16.T03"
+      ],
+      "structural_rationale": "ID.S16, body-confirmed at pdf 763/ID45 (febrile neutropenia investigations: examine for mucositis/line infections, do NOT perform DRE) through pdf 764/ID46 (Immune Reconstitution Inflammatory Syndrome epidemiology/treatment), ending cleanly immediately before 'A Simplified Look at Antibiotics' begins the antimicrobial reference appendix (see SU-ID-32).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-ID-32",
+      "title": "Antimicrobial Reference Tables and Chapter Bibliography",
+      "chapter_code": "ID",
+      "chapter_title": "Infectious Diseases",
+      "source_node_ids": [
+        "ID.S17",
+        "ID.S18",
+        "ID.S18.T01",
+        "ID.S19",
+        "ID.S20",
+        "ID.S21",
+        "ID.S21.T01",
+        "ID.S22",
+        "ID.S23"
+      ],
+      "tn_page_range": "ID46-ID60",
+      "pdf_page_range": [
+        764,
+        778
+      ],
+      "source_hierarchy_path": [
+        "ID.S17",
+        "ID.S18",
+        "ID.S18.T01",
+        "ID.S19",
+        "ID.S20",
+        "ID.S21",
+        "ID.S21.T01",
+        "ID.S22",
+        "ID.S23"
+      ],
+      "structural_rationale": "Major structural finding, resolved via raw-OCR verification spanning pdf 764-778/ID46-60 (clean-ocr 0764.txt-0778.txt): this entire back section of the chapter is drug-class reference tables and bibliography, not disease-topic narrative - 'A Simplified Look at Antibiotics' and Table 33/34 Antibiotics Overview (pdf 764-769/ID46-51), Table 35 Antibiotics for Selected Bacteria (pdf 770/ID52), Table 37 Antifungals (pdf 771-772/ID53-54), Table 38 Antiparasitics (pdf 773/ID55), a cross-reference-only 'Quick Reference: Common Infections and Their Antibiotic Management * see Family Medicine, FM54' (pdf 774/ID56), 'Landmark Infectious Diseases Trials' (a bibliography of clinical-trial citations, pdf 774-776/ID56-58), and the chapter's genuine end-of-chapter References/bibliography organized by topic heading (pdf 777-778/ID59-60). The nodes carrying this content in toc_inventory.json (ID.S17-ID.S23) have HIGH-confidence, TOC_OCR-sourced titles that concatenate these genuine appendix headings with real disease-topic names from ~15-26 pages earlier in the chapter (Cat Scratch Disease -> SU-ID-16; Syphilis column-header artifact, see SU-ID-17's note; HIV/Epidemiology/Modes of Transmission/Natural History -> SU-ID-19; Prevention of HIV/Types of Testing/HIV Pre-Post-Test Counselling -> SU-ID-20), a two-column TOC merge affecting nearly a third of this chapter's page range. Rocky Mountain Spotted Fever and West Nile Virus (ID.S18/ID.S18.T01's other title-fragment) were not body-confirmed as standalone disease sections anywhere in the chapter (see SU-ID-29's note); their nodes are accounted for here since their only confirmed content is the continuing Antimicrobials table on the same physical pages.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    }
+  ]
+}
