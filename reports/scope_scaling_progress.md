@@ -14,34 +14,31 @@ then continue.
 
 | | |
 |---|---|
-| Completed | 14 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`, `FM`, `G`, `GS`, `GM`, `GY`, `H`, `ID`) |
-| Next chapter | **MG — Medical Genetics** |
+| Completed | 17 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`, `FM`, `G`, `GS`, `GM`, `GY`, `H`, `ID`, `MG`, `MI`, `NP`) |
+| Next chapter | **N — Neurology** |
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `ba54a2c` — scope: map ID Infectious Diseases |
+| Last completed commit | `7de9470` — scope: map NP Nephrology |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
 
-1. MG — Medical Genetics *(next)*
-2. MI — Medical Imaging
-3. NP — Nephrology
-4. N — Neurology
-5. NS — Neurosurgery
-6. OB — Obstetrics
-7. OP — Ophthalmology
-8. OR — Orthopedic Surgery
-9. OT — Otolaryngology
-10. P — Pediatrics
-11. PM — Palliative Medicine
-12. PL — Plastic Surgery
-13. PS — Psychiatry
-14. PH — Public Health and Preventive Medicine
-15. R — Respirology
-16. RH — Rheumatology
-17. U — Urology
-18. VS — Vascular Surgery
+1. N — Neurology *(next)*
+2. NS — Neurosurgery
+3. OB — Obstetrics
+4. OP — Ophthalmology
+5. OR — Orthopedic Surgery
+6. OT — Otolaryngology
+7. P — Pediatrics
+8. PM — Palliative Medicine
+9. PL — Plastic Surgery
+10. PS — Psychiatry
+11. PH — Public Health and Preventive Medicine
+12. R — Respirology
+13. RH — Rheumatology
+14. U — Urology
+15. VS — Vascular Surgery
 
 ## Chapter notes
 
@@ -419,6 +416,26 @@ then continue.
   `UNCERTAIN` classifications (`SU-ID-10` Generalized Tetanus, `SU-ID-11`
   Rabies), 0 invalid MCC IDs, 0 hygiene violations, validator PASS,
   553/553 project tests passing.
+
+- **NP (Nephrology)**: 22 study units derived from all 44 canonical
+  `toc_inventory.json` source nodes, plus 4 additional core-content topics
+  (Acute Kidney Injury, Glomerular/Tubulointerstitial/Vascular/Analgesic
+  renal disease, Hypertension, Renal Transplantation) confirmed via
+  raw-OCR body-heading verification against pages the deterministic
+  packet flagged as unresolved TOC anchors, represented via the
+  `UNCATALOGUED:` synthetic source-node-id convention rather than
+  dropped. 29 MCC evidence references (14 STRONG, 14 MODERATE, 1 WEAK)
+  across 9 objectives, 5 of which (89-1 AKI, 8 Hematuria, 84 Proteinuria,
+  9-1 Hypertension, 29-1 Generalized edema) were located via targeted
+  `search-mcc-objectives` calls after the packet's candidate set did not
+  surface them — continuing the same MCC-registry-coverage-gap pattern
+  documented in earlier chapters. Primary classification breakdown:
+  DIRECT=9, COMPONENT=7, SUPPORTING_KNOWLEDGE=3, REFERENCE_ONLY=2,
+  CROSS_DISCIPLINE=1, SPECIALIST_DETAIL=0, UNCERTAIN=0. Processed in an
+  isolated worktree (`scope/NP-nephrology`, commit `7de9470`) and
+  integrated into `main` via fast-forward merge (no divergence). 0
+  invalid MCC IDs, 0 hygiene violations, validator PASS, 553/553 project
+  tests passing.
 
 ## Resume protocol (per Phase 3C instructions)
 

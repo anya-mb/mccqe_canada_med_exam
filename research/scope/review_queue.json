@@ -1,28 +1,27 @@
 {
   "schema_note": "Deterministically rebuilt by the coordinator from each completed chapter local review_items.json after that chapter passed validation. Never mutated directly by chapter subagents.",
   "generated_from_chapters": [
-    "C",
-    "ELOM",
     "A",
     "CP",
     "D",
-    "ER",
     "E",
+    "ER",
     "FM",
     "G",
-    "GS",
     "GM",
+    "GS",
     "GY",
     "H",
     "ID",
     "MG",
-    "MI"
+    "MI",
+    "NP"
   ],
   "chapters_without_review_items_file": [
     "C",
     "ELOM"
   ],
-  "total_items": 67,
+  "total_items": 75,
   "items": [
     {
       "issue_type": "structural_ambiguity",
@@ -32,8 +31,7 @@
       "summary": "The 'Monitoring' heading (source_pdf_page 55 in research/tn2025/unresolved_headings.json, status UNRESOLVED) has NO corresponding node anywhere in toc_inventory.json's 59 chapter-A nodes - unlike the A.S01/A.S06 same-page merges, there was no existing node to split; the TOC-extraction pipeline dropped this heading entirely.",
       "resolution_status": "INDEPENDENTLY RESOLVED (not left open) - raw OCR of pdf page 61 (derived/toronto-notes-2025/ocr/pages/0061.json) confirms the heading text is 'Canadian Guidelines to the Practice of Anesthesia and Patient Monitoring', immediately followed on the same page by the confirmed body-heading match already recorded for node A.S03 ('Airway Management'). Represented as SU-A-07 with source_node_ids ['UNCATALOGUED:Monitoring@pdf61'] since no real toc_inventory.json node id exists to cite.",
       "recommended_action": "Coordinator should consider adding a corresponding node to toc_inventory.json for chapter A (between A.S02 and A.S03, pdf page 61) in a future TOC-extraction pass, since this confirms at least one heading is missing from the pipeline's output entirely (not merged, dropped) - the same class of gap that produced the ELOM reference-disclaimer reattribution case. Flagged informational/low-priority since chapter A's own crosswalk is unaffected (SU-A-07 is fully resolved and validated).",
-      "affects_global_toc": true,
-      "chapter_code": "A"
+      "affects_global_toc": true
     },
     {
       "issue_type": "weak_mapping_scope_review",
@@ -41,8 +39,7 @@
       "study_unit_id": "SU-A-06",
       "title": "Preoperative Hematologic and Endocrine Optimization",
       "summary": "mcc_evidence cites objective 42-1 'Anemia' at WEAK strength (requires_scope_review: true) because this unit tests only the narrow perioperative-optimization slice of anemia management (preop Hb correction timing) rather than the objective's full diagnostic scope.",
-      "recommended_action": "Coordinator/reviewer to confirm whether 42-1 is the best available anchor or whether this content should instead rely solely on the MODERATE 74-3 evidence already present and drop the WEAK 42-1 citation.",
-      "chapter_code": "A"
+      "recommended_action": "Coordinator/reviewer to confirm whether 42-1 is the best available anchor or whether this content should instead rely solely on the MODERATE 74-3 evidence already present and drop the WEAK 42-1 citation."
     },
     {
       "issue_type": "weak_mapping_scope_review",
@@ -50,8 +47,7 @@
       "study_unit_id": "SU-A-09",
       "title": "Methods of Supporting the Airway",
       "summary": "mcc_evidence cites objective 13 'Cardiac arrest' at WEAK strength (requires_scope_review: true) - airway device selection for elective anesthesia is broader than the cardiac-arrest-specific advanced-airway skill the objective anchors elsewhere in this chapter (SU-A-10, SU-A-14, SU-A-36).",
-      "recommended_action": "Coordinator/reviewer to confirm whether this WEAK secondary citation adds value or should be dropped in favor of the MODERATE 74-3 evidence alone.",
-      "chapter_code": "A"
+      "recommended_action": "Coordinator/reviewer to confirm whether this WEAK secondary citation adds value or should be dropped in favor of the MODERATE 74-3 evidence alone."
     },
     {
       "issue_type": "weak_mapping_scope_review",
@@ -59,8 +55,7 @@
       "study_unit_id": "SU-A-12",
       "title": "Oxygen Therapy and Mechanical Ventilation",
       "summary": "mcc_evidence cites objective 27 'Dyspnea' at WEAK strength (requires_scope_review: true) - mechanical ventilation is one management option among many for the broader dyspnea objective, and this unit's scope (perioperative ventilator strategies/complications) is a narrow procedural slice of it.",
-      "recommended_action": "Coordinator/reviewer to confirm whether this WEAK secondary citation adds value or should be dropped in favor of the MODERATE 19 (Cyanosis and hypoxia) evidence alone.",
-      "chapter_code": "A"
+      "recommended_action": "Coordinator/reviewer to confirm whether this WEAK secondary citation adds value or should be dropped in favor of the MODERATE 19 (Cyanosis and hypoxia) evidence alone."
     },
     {
       "issue_type": "weak_mapping_scope_review",
@@ -68,8 +63,7 @@
       "study_unit_id": "SU-A-17",
       "title": "Blood Products and Transfusion",
       "summary": "mcc_evidence cites objective 9-2 'Shock' at WEAK strength (requires_scope_review: true) - blood product administration is one resuscitation option for hemorrhagic shock, a narrow procedural overlap with the broader shock objective already anchoring SU-A-15.",
-      "recommended_action": "Coordinator/reviewer to confirm whether this WEAK secondary citation adds value or should be dropped in favor of the MODERATE 15-1 (Bleeding, bruising) evidence alone.",
-      "chapter_code": "A"
+      "recommended_action": "Coordinator/reviewer to confirm whether this WEAK secondary citation adds value or should be dropped in favor of the MODERATE 15-1 (Bleeding, bruising) evidence alone."
     },
     {
       "issue_type": "weak_mapping_scope_review",
@@ -77,8 +71,7 @@
       "study_unit_id": "SU-A-18",
       "title": "Induction Technique and Agents",
       "summary": "mcc_evidence cites objective 9-2 'Shock' at WEAK strength (requires_scope_review: true) - induction-agent choice in a hemodynamically unstable patient touches the shock objective's management scope for only this one narrow decision point (e.g., etomidate preference).",
-      "recommended_action": "Coordinator/reviewer to confirm whether this WEAK secondary citation adds value or should be dropped in favor of the MODERATE 74-3 evidence alone.",
-      "chapter_code": "A"
+      "recommended_action": "Coordinator/reviewer to confirm whether this WEAK secondary citation adds value or should be dropped in favor of the MODERATE 74-3 evidence alone."
     },
     {
       "issue_type": "mcc_naming_gap",
@@ -86,8 +79,7 @@
       "study_unit_id": "SU-A-33",
       "title": "Malignant Hyperthermia",
       "summary": "No MCC objective names malignant hyperthermia verbatim, despite it being one of the highest-yield, most classically board-tested facts in anesthesia. The best available anchor, 107-1 'Fever and hyperthermia' (MODERATE strength), only lists the mechanistically-analogous 'drug-induced syndromes (e.g., neuroleptic malignant syndrome, serotonin syndrome)' in its causal_conditions, not MH itself. This is honestly documented in the crosswalk's mapping_rationale rather than forced to a false STRONG match.",
-      "recommended_action": "No action required for chapter A's own crosswalk (evidence is defensible at MODERATE); flagged for coordinator awareness in case future MCC objectives_registry.json updates add MH explicitly, or in case other chapters (e.g. Pediatrics, Surgery) encounter the same naming gap and a cross-chapter registry annotation would help.",
-      "chapter_code": "A"
+      "recommended_action": "No action required for chapter A's own crosswalk (evidence is defensible at MODERATE); flagged for coordinator awareness in case future MCC objectives_registry.json updates add MH explicitly, or in case other chapters (e.g. Pediatrics, Surgery) encounter the same naming gap and a cross-chapter registry annotation would help."
     },
     {
       "issue_type": "structural_ambiguity",
@@ -97,8 +89,7 @@
       "summary": "CP.S06's merged_duplicate_headings field lists 'References' alongside 'Landmark Pharmacology Trials' (both indexed to TOC page CP14 / pdf 188), structurally identical in shape to the ELOM ELOM.S04 case where a 'References'-labelled node turned out to be a misattributed disclaimer paragraph rather than a genuine bibliography.",
       "resolution_status": "INDEPENDENTLY RESOLVED (not left open) - raw OCR of body page 0188.json (derived/toronto-notes-2025/ocr/pages/0188.json) confirms CP.S06's 'References' heading here genuinely IS a correctly-attributed, >30-entry chapter bibliography (author/journal/year citations throughout: e.g. Boyer, 'The serotonin syndrome', NEJM 2005; Busse et al., opioid-therapy guideline, CMAJ 2017), with no clinical/testable prose mixed in. No content was reattached elsewhere. Represented as SU-CP-19 (Landmark Pharmacology Trials) + SU-CP-20 (References/Bibliography), both REFERENCE_ONLY.",
       "recommended_action": "No action required for chapter CP's own crosswalk. Flagged for coordinator awareness that the same_page_toc_merge_protocol.md 'References' detection signal (step to check whether a References node is genuine or a misattribution) produces DIFFERENT outcomes across chapters - genuine in Chapter CP, misattributed in Chapter ELOM - confirming the protocol's per-chapter case-by-case verification requirement is doing real work and should not be shortcut in future chapters that show this same merge shape.",
-      "affects_global_toc": false,
-      "chapter_code": "CP"
+      "affects_global_toc": false
     },
     {
       "issue_type": "structural_ambiguity",
@@ -108,8 +99,7 @@
       "summary": "CP.S04's same-page merge nests 'Opioid Therapy and Chronic Non-Cancer Pain' as a third printed TOC sub-bullet under 'Autonomic Physiology & Pharmacology' (alongside Parasympathetic/Sympathetic Nervous System), even though opioid-prescribing guideline content has no thematic connection to autonomic nervous system physiology.",
       "resolution_status": "INDEPENDENTLY RESOLVED (not left open) - raw OCR of body pages 0185.json/0186.json confirms 'Opioid Therapy and Chronic Non-Cancer Pain' is its own genuine, independently-bolded body heading, printed immediately after the Autonomic Physiology content ends (Table 3 / Figure 8) with no textual continuity between the two. Represented as its own separate study unit, SU-CP-16, rather than folded into SU-CP-15 (Autonomic Nervous System Physiology and Pharmacology).",
       "recommended_action": "No action required for chapter CP's own crosswalk. Flagged for coordinator awareness that Toronto Notes' own printed TOC layout occasionally nests a thematically-unrelated heading under a preceding section purely for column-space/typesetting reasons rather than genuine hierarchy - study-unit derivation should continue to prioritize confirmed body-heading structure and thematic coherence over raw TOC indentation, consistent with existing protocol guidance.",
-      "affects_global_toc": false,
-      "chapter_code": "CP"
+      "affects_global_toc": false
     },
     {
       "issue_type": "mcc_naming_gap",
@@ -119,8 +109,7 @@
       "summary": "16 of this chapter's 20 study units (13 of 17 total OBJECTIVE_REFERENCE citations) anchor on the single MCC objective 125 'Prescribing practices', because it is the only Medical Expert objective dedicated to safe/individualized prescribing broadly. However, 125's own enabling-objectives text does not name specific PK/PD mechanisms (bioavailability, volume of distribution, half-life, CYP-mediated metabolism, receptor agonism/antagonism, therapeutic index) verbatim - the mapping_rationale on each affected unit (e.g. SU-CP-04 through SU-CP-11) honestly documents this as a MODERATE-strength inference from 125's broader risk-benefit/comorbidity/genetics language rather than a verbatim match.",
       "resolution_status": "No action required for chapter CP's own crosswalk - every affected unit still achieves at least MODERATE mapping_strength with a defensible textual anchor (0 WEAK mappings in this chapter).",
       "recommended_action": "Flagged for coordinator awareness in case future MCC objectives_registry.json updates add a more granular pharmacology-principles objective, or in case other chapters (e.g., Medicine's own therapeutics content, Psychiatry's psychopharmacology sections) encounter the same single-objective concentration and a cross-chapter registry annotation would help distribute evidence more precisely.",
-      "affects_global_toc": false,
-      "chapter_code": "CP"
+      "affects_global_toc": false
     },
     {
       "issue_type": "structural_ambiguity",
@@ -143,52 +132,6 @@
       "recommended_action": "No action required for chapter D itself (fully resolved). Flagged informational so the coordinator is aware that chapter D's toc_inventory.json node titles are less reliable as literal section titles than other chapters if they are ever consumed directly (e.g. by tooling) rather than through study_units.json's resolved titles.",
       "affects_global_toc": false,
       "chapter_code": "D"
-    },
-    {
-      "issue_type": "structural_ambiguity",
-      "severity": "informational",
-      "study_unit_id": "ER.S05-ER.S08 (SU-ER-28 through SU-ER-33)",
-      "title": "Section-boundary page numbers lag their true body content by one page for pdf 285-290",
-      "summary": "For the contiguous run of toc_inventory.json nodes ER.S04 (tail)/ER.S05/ER.S06/ER.S07/ER.S08 (Otolaryngological, Gynecologic, Ophthalmologic, Dermatologic Emergencies), each node's recorded start_pdf_page is one page earlier than where its titled content actually begins in body OCR: ER.S05 states start_pdf_page 285 but pdf 285 body text is Stroke/TIA (belongs to ER.S04.T12); Epistaxis (ER.S05.T01) actually starts pdf 286 (inside ER.S06's stated range); Nephrolithiasis (ER.S06.T03) actually starts pdf 288 (inside ER.S07's stated range); Ophthalmologic content actually starts pdf 289 (inside ER.S08's stated range); Dermatologic content is a single real page at pdf 290 against a stated 289-290 range. This is a distinct defect class from the two-column TOC-OCR title merges documented elsewhere in this chapter - it affects page-boundary numbers on already-correctly-titled nodes, not the titles themselves.",
-      "resolution_status": "INDEPENDENTLY RESOLVED for chapter ER's own crosswalk - all 6 affected study units (SU-ER-28 through SU-ER-33) cite the toc_inventory.json node whose title is the correct structural match, but record the true confirmed pdf_page_range from body-heading confirmation rather than the node's stated range, with page_mapping_precision set to SECTION_INHERITED and the discrepancy noted in structural_rationale.",
-      "recommended_action": "Coordinator should consider a targeted re-run or manual correction of the TOC-extraction pipeline's page-boundary assignment for chapter ER nodes S05-S08 in toc_inventory.json (shift each node's start_pdf_page/end_pdf_page forward by one page), since this is a distinct, previously undocumented class of extraction defect that could plausibly recur in other chapters with similar TOC layouts. Flagged informational/low-priority since chapter ER's own crosswalk is unaffected (all 6 units are fully resolved and validated against confirmed body pages).",
-      "affects_global_toc": true,
-      "chapter_code": "ER"
-    },
-    {
-      "issue_type": "structural_ambiguity",
-      "severity": "informational",
-      "study_unit_id": "N/A (unresolved TOC fragments, no study unit)",
-      "title": "Three TOC section-title fragments have no corresponding body content anywhere in chapter ER",
-      "summary": "Chapter ER's TOC page (pdf 247) is a badly OCR'd two-column layout; most of its garbling could be resolved by matching each fragment to real body content elsewhere in the chapter (documented per-unit and in study_units.json's same_page_merge_resolutions). Three fragments could not be resolved: (1) ER.S11's 'opine and Spinal Cord Trauma' fragment (paired in the section title with the real 'Psychiatric Emergencies' heading) - no matching body content found in pdf 253-308; possibly a fragment of 'Meperidine' or similar drug name plus a genuine 'Spinal Cord Trauma' subheading that was never captured as its own toc_inventory.json node (chapter ER's Traumatology section covers head/chest/abdominal/GU/extremity trauma but no distinct spinal-cord-trauma subsection was found in body OCR, despite spinal trauma being MCC objective 109-13). (2) ER.S13's 'Joint Pain' fragment (paired with the real 'Common Medications' heading) - no matching body content found in pdf 306-307; possibly a cross-chapter TOC bleed from another discipline's TOC column. (3) ER.S14's 'Shortness of Breath' fragment (paired with the real 'References' heading) - no matching body content found anywhere in pdf 247-308; possibly belongs to Respirology's TOC column.",
-      "resolution_status": "NOT independently resolved - these three fragments are not assigned to any ER study unit. If real content exists (especially 'Spinal Cord Trauma', which would otherwise leave MCC objective 109-13 under-represented in this chapter despite Traumatology being ER.S02's core content), it was not locatable within this chapter's declared pdf 247-308 page range via body-heading confirmation.",
-      "recommended_action": "Coordinator should check whether a genuine 'Spinal Cord Trauma' subsection exists in the source PDF near ER.S02 (Traumatology, pdf 253-263) or ER.S11 (pdf 302) that this pass's page-by-page body scan missed, and whether 'Joint Pain' / 'Shortness of Breath' are genuine TOC entries for a different chapter (Rheumatology/Orthopedic Surgery for Joint Pain; Respirology for Shortness of Breath) that bled into ER's TOC OCR due to physical page adjacency in the printed book.",
-      "affects_global_toc": true,
-      "chapter_code": "ER"
-    },
-    {
-      "issue_type": "weak_mapping_scope_review",
-      "severity": "review-recommended",
-      "study_unit_id": "SU-ER-29",
-      "title": "Epistaxis has no dedicated MCC objective and is left UNCERTAIN",
-      "summary": "No MCC objective in the candidate packet, nor any hit from targeted registry searches ('epistaxis', 'nosebleed'), names epistaxis. The retained WEAK evidence (15-1, 'Bleeding, bruising') is a generic bleeding-symptom anchor rather than a confirmed match.",
-      "recommended_action": "Coordinator/reviewer to confirm whether epistaxis is intended to be tested under Otolaryngology's OT27 cross-reference instead (Toronto Notes itself cross-references this content there), in which case this ER unit's classification could remain UNCERTAIN/low-coverage-weight by design, or whether a dedicated MCC objective exists under different title vocabulary not yet found by keyword search."
-    },
-    {
-      "issue_type": "weak_mapping_scope_review",
-      "severity": "review-recommended",
-      "study_unit_id": "SU-ER-34",
-      "title": "Heat-related illness (heat exhaustion/heat stroke) has no MCC objective found",
-      "summary": "Targeted registry searches ('heat', 'heatstroke', 'environmental', 'hyperthermia') found no MCC objective addressing environmental heat illness specifically; 'Fever and hyperthermia' (107-1) covers hyperthermia only as a fever-differential symptom, not exertional/environmental heat illness, so it was not retained even as WEAK evidence. mcc_evidence is left empty per the classification's UNCERTAIN status.",
-      "recommended_action": "Coordinator/reviewer to confirm no MCC objective covers environmental heat illness before accepting zero MCC-linked question coverage for this content; if genuinely absent from MCC's objective set, this should be documented as a confirmed scope gap rather than left as an open search TODO."
-    },
-    {
-      "issue_type": "weak_mapping_scope_review",
-      "severity": "review-recommended",
-      "study_unit_id": "SU-ER-19, SU-ER-22, SU-ER-27, SU-ER-37, SU-ER-44",
-      "title": "Five COMPONENT units retain a secondary WEAK MCC evidence citation alongside a stronger primary anchor",
-      "summary": "SU-ER-19 (Cardiac Dysrhythmias) cites 68/Palpitations at MODERATE plus 62/Abnormal heart sounds at WEAK; SU-ER-22 (VTE) cites 27/Dyspnea at MODERATE plus 15-2/Prevention of venous thrombosis at WEAK; SU-ER-27 (Sepsis) cites 9-2/Shock at STRONG plus 107-1/Fever and hyperthermia at WEAK; SU-ER-37 (Bites) cites 109-12/Skin wounds at WEAK as its only anchor; SU-ER-44 (Approach to Psychiatric Presentations) cites 86/Psychosis at WEAK as its only anchor, since the unit's actual scope (general safety/history/MSE approach) is broader than any single psychiatric-presentation objective.",
-      "recommended_action": "Coordinator/reviewer to confirm whether each WEAK secondary citation adds question-writing value or should be dropped in favor of the stronger primary evidence alone (where one exists), and for SU-ER-37/SU-ER-44 specifically, whether a better-fitting MCC objective exists under vocabulary not yet found by this pass's keyword searches ('bite', 'psychiatric' both returned zero matches)."
     },
     {
       "issue_type": "structural_ambiguity",
@@ -226,13 +169,57 @@
     {
       "issue_type": "structural_ambiguity",
       "severity": "informational",
+      "study_unit_id": "ER.S05-ER.S08 (SU-ER-28 through SU-ER-33)",
+      "title": "Section-boundary page numbers lag their true body content by one page for pdf 285-290",
+      "summary": "For the contiguous run of toc_inventory.json nodes ER.S04 (tail)/ER.S05/ER.S06/ER.S07/ER.S08 (Otolaryngological, Gynecologic, Ophthalmologic, Dermatologic Emergencies), each node's recorded start_pdf_page is one page earlier than where its titled content actually begins in body OCR: ER.S05 states start_pdf_page 285 but pdf 285 body text is Stroke/TIA (belongs to ER.S04.T12); Epistaxis (ER.S05.T01) actually starts pdf 286 (inside ER.S06's stated range); Nephrolithiasis (ER.S06.T03) actually starts pdf 288 (inside ER.S07's stated range); Ophthalmologic content actually starts pdf 289 (inside ER.S08's stated range); Dermatologic content is a single real page at pdf 290 against a stated 289-290 range. This is a distinct defect class from the two-column TOC-OCR title merges documented elsewhere in this chapter - it affects page-boundary numbers on already-correctly-titled nodes, not the titles themselves.",
+      "resolution_status": "INDEPENDENTLY RESOLVED for chapter ER's own crosswalk - all 6 affected study units (SU-ER-28 through SU-ER-33) cite the toc_inventory.json node whose title is the correct structural match, but record the true confirmed pdf_page_range from body-heading confirmation rather than the node's stated range, with page_mapping_precision set to SECTION_INHERITED and the discrepancy noted in structural_rationale.",
+      "recommended_action": "Coordinator should consider a targeted re-run or manual correction of the TOC-extraction pipeline's page-boundary assignment for chapter ER nodes S05-S08 in toc_inventory.json (shift each node's start_pdf_page/end_pdf_page forward by one page), since this is a distinct, previously undocumented class of extraction defect that could plausibly recur in other chapters with similar TOC layouts. Flagged informational/low-priority since chapter ER's own crosswalk is unaffected (all 6 units are fully resolved and validated against confirmed body pages).",
+      "affects_global_toc": true,
+      "chapter_code": "ER"
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "informational",
+      "study_unit_id": "N/A (originally unresolved TOC fragments; see resolution for resulting study unit)",
+      "title": "Three TOC section-title fragments have no corresponding body content anywhere in chapter ER",
+      "summary": "Chapter ER's TOC page (pdf 247) is a badly OCR'd two-column layout; most of its garbling could be resolved by matching each fragment to real body content elsewhere in the chapter (documented per-unit and in study_units.json's same_page_merge_resolutions). Three fragments could not be resolved by the original pass: (1) ER.S11's 'opine and Spinal Cord Trauma' fragment (paired in the section title with the real 'Psychiatric Emergencies' heading) - no matching body content found in pdf 253-308; possibly a fragment of 'Meperidine' or similar drug name plus a genuine 'Spinal Cord Trauma' subheading that was never captured as its own toc_inventory.json node (chapter ER's Traumatology section covers head/chest/abdominal/GU/extremity trauma but no distinct spinal-cord-trauma subsection was found in body OCR, despite spinal trauma being MCC objective 109-13). (2) ER.S13's 'Joint Pain' fragment (paired with the real 'Common Medications' heading) - no matching body content found in pdf 306-307; possibly a cross-chapter TOC bleed from another discipline's TOC column. (3) ER.S14's 'Shortness of Breath' fragment (paired with the real 'References' heading) - no matching body content found anywhere in pdf 247-308; possibly belongs to Respirology's TOC column.",
+      "resolution_status": "RESOLVED 2026-08-25 via targeted source-ambiguity follow-up. Root cause: the original page-by-page body-heading scan's text-extraction reading order split multi-word headings across non-adjacent tokens, causing 'C-Spine and Spinal Cord Trauma' to be missed even though it is present. Direct pdftotext extraction of the TOC page (pdf 247) and the relevant body-page ranges resolved all three fragments: (1) 'opine and Spinal Cord Trauma' -> CONFIRMED_REAL_HEADING. The genuine Toronto Notes heading 'C-Spine and Spinal Cord Trauma' (with Etiology/Clinical Features/Investigations/Treatment subsections) is confirmed on pdf 255, within ER.S02's Traumatology range, immediately after the Head Trauma/Mild TBI content already covered by SU-ER-03. This was a genuine scope gap (MCC objective 109-13, 'Spinal trauma', had no ER study unit) and has been closed by adding SU-ER-53 (DIRECT, 109-13 STRONG). (2) 'Joint Pain' -> CROSS_REFERENCE_ONLY. Confirmed as a genuine body subheading on pdf 270 (within ER.S03's 'Approach to Common ED Presentations' symptom list, pdf 264-274), but its full body text is only 'Joint Pain - see Rheumatology, RH3' - a cross-reference stub with no ER-specific content. No ER study unit added; correctly excluded. (3) 'Shortness of Breath' -> CROSS_REFERENCE_ONLY. Confirmed as a genuine body subheading on pdf 272 (same ER.S03 symptom list), with body text 'Shortness of Breath - see Respirology, R3 and Cardiology and Cardiac Surgery, C6' - also a cross-reference stub with no ER-specific content. No ER study unit added; correctly excluded. Full detail recorded in study_units.json's same_page_merge_resolutions (ER.S11/ER.S13/ER.S14 entries) and in the new SU-ER-53 record.",
+      "recommended_action": "None outstanding for chapter ER. Coordinator note preserved for provenance: this also confirms the ER.S03 'Approach to Common ED Presentations' TOC-OCR merge extends further than previously documented (Joint Pain and Shortness of Breath are additional interleaved right-column entries from that same symptom list, alongside the already-identified Back Pain/Seizures/Syncope ghosts under ER.S13/ER.S14) - no action needed since all of ER.S03's real content is already fully accounted for by existing study units SU-ER-08 through SU-ER-16.",
+      "affects_global_toc": false,
+      "chapter_code": "ER"
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-ER-29",
+      "title": "Epistaxis has no dedicated MCC objective and is left UNCERTAIN",
+      "summary": "No MCC objective in the candidate packet, nor any hit from targeted registry searches ('epistaxis', 'nosebleed'), names epistaxis. The retained WEAK evidence (15-1, 'Bleeding, bruising') is a generic bleeding-symptom anchor rather than a confirmed match.",
+      "recommended_action": "Coordinator/reviewer to confirm whether epistaxis is intended to be tested under Otolaryngology's OT27 cross-reference instead (Toronto Notes itself cross-references this content there), in which case this ER unit's classification could remain UNCERTAIN/low-coverage-weight by design, or whether a dedicated MCC objective exists under different title vocabulary not yet found by keyword search."
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-ER-34",
+      "title": "Heat-related illness (heat exhaustion/heat stroke) has no MCC objective found",
+      "summary": "Targeted registry searches ('heat', 'heatstroke', 'environmental', 'hyperthermia') found no MCC objective addressing environmental heat illness specifically; 'Fever and hyperthermia' (107-1) covers hyperthermia only as a fever-differential symptom, not exertional/environmental heat illness, so it was not retained even as WEAK evidence. mcc_evidence is left empty per the classification's UNCERTAIN status.",
+      "recommended_action": "Coordinator/reviewer to confirm no MCC objective covers environmental heat illness before accepting zero MCC-linked question coverage for this content; if genuinely absent from MCC's objective set, this should be documented as a confirmed scope gap rather than left as an open search TODO."
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-ER-19, SU-ER-22, SU-ER-27, SU-ER-37, SU-ER-44",
+      "title": "Five COMPONENT units retain a secondary WEAK MCC evidence citation alongside a stronger primary anchor",
+      "summary": "SU-ER-19 (Cardiac Dysrhythmias) cites 68/Palpitations at MODERATE plus 62/Abnormal heart sounds at WEAK; SU-ER-22 (VTE) cites 27/Dyspnea at MODERATE plus 15-2/Prevention of venous thrombosis at WEAK; SU-ER-27 (Sepsis) cites 9-2/Shock at STRONG plus 107-1/Fever and hyperthermia at WEAK; SU-ER-37 (Bites) cites 109-12/Skin wounds at WEAK as its only anchor; SU-ER-44 (Approach to Psychiatric Presentations) cites 86/Psychosis at WEAK as its only anchor, since the unit's actual scope (general safety/history/MSE approach) is broader than any single psychiatric-presentation objective.",
+      "recommended_action": "Coordinator/reviewer to confirm whether each WEAK secondary citation adds question-writing value or should be dropped in favor of the stronger primary evidence alone (where one exists), and for SU-ER-37/SU-ER-44 specifically, whether a better-fitting MCC objective exists under vocabulary not yet found by this pass's keyword searches ('bite', 'psychiatric' both returned zero matches)."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "informational",
       "study_unit_id": "SU-FM-01",
       "title": "'Acronyms' TOC heading resolved via body-heading confirmation",
       "summary": "TOC heading 'Acromyms' had unparseable trailing page-number digits (flagged UNRESOLVED in derived/scope_packets/FM.json source_quality.unresolved_headings). Resolved via body OCR (clean-ocr/0378.txt, pdf 378): the acronym table opens page FM2, the same page as FM.S01 (Four Principles of Family Medicine).",
       "resolution_status": "INDEPENDENTLY RESOLVED - folded into SU-FM-01 as UNCATALOGUED:FM.ACRONYMS.",
-      "recommended_action": "None required for this chapter. Coordinator may want a heuristic that treats a bare 'Acronyms'-style heading immediately preceding a chapter's first real section as page-1-of-chapter-body by default, since this pattern (unparseable trailing digits on a very short glossary heading) has now recurred across at least two chapters (see chapter E's SU-E-01).",
-      "affects_global_toc": true,
-      "chapter_code": "FM"
+      "recommended_action": "None required for this chapter. Coordinator may want a heuristic that treats a bare 'Acronyms'-style heading immediately preceding a chapter's first real section as page-1-of-chapter-body by default, since this pattern (unparseable trailing digits on a very short glossary heading) has now recurred across at least two chapters (see chapter E's SU-E-01)."
     },
     {
       "issue_type": "structural_ambiguity",
@@ -241,9 +228,7 @@
       "title": "'Antimicrobial/Antiviral/Antifungal Quick Reference' TOC heading resolved via body-heading confirmation",
       "summary": "TOC heading had unparseable trailing page-number digits (flagged UNRESOLVED). Resolved via body OCR (clean-ocr/0430.txt and clean-ocr/0431.txt, pdf 430-431): a two-page condition-by-microorganism empiric-therapy table spanning FM54-FM55, positioned between the Palliative Care section (ending FM55 per toc_inventory.json) and Landmark Family Medicine Trials (starting FM56).",
       "resolution_status": "INDEPENDENTLY RESOLVED - represented as its own unit, SU-FM-56, node id UNCATALOGUED:FM.ANTIMICROBIAL_REF.",
-      "recommended_action": "None required for this chapter.",
-      "affects_global_toc": true,
-      "chapter_code": "FM"
+      "recommended_action": "None required for this chapter."
     },
     {
       "issue_type": "structural_ambiguity",
@@ -252,9 +237,7 @@
       "title": "'Complementary and Integrative Medicine' is a genuine distinct topic merged into FM.S05 by TOC extraction",
       "summary": "toc_inventory.json records 'Complementary and Integrative Medicine' as a merged_duplicate_heading absorbed into the FM.S05 (Palliative Care) section node. Body OCR (clean-ocr/0429.txt, pdf 429) confirms this is Table 25 ('Common Herbal Products'), a structurally distinct reference table unrelated to palliative care that happens to fall within FM.S05's recorded page span (FM52-FM55).",
       "resolution_status": "INDEPENDENTLY RESOLVED - represented as its own unit (SU-FM-55, node id UNCATALOGUED:FM.CAM) rather than folded into a Palliative Care unit, to avoid misrepresenting unrelated content as palliative-care testable competency.",
-      "recommended_action": "Coordinator may want a post-processing pass that gives structurally distinct merged_duplicate_headings their own synthetic node_id at TOC-extraction time rather than leaving downstream chapter-mapping to disambiguate via body OCR each time.",
-      "affects_global_toc": true,
-      "chapter_code": "FM"
+      "recommended_action": "Coordinator may want a post-processing pass that gives structurally distinct merged_duplicate_headings their own synthetic node_id at TOC-extraction time rather than leaving downstream chapter-mapping to disambiguate via body OCR each time."
     },
     {
       "issue_type": "cross_discipline_overlap_candidate",
@@ -263,9 +246,7 @@
       "title": "FM Common Presenting Problems / Health Promotion overlap candidates for the global chapter-overlap audit",
       "summary": "Per the FM-specific task instructions (Family Medicine is cross-cutting), every FM study unit whose topic is also covered by an already-completed or not-yet-mapped chapter carries a cross_discipline_note in crosswalk.json rather than being silently duplicated or silently dropped. Consolidated list of overlap candidates for the later PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT global audit: SU-FM-04/05/06/07 (cancer screening) vs. R/G/GY/U; SU-FM-11 Dyslipidemia vs. E (completed, SU-E-02..06); SU-FM-15 Abdominal Pain vs. ER (completed, SU-ER-08) and GS; SU-FM-18 Anxiety vs. PS; SU-FM-19 Asthma/COPD vs. ER (completed, SU-ER-18/20); SU-FM-20 BPH vs. U; SU-FM-22 Chest Pain vs. ER (completed, SU-ER-11) and C; SU-FM-24 Concussion/mTBI vs. ER and NS; SU-FM-25 Contraception, SU-FM-17 Amenorrhea, SU-FM-44 Menopause, SU-FM-48 STI vs. GY; SU-FM-27 Dementia vs. GM and N; SU-FM-28 Depression vs. PS; SU-FM-29 Diabetes Mellitus vs. E (completed, SU-E-07..16); SU-FM-30 Dizziness vs. ER; SU-FM-32 Dyspepsia vs. G; SU-FM-33 Dyspnea vs. ER; SU-FM-34 Dysuria vs. U; SU-FM-39 Headache vs. ER (completed, SU-ER-12); SU-FM-40 Hearing Impairment vs. OT; SU-FM-42 Joint Pain and SU-FM-45 Osteoarthritis vs. RH and OR; SU-FM-46 Osteoporosis vs. E (completed, calcium/bone objective 12-2); SU-FM-47 Rash vs. D (completed); SU-FM-48 STI also vs. U and ID; SU-FM-52/54 Palliative Care content vs. PM and ELOM (completed). Each individual crosswalk entry's cross_discipline_note carries the specific FM-vs-other-chapter distinction (undifferentiated/primary-care presentation, longitudinal management, or preventive/counselling context vs. the other chapter's acute/specialist/procedural angle).",
       "resolution_status": "NOT RESOLVED BY DESIGN - explicitly deferred per task instructions ('Final PRIMARY_OWNER / CROSS_LINK / DISTINCT_CONTEXT decisions happen only after all chapters are mapped').",
-      "recommended_action": "Coordinator should review this list (and each unit's cross_discipline_note) during the global cross-chapter audit once all 32 chapters are mapped, to decide final ownership/cross-link/distinct-context status and to avoid duplicate question pools for the same underlying MCC objective.",
-      "affects_global_toc": false,
-      "chapter_code": "FM"
+      "recommended_action": "Coordinator should review this list (and each unit's cross_discipline_note) during the global cross-chapter audit once all 32 chapters are mapped, to decide final ownership/cross-link/distinct-context status and to avoid duplicate question pools for the same underlying MCC objective."
     },
     {
       "issue_type": "mapping_quality",
@@ -274,9 +255,7 @@
       "title": "Sexually Transmitted Infections mapped to a female-presentation-only MCC objective (partial coverage gap)",
       "summary": "The only MCC objective found for the TN STI subsection is 113 (Vaginal discharge / vulvar pruritus), which does not cover the male-presentation (urethral discharge) or asymptomatic-screening component of STI care. Mapped COMPONENT/MODERATE with the gap documented in mapping_rationale.",
       "resolution_status": "NOT RESOLVED - acceptable per accuracy rules (documented gap rather than fabricated match); may be resolved once Urology (chapter U) or Infectious Diseases (chapter ID) are mapped and a male-presentation or STI-screening objective is found in the full registry.",
-      "recommended_action": "Re-run search-mcc-objectives against the full registry with additional terms once chapter ID or U packets are prepared, and update SU-FM-48's mcc_evidence if a better match is found.",
-      "affects_global_toc": false,
-      "chapter_code": "FM"
+      "recommended_action": "Re-run search-mcc-objectives against the full registry with additional terms once chapter ID or U packets are prepared, and update SU-FM-48's mcc_evidence if a better match is found."
     },
     {
       "issue_type": "structural_title_mismatch",
@@ -312,202 +291,172 @@
       "chapter_code": "G"
     },
     {
-      "issue_type": "structural_two_column_ocr_merge",
-      "severity": "informational",
-      "study_unit_id": "SU-GS-54, SU-GS-55, SU-GS-56, SU-GS-57",
-      "title": "GS.S12 section titled 'Anorectum' but T08-T11 are unrelated Liver topics (Cysts, Abscesses, Neoplasms, Transplantation)",
-      "summary": "GS.S12 (raw OCR 'AmorectuM', GS47-GS54) covers genuine anorectal topics in T01-T07, but T08-T11 are hepatobiliary/liver content - the same two-column TOC-OCR bleed pattern already documented in chapter G's SU-G-44 through SU-G-46 ('Liver Transplantation' section containing cirrhosis-complication T-children). Heading left unchanged per the rule against inventing/relabeling Toronto Notes headings.",
-      "resolution_status": "INDEPENDENTLY RESOLVED - study units built from each T-child's own legible topic title; mismatch documented in study_units_audit.json's title_mismatch_notes.",
-      "recommended_action": "No action required for scope purposes.",
-      "affects_global_toc": false,
-      "chapter_code": "GS"
-    },
-    {
-      "issue_type": "structural_severe_ocr_corruption",
-      "severity": "review-recommended",
-      "study_unit_id": "SU-GS-75",
-      "title": "GS.S17.T02 raw title severely corrupted ('Appendix ee en eee ee ee teens GS35 Advent Gland y')",
-      "summary": "Tentatively read as 'Adrenal Gland' by analogy with the section's other merged title ('Surgical Endocrinology'), but an embedded 'Appendix' fragment and an internally inconsistent page reference ('GS35', outside this section's GS71-GS72 range) prevent confident resolution. Classified UNCERTAIN with no MCC evidence and zero planned question coverage rather than guessed.",
-      "resolution_status": "UNRESOLVED - flagged for a human reviewer with access to the original Toronto Notes PDF to confirm this heading's true content.",
-      "recommended_action": "Coordinator/reviewer to check the source PDF at pdf pages 563-564 (GS71-GS72) directly if/when available, to confirm or correct this heading.",
-      "affects_global_toc": false,
-      "chapter_code": "GS"
-    },
-    {
-      "issue_type": "unrecoverable_coverage_gap",
-      "severity": "informational",
-      "study_unit_id": "N/A",
-      "title": "Two TOC headings could not be resolved to a canonical source node ('Abdominal Hernia', 'Inflammatory Bowel Disease')",
-      "summary": "The deterministic prepare-scope-chapter tool flagged these 2 headings as UNRESOLVED (source_quality.unresolved_headings in derived/scope_packets/GS.json). Neither produced a toc_inventory.json node, so neither is represented as its own study unit. Surgical IBD content is nonetheless covered via SU-GS-79/SU-GS-80 (Crohn's/UC surgical indications).",
-      "resolution_status": "UNRESOLVED - logged in study_units_audit.json's unrecoverable_coverage_gaps.",
-      "recommended_action": "Coordinator may want to add corresponding nodes to toc_inventory.json for chapter GS in a future TOC-extraction pass, similar to the chapter A 'Monitoring' gap already on this queue.",
-      "affects_global_toc": true,
-      "chapter_code": "GS"
-    },
-    {
-      "issue_type": "mcc_registry_coverage_gap",
-      "severity": "informational",
-      "study_unit_id": "multiple (see crosswalk_audit.md)",
-      "title": "MCC objectives registry has no dedicated objective for several high-yield General Surgery topics",
-      "summary": "Full-registry keyword searches (search-mcc-objectives) for 'appendicitis', 'bowel obstruction', 'cholecystitis', 'gallstone', 'pancreatitis', 'colorectal cancer', 'lung cancer', 'pneumothorax', 'postoperative', 'preoperative', and 'adrenal' returned 0 or only 1 direct-title match. This is the same registry-coverage-gap pattern already flagged in chapters E and G. Every affected topic was found explicitly named within the causal_conditions list of a nearby presentation-based objective (e.g., appendicitis/diverticulitis/pancreatitis/biliary disease under objective 3-2 'Acute abdominal pain'; mechanical obstruction/volvulus/toxic megacolon under objective 1 'Abdominal distension'; preoperative risk under objective 74-3 'Pre-operative medical evaluation').",
-      "resolution_status": "RESOLVED FOR THIS CHAPTER - affected units mapped as DIRECT (where the objective's own causal-conditions text explicitly names the exact diagnosis) or COMPONENT, with mapping_strength never exceeding what the objective's retrieved text supports.",
-      "recommended_action": "Coordinator may want to continue folding this into the broader MCC-objectives-registry-gap note (now confirmed in three body-system/discipline chapters: E, G, GS).",
-      "affects_global_toc": false,
-      "chapter_code": "GS"
-    },
-    {
       "issue_type": "structural_ocr_corruption",
       "severity": "informational",
       "study_unit_id": "SU-GM-01",
       "title": "GM.S01 printed title 'ACFOMYMS' is illegible; merged_duplicate_headings gives the usable alternate 'Physiology and Pathology of Aging'",
-      "summary": "The section's printed TOC title is an OCR-corrupted mnemonic acronym with no recoverable literal meaning. Rather than invent a heading, the study unit uses the legible merged_duplicate_headings alternate, consistent with the section's actual content position (aging physiology, first section of the chapter).",
-      "resolution_status": "INDEPENDENTLY RESOLVED - represented as SU-GM-01 using the merged alternate title; garbled literal string not used anywhere in canonical output.",
-      "recommended_action": "No action required for scope purposes.",
-      "affects_global_toc": false,
-      "chapter_code": "GM"
+      "summary": "The section's printed TOC title is an OCR-corrupted mnemonic acronym with no recoverable literal meaning. Rather than invent a heading, the study unit uses the legible merged_duplicate_headings alternate, which is consistent with the section's actual content position (aging physiology, first section of the chapter).",
+      "resolution_status": "INDEPENDENTLY RESOLVED - represented as SU-GM-01 using the merged alternate title; garbled literal string not used anywhere in canonical output."
     },
     {
       "issue_type": "structural_ocr_corruption",
       "severity": "informational",
       "study_unit_id": "SU-GM-20",
       "title": "GM.S09 printed title 'RETEFEMCES' is an OCR corruption of 'REFERENCES'",
-      "summary": "Terminal chapter section with no T-children, positioned identically (last section, bibliographic) to every other completed chapter's References section. High-confidence correction, not an invented heading.",
-      "resolution_status": "INDEPENDENTLY RESOLVED - represented as SU-GM-20 'References'.",
-      "recommended_action": "No action required for scope purposes.",
-      "affects_global_toc": false,
-      "chapter_code": "GM"
+      "summary": "Terminal chapter section with no T-children, positioned identically (last section, bibliographic) to every other completed chapter's References section (e.g., SU-G-62, SU-GS's final section). High-confidence correction, not an invented heading.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - represented as SU-GM-20 'References'."
     },
     {
-      "issue_type": "cross_discipline_overlap_candidate",
-      "severity": "review-recommended",
+      "issue_type": "cross_discipline_overlap",
+      "severity": "review_recommended",
       "study_unit_id": "SU-GM-03, SU-GM-04, SU-GM-09",
       "title": "Candidate cross-discipline overlaps requiring later global resolution",
-      "summary": "SU-GM-03 (Constipation) shares MCC objective 16-1 with chapter G's completed SU-G-25 (PRIMARY_OWNER candidate: G). SU-GM-04 (Delirium) may overlap Psychiatry/Neurology (not yet mapped). SU-GM-09 (Incontinence) may overlap Urology and OBGYN/Gynecology (not yet mapped).",
-      "resolution_status": "NOT RESOLVED BY DESIGN - deferred per task instructions until all chapters covering the same content are mapped.",
-      "recommended_action": "Coordinator should review during the global cross-chapter overlap audit once all 32 chapters are mapped.",
-      "affects_global_toc": false,
-      "chapter_code": "GM"
+      "summary": "SU-GM-03 (Constipation) shares MCC objective 16-1 with chapter G's completed SU-G-25. SU-GM-04 (Delirium) may overlap Psychiatry/Neurology (not yet mapped). SU-GM-09 (Incontinence) may overlap Urology and OBGYN/Gynecology (not yet mapped). All three are recorded here as candidate PRIMARY_OWNER/CROSS_LINK pairs per the project's cross-discipline workflow; none is finalized.",
+      "resolution_status": "DEFERRED - flagged for the global chapter-overlap audit once all chapters mapping the same content are complete, per instructions not to finalize GM's cross-discipline ownership now."
     },
     {
       "issue_type": "capacity_elom_boundary",
-      "severity": "review-recommended",
+      "severity": "review_recommended",
       "study_unit_id": "SU-GM-02",
       "title": "Comprehensive geriatric assessment framework touches, but does not include, legal capacity/consent content",
-      "summary": "No GM source node covers legal decision-making capacity, consent, substitute decision-making, or advance directives as independent topics; MCC objective 121-1 (Consent) was identified via search-mcc-objectives but not attached to any GM unit since it belongs to the clinical-assessment/legal-capacity boundary that ELOM (completed) already partially owns.",
-      "resolution_status": "NOT RESOLVED BY DESIGN - GM/ELOM final ownership of capacity-adjacent content deferred per task instructions.",
-      "recommended_action": "Coordinator should confirm during the global audit that ELOM's existing capacity/consent units fully cover this boundary, or whether a GM-specific geriatric-capacity unit should be added later.",
-      "affects_global_toc": false,
-      "chapter_code": "GM"
+      "summary": "Toronto Notes' 'Framework for the Approach to the Older Adult' section (GM.S02) covers clinical function/cognition assessment. No GM source node covers legal decision-making capacity, consent, substitute decision-making, or advance directives as independent topics, so no separate GM study unit was created for them; MCC objective 121-1 (Consent) was identified via search-mcc-objectives but not attached here since it belongs to the clinical-assessment/legal-capacity boundary that ELOM (completed) already partially owns.",
+      "resolution_status": "DEFERRED - GM/ELOM final ownership of capacity-adjacent content not resolved per instructions; noted in SU-GM-02's testable_competencies as an explicit scope boundary."
     },
     {
-      "issue_type": "mcc_registry_coverage_gap",
+      "issue_type": "no_mcc_objective_found",
       "severity": "informational",
       "study_unit_id": "SU-GM-08, SU-GM-14, SU-GM-15, SU-GM-16",
-      "title": "MCC objectives registry has no dedicated objective for Immobility, Driving Competency, Hospitalization Hazards, or PK/PD Changes in aging",
-      "summary": "Targeted search-mcc-objectives queries ('immobility', 'deconditioning', 'driving', 'fitness to drive', 'hospitalization') returned zero matches in the canonical registry, the same registry-coverage-gap pattern already flagged in chapters E, G, and GS. Rather than fabricate objectives or force a weak citation onto unrelated evidence, these units were classified SUPPORTING_KNOWLEDGE (or COMPONENT/WEAK for Immobility, which has a plausible adjacent objective) with zero planned question coverage.",
-      "resolution_status": "RESOLVED FOR THIS CHAPTER - no evidence fabricated.",
-      "recommended_action": "Coordinator may want to continue folding this into the broader MCC-objectives-registry-gap note (now confirmed in four chapters: E, G, GS, GM); revisit if a future registry refresh adds relevant objectives.",
-      "affects_global_toc": false,
-      "chapter_code": "GM"
+      "title": "Four study units have no adequate MCC objective evidence (Immobility, Driving Competency, Hospitalization Hazards, PK/PD Changes)",
+      "summary": "Targeted search-mcc-objectives queries (immobility, deconditioning, driving, fitness to drive, hospitalization) returned zero matches in the canonical registry. Rather than fabricate objectives or force a weak citation onto unrelated evidence, these units were classified SUPPORTING_KNOWLEDGE (or COMPONENT with WEAK evidence and requires_scope_review=true for Immobility, which has a plausible adjacent objective) with zero planned question coverage.",
+      "resolution_status": "RESOLVED PER ACCURACY RULES - no evidence fabricated; revisit only if a future MCC objectives-registry refresh adds relevant objectives."
+    },
+    {
+      "issue_type": "structural_two_column_ocr_merge",
+      "severity": "informational",
+      "study_unit_id": "SU-GS-54, SU-GS-55, SU-GS-56, SU-GS-57",
+      "title": "GS.S12 section titled 'Anorectum' but T08-T11 are unrelated Liver topics (Cysts, Abscesses, Neoplasms, Transplantation)",
+      "summary": "The canonical TOC labels section GS.S12 'Anorectum' (GS47-GS54, HIGH confidence). Its first 7 T-children are genuine anorectal topics; T08-T11 are hepatobiliary/liver content, consistent with the same two-column TOC-OCR bleed pattern documented for chapter G's SU-G-44 through SU-G-46. The heading was left unchanged per the rule against inventing/relabeling Toronto Notes headings.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - study units built from each T-child's own legible topic title; mismatch documented in each unit's structural_rationale and in study_units_audit.json's title_mismatch_notes."
+    },
+    {
+      "issue_type": "structural_two_column_ocr_merge",
+      "severity": "informational",
+      "study_unit_id": "SU-GS-71, SU-GS-72",
+      "title": "GS.S16.T01 merges 'Short Gut Syndrome' with 'Benign Breast Lesions'",
+      "summary": "GS.S16 ('Breast', GS65-GS70) has a single T-child whose raw title merges two unrelated topics. Split into two study units both citing GS.S16.T01; 'Short Gut Syndrome' is retained with UNRESOLVED page precision and SUPPORTING_KNOWLEDGE classification since its true chapter position could not be confirmed.",
+      "resolution_status": "PARTIALLY RESOLVED - both textual fragments preserved as separate study units; true position of 'Short Gut Syndrome' remains unconfirmed pending a raw-OCR/body-heading corpus not currently available to this project."
+    },
+    {
+      "issue_type": "structural_severe_ocr_corruption",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-GS-75",
+      "title": "GS.S17.T02 raw title is severely corrupted ('Appendix ee en eee ee ee teens GS35 Advent Gland y')",
+      "summary": "Tentatively read as 'Adrenal Gland' by analogy with the section's other merged title ('Surgical Endocrinology'), but the embedded 'Appendix' fragment and internally inconsistent page reference ('GS35', outside this section's GS71-GS72 range) prevent confident resolution. Classified UNCERTAIN with no MCC evidence attached and zero planned question coverage.",
+      "resolution_status": "UNRESOLVED - flagged for human reviewer with access to the original Toronto Notes PDF to confirm this heading's true content, per docs/scope-chapter-workflow.md step 5 (explicit UNRESOLVED status when evidence is insufficient)."
+    },
+    {
+      "issue_type": "structural_two_column_ocr_merge",
+      "severity": "informational",
+      "study_unit_id": "SU-GS-77",
+      "title": "GS.S17.T03 raw title merges 'Appendicitis' with 'Pancreas'",
+      "summary": "'Pancreas' is very likely stray OCR bleed-through (Pancreas is already comprehensively covered as its own dedicated section, GS.S14). 'Appendicitis' - a core, extremely high-yield general-surgery emergency otherwise absent from this chapter's extracted structure - is retained as its own study unit with UNRESOLVED page precision.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - retained as SU-GS-77 (Appendicitis) with UNRESOLVED page_mapping_precision; 'Pancreas' fragment not duplicated given GS.S14's existing coverage."
+    },
+    {
+      "issue_type": "structural_title_mismatch",
+      "severity": "informational",
+      "study_unit_id": "SU-GS-80",
+      "title": "GS.S21 section titled 'Landmark General and Thoracic Surgery Trials' but T-children are Large Bowel Obstruction content",
+      "summary": "raw_ocr_line confirms 'Landmark General and Thoracic Surgery Trials' is the book's actual printed heading (HIGH confidence, not an extraction artifact). Its three T-children describe Mechanical/Functional Large Bowel Obstruction and Ogilvie's Syndrome, not landmark trials. No landmark-trial content was recoverable from the extracted structure.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - study unit built from the T-children's actual disease content (SU-GS-80); mismatch documented in structural_rationale and study_units_audit.json."
+    },
+    {
+      "issue_type": "unrecoverable_coverage_gap",
+      "severity": "informational",
+      "study_unit_id": "N/A",
+      "title": "Two TOC headings could not be resolved to a canonical source node ('Abdominal Hernia', 'Inflammatory Bowel Disease')",
+      "summary": "The deterministic prepare-scope-chapter tool flagged these 2 headings as UNRESOLVED (source_quality.unresolved_headings in derived/scope_packets/GS.json) - trailing page-number digits did not parse to a page consistent with reading order, and no body-page match was found within the searched window. Neither produced a toc_inventory.json node, so neither is represented as its own study unit.",
+      "resolution_status": "UNRESOLVED - logged in study_units_audit.json's unrecoverable_coverage_gaps; surgical IBD content is nonetheless covered via SU-GS-79/SU-GS-80 (Crohn's/UC surgical indications)."
+    },
+    {
+      "issue_type": "unrecoverable_coverage_gap",
+      "severity": "informational",
+      "study_unit_id": "N/A",
+      "title": "Stray title fragments with no recoverable content ('Pediatric Surgery', 'Skin Lesions')",
+      "summary": "raw_ocr_line for GS.S18 and GS.S19 each show a second section title merged in ('Crohn's Disease Pediatric Surgery...', 'Ulcerative Colitis Skin Lesions...'), but no T-children or other extracted content exists for either 'Pediatric Surgery' or 'Skin Lesions' independently.",
+      "resolution_status": "UNRESOLVED - logged as a coverage gap only; no content fabricated."
     },
     {
       "issue_type": "structural_ocr_corruption",
       "severity": "informational",
       "study_unit_id": "SU-GY-01",
-      "title": "GY.S01 printed title 'Acromyms' is a trivial acronym list; merged_duplicate_headings gives the usable alternate 'Basic Anatomy Review'",
-      "summary": "The section's printed TOC title names a front-matter acronym list rather than a clinical topic. The legible merged_duplicate_headings alternate is used as the study-unit title instead.",
-      "resolution_status": "INDEPENDENTLY RESOLVED - represented as SU-GY-01 using the merged alternate title.",
-      "recommended_action": "No action required for scope purposes.",
-      "affects_global_toc": false,
-      "chapter_code": "GY"
+      "title": "GY.S01 printed title 'Acromyms' is a non-substantive acronym list; merged_duplicate_headings gives the usable alternate 'Basic Anatomy Review'",
+      "summary": "The section's printed TOC title names a front-matter acronym list rather than a clinical topic. The legible merged_duplicate_headings alternate ('Basic Anatomy Review') is used as the study-unit title instead, consistent with the section's likely front-of-chapter position.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - represented as SU-GY-01 using the merged alternate title."
     },
     {
       "issue_type": "broad_heading_multiple_diagnoses",
-      "severity": "review-recommended",
+      "severity": "review_recommended",
       "study_unit_id": "SU-GY-08, SU-GY-09",
       "title": "GY.S04 ('Disorders of Menstruation') carries two additional distinct diagnoses (Endometriosis, Adenomyosis) not represented as their own TOC nodes",
-      "summary": "merged_duplicate_headings records 'Endometriosis' and 'Adenomyosis' alongside the section's three normal T-children. Both are clinically distinct diagnoses with no dedicated child node; each was split into its own study unit cited against the parent section node.",
-      "resolution_status": "INDEPENDENTLY RESOLVED - represented as SU-GY-08 and SU-GY-09.",
-      "recommended_action": "Coordinator may want to confirm this split against raw source/body text in a later pass; no independent OCR corpus was available here.",
-      "affects_global_toc": false,
-      "chapter_code": "GY"
+      "summary": "The section's merged_duplicate_headings field records 'Endometriosis' and 'Adenomyosis' alongside its three normal T-children (Amenorrhea, AUB, Dysmenorrhea). Both are clinically distinct diagnoses, not alternate labels for existing T-child content, so each was split into its own study unit cited against the parent section node (no dedicated child node exists for either).",
+      "resolution_status": "INDEPENDENTLY RESOLVED - represented as SU-GY-08 (Endometriosis) and SU-GY-09 (Adenomyosis); recommend confirming against raw source/body text in a later pass since no independent OCR corpus was available here."
     },
     {
       "issue_type": "merged_wrapped_toc_entry",
       "severity": "informational",
       "study_unit_id": "SU-GY-10, SU-GY-40",
       "title": "GY.S05's printed title 'Fibroids' conflicts with all three of its own T-children, which are unambiguously Contraception subtopics",
-      "summary": "Printed title 'Fibroids' (body-heading-confirmed) does not match any T-child (Hormonal Methods, IUD, Emergency Postcoital Contraception), all matching the section's merged_duplicate_headings entry 'Contraception'. Targeted raw-OCR follow-up (2026-08-25) verified pdf pages 608-609 (TN GY14-GY15) carry genuine standalone Fibroids content ending where a body-confirmed 'Contraception' heading begins mid-page-609: GY.S05 merges two real adjacent sections, not a mis-extraction.",
-      "resolution_status": "RESOLVED - Contraception remains SU-GY-10 (pdf 609-612); Fibroids/uterine leiomyoma added as SU-GY-40 (pdf 608-609) after raw-source verification confirmed genuine content, per study_units_audit.json's resolved_coverage_gaps.",
-      "recommended_action": "None required for GY scope purposes. toc_inventory.json itself was left unchanged (its own extraction pipeline is out of scope for a chapter-level fix); a future global TOC refresh could split GY.S05 into its own Fibroids/Contraception nodes using this verification as evidence.",
-      "affects_global_toc": true,
-      "chapter_code": "GY"
+      "summary": "Printed title 'Fibroids' (body-heading-confirmed) does not match any of its T-children (Hormonal Methods, IUD, Emergency Postcoital Contraception), all of which match the section's merged_duplicate_headings entry 'Contraception'. Targeted raw-OCR follow-up (2026-08-25) resolved this: pdf pages 608-609 (TN GY14-GY15) carry genuine, standalone Fibroids content (Definition/Epidemiology/Pathogenesis/Management) ending where a body-confirmed 'Contraception' heading begins mid-page-609. GY.S05 merges two real adjacent sections rather than mis-extracting one.",
+      "resolution_status": "RESOLVED - represented as SU-GY-10 (Contraception, pdf 609-612, unchanged) and SU-GY-40 (Fibroids/uterine leiomyoma, pdf 608-609, added after raw-source verification; see study_units_audit.json's resolved_coverage_gaps)."
     },
     {
       "issue_type": "merged_wrapped_toc_entry",
-      "severity": "informational",
+      "severity": "review_recommended",
       "study_unit_id": "SU-GY-22, SU-GY-23",
       "title": "GY.S12's printed title 'SexualAbuse' bundles two clinically distinct topics with its merged heading 'Sexuality and Sexual Dysfunction'",
-      "summary": "Unlike single-topic title/merged-heading pairs elsewhere in this chapter, GY.S12's two titles name genuinely different content (forensic sexual abuse/assault vs. clinical sexual dysfunction). Split into two study units, both cited against the shared parent node.",
-      "resolution_status": "INDEPENDENTLY RESOLVED - represented as SU-GY-22 and SU-GY-23.",
-      "recommended_action": "No action required for scope purposes.",
-      "affects_global_toc": false,
-      "chapter_code": "GY"
+      "summary": "Unlike single-topic title/merged-heading pairs elsewhere in this chapter, GY.S12's two titles name genuinely different content (forensic sexual abuse/assault vs. clinical sexual dysfunction). Split into two study units, both cited against the shared parent node since no distinct child nodes exist for either half.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - represented as SU-GY-22 (Sexual Abuse and Assault) and SU-GY-23 (Sexual Dysfunction)."
     },
     {
       "issue_type": "structural_ocr_corruption",
-      "severity": "review-recommended",
+      "severity": "review_recommended",
       "study_unit_id": "SU-GY-02, SU-GY-38, SU-GY-39",
       "title": "GY.S18's printed title 'References' is a structural mislabel - its T-children are real clinical content, not a bibliography",
-      "summary": "Unlike the genuine terminal References sections in every other completed chapter, GY.S18's four T-children (Menstrual Cycle, Stages of Puberty, PMS, PMDD) are real appendix-style clinical content. Each is represented under its own real topic instead of being classified as bibliographic REFERENCE_ONLY material.",
-      "resolution_status": "INDEPENDENTLY RESOLVED - represented as SU-GY-02, SU-GY-38, SU-GY-39.",
-      "recommended_action": "Coordinator may want to note this TOC mislabeling pattern (a section titled 'References' whose T-children are real clinical content) for a future raw-source/TOC-inventory quality pass.",
-      "affects_global_toc": true,
-      "chapter_code": "GY"
+      "summary": "Unlike the genuine terminal References sections in every other completed chapter, GY.S18's four T-children (Menstrual Cycle, Stages of Puberty, Premenstrual Syndrome, Premenstrual Dysphoric Disorder) are real appendix-style clinical content. Each is represented under its own real topic instead of being classified as bibliographic REFERENCE_ONLY material.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - Menstrual Cycle consolidated into SU-GY-02 (with GY.S02), Stages of Puberty as SU-GY-38, PMS+PMDD consolidated into SU-GY-39."
     },
     {
       "issue_type": "gy_ob_boundary",
-      "severity": "review-recommended",
+      "severity": "review_recommended",
       "study_unit_id": "SU-GY-11, SU-GY-12, SU-GY-13",
       "title": "Pregnancy-related content (Termination of Pregnancy, Early Pregnancy Loss/First-Trimester Bleeding, Ectopic Pregnancy) genuinely appears in the GY chapter TOC",
-      "summary": "All three units cover content that could conceptually belong to Obstetrics, but each is a genuine GY-chapter source node and was mapped here per the instruction against moving genuine chapter content out of GY. Final PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT decisions against OB are deferred.",
-      "resolution_status": "NOT RESOLVED BY DESIGN - deferred per task instructions until OB is mapped.",
-      "recommended_action": "Coordinator should review during the global GY/OB boundary audit once the OB chapter is mapped.",
-      "affects_global_toc": false,
-      "chapter_code": "GY"
+      "summary": "All three units cover content that could conceptually belong to Obstetrics, but each is a genuine GY-chapter source node (GY.S06, GY.S07, GY.S08) and was therefore mapped here per the instruction against moving genuine chapter content out of GY. Final PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT decisions against the OB chapter (not yet mapped) are deferred.",
+      "resolution_status": "DEFERRED - flagged for the global GY/OB boundary audit once OB is mapped, per instructions not to finalize ownership now."
     },
     {
-      "issue_type": "cross_discipline_overlap_candidate",
-      "severity": "review-recommended",
+      "issue_type": "cross_discipline_overlap",
+      "severity": "review_recommended",
       "study_unit_id": "SU-GY-15, SU-GY-17, SU-GY-21, SU-GY-27",
       "title": "Candidate cross-discipline overlaps requiring later global resolution",
-      "summary": "SU-GY-15 (PCOS) may overlap Endocrinology (E, completed). SU-GY-17 (STI) may overlap Infectious Diseases and Public Health (both not yet mapped). SU-GY-21 (Surgical Site Infections) may overlap General and Thoracic Surgery (GS, completed, PRIMARY_OWNER candidate: GS). SU-GY-27 (Urinary Incontinence) may overlap Urology (not yet mapped).",
-      "resolution_status": "NOT RESOLVED BY DESIGN - deferred per task instructions until all relevant chapters are mapped.",
-      "recommended_action": "Coordinator should review during the global cross-chapter overlap audit once ID, PH, and U are mapped.",
-      "affects_global_toc": false,
-      "chapter_code": "GY"
+      "summary": "SU-GY-15 (PCOS) may overlap Endocrinology (E, completed). SU-GY-17 (STI) may overlap Infectious Diseases and Public Health (both not yet mapped). SU-GY-21 (Surgical Site Infections) may overlap General and Thoracic Surgery (GS, completed). SU-GY-27 (Urinary Incontinence) may overlap Urology (not yet mapped). All four are recorded here as candidate PRIMARY_OWNER/CROSS_LINK pairs; none is finalized.",
+      "resolution_status": "DEFERRED - flagged for the global chapter-overlap audit once all chapters mapping the same content are complete."
     },
     {
       "issue_type": "jurisdiction_legal_sensitive",
-      "severity": "review-recommended",
+      "severity": "review_recommended",
       "study_unit_id": "SU-GY-11, SU-GY-22",
       "title": "Termination of Pregnancy and Sexual Abuse/Assault carry provincial/territorial jurisdiction-sensitive content",
-      "summary": "Both units' freshness/jurisdiction metadata flag LEGAL_REGULATORY verification and PROVINCIAL_TERRITORIAL scope. Neither hard-codes a specific province's rule. Both also touch content ELOM (completed) may partly own at a more general level (consent; abuse reporting).",
-      "resolution_status": "NOT RESOLVED BY DESIGN - jurisdiction/freshness metadata recorded; final ELOM/GY ownership deferred per task instructions.",
-      "recommended_action": "Coordinator should confirm jurisdiction/freshness metadata during a future province-specific verification pass; do not hard-code a single province's rule.",
-      "affects_global_toc": false,
-      "chapter_code": "GY"
+      "summary": "Both units' freshness/jurisdiction metadata flag LEGAL_REGULATORY verification and PROVINCIAL_TERRITORIAL scope (abortion access/gestational limits; mandatory-reporting and forensic-examination protocols). Neither hard-codes a specific province's rule, per the schema's jurisdiction fields and the instruction not to convert province-specific rules into national ones. Both also touch content ELOM (completed) may partly own at a more general level (consent; abuse reporting).",
+      "resolution_status": "DEFERRED - jurisdiction/freshness metadata recorded; final ELOM/GY DISTINCT_CONTEXT ownership not resolved here, per instructions."
     },
     {
-      "issue_type": "mcc_registry_coverage_gap",
+      "issue_type": "no_mcc_objective_found",
       "severity": "informational",
       "study_unit_id": "SU-GY-18, SU-GY-21",
-      "title": "MCC objectives registry has no dedicated objective for Bartholin Gland Abscess or Gynecologic Surgical Site Infections",
-      "summary": "Targeted search-mcc-objectives queries ('bartholin gland', 'toxic shock syndrome', 'surgical infection') returned zero or clearly-unrelated matches, the same registry-coverage-gap pattern already flagged in chapters E, G, GS, GM. Rather than fabricate objectives, both units were classified UNCERTAIN with zero planned question coverage and a documented uncertain_reason.",
-      "resolution_status": "RESOLVED FOR THIS CHAPTER - no evidence fabricated.",
-      "recommended_action": "Coordinator may want to continue folding this into the broader MCC-objectives-registry-gap note (now confirmed in five chapters: E, G, GS, GM, GY); revisit if a future registry refresh adds relevant objectives.",
-      "affects_global_toc": false,
-      "chapter_code": "GY"
+      "title": "Two study units have no adequate MCC objective evidence (Bartholin Gland Abscess, Gynecologic Surgical Site Infections)",
+      "summary": "Targeted search-mcc-objectives queries (bartholin gland, toxic shock syndrome, surgical infection) returned zero or clearly-unrelated matches for these two presentations. Rather than fabricate objectives or force a citation onto unrelated evidence, both units were classified UNCERTAIN with zero planned question coverage and a documented uncertain_reason.",
+      "resolution_status": "RESOLVED PER ACCURACY RULES - no evidence fabricated; revisit only if a future MCC objectives-registry refresh adds relevant objectives."
     },
     {
       "issue_type": "structural_severe_page_misattribution",
@@ -517,8 +466,7 @@
       "summary": "H.S22's printed title concatenates 'Sickle Cell Disease' (real, confirmed at pdf 675-677/H21-H23) with 'Landmark Hematology Trials' (real, confirmed at its own recorded page range pdf 715-716/H61-H62); its T01 'Autoimmune Hemolytic Anemia' is correctly worded but also page-misattributed to H61-H62 (real content at pdf 677/H23). H.S23's title 'Microangiopathic Hemolytic Anemia' is correct but recorded at H63-H64/pdf 717-718, where the genuine content is actually a References bibliography with no toc node of its own; H.S23's real MAHA/TMA content, and its T02-T04 (Hereditary Spherocytosis, Hereditary Elliptocytosis, G6PD Deficiency), are all confirmed via raw OCR (clean-ocr/0677.txt-0678.txt) to sit within H.S07's own declared page range (H18-H24), immediately after the Thalassemia content. This is a more severe variant of the two-column same-page merge pattern already documented in chapters G (SU-G-44/45/46) and GS (SU-GS-54-57): here the title/content mismatch spans ~40 pages rather than a single page.",
       "resolution_status": "INDEPENDENTLY RESOLVED - each real topic is represented as its own study unit citing the node bearing its (correct) title, with page_mapping_precision set to BODY_CONFIRMED_CORRECTED and the confirmed pdf/tn page range substituted for the toc-recorded one (SU-H-18 Sickle Cell Disease; SU-H-19 AIHA; SU-H-20 MAHA/TMA; SU-H-21 Hereditary Spherocytosis/Elliptocytosis; SU-H-22 G6PD Deficiency). The genuine bibliographic content actually occupying H.S22's and H.S23's recorded page ranges is separately represented as SU-H-50 (Landmark Hematology Trials, citing H.S22 at its own recorded range) and SU-H-51 (References, an UNCATALOGUED node since no toc node bears that title anywhere in this chapter).",
       "recommended_action": "Coordinator should consider re-running or manually correcting the TOC-extraction pipeline for chapter H nodes H.S22/H.S23 in toc_inventory.json: split H.S22 into two nodes (Sickle Cell Disease at pdf 675-677; Landmark Hematology Trials at pdf 715-716), correct H.S22.T01's page range, correct H.S23's page range to pdf 677 and its T02-T04's page ranges to pdf 678, and add a new node for the genuine References bibliography at pdf 717-718. This is the largest single page-misattribution defect found across all completed chapters to date and may warrant checking whether the same defect recurs in other body-system chapters with a similarly long TOC.",
-      "affects_global_toc": true,
-      "chapter_code": "H"
+      "affects_global_toc": true
     },
     {
       "issue_type": "mcc_registry_coverage_gap",
@@ -528,8 +476,7 @@
       "summary": "Full-registry keyword searches (search-mcc-objectives) for 'platelet', 'thrombocytopenia', 'neutropenia', 'pancytopenia', 'polycythemia', 'erythrocytosis', 'coagulation', 'leukemia', 'lymphoma', 'myeloma', 'transfusion', 'splenomegaly'/'spleen', 'iron deficiency', 'vitamin B12', 'sickle cell', 'hemolytic', 'DIC', 'hemostasis', 'warfarin', 'deep vein', 'pulmonary embolism' all returned zero direct-title matches. This is the same registry-coverage-gap pattern already flagged in chapters E, G, GS, GM, GY, now confirmed as especially pronounced in Hematology given how many of its topics (leukemia, lymphoma, myeloma, DIC, thrombocytopenia, sickle cell disease, transfusion reactions) are genuinely high-yield generalist content with no dedicated MCC objective. Every affected topic was still found to be explicitly or closely named within the causal_conditions/rationale text of a nearby presentation-based objective (e.g., 'acute leukemia' and 'febrile neutropenia' explicitly named in objective 120's own text; bleeding disorders under 15-1; shock/emergency framing under 9-2), with mapping_strength never exceeding what each objective's actual retrieved text supports (STRONG only where a near-exact or explicitly-named match exists; MODERATE/WEAK elsewhere, each documented).",
       "resolution_status": "RESOLVED FOR THIS CHAPTER - no evidence fabricated; see crosswalk.json's per-unit mapping_rationale.",
       "recommended_action": "Coordinator may want to continue folding this into the broader MCC-objectives-registry-gap note (now confirmed in six chapters: E, G, GS, GM, GY, H); Hematology is the most affected chapter to date by volume of high-yield content lacking a dedicated objective.",
-      "affects_global_toc": false,
-      "chapter_code": "H"
+      "affects_global_toc": false
     },
     {
       "issue_type": "cross_discipline_overlap_candidate",
@@ -539,8 +486,7 @@
       "summary": "SU-H-39 (Acute Lymphoblastic Leukemia) is predominantly pediatric and may overlap chapter P (Pediatrics, not yet mapped). SU-H-42 (Multiple Myeloma) shares its renal-failure complication with chapter NP (Nephrology, not yet mapped). SU-H-32 (VTE) shares content with chapter R (Respirology, for PE, not yet mapped) and Clinical Pharmacology (CP, completed, for anticoagulant reference content). SU-H-9 (Splenomegaly) may overlap chapter ID (Infectious Diseases, not yet mapped, for infectious causes) and G (Gastroenterology, completed, for portal-hypertension-related splenomegaly).",
       "resolution_status": "NOT RESOLVED BY DESIGN - deferred per task instructions until all relevant chapters are mapped.",
       "recommended_action": "Coordinator should review during the global cross-chapter overlap audit once P, NP, R, and ID are mapped.",
-      "affects_global_toc": false,
-      "chapter_code": "H"
+      "affects_global_toc": false
     },
     {
       "issue_type": "weak_mapping_scope_review",
@@ -550,8 +496,7 @@
       "summary": "Thrombocytosis (SU-H-05), Myelofibrosis (SU-H-37), Essential Thrombocythemia (SU-H-38), MGUS (SU-H-43), and Lymphoplasmacytic Lymphoma/Waldenstrom (SU-H-44) each have only a WEAK, loosely-adjacent MCC objective citation. Each is retained as an independent study unit only because Toronto Notes gives it independent topic status; none is classified UNCERTAIN outright since a plausible (if weak) adjacent objective exists for each, unlike SU-H-18's Bartholin-Gland-Abscess-style zero-evidence case seen in other chapters.",
       "resolution_status": "RESOLVED PER ACCURACY RULES - no evidence fabricated; each documented as WEAK/requires_scope_review in crosswalk.json.",
       "recommended_action": "Revisit only if a future MCC objectives-registry refresh adds relevant dedicated objectives (e.g., for myeloproliferative neoplasms or IgM lymphoproliferative disorders).",
-      "affects_global_toc": false,
-      "chapter_code": "H"
+      "affects_global_toc": false
     },
     {
       "issue_type": "structural_severe_two_column_toc_merge",
@@ -561,8 +506,7 @@
       "summary": "Raw-OCR verification (derived/toronto-notes-2025/clean-ocr/, pdf pages 719-778) found the most extensive structural defect of any completed chapter to date. (1) ID.S07 ('Systemic Infections') is missing its fifth T-child, 'Cat Scratch Disease' (real, confirmed pdf 741-742/ID23-24, within S07's own declared range); the title was instead concatenated onto unrelated node ID.S17. (2) A substantial Syphilis section (pdf 742-743/ID24-25) has NO toc_inventory.json node anywhere in the chapter's 75 nodes - a more severe gap than any prior Fibroids/Sickle-Cell-style mislabeling, since no node at all carries even a wrong page range for it. (3) ID.S08 'Tuberculosis' is recorded spanning pdf 743-749/ID25-31, but TB itself occupies only pdf 743-744/ID25-26; the remaining pdf 745-749/ID27-31 is a substantial, genuine HIV/AIDS section (Epidemiology, Etiology, Modes of Transmission, Natural History, Antiretroviral Drugs) with no node of its own. (4) Nodes ID.S17-ID.S23 (toc-recorded pdf 764-778/ID46-60, HIGH-confidence TOC_OCR titles) are a two-column TOC merge: their titles concatenate genuine HIV disease-topic subheadings (confirmed at the true pdf 745-750/ID27-32 location) with an unrelated antimicrobial-reference-appendix column (confirmed at the nodes' own toc-recorded pdf 764-778/ID46-60 location). This is the same class of defect already documented in chapters GY (Fibroids/Contraception) and H (Sickle Cell/Landmark Trials), but affects a larger page span (~26 pages) and a larger number of nodes (9) than either prior case.",
       "resolution_status": "INDEPENDENTLY RESOLVED - each real topic is represented as its own study unit citing the node(s) whose title names it, with page_mapping_precision corrected to the confirmed body location: SU-ID-16 (Cat Scratch Disease, citing ID.S07+ID.S17); SU-ID-17 (Syphilis, UNCATALOGUED:ID.SYPHILIS since no node exists); SU-ID-18 (Tuberculosis, page range corrected down from the toc-recorded 7 pages to its confirmed 2-page extent); SU-ID-19 and SU-ID-20 (HIV, citing ID.S20.T01/S21/S22/S22.T01 and ID.S23/S23.T01/S23.T02 respectively, page ranges corrected to pdf 745-750); SU-ID-32 (the genuine antimicrobial-reference-appendix and chapter bibliography, citing ID.S17-S23 at their own toc-recorded pdf 764-778 range, REFERENCE_ONLY).",
       "recommended_action": "Coordinator should consider re-running or manually correcting the TOC-extraction pipeline for chapter ID nodes S07/S08/S17-S23 in toc_inventory.json: add a Cat Scratch Disease T-child to S07, add a new Syphilis node between S07 and S08, correct S08's page range to pdf 743-744, and split S17-S23 into their real HIV-disease-topic identities (at pdf 745-750) versus their real antimicrobial-appendix identities (at their own recorded pdf 764-778). This is now the largest single page-misattribution defect found across all completed chapters (surpassing chapter H's H.S22/H.S23 case) and reinforces that a similarly long TOC late in a chapter warrants targeted raw-OCR spot-checking as standard practice.",
-      "affects_global_toc": true,
-      "chapter_code": "ID"
+      "affects_global_toc": true
     },
     {
       "issue_type": "cross_reference_only_entries",
@@ -572,8 +516,7 @@
       "summary": "Body confirmation shows ID.S04's 'Gastrointestinal Infections' (pdf 731/ID13, see Gastroenterology G13/G18/G19/G31 and Pediatrics P44), two of ID.S09's three T-children ('Superficial Fungal Infections' and 'Dermatophytes', pdf 750/ID32, see Dermatology D31-D49), and ID.S14's 'Ectoparasites' (pdf 759/ID41, see Dermatology D33) each carry zero independent clinical content in this chapter - each is a single-line cross-reference immediately followed by unrelated, genuine ID content that TOC extraction merged into the same node (Bone and Joint Infections; Subcutaneous Fungal Infections; Travel Medicine, respectively).",
       "resolution_status": "RESOLVED - each cross-reference-only fragment represented as its own REFERENCE_ONLY study unit (SU-ID-06, SU-ID-23, SU-ID-28) with zero planned question coverage and a cross_discipline_note pointing to the owning chapter; the genuine adjacent content is represented separately (SU-ID-07, SU-ID-24, SU-ID-29).",
       "recommended_action": "No action required for this chapter; consistent with the same pattern already seen in chapters G, GS, GY.",
-      "affects_global_toc": false,
-      "chapter_code": "ID"
+      "affects_global_toc": false
     },
     {
       "issue_type": "unresolved_heading_not_body_confirmed",
@@ -583,8 +526,7 @@
       "summary": "A full-chapter search (pdf 719-778, clean-ocr corpus) for 'Rocky Mountain' and 'West Nile Virus' as standalone body headings found no matches; both terms appear only as row entries within Table 29 (Important Exposures), a vector-borne-disease exposure table inside the genuine Travel Medicine section (SU-ID-29).",
       "resolution_status": "UNRESOLVED PER ACCURACY RULES - per the rule against inventing headings, no separate Rocky Mountain Spotted Fever or West Nile Virus study unit was fabricated. ID.S18 and ID.S18.T01 are accounted for in SU-ID-32 (their confirmed content is the continuing Antimicrobials reference table on the same physical pages).",
       "recommended_action": "Revisit if a future raw-OCR pass locates a dedicated body section for either disease elsewhere in the chapter or in an adjacent chapter (e.g., Dermatology for the rash differential).",
-      "affects_global_toc": false,
-      "chapter_code": "ID"
+      "affects_global_toc": false
     },
     {
       "issue_type": "mcc_registry_coverage_gap",
@@ -594,8 +536,7 @@
       "summary": "MCC's Medical Expert objectives (198 total) are almost entirely presentation-based (fever, shock, cough, skin conditions) rather than disease-based, so no objective is titled 'HIV', 'Tuberculosis', 'Syphilis', 'Sepsis', 'Meningitis', 'Malaria', 'Lyme disease', 'Leprosy', 'Rabies', 'Tetanus', 'Cat Scratch Disease', or 'Endemic/Opportunistic Fungi'. This is the same registry-coverage-gap pattern already flagged in chapters E, G, GS, GM, GY, H, but is especially pronounced here given how disease-centric this chapter's structure is. Every affected topic was still mapped to the closest presentation-based objective whose causal_conditions/enabling_objectives text names it explicitly where possible (e.g., 'Sepsis' named under objective 9-2's Distributive shock; 'meningitis, encephalitis' named under objective 58-1's Coma causal_conditions; 'Plasmodium' named under objective 107-1's fever causal_conditions; 'immunocompromised state due to HIV' named in objective 107-1's enabling objectives), with mapping_strength never exceeding what the retrieved text actually supports.",
       "resolution_status": "RESOLVED FOR THIS CHAPTER - no evidence fabricated; see crosswalk.json's per-unit mapping_rationale.",
       "recommended_action": "Coordinator may want to continue folding this into the broader MCC-objectives-registry-gap note (now confirmed in seven chapters: E, G, GS, GM, GY, H, ID).",
-      "affects_global_toc": false,
-      "chapter_code": "ID"
+      "affects_global_toc": false
     },
     {
       "issue_type": "cross_discipline_overlap_candidate",
@@ -605,8 +546,7 @@
       "summary": "SU-ID-17 (Syphilis) overlaps Gynecology (GY, completed - SU-GY-17 Sexually Transmitted Infections already flagged this same gap from the GY side) and Family Medicine (FM, not yet mapped, cited in-text for generalized STI workup). SU-ID-25 (Trichomonas vaginalis, part of Parasitic Infections: Protozoa) also overlaps Gynecology's vaginal-discharge/STI content.",
       "resolution_status": "NOT RESOLVED BY DESIGN - deferred per task instructions until all relevant chapters are mapped.",
       "recommended_action": "Coordinator should review during the global cross-chapter overlap audit once FM is mapped and reconcile against GY's existing SU-GY-17 cross-discipline note.",
-      "affects_global_toc": false,
-      "chapter_code": "ID"
+      "affects_global_toc": false
     },
     {
       "issue_type": "current_guidance_sensitive_content",
@@ -616,8 +556,7 @@
       "summary": "Per project instructions, exact antibiotic/antifungal/antiparasitic/antiretroviral choice, dose, and duration are not encoded into the scope layer even where Toronto Notes provides them (e.g., specific PrEP dosing regimens, RIPE doses, vancomycin dosing). freshness.verification_required is set to true on SU-ID-19, SU-ID-20, SU-ID-22, and SU-ID-32 accordingly.",
       "resolution_status": "RESOLVED - competencies are mapped at the recognition/initiation level only; clinical answers will be researched from current Canadian guidance during question generation.",
       "recommended_action": "No action required; standard practice per chapter workflow instructions.",
-      "affects_global_toc": false,
-      "chapter_code": "ID"
+      "affects_global_toc": false
     },
     {
       "issue_type": "structural_severe_missing_t_children",
@@ -627,8 +566,7 @@
       "summary": "Raw-OCR verification (derived/toronto-notes-2025/clean-ocr/, pdf pages 779-790) found that MG.S03 is recorded with only two T-children ('Other Single Gene Disorders', 'Metabolic Diseases'), both LOW-confidence TOC_OCR_UNANCHORED. Body confirmation shows four additional, substantial table-based subsections (Table 2 Chromosomal Aneuploidy Syndromes, Table 3 Sex Chromosome Disorders, Table 4 Other Genetic Syndromes, Table 5 Familial Cancer Syndromes) at pdf 784-785/MG6-7, preceding the genuine 'Other Single Gene Disorders' heading (itself body-confirmed one page later than the parent node's own start_pdf_page would suggest). This is the same class of defect already documented in chapters GY, H, and ID (real content merged ahead of or dropped from a recorded T-child), here affecting four distinct high-yield topic clusters within a single node rather than one.",
       "resolution_status": "INDEPENDENTLY RESOLVED - each real topic is represented as its own study unit citing the parent node MG.S03 (SU-MG-07 through SU-MG-10), per the GY-Fibroids/H-Sickle-Cell/ID-Endemic-Mycoses dual/multi-unit precedent for real content sharing one node id.",
       "recommended_action": "Coordinator should consider adding four T-children to MG.S03 in toc_inventory.json ('Chromosomal Aneuploidy Syndromes', 'Sex Chromosome Disorders', 'Other Genetic Syndromes', 'Familial Cancer Syndromes', at pdf 784-785) in a future TOC-extraction pass; also correct 'Other Single Gene Disorders' start_pdf_page from 784 to 785 and 'Metabolic Diseases' start_pdf_page from 784 to 787.",
-      "affects_global_toc": true,
-      "chapter_code": "MG"
+      "affects_global_toc": true
     },
     {
       "issue_type": "cross_reference_only_entries",
@@ -638,8 +576,7 @@
       "summary": "Body confirmation at pdf 785/MG7 shows Sickle Cell Disease is a single-line cross-reference ('see Hematology, H21') and Cystic Fibrosis is explicitly marked 'More information found in other chapters', each followed immediately by unrelated, genuine single-gene-disorder content (Wilson Disease, Duchenne Muscular Dystrophy) that TOC extraction would otherwise merge into one T-child.",
       "resolution_status": "RESOLVED - represented as its own REFERENCE_ONLY study unit (SU-MG-11) with zero planned question coverage; the genuine adjacent content is represented separately (SU-MG-12 Wilson Disease, SU-MG-13 Duchenne Muscular Dystrophy).",
       "recommended_action": "No action required for this chapter; consistent with the same pattern already seen in chapters G, GS, GY, ID.",
-      "affects_global_toc": false,
-      "chapter_code": "MG"
+      "affects_global_toc": false
     },
     {
       "issue_type": "mcc_registry_coverage_gap",
@@ -649,8 +586,7 @@
       "summary": "MCC's Medical Expert objectives (198 total) name only one genetics-specific presentation ('Genetic concerns', objective 36) plus one congenital-anomaly presentation (36-2); neither is titled for '22q11.2 deletion syndrome', 'Prader-Willi syndrome', 'hereditary cancer syndromes', 'Wilson disease', or 'Duchenne muscular dystrophy'. This is the same registry-coverage-gap pattern already flagged in chapters E, G, GS, GM, GY, H, ID. Every affected topic was still mapped to the closest available objective (36 or 36-2) whose causal_conditions/enabling_objectives text names the general category (chromosomal, monogenic, imprinting) or, where no text match exists at all (Wilson disease, DMD), mapped at WEAK strength with requires_scope_review: true rather than left unmapped or fabricated.",
       "resolution_status": "RESOLVED FOR THIS CHAPTER - no evidence fabricated; see crosswalk.json's per-unit mapping_rationale.",
       "recommended_action": "Coordinator may want to continue folding this into the broader MCC-objectives-registry-gap note (now confirmed in eight chapters: E, G, GS, GM, GY, H, ID, MG).",
-      "affects_global_toc": false,
-      "chapter_code": "MG"
+      "affects_global_toc": false
     },
     {
       "issue_type": "cross_discipline_overlap_candidate",
@@ -660,8 +596,7 @@
       "summary": "SU-MG-10 (Familial Cancer Syndromes) overlaps Gynecology (BRCA/hereditary breast-ovarian cancer, GY already completed) and General/Thoracic Surgery and Gastroenterology (colorectal-cancer syndromes, both already completed) - none of those chapters' crosswalks were re-opened to check for an existing overlapping unit as part of this chapter's mapping. SU-MG-11 (Sickle Cell Disease cross-reference) overlaps chapter H (Hematology, already completed, owns the substantive content); Cystic Fibrosis ownership is not yet resolved since its owning chapter (likely Respirology or Pediatrics) is not yet mapped.",
       "resolution_status": "NOT RESOLVED BY DESIGN - deferred per task instructions until all relevant chapters are mapped.",
       "recommended_action": "Coordinator should review during the global cross-chapter overlap audit once Respirology/Pediatrics are mapped, and cross-check GY/GS/G's existing cancer-syndrome units against SU-MG-10.",
-      "affects_global_toc": false,
-      "chapter_code": "MG"
+      "affects_global_toc": false
     },
     {
       "issue_type": "current_guidance_sensitive_content",
@@ -671,8 +606,7 @@
       "summary": "Per project instructions, exact newborn-screening panel contents, specific genetic-test technology recommendations, and jurisdiction-specific screening program details are not encoded into the scope layer even where Toronto Notes provides Ontario-specific examples. freshness.verification_required is set to true (verification_types: [SCREENING]) on SU-MG-04 and SU-MG-15 accordingly.",
       "resolution_status": "RESOLVED - competencies are mapped at the recognition/referral level only; current Canadian screening-program specifics will be researched during question generation.",
       "recommended_action": "No action required; standard practice per chapter workflow instructions.",
-      "affects_global_toc": false,
-      "chapter_code": "MG"
+      "affects_global_toc": false
     },
     {
       "issue_type": "wrapped_heading_ocr_defect",
@@ -682,8 +616,7 @@
       "summary": "Raw-OCR verification (derived/toronto-notes-2025/clean-ocr/, pdf pages 791-820) confirmed four section-title OCR defects in this chapter: (1) MI.S01 'ACTOMYMS' is an OCR-garbled 'ACRONYMS', a non-clinical acronym glossary merged with the genuine 'Imaging Modalities' heading per merged_duplicate_headings (same pattern as chapter ID's 'ACRONYMS' node). (2) MI.S02 'Chestlmaging', (3) MI.S08 'InterventionalRadiology', and (4) MI.S09 'BreastImaging' are all wrapped-heading defects (a missing space) for 'Chest Imaging', 'Interventional Radiology', and 'Breast Imaging' respectively - unlike the ACTOMYMS case, all three are confirmed genuine, single-topic section titles with no unrelated merged content, and required no splitting.",
       "resolution_status": "RESOLVED - ACTOMYMS's acronym-glossary fragment is not separately represented (analogous to SU-ID-01's treatment); the three wrapped-heading titles are represented under their corrected genuine title text in study_units.json with no content misattribution.",
       "recommended_action": "Coordinator may want to note that OCR wrapped-heading defects (missing inter-word spaces) recur across chapters (chapter ID's Chestlmaging-style analogues not previously seen, but similar to isolated wrapped-title defects in other completed chapters) and could be addressed with a post-processing space-insertion heuristic in a future TOC-extraction pass; low priority since this chapter's crosswalk is unaffected.",
-      "affects_global_toc": true,
-      "chapter_code": "MI"
+      "affects_global_toc": true
     },
     {
       "issue_type": "minor_page_boundary_drift",
@@ -693,8 +626,7 @@
       "summary": "Raw-OCR verification found four instances where a section's toc-recorded end page understates its true body extent by a small margin, with the next section's heading beginning mid-page rather than at its own declared start: (1) MI.S03 (Abdominal Imaging, declared end pdf 805) actually continues through Acute/Chronic Pancreatitis and Angiography of the GI Tract at the top of pdf 806, before MI.S04 begins mid-page (affects SU-MI-13, SU-MI-14). (2) MI.S04 (Genitourinary System and Adrenals, declared end pdf 808) actually continues through the Adrenal Mass table at the top of pdf 809, before MI.S05 (Neuroradiology) begins mid-page (affects SU-MI-17). (3) MI.S06 (Musculoskeletal System, declared end pdf 814) actually continues through Hyperparathyroidism and Paget's Disease at the top of pdf 815, before MI.S07 (Nuclear Medicine) begins mid-page (affects SU-MI-25). (4) MI.S08 (Interventional Radiology, declared end pdf 817) actually continues through Central Venous Access at the top of pdf 818, before MI.S09 (Breast Imaging) begins mid-page (affects SU-MI-30). All four are minor precision corrections of a fraction of a page each - content is genuine and was not fabricated, mislabeled, or reordered, unlike chapter ID's severe multi-page two-column TOC merge.",
       "resolution_status": "RESOLVED - each affected study unit's pdf_page_range/tn_page_range is corrected to its confirmed body extent in study_units.json, with the drift documented in each unit's structural_rationale.",
       "recommended_action": "Coordinator may want to note this recurring minor-drift pattern (declared section end page consistently falling a fraction of a page short of true content extent) as a low-priority TOC-extraction refinement opportunity; does not affect this chapter's crosswalk correctness.",
-      "affects_global_toc": true,
-      "chapter_code": "MI"
+      "affects_global_toc": true
     },
     {
       "issue_type": "cross_reference_only_entries",
@@ -704,8 +636,7 @@
       "summary": "Body confirmation shows MI.S06.T04's 'Arthritis' (pdf 813/MI23, 'see Rheumatology for radiographic features of specific arthritides') carries zero independent clinical content in this chapter - a single-line cross-reference immediately followed by unrelated, genuine Bone and Soft Tissue Tumours content that TOC extraction listed as the next sibling T-child.",
       "resolution_status": "RESOLVED - represented as its own REFERENCE_ONLY study unit (SU-MI-22) with zero planned question coverage and a cross_discipline_note pointing to Rheumatology; the genuine adjacent content is represented separately (SU-MI-23).",
       "recommended_action": "No action required for this chapter; consistent with the same pattern already seen in chapters ID, G, GS, GY.",
-      "affects_global_toc": false,
-      "chapter_code": "MI"
+      "affects_global_toc": false
     },
     {
       "issue_type": "mcc_registry_coverage_gap",
@@ -715,8 +646,7 @@
       "summary": "Targeted registry searches for 'imaging', 'radiation', 'contrast', 'diagnostic imaging', 'screening imaging', 'pulmonary embolism', 'osteomyelitis', 'appendicitis', 'meningitis', 'multiple sclerosis', 'renal colic', 'pneumothorax', 'fracture', 'osteoporosis', 'adrenal mass', and 'hydronephrosis' returned zero or only loosely-related matches, confirming (as in chapters E, G, GS, GM, GY, H, ID) that MCC's 198 Medical Expert objectives are almost entirely presentation-based (dyspnea, chest pain, abdominal pain) rather than modality- or disease-based. This is especially pronounced in this chapter given its structure is organized by imaging modality/organ system rather than by clinical presentation. Every affected topic was still mapped to the closest presentation-based objective whose scope plausibly encompasses it (e.g., contrast safety anchored to objective 89-2 Chronic kidney disease; IR vascular procedures anchored to 109-15 Vascular injury and 15-2 Prevention of venous thrombosis), with mapping_strength never exceeding what the objective's actual scope supports, and with SPECIALIST_DETAIL/no-evidence classification used where no plausible anchor exists (tubes/lines/catheters positioning, adrenal mass characterization).",
       "resolution_status": "RESOLVED FOR THIS CHAPTER - no evidence fabricated; see crosswalk.json's per-unit mapping_rationale.",
       "recommended_action": "Coordinator may want to continue folding this into the broader MCC-objectives-registry-gap note (now confirmed in eight chapters: E, G, GS, GM, GY, H, ID, MI), noting MI as a case where the gap stems from the chapter's non-presentation-based organizational structure rather than disease-naming granularity.",
-      "affects_global_toc": false,
-      "chapter_code": "MI"
+      "affects_global_toc": false
     },
     {
       "issue_type": "cross_discipline_overlap_candidate",
@@ -726,8 +656,7 @@
       "summary": "SU-MI-12 (Specific Visceral Organ Imaging: Liver/Spleen/Biliary) overlaps Gastroenterology (G, completed). SU-MI-16 (Gynecological Imaging) overlaps Gynecology (GY, completed). SU-MI-20 (CNS Infection/Demyelinating Disease Imaging) overlaps Infectious Diseases (SU-ID-09, completed) and Neurology (N, not yet mapped). SU-MI-25 (Metabolic Bone Disease Imaging) overlaps Endocrinology (E, completed - osteoporosis E46, Paget's E50). Consistent with the project's expectation that Medical Imaging will overlap with nearly every clinical discipline, each unit here is deliberately scoped to imaging-modality selection/recognition only, not disease management, per task instructions distinguishing 'recognize/manage disease X' from 'select/interpret the appropriate imaging for presentation X.'",
       "resolution_status": "NOT RESOLVED BY DESIGN - deferred per task instructions until the global cross-chapter overlap audit (PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT finalization occurs there, not at this chapter-mapping stage).",
       "recommended_action": "Coordinator should review during the global cross-chapter overlap audit once Rheumatology (RH) and Neurology (N) are mapped, and reconcile against G/GY/E's existing content.",
-      "affects_global_toc": false,
-      "chapter_code": "MI"
+      "affects_global_toc": false
     },
     {
       "issue_type": "current_guidance_sensitive_content",
@@ -737,8 +666,57 @@
       "summary": "Per project instructions, appropriateness-criteria-style recommendations (e.g., specific IV hydration protocols for contrast nephropathy prevention, exact PE imaging algorithm thresholds, breast-cancer screening age/interval guidelines) are not encoded into the scope layer even where Toronto Notes provides specific figures (e.g., the AMACING trial's hydration-vs-no-hydration finding referenced in SU-MI-33). freshness.verification_required is set to true on SU-MI-02, SU-MI-06, and SU-MI-31 accordingly.",
       "resolution_status": "RESOLVED - competencies are mapped at the recognition/selection level only; specific current Canadian Association of Radiologists / provincial screening guidance will be researched during question generation.",
       "recommended_action": "No action required; standard practice per chapter workflow instructions.",
-      "affects_global_toc": false,
-      "chapter_code": "MI"
+      "affects_global_toc": false
+    },
+    {
+      "issue_type": "unresolved_toc_headings_confirmed_via_body_evidence",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-NP-08, SU-NP-09, SU-NP-10, SU-NP-11, SU-NP-12, SU-NP-15, SU-NP-19",
+      "title": "Five TOC headings unresolved by the deterministic packet; four confirmed as genuine core content via raw-OCR body-heading verification and represented with synthetic UNCATALOGUED: source_node_ids",
+      "summary": "The NP packet's source_quality.unresolved_headings lists five TOC lines whose trailing page-number OCR did not parse to a trusted anchor, so no toc_inventory.json node exists for them: 'ACTOMYINS' (OCR-garbled 'ACRONYMS'), 'Acute Kidney Injury', 'Parenchymal Kidney Dis[eases]' (with five listed subtopics: Glomerular Diseases, Glomerular Syndromes, Tubulointerstitial Disease, Vascular Diseases of the Kidney, Analgesic Nephropathies), 'Hypertension' (with three listed subtopics: Hypertensive Nephrosclerosis, Renovascular Hypertension, Renal Parenchymal Hypertension), and 'Renal Transplantation'. Raw-OCR body-heading verification (derived/toronto-notes-2025/clean-ocr/, pdf pages 822, 841-853, 858, 862) confirmed: (1) 'ACTOMYINS' is a non-clinical acronym glossary (pdf 822/NP2), correctly excluded, matching the ID/MI chapter precedent. (2) 'Acute Kidney Injury' is a genuine, substantial section (KDIGO staging table, prerenal/renal/postrenal approach) at pdf 841-842/NP21-22. (3) 'Parenchymal Kidney Diseases' is genuine and substantial, spanning pdf 842-853/NP22-33, and was split into four study units (glomerular, tubulointerstitial, vascular, analgesic) per its own subheadings. (4) 'Hypertension' is genuine, spanning pdf 858/NP38 (sharing that page with the start of Cystic Diseases of the Kidney). (5) 'Renal Transplantation' is genuine, at pdf 862/NP42. Since dropping four of these five as UNRESOLVED would have excluded core MCCQE nephrology content (AKI alone maps to a top-priority MCC objective, 89-1) from the crosswalk, each was represented using a synthetic UNCATALOGUED: source_node_id (documented per-unit in study_units.json's structural_rationale) rather than left unmapped.",
+      "resolution_status": "RESOLVED FOR THIS CHAPTER - represented via SU-NP-08 through SU-NP-12, SU-NP-15, and SU-NP-19 with synthetic UNCATALOGUED: source_node_ids and UNRESOLVED page_mapping_precision (accurately reflecting the lack of a trusted TOC page anchor even though the body location is confirmed).",
+      "recommended_action": "Coordinator/human reviewer should confirm the UNCATALOGUED: synthetic-node-id convention is an acceptable resolution path (it is explicitly supported by scripts/qbank/scope_validate.py's source-accounting check) versus requiring a toc_inventory.json regeneration pass for chapter NP specifically, given this chapter had an unusually high rate (5 of ~49 total headings) of unresolved TOC page anchors compared to prior chapters. If a future toc_inventory.json extraction improvement resolves these page anchors, this chapter's study_units.json source_node_ids should be migrated from the synthetic IDs to the resulting canonical node_ids.",
+      "affects_global_toc": true
+    },
+    {
+      "issue_type": "minor_page_boundary_drift",
+      "severity": "informational",
+      "study_unit_id": "SU-NP-05, SU-NP-06, SU-NP-16",
+      "title": "Two minor section-boundary page-range corrections where content spills a fraction of a page past the toc-recorded end page",
+      "summary": "Raw-OCR verification found two instances where a section's toc-recorded end page understates its true body extent by a small margin: (1) NP.S03 (Electrolyte Disorders, declared end pdf 836) actually continues through Hypomagnesemia treatment content at the top of pdf 837, before NP.S04 (Acid-Base Disorders) begins mid-page (affects SU-NP-05, SU-NP-06). (2) NP.S06 (Chronic Kidney Disease, declared end implied by NP.S07's declared start pdf 858) actually ends mid-page on pdf 858, with the uncatalogued Hypertension section and then NP.S07 (Cystic Diseases of the Kidney) both beginning on the same page (affects SU-NP-16). Both are minor precision corrections of a fraction of a page each - content is genuine and was not fabricated, mislabeled, or reordered, consistent with the same low-severity pattern documented in chapter MI's review_items.json.",
+      "resolution_status": "RESOLVED - each affected study unit's pdf_page_range/tn_page_range is corrected to its confirmed body extent in study_units.json, with the drift documented in each unit's structural_rationale.",
+      "recommended_action": "Coordinator may want to continue folding this into the recurring minor-page-boundary-drift note already raised for chapter MI; does not affect this chapter's crosswalk correctness.",
+      "affects_global_toc": true
+    },
+    {
+      "issue_type": "cross_reference_only_content",
+      "severity": "informational",
+      "study_unit_id": "SU-NP-13",
+      "title": "Two of four topics in Systemic Disease with Renal Manifestation are pure cross-references to other chapters",
+      "summary": "Body confirmation shows NP.S05.T02 (Scleroderma, pdf 856) opens with 'see Rheumatology, RH14' and NP.S05.T03 (Multiple Myeloma, pdf 856) opens with 'see Hematology, H51', each followed by genuine NP-chapter-specific renal-manifestation content (scleroderma renal crisis; myeloma cast nephropathy context), unlike a pure zero-content cross-reference (cf. MI's SU-MI-22 Arthritis precedent, which had zero independent content). Retained within SU-NP-13 rather than split into separate REFERENCE_ONLY units since each carries genuine renal-specific content beyond the cross-reference line.",
+      "resolution_status": "RESOLVED - represented within SU-NP-13 with a CROSS_DISCIPLINE classification and cross_discipline_note documenting both cross-references; full disease management for scleroderma/myeloma is out of this chapter's scope by design.",
+      "recommended_action": "No action required for this chapter; consistent with prior chapters' treatment of cross-referenced systemic-disease content.",
+      "affects_global_toc": false
+    },
+    {
+      "issue_type": "mcc_registry_coverage_gap",
+      "severity": "informational",
+      "study_unit_id": "SU-NP-05, SU-NP-18, SU-NP-19",
+      "title": "MCC objectives registry has no dedicated objective for phosphate/magnesium disorders, dialysis, or renal transplantation",
+      "summary": "Targeted registry searches for 'phosphate', 'magnesium', 'dialysis', 'renal failure', and 'kidney transplant' returned zero or only loosely-related matches (89-1 AKI, 89-2 CKD as the only kidney-transplant hits, via general renal-failure grouping). Every affected topic was still mapped to the closest presentation-based objective whose scope plausibly encompasses it (dialysis/transplant anchored to 89-1/89-2's explicit renal-replacement-therapy management language; phosphate/magnesium anchored to 89-2's CKD-complication-management scope), with mapping_strength never exceeding what the objective's actual scope supports. This chapter's overall MCC-mapping-strength rate is notably better than prior chapters (only 1 of 22 units - SU-NP-05 - carries a WEAK primary anchor) because five presentation-based objectives directly matching this chapter's core content (89-1 AKI, 8 Hematuria, 84 Proteinuria, 9-1 Hypertension) were found via targeted search-mcc-objectives calls after the packet's candidate set (built from Study Smarter/token-overlap heuristics) failed to surface them.",
+      "resolution_status": "RESOLVED FOR THIS CHAPTER - no evidence fabricated; see crosswalk.json's per-unit mapping_rationale.",
+      "recommended_action": "Coordinator may want to continue folding this into the broader MCC-objectives-registry-gap note (now confirmed in chapters E, G, GS, GM, GY, H, ID, MI, and NP for the specific procedural/pharmacologic sub-topics named above), while noting NP as a case where the chapter's presentation-based organizational structure resulted in an unusually strong overall match rate once search-mcc-objectives was used to fill packet gaps.",
+      "affects_global_toc": false
+    },
+    {
+      "issue_type": "landmark_trial_sidebar_placement",
+      "severity": "informational",
+      "study_unit_id": "SU-NP-12, SU-NP-21",
+      "title": "Toronto Notes places topic-adjacent 'Landmark Trial' EBM sidebar boxes throughout the chapter body, not only in the dedicated Landmark Trials section",
+      "summary": "Body confirmation found an 'ELITE-Symphony' renal-transplantation trial sidebar box embedded at the foot of pdf 853/NP33 (within the Analgesic Nephropathies body text, topically unrelated to that page's main content but placed there for layout reasons) - a formatting pattern distinct from the chapter's dedicated, compiled 'Landmark Nephrology Trials' table section (NP.S11, pdf 864-865/NP44-45, represented as SU-NP-21). This differs from a structural TOC defect; it is standard Toronto Notes page-layout behavior (trial boxes fill available page margin space near topically-related content) and does not affect source-node accounting since the sidebar box carries no separate toc_inventory.json node.",
+      "resolution_status": "RESOLVED - noted in SU-NP-12's structural_rationale; not separately represented as a study unit since it duplicates content addressable via SU-NP-19 (Renal Transplantation) and SU-NP-21 (Landmark Trials).",
+      "recommended_action": "No action required; low priority given it does not affect crosswalk correctness or source-node accounting.",
+      "affects_global_toc": false
     }
   ]
 }
