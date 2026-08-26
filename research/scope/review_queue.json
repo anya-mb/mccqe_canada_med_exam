@@ -18,13 +18,14 @@
     "NP",
     "N",
     "NS",
-    "OB"
+    "OB",
+    "OP"
   ],
   "chapters_without_review_items_file": [
     "C",
     "ELOM"
   ],
-  "total_items": 98,
+  "total_items": 103,
   "items": [
     {
       "issue_type": "structural_ambiguity",
@@ -905,6 +906,46 @@
       "title": "Several study units carry no direct MCC objective (empty mcc_evidence or CROSS_DISCIPLINE with no own-chapter evidence)",
       "summary": "Infections During Pregnancy returned no matches in the packet's candidate set or via targeted search-mcc-objectives queries (e.g. 'chorioamnionitis', 'meconium', 'cesarean section', 'vacuum extraction', 'episiotomy', 'perineal laceration' all returned 0 results against research/mcc/objectives_registry.json). MCC's objective structure is presentation-based rather than disease-based (confirmed consistent with the NS/N chapter precedent), so several individually-named obstetric entities (shoulder dystocia, cord prolapse, uterine rupture, amniotic fluid embolism, chorioamnionitis, retained placenta, uterine inversion, mastitis, meconium, operative delivery specifics) have no dedicated objective and are instead anchored to the broad umbrella objectives 80-1 (Prenatal care) / 80-2 (Intrapartum and postpartum care) at WEAK-to-MODERATE strength, per project accuracy rules (DIRECT/COMPONENT requires actual MCC evidence; WEAK/UNCERTAIN when evidence is insufficient). coverage_weight for these units reflects genuine clinical/generalist priority (e.g., shoulder dystocia, cord prolapse, uterine rupture, postpartum hemorrhage all carry weight 5) independent of MCC-objective specificity.",
       "recommended_action": "Coordinator to confirm no MCC objective was missed via alternate query terms before finalizing these units' evidence-strength assignments."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-OP-11, SU-OP-12",
+      "title": "The Ocular Examination / Ocular Emergencies (Triage Overview)",
+      "summary": "OP.S03's raw TOC title is the concatenated 'OcularEmergencies', but merged_duplicate_headings records a co-located real heading, 'The Ocular Examination', on the same OP5-OP6 page span. Both headings are clinically substantive (unlike the OB.S01/NS.S01 acronym-glossary precedent, where one of two co-located headings was non-clinical and safely discarded), so both are represented as separate study units from the same single source node, following the OB.S07 compound-title-split precedent. The true page boundary between the two headings could not be determined from the TOC alone.",
+      "recommended_action": "Reviewer should confirm against the source PDF (pdf pages 1045-1046, TN OP5-OP6) whether 'The Ocular Examination' and 'Ocular Emergencies' are in fact two adjacent headings (in which case the split is correct and page ranges could be tightened) or whether the OCR extraction genuinely merged/mislabeled a single section (in which case one of SU-OP-11/SU-OP-12 may need to be retired or retitled)."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-OP-42, SU-OP-43, SU-OP-44, SU-OP-45, SU-OP-46, SU-OP-47, SU-OP-48, SU-OP-49",
+      "title": "Malignancies / Ocular Manifestations of Systemic Disease (OP.S15 dual-theme section)",
+      "summary": "OP.S15's raw TOC title is 'Malignancies', but merged_duplicate_headings records a co-located real heading, 'Ocular Manifestations of Systemic Disease', on the same OP33-OP36 span. The section's 13 topic children in fact span two distinct clinical themes (ocular malignancy: lid carcinoma/uveal melanoma/metastases; and systemic-disease ocular manifestations: HIV, diabetes, hypertension, MS, Graves', connective tissue disease, GCA, sarcoidosis). Represented as one malignancy-themed unit (SU-OP-42) and seven systemic-disease-themed units (SU-OP-43 to SU-OP-49) grouped by clinical theme rather than raw section title, since no page-level boundary between the two themes is recoverable from the TOC.",
+      "recommended_action": "Reviewer should confirm the theme-based regrouping against the source PDF (pdf pages 1073-1076, TN OP33-OP36) and verify no topic was misassigned to the wrong theme (e.g., confirm HIV/AIDS at OP.S15.T04 is presented as a systemic-disease-ocular-manifestation topic rather than an ocular-malignancy-risk topic in the original text)."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-OP-60, SU-OP-61",
+      "title": "Uveitis / Common Ophthalmic Medications (OP.S19 compound heading + unresolved 'Uveal Tract' heading)",
+      "summary": "OP.S19's raw TOC title, 'Uveitis Common Medications', concatenates a clinical heading ('Uveitis') and a reference-table heading ('Common Medications'), split here into a clinical unit (SU-OP-60) and a REFERENCE_ONLY unit (SU-OP-61). Separately, the packet's source_quality.unresolved_headings records one UNRESOLVED candidate heading, 'The Uveal Tract' (raw_ocr_line: 'The UvealTract (c). 2... ee OP20 ou'; search window pdf pages 1083-1084), whose page-number digits did not parse to a page consistent with reading order and could not be anchored against any standalone body-page line. This window overlaps/immediately precedes OP.S19's own OP44-OP45 span, raising the possibility that the true chapter structure places a dedicated 'The Uveal Tract' (anatomy/overview) heading here that the extraction pipeline dropped entirely, similar to the chapter-A 'Monitoring' precedent recorded in the global review queue.",
+      "recommended_action": "Reviewer should check the source PDF/OCR at pdf pages 1083-1084 (and the OP19-OP20 TN-page area the raw OCR line's trailing digits point toward) to determine whether 'The Uveal Tract' is a real dropped heading requiring a toc_inventory.json addition (per the chapter-A precedent) and, if so, reverify SU-OP-60's page-mapping precision and hierarchy placement."
+    },
+    {
+      "issue_type": "cross_discipline_flags",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-OP-22, SU-OP-26, SU-OP-32, SU-OP-36, SU-OP-43, SU-OP-44, SU-OP-45, SU-OP-46, SU-OP-49, SU-OP-52, SU-OP-53, SU-OP-57, SU-OP-59, SU-OP-60, SU-OP-62",
+      "title": "Scleritis / HSV-HZ keratitis / Endophthalmitis / Retinitis pigmentosa / Systemic-disease ocular manifestations / ROP / Ophthalmia neonatorum / Orbital fracture / Ocular drug toxicity / Uveitis / Dislocated lens",
+      "summary": "Flagged CROSS_DISCIPLINE-flavored (several classified COMPONENT with a cross_discipline_note rather than pure CROSS_DISCIPLINE, per the primarily-ocular-presentation-angle rationale): these units substantially overlap sister-chapter content -- Rheumatology (scleritis, GCA, uveitis's HLA-B27 spectrum), Infectious Diseases (HSV/HZ keratitis, endophthalmitis), Medical Genetics (retinitis pigmentosa, ectopia lentis), Endocrinology (diabetic/hypertensive retinopathy), Neurology (MS optic neuritis), Pediatrics (ROP, ophthalmia neonatorum), Plastic Surgery/Otolaryngology (orbital blow-out fracture), and Clinical Pharmacology (ocular drug toxicity). Per project instruction (matching the OB precedent), PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT designation is deferred to a later global cross-chapter audit; these are recorded here as thin CROSS_DISCIPLINE-flavored units retaining only the ocular-recognition/referral angle rather than duplicating the sister chapters' content.",
+      "recommended_action": "Defer to global cross-chapter ownership audit; no chapter-local action required."
+    },
+    {
+      "issue_type": "no_dedicated_mcc_objective_found",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-OP-05, SU-OP-08, SU-OP-15, SU-OP-16, SU-OP-18, SU-OP-19, SU-OP-21, SU-OP-24, SU-OP-27, SU-OP-28, SU-OP-36, SU-OP-39, SU-OP-45, SU-OP-51, SU-OP-52, SU-OP-53, SU-OP-54",
+      "title": "Multiple study units carry only WEAK MCC evidence (no dedicated ophthalmology-specific MCC objective)",
+      "summary": "A full-registry search-mcc-objectives sweep for 'cataract', 'glaucoma', 'floaters', 'macular degeneration', 'diabetic retinopathy', 'orbital cellulitis', 'corneal', 'hyphema', 'leukocoria', 'ptosis', 'conjunctivitis', 'retinal detachment', 'temporal arteritis', 'chemical burn', 'amaurosis', 'photophobia', 'ocular', 'arteritis', 'vasculitis', 'eyelid', 'stye', 'blepharitis', 'dry eye', 'uveitis', 'iritis', 'keratitis', 'scleritis', 'nystagmus', 'pupil', 'papilledema', 'optic neuritis', and 'orbit' returned zero direct matches for most of these terms (only 'dry eye' incidentally matched objective 30 Eye redness, and 'eye trauma' matched objective 109). The MCC Objectives registry has no ophthalmology-subspecialty presentation list beyond Eye redness (30), Acute/Chronic visual disturbance or loss (115-1/115-2), Diplopia (23), and Strabismus/amblyopia (102); most disease-specific ophthalmic entities (cataract, glaucoma, retinal vascular occlusion, orbital cellulitis, corneal ulcer, uveitis, etc.) are therefore mapped as COMPONENT/CROSS_DISCIPLINE against these five broader presentation-level objectives (or, for diabetic retinopathy/hypertensive retinopathy, against the nearest systemic-disease objective: 130 Hyperglycemia, 9-1 Hypertension) rather than against a dedicated objective, consistent with project accuracy rules (WEAK/UNCERTAIN rather than fabricated DIRECT evidence).",
+      "recommended_action": "None required at this stage -- consistent with project accuracy rules (no invented MCC IDs; WEAK used where evidence is indirect). Coordinator may wish to note, in a future cross-chapter registry-gap audit, that the MCC Objectives Online registry itself appears to lack dedicated objectives for several high-prevalence ophthalmic diagnoses (cataract, glaucoma, retinal detachment/vascular occlusion) despite their presentation-level objectives (Eye redness, Vision loss) existing."
     }
   ]
 }
