@@ -8,13 +8,14 @@
     "D",
     "ER",
     "E",
-    "FM"
+    "FM",
+    "G"
   ],
   "chapters_without_review_items_file": [
     "C",
     "ELOM"
   ],
-  "total_items": 25,
+  "total_items": 28,
   "items": [
     {
       "issue_type": "structural_ambiguity",
@@ -269,6 +270,39 @@
       "recommended_action": "Re-run search-mcc-objectives against the full registry with additional terms once chapter ID or U packets are prepared, and update SU-FM-48's mcc_evidence if a better match is found.",
       "affects_global_toc": false,
       "chapter_code": "FM"
+    },
+    {
+      "issue_type": "structural_title_mismatch",
+      "severity": "informational",
+      "study_unit_id": "SU-G-44, SU-G-45, SU-G-46",
+      "title": "G.S05 section titled 'Liver Transplantation' but body content is cirrhosis complications, not transplant procedure detail",
+      "summary": "The canonical TOC (toc_inventory.json, HIGH confidence, raw_ocr_line confirmed exact print match 'Liver Transplantation... G42') labels section G.S05 'Liver Transplantation', but its three T-children (Portal Hypertension, Hepatic Encephalopathy, Ascites) are cirrhosis-complication topics relevant to transplant-listing criteria rather than transplant surgical/procedural content. Chapter G passed TOC_VALIDATION with 0 unresolved headings, and this is confirmed as the book's actual printed heading (not an OCR artifact), so the heading was left unchanged per the rule against inventing/relabeling Toronto Notes headings.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - study units built from the T-child topic titles (Portal Hypertension, Hepatic Encephalopathy, Ascites) rather than the parent section title; mismatch documented in each unit's structural_rationale and in study_units_audit.json's title_mismatch_flags.",
+      "recommended_action": "No action required for scope purposes. Coordinator may want to note this as a minor curiosity if any downstream tooling displays section titles directly to question-writers.",
+      "affects_global_toc": false,
+      "chapter_code": "G"
+    },
+    {
+      "issue_type": "structural_note",
+      "severity": "informational",
+      "study_unit_id": "SU-G-16 through SU-G-43",
+      "title": "G.S04 ('Small and Large Bowel') spans both lower-GI and hepatobiliary/liver topics under one section heading",
+      "summary": "G.S04 is a single canonical TOC section (G14-G41, HIGH confidence, raw_ocr_line confirmed) containing 36 T-children split roughly evenly between lower-GI/bowel disease (T01-T21) and liver disease (T22-T36). This is the book's actual printed structure, not an OCR merge artifact (chapter G is 'clean': 0 unresolved headings, TOC_VALIDATION PASS). No split of the section node itself was made; study units were built at T-node granularity so bowel and liver content remain separated topic-by-topic despite sharing one parent section.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - no action needed; documented in study_units.json methodology_note and organizational_header_nodes.",
+      "recommended_action": "No action required.",
+      "affects_global_toc": false,
+      "chapter_code": "G"
+    },
+    {
+      "issue_type": "mcc_registry_coverage_gap",
+      "severity": "informational",
+      "study_unit_id": "multiple (see crosswalk_audit.md MCC registry search note)",
+      "title": "MCC objectives registry has no dedicated objective for several high-yield Gastroenterology topics",
+      "summary": "Full-registry keyword searches (search-mcc-objectives) for 'gastroesophageal reflux', 'peptic ulcer', 'dyspepsia', 'inflammatory bowel disease' (as a phrase), 'irritable bowel', 'celiac', 'colorectal cancer', 'cancer screening', 'hepatitis', 'cirrhosis', 'pancreatitis', 'gallstones', 'cholecystitis', 'malabsorption', 'ascites', 'encephalopathy', 'polyp', 'diverticul', 'reflux', 'heartburn', and 'esophag' returned zero direct-title matches. This mirrors the same registry-coverage-gap pattern flagged in chapter E's review_items.json (which anticipated checking Gastroenterology for it). It is a genuine registry gap, not a search-tooling failure: every affected topic was still found to be explicitly named within the causal_conditions list of a nearby presentation-based objective (e.g., GERD/PUD/pancreatitis/biliary disease under objective 14 'Chest pain' and objective 3-2 'Acute abdominal pain'; celiac disease under objectives 22-2, 52, and 3-3; IBD/Crohn's/UC under objectives 3-2, 3-3, 22-2, and 6-2; colorectal cancer screening explicitly named in objective 6-2's own key objective text and objective 74's causal-conditions list; ascites explicitly enumerated in objective 1 'Abdominal distension'; Gilbert syndrome explicitly named in both objectives 49 and 52).",
+      "resolution_status": "RESOLVED FOR THIS CHAPTER - affected units were mapped as COMPONENT (or DIRECT where the objective's own causal-conditions text explicitly names the exact diagnosis, e.g. PUD/gastritis/Mallory-Weiss/diverticular bleeding/Gilbert syndrome/ascites) under the nearest genuinely-matching objective, with mapping_strength never exceeding what the objective's actual retrieved text supports. Only two units (Wilson's Disease, Autoimmune Pancreatitis) had no explicit or generic-category textual anchor and were left at WEAK/requires_scope_review.",
+      "recommended_action": "Coordinator may want to fold this into the same broader MCC-objectives-registry-gap note started in chapter E's review, now confirmed to recur in Gastroenterology (a second body-system chapter), suggesting future chapters should budget time for full-registry causal-conditions-list searches rather than relying on title-only matches.",
+      "affects_global_toc": false,
+      "chapter_code": "G"
     }
   ]
 }

@@ -14,40 +14,39 @@ then continue.
 
 | | |
 |---|---|
-| Completed | 8 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`, `FM`) |
-| Next chapter | **G — Gastroenterology** |
+| Completed | 9 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`, `FM`, `G`) |
+| Next chapter | **GS — General and Thoracic Surgery** |
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `6be4263` — scope: map FM Family Medicine |
+| Last completed commit | `PENDING_G_COMMIT` — scope: map G Gastroenterology (fill in actual hash after commit, per ledger convention) |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
 
-1. G — Gastroenterology *(next)*
-2. GS — General and Thoracic Surgery
-3. GM — Geriatric Medicine
-4. GY — Gynecology
-5. H — Hematology
-6. ID — Infectious Diseases
-7. MG — Medical Genetics
-8. MI — Medical Imaging
-9. NP — Nephrology
-10. N — Neurology
-11. NS — Neurosurgery
-12. OB — Obstetrics
-13. OP — Ophthalmology
-14. OR — Orthopedic Surgery
-15. OT — Otolaryngology
-16. P — Pediatrics
-17. PM — Palliative Medicine
-18. PL — Plastic Surgery
-19. PS — Psychiatry
-20. PH — Public Health and Preventive Medicine
-21. R — Respirology
-22. RH — Rheumatology
-23. U — Urology
-24. VS — Vascular Surgery
+1. GS — General and Thoracic Surgery *(next)*
+2. GM — Geriatric Medicine
+3. GY — Gynecology
+4. H — Hematology
+5. ID — Infectious Diseases
+6. MG — Medical Genetics
+7. MI — Medical Imaging
+8. NP — Nephrology
+9. N — Neurology
+10. NS — Neurosurgery
+11. OB — Obstetrics
+12. OP — Ophthalmology
+13. OR — Orthopedic Surgery
+14. OT — Otolaryngology
+15. P — Pediatrics
+16. PM — Palliative Medicine
+17. PL — Plastic Surgery
+18. PS — Psychiatry
+19. PH — Public Health and Preventive Medicine
+20. R — Respirology
+21. RH — Rheumatology
+22. U — Urology
+23. VS — Vascular Surgery
 
 ## Chapter notes
 
@@ -157,6 +156,59 @@ then continue.
   match with the coverage gap documented in `mapping_rationale`). 0
   invalid MCC IDs, 0 WEAK mappings, 0 hygiene violations, 1 UNCERTAIN
   classification, validator PASS, 553/553 project tests passing.
+- **G (Gastroenterology)**: 62 study units from 84 source nodes (75
+  leaf/topic nodes + 1 chapter root + 8 organizational section headers,
+  all 75 leaf nodes accounted for, 0 missing/0 duplicated — verified
+  programmatically). Chapter G is a "clean" chapter per
+  `research/tn2025/toc_validation_report.json` (0 unresolved headings,
+  `TOC_VALIDATION: PASS`), so no `UNCATALOGUED:` synthetic ids were
+  needed. Two structural observations were investigated against
+  `toc_inventory.json`'s `raw_ocr_line` (no independent raw-OCR/body-
+  heading corpus exists for this project beyond `toc_inventory.json`
+  itself) and confirmed as the book's genuine printed structure rather
+  than extraction artifacts: (1) `G.S04` ("Small and Large Bowel",
+  G14-G41) spans both lower-GI/bowel topics (T01-T21) and hepatobiliary/
+  liver topics (T22-T36) under one section heading — no section split
+  was invented; study units were built at T-node granularity instead
+  (`SU-G-16` through `SU-G-43`); (2) `G.S05` is titled "Liver
+  Transplantation" but its three T-children (Portal Hypertension,
+  Hepatic Encephalopathy, Ascites) are cirrhosis-complication topics,
+  not transplant-procedure content — documented per-unit rather than
+  relabeling the canonical heading. 21 of 62 units consolidate 2-5
+  T-nodes into one study unit where TN's own subtopics are
+  etiology-specific subtypes of one disease sharing one MCC evidence
+  citation (e.g. PUD + H. pylori/NSAID/stress-induced ulceration; viral
+  hepatitis A/B/C/D; UGIB + Mallory-Weiss; LGIB + diverticular bleeding;
+  colorectal carcinoma + polyps) — see
+  `research/scope/chapters/G/study_units_audit.md` for the full list.
+  The scope packet's bounded candidate MCC set (35 entries) was mostly
+  generic cross-discipline Study-Smarter noise (SIDS, personality
+  disorders, hypertension, etc. matched only via the broad `Medicine`
+  discipline tag) and covered only 11 genuinely GI-relevant objectives;
+  targeted `search-mcc-objectives` full-registry searches for
+  'gastroesophageal reflux', 'peptic ulcer', 'dyspepsia', 'inflammatory
+  bowel disease', 'irritable bowel', 'celiac', 'colorectal cancer',
+  'hepatitis', 'cirrhosis', 'pancreatitis', 'gallstones', 'cholecystitis',
+  'ascites', and several related terms all returned **zero** direct-
+  title matches — a genuine MCC-objectives-registry coverage gap for
+  named GI diagnoses, the same pattern chapter E's review flagged and
+  asked to be checked in Gastroenterology. Every affected topic was
+  still mapped with STRONG or MODERATE evidence by locating its
+  explicit appearance inside a nearby presentation-based objective's own
+  retrieved `causal_conditions` text (objective 14 "Chest pain" alone
+  explicitly names esophagitis, PUD, Mallory-Weiss, and biliary
+  disease/pancreatitis as differentials; objective 6-2 "Lower
+  gastrointestinal bleeding"'s own key-objective text explicitly covers
+  colorectal cancer screening; objective 1 "Abdominal distension"
+  explicitly enumerates ascites with the transudative/exudative
+  framework) — see `research/scope/chapters/G/crosswalk_audit.md` for
+  the full search log. 18 distinct MCC objective IDs cited, 83 total
+  evidence citations (58 STRONG, 23 MODERATE, 2 WEAK). Only 2 units
+  (Wilson's Disease, Autoimmune Pancreatitis) had no explicit or
+  generic-category textual anchor and were left `SPECIALIST_DETAIL`/
+  WEAK/`requires_scope_review: true` rather than forced. 0 invalid MCC
+  IDs, 0 hygiene violations, 0 UNCERTAIN classifications, validator
+  PASS, 553/553 project tests passing.
 
 ## Resume protocol (per Phase 3C instructions)
 
