@@ -19,7 +19,7 @@ then continue.
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `PENDING_COMMIT` — scope: map GY Gynecology |
+| Last completed commit | `6cfd812` — scope: map GY Gynecology |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
