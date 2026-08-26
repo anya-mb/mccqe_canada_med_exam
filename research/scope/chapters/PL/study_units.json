@@ -1,0 +1,976 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-26T00:00:00Z",
+  "chapter_code": "PL",
+  "chapter_title": "Plastic Surgery",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes source structure (toc_inventory.json / derived/scope_packets/PL.json), corrected against raw OCR of ~30 body pages (pdf 1312-1354) via PyMuPDF text extraction. PL's toc_inventory.json is structurally much cleaner than prior chapters (no two-column TOC corruption, no unresolved_headings.json entries, candidate_set_truncated: false) but contains one significant defect matching the project-flagged 'broad node containing multiple distinct clinical topics' / 'topics attached to the wrong section' risk pattern for this chapter: PL.S08 ('Craniofacial Injuries', recorded pdf range 1341-1350) silently absorbs six topics (T08 'Anatomy' through T13 'Breast Reconstruction') that raw OCR body-confirms are a wholly distinct 'Breast' section beginning with a 'Breast Anatomy' heading partway through pdf 1345 (TN page PL35), immediately after the real Craniofacial Injuries content (Approach to Facial Injuries through Traumatic Auricular Hematoma, T01-T07) ends. toc_inventory.json has no node at all for this Breast section header, matching the OR-chapter 'silently dropped section header' pattern; the six Breast topics are represented here as SU-PL-32 through SU-PL-37 under a synthetic UNCATALOGUED section (see each unit's structural_rationale for the shared correction note) rather than left folded into Craniofacial Injuries. A secondary, minor one-page section-boundary drift was also confirmed by body OCR: Carpal Tunnel Syndrome (PL.S06.T08) occupies the full body-visible page at pdf 1340 (not within PL.S06's packet-recorded 1334-1339 range), pushing Brachial Plexus (PL.S07) to begin at pdf 1341 rather than the packet-recorded 1340 -- both corrected in SU-PL-23/24. PL.S09's merged_duplicate_headings field ('Gender-Affirming Surgery') was independently body-confirmed via Table 36 on pdf 1352 and represented as SU-PL-39 under a synthetic UNCATALOGUED id, matching the OR-chapter body-recovered-heading precedent. No other section boundary, topic ordering, or parent-child relationship in toc_inventory.json's 61 PL nodes was found to conflict with body-page spot verification (~20 additional pages checked across S01-S07, S09-S11). Excluded as non-clinical organizational/reference material: the chapter root (PL) and PL.S11 (References).",
+  "total_study_units": 41,
+  "organizational_header_nodes": [
+    "PL",
+    "PL.S11"
+  ],
+  "excluded_artifact_nodes": [],
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-01",
+      "title": "Basic Anatomy Review (Forearm/Hand Musculature, Tendon Compartments, Facial Skeleton)",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S01",
+        "PL.S01.T01",
+        "PL.S01.T02",
+        "PL.S01.T03",
+        "PL.S01.T04"
+      ],
+      "tn_page_range": "PL2-PL5",
+      "pdf_page_range": [
+        1312,
+        1315
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Acronyms",
+        "Basic Anatomy Review"
+      ],
+      "structural_rationale": "PL.S01's captured title 'Acromyms' (OCR-garbled 'Acronyms') carries merged_duplicate_headings: ['Basic Anatomy Review'], matching the OP.S01/OB.S01/NS.S01/OR.S01 chapter-opening acronym-glossary-plus-anatomy-review precedent. Raw OCR body-confirms pdf 1313-1315 (PL3-PL5) contain forearm/hand extensor-flexor muscle/tendon tables and compartment anatomy plus a facial-bones figure (Figure 10), directly under the chapter's four TOC_OCR_UNANCHORED sub-topics (Skin, Hand, Brachial Plexus, Face), which correspond to the four systems covered later in the chapter. The non-clinical acronym glossary itself is not separately represented.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-02",
+      "title": "Skin Lesions and Masses: Differential Diagnosis and Surgical Management of Malignant Lesions",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S02",
+        "PL.S02.T01",
+        "PL.S02.T02"
+      ],
+      "tn_page_range": "PL5",
+      "pdf_page_range": [
+        1315,
+        1315
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Skin Lesions and Masses"
+      ],
+      "structural_rationale": "PL.S02 and its two topics are clean/unmerged. Body text on pdf 1315 (PL5) contains an explicit cross-reference redirect ('for background information see Dermatology, D4 and D8'; 'for pathophysiology and diagnosis see Dermatology, D40') confirming this unit's role as the surgical-management counterpart to Dermatology's diagnostic content, not a duplicate of it.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-03",
+      "title": "Suturing and Wound Closure Materials",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S03",
+        "PL.S03.T01"
+      ],
+      "tn_page_range": "PL6-PL7",
+      "pdf_page_range": [
+        1316,
+        1317
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Basic Surgical Techniques",
+        "Sutures and Suturing"
+      ],
+      "structural_rationale": "PL.S03.T01 title 'Sutures and Suturing' is clean/unmerged. Body-confirmed on pdf 1317 (PL7, Table 7: absorbable vs. non-absorbable, monofilament vs. multifilament suture materials).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-04",
+      "title": "Skin Biopsy Types and Excisional Techniques",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S03.T02",
+        "PL.S03.T03"
+      ],
+      "tn_page_range": "PL6-PL7",
+      "pdf_page_range": [
+        1316,
+        1317
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Basic Surgical Techniques",
+        "Excision / Skin Biopsy Types and Techniques"
+      ],
+      "structural_rationale": "PL.S03.T02 ('Excision') and PL.S03.T03 ('Skin Biopsy Types and Techniques') are clean/unmerged, adjacent, and clinically inseparable (biopsy technique selection is the generalist-relevant decision point; formal excision is its therapeutic extension) -- combined per the project instruction not to fragment closely-linked technique content into single-topic units when one coherent decision is being tested.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-05",
+      "title": "Wound Classification and Assessment",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S03.T04"
+      ],
+      "tn_page_range": "PL8-PL9",
+      "pdf_page_range": [
+        1318,
+        1319
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Basic Surgical Techniques",
+        "Types of Wounds"
+      ],
+      "structural_rationale": "PL.S03.T04 title 'Types of Wounds' is clean/unmerged; represents the wound-classification/assessment content most directly aligned with MCC objective 109-12 (Skin wounds).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-06",
+      "title": "Infected Wounds",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S03.T05"
+      ],
+      "tn_page_range": "PL9-PL10",
+      "pdf_page_range": [
+        1319,
+        1320
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Basic Surgical Techniques",
+        "Infected Wounds"
+      ],
+      "structural_rationale": "PL.S03.T05 title 'Infected Wounds' is clean/unmerged.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-07",
+      "title": "Wound Dressings",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S03.T06"
+      ],
+      "tn_page_range": "PL10",
+      "pdf_page_range": [
+        1320,
+        1320
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Basic Surgical Techniques",
+        "Dressings"
+      ],
+      "structural_rationale": "PL.S03.T06 title 'Dressings' is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-08",
+      "title": "Reconstructive Ladder and Skin Grafting",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S03.T07",
+        "PL.S03.T08"
+      ],
+      "tn_page_range": "PL11-PL14",
+      "pdf_page_range": [
+        1321,
+        1324
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Basic Surgical Techniques",
+        "Reconstruction / Meshed Grafts"
+      ],
+      "structural_rationale": "PL.S03.T07 ('Reconstruction') and PL.S03.T08 ('Meshed Grafts') are clean/unmerged and clinically continuous (graft/flap selection is the direct extension of the reconstructive-ladder concept) -- combined into one unit. Body-confirmed on pdf 1325 (PL15): flap classification content (peninsular/axial-pattern/island/free flap) is still part of this Reconstruction topic, one page beyond PL.S03's packet-recorded end_pdf_page of 1324, consistent with ordinary TN section-boundary imprecision rather than a distinct missing section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-09",
+      "title": "Erysipelas and Cellulitis",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S04",
+        "PL.S04.T01",
+        "PL.S04.T02"
+      ],
+      "tn_page_range": "PL15-PL16",
+      "pdf_page_range": [
+        1325,
+        1326
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Soft Tissue Infections",
+        "Erysipelas / Cellulitis"
+      ],
+      "structural_rationale": "PL.S04.T01 ('Erysipelas') and PL.S04.T02 ('Cellulitis') are clean/unmerged, adjacent superficial soft-tissue infections commonly taught and differentiated together (depth of involvement, sharpness of margins) -- combined into one comparative unit rather than fragmenting two closely-linked presentations of the same infectious spectrum.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-10",
+      "title": "Necrotizing Fasciitis",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S04.T03"
+      ],
+      "tn_page_range": "PL16-PL17",
+      "pdf_page_range": [
+        1326,
+        1327
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Soft Tissue Infections",
+        "Necrotizing Fasciitis"
+      ],
+      "structural_rationale": "PL.S04.T03 title 'Necrotizing Fasciitis' is clean/unmerged.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-11",
+      "title": "Lower Limb (Venous, Arterial, and Diabetic) Ulcers",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S04.T04"
+      ],
+      "tn_page_range": "PL17",
+      "pdf_page_range": [
+        1327,
+        1327
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Soft Tissue Infections",
+        "Lower Limb Ulcers"
+      ],
+      "structural_rationale": "PL.S04.T04 title 'Lower Limb Ulcers' is clean/unmerged.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-12",
+      "title": "Pressure Ulcers (Pressure Injuries)",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S04.T05"
+      ],
+      "tn_page_range": "PL17-PL18",
+      "pdf_page_range": [
+        1327,
+        1328
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Soft Tissue Infections",
+        "Pressure Ulcers"
+      ],
+      "structural_rationale": "PL.S04.T05 title 'Pressure Ulcers' is clean/unmerged; body-confirmed staging content (including 'Unstageable' and 'Deep Tissue Pressure Injury' categories) on pdf 1328 (PL18).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-13",
+      "title": "Burn Injury Classification, Pathophysiology, and Severity Assessment",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S05",
+        "PL.S05.T01",
+        "PL.S05.T02",
+        "PL.S05.T03"
+      ],
+      "tn_page_range": "PL18-PL21",
+      "pdf_page_range": [
+        1328,
+        1331
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "BUMS",
+        "Burn Injuries / Pathophysiology of Burn Wounds / Diagnosis and Prognosis"
+      ],
+      "structural_rationale": "PL.S05.T01 ('Burn Injuries'), T02 ('Pathophysiology of Burn Wounds'), and T03 ('Diagnosis and Prognosis') are clean/unmerged and represent one coherent clinical-reasoning arc (mechanism -> tissue zones of injury -> depth/extent classification) rather than independently testable topics -- combined per the project instruction not to fragment generic Etiology/Clinical-Features/Investigations content belonging to a single clinical problem. Body-confirmed on pdf 1329 (PL19): Table 16 (zones of hyperemia/stasis/coagulation) anchors the pathophysiology content.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-14",
+      "title": "Indications for Referral to a Burn Centre",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S05.T04"
+      ],
+      "tn_page_range": "PL21-PL22",
+      "pdf_page_range": [
+        1331,
+        1332
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "BUMS",
+        "Indications for Referral to Burn Centre"
+      ],
+      "structural_rationale": "PL.S05.T04 title 'Indications for Referral to Burn Centre' is clean/unmerged.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-15",
+      "title": "Acute Care and Initial Resuscitation of Burn Patients",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S05.T05"
+      ],
+      "tn_page_range": "PL22-PL23",
+      "pdf_page_range": [
+        1332,
+        1333
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "BUMS",
+        "Acute Care of Burn Patients"
+      ],
+      "structural_rationale": "PL.S05.T05 title 'Acute Care of Burn Patients' is clean/unmerged.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-16",
+      "title": "Special Considerations in Burn Injury (Chemical, Electrical, Inhalation, Pediatric)",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S05.T06"
+      ],
+      "tn_page_range": "PL23",
+      "pdf_page_range": [
+        1333,
+        1333
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "BUMS",
+        "Special Considerations"
+      ],
+      "structural_rationale": "PL.S05.T06 title 'Special Considerations' is clean/unmerged.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-17",
+      "title": "Approach to and General Management of Traumatic Hand Injuries",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S06",
+        "PL.S06.T01",
+        "PL.S06.T02"
+      ],
+      "tn_page_range": "PL24-PL25",
+      "pdf_page_range": [
+        1334,
+        1335
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Hand",
+        "Traumatic Hand / General Management of Hand Injuries (Categorized by Tissue)"
+      ],
+      "structural_rationale": "PL.S06.T01 ('Traumatic Hand') and PL.S06.T02 ('General Management of Hand Injuries (Categorized by Tissue)') are clean/unmerged and represent one coherent unit -- the general approach/exam framework -- rather than being fragmented, per the project instruction against splitting generic-approach content from the specific problem it introduces. Body-confirmed on pdf 1335 (PL25): tissue-by-tissue (nerve/tendon/vessel/bone) management principles.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-18",
+      "title": "Hand Infections",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S06.T03"
+      ],
+      "tn_page_range": "PL26-PL27",
+      "pdf_page_range": [
+        1336,
+        1337
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Hand",
+        "Hand Infections"
+      ],
+      "structural_rationale": "PL.S06.T03 title 'Hand Infections' is clean/unmerged.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-19",
+      "title": "Traumatic Hand Amputations and Replantation",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S06.T04"
+      ],
+      "tn_page_range": "PL27-PL28",
+      "pdf_page_range": [
+        1337,
+        1338
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Hand",
+        "Amputations"
+      ],
+      "structural_rationale": "PL.S06.T04 title 'Amputations' is clean/unmerged.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-20",
+      "title": "Hand Tendon Injuries (Flexor and Extensor)",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S06.T05"
+      ],
+      "tn_page_range": "PL28-PL29",
+      "pdf_page_range": [
+        1338,
+        1339
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Hand",
+        "Tendons"
+      ],
+      "structural_rationale": "PL.S06.T05 title 'Tendons' is clean/unmerged. Body-confirmed on pdf 1314 (PL4) that flexor tendons should be 'seen and treated sooner due to risk of retraction' while extensor tendons 'do not require the same urgency', anchoring the differential-urgency competency for this unit.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-21",
+      "title": "Hand Fractures and Dislocations",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S06.T06"
+      ],
+      "tn_page_range": "PL29",
+      "pdf_page_range": [
+        1339,
+        1339
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Hand",
+        "Fractures and Dislocations"
+      ],
+      "structural_rationale": "PL.S06.T06 title 'Fractures and Dislocations' is clean/unmerged.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-22",
+      "title": "Dupuytren's Disease",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S06.T07"
+      ],
+      "tn_page_range": "PL29",
+      "pdf_page_range": [
+        1339,
+        1339
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Hand",
+        "Dupuytren's Disease"
+      ],
+      "structural_rationale": "PL.S06.T07 title (OCR rendered 'Dupuytren’s Disease') is clean/unmerged.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-23",
+      "title": "Carpal Tunnel Syndrome",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S06.T08"
+      ],
+      "tn_page_range": "PL30",
+      "pdf_page_range": [
+        1340,
+        1340
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Hand",
+        "Carpal Tunnel Syndrome"
+      ],
+      "structural_rationale": "PL.S06.T08 title 'Carpal Tunnel Syndrome' is clean/unmerged. Body-confirmed on pdf 1340 (TN page printed 'PL30') as a full-page standalone topic (Definition/Etiology/Epidemiology/Clinical Features/Investigations/Treatment); this places it on pdf page 1340 rather than within PL.S06's packet-recorded 1334-1339 range, and correspondingly places PL.S07 (Brachial Plexus) starting on pdf 1341 rather than the packet-recorded 1340 -- a one-page section-boundary drift confirmed by body OCR and flagged in review_items.json, not a missing-heading or wrong-parent defect.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-24",
+      "title": "Brachial Plexus Injuries",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S07"
+      ],
+      "tn_page_range": "PL31",
+      "pdf_page_range": [
+        1341,
+        1341
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Brachial Plexus"
+      ],
+      "structural_rationale": "PL.S07's captured title 'BrachialPlexus' (OCR-concatenated, unmerged/single heading) is clean. Body-confirmed on pdf 1341 (PL31): closed-vs-open injury management table (Table 25) and nerve-transfer content; this section is largely confined to pdf 1341, consistent with the one-page boundary drift noted on SU-PL-23 (Carpal Tunnel Syndrome occupying the packet-recorded 1340 slot instead).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-25",
+      "title": "Approach to Facial Trauma",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S08",
+        "PL.S08.T01"
+      ],
+      "tn_page_range": "PL31-PL32",
+      "pdf_page_range": [
+        1341,
+        1342
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Craniofacial Injuries",
+        "Approach to Facial Injuries"
+      ],
+      "structural_rationale": "PL.S08.T01 title 'Approach to Facial Injuries' is clean/unmerged.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-26",
+      "title": "Mandible Fractures",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S08.T02"
+      ],
+      "tn_page_range": "PL32-PL33",
+      "pdf_page_range": [
+        1342,
+        1343
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Craniofacial Injuries",
+        "Mandible Fractures"
+      ],
+      "structural_rationale": "PL.S08.T02 title 'Mandible Fractures' is clean/unmerged.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-27",
+      "title": "Maxillary (Le Fort) Fractures",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S08.T03"
+      ],
+      "tn_page_range": "PL33",
+      "pdf_page_range": [
+        1343,
+        1343
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Craniofacial Injuries",
+        "Maxillary Fractures"
+      ],
+      "structural_rationale": "PL.S08.T03 title 'Maxillary Fractures' is clean/unmerged.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-28",
+      "title": "Nasal Fractures",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S08.T04"
+      ],
+      "tn_page_range": "PL33-PL34",
+      "pdf_page_range": [
+        1343,
+        1344
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Craniofacial Injuries",
+        "Nasal Fractures"
+      ],
+      "structural_rationale": "PL.S08.T04 title 'Nasal Fractures' is clean/unmerged.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-29",
+      "title": "Zygomatic Fractures",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S08.T05"
+      ],
+      "tn_page_range": "PL34",
+      "pdf_page_range": [
+        1344,
+        1344
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Craniofacial Injuries",
+        "Zygomatic Fractures"
+      ],
+      "structural_rationale": "PL.S08.T05 title 'Zygomatic Fractures' is clean/unmerged. Body-confirmed on pdf 1344 (PL34): three pathognomonic features (subconjunctival hemorrhage, periorbital ecchymosis, CN V2 numbness).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-30",
+      "title": "Orbital Floor Fractures",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S08.T06"
+      ],
+      "tn_page_range": "PL34-PL35",
+      "pdf_page_range": [
+        1344,
+        1345
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Craniofacial Injuries",
+        "Orbital Floor Fractures"
+      ],
+      "structural_rationale": "PL.S08.T06 title 'Orbital Floor Fractures' is clean/unmerged. Body text explicitly cross-references 'see Ophthalmology, OP42'.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-31",
+      "title": "Traumatic Auricular Hematoma (Cauliflower Ear)",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S08.T07"
+      ],
+      "tn_page_range": "PL35",
+      "pdf_page_range": [
+        1345,
+        1345
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Craniofacial Injuries",
+        "Traumatic Auricular Hematoma (Cauliflower Ear)"
+      ],
+      "structural_rationale": "PL.S08.T07 title is clean/unmerged. Body-confirmed on pdf 1345 (PL35), immediately preceding the mis-nested Breast Anatomy heading (see study methodology_note on the Breast-section reassignment).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-32",
+      "title": "Breast Anatomy (Vascular Supply and Innervation)",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S08.T08"
+      ],
+      "tn_page_range": "PL35",
+      "pdf_page_range": [
+        1345,
+        1345
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Breast (UNCATALOGUED section)",
+        "Breast Anatomy"
+      ],
+      "structural_rationale": "STRUCTURAL CORRECTION (not a toc_inventory.json node -- reassigned from PL.S08): toc_inventory.json parents this topic under PL.S08 'Craniofacial Injuries' (which spans the recorded pdf range 1341-1350), but raw OCR body-confirms a distinct 'Breast Anatomy' section heading beginning partway through pdf 1345 (TN page PL35), immediately after the Traumatic Auricular Hematoma content ends, running through Breast Reduction (pdf 1346), Mastopexy/Breast Augmentation/Gynecomastia (pdf 1347), and Breast Reconstruction/Nipple-Areolar Complex Reconstruction (pdf 1348-1350) -- fully six topics of genuinely distinct breast-surgery content silently folded into the Craniofacial Injuries node by the automated extraction pipeline, matching this project's documented risk pattern of 'broad nodes containing multiple distinct clinical topics' / 'topics attached to the wrong section'. Represented here as a synthetic UNCATALOGUED Breast section (no toc_inventory.json node exists for it), per the OR-chapter UNCATALOGUED precedent for silently-dropped section headers. This unit represents toc_inventory.json's mis-parented node PL.S08.T08 ('Anatomy', a real node that exists but is wrongly parented under Craniofacial Injuries) as the 'Breast Anatomy' heading (Figure 38, breast vasculature; dermatomal/intercostal-nerve innervation pattern).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-33",
+      "title": "Breast Reduction (Reduction Mammaplasty)",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S08.T09"
+      ],
+      "tn_page_range": "PL36",
+      "pdf_page_range": [
+        1346,
+        1346
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Breast (UNCATALOGUED section)",
+        "Breast Reduction"
+      ],
+      "structural_rationale": "STRUCTURAL CORRECTION (not a toc_inventory.json node -- reassigned from PL.S08): toc_inventory.json parents this topic under PL.S08 'Craniofacial Injuries' (which spans the recorded pdf range 1341-1350), but raw OCR body-confirms a distinct 'Breast Anatomy' section heading beginning partway through pdf 1345 (TN page PL35), immediately after the Traumatic Auricular Hematoma content ends, running through Breast Reduction (pdf 1346), Mastopexy/Breast Augmentation/Gynecomastia (pdf 1347), and Breast Reconstruction/Nipple-Areolar Complex Reconstruction (pdf 1348-1350) -- fully six topics of genuinely distinct breast-surgery content silently folded into the Craniofacial Injuries node by the automated extraction pipeline, matching this project's documented risk pattern of 'broad nodes containing multiple distinct clinical topics' / 'topics attached to the wrong section'. Represented here as a synthetic UNCATALOGUED Breast section (no toc_inventory.json node exists for it), per the OR-chapter UNCATALOGUED precedent for silently-dropped section headers. This unit represents toc_inventory.json's mis-parented node PL.S08.T09 ('Breast Reduction', indications, pedicle-technique classification, inverted-T/vertical pattern skin resection).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-34",
+      "title": "Mastopexy (Breast Lift)",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S08.T10"
+      ],
+      "tn_page_range": "PL37",
+      "pdf_page_range": [
+        1347,
+        1347
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Breast (UNCATALOGUED section)",
+        "Mastopexy (Breast Lift)"
+      ],
+      "structural_rationale": "STRUCTURAL CORRECTION (not a toc_inventory.json node -- reassigned from PL.S08): toc_inventory.json parents this topic under PL.S08 'Craniofacial Injuries' (which spans the recorded pdf range 1341-1350), but raw OCR body-confirms a distinct 'Breast Anatomy' section heading beginning partway through pdf 1345 (TN page PL35), immediately after the Traumatic Auricular Hematoma content ends, running through Breast Reduction (pdf 1346), Mastopexy/Breast Augmentation/Gynecomastia (pdf 1347), and Breast Reconstruction/Nipple-Areolar Complex Reconstruction (pdf 1348-1350) -- fully six topics of genuinely distinct breast-surgery content silently folded into the Craniofacial Injuries node by the automated extraction pipeline, matching this project's documented risk pattern of 'broad nodes containing multiple distinct clinical topics' / 'topics attached to the wrong section'. Represented here as a synthetic UNCATALOGUED Breast section (no toc_inventory.json node exists for it), per the OR-chapter UNCATALOGUED precedent for silently-dropped section headers. This unit represents toc_inventory.json's mis-parented node PL.S08.T10 ('Mastopexy (Breast Lift)').",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-35",
+      "title": "Breast Augmentation",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S08.T11"
+      ],
+      "tn_page_range": "PL37",
+      "pdf_page_range": [
+        1347,
+        1347
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Breast (UNCATALOGUED section)",
+        "Breast Augmentation"
+      ],
+      "structural_rationale": "STRUCTURAL CORRECTION (not a toc_inventory.json node -- reassigned from PL.S08): toc_inventory.json parents this topic under PL.S08 'Craniofacial Injuries' (which spans the recorded pdf range 1341-1350), but raw OCR body-confirms a distinct 'Breast Anatomy' section heading beginning partway through pdf 1345 (TN page PL35), immediately after the Traumatic Auricular Hematoma content ends, running through Breast Reduction (pdf 1346), Mastopexy/Breast Augmentation/Gynecomastia (pdf 1347), and Breast Reconstruction/Nipple-Areolar Complex Reconstruction (pdf 1348-1350) -- fully six topics of genuinely distinct breast-surgery content silently folded into the Craniofacial Injuries node by the automated extraction pipeline, matching this project's documented risk pattern of 'broad nodes containing multiple distinct clinical topics' / 'topics attached to the wrong section'. Represented here as a synthetic UNCATALOGUED Breast section (no toc_inventory.json node exists for it), per the OR-chapter UNCATALOGUED precedent for silently-dropped section headers. This unit represents toc_inventory.json's mis-parented node PL.S08.T11 ('Breast Augmentation').",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-36",
+      "title": "Gynecomastia",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S08.T12"
+      ],
+      "tn_page_range": "PL37",
+      "pdf_page_range": [
+        1347,
+        1347
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Breast (UNCATALOGUED section)",
+        "Gynecomastia"
+      ],
+      "structural_rationale": "STRUCTURAL CORRECTION (not a toc_inventory.json node -- reassigned from PL.S08): toc_inventory.json parents this topic under PL.S08 'Craniofacial Injuries' (which spans the recorded pdf range 1341-1350), but raw OCR body-confirms a distinct 'Breast Anatomy' section heading beginning partway through pdf 1345 (TN page PL35), immediately after the Traumatic Auricular Hematoma content ends, running through Breast Reduction (pdf 1346), Mastopexy/Breast Augmentation/Gynecomastia (pdf 1347), and Breast Reconstruction/Nipple-Areolar Complex Reconstruction (pdf 1348-1350) -- fully six topics of genuinely distinct breast-surgery content silently folded into the Craniofacial Injuries node by the automated extraction pipeline, matching this project's documented risk pattern of 'broad nodes containing multiple distinct clinical topics' / 'topics attached to the wrong section'. Represented here as a synthetic UNCATALOGUED Breast section (no toc_inventory.json node exists for it), per the OR-chapter UNCATALOGUED precedent for silently-dropped section headers. This unit represents toc_inventory.json's mis-parented node PL.S08.T12 ('Gynecomastia').",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-37",
+      "title": "Breast Reconstruction (Post-Mastectomy)",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S08.T13"
+      ],
+      "tn_page_range": "PL38-PL40",
+      "pdf_page_range": [
+        1348,
+        1350
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Breast (UNCATALOGUED section)",
+        "Breast Reconstruction"
+      ],
+      "structural_rationale": "STRUCTURAL CORRECTION (not a toc_inventory.json node -- reassigned from PL.S08): toc_inventory.json parents this topic under PL.S08 'Craniofacial Injuries' (which spans the recorded pdf range 1341-1350), but raw OCR body-confirms a distinct 'Breast Anatomy' section heading beginning partway through pdf 1345 (TN page PL35), immediately after the Traumatic Auricular Hematoma content ends, running through Breast Reduction (pdf 1346), Mastopexy/Breast Augmentation/Gynecomastia (pdf 1347), and Breast Reconstruction/Nipple-Areolar Complex Reconstruction (pdf 1348-1350) -- fully six topics of genuinely distinct breast-surgery content silently folded into the Craniofacial Injuries node by the automated extraction pipeline, matching this project's documented risk pattern of 'broad nodes containing multiple distinct clinical topics' / 'topics attached to the wrong section'. Represented here as a synthetic UNCATALOGUED Breast section (no toc_inventory.json node exists for it), per the OR-chapter UNCATALOGUED precedent for silently-dropped section headers. This unit represents toc_inventory.json's mis-parented node PL.S08.T13 ('Breast Reconstruction') and its Nipple-Areolar Complex Reconstruction sub-content (flap/implant options, latissimus dorsi flap, nipple reconstruction techniques), spanning pdf 1348-1350.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-38",
+      "title": "Aesthetic (Cosmetic) Procedures Overview",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S09",
+        "PL.S09.T01"
+      ],
+      "tn_page_range": "PL41",
+      "pdf_page_range": [
+        1351,
+        1351
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Aesthetic Surgery",
+        "Aesthetic Procedures"
+      ],
+      "structural_rationale": "PL.S09 title 'Aesthetic Surgery' is clean at the section level; its merged_duplicate_headings field records a co-located 'Gender-Affirming Surgery' heading (represented separately as SU-PL-39). This unit covers T01 'Aesthetic Procedures' (Table 34: hair transplant, otoplasty, brow lift, rhytidectomy, blepharoplasty, rhinoplasty, genioplasty, chemical peel, dermabrasion, laser resurfacing, fillers, neuromodulators, body-contouring procedures).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-39",
+      "title": "Gender-Affirming Surgery",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:GenderAffirmingSurgery@pdf1352"
+      ],
+      "tn_page_range": "PL41-PL42",
+      "pdf_page_range": [
+        1351,
+        1352
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Aesthetic Surgery",
+        "Gender-Affirming Surgery"
+      ],
+      "structural_rationale": "Body-recovered heading: PL.S09's merged_duplicate_headings field records 'Gender-Affirming Surgery' as a real co-located heading with no distinct toc_inventory.json node of its own. Raw OCR body-confirms Table 36 ('Surgical Options for Transgender Men': chest masculinization, facial masculinization, thyroid cartilage enhancement, vocal cord surgery) on pdf 1352 (PL42), with an explicit in-text redirect: 'for further information on gender-affirming surgical techniques, see Urology, Transition-Related Surgeries, U47'. Represented as a synthetic UNCATALOGUED unit per the OR-chapter precedent for body-recovered headings without their own node.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-40",
+      "title": "Pediatric Craniofacial Anomalies",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S10",
+        "PL.S10.T01"
+      ],
+      "tn_page_range": "PL42",
+      "pdf_page_range": [
+        1352,
+        1352
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Pediatric Plastic Surgery",
+        "Craniofacial Anomalies"
+      ],
+      "structural_rationale": "PL.S10 ('Pediatric Plastic Surgery') and T01 ('Craniofacial Anomalies') titles are clean/unmerged (Table 37).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PL-41",
+      "title": "Congenital Hand Anomalies",
+      "chapter_code": "PL",
+      "chapter_title": "Plastic Surgery",
+      "source_node_ids": [
+        "PL.S10.T02"
+      ],
+      "tn_page_range": "PL43",
+      "pdf_page_range": [
+        1353,
+        1353
+      ],
+      "source_hierarchy_path": [
+        "Plastic Surgery",
+        "Pediatric Plastic Surgery",
+        "Congenital Hand Anomalies"
+      ],
+      "structural_rationale": "PL.S10.T02 title 'Congenital Hand Anomalies' is clean/unmerged (Table 38, ASSH classification).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    }
+  ]
+}

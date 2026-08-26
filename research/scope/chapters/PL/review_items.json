@@ -1,0 +1,55 @@
+{
+  "generated_at": "2026-08-26",
+  "chapter_code": "PL",
+  "schema_note": "Chapter-local review-queue candidates only. This file is NOT the global research/scope/review_queue.json - it is merged into that coordinator-maintained file after this chapter passes validation.",
+  "items": [
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-PL-32, SU-PL-33, SU-PL-34, SU-PL-35, SU-PL-36, SU-PL-37",
+      "title": "Six Breast-surgery topics (T08-T13) were silently nested under 'Craniofacial Injuries' in toc_inventory.json",
+      "summary": "toc_inventory.json parents PL.S08.T08 ('Anatomy') through PL.S08.T13 ('Breast Reconstruction') under PL.S08 'Craniofacial Injuries' (recorded pdf range 1341-1350), which has no unresolved_headings.json entry and no merged_duplicate_headings flag -- i.e. the packet's own hygiene signals gave no warning. Raw OCR body-verification (PyMuPDF text extraction across pdf 1341-1350) confirms Craniofacial Injuries content (Approach to Facial Injuries through Traumatic Auricular Hematoma / Cauliflower Ear, T01-T07) genuinely ends partway through pdf 1345 (TN page PL35), immediately followed on the same page by a distinct 'Breast Anatomy' section heading (Figure 38, breast vasculature) with no toc_inventory.json node of its own, which then runs through Breast Reduction (pdf 1346), Mastopexy/Breast Augmentation/Gynecomastia (all three headings confirmed on pdf 1347), and Breast Reconstruction plus Nipple-Areolar Complex Reconstruction (pdf 1348-1350, Table 32, Figure 47 latissimus dorsi flap). This is exactly the project-flagged PL risk pattern 'broad nodes containing multiple distinct clinical topics' / 'topics attached to the wrong section'. Resolved by retaining the six real (mis-parented) toc_inventory.json nodes as the source_node_ids for six separate study units (SU-PL-32 through SU-PL-37) rather than leaving them folded into the Craniofacial Injuries unit set, with the correction documented in each unit's structural_rationale and the chapter-wide methodology_note.",
+      "recommended_action": "Reviewer should spot-check pdf pages 1345-1350 against page images (not just OCR text, which was the only evidence used here) to confirm the Breast Anatomy heading boundary and that no additional distinct heading was missed within the Breast Reconstruction span (pdf 1348-1350 is the widest single-topic range in this chapter's reconstruction). Coordinator may also wish to log a toc_inventory.json extraction-pipeline defect report: this chapter shows that the 'no unresolved_headings.json entry + no merged_duplicate_headings flag' state is not sufficient evidence of correct parenting on its own, consistent with this project's standing caution not to assume completeness from clean validator/packet output alone."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-PL-23, SU-PL-24",
+      "title": "Minor one-page boundary drift between Hand (Carpal Tunnel Syndrome) and Brachial Plexus sections",
+      "summary": "toc_inventory.json records PL.S06 (Hand) ending at pdf 1339 (TN PL29) and PL.S07 (Brachial Plexus) spanning pdf 1340 only (TN PL30). Raw OCR body-confirms pdf 1340 is entirely occupied by Carpal Tunnel Syndrome content (Definition/Etiology/Epidemiology/Clinical Features/Investigations/Treatment, the last Hand topic, PL.S06.T08), and Brachial Plexus content (closed/open injury management table, nerve transfer discussion) does not begin until pdf 1341, continuing on the same page into the start of Craniofacial Injuries. Corrected page ranges are reflected in SU-PL-23 (Carpal Tunnel Syndrome, pdf [1340,1340]) and SU-PL-24 (Brachial Plexus, pdf [1341,1341]).",
+      "recommended_action": "No action required -- ordinary section-boundary imprecision (not a missing-heading, wrong-parent, or two-column-merge defect), corrected via body OCR and documented on the affected units."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-PL-39",
+      "title": "'Gender-Affirming Surgery' is a body-recovered heading with no toc_inventory.json node",
+      "summary": "PL.S09's merged_duplicate_headings field flags 'Gender-Affirming Surgery' as co-located with 'Aesthetic Surgery' but toc_inventory.json has no separate node for it. Raw OCR body-confirms Table 36 ('Surgical Options for Transgender Men': chest masculinization, facial masculinization, thyroid cartilage enhancement, vocal cord surgery) on pdf 1352 (TN PL42), with an explicit in-text redirect to 'Urology, Transition-Related Surgeries, U47'. Represented as SU-PL-39 under a synthetic UNCATALOGUED id per the OR-chapter body-recovered-heading precedent.",
+      "recommended_action": "No action required; consistent with prior-chapter precedent for a real, body-confirmed heading with no dedicated toc_inventory.json node."
+    },
+    {
+      "issue_type": "cross_discipline_flags",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-PL-02, SU-PL-11, SU-PL-12, SU-PL-30, SU-PL-31, SU-PL-37, SU-PL-39",
+      "title": "Multiple study units carry explicit in-text redirects or substantial overlap with sister chapters",
+      "summary": "Skin Lesions and Masses (SU-PL-02) explicitly redirects to Dermatology (D4, D8, D40) for background/pathophysiology; Lower Limb Ulcers (SU-PL-11) overlaps Vascular Surgery (arterial workup) and Endocrinology (diabetic foot); Pressure Ulcers (SU-PL-12) overlaps Geriatric Medicine and Palliative Medicine; Orbital Floor Fractures (SU-PL-30) explicitly redirects to Ophthalmology (OP42); Traumatic Auricular Hematoma (SU-PL-31) overlaps Otolaryngology; Breast Reconstruction (SU-PL-37) is downstream of General/Thoracic Surgery and Gynecology/Oncology breast-cancer management; Gender-Affirming Surgery (SU-PL-39) explicitly redirects to Urology (U47) for genital procedures. Per project instruction, PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT designation is deferred to a later global cross-chapter ownership audit; each unit here retains only the plastic-surgery-relevant recognition/referral angle.",
+      "recommended_action": "Defer to global cross-chapter ownership audit; no chapter-local action required."
+    },
+    {
+      "issue_type": "no_dedicated_mcc_objective_found",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-PL-13, SU-PL-14, SU-PL-15, SU-PL-16, SU-PL-18, SU-PL-19, SU-PL-22, SU-PL-23, SU-PL-24, SU-PL-26, SU-PL-27, SU-PL-28, SU-PL-29, SU-PL-33, SU-PL-37, SU-PL-40, SU-PL-41",
+      "title": "The MCC Objectives registry has no dedicated objectives for burns, hand-specific conditions, individual craniofacial-fracture subtypes, or several other high-prevalence Plastic Surgery topics",
+      "summary": "A full-registry search-mcc-objectives sweep for 'burn', 'hand', 'tendon', 'carpal tunnel', 'dupuytren', 'wound healing', 'abscess', 'cellulitis', 'necrotizing', 'fracture', 'mandible', 'nasal fracture', 'orbital fracture', 'mastectomy', 'cosmetic', and related Plastic-Surgery-specific terms returned zero direct matches; the registry's most relevant anchors are broad family objectives (109 Trauma and its sub-objectives 109-3/109-8/109-11/109-12/109-15, 38 Skin and integument conditions, 10-1 Breast masses and enlargement, 36-2 Congenital anomalies, 66 Numbness/tingling/altered sensation, 94-1 Gender and sexuality). This mirrors the OR-chapter finding that the registry lacks disease-specific objectives for several high-prevalence specialty domains; consistent with project accuracy rules, all affected units use COMPONENT (rather than DIRECT) classification with MODERATE or WEAK evidence strength and requires_scope_review=true where WEAK, rather than fabricating a closer-fitting objective.",
+      "recommended_action": "None required at this stage -- consistent with project accuracy rules (no invented MCC IDs; WEAK/COMPONENT used where evidence is indirect). Coordinator may wish to note, in a future cross-chapter registry-gap audit, that burns and hand surgery in particular have no dedicated MCC objectives despite being common generalist-relevant presentations (ED/urgent-care burn triage, hand neurovascular exam)."
+    },
+    {
+      "issue_type": "specialist_vs_generalist_review",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-PL-08, SU-PL-33, SU-PL-34, SU-PL-35, SU-PL-37, SU-PL-38",
+      "title": "SPECIALIST_DETAIL / REFERENCE_ONLY units checked for retained generalist recognition content",
+      "summary": "Per project instruction, each SPECIALIST_DETAIL/REFERENCE_ONLY unit was explicitly checked for whether the entire competency is specialist-only or only the definitive technique is. Reconstructive Ladder and Skin Grafting (SU-PL-08) retains the conceptual reconstructive-ladder framework (RECOGNIZE depth) while excluding flap/graft technique selection. Breast Augmentation (SU-PL-35) retains generalist-relevant implant-complication awareness (capsular contracture, BIA-ALCL red-flag) while excluding implant-selection/operative technique. Breast Reconstruction (SU-PL-37) retains post-mastectomy counselling awareness while excluding flap/implant technique selection. Mastopexy (SU-PL-34) and the Aesthetic Procedures overview (SU-PL-38) were assessed and found to have no independently testable generalist decision-value beyond basic terminology -- both are purely elective/cosmetic with no MCC objective anchor -- and were left at REFERENCE_ONLY/zero-coverage rather than artificially retaining a thin recognition layer.",
+      "recommended_action": "None required; documented per project instruction as a completed check, not an open question."
+    }
+  ]
+}
