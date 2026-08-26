@@ -1,0 +1,1722 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-25T00:00:00Z",
+  "chapter_code": "GS",
+  "chapter_title": "General and Thoracic Surgery",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes SOURCE STRUCTURE (toc_inventory.json / derived/scope_packets/GS.json). Chapter GS is a heavily two-column-TOC-corrupted chapter: the deterministic prepare-scope-chapter tool flagged 2 unresolved headings ('Abdominal Hernia' near GS33, 'Inflammatory Bowel Disease' near GS36 - neither produced a toc_inventory.json node and therefore neither is represented as its own study unit; both are logged in review_items.json as unrecoverable coverage gaps), and 5 additional section/topic nodes independently identified during study-unit construction show clear textual evidence of the same two-column OCR bleed pattern (GS.S12 'Anorectum' containing 4 unrelated Liver topics as T08-T11; GS.S16 'Breast' T01 merging 'Short Gut Syndrome' with 'Benign Breast Lesions'; GS.S17 'Groin Hernias Surgical Endocrinology' merging two section titles with corrupted T-children; GS.S18 'Crohn's Disease Pediatric Surgery' and GS.S19 'Ulcerative Colitis Skin Lesions' each merging two section titles; GS.S21 'Landmark ... Trials' whose T-children are actually Large Bowel Obstruction disease content). Per docs/scope-chapter-workflow.md's resolution order, canonical TOC data and raw_ocr_line were checked for every case (confirming the merges are genuine printed-source artifacts, not extraction bugs); no independent raw-OCR/body-heading corpus beyond toc_inventory.json exists for this project (same limitation documented in chapter G's audit), so body-heading/nearby-page confirmation (steps 3-4) was not available, and each case is resolved either by textually splitting an obvious two-topic merge into separate study units (both citing the same shared source_node_id), by retaining a single legible real-world term found within a corrupted fragment (e.g., 'Appendicitis') with UNRESOLVED page precision, or by explicit UNCERTAIN classification (GS.S17.T02, 'Adrenal Gland') where even the topic identity itself could not be confirmed. No Toronto Notes heading was invented; every study unit traces to specific, legible source-node text.",
+  "total_study_units": 80,
+  "organizational_header_nodes": {
+    "GS": "Chapter root container - represented by all study units below, per the C/ELOM/A/CP/D/ER/E/FM/G convention.",
+    "GS.S02": "'Differential Diagnoses of Common Presentations' umbrella heading (GS4); carries no independent content beyond its four T-children, represented as SU-GS-02 through SU-GS-05.",
+    "GS.S04": "'Surgical Complications' umbrella heading (GS8); carries no independent content beyond its nine T-children, represented as SU-GS-07 through SU-GS-14 (Postoperative Dyspnea/Respiratory Complications consolidated; Paralytic Ileus consolidated with GS.S07.T02).",
+    "GS.S05": "'Thoracic and Foregut Surgery' umbrella heading (GS13); carries no independent content beyond its fifteen T-children, represented as SU-GS-15 through SU-GS-28 (Complicated Parapneumonic Effusion/Empyema consolidated).",
+    "GS.S06": "'Stomach and Duodenum' umbrella heading (GS25, raw OCR 'StomachandDuodenum'); carries no independent content beyond its four T-children, represented as SU-GS-29 through SU-GS-32.",
+    "GS.S07": "'Small Intestine' umbrella heading (GS29, raw OCR 'SMALLINTESTINE'); carries no independent content beyond its four T-children, represented as SU-GS-33, SU-GS-34, SU-GS-35 (Paralytic Ileus, T02, consolidated into SU-GS-14 under GS.S04).",
+    "GS.S09": "'Diverticular Disease' umbrella heading (GS39); carries no independent content beyond its two T-children, represented as SU-GS-37 and SU-GS-38.",
+    "GS.S10": "'Colorectal Neoplasms' umbrella heading (GS41, raw OCR 'ColorectalNeoplasms'); carries no independent content beyond its three T-children, represented as SU-GS-39 through SU-GS-41.",
+    "GS.S11": "'Other Conditions of the Large Intestine' umbrella heading (GS44, raw OCR 'Other Conditions of the Largelntestine'); carries no independent content beyond its five T-children, represented as SU-GS-42 through SU-GS-46.",
+    "GS.S12": "'Anorectum' umbrella heading (GS47, raw OCR 'AmorectuM'); carries no independent content beyond its eleven T-children. T01-T07 (genuine anorectal topics) are represented as SU-GS-47 through SU-GS-53. T08-T11 are unrelated hepatobiliary/liver content bled into this section by the same two-column OCR merge pattern documented at chapter G's SU-G-44 through SU-G-46 (title/content mismatch, not corrected without body-page evidence) and are represented as SU-GS-54 through SU-GS-57.",
+    "GS.S13": "'Biliary Tract' umbrella heading (GS55); carries no independent content beyond its nine T-children, represented as SU-GS-58 through SU-GS-64 (Cholelithiasis/Biliary Colic and Acute/Acalculous Cholecystitis each consolidated).",
+    "GS.S14": "'Pancreas' umbrella heading (GS60, raw OCR 'PancreaS'); carries no independent content beyond its three T-children, represented as SU-GS-65 through SU-GS-67.",
+    "GS.S15": "'Spleen' umbrella heading (GS63); carries no independent content beyond its three T-children, represented as SU-GS-68 through SU-GS-70.",
+    "GS.S16": "'Breast' umbrella heading (GS65); carries no independent content beyond its single (two-topic-merged) T-child, represented as SU-GS-71 and SU-GS-72.",
+    "GS.S21": "'Landmark General and Thoracic Surgery Trials' heading (GS77) - raw_ocr_line confirmed HIGH confidence, not an extraction artifact - but its three T-children contain unrelated Large Bowel Obstruction disease content rather than trial names (see SU-GS-80's structural_rationale); no independent landmark-trials content was recoverable."
+  },
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-01",
+      "title": "Acronyms (Chapter Glossary)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S01"
+      ],
+      "tn_page_range": "GS2-GS3",
+      "pdf_page_range": [
+        494,
+        495
+      ],
+      "source_hierarchy_path": [
+        "GS.S01 (ACTOMYMS)"
+      ],
+      "structural_rationale": "Toronto Notes' chapter-opening acronym glossary (GS.S01, 'ACTOMYMS' raw OCR of 'Acronyms'). Reference material only, no independent clinical content.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-02",
+      "title": "Differential Diagnosis of Acute Abdominal Pain (Surgical Approach)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S02.T01"
+      ],
+      "tn_page_range": "GS4-GS6",
+      "pdf_page_range": [
+        496,
+        498
+      ],
+      "source_hierarchy_path": [
+        "GS.S02.T01 (Acute Abdominal Pain)"
+      ],
+      "structural_rationale": "GS.S02.T01 is the chapter's surgical approach/differential to acute abdominal pain, a core presentation.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-03",
+      "title": "Differential Diagnosis of Abdominal Mass",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S02.T02"
+      ],
+      "tn_page_range": "GS4-GS6",
+      "pdf_page_range": [
+        496,
+        498
+      ],
+      "source_hierarchy_path": [
+        "GS.S02.T02 (Abdominal Mass)"
+      ],
+      "structural_rationale": "GS.S02.T02 is the chapter's differential-diagnosis approach to abdominal mass.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-04",
+      "title": "Differential Diagnosis of Gastrointestinal Bleeding (Surgical Approach)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S02.T03"
+      ],
+      "tn_page_range": "GS4-GS6",
+      "pdf_page_range": [
+        496,
+        498
+      ],
+      "source_hierarchy_path": [
+        "GS.S02.T03 (Gastrointestinal Bleeding)"
+      ],
+      "structural_rationale": "GS.S02.T03 is the chapter's surgical differential-diagnosis approach to GI bleeding, spanning both upper and lower sources.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-05",
+      "title": "Differential Diagnosis of Jaundice (Surgical Approach)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S02.T04"
+      ],
+      "tn_page_range": "GS4-GS6",
+      "pdf_page_range": [
+        496,
+        498
+      ],
+      "source_hierarchy_path": [
+        "GS.S02.T04 (Jaundice)"
+      ],
+      "structural_rationale": "GS.S02.T04 is the chapter's differential-diagnosis approach to jaundice, emphasizing surgically correctable (obstructive) causes.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-06",
+      "title": "Preoperative Assessment and Preparation",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S03"
+      ],
+      "tn_page_range": "GS7-GS7",
+      "pdf_page_range": [
+        499,
+        499
+      ],
+      "source_hierarchy_path": [
+        "GS.S03 (Preoperative Preparations)"
+      ],
+      "structural_rationale": "GS.S03 (single-page section, no T-children) covers general preoperative preparation principles.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-07",
+      "title": "Postoperative Fever",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S04.T01"
+      ],
+      "tn_page_range": "GS8-GS12",
+      "pdf_page_range": [
+        500,
+        504
+      ],
+      "source_hierarchy_path": [
+        "GS.S04.T01 (Postoperative Fever)"
+      ],
+      "structural_rationale": "GS.S04.T01 covers the classic postoperative-fever differential and timeline.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-08",
+      "title": "Wound and Incisional Complications",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S04.T02"
+      ],
+      "tn_page_range": "GS8-GS12",
+      "pdf_page_range": [
+        500,
+        504
+      ],
+      "source_hierarchy_path": [
+        "GS.S04.T02 (Wound/Incisional Complications)"
+      ],
+      "structural_rationale": "GS.S04.T02 covers postoperative wound and incisional complications (infection, dehiscence).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-09",
+      "title": "Postoperative Urinary and Renal Complications",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S04.T03"
+      ],
+      "tn_page_range": "GS8-GS12",
+      "pdf_page_range": [
+        500,
+        504
+      ],
+      "source_hierarchy_path": [
+        "GS.S04.T03 (Urinary and Renal Complications)"
+      ],
+      "structural_rationale": "GS.S04.T03 covers postoperative urinary retention and renal complications (e.g., AKI).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-10",
+      "title": "Postoperative Respiratory Complications (Dyspnea, Atelectasis, Pneumonia, Pulmonary Embolism)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S04.T04",
+        "GS.S04.T05"
+      ],
+      "tn_page_range": "GS8-GS12",
+      "pdf_page_range": [
+        500,
+        504
+      ],
+      "source_hierarchy_path": [
+        "GS.S04.T04 (Postoperative Dyspnea)",
+        "GS.S04.T05 (Respiratory Complications)"
+      ],
+      "structural_rationale": "GS.S04.T04 (Postoperative Dyspnea) and T05 (Respiratory Complications) are consolidated as one clinical continuum: dyspnea is the presenting symptom of the postoperative respiratory complications T05 enumerates (atelectasis, pneumonia, PE).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-11",
+      "title": "Postoperative Cardiac Complications",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S04.T06"
+      ],
+      "tn_page_range": "GS8-GS12",
+      "pdf_page_range": [
+        500,
+        504
+      ],
+      "source_hierarchy_path": [
+        "GS.S04.T06 (Cardiac Complications)"
+      ],
+      "structural_rationale": "GS.S04.T06 covers postoperative cardiac complications (ischemia, arrhythmia, heart failure).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-12",
+      "title": "Postoperative Intra-Abdominal Abscess",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S04.T07"
+      ],
+      "tn_page_range": "GS8-GS12",
+      "pdf_page_range": [
+        500,
+        504
+      ],
+      "source_hierarchy_path": [
+        "GS.S04.T07 (Intra-Abdominal Abscess)"
+      ],
+      "structural_rationale": "GS.S04.T07 covers postoperative intra-abdominal abscess.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-13",
+      "title": "Paralytic (Adynamic) Ileus",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S04.T08",
+        "GS.S07.T02"
+      ],
+      "tn_page_range": "GS8-GS36",
+      "pdf_page_range": [
+        500,
+        528
+      ],
+      "source_hierarchy_path": [
+        "GS.S04.T08 (Paralytic lleus)",
+        "GS.S07.T02 (Paralytic lleus)"
+      ],
+      "structural_rationale": "Paralytic ileus is listed twice in the extracted structure - once as a postoperative complication (GS.S04.T08) and once under Small Intestine (GS.S07.T02, immediately after Mechanical Small Bowel Obstruction). Both source nodes describe the identical clinical entity and are consolidated into one study unit rather than duplicated.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-14",
+      "title": "Postoperative Delirium",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S04.T09"
+      ],
+      "tn_page_range": "GS8-GS12",
+      "pdf_page_range": [
+        500,
+        504
+      ],
+      "source_hierarchy_path": [
+        "GS.S04.T09 (Delirium)"
+      ],
+      "structural_rationale": "GS.S04.T09 covers postoperative delirium.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-15",
+      "title": "Approach to the Solitary Pulmonary Nodule",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S05.T01"
+      ],
+      "tn_page_range": "GS13-GS24",
+      "pdf_page_range": [
+        505,
+        516
+      ],
+      "source_hierarchy_path": [
+        "GS.S05.T01 (Approach to the Solitary Pulmonary Nodule)"
+      ],
+      "structural_rationale": "GS.S05.T01 covers the incidental solitary-pulmonary-nodule workup approach. No MCC presentation objective specifically addresses an asymptomatic imaging finding of this kind (searched: 'solitary pulmonary nodule', 'pulmonary nodule' - 0 matches); retained as supporting background for the Lung Cancer study unit rather than independently mapped.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-16",
+      "title": "Lung Cancer",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S05.T02"
+      ],
+      "tn_page_range": "GS13-GS24",
+      "pdf_page_range": [
+        505,
+        516
+      ],
+      "source_hierarchy_path": [
+        "GS.S05.T02 (Lung Cancer)"
+      ],
+      "structural_rationale": "GS.S05.T02 covers lung cancer recognition and initial workup; no MCC objective is titled 'lung cancer' (searched, 0 direct matches), so evidence is drawn from adjacent presentation objectives.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-17",
+      "title": "Pleura, Lung, and Mediastinum (Overview)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S05.T03"
+      ],
+      "tn_page_range": "GS13-GS24",
+      "pdf_page_range": [
+        505,
+        516
+      ],
+      "source_hierarchy_path": [
+        "GS.S05.T03 (Pleura, Lung, and Mediastinum)"
+      ],
+      "structural_rationale": "GS.S05.T03 is an umbrella/overview heading introducing the pleural, pulmonary, and mediastinal disease topics that follow (each separately mapped); no independent testable content of its own.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-18",
+      "title": "Complicated Parapneumonic Effusion and Empyema",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S05.T04",
+        "GS.S05.T05"
+      ],
+      "tn_page_range": "GS13-GS24",
+      "pdf_page_range": [
+        505,
+        516
+      ],
+      "source_hierarchy_path": [
+        "GS.S05.T04 (Complicated Parapneumonic Effusion)",
+        "GS.S05.T05 (Empyema)"
+      ],
+      "structural_rationale": "GS.S05.T04 (Complicated Parapneumonic Effusion) and T05 (Empyema) are consolidated: MCC objective 76 names both together as a single causal category, and empyema is the natural progression of a complicated parapneumonic effusion.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-19",
+      "title": "Pneumothorax",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S05.T06"
+      ],
+      "tn_page_range": "GS13-GS24",
+      "pdf_page_range": [
+        505,
+        516
+      ],
+      "source_hierarchy_path": [
+        "GS.S05.T06 (Pneumothorax)"
+      ],
+      "structural_rationale": "GS.S05.T06 covers pneumothorax, including tension pneumothorax as a surgical emergency.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-20",
+      "title": "Tube Thoracostomy (Chest Tube Insertion)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S05.T07"
+      ],
+      "tn_page_range": "GS13-GS24",
+      "pdf_page_range": [
+        505,
+        516
+      ],
+      "source_hierarchy_path": [
+        "GS.S05.T07 (Tube Thoracostomy)"
+      ],
+      "structural_rationale": "GS.S05.T07 covers indications for and complications of chest tube insertion; procedural insertion technique itself is specialist detail.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-21",
+      "title": "Lung Transplantation",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S05.T08"
+      ],
+      "tn_page_range": "GS13-GS24",
+      "pdf_page_range": [
+        505,
+        516
+      ],
+      "source_hierarchy_path": [
+        "GS.S05.T08 (Lung Transplantation)"
+      ],
+      "structural_rationale": "GS.S05.T08 covers lung transplantation candidacy/technique, specialist thoracic-surgery/transplant-medicine depth beyond MCCQE graduate scope.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-22",
+      "title": "COPD (Surgical and Perioperative Considerations)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S05.T09"
+      ],
+      "tn_page_range": "GS13-GS24",
+      "pdf_page_range": [
+        505,
+        516
+      ],
+      "source_hierarchy_path": [
+        "GS.S05.T09 (Chronic Obstructive Pulmonary Disease)"
+      ],
+      "structural_rationale": "GS.S05.T09 (COPD) is placed in this surgical chapter for its perioperative-risk and lung-volume-reduction-surgery relevance; primary diagnostic/medical-management ownership belongs to Respirology (chapter R, not yet mapped).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-23",
+      "title": "Mediastinal Masses",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S05.T10"
+      ],
+      "tn_page_range": "GS13-GS24",
+      "pdf_page_range": [
+        505,
+        516
+      ],
+      "source_hierarchy_path": [
+        "GS.S05.T10 (Mediastinal Masses)"
+      ],
+      "structural_rationale": "GS.S05.T10 covers the mediastinal mass compartment-based approach.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-24",
+      "title": "Thymoma",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S05.T11"
+      ],
+      "tn_page_range": "GS13-GS24",
+      "pdf_page_range": [
+        505,
+        516
+      ],
+      "source_hierarchy_path": [
+        "GS.S05.T11 (Thymoma)"
+      ],
+      "structural_rationale": "GS.S05.T11 covers thymoma specifically, a named subtype of GS.S05.T10's anterior mediastinal mass category.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-25",
+      "title": "Esophageal Carcinoma",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S05.T12"
+      ],
+      "tn_page_range": "GS13-GS24",
+      "pdf_page_range": [
+        505,
+        516
+      ],
+      "source_hierarchy_path": [
+        "GS.S05.T12 (Esophageal Carcinoma)"
+      ],
+      "structural_rationale": "GS.S05.T12 covers esophageal carcinoma.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-26",
+      "title": "Esophageal Perforation",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S05.T13"
+      ],
+      "tn_page_range": "GS13-GS24",
+      "pdf_page_range": [
+        505,
+        516
+      ],
+      "source_hierarchy_path": [
+        "GS.S05.T13 (Esophageal Perforation)"
+      ],
+      "structural_rationale": "GS.S05.T13 covers esophageal perforation, a surgical emergency; direct MCC objective evidence is weak (no objective names esophageal perforation specifically).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-27",
+      "title": "Hiatus Hernia",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S05.T14"
+      ],
+      "tn_page_range": "GS13-GS24",
+      "pdf_page_range": [
+        505,
+        516
+      ],
+      "source_hierarchy_path": [
+        "GS.S05.T14 (Hiatus Hernia)"
+      ],
+      "structural_rationale": "GS.S05.T14 covers hiatus hernia.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-28",
+      "title": "Achalasia",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S05.T15"
+      ],
+      "tn_page_range": "GS13-GS24",
+      "pdf_page_range": [
+        505,
+        516
+      ],
+      "source_hierarchy_path": [
+        "GS.S05.T15 (Achalasia)"
+      ],
+      "structural_rationale": "GS.S05.T15 covers achalasia.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-29",
+      "title": "Peptic Ulcer Disease (Surgical Complications)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S06.T01"
+      ],
+      "tn_page_range": "GS25-GS28",
+      "pdf_page_range": [
+        517,
+        520
+      ],
+      "source_hierarchy_path": [
+        "GS.S06.T01 (Peptic Ulcer Disease)"
+      ],
+      "structural_rationale": "GS.S06.T01 is this chapter's surgical-complications view of peptic ulcer disease (perforation, uncontrolled hemorrhage); medical management/etiology is primary content of Gastroenterology (G, already mapped as SU-G-14).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-30",
+      "title": "Gastric Carcinoma",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S06.T02"
+      ],
+      "tn_page_range": "GS25-GS28",
+      "pdf_page_range": [
+        517,
+        520
+      ],
+      "source_hierarchy_path": [
+        "GS.S06.T02 (Gastric Carcinoma)"
+      ],
+      "structural_rationale": "GS.S06.T02 covers gastric carcinoma.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-31",
+      "title": "Gastrointestinal Stromal Tumour (GIST)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S06.T03"
+      ],
+      "tn_page_range": "GS25-GS28",
+      "pdf_page_range": [
+        517,
+        520
+      ],
+      "source_hierarchy_path": [
+        "GS.S06.T03 (Gastrointestinal Stromal Tumour)"
+      ],
+      "structural_rationale": "GS.S06.T03 covers gastrointestinal stromal tumour.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-32",
+      "title": "Bariatric Surgery",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S06.T04"
+      ],
+      "tn_page_range": "GS25-GS28",
+      "pdf_page_range": [
+        517,
+        520
+      ],
+      "source_hierarchy_path": [
+        "GS.S06.T04 (Bariatric Surgery)"
+      ],
+      "structural_rationale": "GS.S06.T04 covers bariatric surgery; procedural/technique selection is specialist detail, but indications and major complications remain generalist-relevant.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-33",
+      "title": "Mechanical Small Bowel Obstruction",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S07.T01"
+      ],
+      "tn_page_range": "GS29-GS36",
+      "pdf_page_range": [
+        521,
+        528
+      ],
+      "source_hierarchy_path": [
+        "GS.S07.T01 (Mechanical Small Bowel Obstruction)"
+      ],
+      "structural_rationale": "GS.S07.T01 covers mechanical small bowel obstruction, a core high-yield surgical emergency.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-34",
+      "title": "Intestinal Ischemia",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S07.T03"
+      ],
+      "tn_page_range": "GS29-GS36",
+      "pdf_page_range": [
+        521,
+        528
+      ],
+      "source_hierarchy_path": [
+        "GS.S07.T03 (Intestinal Ischemia)"
+      ],
+      "structural_rationale": "GS.S07.T03 covers intestinal (mesenteric) ischemia.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-35",
+      "title": "Tumours of the Small Intestine",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S07.T04"
+      ],
+      "tn_page_range": "GS29-GS36",
+      "pdf_page_range": [
+        521,
+        528
+      ],
+      "source_hierarchy_path": [
+        "GS.S07.T04 (Tumours of Small Intestine)"
+      ],
+      "structural_rationale": "GS.S07.T04 covers tumours of the small intestine.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-36",
+      "title": "Large Intestine (Anatomy and Overview)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S08"
+      ],
+      "tn_page_range": "GS37-GS38",
+      "pdf_page_range": [
+        529,
+        530
+      ],
+      "source_hierarchy_path": [
+        "GS.S08 (LARGEINTESTINE)"
+      ],
+      "structural_rationale": "GS.S08 (single leaf section, no T-children, MEDIUM confidence) is an anatomy/overview section introducing the large-intestine disease topics that follow (S09-S11), each separately mapped.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-37",
+      "title": "Diverticulosis",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S09.T01"
+      ],
+      "tn_page_range": "GS39-GS40",
+      "pdf_page_range": [
+        531,
+        532
+      ],
+      "source_hierarchy_path": [
+        "GS.S09.T01 (Diverticulosis)"
+      ],
+      "structural_rationale": "GS.S09.T01 covers diverticulosis.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-38",
+      "title": "Diverticulitis",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S09.T02"
+      ],
+      "tn_page_range": "GS39-GS40",
+      "pdf_page_range": [
+        531,
+        532
+      ],
+      "source_hierarchy_path": [
+        "GS.S09.T02 (Diverticulitis)"
+      ],
+      "structural_rationale": "GS.S09.T02 covers acute diverticulitis, a core high-yield surgical presentation.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-39",
+      "title": "Colorectal Polyps",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S10.T01"
+      ],
+      "tn_page_range": "GS41-GS43",
+      "pdf_page_range": [
+        533,
+        535
+      ],
+      "source_hierarchy_path": [
+        "GS.S10.T01 (Colorectal Polyps)"
+      ],
+      "structural_rationale": "GS.S10.T01 covers colorectal polyps.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-40",
+      "title": "Familial Colorectal Cancer Syndromes",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S10.T02"
+      ],
+      "tn_page_range": "GS41-GS43",
+      "pdf_page_range": [
+        533,
+        535
+      ],
+      "source_hierarchy_path": [
+        "GS.S10.T02 (Familial Colon Cancer Syndromes)"
+      ],
+      "structural_rationale": "GS.S10.T02 covers familial colorectal cancer syndromes; hereditary/genetic-counseling depth overlaps with Medical Genetics (MG, not yet mapped).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-41",
+      "title": "Colorectal Carcinoma",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S10.T03"
+      ],
+      "tn_page_range": "GS41-GS43",
+      "pdf_page_range": [
+        533,
+        535
+      ],
+      "source_hierarchy_path": [
+        "GS.S10.T03 (Colorectal Carcinoma)"
+      ],
+      "structural_rationale": "GS.S10.T03 covers colorectal carcinoma, a core high-yield surgical oncology topic.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-42",
+      "title": "Angiodysplasia",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S11.T01"
+      ],
+      "tn_page_range": "GS44-GS46",
+      "pdf_page_range": [
+        536,
+        538
+      ],
+      "source_hierarchy_path": [
+        "GS.S11.T01 (Angiodysplasia)"
+      ],
+      "structural_rationale": "GS.S11.T01 covers angiodysplasia.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-43",
+      "title": "Volvulus",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S11.T02"
+      ],
+      "tn_page_range": "GS44-GS46",
+      "pdf_page_range": [
+        536,
+        538
+      ],
+      "source_hierarchy_path": [
+        "GS.S11.T02 (Volvulus)"
+      ],
+      "structural_rationale": "GS.S11.T02 covers volvulus.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-44",
+      "title": "Toxic Megacolon",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S11.T03"
+      ],
+      "tn_page_range": "GS44-GS46",
+      "pdf_page_range": [
+        536,
+        538
+      ],
+      "source_hierarchy_path": [
+        "GS.S11.T03 (Toxic Megacolon)"
+      ],
+      "structural_rationale": "GS.S11.T03 covers toxic megacolon.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-45",
+      "title": "Fistula (Enteric/Colonic)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S11.T04"
+      ],
+      "tn_page_range": "GS44-GS46",
+      "pdf_page_range": [
+        536,
+        538
+      ],
+      "source_hierarchy_path": [
+        "GS.S11.T04 (Fistula)"
+      ],
+      "structural_rationale": "GS.S11.T04 covers gastrointestinal fistulas arising from large-intestine disease.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-46",
+      "title": "Stomas (Colostomy/Ileostomy)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S11.T05"
+      ],
+      "tn_page_range": "GS44-GS46",
+      "pdf_page_range": [
+        536,
+        538
+      ],
+      "source_hierarchy_path": [
+        "GS.S11.T05 (Stomas)"
+      ],
+      "structural_rationale": "GS.S11.T05 covers stomas; no dedicated MCC objective exists for stoma creation/complications.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-47",
+      "title": "Hemorrhoids",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S12.T01"
+      ],
+      "tn_page_range": "GS47-GS54",
+      "pdf_page_range": [
+        539,
+        546
+      ],
+      "source_hierarchy_path": [
+        "GS.S12.T01 (Hemorrhoids)"
+      ],
+      "structural_rationale": "GS.S12.T01 covers hemorrhoids.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-48",
+      "title": "Anal Fissures",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S12.T02"
+      ],
+      "tn_page_range": "GS47-GS54",
+      "pdf_page_range": [
+        539,
+        546
+      ],
+      "source_hierarchy_path": [
+        "GS.S12.T02 (Anal Fissures)"
+      ],
+      "structural_rationale": "GS.S12.T02 covers anal fissures.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-49",
+      "title": "Anorectal Abscess",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S12.T03"
+      ],
+      "tn_page_range": "GS47-GS54",
+      "pdf_page_range": [
+        539,
+        546
+      ],
+      "source_hierarchy_path": [
+        "GS.S12.T03 (Anorectal Abscess)"
+      ],
+      "structural_rationale": "GS.S12.T03 covers anorectal abscess.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-50",
+      "title": "Fistula-in-Ano",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S12.T04"
+      ],
+      "tn_page_range": "GS47-GS54",
+      "pdf_page_range": [
+        539,
+        546
+      ],
+      "source_hierarchy_path": [
+        "GS.S12.T04 (Fistula-In-Ano)"
+      ],
+      "structural_rationale": "GS.S12.T04 covers fistula-in-ano.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-51",
+      "title": "Pilonidal Disease",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S12.T05"
+      ],
+      "tn_page_range": "GS47-GS54",
+      "pdf_page_range": [
+        539,
+        546
+      ],
+      "source_hierarchy_path": [
+        "GS.S12.T05 (Pilonidal Disease)"
+      ],
+      "structural_rationale": "GS.S12.T05 covers pilonidal disease.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-52",
+      "title": "Rectal Prolapse",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S12.T06"
+      ],
+      "tn_page_range": "GS47-GS54",
+      "pdf_page_range": [
+        539,
+        546
+      ],
+      "source_hierarchy_path": [
+        "GS.S12.T06 (Rectal Prolapse)"
+      ],
+      "structural_rationale": "GS.S12.T06 covers rectal prolapse; no MCC objective addresses rectal (as opposed to gynecologic) prolapse specifically.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-53",
+      "title": "Anal Neoplasms",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S12.T07"
+      ],
+      "tn_page_range": "GS47-GS54",
+      "pdf_page_range": [
+        539,
+        546
+      ],
+      "source_hierarchy_path": [
+        "GS.S12.T07 (Anal Neoplasms)"
+      ],
+      "structural_rationale": "GS.S12.T07 covers anal neoplasms.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-54",
+      "title": "Liver Cysts (Surgical)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S12.T08"
+      ],
+      "tn_page_range": "GS47-GS54",
+      "pdf_page_range": [
+        539,
+        546
+      ],
+      "source_hierarchy_path": [
+        "GS.S12.T08 (Liver Cysts)"
+      ],
+      "structural_rationale": "GS.S12.T08 ('Liver Cysts') is one of four Liver-topic T-children (T08-T11) whose content is unrelated to this section's printed 'Anorectum' title - raw_ocr_line for GS.S12 was not independently confirmed beyond the toc_inventory extraction, and no additional raw-OCR/body-heading corpus is available to relocate these nodes to a differently-labeled section, so they remain attached to GS.S12 per the extraction while their genuine hepatobiliary subject matter is reflected in each unit's own title (same documented-mismatch approach used for chapter G's SU-G-44 through SU-G-46 under the mislabeled 'Liver Transplantation' section).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-55",
+      "title": "Liver Abscesses",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S12.T09"
+      ],
+      "tn_page_range": "GS47-GS54",
+      "pdf_page_range": [
+        539,
+        546
+      ],
+      "source_hierarchy_path": [
+        "GS.S12.T09 (Liver Abscesses)"
+      ],
+      "structural_rationale": "GS.S12.T09 ('Liver Abscesses') - see GS.S12.T08 structural note regarding the section-title mismatch.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-56",
+      "title": "Liver Neoplasms (Surgical)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S12.T10"
+      ],
+      "tn_page_range": "GS47-GS54",
+      "pdf_page_range": [
+        539,
+        546
+      ],
+      "source_hierarchy_path": [
+        "GS.S12.T10 (Neoplasms)"
+      ],
+      "structural_rationale": "GS.S12.T10 ('Neoplasms', in the liver/hepatobiliary context per GS.S12.T08-T11 grouping) - see GS.S12.T08 structural note.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-57",
+      "title": "Liver Transplantation",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S12.T11"
+      ],
+      "tn_page_range": "GS47-GS54",
+      "pdf_page_range": [
+        539,
+        546
+      ],
+      "source_hierarchy_path": [
+        "GS.S12.T11 (Liver Transplantation)"
+      ],
+      "structural_rationale": "GS.S12.T11 covers liver transplantation candidacy/technique, specialist transplant-surgery depth beyond MCCQE graduate scope - see GS.S12.T08 structural note regarding section-title mismatch.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-58",
+      "title": "Cholelithiasis and Biliary Colic",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S13.T01",
+        "GS.S13.T02"
+      ],
+      "tn_page_range": "GS55-GS59",
+      "pdf_page_range": [
+        547,
+        551
+      ],
+      "source_hierarchy_path": [
+        "GS.S13.T01 (Cholelithiasis)",
+        "GS.S13.T02 (Biliary Colic)"
+      ],
+      "structural_rationale": "GS.S13.T01 (Cholelithiasis) and T02 (Biliary Colic) are consolidated: biliary colic is the symptomatic presentation of cholelithiasis, one disease entity sharing the same evidence base.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-59",
+      "title": "Acute Cholecystitis (Calculous and Acalculous)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S13.T03",
+        "GS.S13.T04"
+      ],
+      "tn_page_range": "GS55-GS59",
+      "pdf_page_range": [
+        547,
+        551
+      ],
+      "source_hierarchy_path": [
+        "GS.S13.T03 (Acute Cholecystitis)",
+        "GS.S13.T04 (Acalculous Cholecystitis)"
+      ],
+      "structural_rationale": "GS.S13.T03 (Acute Cholecystitis) and T04 (Acalculous Cholecystitis) are consolidated as one disease with a named etiologic subtype, sharing the same evidence base.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-60",
+      "title": "Choledocholithiasis",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S13.T05"
+      ],
+      "tn_page_range": "GS55-GS59",
+      "pdf_page_range": [
+        547,
+        551
+      ],
+      "source_hierarchy_path": [
+        "GS.S13.T05 (Choledocholithiasis)"
+      ],
+      "structural_rationale": "GS.S13.T05 covers choledocholithiasis.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-61",
+      "title": "Acute Cholangitis",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S13.T06"
+      ],
+      "tn_page_range": "GS55-GS59",
+      "pdf_page_range": [
+        547,
+        551
+      ],
+      "source_hierarchy_path": [
+        "GS.S13.T06 (Acute Cholangitis)"
+      ],
+      "structural_rationale": "GS.S13.T06 covers acute cholangitis, a core high-yield emergency.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-62",
+      "title": "Gallstone Ileus",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S13.T07"
+      ],
+      "tn_page_range": "GS55-GS59",
+      "pdf_page_range": [
+        547,
+        551
+      ],
+      "source_hierarchy_path": [
+        "GS.S13.T07 (Gallstone lleus)"
+      ],
+      "structural_rationale": "GS.S13.T07 covers gallstone ileus.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-63",
+      "title": "Carcinoma of the Gallbladder",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S13.T08"
+      ],
+      "tn_page_range": "GS55-GS59",
+      "pdf_page_range": [
+        547,
+        551
+      ],
+      "source_hierarchy_path": [
+        "GS.S13.T08 (Carcinoma of the Gallbladder)"
+      ],
+      "structural_rationale": "GS.S13.T08 covers gallbladder carcinoma, an uncommon diagnosis with limited direct MCC evidence.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-64",
+      "title": "Cholangiocarcinoma",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S13.T09"
+      ],
+      "tn_page_range": "GS55-GS59",
+      "pdf_page_range": [
+        547,
+        551
+      ],
+      "source_hierarchy_path": [
+        "GS.S13.T09 (Cholangiocarcinoma)"
+      ],
+      "structural_rationale": "GS.S13.T09 covers cholangiocarcinoma.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-65",
+      "title": "Acute Pancreatitis",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S14.T01"
+      ],
+      "tn_page_range": "GS60-GS62",
+      "pdf_page_range": [
+        552,
+        554
+      ],
+      "source_hierarchy_path": [
+        "GS.S14.T01 (Acute Pancreatitis)"
+      ],
+      "structural_rationale": "GS.S14.T01 covers acute pancreatitis, a core high-yield presentation.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-66",
+      "title": "Chronic Pancreatitis",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S14.T02"
+      ],
+      "tn_page_range": "GS60-GS62",
+      "pdf_page_range": [
+        552,
+        554
+      ],
+      "source_hierarchy_path": [
+        "GS.S14.T02 (Chronic Pancreatitis)"
+      ],
+      "structural_rationale": "GS.S14.T02 covers chronic pancreatitis.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-67",
+      "title": "Pancreatic Cancer",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S14.T03"
+      ],
+      "tn_page_range": "GS60-GS62",
+      "pdf_page_range": [
+        552,
+        554
+      ],
+      "source_hierarchy_path": [
+        "GS.S14.T03 (Pancreatic Cancer)"
+      ],
+      "structural_rationale": "GS.S14.T03 covers pancreatic cancer, a core high-yield oncologic surgical topic.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-68",
+      "title": "Splenic Trauma",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S15.T01"
+      ],
+      "tn_page_range": "GS63-GS64",
+      "pdf_page_range": [
+        555,
+        556
+      ],
+      "source_hierarchy_path": [
+        "GS.S15.T01 (Splenic Trauma)"
+      ],
+      "structural_rationale": "GS.S15.T01 covers splenic trauma.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-69",
+      "title": "Splenectomy",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S15.T02"
+      ],
+      "tn_page_range": "GS63-GS64",
+      "pdf_page_range": [
+        555,
+        556
+      ],
+      "source_hierarchy_path": [
+        "GS.S15.T02 (Splenectomy)"
+      ],
+      "structural_rationale": "GS.S15.T02 covers splenectomy and its post-splenectomy sepsis complication.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-70",
+      "title": "Splenic Infarct",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S15.T03"
+      ],
+      "tn_page_range": "GS63-GS64",
+      "pdf_page_range": [
+        555,
+        556
+      ],
+      "source_hierarchy_path": [
+        "GS.S15.T03 (Splenic Infarct)"
+      ],
+      "structural_rationale": "GS.S15.T03 covers splenic infarct.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-71",
+      "title": "Benign Breast Lesions",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S16.T01"
+      ],
+      "tn_page_range": "GS65-GS70",
+      "pdf_page_range": [
+        557,
+        562
+      ],
+      "source_hierarchy_path": [
+        "GS.S16.T01 (Short Gut Syndrome Benign Breast Lesions)"
+      ],
+      "structural_rationale": "GS.S16.T01's raw title 'Short Gut Syndrome Benign Breast Lesions' is a two-topic OCR merge (confirmed via raw_ocr_line 'Breast 2... ee GS$65' at the parent GS.S16 level, which shows no independent second heading beyond 'Breast'). 'Benign Breast Lesions' is the portion consistent with the parent section title ('Breast', GS65-GS70) and is represented as its own study unit; the unrelated 'Short Gut Syndrome' fragment is represented separately (see next unit) since it describes a distinct, unrelated clinical entity bled in from elsewhere in the two-column source page. No independent raw-OCR/body-heading corpus beyond toc_inventory.json exists for this project to relocate either fragment with more precision.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-72",
+      "title": "Short Gut Syndrome",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S16.T01"
+      ],
+      "tn_page_range": "GS65-GS70",
+      "pdf_page_range": [
+        557,
+        562
+      ],
+      "source_hierarchy_path": [
+        "GS.S16.T01 (Short Gut Syndrome Benign Breast Lesions)"
+      ],
+      "structural_rationale": "See the structural_rationale on the 'Benign Breast Lesions' study unit (also sourced from GS.S16.T01) for the OCR-merge explanation. 'Short Gut Syndrome' (a small-bowel-resection complication) is thematically unrelated to the Breast section it is textually anchored under; its true chapter position could not be confirmed from toc_inventory.json alone, so it is retained here as its own minimally-scoped unit with UNRESOLVED structural confidence rather than being silently dropped or reassigned to a guessed location (e.g., end of Small Intestine, GS.S07) without body-page evidence.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "UNRESOLVED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-73",
+      "title": "Groin Hernias",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S17"
+      ],
+      "tn_page_range": "GS71-GS72",
+      "pdf_page_range": [
+        563,
+        564
+      ],
+      "source_hierarchy_path": [
+        "GS.S17 (Groin Hernias Surgical Endocrinology)"
+      ],
+      "structural_rationale": "GS.S17's raw_ocr_line ('Groin Hernias Surgical Endocrinology...') confirms two section titles were merged in the source OCR. No T-child node represents 'Groin Hernias' independently (all three surviving T-children map to the 'Surgical Endocrinology' portion), so this study unit is sourced directly from the GS.S17 parent node.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-74",
+      "title": "Thyroid and Parathyroid (Surgical Overview)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S17.T01"
+      ],
+      "tn_page_range": "GS71-GS72",
+      "pdf_page_range": [
+        563,
+        564
+      ],
+      "source_hierarchy_path": [
+        "GS.S17.T01 (. Thyroid and Parathyroid)"
+      ],
+      "structural_rationale": "GS.S17.T01 ('. Thyroid and Parathyroid') is the legible portion of the 'Surgical Endocrinology' subsection merged into GS.S17's title.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-75",
+      "title": "Adrenal Gland (Surgical Overview) - Structurally Uncertain",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S17.T02"
+      ],
+      "tn_page_range": "GS71-GS72",
+      "pdf_page_range": [
+        563,
+        564
+      ],
+      "source_hierarchy_path": [
+        "GS.S17.T02 (Appendix ee en eee ee ee teens GS35 Advent Gland y)"
+      ],
+      "structural_rationale": "GS.S17.T02's raw title ('Appendix ee en eee ee ee teens GS35 Advent Gland y') is severely OCR-corrupted. 'Advent Gland y' is tentatively read as 'Adrenal Gland' (consistent with 'Surgical Endocrinology' being the section's other merged title, alongside Thyroid/Parathyroid), but the embedded dot-leader fragment, the internally inconsistent page reference ('GS35', outside this section's own GS71-GS72 range), and the word 'Appendix' cannot be confidently parsed or attributed. No independent raw-OCR/body-heading corpus exists to confirm this node's true content or position.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "UNRESOLVED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-76",
+      "title": "Appendicitis",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S17.T03"
+      ],
+      "tn_page_range": "GS71-GS72",
+      "pdf_page_range": [
+        563,
+        564
+      ],
+      "source_hierarchy_path": [
+        "GS.S17.T03 (Appendicitis Pancreas)"
+      ],
+      "structural_rationale": "GS.S17.T03's raw title ('Appendicitis Pancreas') merges two words; 'Pancreas' is very likely stray OCR bleed-through from elsewhere, since Pancreas is already comprehensively covered as its own dedicated section (GS.S14, 3 pages, 3 topics). 'Appendicitis' is retained as its own study unit because it is a core, extremely high-yield general-surgery emergency notably absent elsewhere in this chapter's extracted structure, and the word itself is unambiguous even though the section's page anchor (GS71-GS72, inherited from GS.S17) is almost certainly not this topic's true location in the source book.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "UNRESOLVED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-77",
+      "title": "Crohn's Disease (Surgical Indications and Management)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S18"
+      ],
+      "tn_page_range": "GS73-GS74",
+      "pdf_page_range": [
+        565,
+        566
+      ],
+      "source_hierarchy_path": [
+        "GS.S18 (Crohn)"
+      ],
+      "structural_rationale": "GS.S18's raw_ocr_line ('Crohn's Disease Pediatric Surgery... GS73') confirms two section titles were merged. This study unit represents the 'Crohn's Disease' portion, scoped to surgical indications/management (medical management and etiology are primarily mapped in Gastroenterology, G, SU-G-22). No T-children or other content survived for an independent 'Pediatric Surgery' section - this is recorded as a coverage gap in review_items.json rather than fabricated.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-78",
+      "title": "Ulcerative Colitis (Surgical Indications and Management)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S19"
+      ],
+      "tn_page_range": "GS75-GS75",
+      "pdf_page_range": [
+        567,
+        567
+      ],
+      "source_hierarchy_path": [
+        "GS.S19 (Ulcerative Colitis Skin Lesions)"
+      ],
+      "structural_rationale": "GS.S19's raw_ocr_line ('Ulcerative Colitis Skin Lesions... GS75') confirms two section titles were merged. This study unit represents the 'Ulcerative Colitis' portion, scoped to surgical indications/management (medical management and etiology are primarily mapped in Gastroenterology, G, SU-G-23). No independent content survived for a 'Skin Lesions' topic - recorded as a coverage gap in review_items.json rather than fabricated.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-79",
+      "title": "Common Surgical Medications (Overview)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S20"
+      ],
+      "tn_page_range": "GS76-GS76",
+      "pdf_page_range": [
+        568,
+        568
+      ],
+      "source_hierarchy_path": [
+        "GS.S20 (Common Medications)"
+      ],
+      "structural_rationale": "GS.S20 (single-page section, no T-children) is a chapter-closing medications reference table.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-GS-80",
+      "title": "Large Bowel Obstruction (Mechanical and Functional/Ogilvie's Syndrome)",
+      "chapter_code": "GS",
+      "chapter_title": "General and Thoracic Surgery",
+      "source_node_ids": [
+        "GS.S21.T01",
+        "GS.S21.T02",
+        "GS.S21.T03"
+      ],
+      "tn_page_range": "GS77-GS80",
+      "pdf_page_range": [
+        569,
+        572
+      ],
+      "source_hierarchy_path": [
+        "GS.S21.T01 (Mechanical Large Bowel Obstruction)",
+        "GS.S21.T02 (Functional Large Bowel Obstruction: Colonic Pseudo-Obstruction References vv eee eee eee eee eee 6578)",
+        "GS.S21.T03 ((Ogilvie\u2019s Syndrome))"
+      ],
+      "structural_rationale": "GS.S21.T01-T03 are extracted as children of a section titled 'Landmark General and Thoracic Surgery Trials', but their actual content (Mechanical Large Bowel Obstruction; Functional Large Bowel Obstruction/Colonic Pseudo-Obstruction; '(Ogilvie's Syndrome)') is unrelated clinical disease content, not trial names - the same documented title/content mismatch pattern as chapter G's SU-G-44 through SU-G-46 (raw_ocr_line for GS.S21 confirms the printed title itself, so this is not treated as an extraction artifact to silently correct). T02's raw title embeds the word 'References', consistent with genuine landmark-trial reference-list content existing somewhere on these pages but not surviving extraction as its own topic; no landmark-trial-specific content could be recovered and none is fabricated here. All three T-nodes are consolidated into one study unit since T02 and T03 are a single split concept (Functional Large Bowel Obstruction = Ogilvie's Syndrome).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "UNRESOLVED"
+    }
+  ]
+}

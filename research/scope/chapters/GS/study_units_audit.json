@@ -1,0 +1,153 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-25",
+  "chapter_code": "GS",
+  "source_node_accounting": {
+    "total_source_nodes_in_packet": 101,
+    "chapter_root": 1,
+    "organizational_sections_no_direct_unit": 14,
+    "total_study_units": 80,
+    "coverage_check": "PASS - every canonical source node in derived/scope_packets/GS.json (101 nodes) is represented in at least one study unit's source_node_ids or organizational_header_nodes; verified by scripts.qbank validate-scope-chapter GS (source_accounting: PASS)."
+  },
+  "confidence_counts": {
+    "HIGH": 3,
+    "LOW": 77
+  },
+  "page_precision_counts": {
+    "EXACT_SECTION": 3,
+    "SECTION_INHERITED": 73,
+    "UNRESOLVED": 4
+  },
+  "consolidation_summary": [
+    {
+      "study_unit_id": "SU-GS-10",
+      "consolidated_nodes": [
+        "GS.S04.T04",
+        "GS.S04.T05"
+      ],
+      "reason": "GS.S04.T04 (Postoperative Dyspnea) and T05 (Respiratory Complications) are consolidated as one clinical continuum: dyspnea is the presenting symptom of the postoperative respiratory complications T05 enumerates (atelectasis, pneumonia, PE)."
+    },
+    {
+      "study_unit_id": "SU-GS-13",
+      "consolidated_nodes": [
+        "GS.S04.T08",
+        "GS.S07.T02"
+      ],
+      "reason": "Paralytic ileus is listed twice in the extracted structure - once as a postoperative complication (GS.S04.T08) and once under Small Intestine (GS.S07.T02, immediately after Mechanical Small Bowel Obstruction). Both source nodes describe the identical clinical entity and are consolidated into one study unit rather than duplicated."
+    },
+    {
+      "study_unit_id": "SU-GS-18",
+      "consolidated_nodes": [
+        "GS.S05.T04",
+        "GS.S05.T05"
+      ],
+      "reason": "GS.S05.T04 (Complicated Parapneumonic Effusion) and T05 (Empyema) are consolidated: MCC objective 76 names both together as a single causal category, and empyema is the natural progression of a complicated parapneumonic effusion."
+    },
+    {
+      "study_unit_id": "SU-GS-58",
+      "consolidated_nodes": [
+        "GS.S13.T01",
+        "GS.S13.T02"
+      ],
+      "reason": "GS.S13.T01 (Cholelithiasis) and T02 (Biliary Colic) are consolidated: biliary colic is the symptomatic presentation of cholelithiasis, one disease entity sharing the same evidence base."
+    },
+    {
+      "study_unit_id": "SU-GS-59",
+      "consolidated_nodes": [
+        "GS.S13.T03",
+        "GS.S13.T04"
+      ],
+      "reason": "GS.S13.T03 (Acute Cholecystitis) and T04 (Acalculous Cholecystitis) are consolidated as one disease with a named etiologic subtype, sharing the same evidence base."
+    },
+    {
+      "study_unit_id": "SU-GS-80",
+      "consolidated_nodes": [
+        "GS.S21.T01",
+        "GS.S21.T02",
+        "GS.S21.T03"
+      ],
+      "reason": "GS.S21.T01-T03 are extracted as children of a section titled 'Landmark General and Thoracic Surgery Trials', but their actual content (Mechanical Large Bowel Obstruction; Functional Large Bowel Obstruction/Colonic Pseudo-Obstruction; '(Ogilvie's Syndrome)') is unrelated clinical disease content, not trial names - the same documented title/content mismatch pattern as chapter G's SU-G-44 through SU-G-46 (raw_ocr_line for GS.S21 confirms the printed title itself, so this is not treated as an extraction artifact to silently correct). T02's raw title embeds the word 'References', consistent with genuine landmark-trial reference-list content existing somewhere on these pages but not surviving extraction as its own topic; no landmark-trial-specific content could be recovered and none is fabricated here. All three T-nodes are consolidated into one study unit since T02 and T03 are a single split concept (Functional Large Bowel Obstruction = Ogilvie's Syndrome)."
+    }
+  ],
+  "title_mismatch_notes": [
+    {
+      "study_unit_ids": [
+        "SU-GS-54",
+        "SU-GS-55",
+        "SU-GS-56",
+        "SU-GS-57"
+      ],
+      "note": "GS.S12 is titled 'Anorectum' (raw OCR 'AmorectuM') but T08-T11 (Liver Cysts, Liver Abscesses, Neoplasms, Liver Transplantation) are unrelated hepatobiliary/liver content, consistent with the same two-column TOC-OCR bleed pattern documented for chapter G's SU-G-44 through SU-G-46 ('Liver Transplantation' section containing cirrhosis-complication T-children). Not corrected without body-page evidence; each unit's own title reflects its true content."
+    },
+    {
+      "study_unit_ids": [
+        "SU-GS-71",
+        "SU-GS-72"
+      ],
+      "note": "GS.S16 is titled 'Breast' but its single T-child merges two unrelated topics ('Short Gut Syndrome' and 'Benign Breast Lesions') in one raw OCR string. Split into two study units sharing the same source_node_id."
+    },
+    {
+      "study_unit_ids": [
+        "SU-GS-79"
+      ],
+      "note": "GS.S17 raw_ocr_line ('Groin Hernias Surgical Endocrinology...') confirms two section titles were merged; 'Groin Hernias' has no surviving T-child and is sourced from the parent GS.S17 node directly."
+    },
+    {
+      "study_unit_ids": [
+        "SU-GS-77",
+        "SU-GS-78"
+      ],
+      "note": "Same GS.S17 merge: T02 ('Appendix ee en eee ee ee teens GS35 Advent Gland y') and T03 ('Appendicitis Pancreas') are heavily OCR-corrupted; T02 is treated as UNCERTAIN (SU-GS-75) and the 'Appendicitis' content of T03 is retained as its own study unit (SU-GS-77) with UNRESOLVED page precision."
+    },
+    {
+      "study_unit_ids": [
+        "SU-GS-79 (Crohn's Disease)"
+      ],
+      "note": "GS.S18 raw_ocr_line ('Crohn's Disease Pediatric Surgery... GS73') confirms a merged title. No content survived for an independent Pediatric Surgery topic (see review_items.json)."
+    },
+    {
+      "study_unit_ids": [
+        "SU-GS-80 (Ulcerative Colitis)"
+      ],
+      "note": "GS.S19 raw_ocr_line ('Ulcerative Colitis Skin Lesions... GS75') confirms a merged title. No content survived for an independent Skin Lesions topic (see review_items.json)."
+    },
+    {
+      "study_unit_ids": [
+        "SU-GS-80"
+      ],
+      "note": "GS.S21 is titled 'Landmark General and Thoracic Surgery Trials' (raw_ocr_line HIGH confidence, confirmed genuine printed title) but its three T-children are Large Bowel Obstruction disease content, not trial names - same documented mismatch pattern as chapter G's SU-G-44 through SU-G-46."
+    }
+  ],
+  "unrecoverable_coverage_gaps": [
+    {
+      "heading_candidate": "Abdominal Hernia",
+      "source": "derived/scope_packets/GS.json source_quality.unresolved_headings (deterministic prepare-scope-chapter tool output)",
+      "status": "UNRESOLVED - no toc_inventory.json node_id exists for this heading; its trailing page-number digits did not parse to a page consistent with reading order, and no body-page line matched within the searched window (pdf pages 557-563). Not represented as a study unit because it cannot be traced to a canonical source node. Abdominal-wall hernia content beyond groin hernias (SU-GS-79, MCC objective 2-4) may be under-covered in this chapter pending future source re-extraction."
+    },
+    {
+      "heading_candidate": "Inflammatory Bowel Disease",
+      "source": "derived/scope_packets/GS.json source_quality.unresolved_headings (deterministic prepare-scope-chapter tool output)",
+      "status": "UNRESOLVED - no toc_inventory.json node_id exists for this heading (page window searched: pdf pages 563-565). Surgical IBD content is nonetheless covered via SU-GS-79 (Crohn's Disease) and SU-GS-80 (Ulcerative Colitis), which map to MCC objective 3-3's explicit 'Inflammatory bowel disease' causal-conditions entry."
+    },
+    {
+      "heading_candidate": "Pediatric Surgery",
+      "source": "raw_ocr_line for GS.S18 ('Crohn's Disease Pediatric Surgery...')",
+      "status": "No toc_inventory.json node or T-children captured any Pediatric Surgery content; nothing to build a study unit from without fabricating content. Logged as a coverage gap only."
+    },
+    {
+      "heading_candidate": "Skin Lesions",
+      "source": "raw_ocr_line for GS.S19 ('Ulcerative Colitis Skin Lesions...')",
+      "status": "No toc_inventory.json node or T-children captured any Skin Lesions content; nothing to build a study unit from without fabricating content. Logged as a coverage gap only."
+    },
+    {
+      "heading_candidate": "Landmark General and Thoracic Surgery Trials (actual trial names/content)",
+      "source": "GS.S21 section title vs. its T-children's actual content (Large Bowel Obstruction)",
+      "status": "No landmark-trial names or content were recoverable from the extracted structure; GS.S21's T-children were repurposed as SU-GS-80 (Large Bowel Obstruction) per their actual textual content. Logged as a coverage gap only."
+    },
+    {
+      "heading_candidate": "Additional Breast section content (e.g., Breast Cancer, Breast Cancer Screening)",
+      "source": "GS.S16 spans 6 pages (GS65-GS70) but only one merged T-child was extracted",
+      "status": "Only 'Benign Breast Lesions' (SU-GS-71) was textually recoverable from the single corrupted T-child; a 6-page Breast section plausibly contains additional topics (e.g., breast cancer) that did not survive extraction as separate nodes. Logged as a coverage gap only."
+    }
+  ]
+}

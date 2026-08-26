@@ -14,39 +14,38 @@ then continue.
 
 | | |
 |---|---|
-| Completed | 9 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`, `FM`, `G`) |
-| Next chapter | **GS — General and Thoracic Surgery** |
+| Completed | 10 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`, `FM`, `G`, `GS`) |
+| Next chapter | **GM — Geriatric Medicine** |
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `a9a1dad` — scope: map G Gastroenterology |
+| Last completed commit | `PENDING` — scope: map GS General and Thoracic Surgery |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
 
-1. GS — General and Thoracic Surgery *(next)*
-2. GM — Geriatric Medicine
-3. GY — Gynecology
-4. H — Hematology
-5. ID — Infectious Diseases
-6. MG — Medical Genetics
-7. MI — Medical Imaging
-8. NP — Nephrology
-9. N — Neurology
-10. NS — Neurosurgery
-11. OB — Obstetrics
-12. OP — Ophthalmology
-13. OR — Orthopedic Surgery
-14. OT — Otolaryngology
-15. P — Pediatrics
-16. PM — Palliative Medicine
-17. PL — Plastic Surgery
-18. PS — Psychiatry
-19. PH — Public Health and Preventive Medicine
-20. R — Respirology
-21. RH — Rheumatology
-22. U — Urology
-23. VS — Vascular Surgery
+1. GM — Geriatric Medicine *(next)*
+2. GY — Gynecology
+3. H — Hematology
+4. ID — Infectious Diseases
+5. MG — Medical Genetics
+6. MI — Medical Imaging
+7. NP — Nephrology
+8. N — Neurology
+9. NS — Neurosurgery
+10. OB — Obstetrics
+11. OP — Ophthalmology
+12. OR — Orthopedic Surgery
+13. OT — Otolaryngology
+14. P — Pediatrics
+15. PM — Palliative Medicine
+16. PL — Plastic Surgery
+17. PS — Psychiatry
+18. PH — Public Health and Preventive Medicine
+19. R — Respirology
+20. RH — Rheumatology
+21. U — Urology
+22. VS — Vascular Surgery
 
 ## Chapter notes
 
@@ -209,6 +208,59 @@ then continue.
   WEAK/`requires_scope_review: true` rather than forced. 0 invalid MCC
   IDs, 0 hygiene violations, 0 UNCERTAIN classifications, validator
   PASS, 553/553 project tests passing.
+- **GS (General and Thoracic Surgery)**: 80 study units from 101 source
+  nodes (all accounted for and verified programmatically — 0 gaps/
+  duplicates, `source_accounting: PASS`). GS is by far the most
+  structurally corrupted chapter mapped so far: the deterministic
+  `prepare-scope-chapter` tool itself flagged 2 `UNRESOLVED` headings
+  ("Abdominal Hernia", "Inflammatory Bowel Disease" — neither has a
+  `toc_inventory.json` node, so neither could be represented as a study
+  unit; logged as coverage gaps rather than guessed), and 6 additional
+  section/topic nodes independently show the same two-column TOC-OCR
+  bleed pattern confirmed elsewhere in this project (chapters D and G):
+  `GS.S12` ("Anorectum") contains 4 unrelated Liver topics as T08-T11;
+  `GS.S16` ("Breast") merges "Short Gut Syndrome" with "Benign Breast
+  Lesions" in one T-node; `GS.S17` ("Groin Hernias Surgical
+  Endocrinology") merges two section titles, with one T-child
+  ("Appendix ... Advent Gland y") corrupted beyond confident resolution
+  (left `UNCERTAIN`, `SU-GS-75`) and another ("Appendicitis Pancreas")
+  partially recovered (`SU-GS-77`, `Appendicitis`, `UNRESOLVED` page
+  precision); `GS.S18`/`GS.S19` each merge a second section title
+  ("Pediatric Surgery", "Skin Lesions") with no recoverable independent
+  content; `GS.S21` ("Landmark ... Trials", raw_ocr_line HIGH-confidence
+  confirmed as the genuine printed title) has T-children that are
+  actually Large Bowel Obstruction disease content, not trial names. No
+  independent raw-OCR/body-heading corpus beyond `toc_inventory.json`
+  exists for this project (same limitation as chapters G and D before
+  it), so every case was resolved per `docs/scope-chapter-workflow.md`'s
+  resolution order using only canonical TOC data and `raw_ocr_line` —
+  either by textually splitting an obvious two-topic merge, retaining a
+  legible real-world term found within a corrupted fragment with
+  `UNRESOLVED` page precision, or explicit `UNCERTAIN` classification
+  where even topic identity could not be confirmed. No Toronto Notes
+  heading was invented or silently relabeled. 6 T-node consolidations
+  (e.g. Cholelithiasis+Biliary Colic; Acute+Acalculous Cholecystitis;
+  Postoperative Dyspnea+Respiratory Complications; Paralytic Ileus
+  duplicated across `GS.S04.T08`/`GS.S07.T02` merged into one unit) —
+  see `research/scope/chapters/GS/study_units_audit.md`. MCC evidence:
+  the packet's bounded candidate set (48 entries) covered most core
+  presentations (Acute abdominal pain=3-2, Abdominal distension=1,
+  Jaundice=49, GI bleeding=6-1/6-2, Hernia=2-4); targeted
+  `search-mcc-objectives` full-registry searches confirmed 0-1 direct
+  title matches for 'appendicitis', 'bowel obstruction', 'cholecystitis',
+  'pancreatitis', 'colorectal cancer', 'lung cancer', 'pneumothorax',
+  'postoperative', and 'preoperative' — the same MCC-registry-coverage-
+  gap pattern already flagged in chapters E and G — resolved by locating
+  each diagnosis's explicit appearance inside a nearby presentation
+  objective's own `causal_conditions` text (e.g. 74-3 "Pre-operative
+  medical evaluation" for `GS.S03`; 1 "Abdominal distension" explicitly
+  naming volvulus/toxic megacolon/adynamic ileus). 21 distinct MCC
+  objective IDs cited. `MAPPING_STRENGTH_COUNTS: STRONG=50 MODERATE=46
+  WEAK=10`; 1 `UNCERTAIN` classification (`SU-GS-75`); 2
+  `CROSS_DISCIPLINE` units (`SU-GS-22` COPD deferring to not-yet-mapped
+  Respirology; `SU-GS-40` Familial Colorectal Cancer Syndromes deferring
+  to not-yet-mapped Medical Genetics). 0 invalid MCC IDs, 0 hygiene
+  violations, validator PASS, 553/553 project tests passing.
 
 ## Resume protocol (per Phase 3C instructions)
 

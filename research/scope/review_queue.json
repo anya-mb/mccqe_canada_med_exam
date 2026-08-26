@@ -9,13 +9,14 @@
     "ER",
     "E",
     "FM",
-    "G"
+    "G",
+    "GS"
   ],
   "chapters_without_review_items_file": [
     "C",
     "ELOM"
   ],
-  "total_items": 28,
+  "total_items": 32,
   "items": [
     {
       "issue_type": "structural_ambiguity",
@@ -303,6 +304,50 @@
       "recommended_action": "Coordinator may want to fold this into the same broader MCC-objectives-registry-gap note started in chapter E's review, now confirmed to recur in Gastroenterology (a second body-system chapter), suggesting future chapters should budget time for full-registry causal-conditions-list searches rather than relying on title-only matches.",
       "affects_global_toc": false,
       "chapter_code": "G"
+    },
+    {
+      "issue_type": "structural_two_column_ocr_merge",
+      "severity": "informational",
+      "study_unit_id": "SU-GS-54, SU-GS-55, SU-GS-56, SU-GS-57",
+      "title": "GS.S12 section titled 'Anorectum' but T08-T11 are unrelated Liver topics (Cysts, Abscesses, Neoplasms, Transplantation)",
+      "summary": "GS.S12 (raw OCR 'AmorectuM', GS47-GS54) covers genuine anorectal topics in T01-T07, but T08-T11 are hepatobiliary/liver content - the same two-column TOC-OCR bleed pattern already documented in chapter G's SU-G-44 through SU-G-46 ('Liver Transplantation' section containing cirrhosis-complication T-children). Heading left unchanged per the rule against inventing/relabeling Toronto Notes headings.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - study units built from each T-child's own legible topic title; mismatch documented in study_units_audit.json's title_mismatch_notes.",
+      "recommended_action": "No action required for scope purposes.",
+      "affects_global_toc": false,
+      "chapter_code": "GS"
+    },
+    {
+      "issue_type": "structural_severe_ocr_corruption",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-GS-75",
+      "title": "GS.S17.T02 raw title severely corrupted ('Appendix ee en eee ee ee teens GS35 Advent Gland y')",
+      "summary": "Tentatively read as 'Adrenal Gland' by analogy with the section's other merged title ('Surgical Endocrinology'), but an embedded 'Appendix' fragment and an internally inconsistent page reference ('GS35', outside this section's GS71-GS72 range) prevent confident resolution. Classified UNCERTAIN with no MCC evidence and zero planned question coverage rather than guessed.",
+      "resolution_status": "UNRESOLVED - flagged for a human reviewer with access to the original Toronto Notes PDF to confirm this heading's true content.",
+      "recommended_action": "Coordinator/reviewer to check the source PDF at pdf pages 563-564 (GS71-GS72) directly if/when available, to confirm or correct this heading.",
+      "affects_global_toc": false,
+      "chapter_code": "GS"
+    },
+    {
+      "issue_type": "unrecoverable_coverage_gap",
+      "severity": "informational",
+      "study_unit_id": "N/A",
+      "title": "Two TOC headings could not be resolved to a canonical source node ('Abdominal Hernia', 'Inflammatory Bowel Disease')",
+      "summary": "The deterministic prepare-scope-chapter tool flagged these 2 headings as UNRESOLVED (source_quality.unresolved_headings in derived/scope_packets/GS.json). Neither produced a toc_inventory.json node, so neither is represented as its own study unit. Surgical IBD content is nonetheless covered via SU-GS-79/SU-GS-80 (Crohn's/UC surgical indications).",
+      "resolution_status": "UNRESOLVED - logged in study_units_audit.json's unrecoverable_coverage_gaps.",
+      "recommended_action": "Coordinator may want to add corresponding nodes to toc_inventory.json for chapter GS in a future TOC-extraction pass, similar to the chapter A 'Monitoring' gap already on this queue.",
+      "affects_global_toc": true,
+      "chapter_code": "GS"
+    },
+    {
+      "issue_type": "mcc_registry_coverage_gap",
+      "severity": "informational",
+      "study_unit_id": "multiple (see crosswalk_audit.md)",
+      "title": "MCC objectives registry has no dedicated objective for several high-yield General Surgery topics",
+      "summary": "Full-registry keyword searches (search-mcc-objectives) for 'appendicitis', 'bowel obstruction', 'cholecystitis', 'gallstone', 'pancreatitis', 'colorectal cancer', 'lung cancer', 'pneumothorax', 'postoperative', 'preoperative', and 'adrenal' returned 0 or only 1 direct-title match. This is the same registry-coverage-gap pattern already flagged in chapters E and G. Every affected topic was found explicitly named within the causal_conditions list of a nearby presentation-based objective (e.g., appendicitis/diverticulitis/pancreatitis/biliary disease under objective 3-2 'Acute abdominal pain'; mechanical obstruction/volvulus/toxic megacolon under objective 1 'Abdominal distension'; preoperative risk under objective 74-3 'Pre-operative medical evaluation').",
+      "resolution_status": "RESOLVED FOR THIS CHAPTER - affected units mapped as DIRECT (where the objective's own causal-conditions text explicitly names the exact diagnosis) or COMPONENT, with mapping_strength never exceeding what the objective's retrieved text supports.",
+      "recommended_action": "Coordinator may want to continue folding this into the broader MCC-objectives-registry-gap note (now confirmed in three body-system/discipline chapters: E, G, GS).",
+      "affects_global_toc": false,
+      "chapter_code": "GS"
     }
   ]
 }

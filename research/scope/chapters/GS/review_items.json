@@ -1,0 +1,63 @@
+{
+  "generated_at": "2026-08-25",
+  "chapter_code": "GS",
+  "schema_note": "Chapter-local review-queue candidates only. This file is NOT the global research/scope/review_queue.json - it is merged into that coordinator-maintained file after this chapter passes validation.",
+  "items": [
+    {
+      "issue_type": "structural_two_column_ocr_merge",
+      "severity": "informational",
+      "study_unit_id": "SU-GS-54, SU-GS-55, SU-GS-56, SU-GS-57",
+      "title": "GS.S12 section titled 'Anorectum' but T08-T11 are unrelated Liver topics (Cysts, Abscesses, Neoplasms, Transplantation)",
+      "summary": "The canonical TOC labels section GS.S12 'Anorectum' (GS47-GS54, HIGH confidence). Its first 7 T-children are genuine anorectal topics; T08-T11 are hepatobiliary/liver content, consistent with the same two-column TOC-OCR bleed pattern documented for chapter G's SU-G-44 through SU-G-46. The heading was left unchanged per the rule against inventing/relabeling Toronto Notes headings.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - study units built from each T-child's own legible topic title; mismatch documented in each unit's structural_rationale and in study_units_audit.json's title_mismatch_notes."
+    },
+    {
+      "issue_type": "structural_two_column_ocr_merge",
+      "severity": "informational",
+      "study_unit_id": "SU-GS-71, SU-GS-72",
+      "title": "GS.S16.T01 merges 'Short Gut Syndrome' with 'Benign Breast Lesions'",
+      "summary": "GS.S16 ('Breast', GS65-GS70) has a single T-child whose raw title merges two unrelated topics. Split into two study units both citing GS.S16.T01; 'Short Gut Syndrome' is retained with UNRESOLVED page precision and SUPPORTING_KNOWLEDGE classification since its true chapter position could not be confirmed.",
+      "resolution_status": "PARTIALLY RESOLVED - both textual fragments preserved as separate study units; true position of 'Short Gut Syndrome' remains unconfirmed pending a raw-OCR/body-heading corpus not currently available to this project."
+    },
+    {
+      "issue_type": "structural_severe_ocr_corruption",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-GS-75",
+      "title": "GS.S17.T02 raw title is severely corrupted ('Appendix ee en eee ee ee teens GS35 Advent Gland y')",
+      "summary": "Tentatively read as 'Adrenal Gland' by analogy with the section's other merged title ('Surgical Endocrinology'), but the embedded 'Appendix' fragment and internally inconsistent page reference ('GS35', outside this section's GS71-GS72 range) prevent confident resolution. Classified UNCERTAIN with no MCC evidence attached and zero planned question coverage.",
+      "resolution_status": "UNRESOLVED - flagged for human reviewer with access to the original Toronto Notes PDF to confirm this heading's true content, per docs/scope-chapter-workflow.md step 5 (explicit UNRESOLVED status when evidence is insufficient)."
+    },
+    {
+      "issue_type": "structural_two_column_ocr_merge",
+      "severity": "informational",
+      "study_unit_id": "SU-GS-77",
+      "title": "GS.S17.T03 raw title merges 'Appendicitis' with 'Pancreas'",
+      "summary": "'Pancreas' is very likely stray OCR bleed-through (Pancreas is already comprehensively covered as its own dedicated section, GS.S14). 'Appendicitis' - a core, extremely high-yield general-surgery emergency otherwise absent from this chapter's extracted structure - is retained as its own study unit with UNRESOLVED page precision.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - retained as SU-GS-77 (Appendicitis) with UNRESOLVED page_mapping_precision; 'Pancreas' fragment not duplicated given GS.S14's existing coverage."
+    },
+    {
+      "issue_type": "structural_title_mismatch",
+      "severity": "informational",
+      "study_unit_id": "SU-GS-80",
+      "title": "GS.S21 section titled 'Landmark General and Thoracic Surgery Trials' but T-children are Large Bowel Obstruction content",
+      "summary": "raw_ocr_line confirms 'Landmark General and Thoracic Surgery Trials' is the book's actual printed heading (HIGH confidence, not an extraction artifact). Its three T-children describe Mechanical/Functional Large Bowel Obstruction and Ogilvie's Syndrome, not landmark trials. No landmark-trial content was recoverable from the extracted structure.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - study unit built from the T-children's actual disease content (SU-GS-80); mismatch documented in structural_rationale and study_units_audit.json."
+    },
+    {
+      "issue_type": "unrecoverable_coverage_gap",
+      "severity": "informational",
+      "study_unit_id": "N/A",
+      "title": "Two TOC headings could not be resolved to a canonical source node ('Abdominal Hernia', 'Inflammatory Bowel Disease')",
+      "summary": "The deterministic prepare-scope-chapter tool flagged these 2 headings as UNRESOLVED (source_quality.unresolved_headings in derived/scope_packets/GS.json) - trailing page-number digits did not parse to a page consistent with reading order, and no body-page match was found within the searched window. Neither produced a toc_inventory.json node, so neither is represented as its own study unit.",
+      "resolution_status": "UNRESOLVED - logged in study_units_audit.json's unrecoverable_coverage_gaps; surgical IBD content is nonetheless covered via SU-GS-79/SU-GS-80 (Crohn's/UC surgical indications)."
+    },
+    {
+      "issue_type": "unrecoverable_coverage_gap",
+      "severity": "informational",
+      "study_unit_id": "N/A",
+      "title": "Stray title fragments with no recoverable content ('Pediatric Surgery', 'Skin Lesions')",
+      "summary": "raw_ocr_line for GS.S18 and GS.S19 each show a second section title merged in ('Crohn's Disease Pediatric Surgery...', 'Ulcerative Colitis Skin Lesions...'), but no T-children or other extracted content exists for either 'Pediatric Surgery' or 'Skin Lesions' independently.",
+      "resolution_status": "UNRESOLVED - logged as a coverage gap only; no content fabricated."
+    }
+  ]
+}
