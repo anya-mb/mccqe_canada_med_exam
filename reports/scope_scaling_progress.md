@@ -14,31 +14,30 @@ then continue.
 
 | | |
 |---|---|
-| Completed | 17 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`, `FM`, `G`, `GS`, `GM`, `GY`, `H`, `ID`, `MG`, `MI`, `NP`) |
-| Next chapter | **N — Neurology** |
+| Completed | 18 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`, `FM`, `G`, `GS`, `GM`, `GY`, `H`, `ID`, `MG`, `MI`, `NP`, `N`) |
+| Next chapter | **NS — Neurosurgery** |
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `7de9470` — scope: map NP Nephrology |
+| Last completed commit | `c28896e` — scope: map N Neurology |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
 
-1. N — Neurology *(next)*
-2. NS — Neurosurgery
-3. OB — Obstetrics
-4. OP — Ophthalmology
-5. OR — Orthopedic Surgery
-6. OT — Otolaryngology
-7. P — Pediatrics
-8. PM — Palliative Medicine
-9. PL — Plastic Surgery
-10. PS — Psychiatry
-11. PH — Public Health and Preventive Medicine
-12. R — Respirology
-13. RH — Rheumatology
-14. U — Urology
-15. VS — Vascular Surgery
+1. NS — Neurosurgery *(next)*
+2. OB — Obstetrics
+3. OP — Ophthalmology
+4. OR — Orthopedic Surgery
+5. OT — Otolaryngology
+6. P — Pediatrics
+7. PM — Palliative Medicine
+8. PL — Plastic Surgery
+9. PS — Psychiatry
+10. PH — Public Health and Preventive Medicine
+11. R — Respirology
+12. RH — Rheumatology
+13. U — Urology
+14. VS — Vascular Surgery
 
 ## Chapter notes
 
@@ -436,6 +435,66 @@ then continue.
   integrated into `main` via fast-forward merge (no divergence). 0
   invalid MCC IDs, 0 hygiene violations, validator PASS, 553/553 project
   tests passing.
+
+- **N (Neurology)**: 49 study units from 28 canonical section-level TOC
+  nodes (107 total nodes including T-level children, all accounted for).
+  Most severely two-column-TOC-OCR-corrupted chapter mapped to date by
+  node-confidence count (79/107 nodes LOW packet-extraction confidence,
+  vs. GS's previous high of ~8/101). Unlike prior chapters' corruption
+  patterns (headings entirely missing, or two headings merged into one
+  title), N's defect is systematically mis-parented children: a node's
+  own title is correct but its T-level children actually belong to a
+  same-page `merged_duplicate_headings` entry instead (`N.S17` 'Vertigo'
+  with child 'Amyotrophic Lateral Sclerosis' belongs to merged 'Motor
+  Neuron Disease'; `N.S18` 'Other Motor NeuronDiseases' with children
+  'Classification'/'Guillain-Barré Syndrome' belongs to merged
+  'PeripheralNeuropathies'; `N.S24` 'Central Nervous System Infections'
+  with 7 children belongs to merged 'Stroke'), plus two nodes
+  concatenating two unrelated genuine headings with **no**
+  `merged_duplicate_headings` flag at all (`N.S24.T06` 'Aphasia
+  Intracranial Hemorrhage' = real Aphasia [Behavioural Neurology] + real
+  Intracranial Hemorrhage [Stroke]; `N.S25` 'Agnosia Neurocutaneous
+  Syndromes' = real Agnosia [Behavioural Neurology] + real Neurocutaneous
+  Syndromes [cross-reference-only, see Pediatrics P89]), and one node
+  (`N.S27`) titled entirely from OCR noise unrelated to its actual body
+  content (real content = 'Landmark Neurology Trials' at N59; its
+  title-text 'Paraneoplastic Syndromes'/'Tumours of the Nervous System'
+  are themselves genuine headings already correctly located elsewhere, at
+  N30 under Neuro-Oncology/`N.S13`). No independent raw-OCR text corpus
+  resolved this reliably (the source PDF's own embedded text layer
+  preserves the same two-column line-order corruption under
+  `pdftotext -layout`); resolved instead via direct visual review of the
+  chapter's real TOC page and 11 body pages rendered to PNG via
+  `pdftoppm` from `Toronto Notes 2025.pdf` (pdf 871, 900, 905, 907-909,
+  912, 921-926, 929-930). Every real heading traces to an existing
+  `toc_inventory.json` node_id (reused directly, not synthetic
+  `UNCATALOGUED:`, since the node objects genuinely exist, just mistitled
+  or misparented) with the correction documented in full in each affected
+  study unit's `structural_rationale`, plus a chapter-wide summary in
+  `study_units.json`'s `methodology_note`. Six cross-reference-only
+  entries identified and represented as thin `CROSS_DISCIPLINE` study
+  units for source-node traceability rather than duplicated content: CNS
+  Infections -> Infectious Diseases (ID17); Spinal Cord Syndromes ->
+  Neurosurgery (NS34); Vertigo -> Otolaryngology (OT12); Neurocutaneous
+  Syndromes -> Pediatrics (P89); Tumours of the Nervous System ->
+  Neurosurgery (NS12); Paraneoplastic Syndromes -> Endocrinology (E56).
+  Coma (`N.S23.T02`) is split out from its TN parent 'Sleep Disorders'
+  into its own study unit despite genuinely being a TN sub-heading there
+  (confirmed, not a corruption artifact), given its status as an
+  independently-named MCC objective (58-1) and distinct emergency
+  competency. 49 MCC evidence citations (27 STRONG, 22 MODERATE, 5 WEAK)
+  across 26 objectives; targeted `search-mcc-objectives` searches
+  confirmed MCC has no dedicated objective for multiple sclerosis,
+  Parkinson disease (as a title), myasthenia gravis, Guillain-Barré
+  syndrome, or meningitis/encephalitis — each instead mapped via its
+  governing presentation-based objective (e.g. MS via numbness=66 +
+  acute visual disturbance=115-1 + ataxia=35; Parkinson's disease via
+  movement disorders=61, which explicitly names it in the enabling
+  objectives) — continuing the same MCC-registry-coverage-gap pattern
+  documented in chapters E, G, GS, GM, GY, H, ID, NP. 0 invalid MCC IDs,
+  0 hygiene violations, 0 `UNCERTAIN` classifications, validator PASS,
+  553/553 project tests passing. Worked in the canonical `main` checkout
+  per explicit instruction for this chapter (no isolated worktree/branch).
 
 ## Resume protocol (per Phase 3C instructions)
 
