@@ -19,7 +19,7 @@ then continue.
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `PENDING_G_COMMIT` — scope: map G Gastroenterology (fill in actual hash after commit, per ledger convention) |
+| Last completed commit | `a9a1dad` — scope: map G Gastroenterology |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
