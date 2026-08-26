@@ -19,7 +19,7 @@ then continue.
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | see `reports/scope_scaling_progress.json` (`last_completed_commit`) — scope: map ID Infectious Diseases |
+| Last completed commit | `ba54a2c` — scope: map ID Infectious Diseases |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
