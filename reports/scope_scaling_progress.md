@@ -19,7 +19,7 @@ then continue.
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `PENDING` — scope: map GS General and Thoracic Surgery |
+| Last completed commit | `64d185c` — scope: map GS General and Thoracic Surgery |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
