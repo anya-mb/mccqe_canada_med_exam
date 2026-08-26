@@ -1,0 +1,47 @@
+{
+  "generated_at": "2026-08-25",
+  "chapter_code": "H",
+  "schema_note": "Chapter-local review-queue candidates only. This file is NOT the global research/scope/review_queue.json - it is merged into that coordinator-maintained file after this chapter passes validation.",
+  "items": [
+    {
+      "issue_type": "structural_severe_page_misattribution",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-H-18, SU-H-19, SU-H-20, SU-H-21, SU-H-22, SU-H-50, SU-H-51",
+      "title": "toc_inventory.json nodes H.S22 and H.S23 carry titles for six real clinical/bibliographic topics but with page ranges pointing ~40 pages away from their confirmed body content",
+      "summary": "H.S22's printed title concatenates 'Sickle Cell Disease' (real, confirmed at pdf 675-677/H21-H23) with 'Landmark Hematology Trials' (real, confirmed at its own recorded page range pdf 715-716/H61-H62); its T01 'Autoimmune Hemolytic Anemia' is correctly worded but also page-misattributed to H61-H62 (real content at pdf 677/H23). H.S23's title 'Microangiopathic Hemolytic Anemia' is correct but recorded at H63-H64/pdf 717-718, where the genuine content is actually a References bibliography with no toc node of its own; H.S23's real MAHA/TMA content, and its T02-T04 (Hereditary Spherocytosis, Hereditary Elliptocytosis, G6PD Deficiency), are all confirmed via raw OCR (clean-ocr/0677.txt-0678.txt) to sit within H.S07's own declared page range (H18-H24), immediately after the Thalassemia content. This is a more severe variant of the two-column same-page merge pattern already documented in chapters G (SU-G-44/45/46) and GS (SU-GS-54-57): here the title/content mismatch spans ~40 pages rather than a single page.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - each real topic is represented as its own study unit citing the node bearing its (correct) title, with page_mapping_precision set to BODY_CONFIRMED_CORRECTED and the confirmed pdf/tn page range substituted for the toc-recorded one (SU-H-18 Sickle Cell Disease; SU-H-19 AIHA; SU-H-20 MAHA/TMA; SU-H-21 Hereditary Spherocytosis/Elliptocytosis; SU-H-22 G6PD Deficiency). The genuine bibliographic content actually occupying H.S22's and H.S23's recorded page ranges is separately represented as SU-H-50 (Landmark Hematology Trials, citing H.S22 at its own recorded range) and SU-H-51 (References, an UNCATALOGUED node since no toc node bears that title anywhere in this chapter).",
+      "recommended_action": "Coordinator should consider re-running or manually correcting the TOC-extraction pipeline for chapter H nodes H.S22/H.S23 in toc_inventory.json: split H.S22 into two nodes (Sickle Cell Disease at pdf 675-677; Landmark Hematology Trials at pdf 715-716), correct H.S22.T01's page range, correct H.S23's page range to pdf 677 and its T02-T04's page ranges to pdf 678, and add a new node for the genuine References bibliography at pdf 717-718. This is the largest single page-misattribution defect found across all completed chapters to date and may warrant checking whether the same defect recurs in other body-system chapters with a similarly long TOC.",
+      "affects_global_toc": true
+    },
+    {
+      "issue_type": "mcc_registry_coverage_gap",
+      "severity": "informational",
+      "study_unit_id": "multiple (see crosswalk.json)",
+      "title": "MCC objectives registry has no dedicated objective for many high-yield Hematology topics",
+      "summary": "Full-registry keyword searches (search-mcc-objectives) for 'platelet', 'thrombocytopenia', 'neutropenia', 'pancytopenia', 'polycythemia', 'erythrocytosis', 'coagulation', 'leukemia', 'lymphoma', 'myeloma', 'transfusion', 'splenomegaly'/'spleen', 'iron deficiency', 'vitamin B12', 'sickle cell', 'hemolytic', 'DIC', 'hemostasis', 'warfarin', 'deep vein', 'pulmonary embolism' all returned zero direct-title matches. This is the same registry-coverage-gap pattern already flagged in chapters E, G, GS, GM, GY, now confirmed as especially pronounced in Hematology given how many of its topics (leukemia, lymphoma, myeloma, DIC, thrombocytopenia, sickle cell disease, transfusion reactions) are genuinely high-yield generalist content with no dedicated MCC objective. Every affected topic was still found to be explicitly or closely named within the causal_conditions/rationale text of a nearby presentation-based objective (e.g., 'acute leukemia' and 'febrile neutropenia' explicitly named in objective 120's own text; bleeding disorders under 15-1; shock/emergency framing under 9-2), with mapping_strength never exceeding what each objective's actual retrieved text supports (STRONG only where a near-exact or explicitly-named match exists; MODERATE/WEAK elsewhere, each documented).",
+      "resolution_status": "RESOLVED FOR THIS CHAPTER - no evidence fabricated; see crosswalk.json's per-unit mapping_rationale.",
+      "recommended_action": "Coordinator may want to continue folding this into the broader MCC-objectives-registry-gap note (now confirmed in six chapters: E, G, GS, GM, GY, H); Hematology is the most affected chapter to date by volume of high-yield content lacking a dedicated objective.",
+      "affects_global_toc": false
+    },
+    {
+      "issue_type": "cross_discipline_overlap_candidate",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-H-39, SU-H-42, SU-H-32, SU-H-9",
+      "title": "Candidate cross-discipline overlaps requiring later global resolution",
+      "summary": "SU-H-39 (Acute Lymphoblastic Leukemia) is predominantly pediatric and may overlap chapter P (Pediatrics, not yet mapped). SU-H-42 (Multiple Myeloma) shares its renal-failure complication with chapter NP (Nephrology, not yet mapped). SU-H-32 (VTE) shares content with chapter R (Respirology, for PE, not yet mapped) and Clinical Pharmacology (CP, completed, for anticoagulant reference content). SU-H-9 (Splenomegaly) may overlap chapter ID (Infectious Diseases, not yet mapped, for infectious causes) and G (Gastroenterology, completed, for portal-hypertension-related splenomegaly).",
+      "resolution_status": "NOT RESOLVED BY DESIGN - deferred per task instructions until all relevant chapters are mapped.",
+      "recommended_action": "Coordinator should review during the global cross-chapter overlap audit once P, NP, R, and ID are mapped.",
+      "affects_global_toc": false
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-H-05, SU-H-37, SU-H-38, SU-H-43, SU-H-44",
+      "title": "Five study units carry only WEAK MCC evidence with zero planned question coverage",
+      "summary": "Thrombocytosis (SU-H-05), Myelofibrosis (SU-H-37), Essential Thrombocythemia (SU-H-38), MGUS (SU-H-43), and Lymphoplasmacytic Lymphoma/Waldenstrom (SU-H-44) each have only a WEAK, loosely-adjacent MCC objective citation. Each is retained as an independent study unit only because Toronto Notes gives it independent topic status; none is classified UNCERTAIN outright since a plausible (if weak) adjacent objective exists for each, unlike SU-H-18's Bartholin-Gland-Abscess-style zero-evidence case seen in other chapters.",
+      "resolution_status": "RESOLVED PER ACCURACY RULES - no evidence fabricated; each documented as WEAK/requires_scope_review in crosswalk.json.",
+      "recommended_action": "Revisit only if a future MCC objectives-registry refresh adds relevant dedicated objectives (e.g., for myeloproliferative neoplasms or IgM lymphoproliferative disorders).",
+      "affects_global_toc": false
+    }
+  ]
+}

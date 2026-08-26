@@ -1,0 +1,1202 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-25T00:00:00Z",
+  "chapter_code": "H",
+  "chapter_title": "Hematology",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes SOURCE STRUCTURE (toc_inventory.json / derived/scope_packets/H.json). Chapter H has 92 source nodes, 0 unresolved_headings per the deterministic packet, but a distinct structural defect was found and independently resolved during this pass, more severe than any single-page two-column merge documented in prior chapters (G.S05, GS.S12, D): nodes H.S22 and H.S23 carry titles/T-children naming real clinical content (Sickle Cell Disease, Autoimmune Hemolytic Anemia, Microangiopathic Hemolytic Anemia/TMA, Hereditary Spherocytosis, Hereditary Elliptocytosis, Glucose-6-Phosphate Dehydrogenase Deficiency) whose true body content, confirmed via raw OCR (derived/toronto-notes-2025/clean-ocr/0675.txt-0678.txt), is physically located ~40 pages earlier, within H.S07's own declared page range (H18-H24, pdf 672-678) - immediately following H.S07's Thalassemia T-children. The page ranges recorded on H.S22/H.S23 in toc_inventory.json (H61-H64, pdf 715-718) instead point to two genuine bibliographic sections - 'Landmark Hematology Trials' (confirmed via clean-ocr/0715.txt-0716.txt) and 'References' (confirmed via clean-ocr/0717.txt-0718.txt) - that have no other node bearing their title anywhere in the chapter's 92 nodes. This is resolved as follows, per the rule against inventing headings and the instruction to resolve ambiguity via canonical TOC -> raw/normalized OCR -> body-heading confirmation: (1) H.S22's concatenated title 'Sickle Cell Disease Landmark Hematology Trials' is treated as two real headings sharing one node (the same class of same-node title-concatenation already seen in GY.S12's 'SexualAbuse'/'Sexuality and Sexual Dysfunction' split), each represented as its own study unit citing H.S22 with the page range corrected to match its confirmed body content (SU-H-18 Sickle Cell Disease at pdf 675-677/H21-H23; SU-H-50 Landmark Hematology Trials at pdf 715-716/H61-H62). (2) H.S22.T01 'Autoimmune Hemolytic Anemia' keeps its own correctly-worded title but its page range is corrected to pdf 677/H23 (SU-H-19). (3) H.S23 'Microangiopathic Hemolytic Anemia' and its T01 'Microangiopathy (TMA)' (a redundant duplicate of H.S23 itself and of H.S10.T02's already-covered TMA content) are consolidated into one unit (SU-H-20) with page range corrected to pdf 677/H23. (4) H.S23.T02/T03 (Hereditary Spherocytosis, Hereditary Elliptocytosis) are consolidated as one unit (SU-H-21, pdf 678/H24, both membrane-defect hemolytic anemias presented together in the source) and H.S23.T04 (G6PD Deficiency) is its own unit (SU-H-22, pdf 678/H24). (5) The genuine 'References' bibliography confirmed at pdf 717-718/H63-H64 has no toc_inventory.json node bearing that title anywhere in this chapter (unlike every other completed chapter's terminal References section) - it is represented with a synthetic id, UNCATALOGUED:H.REFERENCES, per the project's established convention for confirmed-real-but-uncatalogued content (see chapter A's 'Monitoring', chapter D's dropped headings, chapter FM's Acronyms/Antimicrobial-Reference precedents), as SU-H-51. No fabricated headings were introduced; every unit above is grounded in confirmed body text, not model memory. Aside from this one defect (fully resolved), chapter H's remaining 21 sections and their T-children map cleanly to their stated titles and page ranges.",
+  "total_study_units": 51,
+  "organizational_header_nodes": {
+    "H": "Chapter root container - represented by all study units below, per the C/ELOM/A/CP/D/E/FM/G/GS/GM/GY convention.",
+    "H.S02": "'Common Presenting Problems' umbrella heading (H6-H11); carries no independent content beyond its twelve T-children, represented as SU-H-02 through SU-H-07 (one unit per distinct presenting problem, with the seven single-MCC-objective WBC-count abnormalities consolidated into SU-H-07 per the not-fragmenting-a-shared-objective-differential principle used in GY.S11).",
+    "H.S10": "'Disorders of Primary Hemostasis' umbrella heading (H28-H31); carries no independent content beyond its three T-children (SU-H-25, SU-H-26, SU-H-27).",
+    "H.S11": "'Disorders of Secondary Hemostasis' umbrella heading (H32-H34); carries no independent content beyond its six T-children, represented as SU-H-28 through SU-H-30.",
+    "H.S14": "'Hematologic Malignancies and Related Disorders' umbrella heading (H39-H41) whose merged_duplicate_headings field records 'Myeloid Malignancies' as its true structural identity; carries no independent content beyond its two T-children (SU-H-33, SU-H-34).",
+    "H.S15": "'Myeloproliferative Neoplasms' umbrella heading (H42-H45); carries no independent content beyond its four T-children (SU-H-35 through SU-H-38).",
+    "H.S18": "'Malignant Clonal Proliferations of Mature B-Cells' umbrella heading (H50-H52); carries no independent content beyond its four T-children (SU-H-41 through SU-H-44).",
+    "H.S21": "'Common Medications' umbrella heading (H58-H60); carries no independent content beyond its three T-children (SU-H-48, SU-H-49).",
+    "H.S22": "Printed/concatenated title 'Sickle Cell Disease Landmark Hematology Trials' (toc-recorded H61-H62) is a structural defect - see methodology_note. Represented as SU-H-18 (Sickle Cell Disease, corrected to its confirmed body location H21-H23) and SU-H-50 (Landmark Hematology Trials, at its toc-recorded location H61-H62, which is where this bibliography's real content actually is). Its T01 'Autoimmune Hemolytic Anemia' is SU-H-19, corrected to H23.",
+    "H.S23": "Printed title 'Microangiopathic Hemolytic Anemia' (toc-recorded H63-H64) names real content but at the wrong page range - see methodology_note. Represented as SU-H-20 (MAHA/TMA, corrected to its confirmed body location H23) consolidating the redundant T01 duplicate; T02/T03 (Hereditary Spherocytosis, Hereditary Elliptocytosis) as SU-H-21 and T04 (G6PD Deficiency) as SU-H-22, both corrected to H24. The genuine References bibliography that actually occupies H63-H64 has no toc node of its own and is represented separately as SU-H-51 (UNCATALOGUED:H.REFERENCES)."
+  },
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-01",
+      "title": "Basic Hematologic Investigations (CBC, Blood Film, Bone Marrow)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S01",
+        "H.S01.T01",
+        "H.S01.T02",
+        "H.S01.T03"
+      ],
+      "tn_page_range": "H2-H5",
+      "pdf_page_range": [
+        656,
+        659
+      ],
+      "source_hierarchy_path": [
+        "H.S01",
+        "H.S01.T01",
+        "H.S01.T02",
+        "H.S01.T03"
+      ],
+      "structural_rationale": "H.S01 (merged_duplicate_headings: 'Basics of Hematology') carries three T-children (Complete Blood Count, Blood Film Interpretation, Bone Marrow Aspiration and Biopsy) that are the foundational investigative methods underlying every diagnostic unit later in the chapter. Consolidated into one unit since they represent a single investigation-interpretation competency, not independently testable sub-topics.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-02",
+      "title": "Anemia (Approach)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S02.T01"
+      ],
+      "tn_page_range": "H6-H11",
+      "pdf_page_range": [
+        660,
+        665
+      ],
+      "source_hierarchy_path": [
+        "H.S02",
+        "H.S02.T01"
+      ],
+      "structural_rationale": "TOC heading 'Anemia' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Common Presenting Problems'; the presentation-level approach (MCV-based classification) that frames SU-H-10 through SU-H-23.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-03",
+      "title": "Erythrocytosis (Approach to Elevated Hemoglobin/Hematocrit)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S02.T02"
+      ],
+      "tn_page_range": "H6-H11",
+      "pdf_page_range": [
+        660,
+        665
+      ],
+      "source_hierarchy_path": [
+        "H.S02",
+        "H.S02.T02"
+      ],
+      "structural_rationale": "TOC heading 'Erythrocytosis' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Common Presenting Problems'; distinguished from SU-H-36 (Polycythemia Vera) as the general primary-vs-secondary diagnostic approach rather than the specific myeloproliferative diagnosis.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-04",
+      "title": "Thrombocytopenia (Approach)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S02.T03"
+      ],
+      "tn_page_range": "H6-H11",
+      "pdf_page_range": [
+        660,
+        665
+      ],
+      "source_hierarchy_path": [
+        "H.S02",
+        "H.S02.T03"
+      ],
+      "structural_rationale": "TOC heading 'Thrombocytopenia' (LOW confidence, TOC_OCR_UNANCHORED); the general low-platelet-count diagnostic approach framing SU-H-25 (ITP), SU-H-26 (TMAs), and SU-H-30 (DIC).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-05",
+      "title": "Thrombocytosis (Approach)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S02.T04"
+      ],
+      "tn_page_range": "H6-H11",
+      "pdf_page_range": [
+        660,
+        665
+      ],
+      "source_hierarchy_path": [
+        "H.S02",
+        "H.S02.T04"
+      ],
+      "structural_rationale": "TOC heading 'Thrombocytosis' (LOW confidence, TOC_OCR_UNANCHORED); the general elevated-platelet-count diagnostic approach (reactive vs. clonal) framing SU-H-38 (Essential Thrombocythemia).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-06",
+      "title": "Pancytopenia (Approach)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S02.T05"
+      ],
+      "tn_page_range": "H6-H11",
+      "pdf_page_range": [
+        660,
+        665
+      ],
+      "source_hierarchy_path": [
+        "H.S02",
+        "H.S02.T05"
+      ],
+      "structural_rationale": "TOC heading 'Pancytopenia' (LOW confidence, TOC_OCR_UNANCHORED); the tri-lineage cytopenia diagnostic approach, linking to SU-H-15 (Aplastic Anemia) and SU-H-34 (MDS) as leading causes.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-07",
+      "title": "White Blood Cell Count Abnormalities (Neutrophilia, Neutropenia, Lymphocytosis, Lymphopenia, Eosinophilia, Agranulocytosis, Leukemoid Reaction)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S02.T06",
+        "H.S02.T07",
+        "H.S02.T08",
+        "H.S02.T09",
+        "H.S02.T10",
+        "H.S02.T11",
+        "H.S02.T12"
+      ],
+      "tn_page_range": "H6-H11",
+      "pdf_page_range": [
+        660,
+        665
+      ],
+      "source_hierarchy_path": [
+        "H.S02",
+        "H.S02.T06",
+        "H.S02.T07",
+        "H.S02.T08",
+        "H.S02.T09",
+        "H.S02.T10",
+        "H.S02.T11",
+        "H.S02.T12"
+      ],
+      "structural_rationale": "Seven T-children of 'Common Presenting Problems' (all LOW confidence, TOC_OCR_UNANCHORED) are each a facet of the single differential-diagnosis competency targeted by MCC objective 120 ('White blood cells, abnormalities of'), consolidated per the not-fragmenting-a-shared-objective principle used for GY.S11's discharge differential. Febrile neutropenia is kept salient within this unit's testable_competencies as the emergency-recognition component objective 120's own text names explicitly.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-08",
+      "title": "Approach to Lymphadenopathy",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S03"
+      ],
+      "tn_page_range": "H12",
+      "pdf_page_range": [
+        666,
+        666
+      ],
+      "source_hierarchy_path": [
+        "H.S03"
+      ],
+      "structural_rationale": "Level-2 section (HIGH confidence, TOC_OCR) with no T-children.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-09",
+      "title": "Approach to Splenomegaly",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S04"
+      ],
+      "tn_page_range": "H13",
+      "pdf_page_range": [
+        667,
+        667
+      ],
+      "source_hierarchy_path": [
+        "H.S04"
+      ],
+      "structural_rationale": "Level-2 section (HIGH confidence, TOC_OCR) with no T-children.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-10",
+      "title": "Iron Metabolism and Iron Deficiency Anemia",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S05",
+        "H.S05.T01",
+        "H.S05.T02"
+      ],
+      "tn_page_range": "H14-H16",
+      "pdf_page_range": [
+        668,
+        670
+      ],
+      "source_hierarchy_path": [
+        "H.S05",
+        "H.S05.T01",
+        "H.S05.T02"
+      ],
+      "structural_rationale": "'Microcytic Anemia' (H.S05) T-children 'Iron Metabolism' and 'Iron Deficiency Anemia' are consolidated as the physiology-plus-disease pair underlying this chapter's most commonly tested anemia diagnosis; kept distinct from Anemia of Chronic Disease/Sideroblastic Anemia/Lead Poisoning below since each is an independently distinct etiologic category.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-11",
+      "title": "Anemia of Chronic Disease",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S05.T03"
+      ],
+      "tn_page_range": "H14-H16",
+      "pdf_page_range": [
+        668,
+        670
+      ],
+      "source_hierarchy_path": [
+        "H.S05",
+        "H.S05.T03"
+      ],
+      "structural_rationale": "TOC heading 'Anemia of Chronic Disease' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Microcytic Anemia'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-12",
+      "title": "Sideroblastic Anemia",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S05.T04"
+      ],
+      "tn_page_range": "H14-H16",
+      "pdf_page_range": [
+        668,
+        670
+      ],
+      "source_hierarchy_path": [
+        "H.S05",
+        "H.S05.T04"
+      ],
+      "structural_rationale": "TOC heading 'Sideroblastic Anemia' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Microcytic Anemia'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-13",
+      "title": "Lead Poisoning (Hematologic Manifestations)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S05.T05"
+      ],
+      "tn_page_range": "H14-H16",
+      "pdf_page_range": [
+        668,
+        670
+      ],
+      "source_hierarchy_path": [
+        "H.S05",
+        "H.S05.T05"
+      ],
+      "structural_rationale": "TOC heading 'Lead Poisoning' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Microcytic Anemia'; represents the toxicologic cause of microcytic/sideroblastic anemia.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-14",
+      "title": "Normocytic Anemia (Approach)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S06"
+      ],
+      "tn_page_range": "H17",
+      "pdf_page_range": [
+        671,
+        671
+      ],
+      "source_hierarchy_path": [
+        "H.S06"
+      ],
+      "structural_rationale": "Section (HIGH confidence, BODY_HEADING_CONFIRMATION) framing normocytic-anemia etiology; kept distinct from its T-child Aplastic Anemia below.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-15",
+      "title": "Aplastic Anemia",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S06.T01"
+      ],
+      "tn_page_range": "H17",
+      "pdf_page_range": [
+        671,
+        671
+      ],
+      "source_hierarchy_path": [
+        "H.S06",
+        "H.S06.T01"
+      ],
+      "structural_rationale": "TOC heading 'Aplastic Anemia' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Normocytic Anemia'; a distinct bone-marrow-failure diagnosis warranting its own unit given its overlap with pancytopenia and transplant-referral decision points.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-16",
+      "title": "Hemolytic Anemia (General Approach)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S07"
+      ],
+      "tn_page_range": "H18-H24",
+      "pdf_page_range": [
+        672,
+        678
+      ],
+      "source_hierarchy_path": [
+        "H.S07"
+      ],
+      "structural_rationale": "'HemolyticAnemia' (H.S07, HIGH confidence, TOC_OCR, merged_duplicate_headings: 'Myeloid Malignancies' [sic, a mis-tagged duplicate cross-reference]) frames the intravascular-vs-extravascular classification and investigation panel (Table 12) shared by every hemolytic diagnosis below (SU-H-17 through SU-H-22).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-17",
+      "title": "Thalassemia (Alpha and Beta, Minor/Major/Intermedia)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S07.T01",
+        "H.S07.T02",
+        "H.S07.T03",
+        "H.S07.T04",
+        "H.S07.T05"
+      ],
+      "tn_page_range": "H18-H24",
+      "pdf_page_range": [
+        672,
+        678
+      ],
+      "source_hierarchy_path": [
+        "H.S07",
+        "H.S07.T01",
+        "H.S07.T02",
+        "H.S07.T03",
+        "H.S07.T04",
+        "H.S07.T05"
+      ],
+      "structural_rationale": "Five T-children of 'Hemolytic Anemia' (Thalassemia, B-Thalassemia Minor, B-Thalassemia Major, B-Thalassemia Intermedia, a-Thalassemia; all LOW confidence, TOC_OCR_UNANCHORED) are consolidated into one unit: they are graded severities/genotypes of a single diagnosis category rather than independently tested competencies, consistent with the not-fragmenting-generic-subheadings instruction. Genotype-specific molecular/allelic detail (exact gene-deletion patterns) is kept at RECOGNIZE depth rather than CORE_ACTION.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-18",
+      "title": "Sickle Cell Disease",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S22"
+      ],
+      "tn_page_range": "H21-H23",
+      "pdf_page_range": [
+        675,
+        677
+      ],
+      "source_hierarchy_path": [
+        "H.S07",
+        "H.S22"
+      ],
+      "structural_rationale": "toc_inventory.json node H.S22 carries the concatenated printed title 'Sickle Cell Disease Landmark Hematology Trials' with a recorded page range of H61-H62 (pdf 715-716). Raw OCR confirmation (clean-ocr/0675.txt-0677.txt) shows Sickle Cell Disease is a genuine, extensive major topic (definition, pathophysiology, HbSS/HbSC/HbAS clinical features, vaso-occlusive/aplastic/sequestration crisis management, hydroxyurea therapy, screening) immediately following H.S07.T05 (a-Thalassemia) within H.S07's own declared page range (H18-H24); clean-ocr/0715.txt-0716.txt instead confirms pdf 715-716 is genuinely 'Landmark Hematology Trials' (see SU-H-50). This unit is therefore cited against H.S22 (the node bearing this title) but with the page range corrected to its confirmed body location, per the same-node title-concatenation precedent set by GY.S12 and documented fully in this file's methodology_note.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-19",
+      "title": "Autoimmune Hemolytic Anemia",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S22.T01"
+      ],
+      "tn_page_range": "H23",
+      "pdf_page_range": [
+        677,
+        677
+      ],
+      "source_hierarchy_path": [
+        "H.S07",
+        "H.S22",
+        "H.S22.T01"
+      ],
+      "structural_rationale": "toc_inventory.json node H.S22.T01 ('Autoimmune Hemolytic Anemia', LOW confidence, TOC_OCR_UNANCHORED) carries a correct title but a recorded page range of H61-H62 inherited from its mis-scoped parent H.S22. Raw OCR (clean-ocr/0677.txt, Table 14 'Classification of AIHA') confirms the genuine content (warm vs. cold AIHA, Coombs testing, management) sits within H.S07's page range immediately after Sickle Cell Disease. Page range corrected accordingly; see methodology_note.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-20",
+      "title": "Microangiopathic Hemolytic Anemia / Thrombotic Microangiopathy (Definition and Etiology)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S23",
+        "H.S23.T01"
+      ],
+      "tn_page_range": "H23",
+      "pdf_page_range": [
+        677,
+        677
+      ],
+      "source_hierarchy_path": [
+        "H.S07",
+        "H.S23",
+        "H.S23.T01"
+      ],
+      "structural_rationale": "toc_inventory.json node H.S23 ('Microangiopathic Hemolytic Anemia', HIGH confidence, TOC_OCR) carries a correct title but a recorded page range of H63-H64 (pdf 717-718); its T01 'Microangiopathy (TMA)' is a redundant duplicate of the same content and of H.S10.T02 ('Thrombotic Microangiopathies (TMAs)', already covered by SU-H-26). Raw OCR (clean-ocr/0677.txt) confirms the genuine MAHA/TMA definition-and-etiology content (vasculitis, eclampsia/HELLP, malignant hypertension, drug- and infection-induced causes, cross-referencing TTP/HUS/DIC by page number) sits within H.S07's page range, immediately after AIHA. Consolidated into one unit citing both H.S23 and H.S23.T01 with the corrected page range; genuine TTP/HUS/DIC clinical management remain covered independently at SU-H-26 and SU-H-30. See methodology_note for the full page-range defect.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-21",
+      "title": "Hereditary Spherocytosis and Hereditary Elliptocytosis",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S23.T02",
+        "H.S23.T03"
+      ],
+      "tn_page_range": "H24",
+      "pdf_page_range": [
+        678,
+        678
+      ],
+      "source_hierarchy_path": [
+        "H.S07",
+        "H.S23",
+        "H.S23.T02",
+        "H.S23.T03"
+      ],
+      "structural_rationale": "toc_inventory.json nodes H.S23.T02/T03 (LOW confidence, TOC_OCR_UNANCHORED) carry correct titles but a recorded page range inherited from their mis-scoped parent H.S23. Raw OCR (clean-ocr/0678.txt) confirms both genuine RBC-membrane-defect hemolytic anemias are presented together on the same page, immediately following AIHA/MAHA; consolidated as one unit since both are intrinsic-membrane-defect diagnoses of comparable generalist testing depth, and the source itself presents them consecutively with parallel structure. Page range corrected; see methodology_note.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-22",
+      "title": "Glucose-6-Phosphate Dehydrogenase (G6PD) Deficiency",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S23.T04"
+      ],
+      "tn_page_range": "H24",
+      "pdf_page_range": [
+        678,
+        678
+      ],
+      "source_hierarchy_path": [
+        "H.S07",
+        "H.S23",
+        "H.S23.T04"
+      ],
+      "structural_rationale": "toc_inventory.json node H.S23.T04 (LOW confidence, TOC_OCR_UNANCHORED) carries a correct title but a recorded page range inherited from its mis-scoped parent H.S23. Raw OCR (clean-ocr/0678.txt) confirms genuine content (X-linked enzymopathy, oxidative-stress-triggered episodic hemolysis, Heinz bodies/bite cells) immediately follows the membrane-defect anemias on the same page. Page range corrected; see methodology_note.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-23",
+      "title": "Macrocytic Anemia: Vitamin B12 and Folate Deficiency",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S08",
+        "H.S08.T01",
+        "H.S08.T02"
+      ],
+      "tn_page_range": "H25",
+      "pdf_page_range": [
+        679,
+        679
+      ],
+      "source_hierarchy_path": [
+        "H.S08",
+        "H.S08.T01",
+        "H.S08.T02"
+      ],
+      "structural_rationale": "'Macrocytic Anemia' (H.S08, MEDIUM confidence, TOC_OCR) with T-children 'Vitamin B12 Deficiency' and 'Folate Deficiency' consolidated into one unit: both are the two major etiologies of the single macrocytic-anemia diagnostic category, tested together via B12/folate/MMA/homocysteine differentiation.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-24",
+      "title": "Normal Hemostasis Physiology",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S09",
+        "H.S09.T01"
+      ],
+      "tn_page_range": "H26-H27",
+      "pdf_page_range": [
+        680,
+        681
+      ],
+      "source_hierarchy_path": [
+        "H.S09",
+        "H.S09.T01"
+      ],
+      "structural_rationale": "'Hemostasis' (H.S09) with T-child 'Stages of Hemostasis' is normal-physiology background (primary/secondary hemostasis, fibrinolysis) framing the bleeding- and clotting-disorder units that follow (SU-H-25 through SU-H-32); not independently testable.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-25",
+      "title": "Immune Thrombocytopenia (ITP)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S10.T01"
+      ],
+      "tn_page_range": "H28-H31",
+      "pdf_page_range": [
+        682,
+        685
+      ],
+      "source_hierarchy_path": [
+        "H.S10",
+        "H.S10.T01"
+      ],
+      "structural_rationale": "TOC heading 'Immune Thrombocytopenia' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Disorders of Primary Hemostasis'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-26",
+      "title": "Thrombotic Microangiopathies (TTP/HUS)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S10.T02"
+      ],
+      "tn_page_range": "H28-H31",
+      "pdf_page_range": [
+        682,
+        685
+      ],
+      "source_hierarchy_path": [
+        "H.S10",
+        "H.S10.T02"
+      ],
+      "structural_rationale": "TOC heading 'Thrombotic Microangiopathies (TMAs)' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Disorders of Primary Hemostasis'; covers TTP and HUS as hematologic emergencies requiring urgent plasma exchange/recognition.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-27",
+      "title": "von Willebrand Disease",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S10.T03"
+      ],
+      "tn_page_range": "H28-H31",
+      "pdf_page_range": [
+        682,
+        685
+      ],
+      "source_hierarchy_path": [
+        "H.S10",
+        "H.S10.T03"
+      ],
+      "structural_rationale": "TOC heading 'von Willebrand Disease' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Disorders of Primary Hemostasis'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-28",
+      "title": "Hemophilia A, Hemophilia B, and Factor XI Deficiency",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S11.T01",
+        "H.S11.T02",
+        "H.S11.T03"
+      ],
+      "tn_page_range": "H32-H34",
+      "pdf_page_range": [
+        686,
+        688
+      ],
+      "source_hierarchy_path": [
+        "H.S11",
+        "H.S11.T01",
+        "H.S11.T02",
+        "H.S11.T03"
+      ],
+      "structural_rationale": "Three T-children of 'Disorders of Secondary Hemostasis' (all LOW confidence, TOC_OCR_UNANCHORED) are hereditary single-clotting-factor deficiencies sharing an identical testable competency (recognize X-linked/autosomal bleeding pattern, factor assay/PTT-based diagnosis, factor-replacement management); consolidated per the not-fragmenting-parallel-subheadings instruction.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-29",
+      "title": "Coagulopathy of Liver Disease and Vitamin K Deficiency",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S11.T04",
+        "H.S11.T05"
+      ],
+      "tn_page_range": "H32-H34",
+      "pdf_page_range": [
+        686,
+        688
+      ],
+      "source_hierarchy_path": [
+        "H.S11",
+        "H.S11.T04",
+        "H.S11.T05"
+      ],
+      "structural_rationale": "T-children 'Liver Disease' and 'Vitamin K Deficiency' consolidated: both are acquired multi-factor coagulopathies (decreased hepatic synthesis of vitamin-K-dependent factors) sharing the same PT/INR-based recognition and management competency.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-30",
+      "title": "Disseminated Intravascular Coagulation (DIC)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S11.T06"
+      ],
+      "tn_page_range": "H32-H34",
+      "pdf_page_range": [
+        686,
+        688
+      ],
+      "source_hierarchy_path": [
+        "H.S11",
+        "H.S11.T06"
+      ],
+      "structural_rationale": "TOC heading 'Disseminated Intravascular Coagulation' (LOW confidence, TOC_OCR_UNANCHORED); kept as its own unit given its status as a hematologic emergency (concurrent bleeding and clotting) rather than folded into the single-factor-deficiency unit above.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-31",
+      "title": "Hypercoagulable Disorders (Thrombophilia)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S12"
+      ],
+      "tn_page_range": "H35",
+      "pdf_page_range": [
+        689,
+        689
+      ],
+      "source_hierarchy_path": [
+        "H.S12"
+      ],
+      "structural_rationale": "Level-2 section (MEDIUM confidence, TOC_OCR) with no T-children; covers hereditary (Factor V Leiden, prothrombin gene mutation) and acquired (antiphospholipid syndrome) thrombophilia.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-32",
+      "title": "Venous Thromboembolism: Diagnosis and Treatment",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S13",
+        "H.S13.T01"
+      ],
+      "tn_page_range": "H36-H38",
+      "pdf_page_range": [
+        690,
+        692
+      ],
+      "source_hierarchy_path": [
+        "H.S13",
+        "H.S13.T01"
+      ],
+      "structural_rationale": "'Venous Thromboembolism' (H.S13, MEDIUM confidence, TOC_OCR) with T-child 'Approach to Treatment of Venous Thromboembolism' consolidated as one DVT/PE diagnosis-and-management unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-33",
+      "title": "Acute Myeloid Leukemia",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S14.T01"
+      ],
+      "tn_page_range": "H39-H41",
+      "pdf_page_range": [
+        693,
+        695
+      ],
+      "source_hierarchy_path": [
+        "H.S14",
+        "H.S14.T01"
+      ],
+      "structural_rationale": "TOC heading 'Acute Myeloid Leukemia' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Hematologic Malignancies and Related Disorders' (merged 'Myeloid Malignancies').",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-34",
+      "title": "Myelodysplastic Syndromes",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S14.T02"
+      ],
+      "tn_page_range": "H39-H41",
+      "pdf_page_range": [
+        693,
+        695
+      ],
+      "source_hierarchy_path": [
+        "H.S14",
+        "H.S14.T02"
+      ],
+      "structural_rationale": "TOC heading 'Myelodysplastic Syndromes' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Hematologic Malignancies and Related Disorders'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-35",
+      "title": "Chronic Myeloid Leukemia",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S15.T01"
+      ],
+      "tn_page_range": "H42-H45",
+      "pdf_page_range": [
+        696,
+        699
+      ],
+      "source_hierarchy_path": [
+        "H.S15",
+        "H.S15.T01"
+      ],
+      "structural_rationale": "TOC heading 'Chronic Myeloid Leukemia' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Myeloproliferative Neoplasms'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-36",
+      "title": "Polycythemia Vera",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S15.T02"
+      ],
+      "tn_page_range": "H42-H45",
+      "pdf_page_range": [
+        696,
+        699
+      ],
+      "source_hierarchy_path": [
+        "H.S15",
+        "H.S15.T02"
+      ],
+      "structural_rationale": "TOC heading 'Polycythemia Vera' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Myeloproliferative Neoplasms'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-37",
+      "title": "Myelofibrosis",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S15.T03"
+      ],
+      "tn_page_range": "H42-H45",
+      "pdf_page_range": [
+        696,
+        699
+      ],
+      "source_hierarchy_path": [
+        "H.S15",
+        "H.S15.T03"
+      ],
+      "structural_rationale": "TOC heading 'Myelofibrosis' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Myeloproliferative Neoplasms'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-38",
+      "title": "Essential Thrombocythemia",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S15.T04"
+      ],
+      "tn_page_range": "H42-H45",
+      "pdf_page_range": [
+        696,
+        699
+      ],
+      "source_hierarchy_path": [
+        "H.S15",
+        "H.S15.T04"
+      ],
+      "structural_rationale": "TOC heading 'Essential Thrombocythemia' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Myeloproliferative Neoplasms'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-39",
+      "title": "Acute Lymphoblastic Leukemia",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S16",
+        "H.S16.T01"
+      ],
+      "tn_page_range": "H46-H47",
+      "pdf_page_range": [
+        700,
+        701
+      ],
+      "source_hierarchy_path": [
+        "H.S16",
+        "H.S16.T01"
+      ],
+      "structural_rationale": "'Lymphoid Malignancies' (H.S16, HIGH confidence, TOC_OCR) with its sole T-child 'Acute Lymphoblastic Leukemia' consolidated as one unit; predominantly a pediatric malignancy with adult presentation also covered here.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-40",
+      "title": "Hodgkin and Non-Hodgkin Lymphoma",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S17",
+        "H.S17.T01",
+        "H.S17.T02"
+      ],
+      "tn_page_range": "H48-H49",
+      "pdf_page_range": [
+        702,
+        703
+      ],
+      "source_hierarchy_path": [
+        "H.S17",
+        "H.S17.T01",
+        "H.S17.T02"
+      ],
+      "structural_rationale": "'Lymphomas' (H.S17, HIGH confidence, BODY_HEADING_CONFIRMATION) with T-children 'Hodgkin Lymphoma' and 'Non-Hodgkin Lymphoma' consolidated as one unit: both share the same MCC-tested competency (recognize painless lymphadenopathy +/- B symptoms, determine need for biopsy) even though they are staged/managed differently at specialist level.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-41",
+      "title": "Chronic Lymphocytic Leukemia",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S18.T01"
+      ],
+      "tn_page_range": "H50-H52",
+      "pdf_page_range": [
+        704,
+        706
+      ],
+      "source_hierarchy_path": [
+        "H.S18",
+        "H.S18.T01"
+      ],
+      "structural_rationale": "TOC heading 'Chronic Lymphocytic Leukemia' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Malignant Clonal Proliferations of Mature B-Cells'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-42",
+      "title": "Multiple Myeloma",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S18.T02"
+      ],
+      "tn_page_range": "H50-H52",
+      "pdf_page_range": [
+        704,
+        706
+      ],
+      "source_hierarchy_path": [
+        "H.S18",
+        "H.S18.T02"
+      ],
+      "structural_rationale": "TOC heading 'Multiple Myeloma' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Malignant Clonal Proliferations of Mature B-Cells'; the CRAB-criteria (calcium, renal, anemia, bone) presentation is a high-yield generalist recognition target.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-43",
+      "title": "Monoclonal Gammopathy of Unknown Significance (MGUS)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S18.T03"
+      ],
+      "tn_page_range": "H50-H52",
+      "pdf_page_range": [
+        704,
+        706
+      ],
+      "source_hierarchy_path": [
+        "H.S18",
+        "H.S18.T03"
+      ],
+      "structural_rationale": "TOC heading 'Monoclonal Gammopathy of Unknown Significance' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Malignant Clonal Proliferations of Mature B-Cells'; kept distinct from Multiple Myeloma since distinguishing MGUS from myeloma is itself a testable competency.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-44",
+      "title": "Lymphoplasmacytic Lymphoma (Waldenstrom Macroglobulinemia)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S18.T04"
+      ],
+      "tn_page_range": "H50-H52",
+      "pdf_page_range": [
+        704,
+        706
+      ],
+      "source_hierarchy_path": [
+        "H.S18",
+        "H.S18.T04"
+      ],
+      "structural_rationale": "TOC heading 'Lymphoplasmacytic Lymphoma' (LOW confidence, TOC_OCR_UNANCHORED), a T-child of 'Malignant Clonal Proliferations of Mature B-Cells'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-45",
+      "title": "Oncologic Emergencies: Hyperviscosity Syndrome and Tumour Lysis Syndrome",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S19",
+        "H.S19.T01",
+        "H.S19.T02"
+      ],
+      "tn_page_range": "H53",
+      "pdf_page_range": [
+        707,
+        707
+      ],
+      "source_hierarchy_path": [
+        "H.S19",
+        "H.S19.T01",
+        "H.S19.T02"
+      ],
+      "structural_rationale": "'Complications of Hematologic Malignancies' (H.S19) T-children 'Hyperviscosity Syndrome' and 'Tumour Lysis Syndrome' consolidated as one unit: both are urgent, treatment/disease-burden-triggered oncologic emergencies requiring immediate recognition, sharing the same 'recognize and act urgently' testable competency.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-46",
+      "title": "Blood Product Selection and Transfusion Indications",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S20",
+        "H.S20.T01",
+        "H.S20.T02",
+        "H.S20.T03",
+        "H.S20.T04"
+      ],
+      "tn_page_range": "H54-H57",
+      "pdf_page_range": [
+        708,
+        711
+      ],
+      "source_hierarchy_path": [
+        "H.S20",
+        "H.S20.T01",
+        "H.S20.T02",
+        "H.S20.T03",
+        "H.S20.T04"
+      ],
+      "structural_rationale": "'Blood Products and Transfusions' (H.S20) T-children 'Blood Products', 'Red Blood Cells', 'Platelets', 'Coagulation Factors' consolidated as one unit covering indications and thresholds for each product type; kept distinct from the transfusion-reaction complications below (SU-H-47).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-47",
+      "title": "Acute and Delayed Blood Transfusion Reactions",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S20.T05",
+        "H.S20.T06"
+      ],
+      "tn_page_range": "H54-H57",
+      "pdf_page_range": [
+        708,
+        711
+      ],
+      "source_hierarchy_path": [
+        "H.S20",
+        "H.S20.T05",
+        "H.S20.T06"
+      ],
+      "structural_rationale": "T-children 'Acute Blood Transfusion Reactions' and 'Delayed Blood Transfusion Reactions' consolidated as one recognition-and-urgent-management competency, split from the product-selection unit above since recognizing and managing a transfusion reaction is a distinct, urgent-care testable skill.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-48",
+      "title": "Antiplatelet and Anticoagulant Therapy (Reference)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S21.T01",
+        "H.S21.T02"
+      ],
+      "tn_page_range": "H58-H60",
+      "pdf_page_range": [
+        712,
+        714
+      ],
+      "source_hierarchy_path": [
+        "H.S21",
+        "H.S21.T01",
+        "H.S21.T02"
+      ],
+      "structural_rationale": "'Common Medications' (H.S21) T-children 'Antiplatelet Therapy' and 'Anticoagulant Therapy' consolidated as one drug-class reference unit; general indications/monitoring principles are testable, but specific dosing regimens are out of scope per project accuracy rules.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-49",
+      "title": "Chemotherapeutic and Biologic Agents Used in Oncology (Reference)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S21.T03"
+      ],
+      "tn_page_range": "H58-H60",
+      "pdf_page_range": [
+        712,
+        714
+      ],
+      "source_hierarchy_path": [
+        "H.S21",
+        "H.S21.T03"
+      ],
+      "structural_rationale": "TOC heading 'Chemotherapeutic and Biologic Agents Used in Oncology' (LOW confidence, TOC_OCR_UNANCHORED); a specialist-level regimen-detail reference table.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-50",
+      "title": "Landmark Hematology Trials (Reference)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "H.S22"
+      ],
+      "tn_page_range": "H61-H62",
+      "pdf_page_range": [
+        715,
+        716
+      ],
+      "source_hierarchy_path": [
+        "H.S22"
+      ],
+      "structural_rationale": "The second half of H.S22's concatenated printed title ('...Landmark Hematology Trials'); raw OCR (clean-ocr/0715.txt-0716.txt) confirms this is genuinely a bibliographic clinical-trial summary table at this node's toc-recorded page range (H61-H62). See SU-H-18 for the first half of the concatenated title and this file's methodology_note for the full defect.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-H-51",
+      "title": "References (Bibliography)",
+      "chapter_code": "H",
+      "chapter_title": "Hematology",
+      "source_node_ids": [
+        "UNCATALOGUED:H.REFERENCES"
+      ],
+      "tn_page_range": "H63-H64",
+      "pdf_page_range": [
+        717,
+        718
+      ],
+      "source_hierarchy_path": [
+        "UNCATALOGUED:H.REFERENCES"
+      ],
+      "structural_rationale": "Raw OCR (clean-ocr/0717.txt-0718.txt) confirms a genuine, correctly-attributed terminal chapter bibliography (author/journal/year citations) at pdf 717-718 - the same terminal-References pattern seen in every other completed chapter - but no toc_inventory.json node in this chapter bears the title 'References': H.S23, the node whose recorded page range points here, actually carries the title 'Microangiopathic Hemolytic Anemia' whose real content is elsewhere (see SU-H-20). Represented with a synthetic id per the established UNCATALOGUED convention (chapter A's 'Monitoring', chapter D's dropped headings, chapter FM's Acronyms/Antimicrobial-Reference) since no other node id exists to cite. REFERENCE_ONLY, zero planned question coverage.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    }
+  ]
+}
