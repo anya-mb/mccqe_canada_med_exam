@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-08-26",
+  "chapter_code": "PH",
+  "schema_note": "Chapter-local review-queue candidates only. This file is NOT the global research/scope/review_queue.json - it is merged into that coordinator-maintained file after this chapter passes validation.",
+  "items": [
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-PH-04",
+      "title": "PH.S02.T02/T03 split one heading ('...Structural' / 'Violence') into two spurious topic nodes",
+      "summary": "toc_inventory.json's PH.S02.T02 captured title ('Groups Facing Systemic Barriers, Discrimination, and Structural') is truncated mid-word, and PH.S02.T03 ('Violence') is exactly the missing final word. Raw OCR body-verification of pdf1423 (PH5) confirms the real, single heading is 'Groups Facing Systemic Barriers, Discrimination, and Structural Violence.' A full-range search of PH.S02's body text (pdf1421-1429, PH3-11) found no independent 'Violence' heading or content anywhere else in the section. Merged into a single study unit (SU-PH-04) rather than left as two nodes or fragmented further.",
+      "recommended_action": "Coordinator should flag the underlying toc_inventory.json extraction pipeline: this is a new defect pattern (a single wrapped/long heading split across a page or column boundary into two sequential topic nodes) distinct from the previously-seen merged-heading and mis-parented-heading patterns; worth checking other chapters' unusually short trailing topic titles (e.g., a lone one-or-two-word topic title immediately following a topic with a truncated-looking title) for the same defect."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-PH-11, SU-PH-12",
+      "title": "PH.S04 ('Epidemiology') silently omits a full page of foundational content (Population/Sample/Sampling/Sample Size, Bias/Confounder) with no topic node at all",
+      "summary": "toc_inventory.json's PH.S04 section (HIGH-confidence, pdf1431-1433) records only two children: T01 'Interpreting Test Results' and T02 'Effectiveness of Interventions.' Raw OCR body-verification confirms the section actually opens with substantial, high-yield content entirely absent from toc_inventory.json as any node: 'Population' and 'Sample' definitions, probability/non-probability sampling types, and 'Sample Size' effects (pdf1431, PH13), followed by 'Bias' (selection/information bias subtypes) and 'Confounder' (pdf1432, PH14) -- all preceding 'Interpreting Test Results.' Recovered as two synthetic UNCATALOGUED study units (SU-PH-11, SU-PH-12) per established project precedent for body-recovered headings.",
+      "recommended_action": "Coordinator should flag this as a case where a HIGH-confidence, TOC_OCR-anchored parent section's own recorded page range was correct, but roughly half of the section's actual heading content was dropped with zero children captured for it -- a more severe instance of the 'body-recovered heading' pattern than a single missing heading, since two full named sub-headings covering ~40% of the section's page range were both missed."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-PH-36",
+      "title": "PH.S12 ('Occupational Hazards') omits Table 13, the section's own hazard-category taxonomy",
+      "summary": "toc_inventory.json's PH.S12 section (HIGH-confidence, pdf1449-1450) records five children (T01-T05, Workplace Legislation/Health Promotion/Primary/Secondary/Tertiary Prevention) but no node for Table 13 itself -- the section's first and primary content, comprising the six-category occupational hazard taxonomy (Physical, Chemical, Biological, Psychosocial, Ergonomic, Safety) with worked examples and health effects for each, confirmed on pdf1449 (PH31) immediately preceding 'Workplace Legislation.' Recovered as a synthetic UNCATALOGUED study unit (SU-PH-36).",
+      "recommended_action": "No action required beyond noting this as a further instance (after PS's Psychotherapy/ECT omissions) of a section's own primary/title-eponymous content being silently dropped while its named subheadings are captured correctly."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-PH-41",
+      "title": "PH.S13 ('Appendix') page range recorded as ending one page early",
+      "summary": "toc_inventory.json records PH.S13 ('Appendix') and its child T02 ('Other Reportable Conditions') as ending at pdf1451 (PH33). Raw OCR body-verification confirms the 'Other Reportable Conditions' content actually continues onto pdf1452 (PH34) -- covering Abuse of Long-Term Care/Retirement Home Residents, Unfit to Drive, and Unfit to Fly -- before 'Landmark Preventive Medicine Trials' begins mid-page. Corrected in SU-PH-41's recorded page range to PH33-34 (pdf1451-1452).",
+      "recommended_action": "No action required; a minor page-boundary correction, not a content-loss defect (all content is captured, just under a corrected page range)."
+    },
+    {
+      "issue_type": "hygiene_note",
+      "severity": "informational",
+      "study_unit_id": "SU-PH-21, SU-PH-38",
+      "title": "Two study units deliberately scoped to zero testable questions",
+      "summary": "SU-PH-21 (Choosing an Appropriate Statistical Test) is classified SUPPORTING_KNOWLEDGE with mcc_evidence=[] and minimum_question_coverage=0 per the chapter-scoping instruction to avoid turning PH into a biostatistics exam -- specialist statistical-test-selection mechanics exceed graduating-student testable depth; difficulty should come from interpreting evidence (SU-PH-13/14/16/17), which remain fully tested. SU-PH-38 (Workplace Health Promotion) is similarly thin, one-sentence content contrasting with the fully-tested SU-PH-39 (Workplace Prevention Levels), with no distinct MCC objective evidence. Both are retained as study units for source-traceability only.",
+      "recommended_action": "No action required; this is the intended scope-stage outcome for low-yield/out-of-depth content per the chapter-scoping instructions."
+    },
+    {
+      "issue_type": "cross_discipline_overlap",
+      "severity": "informational",
+      "study_unit_id": "SU-PH-05, SU-PH-32",
+      "title": "Indigenous Health and Environmental Racism content overlaps ELOM's Indigenous Health resources",
+      "summary": "SU-PH-05 (Indigenous Health in Canada and the Legacy of Colonization) and SU-PH-32 (Environmental Racism, including the Grassy Narrows case) are explicitly cross-referenced in-text to ELOM25 (Indigenous Health), ELOM29 (Indigenous Disproportionate Over-Representation of Biological, Psychological and Social Co-Morbidities), and ELOM30 (Resources in Indigenous Health). Per the chapter-scoping instructions, PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT is not finalized here.",
+      "recommended_action": "Coordinator should resolve during the global ownership audit: recommend PH retains the population-health historical-determinants and environmental-justice angle (why health inequities exist at a population level), while ELOM retains the clinical-encounter/consent/resource angle (how to apply this knowledge with an individual Indigenous patient), to avoid duplicate testing of the same historical facts from two chapters."
+    },
+    {
+      "issue_type": "cross_discipline_overlap",
+      "severity": "informational",
+      "study_unit_id": "SU-PH-37, SU-PH-40, SU-PH-41",
+      "title": "Workplace legislation and mandatory-reporting content overlaps ELOM's Legal System objective",
+      "summary": "SU-PH-37 (Workplace Legislation and Workers' Compensation), SU-PH-40 (Mandatory Reporting: Reportable Diseases), and SU-PH-41 (Other Mandatory Reporting Obligations) all cite MCC objective 121-5 (Legal system, an ELOM-category objective) as corroborating or primary evidence. SU-PH-41 in particular is a grab-bag of legal reporting duties (child abuse, gunshot wounds, unfit to drive/fly, LTC abuse) that has no single dedicated MCC objective of its own and overlaps both ELOM's general confidentiality/reporting content and Pediatrics' child-abuse-recognition content.",
+      "recommended_action": "Coordinator should resolve during the global ownership audit: recommend ELOM retains primary ownership of the general legal-system/reporting-duty framework, while PH retains the specific list of provincially-reportable diseases/conditions and the occupational-legislation framework (WHMIS/OHSA/WSIB), consistent with the PS chapter's precedent for the PS/ELOM Canadian Legal Issues boundary."
+    },
+    {
+      "issue_type": "weak_or_uncertain_evidence",
+      "severity": "informational",
+      "study_unit_id": "none",
+      "title": "No WEAK-evidence or UNCERTAIN-classification units in this chapter",
+      "summary": "Unlike several prior chapters, PH's candidate MCC objective set (Group-78 Population Health and its Determinants, plus targeted searches for 78-6/78-8/78-12/74-2/114-1/114-2/114-3/121-5 not present in the auto-generated packet) provided STRONG or MODERATE evidence for every study unit; no study unit required a WEAK fallback or an UNCERTAIN classification.",
+      "recommended_action": "No action required. Note for future chapters: this chapter's packet candidate set (packet-generated 'candidate_mcc_objectives') did not include objectives 78-6 (Environment), 78-8 (Work-related health issues), 78-12 (Quality improvement and patient safety), or 74-2 (Immunization) despite each being a strong, on-topic match found only via targeted search-mcc-objectives calls -- suggesting the packet's automatic candidate-matching under-recovers Group-78 sub-objectives whose titles don't share tokens with the Toronto Notes heading text verbatim."
+    }
+  ]
+}
