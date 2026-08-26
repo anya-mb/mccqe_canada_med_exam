@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.0",
+  "chapter_code": "P",
+  "generated_at": "2026-08-26",
+  "schema_note": "Chapter-local review-queue candidates only. This file is NOT the global research/scope/review_queue.json - it is merged into that coordinator-maintained file after this chapter passes validation.",
+  "items": [
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-P-002, SU-P-003, SU-P-004, SU-P-005, SU-P-006, SU-P-007",
+      "title": "Entire 'Primary Care' section (well-child care) absent from toc_inventory.json",
+      "summary": "research/tn2025/unresolved_headings.json flags 'PrimaryCaré' as one of P's two UNRESOLVED headings (source_pdf_page 1197, TOC page-number OCR did not parse to a trusted anchor). toc_inventory.json has no node at all for this section or its subtopics. Independently resolved via raw OCR of the chapter's own TOC page (pdf 1197) and body pages 1200-1206 (P4-P10): the section runs from immediately after 'Pediatric Quick Reference Values' (P.S01, P3) to immediately before 'Common Complaints' (P.S02, P10), covering Visit Overview, Routine Immunization, Growth and Development, Nutrition, a sixth body heading not named in the TOC line itself ('Injury Prevention Counselling'), and Circumcision.",
+      "resolution_status": "INDEPENDENTLY RESOLVED (not left open) - represented as SU-P-002 through SU-P-007 under synthetic UNCATALOGUED:PrimaryCare@pdf1200.T01-T06 ids since no toc_inventory.json node exists to cite.",
+      "recommended_action": "Coordinator should consider adding corresponding nodes to toc_inventory.json for chapter P (between P.S01 and P.S02, pdf pages 1200-1206) in a future TOC-extraction pass, since this is a substantial six-subtopic clinical section entirely missing from the pipeline's output (dropped, not merged) - the same class of gap seen in chapter A's SU-A-07 case. Not low-priority: unlike A's single-topic gap, this recovered section carries high-yield, directly-DIRECT-mapped MCC content (well-child visit, immunization, growth/development, nutrition)."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-P-026, SU-P-027, SU-P-028, SU-P-029, SU-P-030, SU-P-031, SU-P-032, SU-P-033, SU-P-034, SU-P-035, SU-P-036",
+      "title": "P.S05.T02/T03 ('Acyanotic'/'Cyanotic Congenital Heart Disease') are multi-disease umbrella nodes",
+      "summary": "toc_inventory.json captures 'Acyanotic Congenital Heart Disease' and 'Cyanotic Congenital Heart Disease' as single T-level nodes each, but raw OCR of pdf 1217-1220 (P21-P24) body-confirms each groups multiple independently-testable named lesions with their own definition/epidemiology/investigations/management subsections (Acyanotic: VSD, ASD, PDA, coarctation, aortic stenosis, pulmonary stenosis; Cyanotic: TOF, TGA, TAPVR, truncus arteriosus, HLHS, Ebstein's anomaly).",
+      "resolution_status": "INDEPENDENTLY RESOLVED - split into 11 recovered per-lesion study units (SU-P-026 through SU-P-036) under synthetic UNCATALOGUED:CHD@pdf... ids; P.S05.T02/T03 retained only as organizational-header references (added to organizational_header_nodes) since their content is fully redistributed.",
+      "recommended_action": "None required for chapter P's own crosswalk (fully resolved and validated). Coordinator may wish to note this splitting precedent for any future chapter with a similarly-titled umbrella CHD heading."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-P-138, SU-P-139",
+      "title": "P.S15.T04 ('Neurocutaneous Syndromes') groups two distinct named syndromes",
+      "summary": "Raw OCR of pdf 1285 (P89) body-confirms this single toc_inventory.json node contains two genuinely distinct, independently-testable diagnoses (Neurofibromatosis Type 1 and Type 2), each with its own diagnostic-criteria subsection. No Tuberous Sclerosis/Sturge-Weber subsection is present in this TN edition's text.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - split into SU-P-138 (NF1) and SU-P-139 (NF2) under synthetic UNCATALOGUED:Neurocutaneous@pdf1285.NF1/NF2 ids; P.S15.T04 retained only as an organizational-header reference.",
+      "recommended_action": "None required; fully resolved and validated."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-P-141, SU-P-142, SU-P-143, SU-P-144, SU-P-145",
+      "title": "P.S15.T06 ('Seizure Disorders') groups a general approach plus four named childhood epilepsy syndromes",
+      "summary": "Raw OCR of pdf 1286 (P90) body-confirms this single toc_inventory.json node contains a general seizure-management/investigation/seizure-mimics approach together with four distinct, independently-testable named epilepsy syndromes (Infantile Spasms/West syndrome, Lennox-Gastaut, Juvenile Myoclonic Epilepsy, Childhood Absence Epilepsy), before cross-referencing the adult Neurology chapter (N19) for generalized/partial seizures.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - split into SU-P-141 (general approach, retained under the original P.S15.T06 node id) plus four recovered syndrome-specific units (SU-P-142 through SU-P-145) under synthetic UNCATALOGUED:Seizures@pdf1286.* ids.",
+      "recommended_action": "None required; fully resolved and validated."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "n/a (organizational exclusion)",
+      "title": "P.S13.T04 ('Common Conditions of Neonates') is a nested organizational sub-header, not a study unit",
+      "summary": "Raw OCR of pdf ~1266 body-confirms this node's title introduces the group of already-separately-catalogued specific-condition subsections (T05-T17: Apnea, Bleeding Disorders in Neonates, BPD, Cyanosis, Diaphragmatic Hernia, Hypoglycemia, Neonatal Hyperbilirubinemia, NEC, PPHN, Respiratory Distress, ROP, Sepsis, Skin Conditions) and has no independent content of its own.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - excluded as organizational (added to organizational_header_nodes) rather than represented as its own study unit.",
+      "recommended_action": "None required; fully resolved and validated."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "informational",
+      "study_unit_id": "n/a",
+      "title": "'Acromyms' UNRESOLVED heading confirmed as chapter-opening acronym glossary",
+      "summary": "research/tn2025/unresolved_headings.json's other P entry ('Acromyms', source_pdf_page 1197) is confirmed via the same raw-OCR TOC-page read used to recover 'Primary Care' to be the chapter-opening acronym glossary immediately preceding P.S01 (Pediatric Quick Reference Values).",
+      "resolution_status": "INDEPENDENTLY RESOLVED - excluded as non-clinical, consistent with the chapter-opening acronym-glossary exclusion precedent (OP.S01/OB.S01/NS.S01/OR.S01/OT.S01).",
+      "recommended_action": "None required; low-priority, consistent with an established cross-chapter pattern."
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-P-036",
+      "title": "Ebstein's Anomaly",
+      "summary": "mcc_evidence cites objective 36 'Genetic concerns' at WEAK strength (requires_scope_review: true) for the maternal-lithium/benzodiazepine teratogenic-exposure association, which is a secondary rather than primary teaching point for this unit.",
+      "recommended_action": "Coordinator/reviewer to confirm whether the WEAK 36 citation should be dropped, retaining only the MODERATE objective-19 evidence."
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-P-053",
+      "title": "Pediatric Thyroid Dysfunction (Hyperthyroidism and Hypothyroidism)",
+      "summary": "mcc_evidence cites objective 101 'Stature abnormal' at WEAK strength (requires_scope_review: true) for growth-failure secondary to untreated congenital hypothyroidism, a secondary rather than primary teaching link.",
+      "recommended_action": "Coordinator/reviewer to confirm whether the WEAK 101 citation adds value or should be dropped in favour of the MODERATE objective-63 evidence alone."
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-P-054",
+      "title": "Disorders of Sexual Development",
+      "summary": "mcc_evidence cites objective 93-1 'Abnormal pubertal development' at WEAK strength (requires_scope_review: true) since this unit's primary content is the newborn-period ambiguous-genitalia presentation rather than pubertal-onset DSD.",
+      "recommended_action": "Coordinator/reviewer to confirm the WEAK 93-1 citation's continued value once a global DSD-vs-pubertal-development ownership decision is made."
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-P-083, SU-P-084",
+      "title": "Hereditary Spherocytosis; Glucose-6-Phosphate Dehydrogenase Deficiency",
+      "summary": "Both units cite objective 49 'Jaundice' at WEAK strength (requires_scope_review: true) for their secondary link to severe neonatal jaundice, which is a real but non-primary teaching point relative to their primary hemolytic-anemia framing (objective 42-1, MODERATE).",
+      "recommended_action": "Coordinator/reviewer to confirm whether the WEAK 49 citations should be dropped or retained given the genuine (if secondary) neonatal-jaundice link."
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-P-151",
+      "title": "Growing Pains",
+      "summary": "mcc_evidence cites objective 67-1-2-1 'Generalized pain disorders' at WEAK strength (requires_scope_review: true) as a broader chronic-pain objective that only loosely matches growing pains' specific childhood presentation, alongside the STRONG objective-50-3 primary match.",
+      "recommended_action": "Coordinator/reviewer to confirm whether the WEAK 67-1-2-1 citation should be dropped as redundant given the STRONG 50-3 match already anchors this unit."
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-P-158",
+      "title": "Systemic Lupus Erythematosus (Pediatric)",
+      "summary": "mcc_evidence cites objective 38 'Skin and integument conditions' at WEAK strength (requires_scope_review: true) for the malar-rash finding, a secondary rather than primary teaching link relative to the MODERATE objective-50-2 polyarthralgia match.",
+      "recommended_action": "Coordinator/reviewer to confirm whether the WEAK 38 citation adds value or should be dropped."
+    },
+    {
+      "issue_type": "uncertain_classification_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-P-040",
+      "title": "Infective Endocarditis (Pediatric)",
+      "summary": "Classified UNCERTAIN because no dedicated MCC 'infective endocarditis' presentation-level objective exists in the registry (search-mcc-objectives found no direct match); pediatric IE risk is contextually relevant to fever-source and cardiac-complication reasoning but could not be confidently mapped.",
+      "recommended_action": "Coordinator/reviewer to confirm no better-matching objective exists once the global registry search is repeated across all completed chapters, or to confirm UNCERTAIN is the correct final classification."
+    },
+    {
+      "issue_type": "uncertain_classification_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-P-046",
+      "title": "Autism Spectrum Disorder",
+      "summary": "Classified UNCERTAIN because no dedicated MCC 'autism spectrum disorder' objective exists in the registry (search-mcc-objectives returned zero direct matches); the closest related objectives (Developmental delay 21, Attention/learning/school problems 5) address overlapping but not identical scope. ASD is nonetheless high-yield, well-established pediatric content (question_planning.coverage_weight=4).",
+      "recommended_action": "Coordinator/reviewer to confirm this is a genuine MCC-registry coverage gap (not a missed search term) before finalizing classification, given the high expected question-coverage weight assigned despite UNCERTAIN status."
+    },
+    {
+      "issue_type": "uncertain_classification_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-P-091",
+      "title": "Acute Leukemia (Pediatric)",
+      "summary": "Classified UNCERTAIN because no dedicated MCC objective for leukemia exists in the registry; the closest related objectives (Lymphadenopathy 54, Bleeding/bruising 15-1) address individual presenting signs but not the disease as a unified entity. ALL is nonetheless the highest-yield pediatric malignancy (question_planning.coverage_weight=4).",
+      "recommended_action": "Coordinator/reviewer to confirm this is a genuine MCC-registry coverage gap before finalizing classification, given the high expected question-coverage weight assigned despite UNCERTAIN status."
+    },
+    {
+      "issue_type": "cross_discipline_ownership_pending",
+      "severity": "informational",
+      "study_unit_id": "SU-P-070, SU-P-148 (Cystic Fibrosis); SU-P-101, SU-P-63 (Gastroenteritis); SU-P-109, SU-P-149 (Pneumonia); SU-P-074, SU-P-94, SU-P-95 (Abdominal Mass/Wilms/Neuroblastoma); SU-P-81, SU-P-82 (Sickle Cell/Thalassemia, vs. Hematology H); SU-P-137, SU-P-48 (Hypotonia vs. Motor Delay)",
+      "title": "Cross-discipline / intra-chapter content overlap recorded but not resolved",
+      "summary": "Per the resume brief's instruction not to finalize PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT until the global cross-discipline audit, several study units carry a cross_discipline_note flagging overlap either with a completed adult-discipline chapter (Hematology) or between two independently-full TN write-ups within Pediatrics itself (e.g. Cystic Fibrosis appears as a full GI-focused write-up under P.S09.T15 and a full pulmonary-focused write-up under P.S16.T03 - these are not duplicates but genuinely different-content sections in the source, confirmed by raw-OCR page reads of both).",
+      "recommended_action": "Coordinator to resolve primary ownership during the planned global cross-discipline audit; no chapter-P-specific action needed now."
+    }
+  ]
+}

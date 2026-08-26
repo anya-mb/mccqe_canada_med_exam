@@ -1,0 +1,3739 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-26",
+  "chapter_code": "P",
+  "chapter_title": "Pediatrics",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes source structure (toc_inventory.json / derived/scope_packets/P.json) for the Pediatrics chapter (160 canonical source nodes). Unlike OR/OT, P's toc_inventory.json extraction is clean, single-column, and well-organized (17 system-based L2 sections each with atomic disease/topic-level L3 children); the vast majority of nodes required no structural correction. Targeted verification (raw OCR of the chapter's own TOC page and of body pages for headings whose title suggested a multi-disease umbrella, per the workflow's instruction to split broad nodes only when body evidence confirms distinct topics) surfaced four categories of correction, each independently confirmed via raw OCR body-page text and documented in the affected units' structural_rationale: (1) an entirely uncatalogued section -- 'Primary Care' (Visit Overview, Routine Immunization, Growth and Development, Nutrition, Injury Prevention Counselling, Circumcision), body-confirmed on pdf 1200-1206/P4-P10, absent from toc_inventory.json and independently flagged as one of P's two UNRESOLVED headings in research/tn2025/unresolved_headings.json ('PrimaryCar\u00e9') -- recovered as six new study units (SU-P-002 through SU-P-007) under synthetic UNCATALOGUED ids; (2) two genuine multi-disease umbrella nodes in Cardiology -- P.S05.T02 'Acyanotic Congenital Heart Disease' (VSD, ASD, PDA, coarctation, aortic stenosis, pulmonary stenosis) and P.S05.T03 'Cyanotic Congenital Heart Disease' (TOF, TGA, TAPVR, truncus arteriosus, HLHS, Ebstein's anomaly) -- each body-confirmed (pdf 1217-1220/P21-P24) to contain multiple independently-testable named lesions with their own definition/epidemiology/investigations/management subsections, split into 12 recovered study units while the parent nodes are retained only as organizational-header references; (3) a Neurology umbrella node -- P.S15.T04 'Neurocutaneous Syndromes' -- body-confirmed (pdf 1285/P89) to contain two distinct named syndromes (Neurofibromatosis Type 1 and Type 2, each with its own diagnostic-criteria subsection), split into 2 recovered units; and (4) a Neurology umbrella node -- P.S15.T06 'Seizure Disorders' -- body-confirmed (pdf 1286/P90) to contain a general seizure-management-and-mimics approach plus four distinct named childhood epilepsy syndromes (Infantile Spasms/West syndrome, Lennox-Gastaut, Juvenile Myoclonic Epilepsy, Childhood Absence Epilepsy), split into 5 recovered units (1 approach + 4 syndrome-specific). Additionally, P.S13.T04 'Common Conditions of Neonates' is body-confirmed (pdf ~1266) to be a nested organizational sub-heading with no independent content of its own (it introduces the already-separately-catalogued T05-T17 specific-condition subsections) and is excluded as organizational rather than represented as its own study unit. All corrections are resolved via raw OCR body-page confirmation (never model memory/medical-knowledge reconstruction) and cited in each affected unit's structural_rationale; no page-image rendering was required as raw-text OCR was internally consistent and sufficient at every point checked. The chapter's other UNRESOLVED heading, 'Acromyms' (source_pdf_page 1197), is confirmed via the same raw-OCR read to be the chapter-opening acronym glossary immediately preceding P.S01 (Pediatric Quick Reference Values) -- excluded as non-clinical, consistent with the chapter-opening acronym-glossary exclusion precedent used in OP.S01/OB.S01/NS.S01/OR.S01/OT.S01. Excluded as non-clinical organizational/reference material: the chapter root (P); the 17 system-level L2 section headers (S02, S04-S17), which carry no independent content beyond their T-level children; P.S13.T04 (nested organizational sub-header, see above); P.S05.T02/T03 and P.S15.T04 (fully redistributed into recovered per-lesion/per-syndrome units, see above); and P.S18 (Common Medications, a drug-reference table, consistent with the OR.S15/OP.S20/OB.S18/NS.S20 reference-section precedent) and P.S19 (Landmark Pediatric Trials, an EBM/reference appendix). Genuine cross-discipline overlap (Hematology, Respirology-vs-GI Cystic Fibrosis, Respirology-vs-ID Pneumonia, GI-vs-ID Gastroenteritis, Oncology-vs-GI abdominal mass, Development-vs-Neurology hypotonia/motor delay) is recorded via cross_discipline_note on the affected crosswalk entries without finalizing primary ownership, per the pending global cross-discipline audit.",
+  "total_study_units": 160,
+  "organizational_header_nodes": [
+    "P",
+    "P.S02",
+    "P.S04",
+    "P.S05",
+    "P.S06",
+    "P.S07",
+    "P.S08",
+    "P.S09",
+    "P.S10",
+    "P.S11",
+    "P.S12",
+    "P.S13",
+    "P.S13.T04",
+    "P.S14",
+    "P.S15",
+    "P.S16",
+    "P.S17",
+    "P.S05.T02",
+    "P.S05.T03",
+    "P.S15.T04"
+  ],
+  "excluded_artifact_nodes": [
+    "P.S18",
+    "P.S19"
+  ],
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-001",
+      "title": "Pediatric Quick Reference Values (Normal Vital Signs by Age)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S01"
+      ],
+      "tn_page_range": "P3",
+      "pdf_page_range": [
+        1199,
+        1199
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Pediatric Quick Reference Values"
+      ],
+      "structural_rationale": "P.S01 is a chapter-opening reference block (Table 1 normal HR/RR by age, Table 2 normal SBP by age, Table 3 normal temperature ranges/measurement) immediately following the excluded chapter-opening acronym glossary (raw OCR of pdf 1197/P1-1199/P3 confirms the acronym table is directly followed by these normal-value tables, matching the chapter-opening acronym-then-reference-values pattern). Retained as a single foundational reference unit distinct from the acronym glossary itself.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-002",
+      "title": "Well-Child Visit Overview (Approach to the Pediatric History and Periodic Health Encounter)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:PrimaryCare@pdf1200.T01"
+      ],
+      "tn_page_range": "P4-P5",
+      "pdf_page_range": [
+        1200,
+        1201
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Primary Care (recovered)",
+        "Visit Overview"
+      ],
+      "structural_rationale": "The 'Primary Care' section heading is entirely absent from toc_inventory.json and is independently flagged as one of P's two UNRESOLVED headings in research/tn2025/unresolved_headings.json ('PrimaryCar\u00e9', source_pdf_page 1197). Raw OCR of the chapter's own TOC page (pdf 1197) confirms the real structure: 'PrimaryCar\u00e9... Visit Overview Routine Immunization Growth and Development Nutrition Circumcision' appears between 'Pediatric Quick Reference Values' (P.S01, P3) and 'Common Complaints' (P.S02, P10) -- i.e. a real, substantial, clinically important section (well-child care) with five subtopics that toc_inventory.json omits entirely. Body-confirmed via raw OCR of pdf 1200-1206 (P4-P10): Visit Overview (history-taking approach, HEEADSSS/SSHADESS, ITHELPS) on P4-P5; Routine Immunization (adverse reactions/contraindications table) on P5-P6; Growth and Development (growth chart use, Fenton curve, developmental milestones table) on P7-P8; Nutrition (breastfeeding/formula, signs of adequate/inadequate intake, foods to avoid) on P8-P9; a sixth body heading not named in the TOC line itself, 'Injury Prevention Counselling' (age-banded injury-prevention counselling table), on P10 immediately before Circumcision; and Circumcision (elective-procedure counselling) closing the section on P10, directly followed by 'Common Complaints' / 'Breath Holding Spells' (P.S02.T01) on the same pdf page (1206). All six subtopics are represented under synthetic UNCATALOGUED ids (UNCATALOGUED:PrimaryCare@pdf1200.T0N) per the established recovered-heading convention (cf. OT's Hearing section, SU-OT-04/05). No page-image rendering was required; raw-text OCR was internally consistent at every point checked.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-003",
+      "title": "Routine Immunization (Vaccine Schedule, Adverse Reactions, Contraindications)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:PrimaryCare@pdf1200.T02"
+      ],
+      "tn_page_range": "P5-P6",
+      "pdf_page_range": [
+        1201,
+        1202
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Primary Care (recovered)",
+        "Routine Immunization"
+      ],
+      "structural_rationale": "The 'Primary Care' section heading is entirely absent from toc_inventory.json and is independently flagged as one of P's two UNRESOLVED headings in research/tn2025/unresolved_headings.json ('PrimaryCar\u00e9', source_pdf_page 1197). Raw OCR of the chapter's own TOC page (pdf 1197) confirms the real structure: 'PrimaryCar\u00e9... Visit Overview Routine Immunization Growth and Development Nutrition Circumcision' appears between 'Pediatric Quick Reference Values' (P.S01, P3) and 'Common Complaints' (P.S02, P10) -- i.e. a real, substantial, clinically important section (well-child care) with five subtopics that toc_inventory.json omits entirely. Body-confirmed via raw OCR of pdf 1200-1206 (P4-P10): Visit Overview (history-taking approach, HEEADSSS/SSHADESS, ITHELPS) on P4-P5; Routine Immunization (adverse reactions/contraindications table) on P5-P6; Growth and Development (growth chart use, Fenton curve, developmental milestones table) on P7-P8; Nutrition (breastfeeding/formula, signs of adequate/inadequate intake, foods to avoid) on P8-P9; a sixth body heading not named in the TOC line itself, 'Injury Prevention Counselling' (age-banded injury-prevention counselling table), on P10 immediately before Circumcision; and Circumcision (elective-procedure counselling) closing the section on P10, directly followed by 'Common Complaints' / 'Breath Holding Spells' (P.S02.T01) on the same pdf page (1206). All six subtopics are represented under synthetic UNCATALOGUED ids (UNCATALOGUED:PrimaryCare@pdf1200.T0N) per the established recovered-heading convention (cf. OT's Hearing section, SU-OT-04/05). No page-image rendering was required; raw-text OCR was internally consistent at every point checked.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-004",
+      "title": "Growth and Development (Growth Charts, Growth Velocity, Developmental Milestones)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:PrimaryCare@pdf1200.T03"
+      ],
+      "tn_page_range": "P7-P8",
+      "pdf_page_range": [
+        1203,
+        1204
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Primary Care (recovered)",
+        "Growth and Development"
+      ],
+      "structural_rationale": "The 'Primary Care' section heading is entirely absent from toc_inventory.json and is independently flagged as one of P's two UNRESOLVED headings in research/tn2025/unresolved_headings.json ('PrimaryCar\u00e9', source_pdf_page 1197). Raw OCR of the chapter's own TOC page (pdf 1197) confirms the real structure: 'PrimaryCar\u00e9... Visit Overview Routine Immunization Growth and Development Nutrition Circumcision' appears between 'Pediatric Quick Reference Values' (P.S01, P3) and 'Common Complaints' (P.S02, P10) -- i.e. a real, substantial, clinically important section (well-child care) with five subtopics that toc_inventory.json omits entirely. Body-confirmed via raw OCR of pdf 1200-1206 (P4-P10): Visit Overview (history-taking approach, HEEADSSS/SSHADESS, ITHELPS) on P4-P5; Routine Immunization (adverse reactions/contraindications table) on P5-P6; Growth and Development (growth chart use, Fenton curve, developmental milestones table) on P7-P8; Nutrition (breastfeeding/formula, signs of adequate/inadequate intake, foods to avoid) on P8-P9; a sixth body heading not named in the TOC line itself, 'Injury Prevention Counselling' (age-banded injury-prevention counselling table), on P10 immediately before Circumcision; and Circumcision (elective-procedure counselling) closing the section on P10, directly followed by 'Common Complaints' / 'Breath Holding Spells' (P.S02.T01) on the same pdf page (1206). All six subtopics are represented under synthetic UNCATALOGUED ids (UNCATALOGUED:PrimaryCare@pdf1200.T0N) per the established recovered-heading convention (cf. OT's Hearing section, SU-OT-04/05). No page-image rendering was required; raw-text OCR was internally consistent at every point checked.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-005",
+      "title": "Nutrition (Infant Feeding, Breastfeeding/Formula, Signs of Adequate/Inadequate Intake)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:PrimaryCare@pdf1200.T04"
+      ],
+      "tn_page_range": "P8-P9",
+      "pdf_page_range": [
+        1204,
+        1205
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Primary Care (recovered)",
+        "Nutrition"
+      ],
+      "structural_rationale": "The 'Primary Care' section heading is entirely absent from toc_inventory.json and is independently flagged as one of P's two UNRESOLVED headings in research/tn2025/unresolved_headings.json ('PrimaryCar\u00e9', source_pdf_page 1197). Raw OCR of the chapter's own TOC page (pdf 1197) confirms the real structure: 'PrimaryCar\u00e9... Visit Overview Routine Immunization Growth and Development Nutrition Circumcision' appears between 'Pediatric Quick Reference Values' (P.S01, P3) and 'Common Complaints' (P.S02, P10) -- i.e. a real, substantial, clinically important section (well-child care) with five subtopics that toc_inventory.json omits entirely. Body-confirmed via raw OCR of pdf 1200-1206 (P4-P10): Visit Overview (history-taking approach, HEEADSSS/SSHADESS, ITHELPS) on P4-P5; Routine Immunization (adverse reactions/contraindications table) on P5-P6; Growth and Development (growth chart use, Fenton curve, developmental milestones table) on P7-P8; Nutrition (breastfeeding/formula, signs of adequate/inadequate intake, foods to avoid) on P8-P9; a sixth body heading not named in the TOC line itself, 'Injury Prevention Counselling' (age-banded injury-prevention counselling table), on P10 immediately before Circumcision; and Circumcision (elective-procedure counselling) closing the section on P10, directly followed by 'Common Complaints' / 'Breath Holding Spells' (P.S02.T01) on the same pdf page (1206). All six subtopics are represented under synthetic UNCATALOGUED ids (UNCATALOGUED:PrimaryCare@pdf1200.T0N) per the established recovered-heading convention (cf. OT's Hearing section, SU-OT-04/05). No page-image rendering was required; raw-text OCR was internally consistent at every point checked.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-006",
+      "title": "Injury Prevention Counselling (Age-Specific Anticipatory Guidance)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:PrimaryCare@pdf1200.T05"
+      ],
+      "tn_page_range": "P10",
+      "pdf_page_range": [
+        1206,
+        1206
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Primary Care (recovered)",
+        "Injury Prevention Counselling"
+      ],
+      "structural_rationale": "The 'Primary Care' section heading is entirely absent from toc_inventory.json and is independently flagged as one of P's two UNRESOLVED headings in research/tn2025/unresolved_headings.json ('PrimaryCar\u00e9', source_pdf_page 1197). Raw OCR of the chapter's own TOC page (pdf 1197) confirms the real structure: 'PrimaryCar\u00e9... Visit Overview Routine Immunization Growth and Development Nutrition Circumcision' appears between 'Pediatric Quick Reference Values' (P.S01, P3) and 'Common Complaints' (P.S02, P10) -- i.e. a real, substantial, clinically important section (well-child care) with five subtopics that toc_inventory.json omits entirely. Body-confirmed via raw OCR of pdf 1200-1206 (P4-P10): Visit Overview (history-taking approach, HEEADSSS/SSHADESS, ITHELPS) on P4-P5; Routine Immunization (adverse reactions/contraindications table) on P5-P6; Growth and Development (growth chart use, Fenton curve, developmental milestones table) on P7-P8; Nutrition (breastfeeding/formula, signs of adequate/inadequate intake, foods to avoid) on P8-P9; a sixth body heading not named in the TOC line itself, 'Injury Prevention Counselling' (age-banded injury-prevention counselling table), on P10 immediately before Circumcision; and Circumcision (elective-procedure counselling) closing the section on P10, directly followed by 'Common Complaints' / 'Breath Holding Spells' (P.S02.T01) on the same pdf page (1206). All six subtopics are represented under synthetic UNCATALOGUED ids (UNCATALOGUED:PrimaryCare@pdf1200.T0N) per the established recovered-heading convention (cf. OT's Hearing section, SU-OT-04/05). No page-image rendering was required; raw-text OCR was internally consistent at every point checked. This particular body heading ('Injury Prevention Counselling') is not itself named in the TOC's subtopic list under 'PrimaryCar\u00e9' (Visit Overview/Routine Immunization/Growth and Development/Nutrition/Circumcision) but is body-confirmed on pdf 1206 (P10) as a distinct heading with its own age-banded table (Table 11) positioned between Nutrition and Circumcision, so it is treated as a sixth recovered subtopic of the same section rather than folded into Nutrition.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-007",
+      "title": "Newborn Male Circumcision (Elective Procedure Counselling)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:PrimaryCare@pdf1200.T06"
+      ],
+      "tn_page_range": "P10",
+      "pdf_page_range": [
+        1206,
+        1206
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Primary Care (recovered)",
+        "Circumcision"
+      ],
+      "structural_rationale": "The 'Primary Care' section heading is entirely absent from toc_inventory.json and is independently flagged as one of P's two UNRESOLVED headings in research/tn2025/unresolved_headings.json ('PrimaryCar\u00e9', source_pdf_page 1197). Raw OCR of the chapter's own TOC page (pdf 1197) confirms the real structure: 'PrimaryCar\u00e9... Visit Overview Routine Immunization Growth and Development Nutrition Circumcision' appears between 'Pediatric Quick Reference Values' (P.S01, P3) and 'Common Complaints' (P.S02, P10) -- i.e. a real, substantial, clinically important section (well-child care) with five subtopics that toc_inventory.json omits entirely. Body-confirmed via raw OCR of pdf 1200-1206 (P4-P10): Visit Overview (history-taking approach, HEEADSSS/SSHADESS, ITHELPS) on P4-P5; Routine Immunization (adverse reactions/contraindications table) on P5-P6; Growth and Development (growth chart use, Fenton curve, developmental milestones table) on P7-P8; Nutrition (breastfeeding/formula, signs of adequate/inadequate intake, foods to avoid) on P8-P9; a sixth body heading not named in the TOC line itself, 'Injury Prevention Counselling' (age-banded injury-prevention counselling table), on P10 immediately before Circumcision; and Circumcision (elective-procedure counselling) closing the section on P10, directly followed by 'Common Complaints' / 'Breath Holding Spells' (P.S02.T01) on the same pdf page (1206). All six subtopics are represented under synthetic UNCATALOGUED ids (UNCATALOGUED:PrimaryCare@pdf1200.T0N) per the established recovered-heading convention (cf. OT's Hearing section, SU-OT-04/05). No page-image rendering was required; raw-text OCR was internally consistent at every point checked.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-008",
+      "title": "Breath Holding Spells",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S02.T01"
+      ],
+      "tn_page_range": "P10-P16",
+      "pdf_page_range": [
+        1206,
+        1212
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Common Complaints",
+        "Breath Holding Spells"
+      ],
+      "structural_rationale": "P.S02 ('Common Complaints') is an organizational header with no independent content of its own; its 14 children (T01-T14) are each a distinct, atomic presenting-complaint topic with its own definition/epidemiology/clinical-features/management structure and are represented as individual study units. Topic-level page anchors are not resolved in toc_inventory.json (all 14 children share the section-start page P10 in source_nodes); page range is therefore inherited from the section body span (P10-P16, confirmed by the next section 'Adolescent Medicine' starting P17).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-009",
+      "title": "Crying/Fussy Infant (and Infantile Colic)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S02.T02",
+        "P.S02.T03"
+      ],
+      "tn_page_range": "P10-P16",
+      "pdf_page_range": [
+        1206,
+        1212
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Common Complaints",
+        "Crying/Fussy Infant",
+        "Infantile Colic"
+      ],
+      "structural_rationale": "T02 (Crying/Fussy Infant) and T03 (Infantile Colic) are grouped into one study unit: colic is the paradigm diagnosis-of-exclusion within the broader crying/fussy-infant differential (functional, colic, trauma including non-accidental injury and hair tourniquet, infectious, feeding-intolerance, medication/withdrawal causes), matching the non-fragmentation-of-approach-plus-specific-diagnosis precedent used elsewhere in this crosswalk.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-010",
+      "title": "Dentition and Caries",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S02.T04"
+      ],
+      "tn_page_range": "P10-P16",
+      "pdf_page_range": [
+        1206,
+        1212
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Common Complaints",
+        "Dentition and Caries"
+      ],
+      "structural_rationale": "See S02 organizational-header rationale above; T04 is an atomic presenting-complaint topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-011",
+      "title": "Enuresis",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S02.T05"
+      ],
+      "tn_page_range": "P10-P16",
+      "pdf_page_range": [
+        1206,
+        1212
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Common Complaints",
+        "Enuresis"
+      ],
+      "structural_rationale": "See S02 organizational-header rationale above; T05 is an atomic presenting-complaint topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-012",
+      "title": "Encopresis",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S02.T06"
+      ],
+      "tn_page_range": "P10-P16",
+      "pdf_page_range": [
+        1206,
+        1212
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Common Complaints",
+        "Encopresis (source TOC title OCR-garbled 'Encapresis')"
+      ],
+      "structural_rationale": "TOC/source title 'Encapresis' is an OCR garble of 'Encopresis' (fecal incontinence, typically overflow incontinence secondary to functional constipation); corrected in this unit's title per the established practice of correcting evident single-word OCR artifacts (cf. P.S10.T03 'lron'->'Iron', P.S13.T11 'Hyper bilirubine mia'->'Hyperbilirubinemia') without altering the underlying source_node_id.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-013",
+      "title": "Toilet Training",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S02.T07"
+      ],
+      "tn_page_range": "P10-P16",
+      "pdf_page_range": [
+        1206,
+        1212
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Common Complaints",
+        "Toilet Training"
+      ],
+      "structural_rationale": "See S02 organizational-header rationale above; T07 is an atomic presenting-complaint/anticipatory-guidance topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-014",
+      "title": "Failure to Thrive",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S02.T08"
+      ],
+      "tn_page_range": "P10-P16",
+      "pdf_page_range": [
+        1206,
+        1212
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Common Complaints",
+        "Failure to Thrive"
+      ],
+      "structural_rationale": "See S02 organizational-header rationale above; T08 is an atomic presenting-complaint topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-015",
+      "title": "Obesity",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S02.T09"
+      ],
+      "tn_page_range": "P10-P16",
+      "pdf_page_range": [
+        1206,
+        1212
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Common Complaints",
+        "Obesity"
+      ],
+      "structural_rationale": "See S02 organizational-header rationale above; T09 is an atomic presenting-complaint topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-016",
+      "title": "Poison Prevention",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S02.T10"
+      ],
+      "tn_page_range": "P10-P16",
+      "pdf_page_range": [
+        1206,
+        1212
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Common Complaints",
+        "Poison Prevention"
+      ],
+      "structural_rationale": "See S02 organizational-header rationale above; T10 is an atomic presenting-complaint/anticipatory-guidance topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-017",
+      "title": "Rashes (Common Benign Pediatric Skin Findings, Approach)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S02.T11"
+      ],
+      "tn_page_range": "P10-P16",
+      "pdf_page_range": [
+        1206,
+        1212
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Common Complaints",
+        "Rashes"
+      ],
+      "structural_rationale": "See S02 organizational-header rationale above; T11 is an atomic presenting-complaint topic covering an approach to common pediatric rashes distinct from the infectious-exanthem differential covered under Infectious Diseases (P.S12.T06).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-018",
+      "title": "Sleep Disturbances",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S02.T12"
+      ],
+      "tn_page_range": "P10-P16",
+      "pdf_page_range": [
+        1206,
+        1212
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Common Complaints",
+        "Sleep Disturbances"
+      ],
+      "structural_rationale": "See S02 organizational-header rationale above; T12 is an atomic presenting-complaint topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-019",
+      "title": "Sudden Infant Death Syndrome (SIDS)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S02.T13"
+      ],
+      "tn_page_range": "P10-P16",
+      "pdf_page_range": [
+        1206,
+        1212
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Common Complaints",
+        "Sudden Infant Death Syndrome"
+      ],
+      "structural_rationale": "See S02 organizational-header rationale above; T13 is an atomic presenting-complaint topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-020",
+      "title": "Drowning/Submersion Injuries",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S02.T14"
+      ],
+      "tn_page_range": "P10-P16",
+      "pdf_page_range": [
+        1206,
+        1212
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Common Complaints",
+        "Drowning/Submersion Injuries"
+      ],
+      "structural_rationale": "See S02 organizational-header rationale above; T14 is an atomic presenting-complaint topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-021",
+      "title": "Adolescent Medicine (HEEADSSS Interview, Confidentiality, Adolescent Consent)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S03"
+      ],
+      "tn_page_range": "P17",
+      "pdf_page_range": [
+        1213,
+        1213
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Adolescent Medicine"
+      ],
+      "structural_rationale": "P.S03 is a single-page, leaf-level L2 node with no T-level children in toc_inventory.json; represented as one standalone study unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-022",
+      "title": "Physical Abuse",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S04.T01"
+      ],
+      "tn_page_range": "P18-P19",
+      "pdf_page_range": [
+        1214,
+        1215
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Child Abuse and Neglect",
+        "Physical Abuse"
+      ],
+      "structural_rationale": "P.S04 ('Child Abuse and Neglect') is an organizational header; T01-T03 are each a distinct, atomic subtype with its own recognition/investigation content.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-023",
+      "title": "Sexual Abuse",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S04.T02"
+      ],
+      "tn_page_range": "P18-P19",
+      "pdf_page_range": [
+        1214,
+        1215
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Child Abuse and Neglect",
+        "Sexual Abuse"
+      ],
+      "structural_rationale": "See S04 organizational-header rationale above; T02 is an atomic subtype.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-024",
+      "title": "Neglect",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S04.T03"
+      ],
+      "tn_page_range": "P18-P19",
+      "pdf_page_range": [
+        1214,
+        1215
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Child Abuse and Neglect",
+        "Neglect"
+      ],
+      "structural_rationale": "See S04 organizational-header rationale above; T03 is an atomic subtype.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-025",
+      "title": "Approach to Congenital Heart Disease (Epidemiology, Cyanotic vs. Acyanotic Classification, Initial Investigations)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S05.T01"
+      ],
+      "tn_page_range": "P20-P25",
+      "pdf_page_range": [
+        1216,
+        1221
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Cardiology",
+        "Congenital Heart Disease (approach)"
+      ],
+      "structural_rationale": "T01 'Congenital Heart Disease' is retained as a standalone approach/classification unit (epidemiology 8/1000 live births, echo/ECG/CXR/4-limb-BP/hyperoxia-test workup, and the cyanotic-vs-acyanotic pathophysiologic framework body-confirmed on pdf 1217/P21) distinct from the individual-lesion units recovered from T02/T03 below, matching the non-fragmentation-of-approach-content precedent (cf. OT.S02/S03 'Approach to Dizziness').",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-026",
+      "title": "Ventricular Septal Defect (VSD)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:CHD@pdf1217.VSD"
+      ],
+      "tn_page_range": "P21-P22",
+      "pdf_page_range": [
+        1217,
+        1218
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Cardiology",
+        "Acyanotic Congenital Heart Disease",
+        "Ventricular Septal Defect"
+      ],
+      "structural_rationale": "toc_inventory.json's P.S05.T02 ('Acyanotic Congenital Heart Disease') is a single umbrella node, but raw OCR of pdf 1217-1219 (P21-P23) body-confirms it groups multiple genuinely distinct named lesions, each with its own definition/epidemiology/clinical-features/investigations/management subsection: Ventricular Septal Defect ('most common congenital heart defect, 30-50%'), Atrial Septal Defect (3 subtypes), Patent Ductus Arteriosus, Coarctation of the Aorta, Aortic Stenosis, and Pulmonary Stenosis. Per the instruction to split broad TOC nodes only when body evidence confirms distinct topics (and not to fragment generic sub-headings within one disease), each of these six named lesions -- which are independently testable diagnoses with their own diagnostic criteria -- is recovered as its own study unit under a synthetic UNCATALOGUED id, while P.S05.T02 itself is retained only as the parent umbrella reference in source_hierarchy_path.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-027",
+      "title": "Atrial Septal Defect (ASD)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:CHD@pdf1217.ASD"
+      ],
+      "tn_page_range": "P21",
+      "pdf_page_range": [
+        1217,
+        1217
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Cardiology",
+        "Acyanotic Congenital Heart Disease",
+        "Atrial Septal Defect"
+      ],
+      "structural_rationale": "See VSD unit's structural_rationale for the full account of the Acyanotic CHD umbrella-node split; ASD is body-confirmed on pdf 1217 (P21) with its own definition (3 subtypes: ostium primum, ostium secundum, sinus venosus), epidemiology, natural history, and management.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-028",
+      "title": "Patent Ductus Arteriosus (PDA)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:CHD@pdf1218.PDA"
+      ],
+      "tn_page_range": "P22",
+      "pdf_page_range": [
+        1218,
+        1218
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Cardiology",
+        "Acyanotic Congenital Heart Disease",
+        "Patent Ductus Arteriosus"
+      ],
+      "structural_rationale": "See VSD unit's structural_rationale for the full account of the Acyanotic CHD umbrella-node split; PDA is body-confirmed on pdf 1218 (P22) with its own definition, epidemiology (especially prematurity), clinical features, and management including indomethacin.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-029",
+      "title": "Coarctation of the Aorta",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:CHD@pdf1218.CoA"
+      ],
+      "tn_page_range": "P22-P23",
+      "pdf_page_range": [
+        1218,
+        1219
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Cardiology",
+        "Acyanotic Congenital Heart Disease",
+        "Coarctation of the Aorta"
+      ],
+      "structural_rationale": "See VSD unit's structural_rationale for the full account of the Acyanotic CHD umbrella-node split; Coarctation is body-confirmed on pdf 1218-1219 (P22-P23) with its own definition, Turner-syndrome/bicuspid-aortic-valve associations, and management (prostaglandins to maintain ductal patency in severe neonatal presentation).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-030",
+      "title": "Aortic Stenosis and Pulmonary Stenosis (Valvular Obstructive Lesions)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:CHD@pdf1219.AS-PS"
+      ],
+      "tn_page_range": "P23",
+      "pdf_page_range": [
+        1219,
+        1219
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Cardiology",
+        "Acyanotic Congenital Heart Disease",
+        "Aortic Stenosis / Pulmonary Stenosis"
+      ],
+      "structural_rationale": "See VSD unit's structural_rationale for the full account of the Acyanotic CHD umbrella-node split; Aortic Stenosis and Pulmonary Stenosis are body-confirmed as adjacent, parallel-structured subsections on pdf 1219 (P23), each with valvular/subvalvular/supravalvular subtypes and analogous investigation/management (balloon valvuloplasty for valvular disease, surgery for sub-/supravalvular disease); grouped into one unit given their near-identical teaching structure and shared 'obstructive lesion' classification (physical exam: decreased urine output, pallor, cool extremities, poor pulses, shock, or sudden collapse if severe).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-031",
+      "title": "Tetralogy of Fallot",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:CHD@pdf1219.TOF"
+      ],
+      "tn_page_range": "P23",
+      "pdf_page_range": [
+        1219,
+        1219
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Cardiology",
+        "Cyanotic Congenital Heart Disease",
+        "Tetralogy of Fallot"
+      ],
+      "structural_rationale": "toc_inventory.json's P.S05.T03 ('Cyanotic Congenital Heart Disease') is a single umbrella node, but raw OCR of pdf 1219-1220 (P23-P24) body-confirms it groups multiple genuinely distinct named lesions, each with its own figure and definition/pathophysiology/management subsection: Tetralogy of Fallot, Transposition of the Great Arteries, Total Anomalous Pulmonary Venous Return, Truncus Arteriosus, Hypoplastic Left Heart Syndrome, and Ebstein's Anomaly (the last as a labeled sidebar box with its own Etiology/Treatment). Each is recovered as its own study unit under a synthetic UNCATALOGUED id, matching the Acyanotic-CHD split rationale above; P.S05.T03 is retained only as the parent umbrella reference in source_hierarchy_path.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-032",
+      "title": "Transposition of the Great Arteries (TGA)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:CHD@pdf1219.TGA"
+      ],
+      "tn_page_range": "P23-P24",
+      "pdf_page_range": [
+        1219,
+        1220
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Cardiology",
+        "Cyanotic Congenital Heart Disease",
+        "Transposition of the Great Arteries"
+      ],
+      "structural_rationale": "See Tetralogy of Fallot unit's structural_rationale for the full account of the Cyanotic CHD umbrella-node split; TGA is body-confirmed on pdf 1219-1220 (P23-P24) with its own definition, physiology (parallel systemic/pulmonary circulations, survival dependent on mixing via PDA/ASD/VSD), and management (prostaglandin E1, balloon atrial septostomy, arterial switch).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-033",
+      "title": "Total Anomalous Pulmonary Venous Return (TAPVR)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:CHD@pdf1220.TAPVR"
+      ],
+      "tn_page_range": "P24",
+      "pdf_page_range": [
+        1220,
+        1220
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Cardiology",
+        "Cyanotic Congenital Heart Disease",
+        "Total Anomalous Pulmonary Venous Return"
+      ],
+      "structural_rationale": "See Tetralogy of Fallot unit's structural_rationale for the full account of the Cyanotic CHD umbrella-node split; TAPVR is body-confirmed on pdf 1220 (P24) with its own definition, pathophysiology, and management (urgent surgical repair for severe cyanosis).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-034",
+      "title": "Truncus Arteriosus",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:CHD@pdf1220.Truncus"
+      ],
+      "tn_page_range": "P24",
+      "pdf_page_range": [
+        1220,
+        1220
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Cardiology",
+        "Cyanotic Congenital Heart Disease",
+        "Truncus Arteriosus"
+      ],
+      "structural_rationale": "See Tetralogy of Fallot unit's structural_rationale for the full account of the Cyanotic CHD umbrella-node split; Truncus Arteriosus is body-confirmed on pdf 1220 (P24) with its own definition/pathophysiology (single great vessel overlying a large VSD) and management.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-035",
+      "title": "Hypoplastic Left Heart Syndrome (HLHS)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:CHD@pdf1220.HLHS"
+      ],
+      "tn_page_range": "P24",
+      "pdf_page_range": [
+        1220,
+        1220
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Cardiology",
+        "Cyanotic Congenital Heart Disease",
+        "Hypoplastic Left Heart Syndrome"
+      ],
+      "structural_rationale": "See Tetralogy of Fallot unit's structural_rationale for the full account of the Cyanotic CHD umbrella-node split; HLHS is body-confirmed on pdf 1220 (P24) with its own definition (LV hypoplasia, atretic/stenotic mitral and/or aortic valve, small ascending aorta, coarctation), ductal-dependent systemic-circulation physiology, and management (prostaglandin E1, surgical palliation, or transplant).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-036",
+      "title": "Ebstein's Anomaly",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:CHD@pdf1219.Ebstein"
+      ],
+      "tn_page_range": "P23",
+      "pdf_page_range": [
+        1219,
+        1219
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Cardiology",
+        "Cyanotic Congenital Heart Disease",
+        "Ebstein's Anomaly"
+      ],
+      "structural_rationale": "See Tetralogy of Fallot unit's structural_rationale for the full account of the Cyanotic CHD umbrella-node split; Ebstein's Anomaly is body-confirmed as a labeled sidebar box on pdf 1219 (P23) with its own Etiology/Treatment content (malformed, apically-displaced tricuspid valve leaflets; association with maternal lithium/benzodiazepine use in the first trimester; association with accessory conduction pathways such as WPW).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-037",
+      "title": "Congestive Heart Failure (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S05.T04"
+      ],
+      "tn_page_range": "P20-P25",
+      "pdf_page_range": [
+        1216,
+        1221
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Cardiology",
+        "Congestive Heart Failure"
+      ],
+      "structural_rationale": "T04 is retained as-is; body-confirmed on pdf 1219-1220 (P23-24) as a cohesive unit (etiology, the '2 tachys and 2 megalys' 4-key-features mnemonic, investigations) explicitly cross-referencing the adult Cardiology chapter ('see Cardiology and Cardiac Surgery, C40') for shared underlying content.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-038",
+      "title": "Pediatric Dysrhythmias",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S05.T05"
+      ],
+      "tn_page_range": "P20-P25",
+      "pdf_page_range": [
+        1216,
+        1221
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Cardiology",
+        "Dysrhythmias"
+      ],
+      "structural_rationale": "See S05 organizational-header rationale (T01 unit) above; T05 is an atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-039",
+      "title": "Heart Murmurs (Innocent vs. Pathologic)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S05.T06"
+      ],
+      "tn_page_range": "P20-P25",
+      "pdf_page_range": [
+        1216,
+        1221
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Cardiology",
+        "Heart Murmurs"
+      ],
+      "structural_rationale": "See S05 organizational-header rationale (T01 unit) above; T06 is an atomic topic, body-confirmed to include a dedicated differentiating-murmurs comparison table (Table 15).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-040",
+      "title": "Infective Endocarditis (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S05.T07"
+      ],
+      "tn_page_range": "P20-P25",
+      "pdf_page_range": [
+        1216,
+        1221
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Cardiology",
+        "Infective Endocarditis"
+      ],
+      "structural_rationale": "See S05 organizational-header rationale (T01 unit) above; T07 is an atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-041",
+      "title": "Global Developmental Delay",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S06.T01"
+      ],
+      "tn_page_range": "P26-P31",
+      "pdf_page_range": [
+        1222,
+        1227
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Development",
+        "Global Developmental Delay"
+      ],
+      "structural_rationale": "P.S06 ('Development') is an organizational header; T01-T08 are each a distinct, atomic diagnosis/domain.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-042",
+      "title": "Intellectual Disability",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S06.T02"
+      ],
+      "tn_page_range": "P26-P31",
+      "pdf_page_range": [
+        1222,
+        1227
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Development",
+        "Intellectual Disability"
+      ],
+      "structural_rationale": "See S06 organizational-header rationale above; T02 is an atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-043",
+      "title": "Language Delay",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S06.T03"
+      ],
+      "tn_page_range": "P26-P31",
+      "pdf_page_range": [
+        1222,
+        1227
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Development",
+        "Language Delay"
+      ],
+      "structural_rationale": "See S06 organizational-header rationale above; T03 is an atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-044",
+      "title": "Specific Learning Disorder",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S06.T04"
+      ],
+      "tn_page_range": "P26-P31",
+      "pdf_page_range": [
+        1222,
+        1227
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Development",
+        "Specific Learning Disorder"
+      ],
+      "structural_rationale": "See S06 organizational-header rationale above; T04 is an atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-045",
+      "title": "Fetal Alcohol Spectrum Disorder",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S06.T05"
+      ],
+      "tn_page_range": "P26-P31",
+      "pdf_page_range": [
+        1222,
+        1227
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Development",
+        "Fetal Alcohol Spectrum Disorder"
+      ],
+      "structural_rationale": "See S06 organizational-header rationale above; T05 is an atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-046",
+      "title": "Autism Spectrum Disorder",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S06.T06"
+      ],
+      "tn_page_range": "P26-P31",
+      "pdf_page_range": [
+        1222,
+        1227
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Development",
+        "Autism Spectrum Disorder"
+      ],
+      "structural_rationale": "See S06 organizational-header rationale above; T06 is an atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-047",
+      "title": "Attention Deficit Hyperactivity Disorder",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S06.T07"
+      ],
+      "tn_page_range": "P26-P31",
+      "pdf_page_range": [
+        1222,
+        1227
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Development",
+        "Attention Deficit Hyperactivity Disorder"
+      ],
+      "structural_rationale": "See S06 organizational-header rationale above; T07 is an atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-048",
+      "title": "Motor Delay",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S06.T08"
+      ],
+      "tn_page_range": "P26-P31",
+      "pdf_page_range": [
+        1222,
+        1227
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Development",
+        "Motor Delay"
+      ],
+      "structural_rationale": "See S06 organizational-header rationale above; T08 is an atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-049",
+      "title": "Antidiuretic Hormone Disorders (Diabetes Insipidus, SIADH)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S07.T01"
+      ],
+      "tn_page_range": "P32-P38",
+      "pdf_page_range": [
+        1228,
+        1234
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Endocrinology",
+        "Antidiuretic Hormone"
+      ],
+      "structural_rationale": "P.S07 ('Endocrinology') is an organizational header; T01-T06 are each a distinct, atomic topic. T01's title 'Antidiuretic Hormone' covers the paired ADH-excess (SIADH) and ADH-deficiency (DI) disorders as one physiologically unified topic, consistent with standard TN organization for hormone-axis pairs.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-050",
+      "title": "Diabetes Mellitus (Pediatric, Type 1 and Type 2)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S07.T02"
+      ],
+      "tn_page_range": "P32-P38",
+      "pdf_page_range": [
+        1228,
+        1234
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Endocrinology",
+        "Diabetes Mellitus"
+      ],
+      "structural_rationale": "See S07 organizational-header rationale above; T02 is an atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-051",
+      "title": "Growth Disorders (Short Stature, Growth Hormone Deficiency)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S07.T03"
+      ],
+      "tn_page_range": "P32-P38",
+      "pdf_page_range": [
+        1228,
+        1234
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Endocrinology",
+        "Growth"
+      ],
+      "structural_rationale": "See S07 organizational-header rationale above; T03 is an atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-052",
+      "title": "Disorders of Calcium Homeostasis (Hypercalcemia, Hypocalcemia, Rickets)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S07.T04"
+      ],
+      "tn_page_range": "P32-P38",
+      "pdf_page_range": [
+        1228,
+        1234
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Endocrinology",
+        "Hypercalcemia/Hypocalcemia/Rickets"
+      ],
+      "structural_rationale": "See S07 organizational-header rationale above; T04 groups three closely related calcium-homeostasis disorders under one TN heading; retained as a single unit given they share a unified diagnostic framework (PTH/vitamin D axis) rather than being three independently-taught disease entities.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-053",
+      "title": "Pediatric Thyroid Dysfunction (Hyperthyroidism and Hypothyroidism)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S07.T05"
+      ],
+      "tn_page_range": "P32-P38",
+      "pdf_page_range": [
+        1228,
+        1234
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Endocrinology",
+        "Hyperthyroidism and Hypothyroidism"
+      ],
+      "structural_rationale": "See S07 organizational-header rationale above; T05 groups hyper- and hypothyroidism as a single paired-spectrum topic, consistent with standard endocrine teaching.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-054",
+      "title": "Disorders of Sexual Development",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S07.T06"
+      ],
+      "tn_page_range": "P32-P38",
+      "pdf_page_range": [
+        1228,
+        1234
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Endocrinology",
+        "Disorders of Sexual Development"
+      ],
+      "structural_rationale": "See S07 organizational-header rationale above; T06 is an atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-055",
+      "title": "Approach to the Infant/Child with Dehydration",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S08.T01"
+      ],
+      "tn_page_range": "P39-P40",
+      "pdf_page_range": [
+        1235,
+        1236
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Fluids and Electrolytes",
+        "Approach to Infant/Child with Dehydration"
+      ],
+      "structural_rationale": "P.S08 ('Fluids and Electrolytes') has a single T-level child, retained as one standalone unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-056",
+      "title": "Vomiting (Pediatric, Approach)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T01"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Vomiting"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-057",
+      "title": "Gastroesophageal Reflux (Infant)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T02"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Gastroesophageal Reflux"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-058",
+      "title": "Tracheoesophageal Fistula",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T03"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Tracheoesophageal Fistula"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-059",
+      "title": "Pyloric Stenosis",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T04"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Pyloric Stenosis"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-060",
+      "title": "Duodenal Atresia",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T05"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Duodenal Atresia"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-061",
+      "title": "Malrotation of the Intestine (with Volvulus)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T06"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Malrotation of the Intestine"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-062",
+      "title": "Acute and Chronic Diarrhea (Pediatric, Approach)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T07"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Diarrhea"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-063",
+      "title": "Gastroenteritis (Pediatric, GI Chapter)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T08"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Gastroenteritis"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-064",
+      "title": "Toddler's Diarrhea",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T09"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Toddler's Diarrhea"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-065",
+      "title": "Lactase Deficiency (Lactose Intolerance)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T10"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Lactase Deficiency"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-066",
+      "title": "Irritable Bowel Syndrome (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T11"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Irritable Bowel Syndrome"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-067",
+      "title": "Celiac Disease",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T12"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Celiac Disease"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-068",
+      "title": "Cow's Milk Protein Allergy",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T13"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Cow's Milk Allergy"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-069",
+      "title": "Inflammatory Bowel Disease (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T14"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Inflammatory Bowel Disease"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-070",
+      "title": "Cystic Fibrosis (GI/Pancreatic Manifestations)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T15"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Cystic Fibrosis (GI)"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-071",
+      "title": "Constipation (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T16"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Constipation"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-072",
+      "title": "Acute Abdominal Pain (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T17"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Acute Abdominal Pain"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-073",
+      "title": "Chronic Abdominal Pain (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T18"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Chronic Abdominal Pain"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-074",
+      "title": "Pediatric Abdominal Mass",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T19"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Abdominal Mass"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-075",
+      "title": "Upper Gastrointestinal Bleeding (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T20"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Upper Gastrointestinal Bleeding"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-076",
+      "title": "Lower Gastrointestinal Bleeding (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S09.T21"
+      ],
+      "tn_page_range": "P41-P49",
+      "pdf_page_range": [
+        1237,
+        1245
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Gastroenterology",
+        "Lower Gastrointestinal Bleeding"
+      ],
+      "structural_rationale": "P.S09 ('Gastroenterology') is an organizational header; T01-T21 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-077",
+      "title": "Approach to Pediatric Anemia",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S10.T01"
+      ],
+      "tn_page_range": "P50-P53",
+      "pdf_page_range": [
+        1246,
+        1249
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Genetics, Dysmorphisms, and Metabolism / Hematology",
+        "Approach to Anemia"
+      ],
+      "structural_rationale": "P.S10 (packet-labeled 'Genetics Dysmorphisms and Metabolism' but body-confirmed as the Hematology section, TN page header 'Hematology' at P50) is an organizational header; T01-T13 are each a distinct, atomic topic covering the pediatric anemia/bleeding-disorder curriculum.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-078",
+      "title": "Physiologic Anemia of Infancy",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S10.T02"
+      ],
+      "tn_page_range": "P50-P53",
+      "pdf_page_range": [
+        1246,
+        1249
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Genetics, Dysmorphisms, and Metabolism / Hematology",
+        "Physiologic Anemia"
+      ],
+      "structural_rationale": "P.S10 (packet-labeled 'Genetics Dysmorphisms and Metabolism' but body-confirmed as the Hematology section, TN page header 'Hematology' at P50) is an organizational header; T01-T13 are each a distinct, atomic topic covering the pediatric anemia/bleeding-disorder curriculum.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-079",
+      "title": "Iron Deficiency Anemia (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S10.T03"
+      ],
+      "tn_page_range": "P50-P53",
+      "pdf_page_range": [
+        1246,
+        1249
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Genetics, Dysmorphisms, and Metabolism / Hematology",
+        "Iron Deficiency Anemia (source TOC title OCR-garbled 'lron Deficiency Anemia')"
+      ],
+      "structural_rationale": "See S10 organizational-header rationale above; T03's source title 'lron Deficiency Anemia' is an OCR garble (lowercase L for capital I) corrected here without altering source_node_id.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-080",
+      "title": "Anemia of Chronic Disease (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S10.T04"
+      ],
+      "tn_page_range": "P50-P53",
+      "pdf_page_range": [
+        1246,
+        1249
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Genetics, Dysmorphisms, and Metabolism / Hematology",
+        "Anemia of Chronic Disease"
+      ],
+      "structural_rationale": "P.S10 (packet-labeled 'Genetics Dysmorphisms and Metabolism' but body-confirmed as the Hematology section, TN page header 'Hematology' at P50) is an organizational header; T01-T13 are each a distinct, atomic topic covering the pediatric anemia/bleeding-disorder curriculum.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-081",
+      "title": "Sickle Cell Disease",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S10.T05"
+      ],
+      "tn_page_range": "P50-P53",
+      "pdf_page_range": [
+        1246,
+        1249
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Genetics, Dysmorphisms, and Metabolism / Hematology",
+        "Sickle Cell Disease"
+      ],
+      "structural_rationale": "P.S10 (packet-labeled 'Genetics Dysmorphisms and Metabolism' but body-confirmed as the Hematology section, TN page header 'Hematology' at P50) is an organizational header; T01-T13 are each a distinct, atomic topic covering the pediatric anemia/bleeding-disorder curriculum.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-082",
+      "title": "Thalassemia",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S10.T06"
+      ],
+      "tn_page_range": "P50-P53",
+      "pdf_page_range": [
+        1246,
+        1249
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Genetics, Dysmorphisms, and Metabolism / Hematology",
+        "Thalassemia"
+      ],
+      "structural_rationale": "P.S10 (packet-labeled 'Genetics Dysmorphisms and Metabolism' but body-confirmed as the Hematology section, TN page header 'Hematology' at P50) is an organizational header; T01-T13 are each a distinct, atomic topic covering the pediatric anemia/bleeding-disorder curriculum.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-083",
+      "title": "Hereditary Spherocytosis",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S10.T07"
+      ],
+      "tn_page_range": "P50-P53",
+      "pdf_page_range": [
+        1246,
+        1249
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Genetics, Dysmorphisms, and Metabolism / Hematology",
+        "Hereditary Spherocytosis"
+      ],
+      "structural_rationale": "P.S10 (packet-labeled 'Genetics Dysmorphisms and Metabolism' but body-confirmed as the Hematology section, TN page header 'Hematology' at P50) is an organizational header; T01-T13 are each a distinct, atomic topic covering the pediatric anemia/bleeding-disorder curriculum.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-084",
+      "title": "Glucose-6-Phosphate Dehydrogenase Deficiency",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S10.T08"
+      ],
+      "tn_page_range": "P50-P53",
+      "pdf_page_range": [
+        1246,
+        1249
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Genetics, Dysmorphisms, and Metabolism / Hematology",
+        "G6PD Deficiency"
+      ],
+      "structural_rationale": "P.S10 (packet-labeled 'Genetics Dysmorphisms and Metabolism' but body-confirmed as the Hematology section, TN page header 'Hematology' at P50) is an organizational header; T01-T13 are each a distinct, atomic topic covering the pediatric anemia/bleeding-disorder curriculum.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-085",
+      "title": "Approach to Pediatric Bleeding Disorders",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S10.T09"
+      ],
+      "tn_page_range": "P50-P53",
+      "pdf_page_range": [
+        1246,
+        1249
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Genetics, Dysmorphisms, and Metabolism / Hematology",
+        "Bleeding Disorders (approach)"
+      ],
+      "structural_rationale": "T09 ('Bleeding Disorders') is retained as a standalone approach/overview unit distinct from its named children (Vitamin K Deficiency T10, ITP T11, Hemophilia T12, von Willebrand Disease T13), which are each recovered as their own study units below, matching the non-fragmentation-of-approach-content precedent used for T01/T02-T03 elsewhere in this crosswalk.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-086",
+      "title": "Vitamin K Deficiency (Hemorrhagic Disease of the Newborn)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S10.T10"
+      ],
+      "tn_page_range": "P50-P53",
+      "pdf_page_range": [
+        1246,
+        1249
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Genetics, Dysmorphisms, and Metabolism / Hematology",
+        "Vitamin K Deficiency"
+      ],
+      "structural_rationale": "P.S10 (packet-labeled 'Genetics Dysmorphisms and Metabolism' but body-confirmed as the Hematology section, TN page header 'Hematology' at P50) is an organizational header; T01-T13 are each a distinct, atomic topic covering the pediatric anemia/bleeding-disorder curriculum.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-087",
+      "title": "Immune Thrombocytopenic Purpura (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S10.T11"
+      ],
+      "tn_page_range": "P50-P53",
+      "pdf_page_range": [
+        1246,
+        1249
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Genetics, Dysmorphisms, and Metabolism / Hematology",
+        "Immune Thrombocytopenic Purpura"
+      ],
+      "structural_rationale": "P.S10 (packet-labeled 'Genetics Dysmorphisms and Metabolism' but body-confirmed as the Hematology section, TN page header 'Hematology' at P50) is an organizational header; T01-T13 are each a distinct, atomic topic covering the pediatric anemia/bleeding-disorder curriculum.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-088",
+      "title": "Hemophilia",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S10.T12"
+      ],
+      "tn_page_range": "P50-P53",
+      "pdf_page_range": [
+        1246,
+        1249
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Genetics, Dysmorphisms, and Metabolism / Hematology",
+        "Hemophilia"
+      ],
+      "structural_rationale": "P.S10 (packet-labeled 'Genetics Dysmorphisms and Metabolism' but body-confirmed as the Hematology section, TN page header 'Hematology' at P50) is an organizational header; T01-T13 are each a distinct, atomic topic covering the pediatric anemia/bleeding-disorder curriculum.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-089",
+      "title": "von Willebrand's Disease",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S10.T13"
+      ],
+      "tn_page_range": "P50-P53",
+      "pdf_page_range": [
+        1246,
+        1249
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Genetics, Dysmorphisms, and Metabolism / Hematology",
+        "von Willebrand's Disease"
+      ],
+      "structural_rationale": "P.S10 (packet-labeled 'Genetics Dysmorphisms and Metabolism' but body-confirmed as the Hematology section, TN page header 'Hematology' at P50) is an organizational header; T01-T13 are each a distinct, atomic topic covering the pediatric anemia/bleeding-disorder curriculum.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-090",
+      "title": "Pediatric Lymphadenopathy",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S11.T01"
+      ],
+      "tn_page_range": "P54-P57",
+      "pdf_page_range": [
+        1250,
+        1253
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Oncology",
+        "Lymphadenopathy"
+      ],
+      "structural_rationale": "P.S11 ('Oncology') is an organizational header; T01-T08 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-091",
+      "title": "Acute Leukemia (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S11.T02"
+      ],
+      "tn_page_range": "P54-P57",
+      "pdf_page_range": [
+        1250,
+        1253
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Oncology",
+        "Leukemia"
+      ],
+      "structural_rationale": "P.S11 ('Oncology') is an organizational header; T01-T08 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-092",
+      "title": "Lymphoma (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S11.T03"
+      ],
+      "tn_page_range": "P54-P57",
+      "pdf_page_range": [
+        1250,
+        1253
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Oncology",
+        "Lymphoma"
+      ],
+      "structural_rationale": "P.S11 ('Oncology') is an organizational header; T01-T08 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-093",
+      "title": "Pediatric Brain Tumours",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S11.T04"
+      ],
+      "tn_page_range": "P54-P57",
+      "pdf_page_range": [
+        1250,
+        1253
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Oncology",
+        "Brain Tumours"
+      ],
+      "structural_rationale": "P.S11 ('Oncology') is an organizational header; T01-T08 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-094",
+      "title": "Wilms' Tumour (Nephroblastoma)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S11.T05"
+      ],
+      "tn_page_range": "P54-P57",
+      "pdf_page_range": [
+        1250,
+        1253
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Oncology",
+        "Wilms' Tumour"
+      ],
+      "structural_rationale": "P.S11 ('Oncology') is an organizational header; T01-T08 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-095",
+      "title": "Neuroblastoma",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S11.T06"
+      ],
+      "tn_page_range": "P54-P57",
+      "pdf_page_range": [
+        1250,
+        1253
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Oncology",
+        "Neuroblastoma"
+      ],
+      "structural_rationale": "P.S11 ('Oncology') is an organizational header; T01-T08 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-096",
+      "title": "Pediatric Bone Tumours",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S11.T07"
+      ],
+      "tn_page_range": "P54-P57",
+      "pdf_page_range": [
+        1250,
+        1253
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Oncology",
+        "Bone Tumours"
+      ],
+      "structural_rationale": "P.S11 ('Oncology') is an organizational header; T01-T08 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-097",
+      "title": "Cancer Predisposition Syndromes (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S11.T08"
+      ],
+      "tn_page_range": "P54-P57",
+      "pdf_page_range": [
+        1250,
+        1253
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Oncology",
+        "Cancer Predisposition Syndromes"
+      ],
+      "structural_rationale": "P.S11 ('Oncology') is an organizational header; T01-T08 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-098",
+      "title": "Fever (Pediatric, Approach)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S12.T01"
+      ],
+      "tn_page_range": "P58-P69",
+      "pdf_page_range": [
+        1254,
+        1265
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Infectious Diseases",
+        "Fever"
+      ],
+      "structural_rationale": "P.S12 ('Infectious Diseases') is an organizational header; T01-T16 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-099",
+      "title": "Acute Otitis Media",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S12.T02"
+      ],
+      "tn_page_range": "P58-P69",
+      "pdf_page_range": [
+        1254,
+        1265
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Infectious Diseases",
+        "Acute Otitis Media"
+      ],
+      "structural_rationale": "P.S12 ('Infectious Diseases') is an organizational header; T01-T16 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-100",
+      "title": "Otitis Media with Effusion",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S12.T03"
+      ],
+      "tn_page_range": "P58-P69",
+      "pdf_page_range": [
+        1254,
+        1265
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Infectious Diseases",
+        "Otitis Media with Effusion"
+      ],
+      "structural_rationale": "P.S12 ('Infectious Diseases') is an organizational header; T01-T16 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-101",
+      "title": "Gastroenteritis (Pediatric, Infectious Diseases Chapter -- Pathogens)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S12.T04"
+      ],
+      "tn_page_range": "P58-P69",
+      "pdf_page_range": [
+        1254,
+        1265
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Infectious Diseases",
+        "Gastroenteritis (pathogens)"
+      ],
+      "structural_rationale": "P.S12 ('Infectious Diseases') is an organizational header; T01-T16 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-102",
+      "title": "Pediatric HIV Infection",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S12.T05"
+      ],
+      "tn_page_range": "P58-P69",
+      "pdf_page_range": [
+        1254,
+        1265
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Infectious Diseases",
+        "HIV Infection"
+      ],
+      "structural_rationale": "P.S12 ('Infectious Diseases') is an organizational header; T01-T16 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-103",
+      "title": "Infectious Pediatric Exanthems (Differential Diagnosis)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S12.T06"
+      ],
+      "tn_page_range": "P58-P69",
+      "pdf_page_range": [
+        1254,
+        1265
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Infectious Diseases",
+        "Infectious Pediatric Exanthems"
+      ],
+      "structural_rationale": "T06 is presented in the source as a single large comparison table (Table 29, body-confirmed on pdf 1258/P62) covering multiple exanthematous illnesses (erythema infectiosum, Gianotti-Crosti, hand-foot-mouth disease, HSV gingivostomatitis, measles, and others by pathogen/incubation/rash-distribution/management) side by side. Retained as one differential-diagnosis study unit rather than split per disease, matching the table-format non-fragmentation precedent used elsewhere in this crosswalk (cf. Infectious Pediatric Exanthems is a comparison table, not N independent full disease write-ups).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-104",
+      "title": "Infectious Mononucleosis",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S12.T07"
+      ],
+      "tn_page_range": "P58-P69",
+      "pdf_page_range": [
+        1254,
+        1265
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Infectious Diseases",
+        "Infectious Mononucleosis"
+      ],
+      "structural_rationale": "P.S12 ('Infectious Diseases') is an organizational header; T01-T16 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-105",
+      "title": "Pharyngitis (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S12.T08"
+      ],
+      "tn_page_range": "P58-P69",
+      "pdf_page_range": [
+        1254,
+        1265
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Infectious Diseases",
+        "Pharyngitis"
+      ],
+      "structural_rationale": "P.S12 ('Infectious Diseases') is an organizational header; T01-T16 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-106",
+      "title": "Pediatric Meningitis",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S12.T09"
+      ],
+      "tn_page_range": "P58-P69",
+      "pdf_page_range": [
+        1254,
+        1265
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Infectious Diseases",
+        "Meningitis"
+      ],
+      "structural_rationale": "P.S12 ('Infectious Diseases') is an organizational header; T01-T16 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-107",
+      "title": "Mumps",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S12.T10"
+      ],
+      "tn_page_range": "P58-P69",
+      "pdf_page_range": [
+        1254,
+        1265
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Infectious Diseases",
+        "Mumps"
+      ],
+      "structural_rationale": "P.S12 ('Infectious Diseases') is an organizational header; T01-T16 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-108",
+      "title": "Pertussis",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S12.T11"
+      ],
+      "tn_page_range": "P58-P69",
+      "pdf_page_range": [
+        1254,
+        1265
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Infectious Diseases",
+        "Pertussis"
+      ],
+      "structural_rationale": "P.S12 ('Infectious Diseases') is an organizational header; T01-T16 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-109",
+      "title": "Pneumonia (Pediatric, Infectious Diseases Chapter -- Pathogens by Age)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S12.T12"
+      ],
+      "tn_page_range": "P58-P69",
+      "pdf_page_range": [
+        1254,
+        1265
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Infectious Diseases",
+        "Pneumonia (pathogens)"
+      ],
+      "structural_rationale": "P.S12 ('Infectious Diseases') is an organizational header; T01-T16 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-110",
+      "title": "Periorbital (Preseptal) and Orbital Cellulitis",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S12.T13"
+      ],
+      "tn_page_range": "P58-P69",
+      "pdf_page_range": [
+        1254,
+        1265
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Infectious Diseases",
+        "Periorbital and Orbital Cellulitis"
+      ],
+      "structural_rationale": "P.S12 ('Infectious Diseases') is an organizational header; T01-T16 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-111",
+      "title": "Sexually Transmitted Infections (Adolescent)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S12.T14"
+      ],
+      "tn_page_range": "P58-P69",
+      "pdf_page_range": [
+        1254,
+        1265
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Infectious Diseases",
+        "Sexually Transmitted Infections"
+      ],
+      "structural_rationale": "P.S12 ('Infectious Diseases') is an organizational header; T01-T16 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-112",
+      "title": "Sinusitis (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S12.T15"
+      ],
+      "tn_page_range": "P58-P69",
+      "pdf_page_range": [
+        1254,
+        1265
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Infectious Diseases",
+        "Sinusitis"
+      ],
+      "structural_rationale": "P.S12 ('Infectious Diseases') is an organizational header; T01-T16 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-113",
+      "title": "Urinary Tract Infection (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S12.T16"
+      ],
+      "tn_page_range": "P58-P69",
+      "pdf_page_range": [
+        1254,
+        1265
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Infectious Diseases",
+        "Urinary Tract Infection"
+      ],
+      "structural_rationale": "P.S12 ('Infectious Diseases') is an organizational header; T01-T16 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-114",
+      "title": "Gestational Age and Size Assessment",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S13.T01"
+      ],
+      "tn_page_range": "P70-P81",
+      "pdf_page_range": [
+        1266,
+        1277
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neonatology",
+        "Gestational Age and Size"
+      ],
+      "structural_rationale": "P.S13 ('Neonatology') is an organizational header; T01-T03 and T05-T17 are each a distinct, atomic topic. T04 ('Common Conditions of Neonates') is itself a nested organizational sub-header (body-confirmed on pdf ~1266: the phrase 'Common Conditions of Neonates' introduces the group of specific-condition subsections T05-T17 -- Apnea, Bleeding Disorders in Neonates, Bronchopulmonary Dysplasia, Cyanosis, Diaphragmatic Hernia, Hypoglycemia, Neonatal Hyperbilirubinemia, Necrotizing Enterocolitis, PPHN, Respiratory Distress, ROP, Sepsis, Skin Conditions -- with no independent content of its own) and is therefore excluded as organizational rather than represented as its own study unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-115",
+      "title": "Routine Neonatal Care",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S13.T02"
+      ],
+      "tn_page_range": "P70-P81",
+      "pdf_page_range": [
+        1266,
+        1277
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neonatology",
+        "Routine Neonatal Care"
+      ],
+      "structural_rationale": "P.S13 ('Neonatology') is an organizational header; T01-T03 and T05-T17 are each a distinct, atomic topic. T04 ('Common Conditions of Neonates') is itself a nested organizational sub-header (body-confirmed on pdf ~1266: the phrase 'Common Conditions of Neonates' introduces the group of specific-condition subsections T05-T17 -- Apnea, Bleeding Disorders in Neonates, Bronchopulmonary Dysplasia, Cyanosis, Diaphragmatic Hernia, Hypoglycemia, Neonatal Hyperbilirubinemia, Necrotizing Enterocolitis, PPHN, Respiratory Distress, ROP, Sepsis, Skin Conditions -- with no independent content of its own) and is therefore excluded as organizational rather than represented as its own study unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-116",
+      "title": "Neonatal Resuscitation",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S13.T03"
+      ],
+      "tn_page_range": "P70-P81",
+      "pdf_page_range": [
+        1266,
+        1277
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neonatology",
+        "Neonatal Resuscitation"
+      ],
+      "structural_rationale": "P.S13 ('Neonatology') is an organizational header; T01-T03 and T05-T17 are each a distinct, atomic topic. T04 ('Common Conditions of Neonates') is itself a nested organizational sub-header (body-confirmed on pdf ~1266: the phrase 'Common Conditions of Neonates' introduces the group of specific-condition subsections T05-T17 -- Apnea, Bleeding Disorders in Neonates, Bronchopulmonary Dysplasia, Cyanosis, Diaphragmatic Hernia, Hypoglycemia, Neonatal Hyperbilirubinemia, Necrotizing Enterocolitis, PPHN, Respiratory Distress, ROP, Sepsis, Skin Conditions -- with no independent content of its own) and is therefore excluded as organizational rather than represented as its own study unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-117",
+      "title": "Apnea of Prematurity",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S13.T05"
+      ],
+      "tn_page_range": "P70-P81",
+      "pdf_page_range": [
+        1266,
+        1277
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neonatology",
+        "Apnea"
+      ],
+      "structural_rationale": "P.S13 ('Neonatology') is an organizational header; T01-T03 and T05-T17 are each a distinct, atomic topic. T04 ('Common Conditions of Neonates') is itself a nested organizational sub-header (body-confirmed on pdf ~1266: the phrase 'Common Conditions of Neonates' introduces the group of specific-condition subsections T05-T17 -- Apnea, Bleeding Disorders in Neonates, Bronchopulmonary Dysplasia, Cyanosis, Diaphragmatic Hernia, Hypoglycemia, Neonatal Hyperbilirubinemia, Necrotizing Enterocolitis, PPHN, Respiratory Distress, ROP, Sepsis, Skin Conditions -- with no independent content of its own) and is therefore excluded as organizational rather than represented as its own study unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-118",
+      "title": "Bleeding Disorders in Neonates",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S13.T06"
+      ],
+      "tn_page_range": "P70-P81",
+      "pdf_page_range": [
+        1266,
+        1277
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neonatology",
+        "Bleeding Disorders in Neonates"
+      ],
+      "structural_rationale": "P.S13 ('Neonatology') is an organizational header; T01-T03 and T05-T17 are each a distinct, atomic topic. T04 ('Common Conditions of Neonates') is itself a nested organizational sub-header (body-confirmed on pdf ~1266: the phrase 'Common Conditions of Neonates' introduces the group of specific-condition subsections T05-T17 -- Apnea, Bleeding Disorders in Neonates, Bronchopulmonary Dysplasia, Cyanosis, Diaphragmatic Hernia, Hypoglycemia, Neonatal Hyperbilirubinemia, Necrotizing Enterocolitis, PPHN, Respiratory Distress, ROP, Sepsis, Skin Conditions -- with no independent content of its own) and is therefore excluded as organizational rather than represented as its own study unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-119",
+      "title": "Bronchopulmonary Dysplasia",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S13.T07"
+      ],
+      "tn_page_range": "P70-P81",
+      "pdf_page_range": [
+        1266,
+        1277
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neonatology",
+        "Bronchopulmonary Dysplasia"
+      ],
+      "structural_rationale": "P.S13 ('Neonatology') is an organizational header; T01-T03 and T05-T17 are each a distinct, atomic topic. T04 ('Common Conditions of Neonates') is itself a nested organizational sub-header (body-confirmed on pdf ~1266: the phrase 'Common Conditions of Neonates' introduces the group of specific-condition subsections T05-T17 -- Apnea, Bleeding Disorders in Neonates, Bronchopulmonary Dysplasia, Cyanosis, Diaphragmatic Hernia, Hypoglycemia, Neonatal Hyperbilirubinemia, Necrotizing Enterocolitis, PPHN, Respiratory Distress, ROP, Sepsis, Skin Conditions -- with no independent content of its own) and is therefore excluded as organizational rather than represented as its own study unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-120",
+      "title": "Cyanosis in the Neonate",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S13.T08"
+      ],
+      "tn_page_range": "P70-P81",
+      "pdf_page_range": [
+        1266,
+        1277
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neonatology",
+        "Cyanosis"
+      ],
+      "structural_rationale": "P.S13 ('Neonatology') is an organizational header; T01-T03 and T05-T17 are each a distinct, atomic topic. T04 ('Common Conditions of Neonates') is itself a nested organizational sub-header (body-confirmed on pdf ~1266: the phrase 'Common Conditions of Neonates' introduces the group of specific-condition subsections T05-T17 -- Apnea, Bleeding Disorders in Neonates, Bronchopulmonary Dysplasia, Cyanosis, Diaphragmatic Hernia, Hypoglycemia, Neonatal Hyperbilirubinemia, Necrotizing Enterocolitis, PPHN, Respiratory Distress, ROP, Sepsis, Skin Conditions -- with no independent content of its own) and is therefore excluded as organizational rather than represented as its own study unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-121",
+      "title": "Congenital Diaphragmatic Hernia",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S13.T09"
+      ],
+      "tn_page_range": "P70-P81",
+      "pdf_page_range": [
+        1266,
+        1277
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neonatology",
+        "Diaphragmatic Hernia"
+      ],
+      "structural_rationale": "P.S13 ('Neonatology') is an organizational header; T01-T03 and T05-T17 are each a distinct, atomic topic. T04 ('Common Conditions of Neonates') is itself a nested organizational sub-header (body-confirmed on pdf ~1266: the phrase 'Common Conditions of Neonates' introduces the group of specific-condition subsections T05-T17 -- Apnea, Bleeding Disorders in Neonates, Bronchopulmonary Dysplasia, Cyanosis, Diaphragmatic Hernia, Hypoglycemia, Neonatal Hyperbilirubinemia, Necrotizing Enterocolitis, PPHN, Respiratory Distress, ROP, Sepsis, Skin Conditions -- with no independent content of its own) and is therefore excluded as organizational rather than represented as its own study unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-122",
+      "title": "Neonatal Hypoglycemia",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S13.T10"
+      ],
+      "tn_page_range": "P70-P81",
+      "pdf_page_range": [
+        1266,
+        1277
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neonatology",
+        "Hypoglycemia"
+      ],
+      "structural_rationale": "P.S13 ('Neonatology') is an organizational header; T01-T03 and T05-T17 are each a distinct, atomic topic. T04 ('Common Conditions of Neonates') is itself a nested organizational sub-header (body-confirmed on pdf ~1266: the phrase 'Common Conditions of Neonates' introduces the group of specific-condition subsections T05-T17 -- Apnea, Bleeding Disorders in Neonates, Bronchopulmonary Dysplasia, Cyanosis, Diaphragmatic Hernia, Hypoglycemia, Neonatal Hyperbilirubinemia, Necrotizing Enterocolitis, PPHN, Respiratory Distress, ROP, Sepsis, Skin Conditions -- with no independent content of its own) and is therefore excluded as organizational rather than represented as its own study unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-123",
+      "title": "Neonatal Hyperbilirubinemia (Jaundice)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S13.T11"
+      ],
+      "tn_page_range": "P70-P81",
+      "pdf_page_range": [
+        1266,
+        1277
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neonatology",
+        "Neonatal Hyperbilirubinemia (source TOC title OCR-garbled 'Neonatal Hyper bilirubine mia')"
+      ],
+      "structural_rationale": "See S13 organizational-header rationale above; T11's source title 'Neonatal Hyper bilirubine mia' is an OCR word-spacing garble of 'Neonatal Hyperbilirubinemia', corrected here without altering source_node_id.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-124",
+      "title": "Necrotizing Enterocolitis",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S13.T12"
+      ],
+      "tn_page_range": "P70-P81",
+      "pdf_page_range": [
+        1266,
+        1277
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neonatology",
+        "Necrotizing Enterocolitis"
+      ],
+      "structural_rationale": "P.S13 ('Neonatology') is an organizational header; T01-T03 and T05-T17 are each a distinct, atomic topic. T04 ('Common Conditions of Neonates') is itself a nested organizational sub-header (body-confirmed on pdf ~1266: the phrase 'Common Conditions of Neonates' introduces the group of specific-condition subsections T05-T17 -- Apnea, Bleeding Disorders in Neonates, Bronchopulmonary Dysplasia, Cyanosis, Diaphragmatic Hernia, Hypoglycemia, Neonatal Hyperbilirubinemia, Necrotizing Enterocolitis, PPHN, Respiratory Distress, ROP, Sepsis, Skin Conditions -- with no independent content of its own) and is therefore excluded as organizational rather than represented as its own study unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-125",
+      "title": "Persistent Pulmonary Hypertension of the Newborn",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S13.T13"
+      ],
+      "tn_page_range": "P70-P81",
+      "pdf_page_range": [
+        1266,
+        1277
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neonatology",
+        "Persistent Pulmonary Hypertension of the Newborn"
+      ],
+      "structural_rationale": "P.S13 ('Neonatology') is an organizational header; T01-T03 and T05-T17 are each a distinct, atomic topic. T04 ('Common Conditions of Neonates') is itself a nested organizational sub-header (body-confirmed on pdf ~1266: the phrase 'Common Conditions of Neonates' introduces the group of specific-condition subsections T05-T17 -- Apnea, Bleeding Disorders in Neonates, Bronchopulmonary Dysplasia, Cyanosis, Diaphragmatic Hernia, Hypoglycemia, Neonatal Hyperbilirubinemia, Necrotizing Enterocolitis, PPHN, Respiratory Distress, ROP, Sepsis, Skin Conditions -- with no independent content of its own) and is therefore excluded as organizational rather than represented as its own study unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-126",
+      "title": "Respiratory Distress in the Newborn (RDS, TTN, Meconium Aspiration)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S13.T14"
+      ],
+      "tn_page_range": "P70-P81",
+      "pdf_page_range": [
+        1266,
+        1277
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neonatology",
+        "Respiratory Distress in the Newborn"
+      ],
+      "structural_rationale": "P.S13 ('Neonatology') is an organizational header; T01-T03 and T05-T17 are each a distinct, atomic topic. T04 ('Common Conditions of Neonates') is itself a nested organizational sub-header (body-confirmed on pdf ~1266: the phrase 'Common Conditions of Neonates' introduces the group of specific-condition subsections T05-T17 -- Apnea, Bleeding Disorders in Neonates, Bronchopulmonary Dysplasia, Cyanosis, Diaphragmatic Hernia, Hypoglycemia, Neonatal Hyperbilirubinemia, Necrotizing Enterocolitis, PPHN, Respiratory Distress, ROP, Sepsis, Skin Conditions -- with no independent content of its own) and is therefore excluded as organizational rather than represented as its own study unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-127",
+      "title": "Retinopathy of Prematurity",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S13.T15"
+      ],
+      "tn_page_range": "P70-P81",
+      "pdf_page_range": [
+        1266,
+        1277
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neonatology",
+        "Retinopathy of Prematurity"
+      ],
+      "structural_rationale": "P.S13 ('Neonatology') is an organizational header; T01-T03 and T05-T17 are each a distinct, atomic topic. T04 ('Common Conditions of Neonates') is itself a nested organizational sub-header (body-confirmed on pdf ~1266: the phrase 'Common Conditions of Neonates' introduces the group of specific-condition subsections T05-T17 -- Apnea, Bleeding Disorders in Neonates, Bronchopulmonary Dysplasia, Cyanosis, Diaphragmatic Hernia, Hypoglycemia, Neonatal Hyperbilirubinemia, Necrotizing Enterocolitis, PPHN, Respiratory Distress, ROP, Sepsis, Skin Conditions -- with no independent content of its own) and is therefore excluded as organizational rather than represented as its own study unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-128",
+      "title": "Neonatal Sepsis",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S13.T16"
+      ],
+      "tn_page_range": "P70-P81",
+      "pdf_page_range": [
+        1266,
+        1277
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neonatology",
+        "Neonatal Sepsis (source TOC title OCR-garbled 'Sepsis inthe Neonate')"
+      ],
+      "structural_rationale": "See S13 organizational-header rationale above; T16's source title 'Sepsis inthe Neonate' is an OCR word-spacing garble of 'Sepsis in the Neonate', corrected here without altering source_node_id.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-129",
+      "title": "Skin Conditions of the Neonate (Benign Findings, Differential)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S13.T17"
+      ],
+      "tn_page_range": "P70-P81",
+      "pdf_page_range": [
+        1266,
+        1277
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neonatology",
+        "Skin Conditions of the Neonate"
+      ],
+      "structural_rationale": "P.S13 ('Neonatology') is an organizational header; T01-T03 and T05-T17 are each a distinct, atomic topic. T04 ('Common Conditions of Neonates') is itself a nested organizational sub-header (body-confirmed on pdf ~1266: the phrase 'Common Conditions of Neonates' introduces the group of specific-condition subsections T05-T17 -- Apnea, Bleeding Disorders in Neonates, Bronchopulmonary Dysplasia, Cyanosis, Diaphragmatic Hernia, Hypoglycemia, Neonatal Hyperbilirubinemia, Necrotizing Enterocolitis, PPHN, Respiratory Distress, ROP, Sepsis, Skin Conditions -- with no independent content of its own) and is therefore excluded as organizational rather than represented as its own study unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-130",
+      "title": "Approach to Common Pediatric Renal Diseases",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S14.T01"
+      ],
+      "tn_page_range": "P82-P86",
+      "pdf_page_range": [
+        1278,
+        1282
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Nephrology",
+        "Common Pediatric Renal Diseases (approach)"
+      ],
+      "structural_rationale": "P.S14 ('Nephrology') is an organizational header; T01-T05 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-131",
+      "title": "Hemolytic Uremic Syndrome",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S14.T02"
+      ],
+      "tn_page_range": "P82-P86",
+      "pdf_page_range": [
+        1278,
+        1282
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Nephrology",
+        "Hemolytic Uremic Syndrome"
+      ],
+      "structural_rationale": "P.S14 ('Nephrology') is an organizational header; T01-T05 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-132",
+      "title": "Nephritic Syndrome (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S14.T03"
+      ],
+      "tn_page_range": "P82-P86",
+      "pdf_page_range": [
+        1278,
+        1282
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Nephrology",
+        "Nephritic Syndrome"
+      ],
+      "structural_rationale": "P.S14 ('Nephrology') is an organizational header; T01-T05 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-133",
+      "title": "Nephrotic Syndrome (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S14.T04"
+      ],
+      "tn_page_range": "P82-P86",
+      "pdf_page_range": [
+        1278,
+        1282
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Nephrology",
+        "Nephrotic Syndrome"
+      ],
+      "structural_rationale": "P.S14 ('Nephrology') is an organizational header; T01-T05 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-134",
+      "title": "Hypertension in Childhood",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S14.T05"
+      ],
+      "tn_page_range": "P82-P86",
+      "pdf_page_range": [
+        1278,
+        1282
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Nephrology",
+        "Hypertension in Childhood"
+      ],
+      "structural_rationale": "P.S14 ('Nephrology') is an organizational header; T01-T05 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-135",
+      "title": "Cerebral Palsy",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S15.T01"
+      ],
+      "tn_page_range": "P87-P90",
+      "pdf_page_range": [
+        1283,
+        1286
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neurology",
+        "Cerebral Palsy"
+      ],
+      "structural_rationale": "P.S15 ('Neurology') is an organizational header; T01-T03 and T05 are atomic topics.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-136",
+      "title": "Febrile Seizures",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S15.T02"
+      ],
+      "tn_page_range": "P87-P90",
+      "pdf_page_range": [
+        1283,
+        1286
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neurology",
+        "Febrile Seizures"
+      ],
+      "structural_rationale": "P.S15 ('Neurology') is an organizational header; T01-T03 and T05 are atomic topics.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-137",
+      "title": "Hypotonic Infant",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S15.T03"
+      ],
+      "tn_page_range": "P87-P90",
+      "pdf_page_range": [
+        1283,
+        1286
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neurology",
+        "Hypotonia"
+      ],
+      "structural_rationale": "P.S15 ('Neurology') is an organizational header; T01-T03 and T05 are atomic topics.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-138",
+      "title": "Neurofibromatosis Type 1",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:Neurocutaneous@pdf1285.NF1"
+      ],
+      "tn_page_range": "P89",
+      "pdf_page_range": [
+        1285,
+        1285
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neurology",
+        "Neurocutaneous Syndromes",
+        "Neurofibromatosis Type 1"
+      ],
+      "structural_rationale": "toc_inventory.json's P.S15.T04 ('Neurocutaneous Syndromes') is a single umbrella node, but raw OCR of pdf 1285 (P89) body-confirms it contains two genuinely distinct named diagnoses, each with its own full diagnostic-criteria/management subsection: Neurofibromatosis Type 1 (von Recklinghausen disease) and Neurofibromatosis Type 2. No Tuberous Sclerosis or Sturge-Weber subsection is present in this TN edition's Neurocutaneous Syndromes text (confirmed by reading through to the following 'Recurrent Headache' heading with no further named syndrome in between). Each NF type is recovered as its own study unit under a synthetic UNCATALOGUED id; P.S15.T04 is retained only as the parent umbrella reference in source_hierarchy_path.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-139",
+      "title": "Neurofibromatosis Type 2",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:Neurocutaneous@pdf1285.NF2"
+      ],
+      "tn_page_range": "P89",
+      "pdf_page_range": [
+        1285,
+        1285
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neurology",
+        "Neurocutaneous Syndromes",
+        "Neurofibromatosis Type 2"
+      ],
+      "structural_rationale": "See Neurofibromatosis Type 1 unit's structural_rationale for the full account of the Neurocutaneous Syndromes umbrella-node split.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-140",
+      "title": "Recurrent Headache (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S15.T05"
+      ],
+      "tn_page_range": "P87-P90",
+      "pdf_page_range": [
+        1283,
+        1286
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neurology",
+        "Recurrent Headache"
+      ],
+      "structural_rationale": "P.S15 ('Neurology') is an organizational header; T01-T03 and T05 are atomic topics.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-141",
+      "title": "Approach to Pediatric Seizures (General Management, Seizure Mimics)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S15.T06"
+      ],
+      "tn_page_range": "P89-P90",
+      "pdf_page_range": [
+        1285,
+        1286
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neurology",
+        "Seizure Disorders",
+        "General Approach to Treatment"
+      ],
+      "structural_rationale": "toc_inventory.json's P.S15.T06 ('Seizure Disorders') is a single umbrella node, but raw OCR of pdf 1286 (P90) body-confirms it groups a general seizure-management/investigation approach together with four distinct, individually-named 'Childhood Epilepsy Syndromes' subsections (Infantile Spasms, Lennox-Gastaut, Juvenile Myoclonic Epilepsy, Childhood Absence Epilepsy), each with its own definition/EEG-finding/management block, before cross-referencing the adult Neurology chapter (N19) for Generalized and Partial Seizures. The general-approach content (investigations, seizure mimics box, medication-initiation principles, ketogenic diet, legal driving-reporting obligation) is retained as this standalone unit; the four named epilepsy syndromes are recovered as their own study units below under synthetic UNCATALOGUED ids.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-142",
+      "title": "Infantile Spasms (West Syndrome)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:Seizures@pdf1286.InfantileSpasms"
+      ],
+      "tn_page_range": "P90",
+      "pdf_page_range": [
+        1286,
+        1286
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neurology",
+        "Seizure Disorders",
+        "Childhood Epilepsy Syndromes",
+        "Infantile Spasms"
+      ],
+      "structural_rationale": "See 'Approach to Pediatric Seizures' unit's structural_rationale for the full account of the Seizure Disorders umbrella-node split. Infantile Spasms is body-confirmed on pdf 1286 (P90) as explicitly labeled a 'pediatric emergency' given risk of developmental regression, with its own onset age, clinical description, EEG finding (hypsarrhythmia), and management.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-143",
+      "title": "Lennox-Gastaut Syndrome",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:Seizures@pdf1286.LennoxGastaut"
+      ],
+      "tn_page_range": "P90",
+      "pdf_page_range": [
+        1286,
+        1286
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neurology",
+        "Seizure Disorders",
+        "Childhood Epilepsy Syndromes",
+        "Lennox-Gastaut Syndrome"
+      ],
+      "structural_rationale": "See 'Approach to Pediatric Seizures' unit's structural_rationale for the full account of the Seizure Disorders umbrella-node split. Lennox-Gastaut is body-confirmed on pdf 1286 (P90) with its own triad definition, onset age, and (often poor) prognosis.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-144",
+      "title": "Juvenile Myoclonic Epilepsy (Janz Syndrome)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:Seizures@pdf1286.JME"
+      ],
+      "tn_page_range": "P90",
+      "pdf_page_range": [
+        1286,
+        1286
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neurology",
+        "Seizure Disorders",
+        "Childhood Epilepsy Syndromes",
+        "Juvenile Myoclonic Epilepsy"
+      ],
+      "structural_rationale": "See 'Approach to Pediatric Seizures' unit's structural_rationale for the full account of the Seizure Disorders umbrella-node split. JME is body-confirmed on pdf 1286 (P90) with its own definition, adolescent onset, EEG finding, and excellent-prognosis-with-lifelong-treatment note.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-145",
+      "title": "Childhood Absence Epilepsy",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "UNCATALOGUED:Seizures@pdf1286.ChildhoodAbsence"
+      ],
+      "tn_page_range": "P90",
+      "pdf_page_range": [
+        1286,
+        1286
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Neurology",
+        "Seizure Disorders",
+        "Childhood Epilepsy Syndromes",
+        "Childhood Absence Epilepsy"
+      ],
+      "structural_rationale": "See 'Approach to Pediatric Seizures' unit's structural_rationale for the full account of the Seizure Disorders umbrella-node split. Childhood Absence Epilepsy is body-confirmed as the fourth named syndrome on pdf 1286 (P90), immediately following JME (text truncated at 'Childhood Absence E...' in the raw-OCR extraction window but clearly identifiable by heading and standard TN sequence).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-146",
+      "title": "Pediatric Asthma",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S16.T01"
+      ],
+      "tn_page_range": "P91-P94",
+      "pdf_page_range": [
+        1287,
+        1290
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Respirology",
+        "Asthma"
+      ],
+      "structural_rationale": "P.S16 ('Respirology') is an organizational header; T01-T05 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-147",
+      "title": "Bronchiolitis",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S16.T02"
+      ],
+      "tn_page_range": "P91-P94",
+      "pdf_page_range": [
+        1287,
+        1290
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Respirology",
+        "Bronchiolitis"
+      ],
+      "structural_rationale": "P.S16 ('Respirology') is an organizational header; T01-T05 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-148",
+      "title": "Cystic Fibrosis (Respiratory/Pulmonary Manifestations)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S16.T03"
+      ],
+      "tn_page_range": "P91-P94",
+      "pdf_page_range": [
+        1287,
+        1290
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Respirology",
+        "Cystic Fibrosis (Respiratory)"
+      ],
+      "structural_rationale": "P.S16 ('Respirology') is an organizational header; T01-T05 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-149",
+      "title": "Pneumonia (Pediatric, Respirology Chapter -- Age-Stratified Treatment)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S16.T04"
+      ],
+      "tn_page_range": "P91-P94",
+      "pdf_page_range": [
+        1287,
+        1290
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Respirology",
+        "Pneumonia (Respirology)"
+      ],
+      "structural_rationale": "P.S16 ('Respirology') is an organizational header; T01-T05 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-150",
+      "title": "Approach to Pediatric Respiratory Distress/Dyspnea",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S16.T05"
+      ],
+      "tn_page_range": "P91-P94",
+      "pdf_page_range": [
+        1287,
+        1290
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Respirology",
+        "Respiratory Distress"
+      ],
+      "structural_rationale": "P.S16 ('Respirology') is an organizational header; T01-T05 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-151",
+      "title": "Growing Pains",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S17.T01"
+      ],
+      "tn_page_range": "P95-P98",
+      "pdf_page_range": [
+        1291,
+        1294
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Rheumatology",
+        "Growing Pains"
+      ],
+      "structural_rationale": "P.S17 ('Rheumatology') is an organizational header; T01-T10 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-152",
+      "title": "Juvenile Idiopathic Arthritis",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S17.T02"
+      ],
+      "tn_page_range": "P95-P98",
+      "pdf_page_range": [
+        1291,
+        1294
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Rheumatology",
+        "Juvenile Idiopathic Arthritis"
+      ],
+      "structural_rationale": "P.S17 ('Rheumatology') is an organizational header; T01-T10 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-153",
+      "title": "Limb Pain (Pediatric, Approach)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S17.T03"
+      ],
+      "tn_page_range": "P95-P98",
+      "pdf_page_range": [
+        1291,
+        1294
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Rheumatology",
+        "Limb Pain"
+      ],
+      "structural_rationale": "P.S17 ('Rheumatology') is an organizational header; T01-T10 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-154",
+      "title": "Limp in Children (Approach)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S17.T04"
+      ],
+      "tn_page_range": "P95-P98",
+      "pdf_page_range": [
+        1291,
+        1294
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Rheumatology",
+        "Limp"
+      ],
+      "structural_rationale": "P.S17 ('Rheumatology') is an organizational header; T01-T10 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-155",
+      "title": "Lyme Arthritis",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S17.T05"
+      ],
+      "tn_page_range": "P95-P98",
+      "pdf_page_range": [
+        1291,
+        1294
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Rheumatology",
+        "Lyme Arthritis"
+      ],
+      "structural_rationale": "P.S17 ('Rheumatology') is an organizational header; T01-T10 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-156",
+      "title": "Reactive Arthritis (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S17.T06"
+      ],
+      "tn_page_range": "P95-P98",
+      "pdf_page_range": [
+        1291,
+        1294
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Rheumatology",
+        "Reactive Arthritis"
+      ],
+      "structural_rationale": "P.S17 ('Rheumatology') is an organizational header; T01-T10 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-157",
+      "title": "Septic Arthritis and Osteomyelitis (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S17.T07"
+      ],
+      "tn_page_range": "P95-P98",
+      "pdf_page_range": [
+        1291,
+        1294
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Rheumatology",
+        "Septic Arthritis and Osteomyelitis"
+      ],
+      "structural_rationale": "P.S17 ('Rheumatology') is an organizational header; T01-T10 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-158",
+      "title": "Systemic Lupus Erythematosus (Pediatric)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S17.T08"
+      ],
+      "tn_page_range": "P95-P98",
+      "pdf_page_range": [
+        1291,
+        1294
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Rheumatology",
+        "Systemic Lupus Erythematosus"
+      ],
+      "structural_rationale": "P.S17 ('Rheumatology') is an organizational header; T01-T10 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-159",
+      "title": "Transient Synovitis of the Hip",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S17.T09"
+      ],
+      "tn_page_range": "P95-P98",
+      "pdf_page_range": [
+        1291,
+        1294
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Rheumatology",
+        "Transient Synovitis of the Hip"
+      ],
+      "structural_rationale": "P.S17 ('Rheumatology') is an organizational header; T01-T10 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-P-160",
+      "title": "Pediatric Vasculitides (HSP, Kawasaki Disease)",
+      "chapter_code": "P",
+      "chapter_title": "Pediatrics",
+      "source_node_ids": [
+        "P.S17.T10"
+      ],
+      "tn_page_range": "P95-P98",
+      "pdf_page_range": [
+        1291,
+        1294
+      ],
+      "source_hierarchy_path": [
+        "Pediatrics",
+        "Rheumatology",
+        "Vasculitides"
+      ],
+      "structural_rationale": "P.S17 ('Rheumatology') is an organizational header; T01-T10 are each a distinct, atomic topic.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    }
+  ]
+}
