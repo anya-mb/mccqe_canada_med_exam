@@ -1,0 +1,1366 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-26T00:00:00Z",
+  "chapter_code": "OB",
+  "chapter_title": "Obstetrics",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes source structure (toc_inventory.json / derived/scope_packets/OB.json). Unlike the N/NS/NP chapters, OB's toc_inventory shows no severe two-column OCR corruption: all 18 top-level sections (OB.S01-OB.S18) are HIGH- or MEDIUM-confidence direct TOC/body-heading matches (via TOC_OCR or BODY_HEADING_CONFIRMATION), and no unresolved headings are recorded in the packet's source_quality field. The only OCR artifacts observed are (1) two chapter-opening/section-title spacing/merge glitches -- 'ACFOMYMS' for 'Acronyms' (OB.S01, merged_duplicate_headings correctly records the co-located 'Basic Anatomy Review' heading, consistent with the N/NS/NP precedent of an acronym glossary followed by an anatomy-review section), 'AntepartumCare' for 'Antepartum Care' (OB.S03), and 'PostpartumCare' for 'Postpartum Care' (OB.S15) -- all resolved directly from the section title text itself, not from page-image review, since no body-heading contradiction was flagged. All 64 T-level topic nodes (OB.S0X.T0Y) are LOW-confidence TOC_OCR_UNANCHORED extractions, meaning their titles were extracted from the real chapter TOC but their exact sub-page position within the parent section was not independently confirmed; each such node's page range is therefore inherited from its parent section (SECTION_INHERITED precision) rather than guessed. No page-image rendering was required for this chapter given the absence of corruption/unresolved-heading signals that triggered that step for N/NS. Two non-trivial structural splits were made based on section-title evidence rather than a dedicated T-node: OB.S07 ('Multi-Fetal Gestation and Fetal Malpresentation') was split into two study units along its own compound title (SU-OB-23, SU-OB-24); OB.S04 and OB.S13 have their multiple generic T-children grouped into single study units (Counselling of the Pregnant Patient; Operative Vaginal Delivery) per project instruction not to fragment one clinical/counselling problem into its generic component sub-bullets. The closing References section (OB.S18) is excluded from study units as non-clinical bibliographic material, consistent with the NS.S20/N precedent.",
+  "total_study_units": 58,
+  "organizational_header_nodes": [
+    "OB",
+    "OB.S18"
+  ],
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-01",
+      "title": "Basic Anatomy Review",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S01"
+      ],
+      "tn_page_range": "OB2",
+      "pdf_page_range": [
+        988,
+        988
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Basic Anatomy Review"
+      ],
+      "structural_rationale": "OB.S01 is titled 'ACFOMYMS' (OCR-garbled 'Acronyms'); merged_duplicate_headings records 'Basic Anatomy Review' as co-located content on OB2, matching the N/NS/NP precedent of a chapter-opening acronym glossary followed by a basic-anatomy-review section. The non-clinical acronym glossary is excluded; only the anatomy-review content is represented.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-02",
+      "title": "Maternal Physiologic Adaptations to Pregnancy",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S02"
+      ],
+      "tn_page_range": "OB3",
+      "pdf_page_range": [
+        989,
+        989
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Pregnancy",
+        "Maternal Physiologic Adaptations to Pregnancy"
+      ],
+      "structural_rationale": "OB.S02's merged_duplicate_headings field records 'Maternal Physiologic Adaptations to Pregnancy' as the real heading co-located with the section-title placeholder 'Pregnancy' on OB3; represented as its own unit distinct from Diagnosis of Pregnancy (OB.S02.T01), which is a separate topic on the same page.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-03",
+      "title": "Diagnosis of Pregnancy",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S02.T01"
+      ],
+      "tn_page_range": "OB3",
+      "pdf_page_range": [
+        989,
+        989
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Pregnancy",
+        "Diagnosis of Pregnancy"
+      ],
+      "structural_rationale": "Matches the real chapter TOC as a sub-bullet of Pregnancy (OB3); no corruption flagged. Kept distinct from the physiologic-adaptations background content given its own testable content (hCG kinetics, ultrasound dating).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-04",
+      "title": "Preconception Counselling",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S03",
+        "OB.S03.T01"
+      ],
+      "tn_page_range": "OB4-OB10",
+      "pdf_page_range": [
+        990,
+        996
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Antepartum Care",
+        "Preconception Counselling"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Antepartum Care (OB.S03, 'AntepartumCare' is an OCR spacing artifact of 'Antepartum Care'); packet does not provide independent sub-page anchoring for T-level children of this section, so page range is inherited from the parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-05",
+      "title": "Initial Prenatal Visit",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S03.T02"
+      ],
+      "tn_page_range": "OB4-OB10",
+      "pdf_page_range": [
+        990,
+        996
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Antepartum Care",
+        "Initial Prenatal Visit"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Antepartum Care; page range inherited from parent section per packet limitation (see SU-OB-04 rationale).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-06",
+      "title": "Nausea and Vomiting of Pregnancy",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S03.T03"
+      ],
+      "tn_page_range": "OB4-OB10",
+      "pdf_page_range": [
+        990,
+        996
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Antepartum Care",
+        "Nausea and Vomiting of Pregnancy"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Antepartum Care. Kept distinct from Hyperemesis Gravidarum per project instruction not to split generic subsections of one problem, but to split where body evidence supports distinct clinically meaningful topics -- ordinary NVP and hyperemesis carry materially different severity/management thresholds and are each named as separate TOC sub-bullets.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-07",
+      "title": "Hyperemesis Gravidarum",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S03.T04"
+      ],
+      "tn_page_range": "OB4-OB10",
+      "pdf_page_range": [
+        990,
+        996
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Antepartum Care",
+        "Hyperemesis Gravidarum"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Antepartum Care, named distinctly from Nausea and Vomiting of Pregnancy (see SU-OB-06 rationale).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-08",
+      "title": "Subsequent Prenatal Visits",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S03.T05"
+      ],
+      "tn_page_range": "OB4-OB10",
+      "pdf_page_range": [
+        990,
+        996
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Antepartum Care",
+        "Subsequent Prenatal Visits"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Antepartum Care; page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-09",
+      "title": "Prenatal Screening and Diagnostic Tests",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S03.T06"
+      ],
+      "tn_page_range": "OB4-OB10",
+      "pdf_page_range": [
+        990,
+        996
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Antepartum Care",
+        "Prenatal Screening and Diagnostic Tests"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Antepartum Care; page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-10",
+      "title": "Fetal Surveillance (Antepartum)",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S03.T07"
+      ],
+      "tn_page_range": "OB4-OB10",
+      "pdf_page_range": [
+        990,
+        996
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Antepartum Care",
+        "Fetal Surveillance"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Antepartum Care. Kept distinct from Fetal Monitoring in Labour (OB.S10.T06), which is the intrapartum counterpart, per project instruction to preserve genuine clinically distinct topics rather than merge antepartum and intrapartum surveillance.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-11",
+      "title": "Counselling of the Pregnant Patient (Nutrition, Lifestyle, Medications, Immunizations, Radiation)",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S04",
+        "OB.S04.T01",
+        "OB.S04.T02",
+        "OB.S04.T03",
+        "OB.S04.T04",
+        "OB.S04.T05"
+      ],
+      "tn_page_range": "OB11-OB13",
+      "pdf_page_range": [
+        997,
+        999
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Counseling of the Pregnant Patient"
+      ],
+      "structural_rationale": "OB.S04's five T-children (Nutrition, Lifestyle, Medications, Immunizations, Radiation) are generic component parts of one counselling framework applied across a single section (OB11-13), not independently distinct clinical problems; grouped into one study unit per project instruction not to split generic subsections of one topic. Matches the real chapter TOC directly.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-12",
+      "title": "Placenta Previa",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S05",
+        "OB.S05.T01"
+      ],
+      "tn_page_range": "OB14-OB21",
+      "pdf_page_range": [
+        1000,
+        1007
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Antepartum Hemorrhage",
+        "Placenta Previa"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Antepartum Hemorrhage (OB.S05); page range inherited from parent section per packet limitation.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-13",
+      "title": "Placental Abruption",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S05.T02"
+      ],
+      "tn_page_range": "OB14-OB21",
+      "pdf_page_range": [
+        1000,
+        1007
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Antepartum Hemorrhage",
+        "Placental Abruption"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Antepartum Hemorrhage; page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-14",
+      "title": "Vasa Previa",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S05.T03"
+      ],
+      "tn_page_range": "OB14-OB21",
+      "pdf_page_range": [
+        1000,
+        1007
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Antepartum Hemorrhage",
+        "Vasa Previa"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Antepartum Hemorrhage; page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-15",
+      "title": "Preterm Labour",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S06",
+        "OB.S06.T01"
+      ],
+      "tn_page_range": "OB22",
+      "pdf_page_range": [
+        1008,
+        1008
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Obstetrical Complications",
+        "Preterm Labour"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Obstetrical Complications (OB.S06, confirmed HIGH via BODY_HEADING_CONFIRMATION at the section level); page range inherited from parent section (a single dense page, OB22).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-16",
+      "title": "Prelabour Rupture of Membranes",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S06.T02"
+      ],
+      "tn_page_range": "OB22",
+      "pdf_page_range": [
+        1008,
+        1008
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Obstetrical Complications",
+        "Prelabour Rupture of Membranes"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Obstetrical Complications; page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-17",
+      "title": "Postterm Pregnancy",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S06.T03"
+      ],
+      "tn_page_range": "OB22",
+      "pdf_page_range": [
+        1008,
+        1008
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Obstetrical Complications",
+        "Postterm Pregnancy"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Obstetrical Complications; page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-18",
+      "title": "Intrauterine Fetal Demise",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S06.T04"
+      ],
+      "tn_page_range": "OB22",
+      "pdf_page_range": [
+        1008,
+        1008
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Obstetrical Complications",
+        "Intrauterine Fetal Demise"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Obstetrical Complications; page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-19",
+      "title": "Intrauterine Growth Restriction",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S06.T05"
+      ],
+      "tn_page_range": "OB22",
+      "pdf_page_range": [
+        1008,
+        1008
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Obstetrical Complications",
+        "Intrauterine Growth Restriction"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Obstetrical Complications; page range inherited from parent section. Directly matches candidate MCC objective 118-3 by title.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-20",
+      "title": "Macrosomia",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S06.T06"
+      ],
+      "tn_page_range": "OB22",
+      "pdf_page_range": [
+        1008,
+        1008
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Obstetrical Complications",
+        "Macrosomia"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Obstetrical Complications; page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-21",
+      "title": "Polyhydramnios/Oligohydramnios",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S06.T07"
+      ],
+      "tn_page_range": "OB22",
+      "pdf_page_range": [
+        1008,
+        1008
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Obstetrical Complications",
+        "Polyhydramnios/Oligohydramnios"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Obstetrical Complications; page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-22",
+      "title": "Antenatal Depression",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S06.T08"
+      ],
+      "tn_page_range": "OB22",
+      "pdf_page_range": [
+        1008,
+        1008
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Obstetrical Complications",
+        "Antenatal Depression"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Obstetrical Complications; page range inherited from parent section. Substantially overlaps Psychiatry's mood-disorder content; see crosswalk CROSS_DISCIPLINE note.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-23",
+      "title": "Multi-Fetal Gestation (Twin Pregnancy) including Twin-Twin Transfusion Syndrome",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S07",
+        "OB.S07.T01"
+      ],
+      "tn_page_range": "OB23-OB24",
+      "pdf_page_range": [
+        1009,
+        1010
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Multi-Fetal Gestation and Fetal Malpresentation",
+        "Multi-Fetal Gestation"
+      ],
+      "structural_rationale": "OB.S07's title names two distinct topics ('Multi-Fetal Gestation and Fetal Malpresentation'); split into two study units along that division. This unit covers general twin/multiple pregnancy management (chorionicity, surveillance intensity, delivery planning) plus its named complication Twin-Twin Transfusion Syndrome (OB.S07.T01).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-24",
+      "title": "Fetal Malpresentation including Breech Presentation",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S07",
+        "OB.S07.T02"
+      ],
+      "tn_page_range": "OB23-OB24",
+      "pdf_page_range": [
+        1009,
+        1010
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Multi-Fetal Gestation and Fetal Malpresentation",
+        "Fetal Malpresentation"
+      ],
+      "structural_rationale": "Second half of OB.S07's compound section title (see SU-OB-23 rationale); covers general fetal malpresentation assessment plus its named example Breech Presentation (OB.S07.T02).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-25",
+      "title": "Hypertensive Disorders of Pregnancy (Gestational Hypertension, Preeclampsia, Eclampsia, HELLP)",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S08",
+        "OB.S08.T01"
+      ],
+      "tn_page_range": "OB25-OB27",
+      "pdf_page_range": [
+        1011,
+        1013
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Hypertensive Disorders of Pregnancy"
+      ],
+      "structural_rationale": "OB.S08 has only one T-child ('Hypertension in Pregnancy') spanning the section's full page range; per Toronto Notes structure this section covers the gestational-hypertension-to-eclampsia/HELLP continuum as one clinical problem. Not split further absent independent sub-page evidence for each severity tier, per project instruction not to fragment one clinical problem's continuum without body-confirmed distinct headings.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-26",
+      "title": "Iron and Folate Deficiency Anemia in Pregnancy",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S09",
+        "OB.S09.T01"
+      ],
+      "tn_page_range": "OB28-OB32",
+      "pdf_page_range": [
+        1014,
+        1018
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Medical Complications of Pregnancy",
+        "Iron and Folate Deficiency Anemia"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Medical Complications of Pregnancy (OB.S09); page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-27",
+      "title": "Diabetes Mellitus in Pregnancy (Gestational Diabetes)",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S09.T02"
+      ],
+      "tn_page_range": "OB28-OB32",
+      "pdf_page_range": [
+        1014,
+        1018
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Medical Complications of Pregnancy",
+        "Diabetes Mellitus"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Medical Complications of Pregnancy; page range inherited from parent section. No MCC objective for diabetes (gestational or otherwise) exists anywhere in research/mcc/objectives_registry.json (confirmed by direct registry search, not merely a packet-candidate gap); see crosswalk UNCERTAIN classification and review_items.json for the registry-completeness flag.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-28",
+      "title": "Early-Onset Group B Streptococcus Disease",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S09.T03"
+      ],
+      "tn_page_range": "OB28-OB32",
+      "pdf_page_range": [
+        1014,
+        1018
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Medical Complications of Pregnancy",
+        "Early-Onset Group B Streptococcus Disease"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Medical Complications of Pregnancy; page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-29",
+      "title": "Urinary Tract Infection in Pregnancy",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S09.T04"
+      ],
+      "tn_page_range": "OB28-OB32",
+      "pdf_page_range": [
+        1014,
+        1018
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Medical Complications of Pregnancy",
+        "Urinary Tract Infection"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Medical Complications of Pregnancy; page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-30",
+      "title": "Infections During Pregnancy",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S09.T05"
+      ],
+      "tn_page_range": "OB28-OB32",
+      "pdf_page_range": [
+        1014,
+        1018
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Medical Complications of Pregnancy",
+        "Infections During Pregnancy"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Medical Complications of Pregnancy (TORCH-type congenital/perinatal infections); page range inherited from parent section. Substantially overlaps Infectious Diseases' pathogen-specific content; see crosswalk CROSS_DISCIPLINE note.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-31",
+      "title": "Venous Thromboembolism in Pregnancy",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S09.T06"
+      ],
+      "tn_page_range": "OB28-OB32",
+      "pdf_page_range": [
+        1014,
+        1018
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Medical Complications of Pregnancy",
+        "Venous Thromboembolism"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Medical Complications of Pregnancy; page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-32",
+      "title": "Anatomic Basis of Labour (The Cervix, The Fetus)",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S10",
+        "OB.S10.T01",
+        "OB.S10.T02"
+      ],
+      "tn_page_range": "OB33-OB37",
+      "pdf_page_range": [
+        1019,
+        1023
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Normal Labour and Delivery",
+        "Anatomic Basis of Labour"
+      ],
+      "structural_rationale": "'The Cervix' and 'The Fetus' are real TOC sub-bullets of Normal Labour and Delivery (OB.S10) providing background anatomic/positional terminology (station, presentation, position) that frames the rest of the section; grouped as one foundational unit rather than fragmented into two near-identical background units.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-33",
+      "title": "Four Stages of Labour",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S10.T03"
+      ],
+      "tn_page_range": "OB33-OB37",
+      "pdf_page_range": [
+        1019,
+        1023
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Normal Labour and Delivery",
+        "Four Stages of Labour"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Normal Labour and Delivery; core generalist competency (labour assessment/staging). Page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-34",
+      "title": "Cardinal Movements of the Fetus During Delivery",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S10.T04"
+      ],
+      "tn_page_range": "OB33-OB37",
+      "pdf_page_range": [
+        1019,
+        1023
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Normal Labour and Delivery",
+        "Cardinal Movements of the Fetus During Delivery"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Normal Labour and Delivery; descriptive mechanism-of-descent detail with framing rather than independently testable generalist value, analogous to the mechanism-detail units downweighted in the NS chapter precedent.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-35",
+      "title": "Analgesic and Anesthetic Techniques in Labour and Birth",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S10.T05"
+      ],
+      "tn_page_range": "OB33-OB37",
+      "pdf_page_range": [
+        1019,
+        1023
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Normal Labour and Delivery",
+        "Analgesic and Anesthetic Techniques in Labour and Birth"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Normal Labour and Delivery. Substantially overlaps the Anesthesia chapter's labour-analgesia content; see crosswalk CROSS_DISCIPLINE note.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-36",
+      "title": "Fetal Monitoring in Labour",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S10.T06"
+      ],
+      "tn_page_range": "OB33-OB37",
+      "pdf_page_range": [
+        1019,
+        1023
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Normal Labour and Delivery",
+        "Fetal Monitoring in Labour"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Normal Labour and Delivery; core generalist competency (intrapartum EFM interpretation). Kept distinct from antepartum Fetal Surveillance (SU-OB-10).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-37",
+      "title": "Induction of Labour (Indications and Methods)",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S11",
+        "OB.S11.T01",
+        "OB.S11.T02"
+      ],
+      "tn_page_range": "OB38-OB39",
+      "pdf_page_range": [
+        1024,
+        1025
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Induction and Augmentation of Labour",
+        "Induction of Labour"
+      ],
+      "structural_rationale": "'Induction of Labour' and 'Methods for Induction of Labour' are real TOC sub-bullets of one clinical decision (whether/how to induce); grouped per project instruction not to split generic Indications/Methods subsections of one problem.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-38",
+      "title": "Augmentation of Labour",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S11.T03"
+      ],
+      "tn_page_range": "OB38-OB39",
+      "pdf_page_range": [
+        1024,
+        1025
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Induction and Augmentation of Labour",
+        "Augmentation of Labour"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Induction and Augmentation of Labour, kept distinct from induction as a separate clinical decision point (active labour management vs. initiating labour).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-39",
+      "title": "Abnormal Progression of Labour (Dystocia)",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S12",
+        "OB.S12.T01"
+      ],
+      "tn_page_range": "OB40-OB42",
+      "pdf_page_range": [
+        1026,
+        1028
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Abnormalities and Complications of Labour and Delivery",
+        "Abnormal Progression of Labour"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Abnormalities and Complications of Labour and Delivery (OB.S12); page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-40",
+      "title": "Shoulder Dystocia",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S12.T02"
+      ],
+      "tn_page_range": "OB40-OB42",
+      "pdf_page_range": [
+        1026,
+        1028
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Abnormalities and Complications of Labour and Delivery",
+        "Shoulder Dystocia"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Abnormalities and Complications of Labour and Delivery; classic obstetric emergency requiring immediate recognition/action.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-41",
+      "title": "Umbilical Cord Prolapse",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S12.T03"
+      ],
+      "tn_page_range": "OB40-OB42",
+      "pdf_page_range": [
+        1026,
+        1028
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Abnormalities and Complications of Labour and Delivery",
+        "Umbilical Cord Prolapse"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Abnormalities and Complications of Labour and Delivery; obstetric emergency requiring immediate recognition/action.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-42",
+      "title": "Uterine Rupture",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S12.T04"
+      ],
+      "tn_page_range": "OB40-OB42",
+      "pdf_page_range": [
+        1026,
+        1028
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Abnormalities and Complications of Labour and Delivery",
+        "Uterine Rupture"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Abnormalities and Complications of Labour and Delivery; obstetric emergency requiring immediate recognition/action.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-43",
+      "title": "Amniotic Fluid Embolism",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S12.T05"
+      ],
+      "tn_page_range": "OB40-OB42",
+      "pdf_page_range": [
+        1026,
+        1028
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Abnormalities and Complications of Labour and Delivery",
+        "Amniotic Fluid Embolism"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Abnormalities and Complications of Labour and Delivery; rare catastrophic event retained at recognition level.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-44",
+      "title": "Chorioamnionitis",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S12.T06"
+      ],
+      "tn_page_range": "OB40-OB42",
+      "pdf_page_range": [
+        1026,
+        1028
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Abnormalities and Complications of Labour and Delivery",
+        "Chorioamnionitis"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Abnormalities and Complications of Labour and Delivery; page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-45",
+      "title": "Meconium (Meconium-Stained Amniotic Fluid)",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S12.T07"
+      ],
+      "tn_page_range": "OB40-OB42",
+      "pdf_page_range": [
+        1026,
+        1028
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Abnormalities and Complications of Labour and Delivery",
+        "Meconium"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Abnormalities and Complications of Labour and Delivery. Intrapartum recognition/obstetric decision-making is retained here; neonatal resuscitation/meconium aspiration syndrome management is Pediatrics-owned -- see crosswalk CROSS_DISCIPLINE note.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-46",
+      "title": "Operative Vaginal Delivery (Forceps, Vacuum Extraction)",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S13",
+        "OB.S13.T01",
+        "OB.S13.T02",
+        "OB.S13.T03"
+      ],
+      "tn_page_range": "OB43-OB45",
+      "pdf_page_range": [
+        1029,
+        1031
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Operative Obstetrics",
+        "Operative Vaginal Delivery"
+      ],
+      "structural_rationale": "'Operative Vaginal Delivery', 'Forceps', and 'Vacuum Extraction' are real TOC sub-bullets of Operative Obstetrics (OB.S13); grouped as one unit (general indications/contraindications/complications of assisted vaginal delivery) rather than fragmented by instrument, per project instruction against splitting one clinical decision into generic subsections. Instrument-specific technique is specialist detail.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-47",
+      "title": "Perineal Lacerations and Episiotomy",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S13.T04",
+        "OB.S13.T05"
+      ],
+      "tn_page_range": "OB43-OB45",
+      "pdf_page_range": [
+        1029,
+        1031
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Operative Obstetrics",
+        "Perineal Lacerations and Episiotomy"
+      ],
+      "structural_rationale": "Real TOC sub-bullets of Operative Obstetrics, grouped as one perineal-trauma unit (classification/recognition of laceration degree and episiotomy indications) rather than split.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-48",
+      "title": "Caesarean Delivery",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S13.T06"
+      ],
+      "tn_page_range": "OB43-OB45",
+      "pdf_page_range": [
+        1029,
+        1031
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Operative Obstetrics",
+        "Caesarean Delivery"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Operative Obstetrics; page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-49",
+      "title": "Trial of Labour After Caesarean (TOLAC)",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S13.T07"
+      ],
+      "tn_page_range": "OB43-OB45",
+      "pdf_page_range": [
+        1029,
+        1031
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Operative Obstetrics",
+        "Trial of Labour after Caesarean (TOLAC)"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Operative Obstetrics; page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-50",
+      "title": "Postpartum Hemorrhage",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S14",
+        "OB.S14.T01"
+      ],
+      "tn_page_range": "OB46-OB49",
+      "pdf_page_range": [
+        1032,
+        1035
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Postpartum Period Complications",
+        "Postpartum Hemorrhage"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Postpartum Period Complications (OB.S14); classic postpartum obstetric emergency.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-51",
+      "title": "Retained Placenta",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S14.T02"
+      ],
+      "tn_page_range": "OB46-OB49",
+      "pdf_page_range": [
+        1032,
+        1035
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Postpartum Period Complications",
+        "Retained Placenta"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Postpartum Period Complications; page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-52",
+      "title": "Uterine Inversion",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S14.T03"
+      ],
+      "tn_page_range": "OB46-OB49",
+      "pdf_page_range": [
+        1032,
+        1035
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Postpartum Period Complications",
+        "Uterine Inversion"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Postpartum Period Complications; rare but life-threatening, requiring immediate recognition/action.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-53",
+      "title": "Postpartum Fever",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S14.T04"
+      ],
+      "tn_page_range": "OB46-OB49",
+      "pdf_page_range": [
+        1032,
+        1035
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Postpartum Period Complications",
+        "Postpartum Fever"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Postpartum Period Complications; page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-54",
+      "title": "Mastitis",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S14.T05"
+      ],
+      "tn_page_range": "OB46-OB49",
+      "pdf_page_range": [
+        1032,
+        1035
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Postpartum Period Complications",
+        "Mastitis"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Postpartum Period Complications; page range inherited from parent section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-55",
+      "title": "Postpartum Mood Alterations (Baby Blues, Postpartum Depression, Postpartum Psychosis)",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S14.T06"
+      ],
+      "tn_page_range": "OB46-OB49",
+      "pdf_page_range": [
+        1032,
+        1035
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Postpartum Period Complications",
+        "Postpartum Mood Alterations"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Postpartum Period Complications, spanning the baby-blues-to-psychosis spectrum. Substantially overlaps Psychiatry's mood/psychotic-disorder content; see crosswalk CROSS_DISCIPLINE note (postpartum psychosis retained here at recognition/urgent-action level given its obstetric-context time-criticality).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-56",
+      "title": "Postpartum Care (Routine Care, Breastfeeding and Medication Safety)",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S15",
+        "OB.S15.T01"
+      ],
+      "tn_page_range": "OB50",
+      "pdf_page_range": [
+        1036,
+        1036
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Postpartum Care"
+      ],
+      "structural_rationale": "OB.S15 ('PostpartumCare' is an OCR spacing artifact of 'Postpartum Care') has one T-child ('Breastfeeding and Drugs') and spans a single page (OB50); grouped as one unit covering routine postpartum care plus breastfeeding/medication-safety counselling rather than split, given the thin single-page content.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-57",
+      "title": "Common Medications in Pregnancy (Reference)",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S16"
+      ],
+      "tn_page_range": "OB51",
+      "pdf_page_range": [
+        1037,
+        1037
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Common Medications"
+      ],
+      "structural_rationale": "Matches the real chapter TOC directly; a reference/summary medication table analogous to the EBM sidebar reference sections seen in other chapters (see NS 'Landmark Neurosurgery Trials' precedent), not primary testable clinical content at this scope stage per project instruction not to encode changing medication recommendations.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OB-58",
+      "title": "Landmark Obstetrics Trials",
+      "chapter_code": "OB",
+      "chapter_title": "Obstetrics",
+      "source_node_ids": [
+        "OB.S17"
+      ],
+      "tn_page_range": "OB52",
+      "pdf_page_range": [
+        1038,
+        1038
+      ],
+      "source_hierarchy_path": [
+        "Obstetrics",
+        "Landmark Obstetrics Trials"
+      ],
+      "structural_rationale": "Matches the real chapter TOC directly; an evidence-summary/EBM reference section, classified analogously to the NS 'Landmark Neurosurgery Trials' precedent (SUPPORTING_KNOWLEDGE/REFERENCE_ONLY, not primary testable content).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    }
+  ]
+}
