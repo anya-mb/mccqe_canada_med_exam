@@ -24,13 +24,14 @@
     "OT",
     "P",
     "PM",
-    "PL"
+    "PL",
+    "PS"
   ],
   "chapters_without_review_items_file": [
     "C",
     "ELOM"
   ],
-  "total_items": 144,
+  "total_items": 154,
   "items": [
     {
       "issue_type": "structural_ambiguity",
@@ -1045,7 +1046,7 @@
       "severity": "resolved",
       "study_unit_id": "SU-P-002, SU-P-003, SU-P-004, SU-P-005, SU-P-006, SU-P-007",
       "title": "Entire 'Primary Care' section (well-child care) absent from toc_inventory.json",
-      "summary": "research/tn2025/unresolved_headings.json flags 'PrimaryCaré' as one of P's two UNRESOLVED headings (source_pdf_page 1197, TOC page-number OCR did not parse to a trusted anchor). toc_inventory.json has no node at all for this section or its subtopics. Independently resolved via raw OCR of the chapter's own TOC page (pdf 1197) and body pages 1200-1206 (P4-P10): the section runs from immediately after 'Pediatric Quick Reference Values' (P.S01, P3) to immediately before 'Common Complaints' (P.S02, P10), covering Visit Overview, Routine Immunization, Growth and Development, Nutrition, a sixth body heading not named in the TOC line itself ('Injury Prevention Counselling'), and Circumcision.",
+      "summary": "research/tn2025/unresolved_headings.json flags 'PrimaryCar\u00e9' as one of P's two UNRESOLVED headings (source_pdf_page 1197, TOC page-number OCR did not parse to a trusted anchor). toc_inventory.json has no node at all for this section or its subtopics. Independently resolved via raw OCR of the chapter's own TOC page (pdf 1197) and body pages 1200-1206 (P4-P10): the section runs from immediately after 'Pediatric Quick Reference Values' (P.S01, P3) to immediately before 'Common Complaints' (P.S02, P10), covering Visit Overview, Routine Immunization, Growth and Development, Nutrition, a sixth body heading not named in the TOC line itself ('Injury Prevention Counselling'), and Circumcision.",
       "resolution_status": "INDEPENDENTLY RESOLVED (not left open) - represented as SU-P-002 through SU-P-007 under synthetic UNCATALOGUED:PrimaryCare@pdf1200.T01-T06 ids since no toc_inventory.json node exists to cite.",
       "recommended_action": "Coordinator should consider adding corresponding nodes to toc_inventory.json for chapter P (between P.S01 and P.S02, pdf pages 1200-1206) in a future TOC-extraction pass, since this is a substantial six-subtopic clinical section entirely missing from the pipeline's output (dropped, not merged) - the same class of gap seen in chapter A's SU-A-07 case. Not low-priority: unlike A's single-topic gap, this recovered section carries high-yield, directly-DIRECT-mapped MCC content (well-child visit, immunization, growth/development, nutrition)."
     },
@@ -1291,6 +1292,86 @@
       "summary": "Per project instruction, each SPECIALIST_DETAIL/REFERENCE_ONLY unit was explicitly checked for whether the entire competency is specialist-only or only the definitive technique is. Reconstructive Ladder and Skin Grafting (SU-PL-08) retains the conceptual reconstructive-ladder framework (RECOGNIZE depth) while excluding flap/graft technique selection. Breast Augmentation (SU-PL-35) retains generalist-relevant implant-complication awareness (capsular contracture, BIA-ALCL red-flag) while excluding implant-selection/operative technique. Breast Reconstruction (SU-PL-37) retains post-mastectomy counselling awareness while excluding flap/implant technique selection. Mastopexy (SU-PL-34) and the Aesthetic Procedures overview (SU-PL-38) were assessed and found to have no independently testable generalist decision-value beyond basic terminology -- both are purely elective/cosmetic with no MCC objective anchor -- and were left at REFERENCE_ONLY/zero-coverage rather than artificially retaining a thin recognition layer.",
       "recommended_action": "None required; documented per project instruction as a completed check, not an open question.",
       "chapter_code": "PL"
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-PS-03, SU-PS-04",
+      "title": "PS.S02 ('Assessmentand Plan') silently merges a substantial, safety-critical 'Suicide' heading",
+      "summary": "toc_inventory.json's PS.S02 node (title OCR-garbled as 'Assessmentand Plan') has no T-level children, but does carry merged_duplicate_headings=['SUICIDE'] -- a correct signal that a second heading is folded in. Raw OCR body-verification of pdf1359-1360 (PS5-6) confirms 'Suicide' is a full, independently substantial heading (screening approach, ideation classification, SAD PERSONS risk factors, assessment of a completed attempt, epidemiology, management/hospitalization threshold) beginning partway through pdf1359, distinct from and much larger than the preceding 'Assessment and Plan' framework content. Given the chapter prompt's explicit instruction to give particular scope attention to suicide/self-harm as safety-critical, this was split into SU-PS-03 (Assessment and Plan) and SU-PS-04 (Suicide Risk Assessment and Management, classification DIRECT/CORE_ACTION, coverage_weight 5) rather than left folded into a lower-weighted generic assessment unit.",
+      "recommended_action": "No action required beyond what was done; recommend the coordinator note this as a second confirmed instance (after PL's Craniofacial/Breast merge) of a chapter where merged_duplicate_headings correctly flagged a real defect and should be trusted as a strong signal in future chapters."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-PS-01, SU-PS-02",
+      "title": "PS.S01 ('Acromyms') merges the chapter's Acronyms glossary with the real 'Psychiatric Assessment' heading",
+      "summary": "toc_inventory.json's PS.S01 node title is an OCR garble of 'Acronyms' and also carries merged_duplicate_headings=['Psychiatric Assessment']. Raw OCR body-verification of pdf1356-1358 (PS2-4) confirms the page opens with the chapter's front-matter acronym glossary (non-clinical) followed immediately by the real 'Psychiatric Assessment' heading, whose own children ('History' and 'Mental Status Exam') were already correctly captured by toc_inventory.json as PS.S01.T01/T02. No restructuring of the topic children was needed; PS.S01 itself is recorded as an organizational_header_node (the glossary is non-clinical and excluded; the real content is fully represented by SU-PS-01/SU-PS-02).",
+      "recommended_action": "No action required."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-PS-51",
+      "title": "'Personality Disorders' (PS.S13.T05) is mis-parented under the Eating Disorders section",
+      "summary": "toc_inventory.json records 'Personality Disorders' as PS.S13.T05, a fifth child of the Eating Disorders section (PS.S13, recorded pdf1393-1397), with no merged_duplicate_headings or other hygiene flag raised. This is a genuine wrong-diagnostic-family assignment matching the project-flagged 'disorders assigned to the wrong diagnostic family' risk pattern: raw OCR body-verification confirms Table 10 ('Description and Diagnosis of Personality Disorders,' covering Clusters A/B/C) begins on pdf1397 (PS43), continuing onto pdf1398 (PS44, Table 11 comparing Schizoid/Schizotypal/Schizophrenia) before Child Psychiatry's own content begins -- Personality Disorders has nothing to do with eating disorders. Resolved by representing it as its own major-diagnostic-family unit (SU-PS-51, classification DIRECT against MCC objective 75 'Personality disorders') rather than folding it into or fragmenting it across the Eating Disorders unit set.",
+      "recommended_action": "Coordinator should note this as a third clean case (after PM's four-heading AcromymS merge and PL's Craniofacial/Breast merge) where a node with NO hygiene flag (no merged_duplicate_headings, no unresolved_headings.json entry) still concealed a real wrong-family defect -- reinforcing that clean packet/validator signals are not sufficient evidence of correct parenting on their own."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-PS-59",
+      "title": "'Psychotherapy' heading (Table 13, ten modalities) is entirely absent from toc_inventory.json",
+      "summary": "toc_inventory.json has no node at all for 'Psychotherapy' -- its content (Common Factors of Psychotherapy, and Table 13 summarizing ten psychotherapeutic modalities with indications/approach/duration) is silently absorbed into the recorded page range of PS.S15 ('Neurodevelopmental Disorders'), the wrong diagnostic-family parent for a treatment-modality overview. Confirmed via raw OCR body-verification: this content begins on pdf1403 (PS49) immediately after Intermittent Explosive Disorder ends, and ends before Pharmacotherapy/Antipsychotics begins on pdf1404. Represented under a synthetic UNCATALOGUED id (SU-PS-59) per the OT/OR/OP/PM/PL precedent for body-recovered headings, as a single overview unit since the source itself presents all ten modalities as rows of one summary table.",
+      "recommended_action": "No action required."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-PS-64",
+      "title": "'Electroconvulsive Therapy' is entirely absent from PS.S17's topic list despite being its first and most significant topic",
+      "summary": "toc_inventory.json's PS.S17 ('Somatic Therapies') topic children (T01-T04) cover only rTMS, Magnetic Seizure Therapy, Neurosurgical Treatments, and Other Therapy Modalities -- omitting Electroconvulsive Therapy (ECT) entirely, despite it being body-confirmed (pdf1412, PS58) as the section's actual first and most clinically significant topic, immediately following the Anxiolytics dosing table and ending before rTMS (T01) begins on pdf1413. This is a high-yield omission: ECT is the fastest, most effective, and most frequently tested acute treatment for severe/treatment-resistant depression in this chapter. Recovered under a synthetic UNCATALOGUED id (SU-PS-64), classification DIRECT, coverage_weight 3.",
+      "recommended_action": "Coordinator should flag the underlying toc_inventory.json extraction pipeline: this is the second body-recovered heading in this chapter's Somatic-Therapies-adjacent content (after Psychotherapy), suggesting therapy/treatment-modality headings that follow a long preceding disorder-listing or drug-dosing table may be systematically more likely to be dropped by the TOC extraction step."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-PS-52",
+      "title": "'Developmental Concepts' (attachment/temperament, child-interview guidance) has no toc_inventory.json node",
+      "summary": "Body-recovered heading absent from toc_inventory.json: the 'Developmental Concepts' content (temperament, parental fit, attachment theory, Table 12 attachment models, separation anxiety, plus a child-interview-technique sidebar) is silently folded into PS.S14's ('Child Psychiatry') page range with no topic node of its own, sitting between the recovered Personality Disorders content (ending pdf1398) and PS.S14.T01 'Mood Disorders in Children and Adolescents'. Recovered under a synthetic UNCATALOGUED id (SU-PS-52), classified COMPONENT/CONTEXT_ONLY against MCC objective 74-5 'The well child and adolescent'.",
+      "recommended_action": "No action required."
+    },
+    {
+      "issue_type": "weak_or_uncertain_evidence",
+      "severity": "flagged_for_review",
+      "study_unit_id": "SU-PS-55",
+      "title": "ASD has no MCC candidate objective; obj21 (Developmental delay) used as WEAK fallback",
+      "summary": "SU-PS-55 (ADHD and Autism Spectrum Disorder, cross-reference-only unit) cites obj21 'Developmental delay' at WEAK strength for the ASD half of its content because no MCC candidate objective or targeted-search result names autism spectrum disorder specifically; obj21 is the closest available registry match but is not itself primarily an ASD-focused objective. requires_scope_review is set true per schema. This unit's own testable coverage is minimal (minimum_question_coverage=0, zero_question_reason documents the pure cross-reference to Pediatrics) so the practical impact of the weak evidence is low, but the mapping itself should be re-examined once/if a dedicated ASD objective is confirmed to exist in a future MCC registry refresh.",
+      "recommended_action": "Re-run search-mcc-objectives for 'autism' after any objectives_registry.json refresh; if a dedicated objective is found, replace the WEAK obj21 evidence."
+    },
+    {
+      "issue_type": "weak_or_uncertain_evidence",
+      "severity": "flagged_for_review",
+      "study_unit_id": "SU-PS-45",
+      "title": "'Sexual Addiction / Compulsive Sexual Behaviour' is not a DSM-5 diagnosis and has no MCC anchor",
+      "summary": "Unlike the other three topics in PS.S12 (Gender Dysphoria, Paraphilic Disorders, Sexual Dysfunction -- all formal DSM-5 diagnoses with MCC evidence), 'Sexual Addiction' (PS.S12.T03) is presented in Toronto Notes without being a recognized DSM-5 diagnostic category, and no MCC candidate or targeted registry search surfaced an applicable objective. Classified UNCERTAIN with uncertain_reason documented and mcc_evidence left empty (CONTEXT_ONLY depth, minimum_question_coverage=0).",
+      "recommended_action": "Human reviewer should confirm whether Toronto Notes' own text frames this as informal terminology or references ICD-11's 'compulsive sexual behaviour disorder' (which IS a recognized diagnostic entity, absent from DSM-5); if the latter, classification could be upgraded to COMPONENT/SPECIALIST_DETAIL with a documented ICD-11 citation rather than left UNCERTAIN."
+    },
+    {
+      "issue_type": "cross_discipline_overlap",
+      "severity": "informational",
+      "study_unit_id": "SU-PS-68, SU-PS-69, SU-PS-70, SU-PS-71",
+      "title": "Canadian Legal Issues section (S18) overlaps substantially with ELOM",
+      "summary": "Per the chapter-scoping instructions, PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT for the Common Forms (SU-PS-68), Consent (SU-PS-69, explicit cross-reference to ELOM12), Community Treatment Order (SU-PS-70), and Duty to Inform/Warn (SU-PS-71, explicit cross-reference to ELOM11) units were intentionally NOT finalized, pending the global cross-chapter ownership audit. SU-PS-69 and SU-PS-71 are pure in-text redirects with zero independent testable content (minimum_question_coverage=0); SU-PS-68 and SU-PS-70 have genuine psychiatry-specific clinical-trigger content (when/why a physician invokes these mechanisms) layered on top of the shared legal framework ELOM owns generally.",
+      "recommended_action": "Coordinator should resolve ownership during the global audit: recommend ELOM retains primary ownership of general consent/capacity/duty-to-warn principles, while Psychiatry (this chapter) retains the clinical-trigger/threshold-recognition content specific to psychiatric involuntary assessment and CTOs, to avoid duplicate testing of the same legal mechanics from two chapters."
+    },
+    {
+      "issue_type": "cross_discipline_overlap",
+      "severity": "informational",
+      "study_unit_id": "SU-PS-13, SU-PS-53, SU-PS-54, SU-PS-55",
+      "title": "Postpartum, pediatric-mood/anxiety, and neurodevelopmental content overlaps Obstetrics/Pediatrics",
+      "summary": "Postpartum Mood Disorders (SU-PS-13) overlaps Obstetrics' postpartum-care content; Mood/Anxiety Disorders in Children and Adolescents (SU-PS-53/54) and the ADHD/ASD cross-reference unit (SU-PS-55) overlap Pediatrics' own developmental-surveillance and ADHD/ASD study units. Each PS unit's cross_discipline_note documents that this chapter covers only the psychiatric-diagnosis/management angle, not the full obstetric or pediatric curriculum, per the chapter-scoping instruction not to duplicate another chapter's complete curriculum merely because of psychiatric-manifestation overlap.",
+      "recommended_action": "No action required; documented for the global cross-chapter ownership audit's awareness."
     }
   ]
 }

@@ -1,0 +1,1694 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-26T00:00:00Z",
+  "chapter_code": "PS",
+  "chapter_title": "Psychiatry",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes source structure (toc_inventory.json / derived/scope_packets/PS.json), corrected against raw OCR body-verification (derived/toronto-notes-2025/clean-ocr) of pdf1356-1418 (all pages with a merged_duplicate_headings flag, an OCR-garbled title, or a suspicious topic-to-section-family mismatch, plus spot checks at section-boundary transitions). Five genuine structural defects were confirmed and corrected, matching the project's flagged risk patterns: (1) PS.S01 (title OCR-garbled 'Acromyms') merges the chapter's Acronyms glossary with the real 'Psychiatric Assessment' heading (children History/MSE correctly captured as T01/T02, SU-PS-01/02); (2) PS.S02 (title 'Assessmentand Plan', merged_duplicate_headings=['SUICIDE']) merges 'Assessment and Plan' with a substantial, safety-critical 'Suicide' heading entirely absent from toc_inventory.json as its own node -- split into SU-PS-03/04; (3) 'Personality Disorders' (PS.S13.T05) is mis-parented as a child of the Eating Disorders section rather than represented as its own major diagnostic family -- corrected as SU-PS-51; (4) the 'Psychotherapy' heading (Table 13, ten modalities) is entirely absent from toc_inventory.json, silently folded into PS.S15 'Neurodevelopmental Disorders' page range -- recovered as SU-PS-59; (5) 'Electroconvulsive Therapy' is entirely absent from PS.S17's topic list (T01-T04 cover only rTMS/MST/Neurosurgical/Other) despite being the section's first and most clinically significant topic -- recovered as SU-PS-64. Two further body-recovered headings with no toc_inventory.json node were also captured: 'Developmental Concepts' (attachment/temperament, child-interview guidance; SU-PS-52) folded into PS.S14's page range, and the 'Neurodevelopmental Disorders' section-opening ADHD/ASD cross-references to Pediatrics, correctly distinguished from the section's real body content (Disruptive, Impulse-Control, and Conduct Disorder, T01-T03) per toc_inventory.json's own merged_duplicate_headings flag on PS.S15. All remaining LOW-confidence, TOC_OCR_UNANCHORED topic children (the large majority of this chapter's ~64 topic nodes) were accepted at toc_inventory.json's own segmentation -- each already isolates one coherent DSM-5-type diagnosis or drug class matching this project's non-fragmentation guidance -- with page_mapping_precision honestly recorded as SECTION_INHERITED rather than claiming topic-level page precision that was not independently body-verified.",
+  "total_study_units": 72,
+  "organizational_header_nodes": [
+    "PS",
+    "PS.S01"
+  ],
+  "excluded_artifact_nodes": [
+    "PS.S20"
+  ],
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-01",
+      "title": "Psychiatric History Taking",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S01.T01"
+      ],
+      "tn_page_range": "PS2",
+      "pdf_page_range": [
+        1356,
+        1357
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Psychiatric Assessment",
+        "History"
+      ],
+      "structural_rationale": "toc_inventory.json's PS.S01 node (captured title 'Acromyms', an OCR garble of 'Acronyms') merges two real, distinct top-level headings confirmed by raw OCR body-verification of pdf1356-1358 (PS2-4): the chapter's front-matter Acronyms glossary (non-clinical, excluded via PS.S01 as organizational header) and the real 'Psychiatric Assessment' section, whose own children are 'History' and 'Mental Status Exam' -- already correctly captured by toc_inventory.json as PS.S01.T01/T02. This unit represents the History component only (Introduction, Identifying Data, Chief Complaint, HPI, Psychiatric Functional Inquiry, Past Psychiatric History, Substance Use History, Past Medical/Family/Developmental History, Collateral History), confirmed starting pdf1356 (PS2) and continuing onto pdf1357 (PS3) before Mental Status Exam begins.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-02",
+      "title": "Mental Status Examination",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S01.T02"
+      ],
+      "tn_page_range": "PS3-4",
+      "pdf_page_range": [
+        1357,
+        1358
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Psychiatric Assessment",
+        "Mental Status Exam"
+      ],
+      "structural_rationale": "Confirmed by raw OCR body-verification (pdf1357-1358, PS3-4) as the second real child of the 'Psychiatric Assessment' heading merged into toc_inventory.json's garbled PS.S01 node (see SU-PS-01 for the Acronyms/Psychiatric Assessment merge). Covers General Appearance, Speech, Emotion (mood/affect), Perception, Thought Process/Form, Thought Content (including suicidal/homicidal ideation screening within thought content), Insight, Judgment, and Cognition (AASEPTIC mnemonic).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-03",
+      "title": "Approach to Psychiatric Assessment and Management Planning",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S02"
+      ],
+      "tn_page_range": "PS5",
+      "pdf_page_range": [
+        1359,
+        1359
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Assessment and Plan"
+      ],
+      "structural_rationale": "toc_inventory.json's PS.S02 node (title OCR-garbled as 'Assessmentand Plan') has no T-level children and its own merged_duplicate_headings flag lists 'SUICIDE', correctly signalling that two distinct headings are folded into one node. Raw OCR body-verification of pdf1359 (PS5) confirms 'Assessment and Plan' (historical multiaxial model, problem formulation across biological/psychological/social domains, approach to management) occupies the first half of the page and ends at 'Assessing Insight and Judgment' sidebar, immediately followed by a new 'Suicide' heading -- represented separately as SU-PS-04 given its safety-critical, independently testable content. This unit covers only the Assessment/Problem Formulation and Approach to Management content.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-04",
+      "title": "Suicide Risk Assessment and Management",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "UNCATALOGUED:Suicide@pdf1359"
+      ],
+      "tn_page_range": "PS5-6",
+      "pdf_page_range": [
+        1359,
+        1360
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Assessment and Plan",
+        "Suicide"
+      ],
+      "structural_rationale": "Body-recovered heading: toc_inventory.json has no node for 'Suicide' -- it is silently folded into PS.S02 ('Assessmentand Plan'), flagged only indirectly via that node's merged_duplicate_headings=['SUICIDE']. Raw OCR body-verification confirms 'Suicide' begins partway through pdf1359 (PS5, immediately after the 'Assessing Insight and Judgment' sidebar) and continues through pdf1360 (PS6), covering: importance/universal screening, approach to asking about ideation (passive vs. active), assessing plan/intent/means/protective factors, SAD PERSONS risk factors, assessment of a completed suicide attempt, epidemiology, and management (hospitalization/Form 1 threshold vs. outpatient safety planning). Given a synthetic UNCATALOGUED id per the OT/OR/OP/PM/PL precedent for body-recovered headings absent from toc_inventory.json. Kept as a single coherent unit per the project's non-fragmentation guidance (epidemiology/risk factors/management of one clinical topic) rather than split by subheading.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-05",
+      "title": "Approach to and Differential Diagnosis of Psychosis",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S03",
+        "PS.S03.T01"
+      ],
+      "tn_page_range": "PS7",
+      "pdf_page_range": [
+        1361,
+        1363
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Psychotic Disorders",
+        "Differential Diagnosis of Psychosis"
+      ],
+      "structural_rationale": "PS.S03.T01 is a LOW-confidence, TOC_OCR_UNANCHORED child node; page range inherited from parent PS.S03 (HIGH-confidence, TOC_OCR-anchored, pdf1361-1363) rather than independently confirmed at topic level.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-06",
+      "title": "Schizophrenia",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S03.T02"
+      ],
+      "tn_page_range": "PS7-8",
+      "pdf_page_range": [
+        1361,
+        1363
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Psychotic Disorders",
+        "Schizophrenia"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child; page range inherited from parent PS.S03 (pdf1361-1363).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-07",
+      "title": "Schizophreniform Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S03.T03"
+      ],
+      "tn_page_range": "PS8",
+      "pdf_page_range": [
+        1361,
+        1363
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Psychotic Disorders",
+        "Schizophreniform Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child; page range inherited from parent PS.S03 (pdf1361-1363).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-08",
+      "title": "Brief Psychotic Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S03.T04"
+      ],
+      "tn_page_range": "PS8",
+      "pdf_page_range": [
+        1361,
+        1363
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Psychotic Disorders",
+        "Brief Psychotic Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child; page range inherited from parent PS.S03 (pdf1361-1363).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-09",
+      "title": "Schizoaffective Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S03.T05"
+      ],
+      "tn_page_range": "PS8-9",
+      "pdf_page_range": [
+        1361,
+        1363
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Psychotic Disorders",
+        "Schizoaffective Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child; page range inherited from parent PS.S03 (pdf1361-1363). Body-confirmed (pdf1363, PS9) content covers epidemiology, treatment (antipsychotics/mood stabilizers/antidepressants), and prognosis (intermediate between schizophrenia and mood disorder).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-10",
+      "title": "Delusional Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S03.T06"
+      ],
+      "tn_page_range": "PS9",
+      "pdf_page_range": [
+        1361,
+        1363
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Psychotic Disorders",
+        "Delusional Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child; page range inherited from parent PS.S03 (pdf1361-1363). Body-confirmed (pdf1363, PS9) DSM-5 criteria (>=1 delusion >=1 mo, criterion A for schizophrenia never met, functioning not markedly impaired outside the delusion) and subtypes (erotomanic, grandiose, jealous, persecutory, somatic, mixed).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-11",
+      "title": "Mood Episodes (Major Depressive, Manic, Hypomanic, Mixed)",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S04",
+        "PS.S04.T01"
+      ],
+      "tn_page_range": "PS10-11",
+      "pdf_page_range": [
+        1364,
+        1369
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Mood Disorders",
+        "Mood Episodes"
+      ],
+      "structural_rationale": "PS.S04.T01 is LOW-confidence/TOC_OCR_UNANCHORED; page range inherited from parent PS.S04 (HIGH-confidence, pdf1364-1369). Body-confirmed (pdf1364, PS10) as covering the DSM-5 mood-episode building blocks (major depressive, manic, hypomanic, mixed) and the medical workup applied before attributing a mood episode to a primary mood disorder.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-12",
+      "title": "Depressive Disorders (Major Depressive Disorder, Persistent Depressive Disorder)",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S04.T02"
+      ],
+      "tn_page_range": "PS11-13",
+      "pdf_page_range": [
+        1364,
+        1369
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Mood Disorders",
+        "Depressive Disorders"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S04 (pdf1364-1369).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-13",
+      "title": "Postpartum Mood Disorders",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S04.T03"
+      ],
+      "tn_page_range": "PS13-14",
+      "pdf_page_range": [
+        1364,
+        1369
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Mood Disorders",
+        "Postpartum Mood Disorders"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S04 (pdf1364-1369). Confirmed present via targeted body search (pdf1368-1369) per the chapter prompt's explicit flag for postpartum psychiatric emergencies as safety-critical content.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-14",
+      "title": "Bipolar Disorders",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S04.T04"
+      ],
+      "tn_page_range": "PS14-15",
+      "pdf_page_range": [
+        1364,
+        1369
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Mood Disorders",
+        "Bipolar Disorders"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S04 (pdf1364-1369).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-15",
+      "title": "Panic Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S05",
+        "PS.S05.T01"
+      ],
+      "tn_page_range": "PS16",
+      "pdf_page_range": [
+        1370,
+        1372
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Anxiety Disorders",
+        "Panic Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S05 (HIGH-confidence, pdf1370-1372).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-16",
+      "title": "Agoraphobia",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S05.T02"
+      ],
+      "tn_page_range": "PS16-17",
+      "pdf_page_range": [
+        1370,
+        1372
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Anxiety Disorders",
+        "Agoraphobia"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S05 (pdf1370-1372).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-17",
+      "title": "Generalized Anxiety Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S05.T03"
+      ],
+      "tn_page_range": "PS17",
+      "pdf_page_range": [
+        1370,
+        1372
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Anxiety Disorders",
+        "Generalized Anxiety Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S05 (pdf1370-1372).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-18",
+      "title": "Social Anxiety Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S05.T04"
+      ],
+      "tn_page_range": "PS17-18",
+      "pdf_page_range": [
+        1370,
+        1372
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Anxiety Disorders",
+        "Social Anxiety"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S05 (pdf1370-1372).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-19",
+      "title": "Specific Phobic Disorders",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S05.T05"
+      ],
+      "tn_page_range": "PS18",
+      "pdf_page_range": [
+        1370,
+        1372
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Anxiety Disorders",
+        "Phobic Disorders"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S05 (pdf1370-1372). Body-confirmed (pdf1372, PS18) content: phobic object/situation avoided or endured with intense anxiety, disproportionate/persistent (>=6 mo) fear; treatment is predominantly psychological (CBT with exposure) with minimal role for medication.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-20",
+      "title": "Obsessive-Compulsive Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S06",
+        "PS.S06.T01"
+      ],
+      "tn_page_range": "PS19",
+      "pdf_page_range": [
+        1373,
+        1373
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Obsessive-Compulsive and Related Disorders",
+        "Obsessive-Compulsive Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S06 (HIGH-confidence, pdf1373). Body-confirmed (pdf1373, PS19) DSM-5 criteria (obsessions and/or compulsions, time-consuming or causing significant impairment), epidemiology, risk factors (including PANDAS), and treatment (ERP-based CBT, SSRIs at higher doses/longer latency than for depression, neurosurgery/ECT for refractory cases).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-21",
+      "title": "OCD-Related Disorders (Body Dysmorphic Disorder, Hoarding, Trichotillomania, Excoriation)",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S06.T02"
+      ],
+      "tn_page_range": "PS19",
+      "pdf_page_range": [
+        1373,
+        1373
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Obsessive-Compulsive and Related Disorders",
+        "Related Disorders"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S06 (pdf1373). Represented as a single grouped unit per the DSM-5 'Obsessive-Compulsive and Related Disorders' chapter grouping and the project's non-fragmentation guidance, rather than one unit per disorder, since the source presents them as a compact grouped subheading alongside OCD.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-22",
+      "title": "Post-Traumatic Stress Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S07",
+        "PS.S07.T01"
+      ],
+      "tn_page_range": "PS20-21",
+      "pdf_page_range": [
+        1374,
+        1376
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Trauma- and Stressor-Related Disorders",
+        "Post-Traumatic Stress Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S07 (HIGH-confidence, pdf1374-1376).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-23",
+      "title": "Adjustment Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S07.T02"
+      ],
+      "tn_page_range": "PS21",
+      "pdf_page_range": [
+        1374,
+        1376
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Trauma- and Stressor-Related Disorders",
+        "Adjustment Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S07 (pdf1374-1376).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-24",
+      "title": "Bereavement (Normal and Complicated Grief)",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S07.T03"
+      ],
+      "tn_page_range": "PS22",
+      "pdf_page_range": [
+        1374,
+        1376
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Trauma- and Stressor-Related Disorders",
+        "Bereavement"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S07 (pdf1374-1376). Body-confirmed (pdf1376, PS22) content includes indications for grief therapy and pharmacotherapy when MDD, past mood-disorder history, or severe symptoms complicate bereavement.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-25",
+      "title": "Delirium",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S08",
+        "PS.S08.T01"
+      ],
+      "tn_page_range": "PS23-24",
+      "pdf_page_range": [
+        1377,
+        1386
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Neurocognitive Disorders",
+        "Delirium"
+      ],
+      "structural_rationale": "PS.S08's own section title ('Neurocognitive Disorders', HIGH-confidence/TOC_OCR-anchored, pdf1377-1386) is TN's printed banner for a section that body-verification (pdf1377, PS23) confirms actually bundles Delirium + Major/Mild Neurocognitive Disorder + Substance-Related and Addictive Disorders (T03-T11) -- not solely neurocognitive-disorder content. Delirium itself (T01) is body-confirmed starting exactly at the section boundary (pdf1377), covering DSM-5 criteria, clinical features, risk factors (I WATCH DEATH), and the CAM assessment tool; cross-referenced in-text to Neurology N21.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-26",
+      "title": "Major or Mild Neurocognitive Disorder (Dementia)",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S08.T02"
+      ],
+      "tn_page_range": "PS24-26",
+      "pdf_page_range": [
+        1377,
+        1386
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Neurocognitive Disorders",
+        "Major Neurocognitive Disorder (Dementia)"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child of PS.S08; page range inherited from parent section (pdf1377-1386).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-27",
+      "title": "Substance Use Disorders: General Approach and Diagnosis",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S08.T03"
+      ],
+      "tn_page_range": "PS26-27",
+      "pdf_page_range": [
+        1377,
+        1386
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Neurocognitive Disorders",
+        "Substance-Related and Addictive Disorders"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child of PS.S08; page range inherited from parent section. Body-confirmed (pdf1381, PS27) as the general diagnostic framework (PEC WITH MCAT criteria, mild/moderate/severe severity continuum, toxicology testing principles, THE WATER history-taking mnemonic) applied uniformly across all specific substances before the individual-substance topics (T04-T11) below.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-28",
+      "title": "Nicotine Use Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S08.T04"
+      ],
+      "tn_page_range": "PS27-32",
+      "pdf_page_range": [
+        1377,
+        1386
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Neurocognitive Disorders",
+        "Substance-Related and Addictive Disorders",
+        "Nicotine Use Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child of PS.S08; page range inherited from the parent section (pdf1377-1386). Represented as a substance-specific unit applying the general SUD diagnostic framework (SU-PS-27) plus this substance's specific intoxication/withdrawal syndrome, per toc_inventory.json's own per-substance topic segmentation.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-29",
+      "title": "Alcohol Use Disorder, Intoxication, and Withdrawal",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S08.T05"
+      ],
+      "tn_page_range": "PS27-32",
+      "pdf_page_range": [
+        1377,
+        1386
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Neurocognitive Disorders",
+        "Substance-Related and Addictive Disorders",
+        "Alcohol Use Disorder, Intoxication, and Withdrawal"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child of PS.S08; page range inherited from the parent section (pdf1377-1386). Represented as a substance-specific unit applying the general SUD diagnostic framework (SU-PS-27) plus this substance's specific intoxication/withdrawal syndrome, per toc_inventory.json's own per-substance topic segmentation.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-30",
+      "title": "Opioid Use Disorder, Intoxication, and Withdrawal",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S08.T06"
+      ],
+      "tn_page_range": "PS27-32",
+      "pdf_page_range": [
+        1377,
+        1386
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Neurocognitive Disorders",
+        "Substance-Related and Addictive Disorders",
+        "Opioid Use Disorder, Intoxication, and Withdrawal"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child of PS.S08; page range inherited from the parent section (pdf1377-1386). Represented as a substance-specific unit applying the general SUD diagnostic framework (SU-PS-27) plus this substance's specific intoxication/withdrawal syndrome, per toc_inventory.json's own per-substance topic segmentation.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-31",
+      "title": "Cocaine Use Disorder and Stimulant Intoxication",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S08.T07"
+      ],
+      "tn_page_range": "PS27-32",
+      "pdf_page_range": [
+        1377,
+        1386
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Neurocognitive Disorders",
+        "Substance-Related and Addictive Disorders",
+        "Cocaine Use Disorder and Stimulant Intoxication"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child of PS.S08; page range inherited from the parent section (pdf1377-1386). Represented as a substance-specific unit applying the general SUD diagnostic framework (SU-PS-27) plus this substance's specific intoxication/withdrawal syndrome, per toc_inventory.json's own per-substance topic segmentation.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-32",
+      "title": "Amphetamine Use Disorder and Stimulant Intoxication",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S08.T08"
+      ],
+      "tn_page_range": "PS27-32",
+      "pdf_page_range": [
+        1377,
+        1386
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Neurocognitive Disorders",
+        "Substance-Related and Addictive Disorders",
+        "Amphetamine Use Disorder and Stimulant Intoxication"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child of PS.S08; page range inherited from the parent section (pdf1377-1386). Represented as a substance-specific unit applying the general SUD diagnostic framework (SU-PS-27) plus this substance's specific intoxication/withdrawal syndrome, per toc_inventory.json's own per-substance topic segmentation.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-33",
+      "title": "Cannabis Use Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S08.T09"
+      ],
+      "tn_page_range": "PS27-32",
+      "pdf_page_range": [
+        1377,
+        1386
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Neurocognitive Disorders",
+        "Substance-Related and Addictive Disorders",
+        "Cannabis Use Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child of PS.S08; page range inherited from the parent section (pdf1377-1386). Represented as a substance-specific unit applying the general SUD diagnostic framework (SU-PS-27) plus this substance's specific intoxication/withdrawal syndrome, per toc_inventory.json's own per-substance topic segmentation.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-34",
+      "title": "Hallucinogen Use",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S08.T10"
+      ],
+      "tn_page_range": "PS27-32",
+      "pdf_page_range": [
+        1377,
+        1386
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Neurocognitive Disorders",
+        "Substance-Related and Addictive Disorders",
+        "Hallucinogen Use"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child of PS.S08; page range inherited from the parent section (pdf1377-1386). Represented as a substance-specific unit applying the general SUD diagnostic framework (SU-PS-27) plus this substance's specific intoxication/withdrawal syndrome, per toc_inventory.json's own per-substance topic segmentation.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-35",
+      "title": "Club Drugs (MDMA, GHB, Ketamine)",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S08.T11"
+      ],
+      "tn_page_range": "PS27-32",
+      "pdf_page_range": [
+        1377,
+        1386
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Neurocognitive Disorders",
+        "Substance-Related and Addictive Disorders",
+        "Club Drugs (MDMA, GHB, Ketamine)"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child of PS.S08; page range inherited from the parent section (pdf1377-1386). Represented as a substance-specific unit applying the general SUD diagnostic framework (SU-PS-27) plus this substance's specific intoxication/withdrawal syndrome, per toc_inventory.json's own per-substance topic segmentation.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-36",
+      "title": "Somatic Symptom Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S09",
+        "PS.S09.T01"
+      ],
+      "tn_page_range": "PS33",
+      "pdf_page_range": [
+        1387,
+        1388
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Somatic Symptom and Related Disorders",
+        "Somatic Symptom Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S09 (HIGH-confidence, pdf1387-1388).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-37",
+      "title": "Illness Anxiety Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S09.T02"
+      ],
+      "tn_page_range": "PS33-34",
+      "pdf_page_range": [
+        1387,
+        1388
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Somatic Symptom and Related Disorders",
+        "Illness Anxiety Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S09 (pdf1387-1388).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-38",
+      "title": "Conversion Disorder (Functional Neurological Symptom Disorder)",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S09.T03"
+      ],
+      "tn_page_range": "PS34",
+      "pdf_page_range": [
+        1387,
+        1388
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Somatic Symptom and Related Disorders",
+        "Conversion Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S09 (pdf1387-1388).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-39",
+      "title": "Dissociative Identity Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S10",
+        "PS.S10.T01"
+      ],
+      "tn_page_range": "PS35",
+      "pdf_page_range": [
+        1389,
+        1389
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Dissociative Disorders",
+        "Dissociative Identity Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S10 (HIGH-confidence, pdf1389).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-40",
+      "title": "Dissociative Amnesia",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S10.T02"
+      ],
+      "tn_page_range": "PS35",
+      "pdf_page_range": [
+        1389,
+        1389
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Dissociative Disorders",
+        "Dissociative Amnesia"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S10 (pdf1389).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-41",
+      "title": "Depersonalization/Derealization Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S10.T03"
+      ],
+      "tn_page_range": "PS35",
+      "pdf_page_range": [
+        1389,
+        1389
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Dissociative Disorders",
+        "Depersonalization/Derealization Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S10 (pdf1389). Depersonalization/derealization are also defined as MSE perceptual phenomena in SU-PS-02; this unit covers them as a standalone persistent/recurrent DSM-5 diagnosis.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-42",
+      "title": "Sleep-Wake Disorders (Overview, Sleep Hygiene, and DSM-5 Categories)",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S11"
+      ],
+      "tn_page_range": "PS36-37",
+      "pdf_page_range": [
+        1390,
+        1391
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Sleep Disorders"
+      ],
+      "structural_rationale": "PS.S11 is a HIGH-confidence, TOC_OCR-anchored section (pdf1390-1391) with no T-level children in toc_inventory.json. Body-confirmed content spans a general overview/sleep-hygiene-and-management page (pdf1390, PS36) followed by Table 8 (pdf1391, PS37), a single summary table of major DSM-5 sleep-wake disorder categories (insomnia, hypersomnolence, narcolepsy, circadian rhythm, restless legs, substance-induced, breathing-related [OSA/central/hypoventilation], and parasomnias) with per-row management. Represented as one unit per the project's non-fragmentation guidance, since the source itself presents these as a single reference table rather than as separate full write-ups.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-43",
+      "title": "Gender Dysphoria",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S12",
+        "PS.S12.T01"
+      ],
+      "tn_page_range": "PS38",
+      "pdf_page_range": [
+        1392,
+        1392
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Sexuality and Gender",
+        "Gender Dysphoria"
+      ],
+      "structural_rationale": "toc_inventory.json's PS.S12 title is OCR-garbled as 'SexualityandGender' (missing spaces, corrected here to 'Sexuality and Gender'); node structure/children otherwise unaffected. LOW-confidence, TOC_OCR_UNANCHORED child; page range inherited from parent PS.S12 (HIGH-confidence, pdf1392).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-44",
+      "title": "Paraphilic Disorders",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S12.T02"
+      ],
+      "tn_page_range": "PS38",
+      "pdf_page_range": [
+        1392,
+        1392
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Sexuality and Gender",
+        "Paraphilic Disorders"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S12 (pdf1392).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-45",
+      "title": "Sexual Addiction / Compulsive Sexual Behaviour",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S12.T03"
+      ],
+      "tn_page_range": "PS38",
+      "pdf_page_range": [
+        1392,
+        1392
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Sexuality and Gender",
+        "Sexual Addiction"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S12 (pdf1392). No candidate MCC objective names this concept, and it is not a formal DSM-5 diagnosis (unlike the other units in this section); represented as UNCERTAIN pending confirmation of whether the source frames it as a recognized clinical entity or informal terminology.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-46",
+      "title": "Sexual Dysfunction",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S12.T04"
+      ],
+      "tn_page_range": "PS38",
+      "pdf_page_range": [
+        1392,
+        1392
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Sexuality and Gender",
+        "Sexual Dysfunction"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S12 (pdf1392).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-47",
+      "title": "Anorexia Nervosa",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S13",
+        "PS.S13.T01"
+      ],
+      "tn_page_range": "PS39-40",
+      "pdf_page_range": [
+        1393,
+        1397
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Eating Disorders",
+        "Anorexia Nervosa"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S13 (HIGH-confidence, pdf1393-1397).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-48",
+      "title": "Bulimia Nervosa",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S13.T02"
+      ],
+      "tn_page_range": "PS40-41",
+      "pdf_page_range": [
+        1393,
+        1397
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Eating Disorders",
+        "Bulimia Nervosa"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S13 (pdf1393-1397).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-49",
+      "title": "Binge-Eating Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S13.T03"
+      ],
+      "tn_page_range": "PS41",
+      "pdf_page_range": [
+        1393,
+        1397
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Eating Disorders",
+        "Binge-Eating Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S13 (pdf1393-1397).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-50",
+      "title": "Avoidant/Restrictive Food Intake Disorder (ARFID)",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S13.T04"
+      ],
+      "tn_page_range": "PS42",
+      "pdf_page_range": [
+        1393,
+        1397
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Eating Disorders",
+        "Avoidant/Restrictive Food Intake Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S13 (pdf1393-1397).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-51",
+      "title": "Personality Disorders (Clusters A, B, and C)",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S13.T05"
+      ],
+      "tn_page_range": "PS43-44",
+      "pdf_page_range": [
+        1397,
+        1398
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Personality Disorders"
+      ],
+      "structural_rationale": "toc_inventory.json mis-parents 'Personality Disorders' as PS.S13.T05, a fifth child of the 'Eating Disorders' section (PS.S13, recorded pdf1393-1397) -- a genuine wrong-family structural defect, not a topic that belongs under eating disorders. Raw OCR body-verification confirms Table 10 ('Description and Diagnosis of Personality Disorders,' covering Cluster A [Schizoid, and by extension Paranoid/Schizotypal per the Table 11 comparison on the following page], Cluster B [Borderline, Antisocial, Narcissistic, Histrionic], and Cluster C [Avoidant, Dependent, Obsessive-Compulsive PD]) begins on pdf1397 (PS43), the final page of the recorded Eating Disorders range, and continues onto pdf1398 (PS44, Table 11: Key Differences Among Schizoid, Schizotypal, and Schizophrenia) before Child Psychiatry's own content (Developmental Concepts, see SU-PS-52) begins. Represented as a single unit spanning all three clusters -- matching MCC's own single 'Personality disorders' objective (75), which does not test cluster-by-cluster -- rather than one unit per specific personality disorder, per the project's non-fragmentation guidance.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-52",
+      "title": "Child Development, Attachment, and the Child Psychiatric Interview",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "UNCATALOGUED:DevelopmentalConcepts@pdf1398"
+      ],
+      "tn_page_range": "PS44",
+      "pdf_page_range": [
+        1398,
+        1398
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Child Psychiatry",
+        "Developmental Concepts"
+      ],
+      "structural_rationale": "Body-recovered heading: toc_inventory.json has no node for 'Developmental Concepts' (temperament, parental fit, attachment, separation anxiety, Table 12 attachment models) or the child-interview guidance sidebar -- both are silently absorbed into the page range of PS.S14 without their own topic node, sitting between the recovered Personality Disorders content (SU-PS-51, ending pdf1398) and PS.S14.T01 'Mood Disorders in Children and Adolescents.' Confirmed via raw OCR body-verification of pdf1398 (PS44). Given a synthetic UNCATALOGUED id per established precedent.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-53",
+      "title": "Mood Disorders in Children and Adolescents",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S14",
+        "PS.S14.T01"
+      ],
+      "tn_page_range": "PS44-45",
+      "pdf_page_range": [
+        1398,
+        1400
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Child Psychiatry",
+        "Mood Disorders in Children and Adolescents"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S14 (HIGH-confidence, pdf1398-1400).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-54",
+      "title": "Anxiety Disorders in Children and Adolescents",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S14.T02"
+      ],
+      "tn_page_range": "PS45-46",
+      "pdf_page_range": [
+        1398,
+        1400
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Child Psychiatry",
+        "Anxiety Disorders in Children and Adolescents"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED; page range inherited from parent PS.S14 (pdf1398-1400).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-55",
+      "title": "ADHD and Autism Spectrum Disorder (Cross-Reference to Pediatrics)",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S15"
+      ],
+      "tn_page_range": "PS47",
+      "pdf_page_range": [
+        1401,
+        1403
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Neurodevelopmental Disorders"
+      ],
+      "structural_rationale": "PS.S15's own section title 'Neurodevelopmental Disorders' (HIGH-confidence, TOC_OCR-anchored, pdf1401-1403) is body-confirmed (pdf1401, PS47) to open with only two bulleted, explicit cross-references -- 'Attention Deficit Hyperactivity Disorder (see Pediatrics, P31)' and 'Autism Spectrum Disorder (see Pediatrics, P30)' -- with no chapter-local ADHD/ASD content of its own, before the real detailed content ('Disruptive, Impulse Control, and Conduct Disorder') begins on the same page. Represented as its own cross-reference-only unit distinct from the disruptive-disorder topics that follow.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-56",
+      "title": "Oppositional Defiant Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S15.T01"
+      ],
+      "tn_page_range": "PS47",
+      "pdf_page_range": [
+        1401,
+        1403
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Neurodevelopmental Disorders",
+        "Disruptive, Impulse-Control, and Conduct Disorder",
+        "Oppositional Defiant Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child; page range inherited from parent PS.S15. Body-confirmed (pdf1401, PS47) DSM-5-type criteria (angry/irritable mood, argumentative/defiant behaviour, vindictiveness, >=6 mo) and treatment (parent management training, behavioural therapy).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-57",
+      "title": "Conduct Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S15.T02"
+      ],
+      "tn_page_range": "PS47-48",
+      "pdf_page_range": [
+        1401,
+        1403
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Neurodevelopmental Disorders",
+        "Disruptive, Impulse-Control, and Conduct Disorder",
+        "Conduct Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child; page range inherited from parent PS.S15. Body-confirmed (pdf1401-1402, PS47-48) criteria (aggression to people/animals, property destruction, deceitfulness/theft, rule violation) and the childhood- vs. adolescent-onset distinction, plus the ~50% CD-to-ASPD progression statistic relevant to SU-PS-51.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-58",
+      "title": "Intermittent Explosive Disorder",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S15.T03"
+      ],
+      "tn_page_range": "PS48",
+      "pdf_page_range": [
+        1401,
+        1403
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Neurodevelopmental Disorders",
+        "Disruptive, Impulse-Control, and Conduct Disorder",
+        "Intermittent Explosive Disorder"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child; page range inherited from parent PS.S15. Body-confirmed (pdf1402, PS48) diagnostic criteria (recurrent aggressive outbursts out of proportion to triggers, not premeditated, in patients age >=6).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-59",
+      "title": "Psychotherapeutic Modalities Overview",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "UNCATALOGUED:Psychotherapy@pdf1403"
+      ],
+      "tn_page_range": "PS49",
+      "pdf_page_range": [
+        1403,
+        1403
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Psychotherapy"
+      ],
+      "structural_rationale": "Body-recovered heading: toc_inventory.json has no node for 'Psychotherapy' at all -- its content (Common Factors of Psychotherapy, and Table 13, a full-page summary of ten psychotherapeutic modalities with indications/approach/duration) is silently absorbed into the page range of PS.S15 ('Neurodevelopmental Disorders'), which is the wrong diagnostic-family parent for a treatment-modality overview. Confirmed via raw OCR body-verification: this content begins immediately after Intermittent Explosive Disorder ends on pdf1403 (PS49) and ends before Pharmacotherapy/Antipsychotics begins on pdf1404 (PS50). Given a synthetic UNCATALOGUED id per established precedent; kept as a single overview unit (not fragmented per modality) since the source itself presents all ten modalities as rows of one summary table.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-60",
+      "title": "Antipsychotics",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S16",
+        "PS.S16.T01"
+      ],
+      "tn_page_range": "PS50-57",
+      "pdf_page_range": [
+        1404,
+        1411
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Pharmacotherapy",
+        "Antipsychotics"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child; page range inherited from parent PS.S16 (HIGH-confidence, TOC_OCR-anchored, pdf1404-1411). Body-confirmed (pdf1404, PS50) that Antipsychotics is the section's first topic, covering mechanism, indications, rational-use principles, and long-acting depot preparations.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-61",
+      "title": "Antidepressants",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S16.T02"
+      ],
+      "tn_page_range": "PS50-57",
+      "pdf_page_range": [
+        1404,
+        1411
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Pharmacotherapy",
+        "Antidepressants"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child; page range inherited from parent PS.S16 (HIGH-confidence, TOC_OCR-anchored, pdf1404-1411). Body-confirmed (pdf1404, PS50) that Antipsychotics is the section's first topic, covering mechanism, indications, rational-use principles, and long-acting depot preparations.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-62",
+      "title": "Mood Stabilizers",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S16.T03"
+      ],
+      "tn_page_range": "PS50-57",
+      "pdf_page_range": [
+        1404,
+        1411
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Pharmacotherapy",
+        "Mood Stabilizers"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child; page range inherited from parent PS.S16 (HIGH-confidence, TOC_OCR-anchored, pdf1404-1411). Body-confirmed (pdf1404, PS50) that Antipsychotics is the section's first topic, covering mechanism, indications, rational-use principles, and long-acting depot preparations.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-63",
+      "title": "Anxiolytics and Sedative-Hypnotics",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S16.T04"
+      ],
+      "tn_page_range": "PS50-57",
+      "pdf_page_range": [
+        1404,
+        1411
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Pharmacotherapy",
+        "Anxiolytics and Sedative-Hypnotics"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child; page range inherited from parent PS.S16 (HIGH-confidence, TOC_OCR-anchored, pdf1404-1411). Body-confirmed (pdf1404, PS50) that Antipsychotics is the section's first topic, covering mechanism, indications, rational-use principles, and long-acting depot preparations.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-64",
+      "title": "Electroconvulsive Therapy (ECT)",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "UNCATALOGUED:ECT@pdf1412"
+      ],
+      "tn_page_range": "PS58",
+      "pdf_page_range": [
+        1412,
+        1412
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Somatic Therapies",
+        "Electroconvulsive Therapy"
+      ],
+      "structural_rationale": "Body-recovered heading: toc_inventory.json's PS.S17 topic children (T01-T04: rTMS, Magnetic Seizure Therapy, Neurosurgical Treatments, Other Therapy Modalities) omit 'Electroconvulsive Therapy' entirely, despite it being body-confirmed as the actual first and most substantial topic of the 'Somatic Therapies' section, beginning immediately after the Anxiolytics dosing table ends on pdf1412 (PS58) and continuing to the point where rTMS (PS.S17.T01) begins on pdf1413 (PS59). Given a synthetic UNCATALOGUED id per established precedent. This is a high-yield omission: ECT is the most clinically important and most frequently tested somatic therapy in this section.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-65",
+      "title": "Repetitive Transcranial Magnetic Stimulation (rTMS)",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S17",
+        "PS.S17.T01"
+      ],
+      "tn_page_range": "PS59",
+      "pdf_page_range": [
+        1413,
+        1413
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Somatic Therapies",
+        "Repetitive Transcranial Magnetic Stimulation"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child; page range confirmed via body-verification (pdf1413, PS59) as the first heading following the recovered ECT unit (SU-PS-64).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-66",
+      "title": "Magnetic Seizure Therapy and Neurosurgical/Device-Based Treatments",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S17.T02",
+        "PS.S17.T03"
+      ],
+      "tn_page_range": "PS59",
+      "pdf_page_range": [
+        1413,
+        1413
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Somatic Therapies",
+        "Magnetic Seizure Therapy / Neurosurgical Treatments"
+      ],
+      "structural_rationale": "toc_inventory.json's two LOW-confidence, TOC_OCR_UNANCHORED children (T02 Magnetic Seizure Therapy, T03 Neurosurgical Treatments) are both body-confirmed (pdf1413, PS59) as brief, experimental/specialist-level treatment-resistant options; grouped into a single unit per the project's non-fragmentation guidance since neither carries independent generalist-testable weight and both are explicitly labelled experimental/last-resort in the source.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-67",
+      "title": "Other Somatic Therapy Modalities (Phototherapy, Aerobic Exercise)",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S17.T04"
+      ],
+      "tn_page_range": "PS59",
+      "pdf_page_range": [
+        1413,
+        1413
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Somatic Therapies",
+        "Other Therapy Modalities"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child; page range confirmed via body-verification (pdf1413, PS59).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-68",
+      "title": "Ontario Mental Health Act: Common Forms and Involuntary Psychiatric Assessment",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S18",
+        "PS.S18.T01"
+      ],
+      "tn_page_range": "PS60",
+      "pdf_page_range": [
+        1414,
+        1414
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Canadian Legal Issues",
+        "Common Forms"
+      ],
+      "structural_rationale": "toc_inventory.json's title for PS.S18 is OCR-garbled as 'Canadian Legallssues' (corrected to 'Canadian Legal Issues'). PS.S18.T01 is LOW-confidence/TOC_OCR_UNANCHORED; page range confirmed via body-verification (pdf1414, PS60), which shows Table 22 (Ontario Mental Health Act forms 1-42) and detailed Form 1 (Application for Psychiatric Assessment) criteria (Box A serious-harm test / Box B prior-treatment-response test).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-69",
+      "title": "Consent in Psychiatric Practice (Cross-Reference to ELOM)",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S18.T02"
+      ],
+      "tn_page_range": "PS61",
+      "pdf_page_range": [
+        1415,
+        1415
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Canadian Legal Issues",
+        "Consent"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child; body-confirmed (pdf1415, PS61) as a single-line explicit cross-reference: 'see Ethical, Legal, and Organizational Medicine, ELOM12' with no chapter-local content.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-70",
+      "title": "Community Treatment Order (CTO)",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S18.T03"
+      ],
+      "tn_page_range": "PS61",
+      "pdf_page_range": [
+        1415,
+        1415
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Canadian Legal Issues",
+        "Community Treatment Order (CTO)"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child; body-confirmed (pdf1415, PS61) as substantive content: CTO purpose/eligibility criteria, Form 47 violation mechanism, 6-mo validity, and Consent and Capacity Board review rights.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-71",
+      "title": "Duty to Inform/Warn (Cross-Reference to ELOM)",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S18.T04"
+      ],
+      "tn_page_range": "PS61",
+      "pdf_page_range": [
+        1415,
+        1415
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Canadian Legal Issues",
+        "Duty to Inform/Warn"
+      ],
+      "structural_rationale": "LOW-confidence, TOC_OCR_UNANCHORED child; body-confirmed (pdf1415, PS61) as a single-line explicit cross-reference: 'see Ethical, Legal, and Organizational Medicine, ELOM11' with no chapter-local content.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PS-72",
+      "title": "Landmark Psychiatry Clinical Trials (Reference Table)",
+      "chapter_code": "PS",
+      "chapter_title": "Psychiatry",
+      "source_node_ids": [
+        "PS.S19"
+      ],
+      "tn_page_range": "PS62",
+      "pdf_page_range": [
+        1416,
+        1416
+      ],
+      "source_hierarchy_path": [
+        "Psychiatry",
+        "Landmark Psychiatry Clinical Trials"
+      ],
+      "structural_rationale": "PS.S19 is a HIGH-confidence, TOC_OCR-anchored section (pdf1416) with no T-level children in toc_inventory.json. Body-confirmed (pdf1416, PS62) as a reference table of trial name/citation/results summaries (CATIE, STEP-BD, TRANSFORM-2, STAR*D, TADS, COMBINE) for schizophrenia, bipolar disorder, MDD, and alcohol dependence pharmacotherapy.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    }
+  ]
+}
