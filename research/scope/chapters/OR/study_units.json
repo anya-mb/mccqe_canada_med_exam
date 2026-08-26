@@ -1,0 +1,1750 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-26T00:00:00Z",
+  "chapter_code": "OR",
+  "chapter_title": "Orthopedic Surgery",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes source structure (toc_inventory.json / derived/scope_packets/OR.json), corrected against raw OCR of the chapter's own two-column TOC (pdf 1089) and ~25 body pages. OR presented the most severe source-structure corruption found to date: the printed Toronto Notes TOC for this chapter is a genuine two-column layout (left column: Acronyms through Hip; right column: Femur through References), and the automated extraction pipeline read it as a single interleaved stream, merging left-column row N with right-column row N into a single garbled toc_inventory.json node/title for most of the chapter (e.g. OR.S10 'Rotator Cuff Disease Ankle' = left 'Rotator Cuff Disease' + right 'Ankle'). Beyond simple title merges, this produced two further defect classes: (1) MISSING SECTIONS -- entire right-column sections with no left-column counterpart row available to merge into (Fractures General Principles, Articular Cartilage, Orthopedic X-Ray Imaging, the Orthopedic Emergencies section header itself, the Shoulder section header itself, Femur, most of Knee, most of Foot, Achilles tendon pathology, Plantar Fasciitis, Bunions) are entirely absent from toc_inventory.json -- confirmed via the 5-entry research/tn2025/unresolved_headings.json UNRESOLVED list plus direct body-OCR confirmation for headings unresolved went further than the ledger even flagged; (2) WRONG PARENT -- OR.S16.T01-T03 ('Fractures of the Spine', 'Cervical Spine', 'Thoracolumbar Spine') are parented under OR.S16 'References' in toc_inventory.json, but body OCR confirms they are children of the real 'Spine' section (co-located with 'Hand' on the same TOC row, per OR.S04's merged_duplicate_headings), not References sub-topics -- the row-based merge attached them to whichever S0X node the interleaved stream had reached by that point. All corrections below are resolved via raw OCR body-page confirmation (never model memory/medical-knowledge reconstruction) and cited per-unit; sections/topics with no surviving toc_inventory.json node are sourced from synthetic UNCATALOGUED:<Name>@pdf<N> ids per the chapter-A 'Monitoring' / OP.S19 'UvealTract' precedent. No page-image rendering was performed for this pass -- resolution relied on raw body-text OCR, which was sufficient and internally consistent at every point checked (~25 spot verifications across the chapter); flagged in review_items.json for optional human page-image confirmation given the scale of reconstruction. Excluded as non-clinical organizational/reference material: the chapter root (OR), the Acronyms portion of OR.S01 (matches the OP.S01/OB.S01/NS.S01 chapter-opening acronym-glossary precedent), OR.S15 (Landmark Orthopedic Trials -- an EBM-summary table, consistent with the OP.S20/OB.S18/NS.S20 References-section precedent), and OR.S16 (References -- its three substantive T-children are retained, correctly re-parented under Spine, as SU-OR-33 through SU-OR-35).",
+  "total_study_units": 75,
+  "organizational_header_nodes": [
+    "OR",
+    "OR.S15",
+    "OR.S16"
+  ],
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-01",
+      "title": "Basic Anatomy Review",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S01"
+      ],
+      "tn_page_range": "OR2",
+      "pdf_page_range": [
+        1090,
+        1090
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Basic Anatomy Review"
+      ],
+      "structural_rationale": "OR.S01 is titled 'ACTOMYMS' (OCR-garbled 'Acronyms'); raw OCR of pdf 1090 (TN OR2) body-confirms the co-located real heading 'Basic Anatomy Review' (upper-limb nerve/muscle anatomy figure) immediately following the acronym glossary on the same page, matching the OP.S01/OB.S01/NS.S01 chapter-opening acronym-glossary-plus-anatomy-review precedent. The non-clinical acronym glossary is excluded (see organizational_header_nodes); only the anatomy-review content is represented.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-02",
+      "title": "Approach to Fractures, Fracture Healing, and General Fracture Complications",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:FracturesGeneralPrinciples@pdf1093"
+      ],
+      "tn_page_range": "OR5-OR6",
+      "pdf_page_range": [
+        1093,
+        1094
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Fractures General Principles"
+      ],
+      "structural_rationale": "research/tn2025/unresolved_headings.json records 'Basic Anatomy Review'/'Articular Cartilage'/'Orthopedic X-RayImaging'/'Orthopedic Emergencies' as UNRESOLVED (page-anchor could not be confirmed by the automated pipeline) and toc_inventory.json contains no node at all for this section ('Fractures eneral Principles' in the raw TOC OCR, i.e. 'Fractures General Principles') or its three sub-topics (Approach to Fractures, Fracture Healing, General Fracture Complications) -- confirmed missing from the full 55-node packet dump. Independently resolved via raw OCR of pdf 1089 (chapter TOC, two-column layout) and body pages 1093-1094 (OR5-OR6), which confirm this is a real generic-principles section (fracture description/classification terminology, healing stages, and the general complication list -- malunion/nonunion/AVN/infection/compartment syndrome -- that individual fracture units below cross-reference as 'see General Fracture Complications, OR7'). Represented as a single grouped unit per the project instruction not to fragment generic principles content; sourced from a synthetic UNCATALOGUED id since no toc_inventory.json node exists to cite.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-03",
+      "title": "Articular Cartilage",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:ArticularCartilage@pdf1095"
+      ],
+      "tn_page_range": "OR7",
+      "pdf_page_range": [
+        1095,
+        1095
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Articular Cartilage"
+      ],
+      "structural_rationale": "Missing from toc_inventory.json (see rationale on 'Fracture Principles' unit above for the same silent-drop pattern); resolved via raw OCR of pdf 1095 (OR7), which confirms 'Articular Cartilage' as a real background-physiology heading (cartilage structure/injury/repair) with no dedicated testable disease entity of its own.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-04",
+      "title": "Orthopedic X-Ray Imaging (Overview)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:OrthopedicXRayImaging@pdf1096"
+      ],
+      "tn_page_range": "OR8",
+      "pdf_page_range": [
+        1096,
+        1096
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Orthopedic X-Ray Imaging"
+      ],
+      "structural_rationale": "Missing from toc_inventory.json (same silent-drop pattern); resolved via raw OCR of pdf 1096-1097 (OR8-OR9), which confirms a real 'Orthopedic X-Ray Imaging' heading anchoring Table 5 (recommended imaging views by anatomic site: ankle, foot, spine). Represented as a synthesis-skill overview unit distinct from the site-specific imaging guidance embedded in each fracture unit below, matching the OP.S02/NS.S02 DDx-table-overview precedent.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-05",
+      "title": "Orthopedic Emergencies (Triage Overview) and Trauma Patient Workup",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S08",
+        "UNCATALOGUED:OrthopedicEmergencies@pdf1097"
+      ],
+      "tn_page_range": "OR9",
+      "pdf_page_range": [
+        1097,
+        1097
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Orthopedic Emergencies",
+        "Trauma Patient Workup"
+      ],
+      "structural_rationale": "OR.S08's captured title 'Trauma Patient Workup' is clean/unmerged, but it is actually the opening sub-topic of a section header, 'Orthopedic Emergencies', that itself has no toc_inventory.json node (silently dropped, same pattern as the units above). Raw OCR of pdf 1097 (OR9) body-confirms 'Orthopedic Emergencies' as the real section heading (with its own 'VON CHOP' mnemonic sidebar: Vascular compromise, Open fracture, Neurological compromise/cauda equina, Compartment syndrome, Hip dislocation, Osteomyelitis/septic arthritis, unstable Pelvic fracture) followed immediately by 'Trauma Patient Workup'. Represented as a combined triage-overview unit per the OP.S03/OP.S12 precedent (triage mnemonic + primary-survey approach); the individual VON CHOP emergencies are separately mapped under their own disease-specific units below to avoid double-counting question coverage.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-06",
+      "title": "Open Fractures",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S08.T01"
+      ],
+      "tn_page_range": "OR10",
+      "pdf_page_range": [
+        1098,
+        1098
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Orthopedic Emergencies",
+        "Open Fractures"
+      ],
+      "structural_rationale": "OR.S08.T01's captured title 'Open Fractures Patellar Fracture' is a two-column TOC merge: left-column 'Open Fractures' (an Orthopedic Emergencies child) concatenated with right-column 'Patellar Fracture' (a Patella-section child, see that unit below). Raw OCR of pdf 1098 (OR10) body-confirms 'Open Fractures' as a standalone heading (Gustilo classification, emergency measures, antibiotic prophylaxis by grade).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-07",
+      "title": "Cauda Equina Syndrome",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S08.T02"
+      ],
+      "tn_page_range": "OR10-OR11",
+      "pdf_page_range": [
+        1098,
+        1099
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Orthopedic Emergencies",
+        "Cauda Equina Syndrome"
+      ],
+      "structural_rationale": "OR.S08.T02's captured title 'Cauda Equina Syndrome Patellar Dislocation' is a two-column merge of left-column 'Cauda Equina Syndrome' (Orthopedic Emergencies child) and right-column 'Patellar Dislocation' (Patella-section child, see below).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-08",
+      "title": "Compartment Syndrome",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S08.T03"
+      ],
+      "tn_page_range": "OR11",
+      "pdf_page_range": [
+        1099,
+        1099
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Orthopedic Emergencies",
+        "Compartment Syndrome"
+      ],
+      "structural_rationale": "OR.S08.T03's captured title 'Compartment Syndrome Patellofemoral Syndrome' is a two-column merge of left-column 'Compartment Syndrome' and right-column 'Patellofemoral Syndrome' (see Patella unit below).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-09",
+      "title": "Osteomyelitis",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S08.T04"
+      ],
+      "tn_page_range": "OR11",
+      "pdf_page_range": [
+        1099,
+        1099
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Orthopedic Emergencies",
+        "Osteomyelitis"
+      ],
+      "structural_rationale": "OR.S08.T04 title 'Osteomyelitis' is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-10",
+      "title": "Septic Arthritis",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S09"
+      ],
+      "tn_page_range": "OR11-OR12",
+      "pdf_page_range": [
+        1099,
+        1100
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Orthopedic Emergencies",
+        "Septic Arthritis"
+      ],
+      "structural_rationale": "OR.S09's captured title 'Septic Arthritis Tibia' is a two-column merge of left-column 'Septic Arthritis' (an Orthopedic Emergencies child) and right-column 'Tibia' (a real section header, see Tibial Plateau/Shaft Fracture units below). Raw OCR of pdf 1099-1100 (OR11-OR12) body-confirms 'Septic Arthritis' clinical content (acute monoarticular pain/erythema/fever, joint aspirate criteria, empiric IV antibiotics) ending directly before 'Shoulder Dislocation' begins on OR12.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-11",
+      "title": "Shoulder Dislocation",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:ShoulderDislocation@pdf1100"
+      ],
+      "tn_page_range": "OR12-OR13",
+      "pdf_page_range": [
+        1100,
+        1101
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Shoulder",
+        "Shoulder Dislocation"
+      ],
+      "structural_rationale": "toc_inventory.json has no node capturing 'Shoulder Dislocation' as its own heading (the 'Shoulder' section header itself is also missing from toc_inventory, same silent-drop pattern noted above); raw OCR of pdf 1100 (OR12) body-confirms 'Shoulder Dislocation' as a real heading directly following Septic Arthritis content.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-12",
+      "title": "Rotator Cuff Disease",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S10"
+      ],
+      "tn_page_range": "OR13",
+      "pdf_page_range": [
+        1101,
+        1101
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Shoulder",
+        "Rotator Cuff Disease"
+      ],
+      "structural_rationale": "OR.S10's captured title 'Rotator Cuff Disease Ankle' is a two-column merge of left-column 'Rotator Cuff Disease' (Shoulder child) and right-column 'Ankle' (a real section header, see Ankle units below).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-13",
+      "title": "Acromioclavicular Joint Pathology",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S10.T01"
+      ],
+      "tn_page_range": "OR14",
+      "pdf_page_range": [
+        1102,
+        1102
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Shoulder",
+        "Acromioclavicular Joint Pathology"
+      ],
+      "structural_rationale": "OR.S10.T01's captured title 'Acromioclavicular Joint Pathology Evaluation of Ankle and Foot Complaints' is a two-column merge of left-column 'Acromioclavicular Joint Pathology' (Shoulder child) and right-column 'Evaluation of Ankle and Foot Complaints' (an Ankle-section child, see below).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-14",
+      "title": "Clavicle Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S10.T02"
+      ],
+      "tn_page_range": "OR15",
+      "pdf_page_range": [
+        1103,
+        1103
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Shoulder",
+        "Clavicle Fracture"
+      ],
+      "structural_rationale": "OR.S10.T02's captured title 'Clavicle Fracture Ankle Fracture' is a two-column merge of left-column 'Clavicle Fracture' (Shoulder child) and right-column 'Ankle Fracture' (Ankle-section child, see below).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-15",
+      "title": "Frozen Shoulder (Adhesive Capsulitis)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S10.T03"
+      ],
+      "tn_page_range": "OR16",
+      "pdf_page_range": [
+        1104,
+        1104
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Shoulder",
+        "Frozen Shoulder (Adhesive Capsulitis)"
+      ],
+      "structural_rationale": "OR.S10.T03's captured title 'Frozen Shoulder (Adhesive Capsulitis) Ankle Ligamentous Injuries' is a two-column merge of left-column 'Frozen Shoulder' (Shoulder child) and right-column 'Ankle Ligamentous Injuries' (Ankle-section child, see below).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-16",
+      "title": "Proximal Humeral Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S11.T01",
+        "OR.S02"
+      ],
+      "tn_page_range": "OR17",
+      "pdf_page_range": [
+        1105,
+        1105
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Humerus",
+        "Proximal Humeral Fracture"
+      ],
+      "structural_rationale": "OR.S11.T01's captured title 'Proximal Humeral Fracture Talar Fracture' is a two-column merge of left-column 'Proximal Humeral Fracture' (Humerus child) and right-column 'Talar Fracture' (a Foot-section child, see below).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-17",
+      "title": "Humeral Shaft Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S11.T02"
+      ],
+      "tn_page_range": "OR17-OR18",
+      "pdf_page_range": [
+        1105,
+        1106
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Humerus",
+        "Humeral Shaft Fracture"
+      ],
+      "structural_rationale": "OR.S11.T02's captured title 'Humeral Shaft Fracture Calcaneal Fracture' is a two-column merge of left-column 'Humeral Shaft Fracture' (Humerus child) and right-column 'Calcaneal Fracture' (Foot-section child, see below).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-18",
+      "title": "Distal Humeral Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S11.T03"
+      ],
+      "tn_page_range": "OR18",
+      "pdf_page_range": [
+        1106,
+        1106
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Humerus",
+        "Distal Humeral Fracture"
+      ],
+      "structural_rationale": "OR.S11.T03's captured title 'Distal Humeral Fracture mee rengone' is a heavily OCR-garbled two-column merge; the right-column fragment ('mee rengone') did not resolve to a confident heading and is treated as unrecoverable OCR noise rather than fabricated. Left-column 'Distal Humeral Fracture' (Humerus child) is confirmed via TOC context and standard section ordering.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-19",
+      "title": "Supracondylar Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S11.T06"
+      ],
+      "tn_page_range": "OR19",
+      "pdf_page_range": [
+        1107,
+        1107
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Elbow",
+        "Supracondylar Fracture"
+      ],
+      "structural_rationale": "OR.S11.T06's captured title 'Supracondylar Fracture Bunions (Hallux Valgus)' is a two-column merge of left-column 'Supracondylar Fracture' (Elbow child, the classic pediatric elbow fracture) and right-column 'Bunions (Hallux Valgus)' (a Foot-section child, see below).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-20",
+      "title": "Radial Head Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S11.T07"
+      ],
+      "tn_page_range": "OR20",
+      "pdf_page_range": [
+        1108,
+        1108
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Elbow",
+        "Radial Head Fracture"
+      ],
+      "structural_rationale": "OR.S11.T07's captured title 'Radial Head Fracture Metatarsal Fracture' is a two-column merge of left-column 'Radial Head Fracture' (Elbow child) and right-column 'Metatarsal Fracture' (Foot-section child, see below).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-21",
+      "title": "Olecranon Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S11.T08"
+      ],
+      "tn_page_range": "OR20",
+      "pdf_page_range": [
+        1108,
+        1108
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Elbow",
+        "Olecranon Fracture"
+      ],
+      "structural_rationale": "OR.S11.T08 title 'Olecranon Fracture' is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-22",
+      "title": "Elbow Dislocation",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S12"
+      ],
+      "tn_page_range": "OR20-OR21",
+      "pdf_page_range": [
+        1108,
+        1109
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Elbow",
+        "Elbow Dislocation"
+      ],
+      "structural_rationale": "OR.S12's captured title 'Elbow Dislocation Pediatric Orthopedics' is a two-column merge of left-column 'Elbow Dislocation' (Elbow child, third most common joint dislocation) and right-column 'Pediatric Orthopedics' (a real section header, see the pediatric units below).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-23",
+      "title": "Epicondylitis (Tennis/Golfer's Elbow)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S12.T02"
+      ],
+      "tn_page_range": "OR21",
+      "pdf_page_range": [
+        1109,
+        1109
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Elbow",
+        "Epicondylitis"
+      ],
+      "structural_rationale": "OR.S12.T02's captured title 'Epicondylitis Stress Fractures' is a two-column merge of left-column 'Epicondylitis' (Elbow child) and right-column 'Stress Fractures' (a Pediatric Orthopedics child, see below).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-24",
+      "title": "Elbow Joint Injection (Landmarks)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S12.T03"
+      ],
+      "tn_page_range": "OR21",
+      "pdf_page_range": [
+        1109,
+        1109
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Elbow",
+        "Elbow Joint Injection"
+      ],
+      "structural_rationale": "OR.S12.T03's captured title 'Elbow Joint Injection Physeal Injury' is a two-column merge of left-column 'Elbow Joint Injection' (a procedural landmarks note) and right-column 'Physeal Injury' (a Pediatric Orthopedics child, see below).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-25",
+      "title": "Forearm (Radius/Ulna) Shaft Fractures (Monteggia, Nightstick, Galeazzi)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S12.T05",
+        "OR.S12.T06",
+        "OR.S12.T08",
+        "OR.S12.T09"
+      ],
+      "tn_page_range": "OR21-OR22",
+      "pdf_page_range": [
+        1109,
+        1110
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Radius and Ulna Shaft Fractures",
+        "Monteggia / Nightstick / Galeazzi Fracture"
+      ],
+      "structural_rationale": "This section's toc_inventory.json T-nodes are all two-column merges pairing left-column forearm-fracture content with right-column Pediatric Orthopedics children: OR.S12.T05 'Radius andUlna Shotractures NST Developmental Dysplasia of the Hip' (Radius and Ulna Shaft Fractures + DDH), OR.S12.T06 'Monteggia Fracture Legg-Calve-Perthes Disease (Coxa Plana)' (Monteggia Fracture + Legg-Calve-Perthes), OR.S12.T08 'Nightstick Fracture Congenital Talipes Equinovarus (Club Foot)' (Nightstick Fracture + Club Foot), OR.S12.T09 'Galeazzi Fracture Scoliosis' (Galeazzi Fracture + Scoliosis). Raw OCR of pdf 1109-1111 (OR21-OR23) body-confirms 'Radius and Ulna Shaft Fractures' as the real section heading with 'Monteggia Fracture' as its first named named fracture pattern; the general mechanism/clinical-features content is grouped with its three classic eponymous fracture-dislocation patterns (Monteggia: ulna fracture + radial head dislocation; Galeazzi: radius fracture + DRUJ dislocation; Nightstick: isolated ulnar shaft fracture from direct blow) into a single unit per the generic-component-grouping precedent, since their shared testable competency is recognizing the fracture-dislocation pattern and checking the associated joint.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-26",
+      "title": "Colles' Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S13.T01",
+        "OR.S03"
+      ],
+      "tn_page_range": "OR23",
+      "pdf_page_range": [
+        1111,
+        1111
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Wrist",
+        "Colles' Fracture"
+      ],
+      "structural_rationale": "OR.S13.T01's captured title 'Colles Fracture Benign Active Bone Tumours' is a two-column merge of left-column 'Colles Fracture' (Wrist child) and right-column 'Benign Active Bone Tumours' (a Bone Tumours-section child, see below).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-27",
+      "title": "Smith's Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S13.T02"
+      ],
+      "tn_page_range": "OR23-OR24",
+      "pdf_page_range": [
+        1111,
+        1112
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Wrist",
+        "Smith's Fracture"
+      ],
+      "structural_rationale": "OR.S13.T02's captured title 'Smith's Fracture Benign A ive BoneT' is a two-column merge of left-column 'Smith's Fracture' (Wrist child) and a heavily garbled right-column fragment of 'Benign Aggressive Bone Tumours' (Bone Tumours-section child, see below).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-28",
+      "title": "Complications of Wrist Fractures",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S13.T04"
+      ],
+      "tn_page_range": "OR24",
+      "pdf_page_range": [
+        1112,
+        1112
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Wrist",
+        "Complications of Wrist Fractures"
+      ],
+      "structural_rationale": "OR.S13.T04's captured title 'Co mplicatio ns of Wrist Fractures Malignant Bone Tumours' is a two-column merge of left-column 'Complications of Wrist Fractures' and right-column 'Malignant Bone Tumours' (Bone Tumours-section child, see below).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-29",
+      "title": "Scaphoid Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S13.T05"
+      ],
+      "tn_page_range": "OR24",
+      "pdf_page_range": [
+        1112,
+        1112
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Wrist",
+        "Scaphoid Fracture"
+      ],
+      "structural_rationale": "OR.S13.T05 title 'Scaphoid Fracture' is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-30",
+      "title": "Wrist and Thumb CMC Joint Arthritis",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S14"
+      ],
+      "tn_page_range": "OR24-OR25",
+      "pdf_page_range": [
+        1112,
+        1113
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Wrist",
+        "Wrist and Thumb CMC Joint Arthritis"
+      ],
+      "structural_rationale": "OR.S14's captured title 'Wrist and Thumb CMC Joint Arthritis Common Medications' is a two-column merge of left-column 'Wrist and Thumb CMC Joint Arthritis' (Wrist child) and right-column 'Common Medications' (the chapter's closing reference-table section, see below).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-31",
+      "title": "Hand (Cross-Reference to Plastic Surgery)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S04"
+      ],
+      "tn_page_range": "OR25",
+      "pdf_page_range": [
+        1113,
+        1113
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Hand"
+      ],
+      "structural_rationale": "OR.S04's captured title 'Hand' co-locates (per merged_duplicate_headings) with 'Spine' on the same TOC row/page; raw OCR of pdf 1113 (OR25) shows the Wrist and Thumb CMC Joint Arthritis section's closing treatment content ends with an explicit 'see Plastic Surgery, PL24' cross-reference, and no distinct 'Hand'-titled body content with its own clinical entities was located on OR25 before 'Fractures of the Spine' begins. Represented as a thin cross-reference unit; hand fracture/injury content is primarily covered in Plastic Surgery per this chapter's own redirect. Flagged for human confirmation against the source PDF that no substantive Hand-specific content was missed between these two headings.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-32",
+      "title": "Fractures of the Spine (Cross-Reference to Neurosurgery)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S16.T01"
+      ],
+      "tn_page_range": "OR25",
+      "pdf_page_range": [
+        1113,
+        1113
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Spine",
+        "Fractures of the Spine"
+      ],
+      "structural_rationale": "STRUCTURAL CORRECTION: toc_inventory.json parents OR.S16.T01 under OR.S16 ('References', the chapter's closing bibliography section), but raw OCR of pdf 1113 (OR25) confirms 'Fractures of the Spine' is the first child of the real 'Spine' section (itself a body heading co-located with 'Hand' on the same TOC row -- see merged_duplicate_headings on OR.S04), not a References sub-topic. This is a body-heading-assigned-to-wrong-parent defect (the automated pipeline's row-based two-column merge attached the tail-end Spine/Pelvis/Hip topic rows to whichever S0X node the row-index happened to reach, which was References by that point in the corrupted stream). Re-parented here under Spine per body-page confirmation; content itself is a one-line redirect: 'see Neurosurgery, NS39'.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-33",
+      "title": "Cervical Spine (Approach, Red Flags, Imaging)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S16.T02"
+      ],
+      "tn_page_range": "OR25-OR26",
+      "pdf_page_range": [
+        1113,
+        1114
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Spine",
+        "Cervical Spine"
+      ],
+      "structural_rationale": "STRUCTURAL CORRECTION: toc_inventory.json parents OR.S16.T02 under OR.S16 ('References'); raw OCR of pdf 1113-1114 (OR25-OR26) body-confirms 'Cervical Spine' as the second child of the real 'Spine' section (general principles, special tests, x-ray views, DDx of neck pain, with an explicit 'C-SPINE INJURY: see Neurosurgery, NS38' redirect for acute trauma). Re-parented here under Spine; see structural note on 'Fractures of the Spine' above for the same wrong-parent defect.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-34",
+      "title": "Thoracolumbar Spine (Spondylolisthesis, Low Back Pain Approach)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S16.T03"
+      ],
+      "tn_page_range": "OR26-OR29",
+      "pdf_page_range": [
+        1114,
+        1117
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Spine",
+        "Thoracolumbar Spine"
+      ],
+      "structural_rationale": "STRUCTURAL CORRECTION: toc_inventory.json parents OR.S16.T03 under OR.S16 ('References'); raw OCR of pdf 1114-1117 (OR26-OR29) body-confirms 'Thoracolumbar Spine' as the third child of the real 'Spine' section (general principles, straight-leg-raise/femoral-stretch special tests, and adult isthmic spondylolisthesis with Meyerding classification), ending directly before 'Pelvic Fracture' begins on OR29. Re-parented here under Spine; see structural note on 'Fractures of the Spine' above for the same wrong-parent defect.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-35",
+      "title": "Pelvic Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S05.T01",
+        "OR.S05"
+      ],
+      "tn_page_range": "OR29",
+      "pdf_page_range": [
+        1117,
+        1117
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Pelvis",
+        "Pelvic Fracture"
+      ],
+      "structural_rationale": "OR.S05.T01 title 'Pelvic Fracture' is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-36",
+      "title": "Hip Dislocation",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S06.T01",
+        "OR.S06"
+      ],
+      "tn_page_range": "OR30",
+      "pdf_page_range": [
+        1118,
+        1118
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Hip",
+        "Hip Dislocation"
+      ],
+      "structural_rationale": "OR.S06.T01 title 'Hip Dislocation' is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-37",
+      "title": "Hip Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S06.T02"
+      ],
+      "tn_page_range": "OR30-OR32",
+      "pdf_page_range": [
+        1118,
+        1120
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Hip",
+        "Hip Fracture"
+      ],
+      "structural_rationale": "OR.S06.T02 title 'Hip Fracture' is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-38",
+      "title": "Arthritis of the Hip",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S06.T03"
+      ],
+      "tn_page_range": "OR32",
+      "pdf_page_range": [
+        1120,
+        1120
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Hip",
+        "Arthritis of the Hip"
+      ],
+      "structural_rationale": "OR.S06.T03 title 'Arthritis of the Hip' is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-39",
+      "title": "Hip Dislocation Post-Total Hip Arthroplasty",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S06.T04"
+      ],
+      "tn_page_range": "OR32-OR33",
+      "pdf_page_range": [
+        1120,
+        1121
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Hip",
+        "Hip Dislocation Post-Total Hip Arthroplasty"
+      ],
+      "structural_rationale": "OR.S06.T04 title 'Hip Dislocation Post-Total Hip Arthroplasty' is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-40",
+      "title": "Femoral Diaphysis Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:FemoralDiaphysisFracture@pdf1121",
+        "OR.S07"
+      ],
+      "tn_page_range": "OR33",
+      "pdf_page_range": [
+        1121,
+        1121
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Femur",
+        "Femoral Diaphysis Fracture"
+      ],
+      "structural_rationale": "toc_inventory.json has no node for the 'Femur' section (captured elsewhere in the packet only as the OCR-garbled top-level fragment 'FOEMUP', with no T-children at all) or either of its two children. Raw OCR of pdf 1121 (OR33) body-confirms 'Femoral Diaphysis Fracture' as a real heading (high-energy trauma mechanism, Winquist-Hansen classification, ipsilateral femoral neck fracture as a commonly-missed associated injury).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-41",
+      "title": "Distal Femoral Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:DistalFemoralFracture@pdf1122"
+      ],
+      "tn_page_range": "OR34",
+      "pdf_page_range": [
+        1122,
+        1122
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Femur",
+        "Distal Femoral Fracture"
+      ],
+      "structural_rationale": "Same missing-node pattern as Femoral Diaphysis Fracture above; raw OCR of pdf 1122 (OR34) body-confirms 'Distal Femoral Fracture' as a real heading (direct high-energy or fall-related axial loading, articular-surface classification).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-42",
+      "title": "Evaluation of the Knee (Exam, Special Tests)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:EvaluationOfKnee@pdf1122"
+      ],
+      "tn_page_range": "OR34",
+      "pdf_page_range": [
+        1122,
+        1122
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Knee",
+        "Evaluation of Knee"
+      ],
+      "structural_rationale": "Same missing-node pattern (the entire 'Knee' section and all its children are absent from toc_inventory.json); raw OCR of pdf 1122-1123 (OR34-OR35) body-confirms 'Evaluation of Knee' as a real heading (anterior/posterior drawer, Lachman, pivot shift, McMurray's, Ottawa Knee Rules).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-43",
+      "title": "Cruciate Ligament Tears (ACL/PCL)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:CruciateLigamentTears@pdf1123"
+      ],
+      "tn_page_range": "OR35",
+      "pdf_page_range": [
+        1123,
+        1123
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Knee",
+        "Cruciate Ligament Tears"
+      ],
+      "structural_rationale": "Same missing-node pattern; raw OCR of pdf 1123 (OR35) body-confirms 'Cruciate Ligament Tears' as a real heading with a comparison table of ACL vs. PCL mechanism/history/exam findings.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-44",
+      "title": "Collateral Ligament Tears (MCL/LCL)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:CollateralLigamentTears@pdf1124"
+      ],
+      "tn_page_range": "OR36",
+      "pdf_page_range": [
+        1124,
+        1124
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Knee",
+        "Collateral Ligament Tears"
+      ],
+      "structural_rationale": "Same missing-node pattern; raw OCR of pdf 1124 (OR36) body-confirms 'Collateral Ligament Tears' as a real heading (valgus force mechanism for MCL, varus for LCL).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-45",
+      "title": "Meniscal Tears",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:MeniscalTears@pdf1124"
+      ],
+      "tn_page_range": "OR36",
+      "pdf_page_range": [
+        1124,
+        1124
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Knee",
+        "Meniscal Tears"
+      ],
+      "structural_rationale": "Same missing-node pattern; raw OCR of pdf 1124 (OR36) body-confirms meniscal-tear clinical content (insidious onset, joint-line tenderness, locking) immediately preceding 'Popliteal Cysts'.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-46",
+      "title": "Popliteal Cysts (Baker's Cyst)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:PoplitealCysts@pdf1124"
+      ],
+      "tn_page_range": "OR36",
+      "pdf_page_range": [
+        1124,
+        1124
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Knee",
+        "Popliteal Cysts"
+      ],
+      "structural_rationale": "Same missing-node pattern; raw OCR of pdf 1124 (OR36) body-confirms 'Popliteal Cysts' as a real heading.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-47",
+      "title": "Quadriceps/Patellar Tendon Rupture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:QuadricepsPatellarTendonRupture@pdf1125"
+      ],
+      "tn_page_range": "OR37",
+      "pdf_page_range": [
+        1125,
+        1125
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Knee",
+        "Quadriceps/Patellar Tendon Rupture"
+      ],
+      "structural_rationale": "Same missing-node pattern; raw OCR of pdf 1125 (OR37) body-confirms 'Quadriceps/Patellar Tendon Rupture' as a real heading.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-48",
+      "title": "Dislocated Knee (Tibiofemoral Dislocation)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:DislocatedKnee@pdf1125"
+      ],
+      "tn_page_range": "OR37-OR38",
+      "pdf_page_range": [
+        1125,
+        1126
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Knee",
+        "Dislocated Knee"
+      ],
+      "structural_rationale": "Same missing-node pattern; raw OCR of pdf 1125-1126 (OR37-OR38) body-confirms 'Dislocated Knee' as a real heading with a following 'Specific Complications' subsection listing popliteal artery and peroneal nerve injury.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-49",
+      "title": "Knee Osteoarthritis",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:KneeOsteoarthritis@pdf1126"
+      ],
+      "tn_page_range": "OR38",
+      "pdf_page_range": [
+        1126,
+        1126
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Knee",
+        "Knee Osteoarthritis"
+      ],
+      "structural_rationale": "Same missing-node pattern; raw OCR of pdf 1126 (OR38) body-confirms 'Knee Osteoarthritis' as a real heading directly preceding 'Patella'.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-50",
+      "title": "Patellar Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S08.T01"
+      ],
+      "tn_page_range": "OR38",
+      "pdf_page_range": [
+        1126,
+        1126
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Patella",
+        "Patellar Fracture"
+      ],
+      "structural_rationale": "The right-column half of OR.S08.T01's merged title ('...Patellar Fracture'); this is a real child of the 'Patella' section (itself missing its own toc_inventory node -- see Femur/Knee rationale above for the same pattern). Raw OCR of pdf 1126 (OR38) body-confirms 'Patellar Fracture' directly after Knee Osteoarthritis.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-51",
+      "title": "Patellar Dislocation",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S08.T02"
+      ],
+      "tn_page_range": "OR39",
+      "pdf_page_range": [
+        1127,
+        1127
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Patella",
+        "Patellar Dislocation"
+      ],
+      "structural_rationale": "The right-column half of OR.S08.T02's merged title ('...Patellar Dislocation'); a real child of the 'Patella' section. Raw OCR of pdf 1127 (OR39) body-confirms patellar-dislocation-specific content (Q-angle, apprehension test, J-sign) immediately following Patellar Fracture.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-52",
+      "title": "Patellofemoral (Pain) Syndrome",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S08.T03"
+      ],
+      "tn_page_range": "OR39-OR40",
+      "pdf_page_range": [
+        1127,
+        1128
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Patella",
+        "Patellofemoral Syndrome"
+      ],
+      "structural_rationale": "The right-column half of OR.S08.T03's merged title ('...Patellofemoral Syndrome'); a real child of the 'Patella' section. Raw OCR of pdf 1127-1128 (OR39-OR40) body-confirms patellofemoral-pain-syndrome content (anterior knee pain, non-operative-first management) immediately following Patellar Dislocation and before Tibial Plateau Fracture.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-53",
+      "title": "Tibial Plateau Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S09.T01"
+      ],
+      "tn_page_range": "OR40",
+      "pdf_page_range": [
+        1128,
+        1128
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Tibia",
+        "Tibial Plateau Fracture"
+      ],
+      "structural_rationale": "OR.S09.T01 title 'Tibial Plateau Fracture' is clean/unmerged; it is a real child of the 'Tibia' section (itself the right-column half of OR.S09's merged 'Septic Arthritis Tibia' title -- see Septic Arthritis unit above).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-54",
+      "title": "Tibial Shaft Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:TibialShaftFracture@pdf1128"
+      ],
+      "tn_page_range": "OR40-OR41",
+      "pdf_page_range": [
+        1128,
+        1129
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Tibia",
+        "Tibial Shaft Fracture"
+      ],
+      "structural_rationale": "toc_inventory.json has no node for this heading (the TOC's right-column 'Tibial Shaft Fracture' entry, merged into OR.S10's garbled title 'Shoulder Dislocation Tibial Shaft Fracture', never generated its own T-node in the extraction). Raw OCR of pdf 1128-1129 (OR40-OR41) body-confirms tibial-shaft-fracture treatment content (long leg cast, IM nailing) directly following Tibial Plateau Fracture's complications and before 'Evaluation of Ankle and Foot Complaints' begins.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-55",
+      "title": "Evaluation of Ankle and Foot Complaints",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S10.T01"
+      ],
+      "tn_page_range": "OR41",
+      "pdf_page_range": [
+        1129,
+        1129
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Ankle",
+        "Evaluation of Ankle and Foot Complaints"
+      ],
+      "structural_rationale": "The right-column half of OR.S10.T01's merged title; a real child of the 'Ankle' section. Raw OCR of pdf 1129 (OR41) body-confirms this heading (anterior drawer/talar tilt special tests, x-ray views, Ottawa Ankle and Foot Rules).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-56",
+      "title": "Ankle Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S10.T02"
+      ],
+      "tn_page_range": "OR41",
+      "pdf_page_range": [
+        1129,
+        1129
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Ankle",
+        "Ankle Fracture"
+      ],
+      "structural_rationale": "The right-column half of OR.S10.T02's merged title; a real child of the 'Ankle' section. Raw OCR of pdf 1129 (OR41) body-confirms 'Ankle Fracture' with Danis-Weber and Lauge-Hansen classification systems.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-57",
+      "title": "Ankle Ligamentous Injuries (Sprains)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S10.T03"
+      ],
+      "tn_page_range": "OR42",
+      "pdf_page_range": [
+        1130,
+        1130
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Ankle",
+        "Ankle Ligamentous Injuries"
+      ],
+      "structural_rationale": "The right-column half of OR.S10.T03's merged title; a real child of the 'Ankle' section. Raw OCR of pdf 1130 (OR42) body-confirms medial (deltoid) and lateral ligament complex injury content.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-58",
+      "title": "Talar Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S11.T01",
+        "OR.S11"
+      ],
+      "tn_page_range": "OR42-OR43",
+      "pdf_page_range": [
+        1130,
+        1131
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Foot",
+        "Talar Fracture"
+      ],
+      "structural_rationale": "The right-column half of OR.S11.T01's merged title ('...Talar Fracture'); a real child of the 'Foot' section.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-59",
+      "title": "Calcaneal Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S11.T02"
+      ],
+      "tn_page_range": "OR43",
+      "pdf_page_range": [
+        1131,
+        1131
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Foot",
+        "Calcaneal Fracture"
+      ],
+      "structural_rationale": "The right-column half of OR.S11.T02's merged title ('...Calcaneal Fracture'); a real child of the 'Foot' section. Raw OCR of pdf 1131 (OR43) body-confirms calcaneal-fracture content (Bohler's angle, CT gold standard) and its classic association with axial-loading fall mechanisms and concomitant spinal compression fractures.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-60",
+      "title": "Achilles Tendon Pathology (Tendonitis and Rupture)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:AchillesTendon@pdf1131",
+        "OR.S11.T04"
+      ],
+      "tn_page_range": "OR43-OR44",
+      "pdf_page_range": [
+        1131,
+        1132
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Foot",
+        "Achilles Tendon Pathology"
+      ],
+      "structural_rationale": "The raw TOC OCR reads the right-column heading as 'chilles Tendon Rupture' (garbled 'Achilles Tendon Rupture'), but raw OCR of pdf 1131-1132 (OR43-OR44) body-confirms the actual printed heading is 'Achilles Tendonitis', whose content nonetheless explicitly discusses the most common Achilles tendon rupture site/mechanism. toc_inventory.json has no node for this heading at all (same missing-child pattern as other Foot-section entries). Given the body-vs-TOC title discrepancy, both tendinopathy and rupture are represented together under the body-confirmed title, flagged for human page-image confirmation of whether the source in fact contains two adjacent headings (Tendonitis, then Rupture) that the OCR compressed into one.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-61",
+      "title": "Plantar Fasciitis",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:PlantarFasciitis@pdf1132",
+        "OR.S11.T05"
+      ],
+      "tn_page_range": "OR44",
+      "pdf_page_range": [
+        1132,
+        1132
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Foot",
+        "Plantar Fasciitis"
+      ],
+      "structural_rationale": "toc_inventory.json has no node for this heading (TOC OCR garbled it as 'pitas Fasciitis'); raw OCR of pdf 1132 (OR44) body-confirms 'Plantar Fasciitis' as a real heading.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-62",
+      "title": "Bunions (Hallux Valgus)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "UNCATALOGUED:Bunions@pdf1132"
+      ],
+      "tn_page_range": "OR44-OR45",
+      "pdf_page_range": [
+        1132,
+        1133
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Foot",
+        "Bunions (Hallux Valgus)"
+      ],
+      "structural_rationale": "toc_inventory.json has no node for this heading (it is the right-column pair of OR.S11.T06's merged title 'Supracondylar Fracture Bunions (Hallux Valgus)', but never generated its own T-node in the extraction).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-63",
+      "title": "Metatarsal Fracture",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S11.T07"
+      ],
+      "tn_page_range": "OR45",
+      "pdf_page_range": [
+        1133,
+        1133
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Foot",
+        "Metatarsal Fracture"
+      ],
+      "structural_rationale": "The right-column half of OR.S11.T07's merged title ('...Metatarsal Fracture'); a real child of the 'Foot' section. Raw OCR of pdf 1133 (OR45) body-confirms metatarsal fracture types (5th MT avulsion, Jones fracture, march fracture) and the Ottawa Foot Rules cross-reference.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-64",
+      "title": "Pediatric Fracture Patterns (Fractures in Children)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S12.T01"
+      ],
+      "tn_page_range": "OR45",
+      "pdf_page_range": [
+        1133,
+        1133
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Pediatric Orthopedics",
+        "Fractures in Children"
+      ],
+      "structural_rationale": "The right-column half of OR.S12.T01's merged title ('...Fractures in Children'); a real child of the real 'Pediatric Orthopedics' section (itself the right-column half of OR.S12's merged title 'Elbow Dislocation Pediatric Orthopedics' -- see Elbow Dislocation unit above).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-65",
+      "title": "Stress Fractures",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S12.T02"
+      ],
+      "tn_page_range": "OR46",
+      "pdf_page_range": [
+        1134,
+        1134
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Pediatric Orthopedics",
+        "Stress Fractures"
+      ],
+      "structural_rationale": "The right-column half of OR.S12.T02's merged title ('...Stress Fractures'); a real child of Pediatric Orthopedics.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-66",
+      "title": "Physeal Injury (Salter-Harris Classification)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S12.T03"
+      ],
+      "tn_page_range": "OR46",
+      "pdf_page_range": [
+        1134,
+        1134
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Pediatric Orthopedics",
+        "Physeal Injury"
+      ],
+      "structural_rationale": "The right-column half of OR.S12.T03's merged title ('...Physeal Injury'); a real child of Pediatric Orthopedics.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-67",
+      "title": "Slipped Capital Femoral Epiphysis (SCFE)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S12.T04"
+      ],
+      "tn_page_range": "OR46-OR47",
+      "pdf_page_range": [
+        1134,
+        1135
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Pediatric Orthopedics",
+        "Slipped Capital Femoral Epiphysis"
+      ],
+      "structural_rationale": "OR.S12.T04 title 'Slipped Capital Femoral Epiphysis (SCFE)' is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-68",
+      "title": "Developmental Dysplasia of the Hip (DDH)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S12.T05"
+      ],
+      "tn_page_range": "OR47",
+      "pdf_page_range": [
+        1135,
+        1135
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Pediatric Orthopedics",
+        "Developmental Dysplasia of the Hip"
+      ],
+      "structural_rationale": "The right-column half of OR.S12.T05's merged title ('...Developmental Dysplasia of the Hip'); a real child of Pediatric Orthopedics. Raw OCR of pdf 1135 (OR47) body-confirms 'Developmental Dysplasia of the Hip' as a real heading.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-69",
+      "title": "Legg-Calve-Perthes Disease (Coxa Plana)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S12.T06"
+      ],
+      "tn_page_range": "OR47-OR48",
+      "pdf_page_range": [
+        1135,
+        1136
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Pediatric Orthopedics",
+        "Legg-Calve-Perthes Disease"
+      ],
+      "structural_rationale": "The right-column half of OR.S12.T06's merged title ('...Legg-Calve-Perthes Disease (Coxa Plana)'); a real child of Pediatric Orthopedics.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-70",
+      "title": "Osgood-Schlatter Disease",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S12.T07"
+      ],
+      "tn_page_range": "OR48",
+      "pdf_page_range": [
+        1136,
+        1136
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Pediatric Orthopedics",
+        "Osgood-Schlatter Disease"
+      ],
+      "structural_rationale": "OR.S12.T07's captured title '. f Osgood-Schlatter Disease' contains OCR noise (a stray '. f' fragment, likely a dropped/garbled left-column entry) prefixed to the clean right-column heading 'Osgood-Schlatter Disease'; a real child of Pediatric Orthopedics.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-71",
+      "title": "Congenital Talipes Equinovarus (Club Foot)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S12.T08"
+      ],
+      "tn_page_range": "OR48-OR49",
+      "pdf_page_range": [
+        1136,
+        1137
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Pediatric Orthopedics",
+        "Congenital Talipes Equinovarus (Club Foot)"
+      ],
+      "structural_rationale": "The right-column half of OR.S12.T08's merged title ('...Congenital Talipes Equinovarus (Club Foot)'); a real child of Pediatric Orthopedics.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-72",
+      "title": "Scoliosis",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S12.T09"
+      ],
+      "tn_page_range": "OR49",
+      "pdf_page_range": [
+        1137,
+        1137
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Pediatric Orthopedics",
+        "Scoliosis"
+      ],
+      "structural_rationale": "The right-column half of OR.S12.T09's merged title ('...Scoliosis'); a real child of Pediatric Orthopedics.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-73",
+      "title": "Benign Active and Aggressive Bone Tumours",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S13.T01",
+        "OR.S13.T02",
+        "OR.S13.T03",
+        "OR.S13"
+      ],
+      "tn_page_range": "OR50-OR51",
+      "pdf_page_range": [
+        1138,
+        1139
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Bone Tumours",
+        "Benign (Active/Aggressive) Bone Tumours"
+      ],
+      "structural_rationale": "OR.S13.T01/T02/T03's captured titles are two-column merges pairing left-column Wrist-fracture fragments with right-column Bone Tumours content ('Benign Active Bone Tumours', 'Benign Aggressive Bone Tumours' split awkwardly across T02/T03 due to column-length mismatch -- see structural note in review_items.json). Raw OCR of pdf 1138-1139 (OR50-OR51) body-confirms 'Bone Tumours' as the real section header with benign subtypes (e.g. osteochondroma) as its first content. Grouped into a single unit per the generic-component-grouping precedent, since the graduating-student-level testable competency (recognize a benign lesion pattern and know most require only observation/simple excision) is shared across benign subtypes.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-74",
+      "title": "Malignant Bone Tumours (Primary and Metastatic)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S13.T04"
+      ],
+      "tn_page_range": "OR51-OR52",
+      "pdf_page_range": [
+        1139,
+        1140
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Bone Tumours",
+        "Malignant Bone Tumours"
+      ],
+      "structural_rationale": "The right-column half of OR.S13.T04's merged title ('...Malignant Bone Tumours'). Raw OCR of pdf 1140 (OR52) body-confirms 'Malignant Bone Tumours' as a real heading with a table of the most common malignant bone tumours by age/location.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OR-75",
+      "title": "Common Medications (Orthopedic Reference Table)",
+      "chapter_code": "OR",
+      "chapter_title": "Orthopedic Surgery",
+      "source_node_ids": [
+        "OR.S14"
+      ],
+      "tn_page_range": "OR53",
+      "pdf_page_range": [
+        1141,
+        1141
+      ],
+      "source_hierarchy_path": [
+        "Orthopedic Surgery",
+        "Common Medications"
+      ],
+      "structural_rationale": "The right-column half of OR.S14's merged title ('...Common Medications'), the chapter's closing pharmacologic reference table.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    }
+  ]
+}

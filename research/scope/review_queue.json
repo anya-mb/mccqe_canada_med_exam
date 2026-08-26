@@ -19,13 +19,14 @@
     "N",
     "NS",
     "OB",
-    "OP"
+    "OP",
+    "OR"
   ],
   "chapters_without_review_items_file": [
     "C",
     "ELOM"
   ],
-  "total_items": 103,
+  "total_items": 108,
   "items": [
     {
       "issue_type": "structural_ambiguity",
@@ -946,6 +947,46 @@
       "title": "Multiple study units carry only WEAK MCC evidence (no dedicated ophthalmology-specific MCC objective)",
       "summary": "A full-registry search-mcc-objectives sweep for 'cataract', 'glaucoma', 'floaters', 'macular degeneration', 'diabetic retinopathy', 'orbital cellulitis', 'corneal', 'hyphema', 'leukocoria', 'ptosis', 'conjunctivitis', 'retinal detachment', 'temporal arteritis', 'chemical burn', 'amaurosis', 'photophobia', 'ocular', 'arteritis', 'vasculitis', 'eyelid', 'stye', 'blepharitis', 'dry eye', 'uveitis', 'iritis', 'keratitis', 'scleritis', 'nystagmus', 'pupil', 'papilledema', 'optic neuritis', and 'orbit' returned zero direct matches for most of these terms (only 'dry eye' incidentally matched objective 30 Eye redness, and 'eye trauma' matched objective 109). The MCC Objectives registry has no ophthalmology-subspecialty presentation list beyond Eye redness (30), Acute/Chronic visual disturbance or loss (115-1/115-2), Diplopia (23), and Strabismus/amblyopia (102); most disease-specific ophthalmic entities (cataract, glaucoma, retinal vascular occlusion, orbital cellulitis, corneal ulcer, uveitis, etc.) are therefore mapped as COMPONENT/CROSS_DISCIPLINE against these five broader presentation-level objectives (or, for diabetic retinopathy/hypertensive retinopathy, against the nearest systemic-disease objective: 130 Hyperglycemia, 9-1 Hypertension) rather than against a dedicated objective, consistent with project accuracy rules (WEAK/UNCERTAIN rather than fabricated DIRECT evidence).",
       "recommended_action": "None required at this stage -- consistent with project accuracy rules (no invented MCC IDs; WEAK used where evidence is indirect). Coordinator may wish to note, in a future cross-chapter registry-gap audit, that the MCC Objectives Online registry itself appears to lack dedicated objectives for several high-prevalence ophthalmic diagnoses (cataract, glaucoma, retinal detachment/vascular occlusion) despite their presentation-level objectives (Eye redness, Vision loss) existing."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "review_recommended",
+      "study_unit_id": "chapter-wide (see study_units.json methodology_note)",
+      "title": "Systemic two-column TOC corruption -- most of OR.S02 through OR.S16 titles/parenting are wrong",
+      "summary": "The printed Toronto Notes TOC for this chapter (raw OCR of pdf 1089) is a genuine two-column layout: left column runs Acronyms->Basic Anatomy Review->Fractures General Principles->Articular Cartilage->Orthopedic X-Ray Imaging->Orthopedic Emergencies->Shoulder->Humerus->Elbow->Radius and Ulna Shaft Fractures->Wrist->Hand->Spine->Pelvis->Hip; right column runs Femur->Knee->Patella->Tibia->Ankle->Foot->Pediatric Orthopedics->Bone Tumours->Common Medications->Landmark Orthopedic Trials->References. The automated toc_inventory.json extraction read both columns as a single interleaved stream, merging left-column row N with right-column row N into one garbled node title for most of the chapter (e.g. OR.S10 'Rotator Cuff Disease Ankle'), silently dropped entire right-column sections/children that had no same-row-index left-column partner to merge into (Fractures General Principles, Articular Cartilage, Orthopedic X-Ray Imaging, the Orthopedic Emergencies and Shoulder section headers themselves, Femur, most of Knee's 8 children, Tibial Shaft Fracture, Achilles tendon pathology, Plantar Fasciitis, Bunions -- 5 of these are also independently flagged UNRESOLVED in research/tn2025/unresolved_headings.json), and mis-parented three real Spine children (Fractures of the Spine, Cervical Spine, Thoracolumbar Spine) under the unrelated References section. Resolved via raw OCR of the TOC page plus ~25 spot-verification reads of body pages across the full pdf 1089-1141 range, cross-checked against the printed two-column structure and heading-adjacency at every point checked; no instance of my reconstructed left/right column ordering conflicted with body-page content. Full correction and per-unit citations are in study_units.json's methodology_note and each unit's structural_rationale.",
+      "recommended_action": "Reviewer should spot-check a handful of the 75 reconstructed study units against the source PDF page images (not just raw OCR text, which was the only evidence used here) -- particularly the Femur/Knee/Foot units sourced entirely from synthetic UNCATALOGUED ids, since no toc_inventory.json node exists for them at all. Coordinator may also wish to log a toc_inventory.json extraction-pipeline defect report: this chapter's corruption pattern (genuine two-column TOC read as a single stream) is categorically different from the single-heading-pair merges seen in prior chapters (OP, OB, NS) and may indicate other chapters with two-column TOC layouts warrant a similar full re-check."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-OR-31",
+      "title": "Hand section has no distinct body content beyond a Plastic Surgery cross-reference",
+      "summary": "OR.S04's captured title 'Hand' co-locates with 'Spine' per merged_duplicate_headings (both real TOC headings on the same row/page, OR25/pdf1113). Raw OCR of pdf 1113 shows the preceding Wrist and Thumb CMC Joint Arthritis section's treatment content ends with an explicit 'see Plastic Surgery, PL24' redirect, and no distinct 'Hand'-titled clinical content (fractures, infections, etc.) was located between that redirect and 'Fractures of the Spine'. Represented as a thin CROSS_DISCIPLINE cross-reference unit rather than an UNRESOLVED gap, since the redirect itself is the substantive finding.",
+      "recommended_action": "Reviewer should confirm against the source PDF (pdf page 1113, TN OR25) that no substantive Hand-specific clinical content (e.g. finger fractures, hand infections) was missed between the CMC arthritis content and the Spine section -- the raw-OCR text alone does not rule out a short 'Hand' subheading with content that the OCR extraction dropped entirely (as happened with several Foot/Knee headings in this same chapter)."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-OR-60",
+      "title": "Achilles Tendon Pathology: TOC says 'Rupture', body heading reads 'Tendonitis'",
+      "summary": "The raw TOC OCR (pdf 1089) reads the relevant right-column heading as 'chilles Tendon Rupture' (garbled 'Achilles Tendon Rupture'), but raw OCR of pdf 1131-1132 (OR43-OR44) body-confirms the actual printed heading is 'Achilles Tendonitis' -- whose content nonetheless explicitly discusses rupture mechanism/site as its opening line. Represented as a single combined 'Achilles Tendon Pathology (Tendonitis and Rupture)' unit under the body-confirmed title rather than assuming either OCR reading is authoritative on its own.",
+      "recommended_action": "Reviewer should confirm against the source PDF whether OR43-44 in fact contains two adjacent headings (Achilles Tendonitis, then a separate Achilles Tendon Rupture heading) that raw-text OCR compressed into one, in which case the unit should be split into two per the OP.S03/OB.S07 compound-heading-split precedent."
+    },
+    {
+      "issue_type": "cross_discipline_flags",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-OR-07, SU-OR-09, SU-OR-31, SU-OR-32, SU-OR-33",
+      "title": "Cauda equina / osteomyelitis / spine content substantially overlaps Neurosurgery and Infectious Diseases",
+      "summary": "Several units carry explicit in-text redirects to sister chapters (Fractures of the Spine -> 'see Neurosurgery, NS39'; Cervical Spine's acute-injury content -> 'see Neurosurgery, NS38'; Hand -> 'see Plastic Surgery, PL24') or substantial thematic overlap without an explicit redirect (Cauda Equina Syndrome with Neurosurgery's cord-compression objectives; Osteomyelitis with Infectious Diseases' bone/joint infection content). Per project instruction (matching the OB/OP precedent), PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT designation is deferred to a later global cross-chapter audit; these are recorded here as thin CROSS_DISCIPLINE-flavored units retaining only the orthopedic-recognition/referral angle.",
+      "recommended_action": "Defer to global cross-chapter ownership audit; no chapter-local action required."
+    },
+    {
+      "issue_type": "no_dedicated_mcc_objective_found",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-OR-04, SU-OR-05, SU-OR-09, SU-OR-13, SU-OR-15, SU-OR-31, SU-OR-33, SU-OR-39, SU-OR-44, SU-OR-55, SU-OR-59, SU-OR-60, SU-OR-64, SU-OR-65, SU-OR-70, SU-OR-71",
+      "title": "Multiple study units carry only WEAK MCC evidence or are mapped only to broad Trauma/arthralgia objectives",
+      "summary": "A full-registry search-mcc-objectives sweep for 'fracture', 'osteoarthritis', 'compartment syndrome', 'septic', 'arthritis', 'swelling', 'immobil', and related orthopedic terms returned zero or near-zero direct matches. The MCC Objectives registry has no orthopedic-disease-specific presentation list; nearly all fracture/dislocation content in this chapter is instead mapped as DIRECT/COMPONENT against the broad trauma family (109 Trauma, 109-3 Bone or joint injury, 109-11 Nerve injury, 109-13 Spinal trauma, 109-15 Vascular injury) or the arthralgia/pain family (50-1 through 50-5), and pediatric orthopedic conditions against 20 (Limp in children) or 74 (Periodic health encounter, for DDH/scoliosis screening). This mirrors the OP chapter's finding that the registry lacks disease-specific objectives for a high-prevalence specialty domain, consistent with project accuracy rules (WEAK/UNCERTAIN used rather than fabricated DIRECT evidence).",
+      "recommended_action": "None required at this stage -- consistent with project accuracy rules (no invented MCC IDs; WEAK used where evidence is indirect). Coordinator may wish to note, in a future cross-chapter registry-gap audit, that the MCC Objectives Online registry lacks dedicated objectives for numerous high-prevalence orthopedic diagnoses (fracture subtypes, osteoarthritis, ligament injury) despite the general Trauma/Bone-or-joint-injury objectives existing to anchor them."
     }
   ]
 }
