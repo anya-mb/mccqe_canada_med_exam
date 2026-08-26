@@ -1,0 +1,47 @@
+{
+  "generated_at": "2026-08-26",
+  "chapter_code": "R",
+  "schema_note": "Chapter-local review-queue candidates only. This file is NOT the global research/scope/review_queue.json - it is merged into that coordinator-maintained file after this chapter passes validation.",
+  "items": [
+    {
+      "issue_type": "STRUCTURAL_SOURCE_RECOVERY",
+      "severity": "HIGH",
+      "study_unit_id": "SU-R-02/SU-R-03/SU-R-04/SU-R-05/SU-R-06/SU-R-32/SU-R-33",
+      "title": "Two omitted parent headings and incorrect TOC attachments",
+      "summary": "Canonical TOC/body OCR confirms that Basic Anatomy, common presentations, PFTs, CXR, and ABGs belong beneath the omitted 'Approach to the Respiratory Patient' heading; Sleep Hypoventilation and Sleep Apnea belong beneath the omitted 'Sleep-Related Breathing Disorders' heading, not Neoplasms. Airway Disease starts at R7, not R3.",
+      "recommended_action": "Preserve the chapter-local UNCATALOGUED hierarchy and corrected exact page ranges; repair toc_inventory.json only in a separate global TOC-maintenance task."
+    },
+    {
+      "issue_type": "BODY_RECOVERED_HEADINGS",
+      "severity": "MEDIUM",
+      "study_unit_id": "SU-R-06/SU-R-14/SU-R-15/SU-R-16/SU-R-17",
+      "title": "Substantial ABG and ILD headings absent from toc_inventory.json",
+      "summary": "Targeted body OCR confirms standalone Arterial Blood Gases, Hypersensitivity Pneumonitis, Sarcoidosis, Pneumoconioses, and Drug/Treatment-Associated ILD headings. They were recovered with synthetic IDs and kept within their verified page ranges.",
+      "recommended_action": "Retain these source-traceable units; do not collapse them back into inaccurate broad inventory nodes."
+    },
+    {
+      "issue_type": "WEAK_MCC_MAPPING",
+      "severity": "MEDIUM",
+      "study_unit_id": "SU-R-31",
+      "title": "No dedicated MCC objective for solitary pulmonary nodule",
+      "summary": "Targeted canonical registry searches for pulmonary nodule, lung cancer, and abnormal chest imaging returned no dedicated objective. Objective 7 (Hemoptysis) supports CT evaluation for bronchogenic malignancy only indirectly, so evidence remains WEAK with requires_scope_review=true.",
+      "recommended_action": "Recheck after future MCC registry refresh; keep detailed nodule algorithms in the linked Imaging/Thoracic Surgery scope and verify current thresholds during question generation."
+    },
+    {
+      "issue_type": "CROSS_DISCIPLINE_SCOPE",
+      "severity": "MEDIUM",
+      "study_unit_id": "SU-R-07/SU-R-11/SU-R-16/SU-R-20/SU-R-21/SU-R-22/SU-R-25/SU-R-27/SU-R-30/SU-R-31",
+      "title": "Respiratory recognition retained across explicit cross-references",
+      "summary": "Several R nodes explicitly defer to Pediatrics, Cardiology, Thoracic Surgery, Medical Imaging, Rheumatology, Nephrology, or occupational medicine. R retains presentation recognition, stabilization, basic testing, and referral where source/MCC evidence supports it; no PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT decision was made.",
+      "recommended_action": "Resolve global ownership only after all chapters are mapped."
+    },
+    {
+      "issue_type": "GUIDANCE_FRESHNESS",
+      "severity": "HIGH",
+      "study_unit_id": "SU-R-08/SU-R-09/SU-R-19/SU-R-24/SU-R-28/SU-R-29/SU-R-31/SU-R-37/SU-R-38/SU-R-39",
+      "title": "Volatile respiratory treatment thresholds and regimens",
+      "summary": "The chapter contains inhaler sequences, oxygen/ventilation targets, anticoagulant and antimicrobial regimens, pleural and nodule thresholds, sepsis protocols, and medication doses that must not be frozen at scope stage.",
+      "recommended_action": "During question generation, retrieve current Canadian guidance source-first and verify every exact threshold, dose, sequence, and schedule."
+    }
+  ]
+}
