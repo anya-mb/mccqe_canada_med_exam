@@ -1,0 +1,57 @@
+{
+  "generated_at": "2026-08-26",
+  "chapter_code": "NP",
+  "schema_note": "Chapter-local review-queue candidates only. This file is NOT the global research/scope/review_queue.json - it is merged into that coordinator-maintained file after this chapter passes validation.",
+  "items": [
+    {
+      "issue_type": "unresolved_toc_headings_confirmed_via_body_evidence",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-NP-08, SU-NP-09, SU-NP-10, SU-NP-11, SU-NP-12, SU-NP-15, SU-NP-19",
+      "title": "Five TOC headings unresolved by the deterministic packet; four confirmed as genuine core content via raw-OCR body-heading verification and represented with synthetic UNCATALOGUED: source_node_ids",
+      "summary": "The NP packet's source_quality.unresolved_headings lists five TOC lines whose trailing page-number OCR did not parse to a trusted anchor, so no toc_inventory.json node exists for them: 'ACTOMYINS' (OCR-garbled 'ACRONYMS'), 'Acute Kidney Injury', 'Parenchymal Kidney Dis[eases]' (with five listed subtopics: Glomerular Diseases, Glomerular Syndromes, Tubulointerstitial Disease, Vascular Diseases of the Kidney, Analgesic Nephropathies), 'Hypertension' (with three listed subtopics: Hypertensive Nephrosclerosis, Renovascular Hypertension, Renal Parenchymal Hypertension), and 'Renal Transplantation'. Raw-OCR body-heading verification (derived/toronto-notes-2025/clean-ocr/, pdf pages 822, 841-853, 858, 862) confirmed: (1) 'ACTOMYINS' is a non-clinical acronym glossary (pdf 822/NP2), correctly excluded, matching the ID/MI chapter precedent. (2) 'Acute Kidney Injury' is a genuine, substantial section (KDIGO staging table, prerenal/renal/postrenal approach) at pdf 841-842/NP21-22. (3) 'Parenchymal Kidney Diseases' is genuine and substantial, spanning pdf 842-853/NP22-33, and was split into four study units (glomerular, tubulointerstitial, vascular, analgesic) per its own subheadings. (4) 'Hypertension' is genuine, spanning pdf 858/NP38 (sharing that page with the start of Cystic Diseases of the Kidney). (5) 'Renal Transplantation' is genuine, at pdf 862/NP42. Since dropping four of these five as UNRESOLVED would have excluded core MCCQE nephrology content (AKI alone maps to a top-priority MCC objective, 89-1) from the crosswalk, each was represented using a synthetic UNCATALOGUED: source_node_id (documented per-unit in study_units.json's structural_rationale) rather than left unmapped.",
+      "resolution_status": "RESOLVED FOR THIS CHAPTER - represented via SU-NP-08 through SU-NP-12, SU-NP-15, and SU-NP-19 with synthetic UNCATALOGUED: source_node_ids and UNRESOLVED page_mapping_precision (accurately reflecting the lack of a trusted TOC page anchor even though the body location is confirmed).",
+      "recommended_action": "Coordinator/human reviewer should confirm the UNCATALOGUED: synthetic-node-id convention is an acceptable resolution path (it is explicitly supported by scripts/qbank/scope_validate.py's source-accounting check) versus requiring a toc_inventory.json regeneration pass for chapter NP specifically, given this chapter had an unusually high rate (5 of ~49 total headings) of unresolved TOC page anchors compared to prior chapters. If a future toc_inventory.json extraction improvement resolves these page anchors, this chapter's study_units.json source_node_ids should be migrated from the synthetic IDs to the resulting canonical node_ids.",
+      "affects_global_toc": true
+    },
+    {
+      "issue_type": "minor_page_boundary_drift",
+      "severity": "informational",
+      "study_unit_id": "SU-NP-05, SU-NP-06, SU-NP-16",
+      "title": "Two minor section-boundary page-range corrections where content spills a fraction of a page past the toc-recorded end page",
+      "summary": "Raw-OCR verification found two instances where a section's toc-recorded end page understates its true body extent by a small margin: (1) NP.S03 (Electrolyte Disorders, declared end pdf 836) actually continues through Hypomagnesemia treatment content at the top of pdf 837, before NP.S04 (Acid-Base Disorders) begins mid-page (affects SU-NP-05, SU-NP-06). (2) NP.S06 (Chronic Kidney Disease, declared end implied by NP.S07's declared start pdf 858) actually ends mid-page on pdf 858, with the uncatalogued Hypertension section and then NP.S07 (Cystic Diseases of the Kidney) both beginning on the same page (affects SU-NP-16). Both are minor precision corrections of a fraction of a page each - content is genuine and was not fabricated, mislabeled, or reordered, consistent with the same low-severity pattern documented in chapter MI's review_items.json.",
+      "resolution_status": "RESOLVED - each affected study unit's pdf_page_range/tn_page_range is corrected to its confirmed body extent in study_units.json, with the drift documented in each unit's structural_rationale.",
+      "recommended_action": "Coordinator may want to continue folding this into the recurring minor-page-boundary-drift note already raised for chapter MI; does not affect this chapter's crosswalk correctness.",
+      "affects_global_toc": true
+    },
+    {
+      "issue_type": "cross_reference_only_content",
+      "severity": "informational",
+      "study_unit_id": "SU-NP-13",
+      "title": "Two of four topics in Systemic Disease with Renal Manifestation are pure cross-references to other chapters",
+      "summary": "Body confirmation shows NP.S05.T02 (Scleroderma, pdf 856) opens with 'see Rheumatology, RH14' and NP.S05.T03 (Multiple Myeloma, pdf 856) opens with 'see Hematology, H51', each followed by genuine NP-chapter-specific renal-manifestation content (scleroderma renal crisis; myeloma cast nephropathy context), unlike a pure zero-content cross-reference (cf. MI's SU-MI-22 Arthritis precedent, which had zero independent content). Retained within SU-NP-13 rather than split into separate REFERENCE_ONLY units since each carries genuine renal-specific content beyond the cross-reference line.",
+      "resolution_status": "RESOLVED - represented within SU-NP-13 with a CROSS_DISCIPLINE classification and cross_discipline_note documenting both cross-references; full disease management for scleroderma/myeloma is out of this chapter's scope by design.",
+      "recommended_action": "No action required for this chapter; consistent with prior chapters' treatment of cross-referenced systemic-disease content.",
+      "affects_global_toc": false
+    },
+    {
+      "issue_type": "mcc_registry_coverage_gap",
+      "severity": "informational",
+      "study_unit_id": "SU-NP-05, SU-NP-18, SU-NP-19",
+      "title": "MCC objectives registry has no dedicated objective for phosphate/magnesium disorders, dialysis, or renal transplantation",
+      "summary": "Targeted registry searches for 'phosphate', 'magnesium', 'dialysis', 'renal failure', and 'kidney transplant' returned zero or only loosely-related matches (89-1 AKI, 89-2 CKD as the only kidney-transplant hits, via general renal-failure grouping). Every affected topic was still mapped to the closest presentation-based objective whose scope plausibly encompasses it (dialysis/transplant anchored to 89-1/89-2's explicit renal-replacement-therapy management language; phosphate/magnesium anchored to 89-2's CKD-complication-management scope), with mapping_strength never exceeding what the objective's actual scope supports. This chapter's overall MCC-mapping-strength rate is notably better than prior chapters (only 1 of 22 units - SU-NP-05 - carries a WEAK primary anchor) because five presentation-based objectives directly matching this chapter's core content (89-1 AKI, 8 Hematuria, 84 Proteinuria, 9-1 Hypertension) were found via targeted search-mcc-objectives calls after the packet's candidate set (built from Study Smarter/token-overlap heuristics) failed to surface them.",
+      "resolution_status": "RESOLVED FOR THIS CHAPTER - no evidence fabricated; see crosswalk.json's per-unit mapping_rationale.",
+      "recommended_action": "Coordinator may want to continue folding this into the broader MCC-objectives-registry-gap note (now confirmed in chapters E, G, GS, GM, GY, H, ID, MI, and NP for the specific procedural/pharmacologic sub-topics named above), while noting NP as a case where the chapter's presentation-based organizational structure resulted in an unusually strong overall match rate once search-mcc-objectives was used to fill packet gaps.",
+      "affects_global_toc": false
+    },
+    {
+      "issue_type": "landmark_trial_sidebar_placement",
+      "severity": "informational",
+      "study_unit_id": "SU-NP-12, SU-NP-21",
+      "title": "Toronto Notes places topic-adjacent 'Landmark Trial' EBM sidebar boxes throughout the chapter body, not only in the dedicated Landmark Trials section",
+      "summary": "Body confirmation found an 'ELITE-Symphony' renal-transplantation trial sidebar box embedded at the foot of pdf 853/NP33 (within the Analgesic Nephropathies body text, topically unrelated to that page's main content but placed there for layout reasons) - a formatting pattern distinct from the chapter's dedicated, compiled 'Landmark Nephrology Trials' table section (NP.S11, pdf 864-865/NP44-45, represented as SU-NP-21). This differs from a structural TOC defect; it is standard Toronto Notes page-layout behavior (trial boxes fill available page margin space near topically-related content) and does not affect source-node accounting since the sidebar box carries no separate toc_inventory.json node.",
+      "resolution_status": "RESOLVED - noted in SU-NP-12's structural_rationale; not separately represented as a study unit since it duplicates content addressable via SU-NP-19 (Renal Transplantation) and SU-NP-21 (Landmark Trials).",
+      "recommended_action": "No action required; low priority given it does not affect crosswalk correctness or source-node accounting.",
+      "affects_global_toc": false
+    }
+  ]
+}

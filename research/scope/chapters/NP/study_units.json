@@ -1,0 +1,544 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-26T00:00:00Z",
+  "chapter_code": "NP",
+  "chapter_title": "Nephrology",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes SOURCE STRUCTURE (toc_inventory.json / derived/scope_packets/NP.json), cross-verified against the canonical raw-OCR corpus (derived/toronto-notes-2025/clean-ocr/, pdf pages 821-870) given this chapter's five unresolved TOC headings per the deterministic packet (candidate_set_truncated=false, 44 toc_inventory.json source nodes). Raw-OCR verification of the full page range found: (1) The TOC's opening 'ACTOMYINS' line is an OCR-garbled 'ACRONYMS', a non-clinical acronym glossary (pdf 822/NP2: ACEI, ACR, ADH, AG, AIN, ANA, ARB, etc.) with no toc_inventory.json node and no genuine merged clinical heading (unlike chapters ID's and MI's analogous acronym-glossary defects) - not separately represented, consistent with precedent. (2) Four of the five unresolved TOC headings ('Acute Kidney Injury', 'Parenchymal Kidney Dis[eases]' with its five listed subtopics, 'Hypertension' with its three listed subtopics, and 'Renal Transplantation') are confirmed via body-heading confirmation to be genuine, substantial, clinically essential nephrology content with no toc_inventory.json node (their TOC page-number OCR did not parse to a trusted anchor). Per project instructions (canonical TOC -> raw/normalized OCR -> body-heading confirmation -> nearby source pages -> UNRESOLVED if evidence insufficient), each is represented using a synthetic UNCATALOGUED: source_node_id (SU-NP-08 through SU-NP-12, SU-NP-15, SU-NP-19) since sufficient body evidence exists to confirm both their presence and page location - treating them as UNRESOLVED-and-dropped would have excluded core MCCQE nephrology content (AKI, glomerular disease, hypertension, transplantation) from the crosswalk. The fifth unresolved heading ('ACTOMYINS'/ACRONYMS) is genuinely non-clinical and appropriately excluded. (3) Two minor page-boundary-drift corrections were found: NP.S03's true extent runs into pdf 837/NP17 (Hypomagnesemia) before NP.S04 ('Acid-Base Disorders') begins on the same page, and NP.S07 ('Cystic Diseases of the Kidney') begins at the foot of pdf 858/NP38, sharing that page with the uncatalogued Hypertension section. All corrections and the uncatalogued-node evidence are documented in review_items.json and unresolved_mappings.json.",
+  "total_study_units": 22,
+  "organizational_header_nodes": {
+    "NP": "Chapter root container - represented by all study units below, per the C/ELOM/A/CP/D/ER/E/FM/G/GS/GM/GY/H/ID/MG/MI convention.",
+    "NP.S01": "'Basic Anatomy REVIGW' umbrella heading; carries three T-children consolidated as SU-NP-01.",
+    "NP.S02": "'Assessment of Remal FUMCTtION' umbrella heading; carries four T-children consolidated as SU-NP-02.",
+    "NP.S03": "'Electrolyte DisOrders' umbrella heading; carries eleven T-children split by physiological axis into SU-NP-03 (sodium), SU-NP-04 (potassium), and SU-NP-05 (phosphate/magnesium).",
+    "NP.S04": "'Acid-Base Disorders' umbrella heading; carries three T-children represented as SU-NP-06 (metabolic acidosis/alkalosis) and SU-NP-07 (polyuria).",
+    "NP.S05": "'Systemic Disease with Renal Manifestation' umbrella heading; carries four T-children consolidated as SU-NP-13.",
+    "NP.S06": "'Chronic Kidney Dis' umbrella heading with no T-children; represented as SU-NP-14.",
+    "NP.S07": "'Cystic Diseases of the Kidmey' umbrella heading; carries three T-children consolidated as SU-NP-16.",
+    "NP.S08": "'End Stage Renal Disease' umbrella heading; carries one T-child represented as SU-NP-17.",
+    "NP.S09": "'Renal Replacement Therapy' umbrella heading; carries one T-child (Dialysis) represented as SU-NP-18; Renal Transplantation (TOC-listed peer topic with no toc_inventory.json node) is represented separately as SU-NP-19.",
+    "NP.S10": "'COMMON MeCICAtIONS' umbrella heading with no T-children; represented as SU-NP-20.",
+    "NP.S11": "'Landmark Nephrology Trialls' umbrella heading with no T-children; represented as SU-NP-21.",
+    "NP.S12": "'Reference' umbrella heading; carries one T-child consolidated as SU-NP-22."
+  },
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-01",
+      "title": "Renal Anatomy, Embryology, and Hemodynamics",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "NP.S01",
+        "NP.S01.T01",
+        "NP.S01.T02",
+        "NP.S01.T03"
+      ],
+      "tn_page_range": "NP2-NP4",
+      "pdf_page_range": [
+        822,
+        824
+      ],
+      "source_hierarchy_path": [
+        "NP.S01",
+        "NP.S01.T01",
+        "NP.S01.T02",
+        "NP.S01.T03"
+      ],
+      "structural_rationale": "NP.S01 ('Basic Anatomy REVIGW', OCR-garbled 'Basic Anatomy Review') covers three body-confirmed foundational topics (embryology, renal structure/function, renal hemodynamics per pdf 822-824/NP2-4) underlying every subsequent clinical unit in the chapter, analogous to chapter ID's 'Principles of Microbiology' (SU-ID-01) and MI's modality-physics precedent (SU-MI-01). Consolidated into one SUPPORTING_KNOWLEDGE unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-02",
+      "title": "Assessment of Renal Function: GFR Measurement, Urinalysis, Urine Microscopy, and Urine Biochemistry",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "NP.S02",
+        "NP.S02.T01",
+        "NP.S02.T02",
+        "NP.S02.T03",
+        "NP.S02.T04"
+      ],
+      "tn_page_range": "NP5-NP7",
+      "pdf_page_range": [
+        825,
+        827
+      ],
+      "source_hierarchy_path": [
+        "NP.S02",
+        "NP.S02.T01",
+        "NP.S02.T02",
+        "NP.S02.T03",
+        "NP.S02.T04"
+      ],
+      "structural_rationale": "NP.S02 ('Assessment of Remal FUMCTtION', OCR-garbled 'Assessment of Renal Function') consolidates four body-confirmed topics (pdf 825-827/NP5-7): measurement of renal function (creatinine, eGFR, creatinine clearance), urinalysis, urine microscopy (casts, crystals), and urine biochemistry (electrolytes, FENa). Kept as one unit since these are the shared diagnostic toolkit explicitly named in the enabling objectives of Hematuria (8), Proteinuria (84), Acute kidney injury (89-1), and Chronic kidney disease (89-2) rather than independently testable topics.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-03",
+      "title": "Sodium Disorders: Hyponatremia, Hypernatremia, and Diabetes Insipidus",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "NP.S03",
+        "NP.S03.T01",
+        "NP.S03.T02",
+        "NP.S03.T03",
+        "NP.S03.T04"
+      ],
+      "tn_page_range": "NP8-NP12",
+      "pdf_page_range": [
+        828,
+        832
+      ],
+      "source_hierarchy_path": [
+        "NP.S03",
+        "NP.S03.T01",
+        "NP.S03.T02",
+        "NP.S03.T03",
+        "NP.S03.T04"
+      ],
+      "structural_rationale": "NP.S03 ('Electrolyte DisOrders') splits into three physiologically distinct study units (sodium, potassium, phosphate/magnesium) since body confirmation (pdf 828-837/NP8-17) shows each electrolyte axis has independent diagnostic approach, etiology, and MCC evidence. This unit covers Sodium Homeostasis, Hyponatremia, Hypernatremia, and Diabetes Insipidus (body-confirmed pdf 828-832/NP8-12), grouped because DI is presented as a cause of hypernatremia/water-balance disorder within the same physiological framework in the source text.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-04",
+      "title": "Potassium Disorders: Hyperkalemia and Hypokalemia",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "NP.S03.T05",
+        "NP.S03.T06",
+        "NP.S03.T07"
+      ],
+      "tn_page_range": "NP13-NP15",
+      "pdf_page_range": [
+        833,
+        835
+      ],
+      "source_hierarchy_path": [
+        "NP.S03.T05",
+        "NP.S03.T06",
+        "NP.S03.T07"
+      ],
+      "structural_rationale": "Potassium Homeostasis, Hypokalemia, and Hyperkalemia body-confirmed at pdf 833-835/NP13-15, forming the second of three electrolyte-axis units split from NP.S03.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-05",
+      "title": "Phosphate and Magnesium Disorders: Hyperphosphatemia, Hypophosphatemia, Hypermagnesemia, and Hypomagnesemia",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "NP.S03.T08",
+        "NP.S03.T09",
+        "NP.S03.T10",
+        "NP.S03.T11"
+      ],
+      "tn_page_range": "NP16-NP17",
+      "pdf_page_range": [
+        836,
+        837
+      ],
+      "source_hierarchy_path": [
+        "NP.S03.T08",
+        "NP.S03.T09",
+        "NP.S03.T10",
+        "NP.S03.T11"
+      ],
+      "structural_rationale": "Hyperphosphatemia, Hypophosphatemia, Hypermagnesemia, and Hypomagnesemia body-confirmed at pdf 836-837/NP16-17; the section's true extent runs a fraction of a page past the packet's declared end_pdf_page of 836 (Hypomagnesemia treatment content and the 'Acid-Base Disorders' heading both begin on pdf 837, a minor page-boundary-drift pattern consistent with prior chapters - see review_items.json). Grouped as the third electrolyte-axis unit since both are most commonly caused by and managed as complications of AKI/CKD rather than presenting as independent MCCQE-testable diagnoses.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-06",
+      "title": "Acid-Base Disorders: Metabolic Acidosis and Metabolic Alkalosis",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "NP.S04",
+        "NP.S04.T01",
+        "NP.S04.T02"
+      ],
+      "tn_page_range": "NP17-NP20",
+      "pdf_page_range": [
+        837,
+        840
+      ],
+      "source_hierarchy_path": [
+        "NP.S04",
+        "NP.S04.T01",
+        "NP.S04.T02"
+      ],
+      "structural_rationale": "NP.S04 ('Acid-Base Disorders') body-confirmed beginning mid-page at pdf 837/NP17 (immediately after Hypomagnesemia, before the packet's declared start of pdf 837 - consistent with the same minor drift noted for SU-NP-05) and continuing through pdf 840/NP20. Polyuria (NP.S04.T03) is represented separately (SU-NP-07) as a distinct clinical presentation with its own MCC objective (110-2) rather than an acid-base topic proper.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-07",
+      "title": "Polyuria: Diagnostic Approach",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "NP.S04.T03"
+      ],
+      "tn_page_range": "NP20-NP21",
+      "pdf_page_range": [
+        840,
+        841
+      ],
+      "source_hierarchy_path": [
+        "NP.S04.T03"
+      ],
+      "structural_rationale": "Polyuria body-confirmed at pdf 840-841/NP20-21 (water deprivation test, urine osmolality-based diagnostic algorithm), immediately preceding the body-confirmed but uncatalogued 'Acute Kidney Injury' heading on pdf 841. Represented as its own unit given a direct, named MCC objective (110-2 Polyuria) distinct from the acid-base-disorder classification topics of SU-NP-06.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-08",
+      "title": "Acute Kidney Injury: Classification, Prerenal/Renal/Postrenal Approach, and Management",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "UNCATALOGUED:NP.AKI"
+      ],
+      "tn_page_range": "NP21-NP22",
+      "pdf_page_range": [
+        841,
+        842
+      ],
+      "source_hierarchy_path": [
+        "UNCATALOGUED:NP.AKI"
+      ],
+      "structural_rationale": "TOC page's trailing page-number digits for 'Acute Kidney Injury' did not parse to a trusted page anchor (per packet source_quality.unresolved_headings), so no toc_inventory.json node exists for this heading. Body-heading confirmation (derived/toronto-notes-2025/clean-ocr/0841.txt) locates the genuine, substantial 'Acute Kidney Injury' section beginning mid-page at pdf 841/NP21 (Definition, Clinical Features, KDIGO AKI staging table, prerenal/renal/postrenal approach, treatment) and ending mid-page at pdf 842/NP22 immediately before 'Parenchymal Kidney Diseases' begins. Represented with a synthetic UNCATALOGUED: source_node_id per project convention for a heading with no toc_inventory.json node (documented in unresolved_mappings.json and review_items.json), since dropping AKI - a core MCCQE nephrology topic (objective 89-1) with a body-confirmed, unambiguous heading - would be a significant coverage gap, not an appropriate application of UNRESOLVED status.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "UNRESOLVED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-09",
+      "title": "Glomerular Disease: Nephritic/Nephrotic Syndrome Classification and Major Glomerulonephritides",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "UNCATALOGUED:NP.PARENCHYMAL_KIDNEY_DISEASE.GLOMERULAR"
+      ],
+      "tn_page_range": "NP22-NP27",
+      "pdf_page_range": [
+        842,
+        847
+      ],
+      "source_hierarchy_path": [
+        "UNCATALOGUED:NP.PARENCHYMAL_KIDNEY_DISEASE.GLOMERULAR"
+      ],
+      "structural_rationale": "TOC page anchor for 'Parenchymal Kidney Dis[eases]' (and its five listed subtopics: Glomerular Diseases, Glomerular Syndromes, Tubulointerstitial Disease, Vascular Diseases of the Kidney, Analgesic Nephropathies) did not parse to a trusted page (per packet source_quality.unresolved_headings); no toc_inventory.json node exists. Body-heading confirmation (clean-ocr 0842-0847) locates 'Parenchymal Kidney Diseases' / 'Glomerular Diseases' beginning immediately after AKI's Prognosis subsection at pdf 842/NP22, covering histological classification of glomerular changes, clinical features of glomerular disease (hematuria/proteinuria/HTN/edema pattern), RPGN, nephrotic syndrome (Table 12: minimal change, membranous, FSGS, MPGN), and major glomerulonephritides (e.g. IgA vasculitis/HSP) through pdf 847/NP27. Split from the broader 'Parenchymal Kidney Diseases' umbrella into four distinct study units (SU-NP-09 through SU-NP-12) since actual body evidence confirms each subtopic (glomerular, tubulointerstitial, vascular, analgesic) is a clinically distinct disease category with its own diagnostic approach, per the source's own Glomerular Diseases/Glomerular Syndromes/Tubulointerstitial Disease/Vascular Diseases of the Kidney/Analgesic Nephropathies subheadings. Represented with a synthetic UNCATALOGUED: source_node_id per project convention.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "UNRESOLVED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-10",
+      "title": "Tubulointerstitial Disease: Acute Interstitial Nephritis and Acute Tubular Necrosis",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "UNCATALOGUED:NP.PARENCHYMAL_KIDNEY_DISEASE.TUBULOINTERSTITIAL"
+      ],
+      "tn_page_range": "NP28-NP30",
+      "pdf_page_range": [
+        848,
+        850
+      ],
+      "source_hierarchy_path": [
+        "UNCATALOGUED:NP.PARENCHYMAL_KIDNEY_DISEASE.TUBULOINTERSTITIAL"
+      ],
+      "structural_rationale": "Body-heading confirmation locates 'Tubulointerstitial Disease' beginning at pdf 848/NP28 (Tubulointerstitial Nephritis definition, treatment) through pdf 850/NP30 (Acute Tubular Necrosis etiology table: exogenous/endogenous/decreased-circulating-volume causes), immediately before 'Vascular Diseases of the Kidney' begins at pdf 851. No toc_inventory.json node exists (subtopic of the unresolved 'Parenchymal Kidney Dis[eases]' heading); represented with a synthetic UNCATALOGUED: source_node_id per project convention - see SU-NP-09 for full context.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "UNRESOLVED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-11",
+      "title": "Vascular Diseases of the Kidney: Renal Artery Stenosis, Thrombotic Microangiopathy, and Calcineurin Inhibitor Nephropathy",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "UNCATALOGUED:NP.PARENCHYMAL_KIDNEY_DISEASE.VASCULAR"
+      ],
+      "tn_page_range": "NP31-NP33",
+      "pdf_page_range": [
+        851,
+        853
+      ],
+      "source_hierarchy_path": [
+        "UNCATALOGUED:NP.PARENCHYMAL_KIDNEY_DISEASE.VASCULAR"
+      ],
+      "structural_rationale": "Body-heading confirmation locates 'Vascular Diseases of the Kidney' beginning at pdf 851/NP31 (large/medium/small vessel disease summary table, renal artery stenosis investigations) through pdf 853/NP33 (thrombotic microangiopathy - TTP-HUS spectrum; calcineurin inhibitor nephropathy), immediately before 'Analgesic Nephropathies' begins on the same page (853). No toc_inventory.json node exists; represented with a synthetic UNCATALOGUED: source_node_id per project convention - see SU-NP-09.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "UNRESOLVED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-12",
+      "title": "Analgesic Nephropathies: NSAID- and Acetaminophen-Induced Renal Syndromes",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "UNCATALOGUED:NP.PARENCHYMAL_KIDNEY_DISEASE.ANALGESIC"
+      ],
+      "tn_page_range": "NP33",
+      "pdf_page_range": [
+        853,
+        853
+      ],
+      "source_hierarchy_path": [
+        "UNCATALOGUED:NP.PARENCHYMAL_KIDNEY_DISEASE.ANALGESIC"
+      ],
+      "structural_rationale": "Body-heading confirmation locates 'Analgesic Nephropathies' on pdf 853/NP33 (vasomotor AKI, acute/chronic interstitial nephritis, ATN, and other NSAID effects, all attributable to analgesic exposure), immediately before 'Systemic Disease with Renal Manifestation' begins on pdf 854. A single-page 'Landmark Trial' sidebar box (ELITE-Symphony, renal transplantation) also appears at the foot of pdf 853 - a Toronto Notes formatting artifact unrelated to this topic's content (see review_items.json); it is represented within SU-NP-19 (Renal Transplantation) via the chapter's compiled Landmark Trials section (SU-NP-21), not here. No toc_inventory.json node exists for Analgesic Nephropathies; represented with a synthetic UNCATALOGUED: source_node_id per project convention - see SU-NP-09.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "UNRESOLVED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-13",
+      "title": "Systemic Diseases with Renal Manifestations: Diabetic Nephropathy, Scleroderma Renal Crisis, Multiple Myeloma, and Malignancy-Associated Renal Disease",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "NP.S05",
+        "NP.S05.T01",
+        "NP.S05.T02",
+        "NP.S05.T03",
+        "NP.S05.T04"
+      ],
+      "tn_page_range": "NP34-NP36",
+      "pdf_page_range": [
+        854,
+        856
+      ],
+      "source_hierarchy_path": [
+        "NP.S05",
+        "NP.S05.T01",
+        "NP.S05.T02",
+        "NP.S05.T03",
+        "NP.S05.T04"
+      ],
+      "structural_rationale": "NP.S05 ('Systemic Disease with Renal Manifestation') body-confirmed pdf 854-856/NP34-36, covering four systemic diseases with renal complications: Diabetes (diabetic nephropathy staging/risk factors), Scleroderma (explicit 'see Rheumatology, RH14' cross-reference plus scleroderma renal crisis detail), Multiple Myeloma (explicit 'see Hematology, H51' cross-reference), and Malignancy. Kept as one unit since all four topics share the same renal-manifestation framing and testable competency (recognizing when a systemic disease is causing the renal presentation), despite two of the four explicitly deferring detailed disease management to other disciplines.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-14",
+      "title": "Chronic Kidney Disease: KDIGO Staging, Complications, and Management",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "NP.S06"
+      ],
+      "tn_page_range": "NP36-NP37",
+      "pdf_page_range": [
+        856,
+        857
+      ],
+      "source_hierarchy_path": [
+        "NP.S06"
+      ],
+      "structural_rationale": "NP.S06 ('Chronic Kidney Dis[ease]') body-confirmed pdf 856-857/NP36-37: definition, staging by GFR category and albuminuria (KDIGO 2024 Table 15), clinical features (uremic syndrome by organ system), and comprehensive management (RAAS blockade, SGLT2i, GLP-1RA, calcium/phosphate management, anemia management, dialysis/transplant indications).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-15",
+      "title": "Hypertension: Hypertensive Nephrosclerosis, Renovascular Hypertension, and Renal Parenchymal Hypertension",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "UNCATALOGUED:NP.HYPERTENSION"
+      ],
+      "tn_page_range": "NP38",
+      "pdf_page_range": [
+        858,
+        858
+      ],
+      "source_hierarchy_path": [
+        "UNCATALOGUED:NP.HYPERTENSION"
+      ],
+      "structural_rationale": "TOC page anchor for 'Hypertension' (with subtopics Hypertensive Nephrosclerosis, Renovascular Hypertension, Renal Parenchymal Hypertension) did not parse to a trusted page (per packet source_quality.unresolved_headings); no toc_inventory.json node exists. Body-heading confirmation (clean-ocr 0858.txt) locates the full 'Hypertension' section - covering primary/secondary HTN classification, chronic vs. malignant nephrosclerosis (Table 16), renovascular HTN investigations, and renal parenchymal HTN treatment - occupying the bulk of pdf 858/NP38, with 'Cystic Diseases of the Kidney' beginning at the foot of the same page. Represented with a synthetic UNCATALOGUED: source_node_id per project convention; page_mapping_precision is UNRESOLVED since the section shares a single physical page with the start of NP.S07 and no independent page anchor exists.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "UNRESOLVED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-16",
+      "title": "Cystic Kidney Diseases: Adult Polycystic Kidney Disease, Autosomal Recessive Polycystic Kidney Disease, and Medullary Sponge Kidney",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "NP.S07",
+        "NP.S07.T01",
+        "NP.S07.T02",
+        "NP.S07.T03"
+      ],
+      "tn_page_range": "NP38-NP40",
+      "pdf_page_range": [
+        858,
+        860
+      ],
+      "source_hierarchy_path": [
+        "NP.S07",
+        "NP.S07.T01",
+        "NP.S07.T02",
+        "NP.S07.T03"
+      ],
+      "structural_rationale": "NP.S07 ('Cystic Diseases of the Kidmey', OCR-garbled 'Kidney') body-confirmed beginning at the foot of pdf 858/NP38 (immediately after the Hypertension section) through pdf 860/NP40, covering Adult PKD (genetics, extrarenal manifestations, investigations, treatment including tolvaptan), Autosomal Recessive PKD, and Medullary Sponge Kidney.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-17",
+      "title": "End-Stage Renal Disease: Definition, Risk Factors, and Uremic Presentation",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "NP.S08",
+        "NP.S08.T01"
+      ],
+      "tn_page_range": "NP40-NP41",
+      "pdf_page_range": [
+        860,
+        861
+      ],
+      "source_hierarchy_path": [
+        "NP.S08",
+        "NP.S08.T01"
+      ],
+      "structural_rationale": "NP.S08 ('End Stage Renal Disease') body-confirmed pdf 860-861/NP40-41: definition (GFR <15), risk factors (proteinuria as strongest predictor), and presentation (volume overload, electrolyte abnormalities, uremic syndrome by organ system).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-18",
+      "title": "Renal Replacement Therapy: Dialysis Modalities, Indications, and Complications",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "NP.S09",
+        "NP.S09.T01"
+      ],
+      "tn_page_range": "NP41-NP42",
+      "pdf_page_range": [
+        861,
+        862
+      ],
+      "source_hierarchy_path": [
+        "NP.S09",
+        "NP.S09.T01"
+      ],
+      "structural_rationale": "NP.S09 ('Renal Replacement Therapy') / Dialysis body-confirmed pdf 861-862/NP41-42: complications of untreated uremia, and a comparison table (peritoneal dialysis vs. hemodialysis - rate, location, ultrafiltration mechanism, complications, preferred-when indications). Renal Transplantation, listed as a T-child of this section in the TOC but with no toc_inventory.json node, is represented separately (SU-NP-19) given its distinct testable competencies.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-19",
+      "title": "Renal Transplantation: Indications, Immunosuppression, and Complications",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "UNCATALOGUED:NP.RENAL_TRANSPLANTATION"
+      ],
+      "tn_page_range": "NP42",
+      "pdf_page_range": [
+        862,
+        862
+      ],
+      "source_hierarchy_path": [
+        "UNCATALOGUED:NP.RENAL_TRANSPLANTATION"
+      ],
+      "structural_rationale": "TOC page anchor for 'Renal Transplantation' did not parse to a trusted page (per packet source_quality.unresolved_headings); no toc_inventory.json node exists. Body-heading confirmation (clean-ocr 0862.txt) locates the full 'Renal Transplantation' section on pdf 862/NP42 (indications, deceased vs. living donor, induction/maintenance immunosuppression, and complications including graft rejection, BK virus nephropathy, and malignancy), immediately before 'Common Medications' begins on pdf 863. Represented with a synthetic UNCATALOGUED: source_node_id per project convention.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "UNRESOLVED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-20",
+      "title": "Common Nephrology Medications: Diuretics and Related Agents",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "NP.S10"
+      ],
+      "tn_page_range": "NP43-NP44",
+      "pdf_page_range": [
+        863,
+        864
+      ],
+      "source_hierarchy_path": [
+        "NP.S10"
+      ],
+      "structural_rationale": "NP.S10 ('COMMON MeCICAtIONS', OCR-garbled 'Common Medications') body-confirmed at pdf 863/NP43 onward: a medications-in-nephrology table (loop diuretics: site/mechanism of action, indications, dosing).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-21",
+      "title": "Landmark Nephrology Trials",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "NP.S11"
+      ],
+      "tn_page_range": "NP44-NP45",
+      "pdf_page_range": [
+        864,
+        865
+      ],
+      "source_hierarchy_path": [
+        "NP.S11"
+      ],
+      "structural_rationale": "NP.S11 ('Landmark Nephrology Trialls') is the chapter's compiled table of major nephrology RCTs (e.g. BICAR-ICU, ROADMAP, VA-NEPHRON-D) with trial name, reference, and clinical-trial-detail columns, body-confirmed at pdf 864-865/NP44-45. Distinct from the topic-adjacent 'Landmark Trial' sidebar boxes embedded throughout the chapter (e.g. the ELITE-Symphony box on pdf 853, folded into SU-NP-12's structural_rationale) - this is the chapter's dedicated compiled trials appendix.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NP-22",
+      "title": "Reference: Nephrology Bibliography",
+      "chapter_code": "NP",
+      "chapter_title": "Nephrology",
+      "source_node_ids": [
+        "NP.S12",
+        "NP.S12.T01"
+      ],
+      "tn_page_range": "NP45-NP50",
+      "pdf_page_range": [
+        865,
+        870
+      ],
+      "source_hierarchy_path": [
+        "NP.S12",
+        "NP.S12.T01"
+      ],
+      "structural_rationale": "NP.S12 ('Reference') is the chapter's bibliography/citation list, body-confirmed at pdf 865-870/NP45-50, carrying no independent clinical content.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    }
+  ]
+}
