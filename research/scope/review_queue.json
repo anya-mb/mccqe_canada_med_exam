@@ -20,13 +20,14 @@
     "NS",
     "OB",
     "OP",
-    "OR"
+    "OR",
+    "OT"
   ],
   "chapters_without_review_items_file": [
     "C",
     "ELOM"
   ],
-  "total_items": 108,
+  "total_items": 114,
   "items": [
     {
       "issue_type": "structural_ambiguity",
@@ -987,6 +988,54 @@
       "title": "Multiple study units carry only WEAK MCC evidence or are mapped only to broad Trauma/arthralgia objectives",
       "summary": "A full-registry search-mcc-objectives sweep for 'fracture', 'osteoarthritis', 'compartment syndrome', 'septic', 'arthritis', 'swelling', 'immobil', and related orthopedic terms returned zero or near-zero direct matches. The MCC Objectives registry has no orthopedic-disease-specific presentation list; nearly all fracture/dislocation content in this chapter is instead mapped as DIRECT/COMPONENT against the broad trauma family (109 Trauma, 109-3 Bone or joint injury, 109-11 Nerve injury, 109-13 Spinal trauma, 109-15 Vascular injury) or the arthralgia/pain family (50-1 through 50-5), and pediatric orthopedic conditions against 20 (Limp in children) or 74 (Periodic health encounter, for DDH/scoliosis screening). This mirrors the OP chapter's finding that the registry lacks disease-specific objectives for a high-prevalence specialty domain, consistent with project accuracy rules (WEAK/UNCERTAIN used rather than fabricated DIRECT evidence).",
       "recommended_action": "None required at this stage -- consistent with project accuracy rules (no invented MCC IDs; WEAK used where evidence is indirect). Coordinator may wish to note, in a future cross-chapter registry-gap audit, that the MCC Objectives Online registry lacks dedicated objectives for numerous high-prevalence orthopedic diagnoses (fracture subtypes, osteoarthritis, ligament injury) despite the general Trauma/Bone-or-joint-injury objectives existing to anchor them."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-OT-04, SU-OT-05",
+      "title": "Body heading 'Hearing' (TN OT9-OT12) entirely absent from toc_inventory.json",
+      "summary": "research/tn2025/unresolved_headings.json flags 'Hearing' as OT's one UNRESOLVED heading (TOC page-number OCR did not parse to a trusted anchor). toc_inventory.json has no node at all for this section or its seven children (Types of Hearing Loss, Pure Tone/Speech/Impedance Audiometry, Auditory Brainstem Response, Otoacoustic Emissions, Aural Rehabilitation). Independently resolved via raw OCR of pdf 1153-1156 (OT9-OT12): the section runs from immediately after the Neck Mass DDx figure to immediately before 'Evaluation of the Dizzy Patient' (start of the Vertigo section). Represented under a synthetic UNCATALOGUED:Hearing@pdf1153 id, split into a generalist-relevant physiology/DDx/bedside-test unit (SU-OT-04) and a specialist audiometric-technology unit (SU-OT-05).",
+      "recommended_action": "Reviewer should confirm against the source PDF that the recovered page range (pdf 1153-1156) is exactly correct and that no sub-heading within it was missed."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-OT-06, SU-OT-13",
+      "title": "OT.S04 mislabeled 'Tinnitus' with a real, separate Tinnitus section undetected on the preceding page",
+      "summary": "toc_inventory.json's OT.S04 node is captured with title 'Tinnitus' and start page pdf 1160/OT16, but raw OCR of pdf 1160 body-confirms the content there is actually 'Diseases of the External Ear' (Cerumen Impaction, Exostoses, Otitis Externa, Malignant Otitis Externa) - matching the node's own merged_duplicate_headings field ('Diseases of the ExtermalEar'). The real, separate one-page 'Tinnitus' section (Definition, History, Investigations, Treatment) is confirmed via raw OCR of pdf 1159 (OT15), an undetected body heading with no toc_inventory.json node of its own. Resolved by re-titling OT.S04 to 'Diseases of the External Ear' (SU-OT-13/14/15) and recovering the true Tinnitus section under a synthetic UNCATALOGUED:Tinnitus@pdf1159 id, combined with the Tinnitus DDx figure into SU-OT-06.",
+      "recommended_action": "Reviewer should confirm against the source PDF that pdf 1159 (OT15) is exactly where the Tinnitus section begins and that OT.S04's true start page is pdf 1160 (OT16), not 1159."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-OT-27, SU-OT-28, SU-OT-29, SU-OT-30",
+      "title": "OT.S07.T01/T02 ('Allergic Rhinitis', 'Vasomotor Rhinitis') mis-parented under 'Facial Nerve'; a real 'Rhinitis' section header is missing from toc_inventory.json",
+      "summary": "toc_inventory.json captures OT.S07 with title 'Facial Nerve' and two T-children, 'Allergic Rhinitis (i.e. Hay Fever)' and 'Vasomotor Rhinitis', which are clinically unrelated to facial nerve disease. Raw OCR of pdf 1166-1168 (OT22-OT24) confirms: (1) OT.S07's real, full title is 'Facial Nerve (CN VII) Paralysis' (matching the printed TOC line), covering Central/Peripheral Facial Paralysis and a Bell's Palsy vs. Ramsay Hunt Syndrome comparison table, ending on OT23 with no rhinitis content; and (2) 'Allergic Rhinitis' and 'Vasomotor Rhinitis' are real body headings that begin immediately after, under a 'Rhinitis' section header (Definition, Table 11 Classification of Rhinitis, Table 12 Nasal Discharge) that is itself entirely absent from toc_inventory.json - the same body-heading-assigned-to-wrong-parent pattern documented in OR's Spine-under-References finding (the extraction pipeline evidently attributed the next TOC row's page anchor and following body content to the prior section once its own children ran out). Resolved by correcting OT.S07's title (SU-OT-27) and re-parenting T01/T02 under a synthetic UNCATALOGUED:Rhinitis@pdf1168 id (SU-OT-28/29/30).",
+      "recommended_action": "Reviewer should confirm against the source PDF that no distinct 'Rhinitis' section-header line was missed by the raw-OCR read (i.e. that it genuinely lacks its own printed TOC row, consistent with being a sub-heading under the printed TOC's implicit 'Nose' grouping) and that the OT22-OT24 page boundaries assigned to Facial Nerve vs. Rhinitis are exactly correct."
+    },
+    {
+      "issue_type": "cross_discipline_flags",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-OT-2, SU-OT-27",
+      "title": "Central vertigo and central facial paralysis substantially overlap Neurology",
+      "summary": "This chapter carries explicit in-text redirects to Neurology (central facial paralysis: 'see Neurology, N3') and substantial thematic overlap without an explicit redirect (central vertigo red flags overlap Neurology's stroke/posterior-fossa objectives). Per project instruction (matching the OR/OP/OB precedent), PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT designation is deferred to a later global cross-chapter ownership audit.",
+      "recommended_action": "Defer to global cross-chapter ownership audit; no chapter-local action required."
+    },
+    {
+      "issue_type": "no_dedicated_mcc_objective_found",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-OT-7, SU-OT-13, SU-OT-16, SU-OT-23, SU-OT-27, SU-OT-28, SU-OT-30, SU-OT-32, SU-OT-33, SU-OT-34, SU-OT-35, SU-OT-36, SU-OT-38, SU-OT-39, SU-OT-43, SU-OT-44, SU-OT-47, SU-OT-50, SU-OT-54",
+      "title": "MCC Objectives registry has no dedicated objective for epistaxis, otitis media, hoarseness/larynx, salivary glands, croup/epiglottitis/stridor, sinusitis, tonsillectomy, peritonsillar abscess, or non-traumatic facial nerve palsy",
+      "summary": "A full-registry search-mcc-objectives sweep for 'epistaxis', 'nosebleed', 'otitis media', 'hoarseness', 'voice', 'vocal cord', 'laryngeal cancer', 'salivary gland', 'sinusitis', 'croup', 'epiglottitis', 'stridor', 'tonsillectomy', 'peritonsillar', 'adenoid', 'facial paralysis', and related ENT terms returned zero or near-zero direct matches. As in prior chapters (OR's fracture/osteoarthritis finding, OP's analogous gap), the MCC Objectives registry lacks disease-specific presentation objectives for numerous high-prevalence ENT diagnoses; content is instead mapped to the closest broad presentation objective available (100 Sore throat and/or rhinorrhea, 28 Ear pain, 15-1 Bleeding/bruising, 63 Neck masses and thyroid disease, 27-3 Pediatric respiratory distress, 109-11 Nerve injury) with WEAK/MODERATE evidence strength and requires_scope_review flagged where WEAK, consistent with project accuracy rules (no invented MCC IDs; WEAK/UNCERTAIN preserved rather than fabricated).",
+      "recommended_action": "None required at this stage - consistent with project accuracy rules. Coordinator may wish to note, in a future cross-chapter registry-gap audit, that the MCC Objectives Online registry lacks dedicated objectives for epistaxis, otitis media, laryngeal/voice disorders, and several other high-prevalence ENT presentations despite general presentation-family objectives (100, 28) existing to anchor them."
+    },
+    {
+      "issue_type": "questionable_specialist_detail",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-OT-05, SU-OT-24 (audiology), SU-OT-37, SU-OT-50",
+      "title": "Depth calls flagged for optional human confirmation: audiometric testing, recurrent respiratory papillomatosis, tonsillectomy indications",
+      "summary": "Per the project's generalist-vs-specialist depth guidance (caution against 'detailed audiology testing minutiae' and 'rare procedural classifications'), audiometric test technology (SU-OT-05), recurrent respiratory papillomatosis (SU-OT-37), and tonsillectomy surgical-indication thresholds (SU-OT-50) were classified SUPPORTING_KNOWLEDGE/SPECIALIST_DETAIL with zero minimum question coverage. These are judgment calls rather than clear-cut exclusions.",
+      "recommended_action": "Human reviewer may wish to confirm these depth calls, particularly whether basic audiogram-pattern recognition (conductive vs. sensorineural visual pattern) belongs at COMPONENT rather than SUPPORTING_KNOWLEDGE depth."
     }
   ]
 }

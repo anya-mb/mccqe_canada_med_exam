@@ -1,0 +1,1350 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-26",
+  "chapter_code": "OT",
+  "chapter_title": "Otolaryngology",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes source structure (toc_inventory.json / derived/scope_packets/OT.json), corrected against raw OCR of the chapter's own TOC (pdf 1145) and ~20 body pages. Unlike OR's genuine two-column TOC corruption, OT's toc_inventory.json extraction is single-column and largely clean; the defects found here are three distinct, spot-verified anomalies: (1) a body heading entirely absent from toc_inventory.json and independently flagged as OT's one UNRESOLVED entry in research/tn2025/unresolved_headings.json -- a real 'Hearing' section (TN OT9-OT12, pdf 1153-1156) covering hearing physiology, DDx, bedside/audiometric testing, and aural rehabilitation, confirmed via raw OCR and represented as SU-OT-04/05 under a synthetic UNCATALOGUED id; (2) a mislabeled/mis-anchored section node, OT.S04 (captured title 'Tinnitus', start pdf 1160/OT16), whose body content at that page is actually 'Diseases of the External Ear' (matching the node's own merged_duplicate_headings field) -- the real, separate one-page 'Tinnitus' section (Definition/History/Investigations/Treatment) is an undetected body heading on pdf 1159 (OT15), confirmed via raw OCR and represented as SU-OT-06 under a synthetic UNCATALOGUED id; and (3) a body-heading-assigned-to-wrong-parent defect analogous to OR's Spine-under-References finding -- OT.S07.T01/T02 ('Allergic Rhinitis', 'Vasomotor Rhinitis') are captured as children of OT.S07 (titled 'Facial Nerve'), but raw OCR of pdf 1166-1168 (OT22-OT24) confirms OT.S07's real, full title is 'Facial Nerve (CN VII) Paralysis' (ending on OT23 with Bell's Palsy/Ramsay Hunt content and no rhinitis content at all), and that Allergic/Vasomotor Rhinitis are real children of a separate 'Rhinitis' section header (Table 11/12: rhinitis classification and nasal-discharge differential) that is itself absent from toc_inventory.json -- represented as SU-OT-27 (corrected Facial Nerve unit) and SU-OT-28/29/30 (recovered Rhinitis section, with T01/T02 re-parented). All three corrections are resolved via raw OCR body-page confirmation (never model memory/medical-knowledge reconstruction) and cited in each affected unit's structural_rationale; no page-image rendering was required as raw-text OCR was internally consistent and sufficient at every point checked. Excluded as non-clinical organizational/reference material: the chapter root (OT) and OT.S16 (Common Medications, a drug-reference table, consistent with the OR.S15/OP.S20/OB.S18/NS.S20 reference-section precedent); the Acronyms portion of OT.S01 is likewise excluded, consistent with the OP.S01/OB.S01/NS.S01/OR.S01 chapter-opening acronym-glossary precedent, while its co-located 'Basic Anatomy Review' content is retained as SU-OT-01.",
+  "total_study_units": 57,
+  "organizational_header_nodes": [
+    "OT",
+    "OT.S16"
+  ],
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-01",
+      "title": "Basic Anatomy Review (Ear, Nose, Throat, Head and Neck)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S01",
+        "OT.S01.T01",
+        "OT.S01.T02",
+        "OT.S01.T03",
+        "OT.S01.T04",
+        "OT.S01.T05"
+      ],
+      "tn_page_range": "OT2-OT5",
+      "pdf_page_range": [
+        1146,
+        1149
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Basic Anatomy Review"
+      ],
+      "structural_rationale": "OT.S01's captured title 'Acromyms' (OCR-garbled 'Acronyms') matches the chapter-opening acronym-glossary pattern seen in OP.S01/OB.S01/NS.S01/OR.S01; raw OCR of pdf 1146-1149 (OT2-OT5) body-confirms the acronym table is immediately followed by the real 'Basic Anatomy Review' content (external/middle/inner ear anatomy, nasal anatomy, laryngeal anatomy, facial nerve branches, neck anatomy and anatomical triangles) matching the T01-T05 topic children (Ear, Nose, Throat, Head and Neck, Anatomical Triangles of the Neck). The non-clinical acronym glossary itself is excluded from study units per the established precedent.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-02",
+      "title": "Approach to Dizziness and Vertigo (DDx, Peripheral vs. Central Features, Evaluation)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S02.T01",
+        "OT.S03.T01",
+        "OT.S02",
+        "OT.S03"
+      ],
+      "tn_page_range": "OT6, OT12",
+      "pdf_page_range": [
+        1150,
+        1156
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Differential Diagnoses of Common Presentations",
+        "Dizziness / Evaluation of the Dizzy Patient"
+      ],
+      "structural_rationale": "OT.S02.T01 (Dizziness, DDx Figure 11: true vertigo vs. non-vestibular causes) and OT.S03.T01 (Evaluation of the Dizzy Patient, including Table 5 peripheral-vs-central vertigo features and the '5 Ds of Vertebrobasilar Insufficiency') are grouped as a single approach/evaluation unit distinct from the individual peripheral-vertigo disease units below, per the non-fragmentation precedent for DDx-plus-approach content.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-03",
+      "title": "Approach to Otalgia (Primary vs. Referred Ear Pain)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S02.T02"
+      ],
+      "tn_page_range": "OT6-OT7",
+      "pdf_page_range": [
+        1150,
+        1151
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Differential Diagnoses of Common Presentations",
+        "Otalgia"
+      ],
+      "structural_rationale": "OT.S02.T02 (Otalgia, DDx Figure 12: external/middle/inner ear causes vs. referred pain) is a standalone approach unit; raw OCR of pdf 1151 (OT7) confirms the associated '10 Ts of Referred Pain' sidebar (Teeth, TMD, Tubal area, Tonsils, Throat, Tongue, Trachea, Thyroid, Temporal arteritis, Trauma) as real chapter content.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-04",
+      "title": "Approach to Hearing Loss (Physiology, DDx, Bedside Tuning Fork Tests)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S02.T03",
+        "UNCATALOGUED:Hearing@pdf1153"
+      ],
+      "tn_page_range": "OT7, OT9-OT10",
+      "pdf_page_range": [
+        1151,
+        1154
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Hearing",
+        "Types of Hearing Loss"
+      ],
+      "structural_rationale": "toc_inventory.json captures OT.S02.T03 (Hearing Loss DDx, Figure 13) but has no node at all for the real 'Hearing' section heading printed in the chapter TOC (raw OCR of pdf 1145: 'Hearing... OT9', between 'Neck Mass' and 'Vertigo... OT12'); this is also research/tn2025/unresolved_headings.json's one UNRESOLVED entry for OT ('Hearing', page-anchor could not be confirmed). Resolved via raw OCR of pdf 1153-1154 (OT9-OT10): the section opens with 'Normal Hearing Physiology', 'Types of Hearing Loss' (conductive/sensorineural/mixed), and 'Auditory Acuity' (whispered-voice test, Rinne and Weber tuning fork tests with Table 4 interpretation), ending before 'Pure Tone Audiometry'. This physiology/DDx/bedside-test portion is grouped with the DDx figure as the generalist-relevant half of the recovered section; the audiometric-technology portion is split into SU-OT-05 below.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-05",
+      "title": "Audiometric Testing and Aural Rehabilitation (Pure Tone, Speech, Impedance, ABR, OAE, Hearing Aids)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "UNCATALOGUED:Hearing@pdf1153"
+      ],
+      "tn_page_range": "OT10-OT12",
+      "pdf_page_range": [
+        1154,
+        1156
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Hearing",
+        "Pure Tone Audiometry / Speech Audiometry / Impedance Audiometry / Auditory Brainstem Response / Otoacoustic Emissions / Aural Rehabilitation"
+      ],
+      "structural_rationale": "Second half of the same body-recovered 'Hearing' section (see SU-OT-04 for the missing-node rationale): raw OCR of pdf 1154-1156 (OT10-OT12) confirms 'Pure Tone Audiometry', 'Speech Audiometry', 'Impedance Audiometry' (tympanogram types A/B/C, static compliance, acoustic stapedial reflexes), 'Auditory Brainstem Response', 'Otoacoustic Emissions', and 'Aural Rehabilitation' (hearing aid types, cochlear implants) as real consecutive headings ending immediately before 'Evaluation of the Dizzy Patient' begins the Vertigo section.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-06",
+      "title": "Tinnitus (DDx, Definition, History, Investigations, Management)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S02.T04",
+        "UNCATALOGUED:Tinnitus@pdf1159"
+      ],
+      "tn_page_range": "OT7, OT15",
+      "pdf_page_range": [
+        1151,
+        1159
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Tinnitus"
+      ],
+      "structural_rationale": "toc_inventory.json's OT.S04 node (title 'Tinnitus', start pdf 1160/OT16) is a mislabeled/mis-anchored heading: raw OCR of pdf 1160 (OT16) body-confirms the section actually beginning there is 'Diseases of the External Ear' (Cerumen Impaction, Exostoses, Otitis Externa, Malignant Otitis Externa -- see SU-OT-13/14/15), matching the node's own merged_duplicate_headings field ('Diseases of the ExtermalEar'). The real, separate 'Tinnitus' body section (Definition, History, Investigations, Treatment -- e.g. 'unilateral tinnitus or SNHL is acoustic neuroma until proven otherwise') is confirmed via raw OCR of pdf 1159 (OT15), immediately after 'Acoustic Neuroma' ends the Vertigo section and before 'Diseases of the External Ear' begins -- a body heading entirely absent from toc_inventory.json. Grouped here with the Tinnitus DDx figure (OT.S02.T04, Figure 14: subjective vs. objective/pulsatile tinnitus).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-07",
+      "title": "Approach to Nasal Obstruction (DDx: Acquired vs. Congenital)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S02.T05"
+      ],
+      "tn_page_range": "OT8",
+      "pdf_page_range": [
+        1152,
+        1152
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Differential Diagnoses of Common Presentations",
+        "Nasal Obstruction"
+      ],
+      "structural_rationale": "OT.S02.T05 (Nasal Obstruction, Table 2: nasal cavity/septum/nasopharynx/systemic causes, acquired vs. congenital) is a standalone DDx-approach unit distinct from the Rhinitis/Rhinosinusitis disease units below.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-08",
+      "title": "Approach to a Neck Mass (DDx by Age, Evaluation)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S02.T07",
+        "OT.S12",
+        "OT.S12.T01",
+        "OT.S12.T02"
+      ],
+      "tn_page_range": "OT9, OT32",
+      "pdf_page_range": [
+        1153,
+        1176
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Neck Masses",
+        "Approach to a Neck Mass"
+      ],
+      "structural_rationale": "OT.S02.T07 (Neck Mass DDx, Figure 15: inflammatory/infectious, congenital, and malignant causes by lateral vs. midline location, with the age-based rule of thumb <20 congenital / 20-40 inflammatory / >40 neoplastic) is grouped with OT.S12 ('Approach to a Neck Mass' and 'Evaluation', TN OT32) as a single approach unit, distinct from the individual congenital-neck-mass and neoplasm units below.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-09",
+      "title": "Benign Paroxysmal Positional Vertigo (BPPV)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S03.T02"
+      ],
+      "tn_page_range": "OT12-OT13",
+      "pdf_page_range": [
+        1156,
+        1157
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Vertigo",
+        "Benign Paroxysmal Positional Vertigo"
+      ],
+      "structural_rationale": "OT.S03.T02 title 'Benign Paroxysmal Positional Vertigo' is clean/unmerged; page range inherited from the parent Vertigo section (OT.S03, pdf 1156-1159) as the specific BPPV heading page was not individually OCR-spot-checked.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-10",
+      "title": "Meniere's Disease (Endolymphatic Hydrops)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S03.T03"
+      ],
+      "tn_page_range": "OT13-OT14",
+      "pdf_page_range": [
+        1157,
+        1158
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Vertigo",
+        "Meniere's Disease"
+      ],
+      "structural_rationale": "OT.S03.T03's captured title is OCR-garbled ('Me\u00e9niere's Disease') but unambiguous; raw OCR of pdf 1158 (OT14) body-confirms episodic vertigo, fluctuating low-frequency SNHL, tinnitus, and aural fullness as the classic tetrad, with Tumarkin drop attacks in later disease.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-11",
+      "title": "Vestibular Neuronitis (Labyrinthitis)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S03.T04"
+      ],
+      "tn_page_range": "OT14",
+      "pdf_page_range": [
+        1158,
+        1158
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Vertigo",
+        "Vestibular Neuronitis (Labyrinthitis)"
+      ],
+      "structural_rationale": "OT.S03.T04 title is clean/unmerged; raw OCR of pdf 1158 (OT14) body-confirms acute-onset disabling vertigo with nausea/vomiting and imbalance, without hearing loss (vestibular neuronitis) vs. with hearing loss (labyrinthitis), typically post-viral.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-12",
+      "title": "Acoustic Neuroma (Vestibular Schwannoma)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S03.T05"
+      ],
+      "tn_page_range": "OT15",
+      "pdf_page_range": [
+        1159,
+        1159
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Vertigo",
+        "Acoustic Neuroma (Vestibular Schwannoma)"
+      ],
+      "structural_rationale": "OT.S03.T05 title is clean/unmerged; raw OCR of pdf 1159 (OT15) body-confirms unilateral SNHL or tinnitus as the usual presentation, with the explicit teaching point 'unilateral tinnitus or SNHL is acoustic neuroma until proven otherwise' in the elderly, and gadolinium-enhanced MRI as the diagnostic gold standard.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-13",
+      "title": "Cerumen Impaction and Exostoses",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S04.T01",
+        "OT.S04.T02",
+        "OT.S04"
+      ],
+      "tn_page_range": "OT16",
+      "pdf_page_range": [
+        1160,
+        1160
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Diseases of the External Ear",
+        "Cerumen Impaction / Exostoses"
+      ],
+      "structural_rationale": "Children of OT.S04, whose section title is corrected to 'Diseases of the External Ear' (see SU-OT-06 for the full structural-correction rationale). Raw OCR of pdf 1160 (OT16) confirms Cerumen Impaction (most common cause of CHL age 15-50) and Exostoses (bony EAC protuberances, usually incidental) as consecutive real headings.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-14",
+      "title": "Otitis Externa",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S04.T03"
+      ],
+      "tn_page_range": "OT16",
+      "pdf_page_range": [
+        1160,
+        1160
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Diseases of the External Ear",
+        "Otitis Externa"
+      ],
+      "structural_rationale": "OT.S04.T03 title is clean/unmerged; raw OCR of pdf 1160 (OT16) confirms bacterial (90%, most commonly Pseudomonas aeruginosa) etiology, tragal/pinna traction tenderness as the classic exam finding, and topical antipseudomonal therapy (avoiding ototoxic topical agents if the TM is perforated) as first-line treatment.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-15",
+      "title": "Malignant (Necrotizing) Otitis Externa (Skull Base Osteomyelitis)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S04.T04"
+      ],
+      "tn_page_range": "OT16-OT17",
+      "pdf_page_range": [
+        1160,
+        1161
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Diseases of the External Ear",
+        "Malignant (Necrotizing) Otitis Externa"
+      ],
+      "structural_rationale": "OT.S04.T04 title is clean/unmerged; raw OCR of pdf 1160-1161 (OT16-OT17) confirms this as a medical emergency occurring in elderly diabetic/immunocompromised patients, almost always caused by Pseudomonas aeruginosa, with cranial nerve palsy as a feared complication.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-16",
+      "title": "Chronic Otitis Media (Serous and Suppurative)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S05.T02"
+      ],
+      "tn_page_range": "OT17",
+      "pdf_page_range": [
+        1161,
+        1161
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Diseases of the Middle Ear",
+        "Chronic Otitis Media"
+      ],
+      "structural_rationale": "OT.S05.T02 title is clean/unmerged. Note: OT.S05.T01 (Acute Otitis Media and Otitis Media with Effusion) carries an explicit in-text redirect ('see Pediatric Otolaryngology, OT39') and its substantive content is mapped under SU-OT-46 in the Pediatric Otolaryngology section to avoid duplicating question coverage.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-17",
+      "title": "Cholesteatoma",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S05.T03"
+      ],
+      "tn_page_range": "OT17-OT18",
+      "pdf_page_range": [
+        1161,
+        1162
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Diseases of the Middle Ear",
+        "Cholesteatoma"
+      ],
+      "structural_rationale": "OT.S05.T03 title is clean/unmerged; raw OCR of pdf 1161 (OT17) confirms congenital cholesteatoma as a 'small white pearl' behind an intact TM, distinct from acquired cholesteatoma.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-18",
+      "title": "Mastoiditis",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S05.T04"
+      ],
+      "tn_page_range": "OT18",
+      "pdf_page_range": [
+        1162,
+        1162
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Diseases of the Middle Ear",
+        "Mastoiditis"
+      ],
+      "structural_rationale": "OT.S05.T04 title is clean/unmerged; a well-recognized suppurative complication of acute otitis media.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-19",
+      "title": "Otosclerosis",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S05.T05"
+      ],
+      "tn_page_range": "OT18",
+      "pdf_page_range": [
+        1162,
+        1162
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Diseases of the Middle Ear",
+        "Otosclerosis"
+      ],
+      "structural_rationale": "OT.S05.T05 title is clean/unmerged; the Hearing-section sidebar (pdf 1154, OT10) explicitly cross-references otosclerosis as producing a Carhart's notch on audiogram at 2000 Hz.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-20",
+      "title": "Congenital Sensorineural Hearing Loss",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S06.T01",
+        "OT.S06"
+      ],
+      "tn_page_range": "OT19",
+      "pdf_page_range": [
+        1163,
+        1163
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Diseases of the Inner Ear",
+        "Congenital Sensorineural Hearing Loss"
+      ],
+      "structural_rationale": "OT.S06.T01 title is clean/unmerged; the packet's OT.S06 node title 'Diseases of theInmerEar' is an OCR spacing artifact of 'Diseases of the Inner Ear', not a structural defect.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-21",
+      "title": "Presbycusis",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S06.T02"
+      ],
+      "tn_page_range": "OT19-OT20",
+      "pdf_page_range": [
+        1163,
+        1164
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Diseases of the Inner Ear",
+        "Presbycusis"
+      ],
+      "structural_rationale": "OT.S06.T02 title is clean/unmerged; the most common cause of SNHL in the elderly.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-22",
+      "title": "Sudden Sensorineural Hearing Loss (Otologic Emergency)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S06.T03"
+      ],
+      "tn_page_range": "OT20",
+      "pdf_page_range": [
+        1164,
+        1164
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Diseases of the Inner Ear",
+        "Sudden Sensorineural Hearing Loss"
+      ],
+      "structural_rationale": "OT.S06.T03 title is clean/unmerged; a recognized otologic emergency requiring urgent treatment.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-23",
+      "title": "Autoimmune Inner Ear Disease",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S06.T04"
+      ],
+      "tn_page_range": "OT20",
+      "pdf_page_range": [
+        1164,
+        1164
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Diseases of the Inner Ear",
+        "Autoimmune Inner Ear Disease"
+      ],
+      "structural_rationale": "OT.S06.T04 title is clean/unmerged; a rare cause of rapidly progressive bilateral SNHL.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-24",
+      "title": "Drug Ototoxicity",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S06.T05"
+      ],
+      "tn_page_range": "OT20",
+      "pdf_page_range": [
+        1164,
+        1164
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Diseases of the Inner Ear",
+        "Drug Ototoxicity"
+      ],
+      "structural_rationale": "OT.S06.T05 title is clean/unmerged; classic culprits include aminoglycosides, loop diuretics, and platinum chemotherapy agents.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-25",
+      "title": "Noise-Induced Sensorineural Hearing Loss",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S06.T06"
+      ],
+      "tn_page_range": "OT20-OT21",
+      "pdf_page_range": [
+        1164,
+        1165
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Diseases of the Inner Ear",
+        "Noise-Induced Sensorineural Hearing Loss"
+      ],
+      "structural_rationale": "OT.S06.T06 title is clean/unmerged; the Hearing-section sidebar (pdf 1154, OT10) cross-references the classic 4000 Hz notch ('Boilermaker's notch') for occupational noise-induced hearing loss.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-26",
+      "title": "Temporal Bone Fractures",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S06.T07"
+      ],
+      "tn_page_range": "OT21-OT22",
+      "pdf_page_range": [
+        1165,
+        1166
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Diseases of the Inner Ear",
+        "Temporal Bone Fractures"
+      ],
+      "structural_rationale": "OT.S06.T07 title is clean/unmerged; raw OCR of pdf 1166 (OT22) body-confirms the section's Diagnosis/Treatment/Complications content (CT temporal bones, facial nerve testing, signs of basilar skull fracture: Battle's sign, raccoon eyes, CSF oto/rhinorrhea, hemotympanum) as a direct continuation of this heading, ending immediately before 'Facial Nerve (CN VII) Paralysis' begins.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-27",
+      "title": "Facial Nerve (CN VII) Paralysis (Bell's Palsy vs. Ramsay Hunt Syndrome)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S07"
+      ],
+      "tn_page_range": "OT22-OT23",
+      "pdf_page_range": [
+        1166,
+        1167
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Facial Nerve (CN VII) Paralysis"
+      ],
+      "structural_rationale": "STRUCTURAL CORRECTION: toc_inventory.json's OT.S07 node is captured with title 'Facial Nerve' and two T-children, 'Allergic Rhinitis (i.e. Hay Fever)' and 'Vasomotor Rhinitis', that are clinically unrelated to facial nerve disease. Raw OCR of pdf 1166-1167 (OT22-OT23) body-confirms: (1) the section's real, full title is 'Facial Nerve (CN VII) Paralysis' (matching the TOC line 'Facial Nerve (CN VIl) Paralysis...OT22'), covering Central Facial Paralysis (cross-ref 'see Neurology, N3'), Peripheral Facial Paralysis/Bell's Palsy (KITTENS etiology mnemonic), and Table 10 (Bell's Palsy vs. Ramsay Hunt Syndrome); and (2) this section ends on OT23 with no Allergic/Vasomotor Rhinitis content anywhere in it. 'Allergic Rhinitis' and 'Vasomotor Rhinitis' are real body headings that instead begin immediately after, under a missing 'Rhinitis' section header not captured in toc_inventory.json (Table 11: Classification of Rhinitis; Table 12: Nasal Discharge) -- see SU-OT-28/29/30 for that recovered section. This is a body-heading-assigned-to-wrong-parent defect (the extraction pipeline evidently attributed the next TOC row's page anchor and following body content to the prior section once its own children ran out), analogous to the OR.S16 Spine-re-parented-under-References defect. OT.S07.T01/T02 are re-parented here to their real parent (the recovered Rhinitis section).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-28",
+      "title": "Rhinitis: Classification and Nasal Discharge Differential",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "UNCATALOGUED:Rhinitis@pdf1168"
+      ],
+      "tn_page_range": "OT23",
+      "pdf_page_range": [
+        1167,
+        1167
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Rhinitis"
+      ],
+      "structural_rationale": "Body-recovered section (see SU-OT-27 for the full structural-correction rationale): raw OCR of pdf 1167 (OT23) body-confirms a 'Definition: inflammation of the nasal mucosa' heading with Table 11 (Classification of Rhinitis: inflammatory vs. non-inflammatory, allergic/infectious/atrophic/vasomotor/rhinitis medicamentosa/hormonal subtypes) and Table 12 (Nasal Discharge character and associated conditions) immediately preceding 'Allergic Rhinitis' -- a real heading absent from toc_inventory.json, sourced as a synthetic UNCATALOGUED id per the OR/OP UNCATALOGUED precedent.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-29",
+      "title": "Allergic Rhinitis (Hay Fever)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S07.T01"
+      ],
+      "tn_page_range": "OT24",
+      "pdf_page_range": [
+        1168,
+        1168
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Rhinitis",
+        "Allergic Rhinitis"
+      ],
+      "structural_rationale": "Re-parented from OT.S07 ('Facial Nerve') to its real parent, the recovered Rhinitis section -- see SU-OT-27 for the full structural-correction rationale. Raw OCR of pdf 1168 (OT24) body-confirms IgE-mediated hypersensitivity, seasonal vs. perennial subtypes, and intranasal corticosteroid as mainstay treatment.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-30",
+      "title": "Vasomotor Rhinitis",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S07.T02"
+      ],
+      "tn_page_range": "OT24",
+      "pdf_page_range": [
+        1168,
+        1168
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Rhinitis",
+        "Vasomotor Rhinitis"
+      ],
+      "structural_rationale": "Re-parented from OT.S07 ('Facial Nerve') to its real parent, the recovered Rhinitis section -- see SU-OT-27 for the full structural-correction rationale. Raw OCR of pdf 1168 (OT24) body-confirms non-allergic triggers (temperature change, alcohol, stress) and that allergy must be ruled out before this diagnosis.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-31",
+      "title": "Acute Bacterial Rhinosinusitis (incl. Orbital/Intracranial Complications)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S08",
+        "OT.S08.T01"
+      ],
+      "tn_page_range": "OT24-OT26",
+      "pdf_page_range": [
+        1168,
+        1170
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Rhinosinusitis",
+        "Acute Bacterial Rhinosinusitis"
+      ],
+      "structural_rationale": "OT.S08.T01 title is clean/unmerged; raw OCR of pdf 1168-1169 (OT24-OT25) body-confirms the diagnostic duration threshold (>7 d, or persistent symptoms >10 d / worsening after 5 d / high fever with purulence 3-4 d) distinguishing bacterial from viral rhinosinusitis, plus Chandler's classification of orbital complications.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-32",
+      "title": "Chronic Rhinosinusitis",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S08.T02"
+      ],
+      "tn_page_range": "OT26",
+      "pdf_page_range": [
+        1170,
+        1170
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Rhinosinusitis",
+        "Chronic Rhinosinusitis"
+      ],
+      "structural_rationale": "OT.S08.T02 title is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-33",
+      "title": "Epistaxis",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S09"
+      ],
+      "tn_page_range": "OT27",
+      "pdf_page_range": [
+        1171,
+        1171
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Epistaxis"
+      ],
+      "structural_rationale": "OT.S09 title is clean/unmerged and requires no correction.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-34",
+      "title": "Approach to Hoarseness (DDx, Red Flags for Laryngoscopy)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S02.T06"
+      ],
+      "tn_page_range": "OT8",
+      "pdf_page_range": [
+        1152,
+        1152
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Differential Diagnoses of Common Presentations",
+        "Hoarseness"
+      ],
+      "structural_rationale": "OT.S02.T06 (Hoarseness, Table 3: infectious/inflammatory/traumatic/neoplastic/systemic/neurologic causes, including the teaching point that lung malignancy is the most common cause of extralaryngeal vocal cord paralysis) is a standalone DDx-approach unit distinct from the specific laryngeal-disease units below.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-35",
+      "title": "Acute and Chronic Laryngitis",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S10",
+        "OT.S10.T01",
+        "OT.S10.T02"
+      ],
+      "tn_page_range": "OT28-OT29",
+      "pdf_page_range": [
+        1172,
+        1173
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Hoarseness",
+        "Acute Laryngitis / Chronic Laryngitis"
+      ],
+      "structural_rationale": "OT.S10.T01/T02 titles are clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-36",
+      "title": "Vocal Cord Polyps and Nodules",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S10.T03",
+        "OT.S10.T04"
+      ],
+      "tn_page_range": "OT29",
+      "pdf_page_range": [
+        1173,
+        1173
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Hoarseness",
+        "Vocal Cord Polyps / Vocal Cord Nodules"
+      ],
+      "structural_rationale": "OT.S10.T03/T04 titles are clean/unmerged; both are benign vocal-fold lesions related to voice misuse/abuse.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-37",
+      "title": "Recurrent Respiratory Papillomatosis",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S10.T05"
+      ],
+      "tn_page_range": "OT29",
+      "pdf_page_range": [
+        1173,
+        1173
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Hoarseness",
+        "Recurrent Respiratory Papillomatosis"
+      ],
+      "structural_rationale": "OT.S10.T05 title is clean/unmerged; an HPV-related condition most often affecting children.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-38",
+      "title": "Laryngeal Carcinoma",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S10.T06"
+      ],
+      "tn_page_range": "OT29",
+      "pdf_page_range": [
+        1173,
+        1173
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Hoarseness",
+        "Laryngeal Carcinoma"
+      ],
+      "structural_rationale": "OT.S10.T06 title is clean/unmerged; the chapter's broader H&N malignancy tables (Tables 16-17) provide laryngeal-specific epidemiology (SCC, smoking/EtOH risk factors, subsite breakdown) cross-referenced here rather than duplicated.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-39",
+      "title": "Sialadenitis and Sialolithiasis",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S11",
+        "OT.S11.T01",
+        "OT.S11.T02"
+      ],
+      "tn_page_range": "OT30-OT31",
+      "pdf_page_range": [
+        1174,
+        1175
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Salivary Glands",
+        "Sialadenitis / Sialolithiasis"
+      ],
+      "structural_rationale": "OT.S11.T01/T02 titles are clean/unmerged; the packet's OT.S11 node title 'SalivaryGlands' is an OCR spacing artifact, not a structural defect.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-40",
+      "title": "Salivary Gland Neoplasms (incl. Parotid Gland Neoplasms)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S11.T03",
+        "OT.S11.T04"
+      ],
+      "tn_page_range": "OT31",
+      "pdf_page_range": [
+        1175,
+        1175
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Salivary Glands",
+        "Salivary Gland Neoplasms"
+      ],
+      "structural_rationale": "OT.S11.T03/T04 titles are clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-41",
+      "title": "Branchial Cleft Cysts, Sinuses, and Fistulae",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S13",
+        "OT.S13.T01"
+      ],
+      "tn_page_range": "OT33",
+      "pdf_page_range": [
+        1177,
+        1177
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Congenital Neck Masses",
+        "Branchial Cleft Cysts/Sinuses/Fistulae"
+      ],
+      "structural_rationale": "OT.S13.T01 title is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-42",
+      "title": "Thyroglossal Duct Cyst",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S13.T02"
+      ],
+      "tn_page_range": "OT33-OT34",
+      "pdf_page_range": [
+        1177,
+        1178
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Congenital Neck Masses",
+        "Thyroglossal Duct Cysts"
+      ],
+      "structural_rationale": "OT.S13.T02 title is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-43",
+      "title": "Lymphatic, Venous, or Mixed Venolymphatic Malformations",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S13.T03"
+      ],
+      "tn_page_range": "OT34-OT35",
+      "pdf_page_range": [
+        1178,
+        1179
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Congenital Neck Masses",
+        "Lymphatic, Venous, or Mixed Venolymphatic Malformations"
+      ],
+      "structural_rationale": "OT.S13.T03 title is clean/unmerged; raw OCR of pdf 1179 (OT35) body-confirms macrocystic vs. microcystic presentation and that surgical intervention is deferred several months after any acute infection.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-44",
+      "title": "Head and Neck Malignancy: Pre-Malignant Lesions, Risk Factors, and General Approach",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S14"
+      ],
+      "tn_page_range": "OT35-OT38",
+      "pdf_page_range": [
+        1179,
+        1182
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Neoplasms of the Head and Neck",
+        "Pre-Malignant Disease / General Investigations and Treatment"
+      ],
+      "structural_rationale": "OT.S14's captured title 'Neoplasms ofthe HeadandNeck' is an OCR spacing artifact of 'Neoplasms of the Head and Neck', not a structural defect; the section's only captured T-child is Thyroid Carcinoma (SU-OT-45). Raw OCR of pdf 1179-1182 (OT35-OT38) confirms the remaining section content is an un-subsectioned survey (Table 16/17: Quick Look-Up Summary of H&N Malignancies by anatomic site) rather than separately headed subsections for oral cavity/nasopharynx/oropharynx/hypopharynx/larynx/salivary gland cancer -- i.e. no missing headings, just table rows -- so this is represented as a single approach/overview unit.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-45",
+      "title": "Thyroid Carcinoma (Types, Nodule Approach)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S14.T01"
+      ],
+      "tn_page_range": "OT38-OT39",
+      "pdf_page_range": [
+        1182,
+        1183
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Neoplasms of the Head and Neck",
+        "Thyroid Carcinoma"
+      ],
+      "structural_rationale": "OT.S14.T01 title is clean/unmerged; raw OCR of pdf 1182-1183 (OT38-OT39) body-confirms Bethesda cytology classification, the four major histologic subtypes (papillary/follicular/medullary/anaplastic), and the TSH-plus-ultrasound approach to a thyroid nodule with TI-RADS-guided FNA decision-making.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-46",
+      "title": "Acute Otitis Media and Otitis Media with Effusion (Pediatric)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S05.T01",
+        "OT.S15",
+        "OT.S15.T01",
+        "OT.S15.T02",
+        "OT.S05"
+      ],
+      "tn_page_range": "OT17, OT39-OT41",
+      "pdf_page_range": [
+        1161,
+        1185
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Diseases of the Middle Ear",
+        "Acute Otitis Media and Otitis Media with Effusion"
+      ],
+      "structural_rationale": "OT.S05.T01 (in the adult Diseases of the Middle Ear section) is a one-line redirect ('see Pediatric Otolaryngology, OT39'); its substantive content is the Pediatric Otolaryngology section's own AOM/OME headings (OT.S15.T01/T02). Raw OCR of pdf 1183 (OT39) confirms AOM epidemiology (peak 6-15 mo, ~85% of children have >=1 episode by 3 yr), Eustachian tube dysfunction as the primary defect, and an extensive predisposing-factors list (craniofacial syndromes, adenoid hypertrophy, GERD).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-47",
+      "title": "Adenoid Hypertrophy",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S15.T03"
+      ],
+      "tn_page_range": "OT41",
+      "pdf_page_range": [
+        1185,
+        1185
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Pediatric Otolaryngology",
+        "Adenoid Hypertrophy"
+      ],
+      "structural_rationale": "OT.S15.T03 title is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-48",
+      "title": "Sleep-Disordered Breathing in Children (incl. Obstructive Sleep Apnea)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S15.T04"
+      ],
+      "tn_page_range": "OT41-OT42",
+      "pdf_page_range": [
+        1185,
+        1186
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Pediatric Otolaryngology",
+        "Sleep-Disordered Breathing in Children"
+      ],
+      "structural_rationale": "OT.S15.T04 title is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-49",
+      "title": "Peritonsillar Abscess (Quinsy)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S15.T05"
+      ],
+      "tn_page_range": "OT42",
+      "pdf_page_range": [
+        1186,
+        1186
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Pediatric Otolaryngology",
+        "Peritonsillar Abscess (Quinsy)"
+      ],
+      "structural_rationale": "OT.S15.T05 title is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-50",
+      "title": "Tonsillectomy (Indications)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S15.T06"
+      ],
+      "tn_page_range": "OT42",
+      "pdf_page_range": [
+        1186,
+        1186
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Pediatric Otolaryngology",
+        "Tonsillectomy"
+      ],
+      "structural_rationale": "OT.S15.T06 title is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-51",
+      "title": "Airway Problems in Children and Signs of Airway Obstruction",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S15.T07",
+        "OT.S15.T08"
+      ],
+      "tn_page_range": "OT42-OT43",
+      "pdf_page_range": [
+        1186,
+        1187
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Pediatric Otolaryngology",
+        "Airway Problems in Children / Signs of Airway Obstruction"
+      ],
+      "structural_rationale": "OT.S15.T07/T08 titles are clean/unmerged; grouped as a single triage-overview unit (analogous to the OR Orthopedic-Emergencies-overview precedent) since this content frames the specific pediatric airway emergencies (croup, epiglottitis, foreign body, laryngomalacia, subglottic stenosis) mapped individually below.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-52",
+      "title": "Acute Laryngotracheobronchitis (Croup)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S15.T09"
+      ],
+      "tn_page_range": "OT43-OT44",
+      "pdf_page_range": [
+        1187,
+        1188
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Pediatric Otolaryngology",
+        "Acute Laryngotracheobronchitis (Croup)"
+      ],
+      "structural_rationale": "OT.S15.T09 title is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-53",
+      "title": "Acute Epiglottitis",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S15.T10"
+      ],
+      "tn_page_range": "OT44",
+      "pdf_page_range": [
+        1188,
+        1188
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Pediatric Otolaryngology",
+        "Acute Epiglottitis"
+      ],
+      "structural_rationale": "OT.S15.T10 title is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-54",
+      "title": "Subglottic Stenosis",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S15.T11"
+      ],
+      "tn_page_range": "OT44-OT45",
+      "pdf_page_range": [
+        1188,
+        1189
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Pediatric Otolaryngology",
+        "Subglottic Stenosis"
+      ],
+      "structural_rationale": "OT.S15.T11 title is clean/unmerged; most commonly acquired from prolonged intubation.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-55",
+      "title": "Laryngomalacia",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S15.T12"
+      ],
+      "tn_page_range": "OT45",
+      "pdf_page_range": [
+        1189,
+        1189
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Pediatric Otolaryngology",
+        "Laryngomalacia"
+      ],
+      "structural_rationale": "OT.S15.T12 title is clean/unmerged; the most common cause of stridor in infants.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-56",
+      "title": "Foreign Body (Airway/Aerodigestive Tract)",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S15.T13"
+      ],
+      "tn_page_range": "OT45-OT46",
+      "pdf_page_range": [
+        1189,
+        1190
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Pediatric Otolaryngology",
+        "Foreign Body"
+      ],
+      "structural_rationale": "OT.S15.T13 title is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-OT-57",
+      "title": "Deep Neck Space Infection",
+      "chapter_code": "OT",
+      "chapter_title": "Otolaryngology",
+      "source_node_ids": [
+        "OT.S15.T14"
+      ],
+      "tn_page_range": "OT46-OT47",
+      "pdf_page_range": [
+        1190,
+        1191
+      ],
+      "source_hierarchy_path": [
+        "Otolaryngology",
+        "Pediatric Otolaryngology",
+        "Deep Neck Space Infection"
+      ],
+      "structural_rationale": "OT.S15.T14 title is clean/unmerged.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    }
+  ]
+}
