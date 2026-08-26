@@ -1,0 +1,1082 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-26T00:00:00Z",
+  "chapter_code": "NS",
+  "chapter_title": "Neurosurgery",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes SOURCE STRUCTURE (toc_inventory.json / derived/scope_packets/NS.json), cross-verified against the real chapter table of contents and raw page images (pdftoppm renders of 'Toronto Notes 2025.pdf', pdf pages 933-986) given this chapter's severe two-column TOC OCR corruption: 32 of 47 toc_inventory.json source nodes carried LOW/MEDIUM packet-extraction confidence. Page-image review of the chapter TOC (pdf 933) and targeted body pages (pdf 934, 936, 939, 940-941, 944, 977) confirmed the underlying corruption is column-bleed: OCR text from an adjacent TOC column or a nearby unrelated heading was appended to, or substituted for, the genuine heading text, in several distinct patterns: (1) genuine multi-word headings with trailing garbage appended, matching a real heading elsewhere in the chapter whose text bled across columns (e.g. NS.S02.T02 'ICP/Volume Relationship Nou louie i 5 orn ined Death' = real 'ICP/Volume Relationship' + bled fragment of 'Neurologically Determined Death'; NS.S02.T03 'Cerebral Blood Flow Come ogically Determined Dea' = real 'Cerebral Blood Flow' + further bleed of the same 'Neurologically Determined Death' heading; NS.S02.T05 'Elevated ICP Persistent Vegetative State' = real 'Elevated ICP' + bled 'Persistent Vegetative State' heading text; NS.S03.T01 'Treatment of Elevated ICP Spinal Dysraphism' = real 'Treatment of Elevated ICP' + bled 'Spinal Dysraphism'; NS.S03.T03 'Idiopathic Intracranial Hypertension (Pseudotumour Cerebri) . Hydrocephalus in Pediatrics' = real standalone heading 'Idiopathic Intracranial Hypertension (Pseudotumour Cerebri)' [confirmed via body-page review, pdf 940-941/NS8-9] + bled 'Hydrocephalus in Pediatrics'); (2) a genuine heading split/truncated across two sibling nodes (NS.S10.T01 'Arteriovenous Malformations, Cavernous Malformations, and' + NS.S10.T02 'Dural Arteriovenous Fistulas' are one real TOC heading 'Arteriovenous Malformations, Cavernous Malformations, and Dural Arteriovenous Fistulas', split by a column break); (3) a spurious extra child node with no matching body content at its assigned page location (NS.S02.T01 'Head Injury' - no such heading exists on pdf 936-938/NS4-6, confirmed via body-page review; the real 'Head Injury' heading is a sub-bullet of Neurotrauma at NS35/pdf967, already captured within NS.S15 - T01 is treated as a duplicate artifact, not an independent study unit; similarly NS.S03.T02 'Intraventricular Hemorrhage' has no matching content at pdf939-940/NS7-8, its real content being the Pediatric Neurosurgery IVH sub-bullet at NS41/NS.S15; and NS.S04.T01 'Craniosynostosis' has no matching content at pdf941-942/NS9-10, its real content being the Pediatric Neurosurgery Craniosynostosis sub-bullet at NS43/NS.S15 - both are represented as their own study units sourced from NS.S15's page span, with the duplicate/misplaced T-node id retained in source_node_ids for traceability); (4) four section-level nodes (NS.S16-NS.S19) whose titles are entirely OCR noise unrelated to their actual body content: page-image review confirmed pdf 944/NS12 (node NS.S06, titled 'CNS Tumours') actually contains ALL SIX CNS tumour subtopics listed in the real TOC (Metastatic Tumours, Adult Diffuse Gliomas, Primary CNS Lymphoma, Meningioma, Vestibular Schwannoma, Pituitary Adenoma) as body content spanning pdf944-950/NS12-18, while pdf 977/NS45 (node NS.S16, titled 'Metastatic Tumours Movement Disorders') actually contains the genuine 'Functional Neurosurgery' > 'Movement Disorders' and 'Chronic Pain' body content (confirmed via body-page review) - the CNS-tumour-subtopic-sounding titles on NS.S16/S17/S18/S19 are column-bleed duplicates of the NS.S06 subtopic names, not independent content; the real content at those page positions is Functional Neurosurgery (NS.S16, pdf977/NS45), Surgical Management of Epilepsy (NS.S17, pdf978/NS46), Surgical Management of Trigeminal Neuralgia (NS.S18, pdf979/NS47), and Landmark Neurosurgery Trials (NS.S19, pdf980-983/NS48-51) per the real chapter TOC - this is the same 'title from OCR noise unrelated to actual body content' pattern documented for N.S27 in the Neurology chapter precedent, and is resolved the same way: the node_id is retained for traceability and its REAL, TOC-confirmed body content is used for the study unit derived from it, while its corrupted title text is not used to derive a topic. One organizational section header could not be page-anchored with sufficient confidence and is recorded, per project instruction, as UNRESOLVED rather than guessed: the packet's source_quality.unresolved_headings entry for 'INTRACRANIAL PATHOLOGY' (a non-clinical organizational divider at NS4/pdf933-934, distinct from the clinical content around it, which IS resolved). No toc_inventory.json node was found to be entirely missing from the pipeline's output; every real heading traces to an existing, if sometimes mistitled or misplaced, node_id, used directly for traceability with the correction documented in each affected study unit's structural_rationale. No corruption was resolved from neurosurgical background knowledge; every correction traces to the rendered pdf page images listed above or to the packet's own merged_duplicate_headings/toc_inventory.json fields. Two organizational/non-clinical portions are excluded from study units, consistent with N/ID/MI/NP chapter precedent: the chapter-opening abbreviation glossary (part of NS.S01, alongside genuine 'Basic Anatomy Review' content) and the closing References section (NS.S20).",
+  "total_study_units": 46,
+  "organizational_header_nodes": [
+    "NS",
+    "NS.S01 (Acronyms portion)",
+    "NS.S02 (INTRACRANIAL PATHOLOGY portion - UNRESOLVED page anchor)",
+    "NS.S02.T01",
+    "NS.S11 (EXTRACRANIAL PATHOLOGY portion)",
+    "NS.S15 (SPECIALTY TOPICS portion)",
+    "NS.S20"
+  ],
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-01",
+      "title": "Basic Anatomy Review",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S01"
+      ],
+      "tn_page_range": "NS2",
+      "pdf_page_range": [
+        934,
+        934
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Basic Anatomy Review"
+      ],
+      "structural_rationale": "toc_inventory node NS.S01 is titled 'Acronyms' but its merged_duplicate_headings field records 'Basic Anatomy Review' as co-located content on the same page (pdf 934/NS2), confirmed via raw page-image review: pdf p.934 contains the abbreviation glossary followed by a substantial 'Basic Anatomy Review' section (surface anatomy, MRI neuroanatomy figures). The non-clinical acronym glossary is excluded from study units, consistent with N/ID/MI/NP chapter precedent for chapter-opening abbreviation lists; only the genuine Basic Anatomy Review content is represented here.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-02",
+      "title": "Differential Diagnoses of Common Presentations (Intracranial/Spinal/Peripheral Lesions)",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S02"
+      ],
+      "tn_page_range": "NS4",
+      "pdf_page_range": [
+        936,
+        936
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Differential Diagnoses of Common Presentations"
+      ],
+      "structural_rationale": "Confirmed via body-page review (pdf 936/NS4): a standalone 'Differential Diagnoses of Common Presentations' table (Table 1) covering intracranial mass lesions, disorders of the spine, and peripheral nerve lesions, distinct from the 'Intracranial Pressure Dynamics' content that follows on the same page (represented separately as SU-NS-03). This organizing differential table frames but does not itself carry independently testable content beyond what is captured in the disease-specific units below.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-03",
+      "title": "Intracranial Pressure Dynamics (ICP/Volume Relationship, Cerebral Blood Flow, ICP Measurement, Elevated ICP)",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S02.T02",
+        "NS.S02.T03",
+        "NS.S02.T04",
+        "NS.S02.T05"
+      ],
+      "tn_page_range": "NS4-NS6",
+      "pdf_page_range": [
+        936,
+        938
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Intracranial Pressure Dynamics"
+      ],
+      "structural_rationale": "NS.S02.T02-T05 are OCR-garbled versions of the four real sub-bullets of 'Intracranial Pressure Dynamics' (ICP/Volume Relationship, Cerebral Blood Flow, ICP Measurement, Elevated ICP) confirmed against the real chapter TOC (pdf 933) and body-page review (pdf 936-937, Table 2 'Approach to Intracranial Pathology' and Table 4 'Clinical Features of Elevated ICP'); each carries a bled fragment of a distant heading ('Neurologically Determined Death' bled into T02/T03, 'Persistent Vegetative State' bled into T05) which is stripped as noise, not treated as separate content. A fifth sibling node, NS.S02.T01 'Head Injury', is a spurious duplicate with no matching body content anywhere on pdf 936-938/NS4-6 (the real 'Head Injury' heading is a Neurotrauma sub-bullet at NS35, already captured in SU-NS-33) and is therefore excluded from this unit's source_node_ids.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-04",
+      "title": "Herniation Syndromes",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S03"
+      ],
+      "tn_page_range": "NS7",
+      "pdf_page_range": [
+        939,
+        939
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Herniation Syndromes"
+      ],
+      "structural_rationale": "Matches the real chapter TOC directly; confirmed via body-page review (pdf 939/NS7, Table 5 'Herniation Syndromes' covering subfalcine, central tentorial, uncal, upward, and tonsillar herniation).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-05",
+      "title": "Treatment of Elevated ICP",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S03.T01"
+      ],
+      "tn_page_range": "NS8",
+      "pdf_page_range": [
+        940,
+        940
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Herniation Syndromes",
+        "Treatment of Elevated ICP"
+      ],
+      "structural_rationale": "NS.S03.T01 is titled 'Treatment of Elevated ICP Spinal Dysraphism'; confirmed via body-page review (pdf 940/NS8) the real heading is 'Treatment of Elevated ICP' (Table 6, ICP HEAD mnemonic) - 'Spinal Dysraphism' is a bled fragment of the Pediatric Neurosurgery TOC column (represented separately at SU-NS-37) and is not present as content on this page. Kept as its own study unit given its high generalist relevance (initial management of a neurosurgical emergency) distinct from the diagnostic content of Herniation Syndromes.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-06",
+      "title": "Idiopathic Intracranial Hypertension (Pseudotumour Cerebri)",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S03.T03"
+      ],
+      "tn_page_range": "NS8-NS9",
+      "pdf_page_range": [
+        940,
+        941
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Idiopathic Intracranial Hypertension (Pseudotumour Cerebri)"
+      ],
+      "structural_rationale": "NS.S03.T03 is titled 'Idiopathic Intracranial Hypertension (Pseudotumour Cerebri) . Hydrocephalus in Pediatrics'; confirmed via body-page review (pdf 940-941/NS8-9) that 'Idiopathic Intracranial Hypertension (Pseudotumour Cerebri)' is a genuine standalone top-level heading (Definition/Etiology/Epidemiology/Clinical Features/Investigations/Treatment) with no 'Hydrocephalus in Pediatrics' content on these pages - that fragment bled from the Pediatric Neurosurgery TOC column and is represented separately (SU-NS-39).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-07",
+      "title": "Hydrocephalus",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S04"
+      ],
+      "tn_page_range": "NS9-NS10",
+      "pdf_page_range": [
+        941,
+        942
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Hydrocephalus"
+      ],
+      "structural_rationale": "Matches the real chapter TOC directly; confirmed via body-page review (pdf 941/NS9, Table 7 'Classification of Hydrocephalus' - obstructive, non-obstructive, NPH, hydrocephalus ex vacuo). The page text explicitly cross-references pediatric hydrocephalus to the Pediatric Neurosurgery section (NS41), consistent with that content being represented separately (SU-NS-39) rather than duplicated here.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-08",
+      "title": "Craniosynostosis",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S04.T01",
+        "NS.S15"
+      ],
+      "tn_page_range": "NS43",
+      "pdf_page_range": [
+        973,
+        973
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Pediatric Neurosurgery",
+        "Craniosynostosis"
+      ],
+      "structural_rationale": "NS.S04.T01 'Craniosynostosis' was extracted as a child of Hydrocephalus (NS.S04, pdf941-942/NS9-10) but no such heading exists as body content on those pages. Per the real chapter TOC, Craniosynostosis is a sub-bullet of 'Pediatric Neurosurgery' (NS43), which falls within NS.S15's page span (pdf967-976/NS35-44). The node_id NS.S04.T01 is retained for traceability alongside NS.S15; the tn/pdf page estimate is proportional within the Pediatric Neurosurgery sub-range and not independently page-confirmed beyond the section level.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-09",
+      "title": "Spontaneous Intracranial Hypotension",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S05"
+      ],
+      "tn_page_range": "NS11",
+      "pdf_page_range": [
+        943,
+        943
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Spontaneous Intracranial Hypotension"
+      ],
+      "structural_rationale": "Matches the real chapter TOC directly; HIGH-confidence BODY_HEADING_CONFIRMATION extraction, no corruption flagged.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-10",
+      "title": "CNS Tumours: Classification and General Approach",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S06"
+      ],
+      "tn_page_range": "NS12",
+      "pdf_page_range": [
+        944,
+        944
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "CNS Tumours"
+      ],
+      "structural_rationale": "Confirmed via body-page review (pdf 944/NS12): general classification content (benign vs. malignant, intra-/extra-axial, WHO 2021 classification table, ring-enhancing-lesion differential) precedes the six disease-specific CNS tumour subtopics. The section-level node NS.S06 spans pdf944-950/NS12-18 and is split here into this general-approach unit plus six disease-specific units below (SU-NS-11 to SU-NS-16); the packet did not extract T-level children for NS.S06, so all seven units cite NS.S06 as their only available source_node_id, with page ranges estimated proportionally against the real TOC's per-topic page anchors, not independently confirmed at the sub-page level (SECTION_INHERITED precision).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-11",
+      "title": "Metastatic Brain Tumours and Adult Diffuse Gliomas",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S06"
+      ],
+      "tn_page_range": "NS12-NS14",
+      "pdf_page_range": [
+        944,
+        946
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "CNS Tumours",
+        "Metastatic Tumours / Adult Diffuse Gliomas"
+      ],
+      "structural_rationale": "Real TOC sub-bullets of CNS Tumours (NS12-18); no dedicated packet T-node exists (the T-nodes that carry these names, NS.S16.T01/T02, are column-bleed duplicates whose actual page location (pdf977/NS45) contains unrelated Functional Neurosurgery content - see SU-NS-42/43 rationale). Grouped together as the two most common/highest-yield intra-axial adult brain tumour categories for a generalist (metastasis recognition/workup and glioblastoma/diffuse glioma as the prototypical primary malignant brain tumour).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-12",
+      "title": "Primary Central Nervous System Lymphoma",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S06"
+      ],
+      "tn_page_range": "NS14-NS15",
+      "pdf_page_range": [
+        946,
+        947
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "CNS Tumours",
+        "Primary CNS Lymphoma"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of CNS Tumours; no dedicated packet T-node (NS.S16.T03 carries this name as a column-bleed duplicate at the wrong page location - see SU-NS-42/43). Kept distinct given its immunocompromised-host relevance and distinct diagnostic/management pathway (steroids can obscure biopsy).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-13",
+      "title": "Meningioma",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S06"
+      ],
+      "tn_page_range": "NS15-NS16",
+      "pdf_page_range": [
+        947,
+        948
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "CNS Tumours",
+        "Meningioma"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of CNS Tumours; no dedicated packet T-node (NS.S17's title carries this name as a column-bleed duplicate at the wrong page location - the real content at NS.S17's actual page is 'Surgical Management of Epilepsy', see SU-NS-44). Kept distinct as the most common benign extra-axial primary brain tumour.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-14",
+      "title": "Vestibular Schwannoma (Acoustic Neuroma)",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S06"
+      ],
+      "tn_page_range": "NS16-NS17",
+      "pdf_page_range": [
+        948,
+        949
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "CNS Tumours",
+        "Vestibular Schwannoma"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of CNS Tumours; no dedicated packet T-node (NS.S18's title carries this name as a column-bleed duplicate at the wrong page location - the real content at NS.S18's actual page is 'Surgical Management of Trigeminal Neuralgia', see SU-NS-45). Overlaps substantially with Otolaryngology (CPA lesion/hearing loss workup); flagged for CROSS_DISCIPLINE consideration in the crosswalk.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-15",
+      "title": "Pituitary Adenoma",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S06"
+      ],
+      "tn_page_range": "NS17-NS18",
+      "pdf_page_range": [
+        949,
+        950
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "CNS Tumours",
+        "Pituitary Adenoma"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of CNS Tumours; no dedicated packet T-node (NS.S19's title carries this name as a column-bleed duplicate at the wrong page location - the real content at NS.S19's actual page range is 'Landmark Neurosurgery Trials', see SU-NS-46). Overlaps substantially with Endocrinology (hormonal hypersecretion/hypopituitarism syndromes); flagged for CROSS_DISCIPLINE consideration in the crosswalk, with the neurosurgical mass-effect/visual-field/surgical-indication aspects retained as this chapter's primary content.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-16",
+      "title": "Cerebral Abscess",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S07"
+      ],
+      "tn_page_range": "NS19-NS20",
+      "pdf_page_range": [
+        951,
+        952
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Cerebral Abscess"
+      ],
+      "structural_rationale": "Matches the real chapter TOC directly; HIGH-confidence BODY_HEADING_CONFIRMATION extraction, no corruption flagged.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-17",
+      "title": "Epidural (Extradural) Hematoma",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S08",
+        "NS.S08.T01"
+      ],
+      "tn_page_range": "NS21",
+      "pdf_page_range": [
+        953,
+        953
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Blood",
+        "Epidural (Extradural) Hematoma"
+      ],
+      "structural_rationale": "Matches the real chapter TOC directly, no corruption. Kept as its own unit given its status as a classic neurosurgical emergency with a distinct MCC-testable presentation (lucid interval, biconvex CT lesion).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-18",
+      "title": "Subdural Hematoma",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S08.T02"
+      ],
+      "tn_page_range": "NS21",
+      "pdf_page_range": [
+        953,
+        953
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Blood",
+        "Subdural Hematoma"
+      ],
+      "structural_rationale": "Matches the real chapter TOC directly, no corruption. Kept distinct from Epidural Hematoma given different mechanism (bridging vein tear vs. arterial), imaging appearance (crescentic vs. biconvex), and at-risk populations (elderly/anticoagulated vs. young trauma).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-19",
+      "title": "Subarachnoid Hemorrhage",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S09",
+        "NS.S09.T01"
+      ],
+      "tn_page_range": "NS22-NS23",
+      "pdf_page_range": [
+        954,
+        955
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Cerebrovascular Disease",
+        "Subarachnoid Hemorrhage"
+      ],
+      "structural_rationale": "Matches the real chapter TOC directly, no corruption. High-yield neurosurgical/neurological emergency (thunderclap headache, need for urgent NCCT +/- LP, aneurysm workup).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-20",
+      "title": "Intracranial Aneurysms",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S09.T02"
+      ],
+      "tn_page_range": "NS23-NS25",
+      "pdf_page_range": [
+        955,
+        957
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Cerebrovascular Disease",
+        "Intracranial Aneurysms"
+      ],
+      "structural_rationale": "Matches the real chapter TOC directly, no corruption.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-21",
+      "title": "Intracerebral Hemorrhage",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S09.T03"
+      ],
+      "tn_page_range": "NS25-NS26",
+      "pdf_page_range": [
+        957,
+        958
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Cerebrovascular Disease",
+        "Intracerebral Hemorrhage"
+      ],
+      "structural_rationale": "Matches the real chapter TOC directly, no corruption. Overlaps with Neurology's stroke content; retained here for the neurosurgical decompression/evacuation-indication angle.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-22",
+      "title": "Arteriovenous Malformations, Cavernous Malformations, and Dural Arteriovenous Fistulas",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S10",
+        "NS.S10.T01",
+        "NS.S10.T02"
+      ],
+      "tn_page_range": "NS27",
+      "pdf_page_range": [
+        959,
+        959
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Vascular Malformations"
+      ],
+      "structural_rationale": "NS.S10.T01 ('Arteriovenous Malformations, Cavernous Malformations, and') and NS.S10.T02 ('Dural Arteriovenous Fistulas') are two halves of one real TOC heading ('Arteriovenous Malformations, Cavernous Malformations, and Dural Arteriovenous Fistulas') split by a column break during OCR extraction; recombined into a single study unit per the real chapter TOC.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-23",
+      "title": "Cerebrospinal Fluid Fistulas",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S11"
+      ],
+      "tn_page_range": "NS28",
+      "pdf_page_range": [
+        960,
+        960
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Cerebrospinal Fluid Fistulas"
+      ],
+      "structural_rationale": "NS.S11's merged_duplicate_headings ('EXTRACRANIAL PATHOLOGY', 'Approach to Limb', 'ExtraduralLesions') match the real chapter TOC exactly - these are co-located, genuinely distinct headings sharing pdf960/NS28. The organizational divider 'EXTRACRANIAL PATHOLOGY' is excluded from study units (non-clinical section header, consistent with 'INTRACRANIAL PATHOLOGY' treatment above); 'Approach to Limb/Back Pain' and 'Extradural Lesions' are represented as separate study units (SU-NS-24, SU-NS-25).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-24",
+      "title": "Approach to Limb/Back Pain",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S11"
+      ],
+      "tn_page_range": "NS28",
+      "pdf_page_range": [
+        960,
+        960
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Approach to Limb/Back Pain"
+      ],
+      "structural_rationale": "Real TOC heading co-located with CSF Fistulas on pdf960/NS28 (see SU-NS-23 rationale); represented as its own unit given its direct correspondence to the MCC 'Back pain and related symptoms' presentation objective.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-25",
+      "title": "Extradural Lesions: Root Compression and Cervical Disc Syndrome",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S11.T01",
+        "NS.S11.T02"
+      ],
+      "tn_page_range": "NS28-NS29",
+      "pdf_page_range": [
+        960,
+        961
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Extradural Lesions"
+      ],
+      "structural_rationale": "NS.S11.T01 (Root Compression) and NS.S11.T02 (Cervical Disc Syndrome) both match the real chapter TOC directly as sub-bullets of 'Extradural Lesions'; kept together as one clinical unit (cervical radiculopathy secondary to disc/root pathology) rather than fragmented, per project instruction not to split generic Etiology/Clinical-Features/Management subsections of one clinical problem.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-26",
+      "title": "Degenerative Cervical Myelopathy",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S12"
+      ],
+      "tn_page_range": "NS30-NS32",
+      "pdf_page_range": [
+        962,
+        964
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Degenerative Cervical Myelopathy"
+      ],
+      "structural_rationale": "Matches the real chapter TOC directly, no corruption.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-27",
+      "title": "Lumbar Disc Syndrome",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S12.T01"
+      ],
+      "tn_page_range": "NS30-NS32",
+      "pdf_page_range": [
+        962,
+        964
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Degenerative Cervical Myelopathy",
+        "Lumbar Disc Syndrome"
+      ],
+      "structural_rationale": "Matches the real chapter TOC directly as a sub-bullet of Degenerative Cervical Myelopathy's page range; kept distinct as its own generalist-relevant clinical presentation (lumbar radiculopathy).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-28",
+      "title": "Cauda Equina Syndrome",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S12.T02"
+      ],
+      "tn_page_range": "NS30-NS32",
+      "pdf_page_range": [
+        962,
+        964
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Degenerative Cervical Myelopathy",
+        "Cauda Equina Syndrome"
+      ],
+      "structural_rationale": "Matches the real chapter TOC directly. Kept as its own high-priority unit given its status as a surgical emergency requiring urgent recognition and imaging/referral (core generalist competency), distinct from the more elective Lumbar Disc Syndrome/Stenosis content.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-29",
+      "title": "Lumbar Spinal Stenosis and Neurogenic Claudication",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S12.T03",
+        "NS.S12.T04"
+      ],
+      "tn_page_range": "NS30-NS32",
+      "pdf_page_range": [
+        962,
+        964
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Degenerative Cervical Myelopathy",
+        "Lumbar Spinal Stenosis / Neurogenic Claudication"
+      ],
+      "structural_rationale": "NS.S12.T03 (Lumbar Spinal Stenosis) and T04 (Neurogenic Claudication) both match the real chapter TOC directly and describe the same clinical entity (claudication is the presenting symptom of stenosis); kept together per project instruction not to fragment one clinical problem's presentation from its underlying diagnosis.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-30",
+      "title": "Intradural Intramedullary Lesions",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S13"
+      ],
+      "tn_page_range": "NS33",
+      "pdf_page_range": [
+        965,
+        965
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Intradural Intramedullary Lesions"
+      ],
+      "structural_rationale": "Matches the real chapter TOC directly, no corruption.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-31",
+      "title": "Syringomyelia (Syrinx)",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S13.T01"
+      ],
+      "tn_page_range": "NS33",
+      "pdf_page_range": [
+        965,
+        965
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Intradural Intramedullary Lesions",
+        "Syringomyelia (Syrinx)"
+      ],
+      "structural_rationale": "Matches the real chapter TOC directly, no corruption.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-32",
+      "title": "Spinal Cord Syndromes",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S14"
+      ],
+      "tn_page_range": "NS34",
+      "pdf_page_range": [
+        966,
+        966
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Spinal Cord Syndromes"
+      ],
+      "structural_rationale": "NS.S14's merged_duplicate_headings field ('Peripheral Nerves') matches the real chapter TOC exactly - both are genuinely co-located distinct headings sharing pdf966/NS34. Represented as its own unit (incomplete cord syndromes: Brown-Sequard, central cord, anterior cord, etc.); note this topic is cross-referenced from Neurology's chapter (N.S17 'Spinal Cord Syndromes' cross-reference per N chapter precedent) - this NS unit is the primary owner.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-33",
+      "title": "Peripheral Nerves",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S14"
+      ],
+      "tn_page_range": "NS34",
+      "pdf_page_range": [
+        966,
+        966
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Peripheral Nerves"
+      ],
+      "structural_rationale": "Real TOC heading co-located with Spinal Cord Syndromes on pdf966/NS34 (see SU-NS-32 rationale). This content substantially overlaps Neurology's peripheral neuropathy content and Orthopedic Surgery's nerve entrapment content; flagged CROSS_DISCIPLINE in the crosswalk for later global-audit ownership resolution rather than duplicated here.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-34",
+      "title": "Neurotrauma: Trauma Assessment and Head/Brain Injury",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S15"
+      ],
+      "tn_page_range": "NS35-NS37",
+      "pdf_page_range": [
+        967,
+        969
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Specialty Topics",
+        "Neurotrauma",
+        "Trauma Assessment / Head Injury / Brain Injury"
+      ],
+      "structural_rationale": "NS.S15 is titled 'SPECIALTY TOPICS' with merged_duplicate_headings=['Neurotrauma'], matching the real chapter TOC exactly (SPECIALTY TOPICS is the organizational section header, excluded; Neurotrauma NS35 is the genuine clinical section). The packet did not extract T-level children for this large section (pdf967-976/NS35-44), so this and the following seven study units (SU-NS-35 to SU-NS-41) all cite NS.S15 as their source node, with page ranges estimated proportionally against the real TOC's sub-bullet order (Trauma Assessment, Head Injury, Brain Injury, Spinal Cord Injury, Fractures of the Spine, Neurologically Determined Death, Coma, Persistent Vegetative State, then Pediatric Neurosurgery's own sub-bullets) rather than independently page-confirmed at the sub-bullet level (SECTION_INHERITED precision). Grouped as core generalist trauma-recognition content: primary/secondary survey trauma assessment, head injury classification (GCS-based), and traumatic brain injury.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-35",
+      "title": "Spinal Cord Injury and Fractures of the Spine",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S15"
+      ],
+      "tn_page_range": "NS37-NS38",
+      "pdf_page_range": [
+        969,
+        970
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Specialty Topics",
+        "Neurotrauma",
+        "Spinal Cord Injury / Fractures of the Spine"
+      ],
+      "structural_rationale": "Real TOC sub-bullets of Neurotrauma (see SU-NS-34 rationale for section-level sourcing). Grouped together as one acute spinal trauma unit (cord injury recognition/classification with its bony-injury mechanism).",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-36",
+      "title": "Coma and Glasgow Coma Scale Assessment",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S15"
+      ],
+      "tn_page_range": "NS39-NS40",
+      "pdf_page_range": [
+        971,
+        972
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Specialty Topics",
+        "Neurotrauma",
+        "Coma"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Neurotrauma (see SU-NS-34 rationale for section-level sourcing). Kept distinct from Neurologically Determined Death/PVS given its direct correspondence to bedside GCS assessment, a core generalist skill.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-37",
+      "title": "Neurologically Determined Death (Brain Death) and Persistent Vegetative State",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S15"
+      ],
+      "tn_page_range": "NS39-NS40",
+      "pdf_page_range": [
+        971,
+        972
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Specialty Topics",
+        "Neurotrauma",
+        "Neurologically Determined Death / Persistent Vegetative State"
+      ],
+      "structural_rationale": "Real TOC sub-bullets of Neurotrauma (see SU-NS-34 rationale for section-level sourcing). Grouped together as disorders-of-consciousness-determination content distinct from acute coma assessment; brain death criteria carry organ-donation/end-of-life significance.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-38",
+      "title": "Pediatric Neurosurgery: Spinal Dysraphism",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S03.T01",
+        "NS.S15"
+      ],
+      "tn_page_range": "NS41",
+      "pdf_page_range": [
+        973,
+        973
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Specialty Topics",
+        "Pediatric Neurosurgery",
+        "Spinal Dysraphism"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Pediatric Neurosurgery (NS41), whose title bled into NS.S03.T01 (see SU-NS-05 rationale) with no independent content at that location. Represented here at its correct TOC location within NS.S15's page span; NS.S03.T01 retained as a secondary source_node_id for traceability of the corrupted extraction.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-39",
+      "title": "Pediatric Neurosurgery: Intraventricular Hemorrhage (Neonatal)",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S03.T02",
+        "NS.S15"
+      ],
+      "tn_page_range": "NS41",
+      "pdf_page_range": [
+        973,
+        973
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Specialty Topics",
+        "Pediatric Neurosurgery",
+        "Intraventricular Hemorrhage"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Pediatric Neurosurgery (NS41). NS.S03.T02 was extracted as a child of Herniation Syndromes (pdf939-940/NS7-8) but no matching body content exists there; the genuine IVH content is the neonatal/pediatric IVH sub-bullet of Pediatric Neurosurgery. NS.S03.T02 retained as a secondary source_node_id for traceability.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-40",
+      "title": "Pediatric Neurosurgery: Hydrocephalus in Pediatrics, Dandy-Walker Malformation, and Chiari Malformations",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S03.T03",
+        "NS.S15"
+      ],
+      "tn_page_range": "NS41-NS42",
+      "pdf_page_range": [
+        973,
+        974
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Specialty Topics",
+        "Pediatric Neurosurgery",
+        "Hydrocephalus in Pediatrics / Dandy-Walker / Chiari"
+      ],
+      "structural_rationale": "Real TOC sub-bullets of Pediatric Neurosurgery (NS41-42). 'Hydrocephalus in Pediatrics' bled into NS.S03.T03's title (see SU-NS-06 rationale); Dandy-Walker and Chiari malformations are adjacent real TOC sub-bullets grouped here as related congenital posterior-fossa/CSF-flow anomalies rather than fragmented into three near-identical units. NS.S03.T03 retained as a secondary source_node_id for traceability.",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-41",
+      "title": "Pediatric Brain Tumours",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S15"
+      ],
+      "tn_page_range": "NS44",
+      "pdf_page_range": [
+        976,
+        976
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Specialty Topics",
+        "Pediatric Neurosurgery",
+        "Pediatric Brain Tumours"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Pediatric Neurosurgery, closing that subsection (NS44) immediately before Functional Neurosurgery (NS45/NS.S16).",
+      "extraction_confidence": "LOW",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-42",
+      "title": "Functional Neurosurgery: Movement Disorders",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S16.T01",
+        "NS.S16.T02",
+        "NS.S16.T03",
+        "NS.S16"
+      ],
+      "tn_page_range": "NS45",
+      "pdf_page_range": [
+        977,
+        977
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Functional Neurosurgery",
+        "Movement Disorders"
+      ],
+      "structural_rationale": "NS.S16 is titled 'Functional Neurosurgery', matching the real chapter TOC exactly, confirmed via body-page review (pdf 977/NS45: 'Functional Neurosurgery' > 'Movement Disorders' covering DBS for Parkinson's disease, dystonia, and tremor, with targets/indications/outcomes/morbidity tables). Its three T-children (T01-T03) carry corrupted titles that are column-bleed duplicates of the CNS Tumours subtopic names (Metastatic Tumours, Adult Diffuse Gliomas, Primary CNS Lymphoma - already represented at SU-NS-11/12) with no matching content at pdf977; they are retained here only for node_id traceability, not as evidence of tumour content at this location.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-43",
+      "title": "Functional Neurosurgery: Chronic Pain",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S16"
+      ],
+      "tn_page_range": "NS45",
+      "pdf_page_range": [
+        977,
+        977
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Functional Neurosurgery",
+        "Chronic Pain"
+      ],
+      "structural_rationale": "Real TOC sub-bullet of Functional Neurosurgery, co-located with Movement Disorders on the same section node/page (see SU-NS-42 rationale); represented as its own unit given its distinct clinical content (neuromodulation for chronic pain) from movement-disorder surgery.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-44",
+      "title": "Surgical Management of Epilepsy",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S17"
+      ],
+      "tn_page_range": "NS46",
+      "pdf_page_range": [
+        978,
+        978
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Surgical Management of Epilepsy"
+      ],
+      "structural_rationale": "NS.S17 is titled 'Meningioma Surgical Management of Epilepsy'; confirmed via the real chapter TOC that the genuine heading at this page position (NS46/pdf978) is 'Surgical Management of Epilepsy' - 'Meningioma' is a column-bleed duplicate of the CNS Tumours subtopic name (already represented at SU-NS-13) with no independent content at this location.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-45",
+      "title": "Surgical Management of Trigeminal Neuralgia",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S18"
+      ],
+      "tn_page_range": "NS47",
+      "pdf_page_range": [
+        979,
+        979
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Surgical Management of Trigeminal Neuralgia"
+      ],
+      "structural_rationale": "NS.S18 is titled 'Vestibular Schwannoma'; confirmed via the real chapter TOC that the genuine heading at this page position (NS47/pdf979) is 'Surgical Management of Trigeminal Neuralgia' - 'Vestibular Schwannoma' is a column-bleed duplicate of the CNS Tumours subtopic name (already represented at SU-NS-14) with no independent content at this location.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-NS-46",
+      "title": "Landmark Neurosurgery Trials",
+      "chapter_code": "NS",
+      "chapter_title": "Neurosurgery",
+      "source_node_ids": [
+        "NS.S19"
+      ],
+      "tn_page_range": "NS48-NS51",
+      "pdf_page_range": [
+        980,
+        983
+      ],
+      "source_hierarchy_path": [
+        "Neurosurgery",
+        "Landmark Neurosurgery Trials"
+      ],
+      "structural_rationale": "NS.S19 is titled 'Pituitary Adenoma Landmark Neurosurgery Trials'; confirmed via the real chapter TOC that the genuine heading at this page range (NS48-51/pdf980-983) is 'Landmark Neurosurgery Trials' - 'Pituitary Adenoma' is a column-bleed duplicate of the CNS Tumours subtopic name (already represented at SU-NS-15) with no independent content at this location. This is an evidence-summary/EBM reference section (analogous to the sidebar trial boxes seen throughout the chapter, e.g. the decompressive craniectomy and acetazolamide trials already noted in ICP/IIH content) rather than primary testable clinical content; classified SUPPORTING_KNOWLEDGE/REFERENCE_ONLY in the crosswalk.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    }
+  ]
+}

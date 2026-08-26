@@ -1,0 +1,119 @@
+{
+  "generated_at": "2026-08-26",
+  "chapter_code": "NS",
+  "schema_note": "Chapter-local review-queue candidates only. This file is NOT the global research/scope/review_queue.json - it is merged into that coordinator-maintained file after this chapter passes validation.",
+  "items": [
+    {
+      "issue_type": "severe_two_column_toc_corruption_resolved_via_body_evidence",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-NS-01, SU-NS-03, SU-NS-05, SU-NS-06, SU-NS-08, SU-NS-11, SU-NS-12, SU-NS-13, SU-NS-14, SU-NS-15, SU-NS-22, SU-NS-32, SU-NS-33, SU-NS-38, SU-NS-39, SU-NS-40, SU-NS-42, SU-NS-43, SU-NS-44, SU-NS-45, SU-NS-46",
+      "title": "Chapter NS's toc_inventory.json carries severe two-column TOC OCR corruption (32/47 nodes LOW/MEDIUM packet-confidence, plus 4 section-level nodes NS.S16-S19 with titles that are pure OCR noise unrelated to their actual body content); resolved via direct page-image review rather than OCR text re-parsing",
+      "summary": "Resolved by rendering the chapter's real TOC page (pdf 933) and 7 body pages (pdf 934, 936, 939, 940, 941, 944, 977) to PNG via pdftoppm and visually reading them, following the same methodology established for chapter N. Corruption patterns found: (1) genuine headings with a bled fragment of a distant unrelated heading appended (e.g. NS.S02.T05 'Elevated ICP Persistent Vegetative State'); (2) a genuine heading split across two sibling T-nodes by a column break (NS.S10.T01/T02, AVM/cavernoma/dural AVF); (3) spurious extra T-nodes with no matching body content at their assigned page location, whose real content lives elsewhere in the chapter (NS.S02.T01 'Head Injury', NS.S03.T02 'Intraventricular Hemorrhage', NS.S04.T01 'Craniosynostosis'); (4) four section-level nodes (NS.S16-S19) whose titles are column-bleed duplicates of the CNS Tumours subtopic names from an unrelated page, while their real body content (confirmed via page-image review) is Functional Neurosurgery, Surgical Management of Epilepsy, Surgical Management of Trigeminal Neuralgia, and Landmark Neurosurgery Trials respectively. See study_units.json's methodology_note for full detail. No content was invented from neurosurgical background knowledge; every correction traces to a rendered page image, the packet's merged_duplicate_headings field, or the real chapter TOC. One organizational heading (INTRACRANIAL PATHOLOGY, NS4) remains genuinely UNRESOLVED per the packet's own source_quality.unresolved_headings entry and is recorded as such rather than guessed.",
+      "recommended_action": "Coordinator should consider a TOC-extraction pipeline fix for two-column layouts (as previously recommended for chapter N) given this is now a second chapter exhibiting the identical column-bleed failure mode; no action needed on this chapter's own study units beyond the semantic spot-checks below."
+    },
+    {
+      "issue_type": "unresolved_toc_heading",
+      "severity": "info",
+      "study_unit_id": "N/A (organizational header, excluded from study units)",
+      "title": "INTRACRANIAL PATHOLOGY (NS4)",
+      "summary": "The packet's source_quality.unresolved_headings records 'INTRACRANIAL PATHOLOGY' as UNRESOLVED (TOC page-number digits did not parse to a page consistent with reading order, and no body-page line matched within the search window pdf934-944). This is a non-clinical section-divider heading (confirmed via body-page review at pdf936, where it precedes 'Intracranial Pressure Dynamics'); it carries no independent clinical content and is excluded from study units, consistent with treatment of 'EXTRACRANIAL PATHOLOGY' and 'SPECIALTY TOPICS'.",
+      "recommended_action": "No action required; documented for traceability per project instruction to use explicit UNRESOLVED rather than guess."
+    },
+    {
+      "issue_type": "misplaced_source_node_reassigned_to_correct_toc_location",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-NS-08",
+      "title": "Craniosynostosis",
+      "summary": "'Craniosynostosis' was extracted by the pipeline as a child of an unrelated section (Hydrocephalus or Herniation Syndromes) with no matching body content at that page location. Reassigned to its correct real-TOC location within the Pediatric Neurosurgery subsection (part of NS.S15's page span), with the original misplaced node_id retained in source_node_ids for traceability. Exact sub-page boundaries within Pediatric Neurosurgery (NS41-44) were not independently page-image-confirmed beyond the section level (SECTION_INHERITED precision).",
+      "recommended_action": "Reviewer to spot-check page_mapping_precision if exact sub-page boundaries are needed for downstream question authoring; consider rendering pdf 973-976 directly if higher precision is required."
+    },
+    {
+      "issue_type": "misplaced_source_node_reassigned_to_correct_toc_location",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-NS-38",
+      "title": "Pediatric Neurosurgery: Spinal Dysraphism",
+      "summary": "'Pediatric Neurosurgery: Spinal Dysraphism' was extracted by the pipeline as a child of an unrelated section (Hydrocephalus or Herniation Syndromes) with no matching body content at that page location. Reassigned to its correct real-TOC location within the Pediatric Neurosurgery subsection (part of NS.S15's page span), with the original misplaced node_id retained in source_node_ids for traceability. Exact sub-page boundaries within Pediatric Neurosurgery (NS41-44) were not independently page-image-confirmed beyond the section level (SECTION_INHERITED precision).",
+      "recommended_action": "Reviewer to spot-check page_mapping_precision if exact sub-page boundaries are needed for downstream question authoring; consider rendering pdf 973-976 directly if higher precision is required."
+    },
+    {
+      "issue_type": "misplaced_source_node_reassigned_to_correct_toc_location",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-NS-39",
+      "title": "Pediatric Neurosurgery: Intraventricular Hemorrhage (Neonatal)",
+      "summary": "'Pediatric Neurosurgery: Intraventricular Hemorrhage (Neonatal)' was extracted by the pipeline as a child of an unrelated section (Hydrocephalus or Herniation Syndromes) with no matching body content at that page location. Reassigned to its correct real-TOC location within the Pediatric Neurosurgery subsection (part of NS.S15's page span), with the original misplaced node_id retained in source_node_ids for traceability. Exact sub-page boundaries within Pediatric Neurosurgery (NS41-44) were not independently page-image-confirmed beyond the section level (SECTION_INHERITED precision).",
+      "recommended_action": "Reviewer to spot-check page_mapping_precision if exact sub-page boundaries are needed for downstream question authoring; consider rendering pdf 973-976 directly if higher precision is required."
+    },
+    {
+      "issue_type": "misplaced_source_node_reassigned_to_correct_toc_location",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-NS-40",
+      "title": "Pediatric Neurosurgery: Hydrocephalus in Pediatrics, Dandy-Walker Malformation, and Chiari Malformations",
+      "summary": "'Pediatric Neurosurgery: Hydrocephalus in Pediatrics, Dandy-Walker Malformation, and Chiari Malformations' was extracted by the pipeline as a child of an unrelated section (Hydrocephalus or Herniation Syndromes) with no matching body content at that page location. Reassigned to its correct real-TOC location within the Pediatric Neurosurgery subsection (part of NS.S15's page span), with the original misplaced node_id retained in source_node_ids for traceability. Exact sub-page boundaries within Pediatric Neurosurgery (NS41-44) were not independently page-image-confirmed beyond the section level (SECTION_INHERITED precision).",
+      "recommended_action": "Reviewer to spot-check page_mapping_precision if exact sub-page boundaries are needed for downstream question authoring; consider rendering pdf 973-976 directly if higher precision is required."
+    },
+    {
+      "issue_type": "misplaced_source_node_reassigned_to_correct_toc_location",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-NS-41",
+      "title": "Pediatric Brain Tumours",
+      "summary": "'Pediatric Brain Tumours' was extracted by the pipeline as a child of an unrelated section (Hydrocephalus or Herniation Syndromes) with no matching body content at that page location. Reassigned to its correct real-TOC location within the Pediatric Neurosurgery subsection (part of NS.S15's page span), with the original misplaced node_id retained in source_node_ids for traceability. Exact sub-page boundaries within Pediatric Neurosurgery (NS41-44) were not independently page-image-confirmed beyond the section level (SECTION_INHERITED precision).",
+      "recommended_action": "Reviewer to spot-check page_mapping_precision if exact sub-page boundaries are needed for downstream question authoring; consider rendering pdf 973-976 directly if higher precision is required."
+    },
+    {
+      "issue_type": "section_split_without_dedicated_subnode",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-NS-11",
+      "title": "Metastatic Brain Tumours and Adult Diffuse Gliomas",
+      "summary": "Split out of the single packet-level node NS.S06 ('CNS Tumours', pdf944-950) into a disease-specific study unit because the T-level children that would normally anchor sub-page boundaries (NS.S16.T01-T03 etc.) are column-bleed duplicates located at the wrong page position, not genuine children of NS.S06. Page range is a proportional estimate against the real TOC's per-topic ordering, not independently page-image-confirmed at the sub-page level.",
+      "recommended_action": "Reviewer to confirm proportional page estimates if precise per-topic page numbers are needed; otherwise SECTION_INHERITED precision is acceptable per chapter precedent (see NS.S06 CNS Tumours cluster in study_units.json methodology_note)."
+    },
+    {
+      "issue_type": "section_split_without_dedicated_subnode",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-NS-12",
+      "title": "Primary Central Nervous System Lymphoma",
+      "summary": "Split out of the single packet-level node NS.S06 ('CNS Tumours', pdf944-950) into a disease-specific study unit because the T-level children that would normally anchor sub-page boundaries (NS.S16.T01-T03 etc.) are column-bleed duplicates located at the wrong page position, not genuine children of NS.S06. Page range is a proportional estimate against the real TOC's per-topic ordering, not independently page-image-confirmed at the sub-page level.",
+      "recommended_action": "Reviewer to confirm proportional page estimates if precise per-topic page numbers are needed; otherwise SECTION_INHERITED precision is acceptable per chapter precedent (see NS.S06 CNS Tumours cluster in study_units.json methodology_note)."
+    },
+    {
+      "issue_type": "section_split_without_dedicated_subnode",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-NS-13",
+      "title": "Meningioma",
+      "summary": "Split out of the single packet-level node NS.S06 ('CNS Tumours', pdf944-950) into a disease-specific study unit because the T-level children that would normally anchor sub-page boundaries (NS.S16.T01-T03 etc.) are column-bleed duplicates located at the wrong page position, not genuine children of NS.S06. Page range is a proportional estimate against the real TOC's per-topic ordering, not independently page-image-confirmed at the sub-page level.",
+      "recommended_action": "Reviewer to confirm proportional page estimates if precise per-topic page numbers are needed; otherwise SECTION_INHERITED precision is acceptable per chapter precedent (see NS.S06 CNS Tumours cluster in study_units.json methodology_note)."
+    },
+    {
+      "issue_type": "section_split_without_dedicated_subnode",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-NS-14",
+      "title": "Vestibular Schwannoma (Acoustic Neuroma)",
+      "summary": "Split out of the single packet-level node NS.S06 ('CNS Tumours', pdf944-950) into a disease-specific study unit because the T-level children that would normally anchor sub-page boundaries (NS.S16.T01-T03 etc.) are column-bleed duplicates located at the wrong page position, not genuine children of NS.S06. Page range is a proportional estimate against the real TOC's per-topic ordering, not independently page-image-confirmed at the sub-page level.",
+      "recommended_action": "Reviewer to confirm proportional page estimates if precise per-topic page numbers are needed; otherwise SECTION_INHERITED precision is acceptable per chapter precedent (see NS.S06 CNS Tumours cluster in study_units.json methodology_note)."
+    },
+    {
+      "issue_type": "section_split_without_dedicated_subnode",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-NS-15",
+      "title": "Pituitary Adenoma",
+      "summary": "Split out of the single packet-level node NS.S06 ('CNS Tumours', pdf944-950) into a disease-specific study unit because the T-level children that would normally anchor sub-page boundaries (NS.S16.T01-T03 etc.) are column-bleed duplicates located at the wrong page position, not genuine children of NS.S06. Page range is a proportional estimate against the real TOC's per-topic ordering, not independently page-image-confirmed at the sub-page level.",
+      "recommended_action": "Reviewer to confirm proportional page estimates if precise per-topic page numbers are needed; otherwise SECTION_INHERITED precision is acceptable per chapter precedent (see NS.S06 CNS Tumours cluster in study_units.json methodology_note)."
+    },
+    {
+      "issue_type": "cross_discipline_flag",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-NS-14, SU-NS-15, SU-NS-33",
+      "title": "Vestibular Schwannoma / Pituitary Adenoma / Peripheral Nerves",
+      "summary": "Flagged CROSS_DISCIPLINE: Vestibular Schwannoma substantially overlaps Otolaryngology's hearing-loss/CPA-lesion content; Pituitary Adenoma substantially overlaps Endocrinology's hormonal-hypersecretion content; Peripheral Nerves substantially overlaps Neurology's peripheral neuropathy content and Orthopedic Surgery's nerve entrapment content. Per project instruction, PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT designation is deferred to a later global cross-chapter audit; these are recorded here as thin CROSS_DISCIPLINE-flavored units retaining the neurosurgical mass-effect/surgical angle rather than duplicating the sister chapters' content.",
+      "recommended_action": "Defer to global cross-chapter ownership audit; no chapter-local action required."
+    },
+    {
+      "issue_type": "no_dedicated_mcc_objective_found",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-NS-08, SU-NS-23, SU-NS-30, SU-NS-39, SU-NS-40, SU-NS-41, SU-NS-45, SU-NS-46",
+      "title": "Several study units carry no MCC objective evidence at all",
+      "summary": "Craniosynostosis, CSF Fistulas, Intradural Intramedullary Lesions (general framework), neonatal IVH, pediatric hydrocephalus/Dandy-Walker/Chiari, pediatric brain tumours, trigeminal neuralgia surgery, and landmark trials returned no matches in the packet's candidate MCC objective set and no matches via targeted search-mcc-objectives queries (e.g. 'hydrocephalus', 'pituitary', 'cauda equina', 'trigeminal neuralgia' all returned 0 results). Classified SPECIALIST_DETAIL/SUPPORTING_KNOWLEDGE/REFERENCE_ONLY with minimal coverage_weight (1) and minimum_question_coverage (0) rather than asserted as DIRECT/COMPONENT, per project accuracy rules.",
+      "recommended_action": "Coordinator to confirm no MCC objective was missed (e.g. via alternate query terms) before finalizing these units' low-weight classification."
+    }
+  ]
+}
