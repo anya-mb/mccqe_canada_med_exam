@@ -22,13 +22,14 @@
     "OP",
     "OR",
     "OT",
-    "P"
+    "P",
+    "PM"
   ],
   "chapters_without_review_items_file": [
     "C",
     "ELOM"
   ],
-  "total_items": 130,
+  "total_items": 138,
   "items": [
     {
       "issue_type": "structural_ambiguity",
@@ -1043,7 +1044,7 @@
       "severity": "resolved",
       "study_unit_id": "SU-P-002, SU-P-003, SU-P-004, SU-P-005, SU-P-006, SU-P-007",
       "title": "Entire 'Primary Care' section (well-child care) absent from toc_inventory.json",
-      "summary": "research/tn2025/unresolved_headings.json flags 'PrimaryCar\u00e9' as one of P's two UNRESOLVED headings (source_pdf_page 1197, TOC page-number OCR did not parse to a trusted anchor). toc_inventory.json has no node at all for this section or its subtopics. Independently resolved via raw OCR of the chapter's own TOC page (pdf 1197) and body pages 1200-1206 (P4-P10): the section runs from immediately after 'Pediatric Quick Reference Values' (P.S01, P3) to immediately before 'Common Complaints' (P.S02, P10), covering Visit Overview, Routine Immunization, Growth and Development, Nutrition, a sixth body heading not named in the TOC line itself ('Injury Prevention Counselling'), and Circumcision.",
+      "summary": "research/tn2025/unresolved_headings.json flags 'PrimaryCaré' as one of P's two UNRESOLVED headings (source_pdf_page 1197, TOC page-number OCR did not parse to a trusted anchor). toc_inventory.json has no node at all for this section or its subtopics. Independently resolved via raw OCR of the chapter's own TOC page (pdf 1197) and body pages 1200-1206 (P4-P10): the section runs from immediately after 'Pediatric Quick Reference Values' (P.S01, P3) to immediately before 'Common Complaints' (P.S02, P10), covering Visit Overview, Routine Immunization, Growth and Development, Nutrition, a sixth body heading not named in the TOC line itself ('Injury Prevention Counselling'), and Circumcision.",
       "resolution_status": "INDEPENDENTLY RESOLVED (not left open) - represented as SU-P-002 through SU-P-007 under synthetic UNCATALOGUED:PrimaryCare@pdf1200.T01-T06 ids since no toc_inventory.json node exists to cite.",
       "recommended_action": "Coordinator should consider adding corresponding nodes to toc_inventory.json for chapter P (between P.S01 and P.S02, pdf pages 1200-1206) in a future TOC-extraction pass, since this is a substantial six-subtopic clinical section entirely missing from the pipeline's output (dropped, not merged) - the same class of gap seen in chapter A's SU-A-07 case. Not low-priority: unlike A's single-topic gap, this recovered section carries high-yield, directly-DIRECT-mapped MCC content (well-child visit, immunization, growth/development, nutrition)."
     },
@@ -1171,6 +1172,70 @@
       "title": "Cross-discipline / intra-chapter content overlap recorded but not resolved",
       "summary": "Per the resume brief's instruction not to finalize PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT until the global cross-discipline audit, several study units carry a cross_discipline_note flagging overlap either with a completed adult-discipline chapter (Hematology) or between two independently-full TN write-ups within Pediatrics itself (e.g. Cystic Fibrosis appears as a full GI-focused write-up under P.S09.T15 and a full pulmonary-focused write-up under P.S16.T03 - these are not duplicates but genuinely different-content sections in the source, confirmed by raw-OCR page reads of both).",
       "recommended_action": "Coordinator to resolve primary ownership during the planned global cross-discipline audit; no chapter-P-specific action needed now."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-PM-01, SU-PM-02, SU-PM-03",
+      "title": "PM.S01 ('AcromymS') merges four real top-level TOC headings into one node",
+      "summary": "toc_inventory.json's PM.S01 node (title an OCR garble of 'Acronyms') carries merged_duplicate_headings ['Palliative Approachto Care', 'Pain and Symptom Management'] and only two T-children (Palliative Care, Assessment Tools), implying a single 3-node section. Rendering the source PDF's own TOC page (pdf1299) and body pages PM2-PM4 (pdf1300-1302) confirms these are in fact four distinct top-level navy-banner headings: Acronyms (excluded, non-clinical), Palliative Approach to Care > Palliative Care (SU-PM-01), and Pain and Symptom Management > Assessment Tools (SU-PM-02) plus Pain and Symptom Management's own un-captured Table 2/WHO-ladder content (SU-PM-03, recovered under a synthetic UNCATALOGUED id).",
+      "recommended_action": "Reviewer should confirm against the source PDF that the pdf1300-1302 (PM2-PM4) page boundaries assigned to SU-PM-01/02/03 are exactly correct."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-PM-05",
+      "title": "Real 'Psychosocial and Spiritual Needs' heading absent from toc_inventory.json",
+      "summary": "toc_inventory.json's PM.S02 node (title 'Care of the Dying Patient') carries the real, separate 'Psychosocial and Spiritual Needs' top-level heading in its merged_duplicate_headings field rather than as its own node. Body-confirmed via pdf1303 (PM5): both sections share the page, with 'Psychosocial and Spiritual Needs' as its own navy-banner heading in the bottom half. Recovered under a synthetic UNCATALOGUED:PsychosocialAndSpiritualNeeds@pdf1303 id.",
+      "recommended_action": "Reviewer should confirm the pdf1303 (PM5) single-page assignment is correct and that no further sub-heading within this section was missed."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-PM-07",
+      "title": "PM.S03.T02 ('Approach to Communicating Bad News') mis-parented under 'End-of-Life Decision Making'; real 'Communication' heading missing",
+      "summary": "toc_inventory.json captures PM.S03.T02 as a child of PM.S03 ('End-of-Life Decision Making'), and folds the real, separate 'Communication' top-level heading into PM.S03's merged_duplicate_headings field. Body confirmation (pdf1304-1305, PM6-PM7) shows 'Communication' is T02's true immediate parent: the general communication-principles paragraph is directly followed by the SPIKES 'Approach to Communicating Bad News' sub-heading, then 'Estimating Life Expectancy' at the top of PM7 before 'Collaboration' begins. Re-parented under a synthetic UNCATALOGUED:Communication@pdf1304 id (SU-PM-07); PM.S03/PM.S03.T01 (Types of Discussions) remain correctly under End-of-Life Decision Making (SU-PM-06).",
+      "recommended_action": "Reviewer should confirm the pdf1304-1305 (PM6-PM7) page boundary between End-of-Life Decision Making and Communication, and that 'Estimating Life Expectancy' is genuinely part of Communication rather than its own missing top-level heading."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-PM-09, SU-PM-10, SU-PM-11",
+      "title": "Real 'Suffering' section (PM7-PM8) entirely absent from toc_inventory.json, garbled into PM.S04 as fragment 'Tn'",
+      "summary": "toc_inventory.json's PM.S04 node (title 'Collaboration') carries the fragment 'Tn' in its merged_duplicate_headings field - an OCR garble that, cross-checked against the source PDF's own TOC page (pdf1299), corresponds to the real 'Suffering' top-level heading (the next heading after 'Collaboration', both starting PM7). No node of any kind exists for this heading or its ~275 words of substantive content (Definition, Sources of Suffering; Options to Relieve Refractory Physical Suffering including palliative sedation and dignity therapy; Options to Relieve Existential Suffering including MAID; Types of Grief), spanning pdf1305-1306 (PM7-PM8). Recovered under a synthetic UNCATALOGUED:Suffering@pdf1305 id and split into three study units (SU-PM-09 definition/sources/physical-suffering-relief, SU-PM-10 MAID, SU-PM-11 grief) since MAID and grief classification are independently testable topics rather than generic suffering-relief detail.",
+      "recommended_action": "Reviewer should confirm against the source PDF that the pdf1305-1306 (PM7-PM8) page boundaries and the three-way SU-PM-09/10/11 split are correct, and that no sub-heading within the recovered section was missed."
+    },
+    {
+      "issue_type": "structural_ambiguity",
+      "severity": "resolved",
+      "study_unit_id": "SU-PM-14",
+      "title": "Pediatric-Palliative-Care 'Assessment Tools' child heading absent from toc_inventory.json",
+      "summary": "toc_inventory.json's PM.S06 node (title 'Pediatric Palliative Care') carries the real, separate 'Assessment Tools' child heading in its merged_duplicate_headings field rather than as its own T-child node (distinct from the earlier adult 'Assessment Tools' child of 'Pain and Symptom Management', PM.S01.T02/SU-PM-02). Body-confirmed via pdf1307 (PM9): SSPedi, Mini-SSPedi, and MSAS instrument descriptions between 'Table 3' and the 'Symptom Management' sub-heading. Recovered under a synthetic UNCATALOGUED:PediatricAssessmentTools@pdf1307 id (SU-PM-14).",
+      "recommended_action": "Reviewer should confirm the pdf1307 (PM9) single-page assignment is correct."
+    },
+    {
+      "issue_type": "cross_discipline_flags",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-PM-06, SU-PM-07, SU-PM-10",
+      "title": "End-of-Life Decision Making, Communication/SPIKES, and MAID substantially overlap ELOM",
+      "summary": "SU-PM-06 (Advance Care Planning/Goals of Care/Code Status) shares its Ontario default-SDM/Power-of-Attorney legal machinery with ELOM's Consent and Capacity unit (MCC 121-1), and the chapter itself explicitly redirects POA mechanics to ELOM15. SU-PM-07 (Communication/SPIKES) shares its general truth-telling/bad-news-disclosure ethical principle with ELOM's Truth Telling unit (MCC 121-2). SU-PM-10 (MAID) is foundational to ELOM's end-of-life legal/ethical content generally. Per project instruction (matching the OR/OP/OB/OT precedent and this task's explicit ELOM/PM boundary guidance), PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT designation across all three is deferred to a later global cross-chapter ownership audit; each unit's cross_discipline_note documents the specific overlap and the clinical-application-vs-general-principle distinction used to avoid outright duplication.",
+      "recommended_action": "Defer to global cross-chapter ownership audit; no chapter-local action required. Reviewer may wish to confirm ELOM's existing Consent/Capacity and Truth Telling units do not already claim palliative-specific content (SPIKES, MAID eligibility pathways, code-status terminology) that would make these PM units redundant rather than complementary."
+    },
+    {
+      "issue_type": "no_dedicated_mcc_objective_found",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-PM-01, SU-PM-02, SU-PM-05, SU-PM-11, SU-PM-13, SU-PM-15",
+      "title": "MCC Objectives registry has no dedicated palliative-care, spiritual-assessment, grief, or pediatric-palliative objective",
+      "summary": "A full-registry search-mcc-objectives sweep for 'palliative', 'goals of care', 'MAID', 'prognosis', 'grief', 'spiritual', 'psychosocial', 'advance care planning', 'communication skills', and related terms returned zero direct matches beyond obj25 ('Dying patients') and obj121-2 ('Truth telling'). As in prior chapters (OT's ENT-presentation gap, OR's fracture gap), the registry lacks a dedicated 'palliative care' or 'goals of care' objective distinct from the dying-patient objective; content earlier or broader than the dying-patient scope (early palliative referral timing, assessment-tool selection, spiritual assessment, grief classification, pediatric palliative care) is instead mapped to obj25 with MODERATE evidence strength rather than STRONG, consistent with project accuracy rules (no invented MCC IDs; evidence strength reflects the actual degree of match).",
+      "recommended_action": "None required at this stage - consistent with project accuracy rules. Coordinator may wish to note, in a future cross-chapter registry-gap audit, that the MCC Objectives registry anchors essentially all of palliative medicine's non-MAID, non-symptom-control content to a single dying-patient objective (25), despite this chapter's real scope (early palliative referral, spiritual/psychosocial assessment, grief, pediatric palliative care) extending meaningfully beyond a strictly dying patient."
+    },
+    {
+      "issue_type": "questionable_specialist_detail",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-PM-14, SU-PM-17",
+      "title": "Depth calls flagged for optional human confirmation: pediatric assessment-instrument names, landmark-trials table",
+      "summary": "Per the project's generalist-vs-specialist depth guidance, named pediatric symptom-screening instruments (SSPedi/Mini-SSPedi/MSAS, SU-PM-14) and the chapter's EBM landmark-trials summary table (SU-PM-17) were classified SPECIALIST_DETAIL/REFERENCE_ONLY with zero minimum question coverage, consistent with the OT audiometric-instrument and general reference-table precedents. These are judgment calls rather than clear-cut exclusions.",
+      "recommended_action": "Human reviewer may wish to confirm these depth calls, particularly whether basic recognition that SSPedi vs. Mini-SSPedi differ by age band belongs at COMPONENT rather than SPECIALIST_DETAIL depth."
     }
   ]
 }

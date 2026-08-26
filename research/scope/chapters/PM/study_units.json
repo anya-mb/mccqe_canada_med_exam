@@ -1,0 +1,401 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-26",
+  "chapter_code": "PM",
+  "chapter_title": "Palliative Medicine",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes source structure (toc_inventory.json / derived/scope_packets/PM.json), corrected against the rendered source PDF's own TOC page (pdf1299) and all 11 body pages (pdf1300-1310, PM2-PM12), since the chapter's TOC extraction is far more fragmented than a typical clean chapter despite not being flagged in research/tn2025/toc_validation_report.json's incomplete_chapter_codes list. toc_inventory.json compresses PM's true 17-heading TOC (Acronyms; Palliative Approach to Care > Palliative Care; Pain and Symptom Management > Assessment Tools; Care of the Dying Patient; Psychosocial and Spiritual Needs; End-of-Life Decision Making > Types of Discussions; Communication > Approach to Communicating Bad News; Collaboration; Suffering; Self-Care; Pediatric Palliative Care > Assessment Tools > Symptom Management; Equity in Palliative Care; Landmark Palliative Medicine Trials; References) into just 9 nodes (PM.S01-PM.S09), each merged_duplicate_headings-flagged node folding two to four real top-level TOC headings together. Two real headings are entirely absent from toc_inventory.json with no node of any kind: 'Psychosocial and Spiritual Needs' (PM5, folded into PM.S02's merged_duplicate_headings) and 'Suffering' (PM7-PM8, folded into PM.S04's merged_duplicate_headings under the garbled fragment 'Tn') -- the latter is a substantial section (Definition/Sources of Suffering, palliative sedation, dignity therapy, MAID, Types of Grief) recovered under a synthetic UNCATALOGUED:Suffering@pdf1305 id and split across three study units (SU-PM-09/10/11) since MAID and grief classification are independently testable topics distinct from physical-suffering relief. Two further real headings ('Pain and Symptom Management' itself, beyond its captured 'Assessment Tools' child; and Pediatric Palliative Care's own 'Assessment Tools' child) are likewise absent as their own nodes and recovered under synthetic UNCATALOGUED ids (SU-PM-03, SU-PM-14). All recoveries and re-parentings are resolved via direct rendering of the source PDF pages (never model memory/medical-knowledge reconstruction) and cited in each affected unit's structural_rationale. Excluded as non-clinical organizational/reference material: the chapter root (PM) and PM.S09 (References, a citation list, consistent with the OR.S15/OP.S20/OB.S18/NS.S20 reference-section precedent); the Acronyms portion of PM.S01 is likewise excluded, consistent with the OP.S01/OB.S01/NS.S01/OR.S01/OT.S01 chapter-opening acronym-glossary precedent.",
+  "total_study_units": 17,
+  "organizational_header_nodes": [
+    "PM",
+    "PM.S09"
+  ],
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PM-01",
+      "title": "Palliative Approach to Care (Definition and Enhanced Model)",
+      "chapter_code": "PM",
+      "chapter_title": "Palliative Medicine",
+      "source_node_ids": [
+        "PM.S01",
+        "PM.S01.T01"
+      ],
+      "tn_page_range": "PM2",
+      "pdf_page_range": [
+        1300,
+        1300
+      ],
+      "source_hierarchy_path": [
+        "Palliative Medicine",
+        "Palliative Approach to Care",
+        "Palliative Care"
+      ],
+      "structural_rationale": "toc_inventory.json's PM.S01 node (captured title 'AcromymS', an OCR garble of 'Acronyms') merges four real, separate top-level TOC headings that all start on PM2/pdf1300: 'Acronyms', 'Palliative Approach to Care' (child: 'Palliative Care'), and 'Pain and Symptom Management' (child: 'Assessment Tools') -- confirmed by rendering the source PDF's own TOC page (pdf1299) and body page PM2 (pdf1300), which show these as four distinct navy-banner section headings, not one section with five children as toc_inventory.json's single S01 node with two T-children implies. This unit represents the real 'Palliative Approach to Care' > 'Palliative Care' heading only (Definition, Figure 1 enhanced model, and Palliative Care Assessment bullet list on pdf1300); the chapter-opening Acronyms glossary is excluded as non-clinical per the established OT/OP/OB/NS/OR precedent, and 'Pain and Symptom Management' / 'Assessment Tools' are represented separately below (SU-PM-02, SU-PM-03) since they are not children of 'Palliative Approach to Care'.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PM-02",
+      "title": "Palliative Care Assessment Tools (ESAS, Palliative Performance Scale)",
+      "chapter_code": "PM",
+      "chapter_title": "Palliative Medicine",
+      "source_node_ids": [
+        "PM.S01.T02"
+      ],
+      "tn_page_range": "PM2-PM3",
+      "pdf_page_range": [
+        1300,
+        1301
+      ],
+      "source_hierarchy_path": [
+        "Palliative Medicine",
+        "Pain and Symptom Management",
+        "Assessment Tools"
+      ],
+      "structural_rationale": "toc_inventory.json captures PM.S01.T02 (title 'Assessment Tools') as a child of the merged PM.S01 node; body confirmation (pdf1300-1301, PM2-PM3) shows 'Assessment Tools' is the real child of 'Pain and Symptom Management' (not 'Palliative Approach to Care' as the flattened T01/T02 sibling structure implies), covering the Edmonton Symptom Assessment System (ESAS, Figure 2) and the Palliative Performance Scale (PPS, Table 1) -- validated instruments for symptom burden and functional/prognostic assessment.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PM-03",
+      "title": "Pain and Symptom Management (WHO Pain Ladder, Table of Common Symptoms)",
+      "chapter_code": "PM",
+      "chapter_title": "Palliative Medicine",
+      "source_node_ids": [
+        "UNCATALOGUED:PainAndSymptomManagement@pdf1302"
+      ],
+      "tn_page_range": "PM4",
+      "pdf_page_range": [
+        1302,
+        1302
+      ],
+      "source_hierarchy_path": [
+        "Palliative Medicine",
+        "Pain and Symptom Management"
+      ],
+      "structural_rationale": "The real 'Pain and Symptom Management' section's own substantive content (Table 2: Non-Pharmacologic/Pharmacologic management of constipation, dyspnea, hiccups, nausea/vomiting, pain, pruritus, fatigue, psychiatric symptoms, and oropharyngeal secretions/death rattle; Figure 3: WHO's Pain Relief Ladder; and explicit in-text redirects 'Pain Management -- see Anesthesia, A25' and 'Pain Syndromes -- see Neurology, N43') is entirely absent from toc_inventory.json as its own node -- only its 'Assessment Tools' child (SU-PM-02) was captured. Confirmed via raw body-page rendering of pdf1302 (PM4), the one page occupied by this table between the end of 'Assessment Tools' and the start of 'Care of the Dying Patient'. Represented under a synthetic UNCATALOGUED id per the OT/OR/OP precedent for body-recovered headings. Kept as a single coherent symptom-management unit per the project's non-fragmentation guidance rather than splitting into one unit per symptom row.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PM-04",
+      "title": "Care of the Dying Patient (Predictors of Decline, Final Hours, Final-Days Care)",
+      "chapter_code": "PM",
+      "chapter_title": "Palliative Medicine",
+      "source_node_ids": [
+        "PM.S02"
+      ],
+      "tn_page_range": "PM5",
+      "pdf_page_range": [
+        1303,
+        1303
+      ],
+      "source_hierarchy_path": [
+        "Palliative Medicine",
+        "Care of the Dying Patient"
+      ],
+      "structural_rationale": "PM.S02's captured title 'Care of the Dying Patient' is clean/unmerged (only its sibling 'Psychosocial and Spiritual Needs' was folded into its merged_duplicate_headings field -- see SU-PM-05). Body-confirmed via pdf1303 (PM5): General Predictors of Decline in the Final Months of Life, Changes in the Last Hours of Life, and Care of the Patient in the Final Days of Life (including the EDITH expected-death-in-the-home plan and non-oral medication routes).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PM-05",
+      "title": "Psychosocial and Spiritual Needs (incl. FICA Spiritual Assessment)",
+      "chapter_code": "PM",
+      "chapter_title": "Palliative Medicine",
+      "source_node_ids": [
+        "UNCATALOGUED:PsychosocialAndSpiritualNeeds@pdf1303"
+      ],
+      "tn_page_range": "PM5",
+      "pdf_page_range": [
+        1303,
+        1303
+      ],
+      "source_hierarchy_path": [
+        "Palliative Medicine",
+        "Psychosocial and Spiritual Needs"
+      ],
+      "structural_rationale": "toc_inventory.json's PM.S02 node folds the real, separate 'Psychosocial and Spiritual Needs' top-level heading (printed TOC, pdf1299, starting PM5 immediately after 'Care of the Dying Patient') into its own merged_duplicate_headings field rather than creating a sibling node. Body-confirmed via pdf1303 (PM5, bottom half of the page): definitions of psychosocial vs. spiritual needs, the Approach to Assessing Psychosocial and Spiritual Needs (including the FICA spiritual-assessment tool: Faith, Importance, Community, Address), and the Interprofessional Care Plan for these needs. Represented under a synthetic UNCATALOGUED id since toc_inventory.json has no node of its own for this heading.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PM-06",
+      "title": "End-of-Life Decision Making (Advance Care Planning, Goals of Care, Code Status)",
+      "chapter_code": "PM",
+      "chapter_title": "Palliative Medicine",
+      "source_node_ids": [
+        "PM.S03",
+        "PM.S03.T01"
+      ],
+      "tn_page_range": "PM6",
+      "pdf_page_range": [
+        1304,
+        1304
+      ],
+      "source_hierarchy_path": [
+        "Palliative Medicine",
+        "End-of-Life Decision Making",
+        "Types of Discussions"
+      ],
+      "structural_rationale": "PM.S03's captured title 'End-of-Life Decision Making' and its T01 child 'Types of Discussions' are clean/unmerged and correctly parented; only the sibling 'Communication' heading was incorrectly folded into PM.S03's merged_duplicate_headings field (see SU-PM-07). Body-confirmed via pdf1304 (PM6): Advance Care Planning (SDM/POA identification, explicit cross-reference to Ethical, Legal, and Organizational Medicine ELOM15 for Power of Attorney for Personal Care), Goals of Care discussions, Code Status terminology (full code, DNR, comfort measures, AND), and triggers for When to Initiate EOL Care Discussions (including a MAID request).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PM-07",
+      "title": "Communication in Palliative Care (incl. SPIKES Protocol for Breaking Bad News)",
+      "chapter_code": "PM",
+      "chapter_title": "Palliative Medicine",
+      "source_node_ids": [
+        "UNCATALOGUED:Communication@pdf1304",
+        "PM.S03.T02"
+      ],
+      "tn_page_range": "PM6-PM7",
+      "pdf_page_range": [
+        1304,
+        1305
+      ],
+      "source_hierarchy_path": [
+        "Palliative Medicine",
+        "Communication",
+        "Approach to Communicating Bad News"
+      ],
+      "structural_rationale": "STRUCTURAL CORRECTION: toc_inventory.json's PM.S03.T02 (title 'Approach to Communicating Bad News') is captured as a child of PM.S03 ('End-of-Life Decision Making'), and the real, separate 'Communication' top-level heading (printed TOC, pdf1299, starting PM6) is folded into PM.S03's merged_duplicate_headings field rather than becoming its own node. Body confirmation (pdf1304-1305, PM6-PM7) shows 'Communication' is in fact T02's true immediate parent -- the general communication-principles paragraph is directly followed by the 'Approach to Communicating Bad News' sub-heading (the SPIKES protocol: Setting, Perception, Invitation, Knowledge, Emotions, Strategy/Summary), which in turn is directly followed by 'Estimating Life Expectancy' (prognostic-communication guidance) at the top of PM7, immediately before the 'Collaboration' banner. All three are grouped as one Communication unit. Represented with a synthetic UNCATALOGUED id for the recovered 'Communication' heading itself.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PM-08",
+      "title": "Collaboration (Interprofessional Palliative Care Team)",
+      "chapter_code": "PM",
+      "chapter_title": "Palliative Medicine",
+      "source_node_ids": [
+        "PM.S04"
+      ],
+      "tn_page_range": "PM7",
+      "pdf_page_range": [
+        1305,
+        1305
+      ],
+      "source_hierarchy_path": [
+        "Palliative Medicine",
+        "Collaboration"
+      ],
+      "structural_rationale": "toc_inventory.json's PM.S04 node (title 'Collaboration') folds the real, separate 'Suffering' top-level heading into its merged_duplicate_headings field under the garbled fragment 'Tn' (an OCR artifact; the printed TOC, pdf1299, confirms 'Suffering' is the next heading after 'Collaboration', both starting PM7) -- see SU-PM-09 for the recovered Suffering section. This unit is PM.S04's own real content: the Interprofessional Team roster (physicians, nurses, social workers/case managers, pharmacists, occupational therapists, physiotherapists, dieticians, spiritual care workers) confirmed via body rendering of pdf1305 (PM7, top of page).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PM-09",
+      "title": "Suffering: Definition, Sources, and Relief of Refractory Physical/Existential Suffering",
+      "chapter_code": "PM",
+      "chapter_title": "Palliative Medicine",
+      "source_node_ids": [
+        "UNCATALOGUED:Suffering@pdf1305"
+      ],
+      "tn_page_range": "PM7-PM8",
+      "pdf_page_range": [
+        1305,
+        1306
+      ],
+      "source_hierarchy_path": [
+        "Palliative Medicine",
+        "Suffering"
+      ],
+      "structural_rationale": "toc_inventory.json has no node at all for the real 'Suffering' top-level heading (printed TOC, pdf1299: 'Suffering...PM7', between 'Collaboration' and 'Self-Care'); it is folded into PM.S04's merged_duplicate_headings field as the garbled fragment 'Tn'. Body-confirmed via pdf1305-1306 (PM7-PM8): Definition, Key Points, and Sources of Suffering (physical, social-relational, psychological, spiritual, existential concerns), followed by 'Options to Relieve Refractory Physical Suffering' (palliative sedation therapy; dignity therapy, including the full Dignity Therapy Question set). This unit covers the definition/sources/physical-suffering-relief portion of the recovered section; the Existential Suffering (MAID) and Types of Grief subsections that follow on pdf1306 are split into SU-PM-10 and SU-PM-11 respectively as separately testable, legally/clinically distinct topics. Represented under a synthetic UNCATALOGUED id per the OT/OR/OP precedent for body-recovered headings entirely missing from toc_inventory.json.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PM-10",
+      "title": "Medical Assistance in Dying (MAID)",
+      "chapter_code": "PM",
+      "chapter_title": "Palliative Medicine",
+      "source_node_ids": [
+        "UNCATALOGUED:Suffering@pdf1305"
+      ],
+      "tn_page_range": "PM8",
+      "pdf_page_range": [
+        1306,
+        1306
+      ],
+      "source_hierarchy_path": [
+        "Palliative Medicine",
+        "Suffering",
+        "Options to Relieve Existential Suffering",
+        "Medical Assistance in Dying (MAID)"
+      ],
+      "structural_rationale": "Subsection of the same body-recovered 'Suffering' section (see SU-PM-09 for the full structural-correction rationale), split out as its own study unit because MAID is a legally and procedurally distinct, independently testable topic (matching MCC objective 25's explicit carve-out: 'must know the provisions in Canadian law on MAID, be prepared to discuss them with patients, and respond appropriately to such requests'). Body-confirmed via pdf1306 (PM8): the two MAID eligibility pathways (foreseeable vs. not-immediately-foreseeable natural death), the recent waiver-of-final-consent provision, ongoing parliamentary review, and the mental-illness-sole-criterion exclusion until March 17, 2027.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PM-11",
+      "title": "Types of Grief (Anticipatory, Acute, Complicated)",
+      "chapter_code": "PM",
+      "chapter_title": "Palliative Medicine",
+      "source_node_ids": [
+        "UNCATALOGUED:Suffering@pdf1305"
+      ],
+      "tn_page_range": "PM8",
+      "pdf_page_range": [
+        1306,
+        1306
+      ],
+      "source_hierarchy_path": [
+        "Palliative Medicine",
+        "Suffering",
+        "Types of Grief"
+      ],
+      "structural_rationale": "Subsection of the same body-recovered 'Suffering' section (see SU-PM-09 for the full structural-correction rationale), split out as its own study unit since grief classification is a distinct, independently testable clinical-recognition topic (complicated grief vs. normal/acute/anticipatory grief) rather than a suffering-relief intervention. Body-confirmed via pdf1306 (PM8), immediately before the 'Self-Care' banner.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PM-12",
+      "title": "Self-Care for Palliative Care Providers",
+      "chapter_code": "PM",
+      "chapter_title": "Palliative Medicine",
+      "source_node_ids": [
+        "PM.S05"
+      ],
+      "tn_page_range": "PM8",
+      "pdf_page_range": [
+        1306,
+        1306
+      ],
+      "source_hierarchy_path": [
+        "Palliative Medicine",
+        "Self-Care"
+      ],
+      "structural_rationale": "PM.S05's captured title 'Self-Care' is clean/unmerged and requires no correction. Body-confirmed via pdf1306 (PM8, bottom of page): Definition, Benefits (compassion satisfaction, burnout prevention), and Strategies (within- and beyond-workplace) for provider self-care.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PM-13",
+      "title": "Pediatric Palliative Care: Unique Considerations and Patient Categories",
+      "chapter_code": "PM",
+      "chapter_title": "Palliative Medicine",
+      "source_node_ids": [
+        "PM.S06"
+      ],
+      "tn_page_range": "PM9",
+      "pdf_page_range": [
+        1307,
+        1307
+      ],
+      "source_hierarchy_path": [
+        "Palliative Medicine",
+        "Pediatric Palliative Care"
+      ],
+      "structural_rationale": "PM.S06's captured title 'Pediatric Palliative Care' is clean/unmerged (only its sibling 'Assessment Tools' was folded into its merged_duplicate_headings field -- see SU-PM-14). Body-confirmed via pdf1307 (PM9): Unique Considerations for Pediatric Patients (family/sibling-centred unit of care, early integration alongside curative care, respite services, decision-making authority tied to developmental capacity rather than chronological age) and Table 3 (the four ACT/RCPCH categories of pediatric patients who may benefit from palliative care, with worked examples).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PM-14",
+      "title": "Pediatric Palliative Care Assessment Tools (SSPedi, Mini-SSPedi, MSAS)",
+      "chapter_code": "PM",
+      "chapter_title": "Palliative Medicine",
+      "source_node_ids": [
+        "UNCATALOGUED:PediatricAssessmentTools@pdf1307"
+      ],
+      "tn_page_range": "PM9",
+      "pdf_page_range": [
+        1307,
+        1307
+      ],
+      "source_hierarchy_path": [
+        "Palliative Medicine",
+        "Pediatric Palliative Care",
+        "Assessment Tools"
+      ],
+      "structural_rationale": "toc_inventory.json's PM.S06 node folds the real, separate 'Assessment Tools' heading (printed TOC, pdf1299, a child of 'Pediatric Palliative Care' distinct from the earlier adult 'Assessment Tools' child of 'Pain and Symptom Management' -- see SU-PM-02) into its merged_duplicate_headings field rather than as a captured child node. Body-confirmed via pdf1307 (PM9): the Symptom Screening in Pediatrics Tool (SSPedi, ages 8-18), Mini-SSPedi (ages 4-7), and Memorial Symptom Assessment Scale (MSAS, ages 7+). Represented under a synthetic UNCATALOGUED id.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PM-15",
+      "title": "Pediatric Symptom Management (Unique Considerations)",
+      "chapter_code": "PM",
+      "chapter_title": "Palliative Medicine",
+      "source_node_ids": [
+        "PM.S06.T01"
+      ],
+      "tn_page_range": "PM9-PM10",
+      "pdf_page_range": [
+        1307,
+        1308
+      ],
+      "source_hierarchy_path": [
+        "Palliative Medicine",
+        "Pediatric Palliative Care",
+        "Symptom Management"
+      ],
+      "structural_rationale": "PM.S06.T01 (title 'Symptom Management') is clean/unmerged and correctly parented under Pediatric Palliative Care. Body-confirmed via pdf1307-1308 (PM9-PM10): the section explicitly cross-references the adult Table 2 symptom-management table (SU-PM-03) for pharmacologic/non-pharmacologic specifics and instead covers what is unique to pediatric management -- open communication about diagnosis/prognosis matched to developmental stage, shared decision-making with the child and parents, play therapy, and the sense-of-normality/sibling-support bullets that continue onto the top of pdf1308 (PM10) before the 'Equity in Palliative Care' banner.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PM-16",
+      "title": "Equity in Palliative Care (Barriers to Access, Anti-Oppressive Care)",
+      "chapter_code": "PM",
+      "chapter_title": "Palliative Medicine",
+      "source_node_ids": [
+        "PM.S07"
+      ],
+      "tn_page_range": "PM10",
+      "pdf_page_range": [
+        1308,
+        1308
+      ],
+      "source_hierarchy_path": [
+        "Palliative Medicine",
+        "Equity in Palliative Care"
+      ],
+      "structural_rationale": "PM.S07's captured title 'Equity in Palliative Care' is clean/unmerged and requires no correction. Body-confirmed via pdf1308 (PM10): the health-equity definition and a 12-item list of characteristics associated with poorer access to palliative care (older age, race, marital/living-alone status, non-cancer diagnosis, sexual/gender minority status, homelessness, low socioeconomic status, long-term-care residence, caregiver education, rurality, disability, immigrant status).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-PM-17",
+      "title": "Landmark Palliative Medicine Trials (EBM Summary Table)",
+      "chapter_code": "PM",
+      "chapter_title": "Palliative Medicine",
+      "source_node_ids": [
+        "PM.S08"
+      ],
+      "tn_page_range": "PM11",
+      "pdf_page_range": [
+        1309,
+        1309
+      ],
+      "source_hierarchy_path": [
+        "Palliative Medicine",
+        "Landmark Palliative Medicine Trials"
+      ],
+      "structural_rationale": "PM.S08's captured title 'Landmark Palliative MedicineTrials' is an OCR spacing artifact of 'Landmark Palliative Medicine Trials', not a structural defect. Body-confirmed via pdf1309 (PM11): a single-page EBM reference table (Trial Name / Reference / Purpose / Methods / Results / Conclusions) spanning 'Palliative Approach to Care' and 'Patient Assessment' categories -- Temel et al. 2010, the 2014 Lancet advanced-cancer RCT, COSMIC, ENABLE II, ENABLE III, the palliative-oxygen-vs-room-air trial, the statin-discontinuation trial, and a doctors'-prognostic-accuracy cohort study, several of which are cross-referenced by 'Landmark Trials' sidebar call-outs elsewhere in the chapter (see SU-PM-01, SU-PM-04).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    }
+  ]
+}
