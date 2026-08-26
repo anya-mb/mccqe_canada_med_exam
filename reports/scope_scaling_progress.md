@@ -14,38 +14,37 @@ then continue.
 
 | | |
 |---|---|
-| Completed | 10 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`, `FM`, `G`, `GS`) |
-| Next chapter | **GM — Geriatric Medicine** |
+| Completed | 11 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`, `FM`, `G`, `GS`, `GM`) |
+| Next chapter | **GY — Gynecology** |
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `64d185c` — scope: map GS General and Thoracic Surgery |
+| Last completed commit | `PENDING` — scope: map GM Geriatric Medicine |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
 
-1. GM — Geriatric Medicine *(next)*
-2. GY — Gynecology
-3. H — Hematology
-4. ID — Infectious Diseases
-5. MG — Medical Genetics
-6. MI — Medical Imaging
-7. NP — Nephrology
-8. N — Neurology
-9. NS — Neurosurgery
-10. OB — Obstetrics
-11. OP — Ophthalmology
-12. OR — Orthopedic Surgery
-13. OT — Otolaryngology
-14. P — Pediatrics
-15. PM — Palliative Medicine
-16. PL — Plastic Surgery
-17. PS — Psychiatry
-18. PH — Public Health and Preventive Medicine
-19. R — Respirology
-20. RH — Rheumatology
-21. U — Urology
-22. VS — Vascular Surgery
+1. GY — Gynecology *(next)*
+2. H — Hematology
+3. ID — Infectious Diseases
+4. MG — Medical Genetics
+5. MI — Medical Imaging
+6. NP — Nephrology
+7. N — Neurology
+8. NS — Neurosurgery
+9. OB — Obstetrics
+10. OP — Ophthalmology
+11. OR — Orthopedic Surgery
+12. OT — Otolaryngology
+13. P — Pediatrics
+14. PM — Palliative Medicine
+15. PL — Plastic Surgery
+16. PS — Psychiatry
+17. PH — Public Health and Preventive Medicine
+18. R — Respirology
+19. RH — Rheumatology
+20. U — Urology
+21. VS — Vascular Surgery
 
 ## Chapter notes
 
@@ -260,6 +259,39 @@ then continue.
   `CROSS_DISCIPLINE` units (`SU-GS-22` COPD deferring to not-yet-mapped
   Respirology; `SU-GS-40` Familial Colorectal Cancer Syndromes deferring
   to not-yet-mapped Medical Genetics). 0 invalid MCC IDs, 0 hygiene
+  violations, validator PASS, 553/553 project tests passing.
+- **GM (Geriatric Medicine)**: 20 study units from 27 source nodes (1
+  chapter root + 3 organizational section headers + 23 leaf/topic
+  nodes, all 27 accounted for). Clean chapter: 0 unresolved headings.
+  Two OCR-corrupted section titles resolved without inventing content:
+  `GM.S01` ("ACFOMYMS") represented under its legible
+  `merged_duplicate_headings` alternate "Physiology and Pathology of
+  Aging"; `GM.S09` ("RETEFEMCES") corrected to "References" by analogy
+  with every other completed chapter's terminal bibliography section.
+  `GM.S03` ("Presentations in Older Adults", 11 T-children) kept as 11
+  independent study units per the geriatrics scope principle for broad
+  syndromes; `GM.S04` (Driving Competency) and `GM.S06` (Geriatric
+  Pharmacology) each consolidated their T-children into fewer units
+  (2 facets of one fitness-to-drive competency; PK/PD mechanistic
+  background vs. applied polypharmacy/prescribing). 3 `CROSS_DISCIPLINE`
+  units recorded for the later global overlap audit (`SU-GM-03`
+  Constipation vs. completed chapter G's `SU-G-25`, same MCC objective
+  16-1; `SU-GM-04` Delirium vs. not-yet-mapped Psychiatry/Neurology;
+  `SU-GM-09` Incontinence vs. not-yet-mapped Urology/Gynecology) — none
+  finalized. Targeted `search-mcc-objectives` searches confirmed
+  presbycusis explicitly named under objective 40's sensorineural
+  causal-conditions list (STRONG) and polypharmacy/deprescribing
+  explicitly named in objective 125's enabling text (STRONG), while
+  immobility, driving-fitness/reporting, hospitalization hazards, and
+  PK/PD mechanics have no dedicated MCC objective (classified
+  SUPPORTING_KNOWLEDGE or WEAK/flagged rather than fabricated) —
+  continuing the same MCC-registry-coverage-gap pattern already
+  documented in chapters E, G, and GS. Driving Competency retained as
+  jurisdiction-sensitive (`PROVINCIAL_TERRITORIAL`) rather than
+  Canada-wide. GM/ELOM final ownership of capacity/consent-adjacent
+  content explicitly deferred (no GM source node covers it
+  independently). `MAPPING_STRENGTH_COUNTS: STRONG=7 MODERATE=7 WEAK=1`;
+  0 `UNCERTAIN` classifications, 0 invalid MCC IDs, 0 hygiene
   violations, validator PASS, 553/553 project tests passing.
 
 ## Resume protocol (per Phase 3C instructions)

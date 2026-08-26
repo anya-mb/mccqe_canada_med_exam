@@ -1,0 +1,47 @@
+{
+  "generated_at": "2026-08-25",
+  "chapter_code": "GM",
+  "schema_note": "Chapter-local review-queue candidates only. This file is NOT the global research/scope/review_queue.json - it is merged into that coordinator-maintained file after this chapter passes validation.",
+  "items": [
+    {
+      "issue_type": "structural_ocr_corruption",
+      "severity": "informational",
+      "study_unit_id": "SU-GM-01",
+      "title": "GM.S01 printed title 'ACFOMYMS' is illegible; merged_duplicate_headings gives the usable alternate 'Physiology and Pathology of Aging'",
+      "summary": "The section's printed TOC title is an OCR-corrupted mnemonic acronym with no recoverable literal meaning. Rather than invent a heading, the study unit uses the legible merged_duplicate_headings alternate, which is consistent with the section's actual content position (aging physiology, first section of the chapter).",
+      "resolution_status": "INDEPENDENTLY RESOLVED - represented as SU-GM-01 using the merged alternate title; garbled literal string not used anywhere in canonical output."
+    },
+    {
+      "issue_type": "structural_ocr_corruption",
+      "severity": "informational",
+      "study_unit_id": "SU-GM-20",
+      "title": "GM.S09 printed title 'RETEFEMCES' is an OCR corruption of 'REFERENCES'",
+      "summary": "Terminal chapter section with no T-children, positioned identically (last section, bibliographic) to every other completed chapter's References section (e.g., SU-G-62, SU-GS's final section). High-confidence correction, not an invented heading.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - represented as SU-GM-20 'References'."
+    },
+    {
+      "issue_type": "cross_discipline_overlap",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-GM-03, SU-GM-04, SU-GM-09",
+      "title": "Candidate cross-discipline overlaps requiring later global resolution",
+      "summary": "SU-GM-03 (Constipation) shares MCC objective 16-1 with chapter G's completed SU-G-25. SU-GM-04 (Delirium) may overlap Psychiatry/Neurology (not yet mapped). SU-GM-09 (Incontinence) may overlap Urology and OBGYN/Gynecology (not yet mapped). All three are recorded here as candidate PRIMARY_OWNER/CROSS_LINK pairs per the project's cross-discipline workflow; none is finalized.",
+      "resolution_status": "DEFERRED - flagged for the global chapter-overlap audit once all chapters mapping the same content are complete, per instructions not to finalize GM's cross-discipline ownership now."
+    },
+    {
+      "issue_type": "capacity_elom_boundary",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-GM-02",
+      "title": "Comprehensive geriatric assessment framework touches, but does not include, legal capacity/consent content",
+      "summary": "Toronto Notes' 'Framework for the Approach to the Older Adult' section (GM.S02) covers clinical function/cognition assessment. No GM source node covers legal decision-making capacity, consent, substitute decision-making, or advance directives as independent topics, so no separate GM study unit was created for them; MCC objective 121-1 (Consent) was identified via search-mcc-objectives but not attached here since it belongs to the clinical-assessment/legal-capacity boundary that ELOM (completed) already partially owns.",
+      "resolution_status": "DEFERRED - GM/ELOM final ownership of capacity-adjacent content not resolved per instructions; noted in SU-GM-02's testable_competencies as an explicit scope boundary."
+    },
+    {
+      "issue_type": "no_mcc_objective_found",
+      "severity": "informational",
+      "study_unit_id": "SU-GM-08, SU-GM-14, SU-GM-15, SU-GM-16",
+      "title": "Four study units have no adequate MCC objective evidence (Immobility, Driving Competency, Hospitalization Hazards, PK/PD Changes)",
+      "summary": "Targeted search-mcc-objectives queries (immobility, deconditioning, driving, fitness to drive, hospitalization) returned zero matches in the canonical registry. Rather than fabricate objectives or force a weak citation onto unrelated evidence, these units were classified SUPPORTING_KNOWLEDGE (or COMPONENT with WEAK evidence and requires_scope_review=true for Immobility, which has a plausible adjacent objective) with zero planned question coverage.",
+      "resolution_status": "RESOLVED PER ACCURACY RULES - no evidence fabricated; revisit only if a future MCC objectives-registry refresh adds relevant objectives."
+    }
+  ]
+}
