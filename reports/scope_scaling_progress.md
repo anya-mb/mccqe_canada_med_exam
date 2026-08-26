@@ -14,30 +14,29 @@ then continue.
 
 | | |
 |---|---|
-| Completed | 18 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`, `FM`, `G`, `GS`, `GM`, `GY`, `H`, `ID`, `MG`, `MI`, `NP`, `N`) |
-| Next chapter | **NS — Neurosurgery** |
+| Completed | 19 / 32 (`C`, `ELOM`, `A`, `CP`, `D`, `ER`, `E`, `FM`, `G`, `GS`, `GM`, `GY`, `H`, `ID`, `MG`, `MI`, `NP`, `N`, `NS`) |
+| Next chapter | **OB — Obstetrics** |
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `c28896e` — scope: map N Neurology |
+| Last completed commit | `7f56f07` — scope: map NS Neurosurgery |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
 
-1. NS — Neurosurgery *(next)*
-2. OB — Obstetrics
-3. OP — Ophthalmology
-4. OR — Orthopedic Surgery
-5. OT — Otolaryngology
-6. P — Pediatrics
-7. PM — Palliative Medicine
-8. PL — Plastic Surgery
-9. PS — Psychiatry
-10. PH — Public Health and Preventive Medicine
-11. R — Respirology
-12. RH — Rheumatology
-13. U — Urology
-14. VS — Vascular Surgery
+1. OB — Obstetrics *(next)*
+2. OP — Ophthalmology
+3. OR — Orthopedic Surgery
+4. OT — Otolaryngology
+5. P — Pediatrics
+6. PM — Palliative Medicine
+7. PL — Plastic Surgery
+8. PS — Psychiatry
+9. PH — Public Health and Preventive Medicine
+10. R — Respirology
+11. RH — Rheumatology
+12. U — Urology
+13. VS — Vascular Surgery
 
 ## Chapter notes
 
@@ -495,6 +494,49 @@ then continue.
   0 hygiene violations, 0 `UNCERTAIN` classifications, validator PASS,
   553/553 project tests passing. Worked in the canonical `main` checkout
   per explicit instruction for this chapter (no isolated worktree/branch).
+
+- **NS (Neurosurgery)**: 46 study units from 20 canonical section-level
+  TOC nodes (47 total nodes including T-level children, all accounted
+  for). Second chapter (after N) exhibiting severe two-column TOC OCR
+  corruption (32/47 nodes LOW/MEDIUM packet-extraction confidence),
+  including a new failure mode not previously documented: four
+  section-level nodes (`NS.S16`-`NS.S19`) whose titles are pure OCR
+  noise from an unrelated page (column-bleed duplicates of the CNS
+  Tumours subtopic names), while their real body content — confirmed via
+  `pdftoppm` page-image review of `Toronto Notes 2025.pdf` (pdf 933, 934,
+  936, 939, 940-941, 944, 977) — is Functional Neurosurgery, Surgical
+  Management of Epilepsy, Surgical Management of Trigeminal Neuralgia,
+  and Landmark Neurosurgery Trials respectively. Also resolved: bled
+  heading fragments (e.g. `NS.S02.T05` 'Elevated ICP Persistent
+  Vegetative State' = real 'Elevated ICP' + bled 'Persistent Vegetative
+  State'); a heading split across two sibling nodes by a column break
+  (`NS.S10.T01`/`T02`, AVM/cavernoma/dural AVF, recombined); and three
+  spurious child nodes with no matching body content at their assigned
+  location, whose real content lives in the Pediatric Neurosurgery
+  subsection (`NS.S02.T01` 'Head Injury', `NS.S03.T02` 'Intraventricular
+  Hemorrhage', `NS.S04.T01` 'Craniosynostosis' — each reassigned to its
+  correct TOC location with the original node_id retained for
+  traceability). One organizational heading ('INTRACRANIAL PATHOLOGY',
+  NS4) remains genuinely UNRESOLVED per the packet's own
+  `source_quality.unresolved_headings` entry and is recorded as such.
+  Every correction traces to a rendered page image, the packet's
+  `merged_duplicate_headings` field, or the real chapter TOC — none from
+  neurosurgical background knowledge. Crosswalk: 8 `DIRECT`, 14
+  `COMPONENT`, 4 `SUPPORTING_KNOWLEDGE`, 16 `SPECIALIST_DETAIL`, 3
+  `CROSS_DISCIPLINE`, 1 `REFERENCE_ONLY`, 0 `UNCERTAIN`; 41 MCC evidence
+  citations (13 STRONG, 11 MODERATE, 17 WEAK) across `search-mcc-
+  objectives` searches confirming MCC has no dedicated objective for
+  hydrocephalus, pituitary adenoma, cauda equina syndrome (by name),
+  trigeminal neuralgia, or craniosynostosis — each instead mapped via its
+  closest governing presentation objective (headache=39, back pain=50-4,
+  coma=58-1, TBI=109-10) at WEAK/MODERATE strength, or left with no
+  evidence and classified `SPECIALIST_DETAIL`/`REFERENCE_ONLY` at minimal
+  coverage weight per project accuracy rules, continuing the
+  MCC-registry-coverage-gap pattern documented in prior chapters. 0
+  invalid MCC IDs, 0 hygiene violations, 0 `UNCERTAIN` classifications,
+  validator PASS, 553/553 project tests passing. Worked in the canonical
+  `main` checkout per explicit instruction for this chapter (no isolated
+  worktree/branch).
 
 ## Resume protocol (per Phase 3C instructions)
 
