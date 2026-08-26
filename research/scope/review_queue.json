@@ -15,13 +15,14 @@
     "GY",
     "H",
     "ID",
-    "MG"
+    "MG",
+    "MI"
   ],
   "chapters_without_review_items_file": [
     "C",
     "ELOM"
   ],
-  "total_items": 61,
+  "total_items": 67,
   "items": [
     {
       "issue_type": "structural_ambiguity",
@@ -672,6 +673,72 @@
       "recommended_action": "No action required; standard practice per chapter workflow instructions.",
       "affects_global_toc": false,
       "chapter_code": "MG"
+    },
+    {
+      "issue_type": "wrapped_heading_ocr_defect",
+      "severity": "informational",
+      "study_unit_id": "SU-MI-01, SU-MI-02, SU-MI-03 through SU-MI-09, SU-MI-30, SU-MI-31, SU-MI-32",
+      "title": "Four section-title OCR defects (ACTOMYMS, Chestlmaging, InterventionalRadiology, BreastImaging) confirmed benign - genuine, coherent section content, no unrelated merged material",
+      "summary": "Raw-OCR verification (derived/toronto-notes-2025/clean-ocr/, pdf pages 791-820) confirmed four section-title OCR defects in this chapter: (1) MI.S01 'ACTOMYMS' is an OCR-garbled 'ACRONYMS', a non-clinical acronym glossary merged with the genuine 'Imaging Modalities' heading per merged_duplicate_headings (same pattern as chapter ID's 'ACRONYMS' node). (2) MI.S02 'Chestlmaging', (3) MI.S08 'InterventionalRadiology', and (4) MI.S09 'BreastImaging' are all wrapped-heading defects (a missing space) for 'Chest Imaging', 'Interventional Radiology', and 'Breast Imaging' respectively - unlike the ACTOMYMS case, all three are confirmed genuine, single-topic section titles with no unrelated merged content, and required no splitting.",
+      "resolution_status": "RESOLVED - ACTOMYMS's acronym-glossary fragment is not separately represented (analogous to SU-ID-01's treatment); the three wrapped-heading titles are represented under their corrected genuine title text in study_units.json with no content misattribution.",
+      "recommended_action": "Coordinator may want to note that OCR wrapped-heading defects (missing inter-word spaces) recur across chapters (chapter ID's Chestlmaging-style analogues not previously seen, but similar to isolated wrapped-title defects in other completed chapters) and could be addressed with a post-processing space-insertion heuristic in a future TOC-extraction pass; low priority since this chapter's crosswalk is unaffected.",
+      "affects_global_toc": true,
+      "chapter_code": "MI"
+    },
+    {
+      "issue_type": "minor_page_boundary_drift",
+      "severity": "informational",
+      "study_unit_id": "SU-MI-13, SU-MI-14, SU-MI-17, SU-MI-25, SU-MI-30",
+      "title": "Four minor section-boundary page-range corrections where content spills a fraction of a page past the toc-recorded end page",
+      "summary": "Raw-OCR verification found four instances where a section's toc-recorded end page understates its true body extent by a small margin, with the next section's heading beginning mid-page rather than at its own declared start: (1) MI.S03 (Abdominal Imaging, declared end pdf 805) actually continues through Acute/Chronic Pancreatitis and Angiography of the GI Tract at the top of pdf 806, before MI.S04 begins mid-page (affects SU-MI-13, SU-MI-14). (2) MI.S04 (Genitourinary System and Adrenals, declared end pdf 808) actually continues through the Adrenal Mass table at the top of pdf 809, before MI.S05 (Neuroradiology) begins mid-page (affects SU-MI-17). (3) MI.S06 (Musculoskeletal System, declared end pdf 814) actually continues through Hyperparathyroidism and Paget's Disease at the top of pdf 815, before MI.S07 (Nuclear Medicine) begins mid-page (affects SU-MI-25). (4) MI.S08 (Interventional Radiology, declared end pdf 817) actually continues through Central Venous Access at the top of pdf 818, before MI.S09 (Breast Imaging) begins mid-page (affects SU-MI-30). All four are minor precision corrections of a fraction of a page each - content is genuine and was not fabricated, mislabeled, or reordered, unlike chapter ID's severe multi-page two-column TOC merge.",
+      "resolution_status": "RESOLVED - each affected study unit's pdf_page_range/tn_page_range is corrected to its confirmed body extent in study_units.json, with the drift documented in each unit's structural_rationale.",
+      "recommended_action": "Coordinator may want to note this recurring minor-drift pattern (declared section end page consistently falling a fraction of a page short of true content extent) as a low-priority TOC-extraction refinement opportunity; does not affect this chapter's crosswalk correctness.",
+      "affects_global_toc": true,
+      "chapter_code": "MI"
+    },
+    {
+      "issue_type": "cross_reference_only_entries",
+      "severity": "informational",
+      "study_unit_id": "SU-MI-22",
+      "title": "One node (Arthritis) carries no independent MI-chapter content - pure cross-reference to Rheumatology",
+      "summary": "Body confirmation shows MI.S06.T04's 'Arthritis' (pdf 813/MI23, 'see Rheumatology for radiographic features of specific arthritides') carries zero independent clinical content in this chapter - a single-line cross-reference immediately followed by unrelated, genuine Bone and Soft Tissue Tumours content that TOC extraction listed as the next sibling T-child.",
+      "resolution_status": "RESOLVED - represented as its own REFERENCE_ONLY study unit (SU-MI-22) with zero planned question coverage and a cross_discipline_note pointing to Rheumatology; the genuine adjacent content is represented separately (SU-MI-23).",
+      "recommended_action": "No action required for this chapter; consistent with the same pattern already seen in chapters ID, G, GS, GY.",
+      "affects_global_toc": false,
+      "chapter_code": "MI"
+    },
+    {
+      "issue_type": "mcc_registry_coverage_gap",
+      "severity": "informational",
+      "study_unit_id": "SU-MI-09, SU-MI-17, SU-MI-30",
+      "title": "MCC objectives registry has no dedicated objective for tubes/lines/catheters positioning, adrenal mass, or interventional radiology procedures",
+      "summary": "Targeted registry searches for 'imaging', 'radiation', 'contrast', 'diagnostic imaging', 'screening imaging', 'pulmonary embolism', 'osteomyelitis', 'appendicitis', 'meningitis', 'multiple sclerosis', 'renal colic', 'pneumothorax', 'fracture', 'osteoporosis', 'adrenal mass', and 'hydronephrosis' returned zero or only loosely-related matches, confirming (as in chapters E, G, GS, GM, GY, H, ID) that MCC's 198 Medical Expert objectives are almost entirely presentation-based (dyspnea, chest pain, abdominal pain) rather than modality- or disease-based. This is especially pronounced in this chapter given its structure is organized by imaging modality/organ system rather than by clinical presentation. Every affected topic was still mapped to the closest presentation-based objective whose scope plausibly encompasses it (e.g., contrast safety anchored to objective 89-2 Chronic kidney disease; IR vascular procedures anchored to 109-15 Vascular injury and 15-2 Prevention of venous thrombosis), with mapping_strength never exceeding what the objective's actual scope supports, and with SPECIALIST_DETAIL/no-evidence classification used where no plausible anchor exists (tubes/lines/catheters positioning, adrenal mass characterization).",
+      "resolution_status": "RESOLVED FOR THIS CHAPTER - no evidence fabricated; see crosswalk.json's per-unit mapping_rationale.",
+      "recommended_action": "Coordinator may want to continue folding this into the broader MCC-objectives-registry-gap note (now confirmed in eight chapters: E, G, GS, GM, GY, H, ID, MI), noting MI as a case where the gap stems from the chapter's non-presentation-based organizational structure rather than disease-naming granularity.",
+      "affects_global_toc": false,
+      "chapter_code": "MI"
+    },
+    {
+      "issue_type": "cross_discipline_overlap_candidate",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-MI-12, SU-MI-16, SU-MI-20, SU-MI-25",
+      "title": "Candidate cross-discipline overlaps requiring later global resolution",
+      "summary": "SU-MI-12 (Specific Visceral Organ Imaging: Liver/Spleen/Biliary) overlaps Gastroenterology (G, completed). SU-MI-16 (Gynecological Imaging) overlaps Gynecology (GY, completed). SU-MI-20 (CNS Infection/Demyelinating Disease Imaging) overlaps Infectious Diseases (SU-ID-09, completed) and Neurology (N, not yet mapped). SU-MI-25 (Metabolic Bone Disease Imaging) overlaps Endocrinology (E, completed - osteoporosis E46, Paget's E50). Consistent with the project's expectation that Medical Imaging will overlap with nearly every clinical discipline, each unit here is deliberately scoped to imaging-modality selection/recognition only, not disease management, per task instructions distinguishing 'recognize/manage disease X' from 'select/interpret the appropriate imaging for presentation X.'",
+      "resolution_status": "NOT RESOLVED BY DESIGN - deferred per task instructions until the global cross-chapter overlap audit (PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT finalization occurs there, not at this chapter-mapping stage).",
+      "recommended_action": "Coordinator should review during the global cross-chapter overlap audit once Rheumatology (RH) and Neurology (N) are mapped, and reconcile against G/GY/E's existing content.",
+      "affects_global_toc": false,
+      "chapter_code": "MI"
+    },
+    {
+      "issue_type": "current_guidance_sensitive_content",
+      "severity": "informational",
+      "study_unit_id": "SU-MI-02, SU-MI-06, SU-MI-31, SU-MI-33",
+      "title": "Contrast-induced nephropathy prophylaxis, PE imaging pathway choice, and breast-screening guidelines are current-guidance-sensitive",
+      "summary": "Per project instructions, appropriateness-criteria-style recommendations (e.g., specific IV hydration protocols for contrast nephropathy prevention, exact PE imaging algorithm thresholds, breast-cancer screening age/interval guidelines) are not encoded into the scope layer even where Toronto Notes provides specific figures (e.g., the AMACING trial's hydration-vs-no-hydration finding referenced in SU-MI-33). freshness.verification_required is set to true on SU-MI-02, SU-MI-06, and SU-MI-31 accordingly.",
+      "resolution_status": "RESOLVED - competencies are mapped at the recognition/selection level only; specific current Canadian Association of Radiologists / provincial screening guidance will be researched during question generation.",
+      "recommended_action": "No action required; standard practice per chapter workflow instructions.",
+      "affects_global_toc": false,
+      "chapter_code": "MI"
     }
   ]
 }
