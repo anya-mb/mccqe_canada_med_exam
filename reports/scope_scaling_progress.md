@@ -19,7 +19,7 @@ then continue.
 | Current chapter (in progress) | none |
 | Review-required | none |
 | Failed | none |
-| Last completed commit | `PENDING` — scope: map GM Geriatric Medicine |
+| Last completed commit | `e0c3b5c` — scope: map GM Geriatric Medicine |
 | Working tree | clean as of this checkpoint |
 
 ## Processing order (remaining, one at a time)
