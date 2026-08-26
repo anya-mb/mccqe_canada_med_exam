@@ -1,0 +1,1181 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-26T00:00:00Z",
+  "chapter_code": "N",
+  "chapter_title": "Neurology",
+  "source_toc_inventory": "research/tn2025/toc_inventory.json",
+  "methodology_note": "Study units derived from Toronto Notes SOURCE STRUCTURE (toc_inventory.json / derived/scope_packets/N.json), cross-verified against the real chapter table of contents and raw page images (pdftoppm renders of 'Toronto Notes 2025.pdf', pdf pages 871-932) given this chapter's severe two-column TOC OCR corruption: 79 of 107 toc_inventory.json source nodes carried LOW packet-extraction confidence, and page-image review confirmed the underlying toc_inventory.json node titles/parent-child assignments are corrupted in multiple ways beyond the packet's own low-confidence flags: (1) several nodes' titles are OCR-garbled single headings (e.g. N.S01 'ACTOMYMS'=Acronyms, N.S14 'Wilson'=Wilson's Disease); (2) several nodes' own titles are correct but their T-level children actually belong to a same-page 'merged_duplicate_headings' heading rather than the node's own title (e.g. N.S17 'Vertigo' with child 'Amyotrophic Lateral Sclerosis' actually belonging to the merged 'Motor Neuron Disease' heading; N.S24 'Central Nervous System Infections' with children Terminology/Pathophysiology/Assessment/Treatment/Prevention actually belonging to the merged 'Stroke' heading); (3) two nodes concatenate text from two unrelated genuine headings into one corrupted title with no merged_duplicate_headings flag (N.S24.T06 'Aphasia Intracranial Hemorrhage' = real 'Aphasia' [Behavioural Neurology] + real 'Intracranial Hemorrhage' [Stroke]; N.S25 'Agnosia Neurocutaneous Syndromes' = real 'Agnosia' [Behavioural Neurology] + real 'Neurocutaneous Syndromes' [cross-reference-only]); (4) one node (N.S27) is titled from OCR noise entirely unrelated to its actual body content (real content = 'Landmark Neurology Trials' at N59, not the node's title-text 'Paraneoplastic Syndromes'/'Tumours of the Nervous System', which are themselves genuine headings already correctly located elsewhere, at N30, under Neuro-Oncology/N.S13). Per project instructions (canonical TOC -> raw/normalized OCR -> body-heading confirmation -> nearby pages -> UNRESOLVED when necessary), each corruption was resolved via direct page-image review of the chapter's TOC page (pdf 871) and the relevant body pages (pdf 900, 905, 907-909, 912, 921-926, 929-930) rather than model memory. No toc_inventory.json node was found to be entirely missing from the pipeline's output (unlike NP's UNCATALOGUED cases) - every real heading traces to an existing, if sometimes mistitled or misplaced, node_id, which is used directly for traceability with the correction documented in each affected study unit's structural_rationale. Five cross-reference-only entries were identified and confirmed via body-page review (Central Nervous System Infections -> Infectious Diseases ID17; Spinal Cord Syndromes -> Neurosurgery NS34; Vertigo -> Otolaryngology OT12; Neurocutaneous Syndromes -> Pediatrics P89; Tumours of the Nervous System -> Neurosurgery NS12; Paraneoplastic Syndromes -> Endocrinology E56), each represented as a thin CROSS_DISCIPLINE study unit for traceability rather than duplicating out-of-chapter content. The chapter-opening abbreviation glossary (part of N.S01, alongside genuine 'Lesion Localization' content) is excluded from study units, consistent with ID/MI/NP chapter precedent; the closing References section (N.S28) is likewise excluded as non-clinical bibliography.",
+  "total_study_units": 49,
+  "organizational_header_nodes": [
+    "N",
+    "N.S01 (Acronyms portion)",
+    "N.S28"
+  ],
+  "study_units": [
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-01",
+      "title": "Lesion Localization (CNS vs. PNS Localization Framework)",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S01"
+      ],
+      "tn_page_range": "N2",
+      "pdf_page_range": [
+        872,
+        872
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Lesion Localization"
+      ],
+      "structural_rationale": "toc_inventory node N.S01 is titled 'ACTOMYMS' (OCR-garbled 'Acronyms') but its merged_duplicate_headings field records 'Lesion Localization' as co-located content on the same page (pdf 872/N2), confirmed via raw page-image review: pdf p.872 contains both the abbreviation glossary and a substantial 'Lesion Localization' section (CNS: cortical/subcortical/brainstem/cerebellum/spinal cord vs. PNS: anterior horn cell/nerve root/plexus/peripheral nerve/NMJ/muscle localizing findings). The non-clinical acronym glossary portion is excluded from study units (consistent with ID/MI/NP chapter precedent for chapter-opening abbreviation lists); only the genuine clinical Lesion Localization content is represented here.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-02",
+      "title": "Neurological Examination (Mental Status, Cranial Nerve, Motor, Sensory, Coordination/Gait)",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S02",
+        "N.S02.T01",
+        "N.S02.T02",
+        "N.S02.T03",
+        "N.S02.T04",
+        "N.S02.T05"
+      ],
+      "tn_page_range": "N3-N5",
+      "pdf_page_range": [
+        873,
+        875
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Neurological Exam"
+      ],
+      "structural_rationale": "N.S02's five T-level children (Mental Status/Cranial Nerve/Motor/Sensory/Coordination-and-Gait Exam) are the standard components of one bedside neurological examination technique, not five distinct clinical topics; kept as a single study unit per project instruction not to fragment a unified skill into its generic subsections. Confirmed against the real chapter TOC (pdf 871/N1 page image), which lists these five items as sub-bullets of one 'Neurological Exam' heading.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-03",
+      "title": "Neuroanatomy Review",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S03"
+      ],
+      "tn_page_range": "N6-N8",
+      "pdf_page_range": [
+        876,
+        878
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Neuroanatomy Review"
+      ],
+      "structural_rationale": "Foundational anatomy/physiology background section (pdf 876-878/N6-N8), analogous to NP's SU-NP-01 renal anatomy unit: frames but is not independently tested by MCCQE.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-04",
+      "title": "Lumbar Puncture",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S04"
+      ],
+      "tn_page_range": "N9",
+      "pdf_page_range": [
+        879,
+        879
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Lumbar Puncture"
+      ],
+      "structural_rationale": "Standalone procedural-knowledge section (pdf 879/N9).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-05",
+      "title": "Approach to Weakness",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S05",
+        "N.S05.T01"
+      ],
+      "tn_page_range": "N10",
+      "pdf_page_range": [
+        880,
+        880
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Approach to Common Presentations",
+        "Weakness"
+      ],
+      "structural_rationale": "Direct 1:1 match to a named MCC presentation objective; kept distinct from Numbness and Abnormal Gait (its sibling TOC entries) because each has its own dedicated MCC objective and distinct diagnostic approach.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-06",
+      "title": "Approach to Numbness/Altered Sensation",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S05.T02"
+      ],
+      "tn_page_range": "N10",
+      "pdf_page_range": [
+        880,
+        880
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Approach to Common Presentations",
+        "Numbness/Altered Sensation"
+      ],
+      "structural_rationale": "Direct 1:1 match to a named MCC presentation objective.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-07",
+      "title": "Approach to Abnormal Gait",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S05.T03"
+      ],
+      "tn_page_range": "N10",
+      "pdf_page_range": [
+        880,
+        880
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Approach to Common Presentations",
+        "Abnormal Gait"
+      ],
+      "structural_rationale": "Direct 1:1 match to a named MCC presentation objective.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-08",
+      "title": "Cranial Nerve Deficits (CN I-XII Localizing Syndromes)",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S06",
+        "N.S06.T01",
+        "N.S06.T02",
+        "N.S06.T03",
+        "N.S06.T04",
+        "N.S06.T05",
+        "N.S06.T06",
+        "N.S06.T07",
+        "N.S06.T08",
+        "N.S06.T09",
+        "N.S06.T10",
+        "N.S06.T11",
+        "N.S06.T12"
+      ],
+      "tn_page_range": "N11-N13",
+      "pdf_page_range": [
+        881,
+        883
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Cranial Nerve Deficits"
+      ],
+      "structural_rationale": "Twelve TOC sub-entries (CN I through CN XII), one per cranial nerve; kept as a single study unit because they share one underlying competency (recognize a cranial-nerve deficit pattern and localize it) rather than twelve independently-scoped MCCQE presentations - no single nerve besides those already covered by dedicated objectives (diplopia for III/IV/VI, hearing loss for VIII) has its own MCC objective. Confirmed against real TOC (pdf 871/N1).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-09",
+      "title": "Neuro-Ophthalmology (Optic Neuropathy, Atrophy, Disc Edema, Visual Field Defects, Amaurosis Fugax, Pupil Abnormalities)",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S07",
+        "N.S07.T01",
+        "N.S07.T02",
+        "N.S07.T03",
+        "N.S07.T04",
+        "N.S07.T05",
+        "N.S07.T06"
+      ],
+      "tn_page_range": "N14-N15",
+      "pdf_page_range": [
+        884,
+        885
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Neuro-Ophthalmology"
+      ],
+      "structural_rationale": "Six TOC sub-entries kept as one unit: they are the differential-diagnosis components of a single presenting problem (acute/chronic visual disturbance) rather than independently distinct MCCQE presentations.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-10",
+      "title": "Eye Movement Disorders (Internuclear Ophthalmoplegia, Diplopia, Nystagmus)",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S08",
+        "N.S08.T01",
+        "N.S08.T02",
+        "N.S08.T03"
+      ],
+      "tn_page_range": "N16",
+      "pdf_page_range": [
+        886,
+        886
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Eye Movement Disorders"
+      ],
+      "structural_rationale": "Three TOC sub-entries kept as one unit given shared brainstem/ocular-motor localization competency.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-11",
+      "title": "Nutritional Deficiencies and Toxic Injuries (Neurologic)",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S09"
+      ],
+      "tn_page_range": "N17",
+      "pdf_page_range": [
+        887,
+        887
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Nutritional Deficiencies and Toxic Injuries"
+      ],
+      "structural_rationale": "Standalone one-page section (pdf 887/N17), no TOC sub-entries.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-12",
+      "title": "Seizure and Status Epilepticus",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S10",
+        "N.S10.T01",
+        "N.S10.T02"
+      ],
+      "tn_page_range": "N18-N20",
+      "pdf_page_range": [
+        888,
+        890
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Seizure Disorders and Epilepsy"
+      ],
+      "structural_rationale": "Two TOC sub-entries (Seizure, Status Epilepticus) kept as one unit: status epilepticus is the emergent complication/continuum of the same presentation objective, not a distinct presentation.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-13",
+      "title": "Acute Confusional State / Delirium",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S11",
+        "N.S11.T01"
+      ],
+      "tn_page_range": "N21-N28",
+      "pdf_page_range": [
+        891,
+        898
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Behavioural Neurology",
+        "Acute Confusional State/Delirium"
+      ],
+      "structural_rationale": "Direct 1:1 match to a named MCC objective; kept distinct from the neurocognitive-disorder units because delirium (acute, fluctuating, reversible) is a categorically different competency from dementia (chronic, progressive) despite TN grouping both under 'Behavioural Neurology'.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-14",
+      "title": "Mild Neurocognitive Disorder (Mild Cognitive Impairment)",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S11.T02"
+      ],
+      "tn_page_range": "N21-N28",
+      "pdf_page_range": [
+        891,
+        898
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Behavioural Neurology",
+        "Mild Neurocognitive Disorder (Mild Cognitive Impairment)"
+      ],
+      "structural_rationale": "Component of the broader neurocognitive-disorder spectrum objective 58-3, kept as its own unit since MCI (preserved function) is a clinically distinct entry point from major NCD/dementia.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-15",
+      "title": "Major Neurocognitive Disorder / Dementia (Overview, Alzheimer's, Lewy Body, Frontotemporal, and Vascular Subtypes)",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S11.T03",
+        "N.S11.T04",
+        "N.S11.T05",
+        "N.S11.T06",
+        "N.S11.T07",
+        "N.S11.T08",
+        "N.S11.T09",
+        "N.S11.T10"
+      ],
+      "tn_page_range": "N21-N28",
+      "pdf_page_range": [
+        891,
+        898
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Behavioural Neurology",
+        "Major Neurocognitive Disorder (formerly Dementia)"
+      ],
+      "structural_rationale": "toc_inventory split this content into 8 T-level nodes, but four of those splits (T04/T05, T06/T07, T08/T09) are line-wrap artifacts of a single heading each ('Major or Mild Neurocognitive Dementia due to Alzheimer's' + 'Disease'; '...with Lewy Bodies' + '(formerly Dementia with Lewy Bodies)'; '...Frontotemporal...(formerly' + 'Frontotemporal Dementia)'), confirmed against the real chapter TOC (pdf 871/N1) which lists these as single wrapped lines. Kept as one study unit (general dementia overview + the four major etiologic subtypes) because they share one MCC objective and one core testable competency (differentiate dementia subtypes by clinical features), consistent with the project instruction not to fragment content belonging to one clinical topic.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-16",
+      "title": "Creutzfeldt-Jakob Disease",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S11.T11"
+      ],
+      "tn_page_range": "N21-N28",
+      "pdf_page_range": [
+        891,
+        898
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Behavioural Neurology",
+        "Creutzfeldt-Jakob Disease"
+      ],
+      "structural_rationale": "Own TOC sub-entry; kept separate from the major-dementia unit because its rapid tempo and prion etiology make it a distinct red-flag/differential item rather than a differentiable subtype of the typical slow-progressive dementias.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-17",
+      "title": "Aphasia",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S24.T06"
+      ],
+      "tn_page_range": "N51-N54",
+      "pdf_page_range": [
+        921,
+        924
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Behavioural Neurology",
+        "Aphasia"
+      ],
+      "structural_rationale": "toc_inventory node N.S24.T06 is titled 'Aphasia Intracranial Hemorrhage', an OCR merge of two genuine but unrelated real TN headings that happen to share this corrupted node: 'Aphasia' (a real Behavioural Neurology subheading per the chapter TOC, pdf 871/N1, grouped there with Apraxia and Agnosia) and 'Intracranial Hemorrhage' (a real Stroke subheading, confirmed via body page pdf 925/N55). This study unit represents only the Aphasia portion; Intracranial Hemorrhage is represented separately under the Stroke study units using the same source node_id, each documented with this split rationale.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-18",
+      "title": "Apraxia and Agnosia",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S24.T07",
+        "N.S25"
+      ],
+      "tn_page_range": "N51-N56",
+      "pdf_page_range": [
+        921,
+        926
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Behavioural Neurology",
+        "Apraxia",
+        "Agnosia"
+      ],
+      "structural_rationale": "N.S24.T07 is titled 'Apraxia' (correct, a real Behavioural Neurology subheading per chapter TOC). N.S25 is titled 'Agnosia Neurocutaneous Syndromes', an OCR merge of the real 'Agnosia' subheading (grouped with Aphasia/Apraxia in Behavioural Neurology per the chapter TOC) with the unrelated real 'Neurocutaneous Syndromes' heading (confirmed via body page pdf 925/N55, a cross-reference-only entry represented separately). This unit represents only the Agnosia portion of N.S25, combined with N.S24.T07's Apraxia content since both are thin, closely related higher-cortical-function deficits without dedicated MCC objectives.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-19",
+      "title": "Mild Traumatic Brain Injury",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S12"
+      ],
+      "tn_page_range": "N29",
+      "pdf_page_range": [
+        899,
+        899
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Mild Traumatic Brain Injury"
+      ],
+      "structural_rationale": "Standalone section (pdf 899/N29).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-20",
+      "title": "Neuro-Oncology: Paraneoplastic Syndromes and Tumours of the Nervous System",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S13"
+      ],
+      "tn_page_range": "N30-N33",
+      "pdf_page_range": [
+        900,
+        903
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Neuro-Oncology"
+      ],
+      "structural_rationale": "toc_inventory node N.S13 (titled 'Movement Disorders') records merged_duplicate_headings=['Neuro-Oncology']; confirmed via body page (pdf 900/N30) that 'Neuro-Oncology' (Paraneoplastic Syndromes, Tumours of the Nervous System) is genuine content on the same page immediately preceding 'Movement Disorders'. Both of its subsections are cross-reference-only entries ('see Endocrinology, E56' and 'see Neurosurgery, NS12') with no independent TN content in this chapter - a cross-reference-only case per project instructions.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-21",
+      "title": "Movement Disorders: Basal Ganglia Physiology",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S13.T01"
+      ],
+      "tn_page_range": "N30-N33",
+      "pdf_page_range": [
+        900,
+        903
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Movement Disorders",
+        "Basal Ganglia"
+      ],
+      "structural_rationale": "Foundational physiology sub-heading preceding the movement-disorder disease units.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-22",
+      "title": "Signs and Symptoms of Movement Disorders",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S13.T02"
+      ],
+      "tn_page_range": "N30-N33",
+      "pdf_page_range": [
+        900,
+        903
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Movement Disorders",
+        "Signs and Symptoms of Movement Disorders"
+      ],
+      "structural_rationale": "General hyperkinetic/hypokinetic movement-disorder semiology overview preceding disease-specific units.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-23",
+      "title": "Parkinson's Disease",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S13.T03"
+      ],
+      "tn_page_range": "N30-N33",
+      "pdf_page_range": [
+        900,
+        903
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Movement Disorders",
+        "Parkinson's Disease"
+      ],
+      "structural_rationale": "Own TOC sub-entry; the prototypical hypokinetic movement disorder and the only disease explicitly named in the MCC objective's enabling text.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-24",
+      "title": "Other Parkinsonian Disorders",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S13.T04"
+      ],
+      "tn_page_range": "N30-N33",
+      "pdf_page_range": [
+        900,
+        903
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Movement Disorders",
+        "Other Parkinsonian Disorders"
+      ],
+      "structural_rationale": "Own TOC sub-entry (atypical parkinsonism: MSA, PSP, CBD, etc.).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-25",
+      "title": "Huntington's Disease",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S13.T05"
+      ],
+      "tn_page_range": "N30-N33",
+      "pdf_page_range": [
+        900,
+        903
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Movement Disorders",
+        "Huntington's Disease"
+      ],
+      "structural_rationale": "Own TOC sub-entry, the prototypical hyperkinetic (choreiform) genetic movement disorder.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-26",
+      "title": "Wilson's Disease and Dystonia",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S14",
+        "N.S14.T01"
+      ],
+      "tn_page_range": "N34",
+      "pdf_page_range": [
+        904,
+        904
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Wilson's Disease",
+        "Dystonia"
+      ],
+      "structural_rationale": "Two TOC sub-entries kept together: Dystonia is listed as Wilson's disease's own sub-heading and is also its most characteristic movement-disorder manifestation.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-27",
+      "title": "Tic Disorders and Tourette's Syndrome",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S15"
+      ],
+      "tn_page_range": "N35",
+      "pdf_page_range": [
+        905,
+        905
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Tic Disorders",
+        "Tourette's Syndrome"
+      ],
+      "structural_rationale": "toc_inventory node N.S15 (titled 'Tic Disorders') records merged_duplicate_headings=['Tourette']; confirmed via body page (pdf 905/N35) that both are genuine, substantial, adjacent headings. Kept as one study unit since Tourette's syndrome is presented as the flagship/most severe tic-disorder subtype sharing the same diagnostic framework and MCC objective, not a distinct clinical topic.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-28",
+      "title": "Cerebellar Disorders: Wernicke-Korsakoff Syndrome and Cerebellar Ataxias",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S16",
+        "N.S16.T01",
+        "N.S16.T02"
+      ],
+      "tn_page_range": "N36",
+      "pdf_page_range": [
+        906,
+        906
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Cerebellar Disorders"
+      ],
+      "structural_rationale": "Two TOC sub-entries kept as one unit given shared cerebellar/ataxia localization competency.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-29",
+      "title": "Vertigo",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S17"
+      ],
+      "tn_page_range": "N37",
+      "pdf_page_range": [
+        907,
+        907
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Vertigo"
+      ],
+      "structural_rationale": "toc_inventory node N.S17 is titled 'Vertigo' (correct) and records merged_duplicate_headings=['Motor Neuron Disease']; confirmed via body page (pdf 907/N37) that Vertigo's own content is a single cross-reference-only line ('see Otolaryngology, OT12'). The merged Motor Neuron Disease content is represented separately (see below), using this node's T01 child.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-30",
+      "title": "Motor Neuron Disease: Amyotrophic Lateral Sclerosis",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S17.T01"
+      ],
+      "tn_page_range": "N37",
+      "pdf_page_range": [
+        907,
+        907
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Motor Neuron Disease",
+        "Amyotrophic Lateral Sclerosis"
+      ],
+      "structural_rationale": "toc_inventory node N.S17.T01 is titled 'Amyotrophic Lateral Sclerosis' and is nested as a child of N.S17 ('Vertigo'), but per N.S17's merged_duplicate_headings=['Motor Neuron Disease'] and body-page confirmation (pdf 907/N37), this content actually belongs to the real 'Motor Neuron Disease' heading (with ALS as its own sub-heading), not to Vertigo, which has no sub-headings of its own.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-31",
+      "title": "Other Motor Neuron Diseases",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S18"
+      ],
+      "tn_page_range": "N38-N39",
+      "pdf_page_range": [
+        908,
+        909
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Other Motor Neuron Diseases"
+      ],
+      "structural_rationale": "toc_inventory node N.S18 title 'Other Motor NeuronDiseases' is correct (confirmed via chapter TOC, pdf 871/N1); its own content (brief, e.g. PLS/PMA/SBMA) is distinct from its merged Peripheral Neuropathies content (represented separately below via this node's T-children).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-32",
+      "title": "Peripheral Neuropathies: Classification and Guillain-Barré Syndrome",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S18.T01",
+        "N.S18.T02"
+      ],
+      "tn_page_range": "N38-N39",
+      "pdf_page_range": [
+        908,
+        909
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Peripheral Neuropathies"
+      ],
+      "structural_rationale": "toc_inventory node N.S18's T01/T02 children ('Classification', 'Guillain-Barré Syndrome') are titled correctly for content but nested under the wrong parent title in the packet; per N.S18's merged_duplicate_headings=['PeripheralNeuropathies'] this content belongs to the real 'Peripheral Neuropathies' heading, confirmed against the chapter TOC (pdf 871/N1).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-33",
+      "title": "Neuromuscular Junction Disorders: Myasthenia Gravis, Lambert-Eaton Myasthenic Syndrome, and Botulism",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S19",
+        "N.S19.T01",
+        "N.S19.T02",
+        "N.S19.T03"
+      ],
+      "tn_page_range": "N40-N41",
+      "pdf_page_range": [
+        910,
+        911
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Neuromuscular Junction Disorders"
+      ],
+      "structural_rationale": "Three TOC sub-entries kept as one unit given shared NMJ localization/fatigability competency and direct clinical comparison (pre- vs. post-synaptic, fatigability pattern) tested as a set.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-34",
+      "title": "Myopathies: Classification and Overview",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S20"
+      ],
+      "tn_page_range": "N42",
+      "pdf_page_range": [
+        912,
+        912
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Myopathies"
+      ],
+      "structural_rationale": "toc_inventory node N.S20 title 'Myopathies' is correct; records merged_duplicate_headings=['Myotonic Dystrophy Typet'] (OCR-garbled 'Type 1'), confirmed via body page (pdf 912/N42) showing the Myopathies overview table immediately followed by a distinct 'Myotonic Dystrophy Type 1' heading with its own substantial detail. Myotonic Dystrophy Type 1 is represented as its own unit below since TN gives it dedicated depth beyond the overview table.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-35",
+      "title": "Myotonic Dystrophy Type 1",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S20"
+      ],
+      "tn_page_range": "N42",
+      "pdf_page_range": [
+        912,
+        912
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Myotonic Dystrophy Type 1"
+      ],
+      "structural_rationale": "See preceding unit's structural_rationale for the merged_duplicate_headings basis of this split; this unit represents the dedicated 'Myotonic Dystrophy Type 1' heading and body content (pdf 912/N42), distinct from the general Myopathies overview table.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-36",
+      "title": "Pain Syndromes: Neuropathic Pain, Trigeminal Neuralgia, Postherpetic Neuralgia, Painful Diabetic Neuropathy, and Complex Regional Pain Syndrome",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S21",
+        "N.S21.T01",
+        "N.S21.T02",
+        "N.S21.T03",
+        "N.S21.T04",
+        "N.S21.T05"
+      ],
+      "tn_page_range": "N43-N45",
+      "pdf_page_range": [
+        913,
+        915
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Pain Syndromes"
+      ],
+      "structural_rationale": "Five TOC sub-entries kept as one unit: each is a specific etiologic example of one shared presentation/management competency (neuropathic pain).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-37",
+      "title": "Headache and Migraine",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S22",
+        "N.S22.T01"
+      ],
+      "tn_page_range": "N46-N47",
+      "pdf_page_range": [
+        916,
+        917
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Headache",
+        "Migraine"
+      ],
+      "structural_rationale": "Own TOC sub-entry (Migraine) under a direct-match parent heading.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-38",
+      "title": "Sleep Disorders (Overview, Insomnia, Sleep Apnea, Restless Legs Syndrome, Periodic Limb Movement Disorder, Narcolepsy, Parasomnias)",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S23",
+        "N.S23.T01",
+        "N.S23.T03",
+        "N.S23.T04",
+        "N.S23.T05",
+        "N.S23.T06",
+        "N.S23.T07",
+        "N.S23.T08"
+      ],
+      "tn_page_range": "N48-N50",
+      "pdf_page_range": [
+        918,
+        920
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Sleep Disorders"
+      ],
+      "structural_rationale": "Seven TOC sub-entries kept as one unit (excluding Coma, T02, which is represented as its own unit below given its outsized independent MCCQE relevance despite TN nesting it here); confirmed against chapter TOC (pdf 871/N1) that Coma genuinely appears as a Sleep Disorders sub-entry in the source.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-39",
+      "title": "Coma",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S23.T02"
+      ],
+      "tn_page_range": "N48-N50",
+      "pdf_page_range": [
+        918,
+        920
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Sleep Disorders",
+        "Coma"
+      ],
+      "structural_rationale": "toc_inventory nests this under 'Sleep Disorders' (confirmed genuine per chapter TOC, pdf 871/N1, not a corruption artifact), but Coma is split into its own study unit given its status as an independently-named MCC objective and a neurologic emergency with a distinct testable competency from the sleep-wake-cycle disorders around it.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-40",
+      "title": "Central Nervous System Infections",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S24"
+      ],
+      "tn_page_range": "N51-N54",
+      "pdf_page_range": [
+        921,
+        924
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Central Nervous System Infections"
+      ],
+      "structural_rationale": "toc_inventory node N.S24 (titled 'Central Nervous System Infections') is a cross-reference-only entry ('see Infectious Diseases, ID17'), confirmed via body page (pdf 921/N51), with zero independent content; its merged_duplicate_headings=['Spinal Cord Syndromes','Stroke'] content is represented separately below.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-41",
+      "title": "Spinal Cord Syndromes",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S24"
+      ],
+      "tn_page_range": "N51-N54",
+      "pdf_page_range": [
+        921,
+        924
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Spinal Cord Syndromes"
+      ],
+      "structural_rationale": "Per N.S24's merged_duplicate_headings, 'Spinal Cord Syndromes' is genuine content co-located on the same node; confirmed via body page (pdf 921/N51) to be a cross-reference-only entry ('see Neurosurgery, NS34') with zero independent content.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-42",
+      "title": "Stroke: Terminology, Pathophysiology, and Vascular Territory Syndromes",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S24.T01",
+        "N.S24.T02"
+      ],
+      "tn_page_range": "N51-N54",
+      "pdf_page_range": [
+        921,
+        924
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Stroke",
+        "Terminology",
+        "Pathophysiology"
+      ],
+      "structural_rationale": "toc_inventory node N.S24's T01/T02 children ('Terminology','Pathophysiology') are titled correctly for content but nested under the wrong parent ('Central Nervous System Infections'); per N.S24's merged_duplicate_headings=['Spinal Cord Syndromes','Stroke'] this content belongs to the real 'Stroke' heading, confirmed via body page (pdf 921/N51). Includes the body-confirmed 'Stroke Syndromes According to Vascular Territory' subsection on the same pages.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-43",
+      "title": "Stroke: Assessment and Treatment of Acute Ischemic Stroke",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S24.T03",
+        "N.S24.T04"
+      ],
+      "tn_page_range": "N51-N54",
+      "pdf_page_range": [
+        921,
+        924
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Stroke",
+        "Assessment of Acute Ischemic Stroke",
+        "Treatment of Acute Ischemic Stroke"
+      ],
+      "structural_rationale": "Same node/parent-correction basis as the preceding Stroke unit; T03/T04 ('Assessment...','Treatment...of Acute Ischemic Stroke') are the acute-management subheadings.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-44",
+      "title": "Stroke: Primary and Secondary Prevention",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S24.T05"
+      ],
+      "tn_page_range": "N51-N54",
+      "pdf_page_range": [
+        921,
+        924
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Stroke",
+        "Primary and Secondary Prevention of Ischemic Stroke"
+      ],
+      "structural_rationale": "Same node/parent-correction basis as the preceding Stroke units.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-45",
+      "title": "Intracranial Hemorrhage",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S24.T06"
+      ],
+      "tn_page_range": "N51-N54",
+      "pdf_page_range": [
+        921,
+        924
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Stroke",
+        "Intracranial Hemorrhage"
+      ],
+      "structural_rationale": "toc_inventory node N.S24.T06 is titled 'Aphasia Intracranial Hemorrhage', an OCR merge of two genuine but unrelated real TN headings (see the Aphasia study unit's structural_rationale for the full explanation). This unit represents only the Intracranial Hemorrhage portion (definition, etiology, investigations, and treatment), confirmed via body page (pdf 925/N55) as a substantial, independent Stroke sub-heading distinct from the ischemic-stroke content above.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-46",
+      "title": "Neurocutaneous Syndromes",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S25"
+      ],
+      "tn_page_range": "N55-N56",
+      "pdf_page_range": [
+        925,
+        926
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Neurocutaneous Syndromes"
+      ],
+      "structural_rationale": "Per N.S25's title fragment 'Neurocutaneous Syndromes' (the non-Agnosia portion; see the Apraxia and Agnosia unit for the merge explanation), confirmed via body page (pdf 925/N55) to be a cross-reference-only entry ('see Pediatrics, P89') with zero independent content.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-47",
+      "title": "Multiple Sclerosis",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S25"
+      ],
+      "tn_page_range": "N55-N56",
+      "pdf_page_range": [
+        925,
+        926
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Multiple Sclerosis"
+      ],
+      "structural_rationale": "Per N.S25's mistitled node ('Agnosia Neurocutaneous Syndromes'), this study unit represents the bulk of the node's real body content: a substantial, independent Multiple Sclerosis section (Definition, Epidemiology, clinical course patterns, diagnosis, treatment), confirmed via body page (pdf 925/N55) to begin immediately after the brief Neurocutaneous Syndromes cross-reference on the same page range and continue through pdf 926/N56.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-48",
+      "title": "Common Medications (Neurology Reference Table)",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S26"
+      ],
+      "tn_page_range": "N57-N58",
+      "pdf_page_range": [
+        927,
+        928
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Common Medications"
+      ],
+      "structural_rationale": "Reference medication-summary table (pdf 927-928/N57-58), analogous to reference/summary tables excluded or minimally weighted in prior chapters.",
+      "extraction_confidence": "MEDIUM",
+      "page_mapping_precision": "EXACT_SECTION"
+    },
+    {
+      "scope_schema_version": "1.0",
+      "study_unit_id": "SU-N-49",
+      "title": "Landmark Neurology Trials",
+      "chapter_code": "N",
+      "chapter_title": "Neurology",
+      "source_node_ids": [
+        "N.S27",
+        "N.S27.T01"
+      ],
+      "tn_page_range": "N59-N60",
+      "pdf_page_range": [
+        929,
+        930
+      ],
+      "source_hierarchy_path": [
+        "Neurology",
+        "Landmark Neurology Trials"
+      ],
+      "structural_rationale": "toc_inventory node N.S27 is titled 'Paraneoplastic Syndromes Landmark Neurology Trials' with child T01 'Tumours of the Nervous System'; both titles are OCR artifacts bearing no relation to this node's actual body content. The real chapter TOC (pdf 871/N1) confirms 'Paraneoplastic Syndromes' and 'Tumours of the Nervous System' are Neuro-Oncology sub-headings located at pdf 900/N30 (already represented under the Neuro-Oncology study unit above, N.S13), while 'Landmark Neurology Trials' is a distinct heading at N59, confirmed via body page (pdf 929/N59) to be a stroke/AFib clinical-trial evidence summary table (NASCET, NINDS tPA, WASID, SPARCL, ECASS 3, RELY, CREST, ARISTOTLE, AVERROES, ROCKET AF, SAMMPRIS, INTERACT2) with no relation to the T01 title text.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "SECTION_INHERITED"
+    }
+  ]
+}

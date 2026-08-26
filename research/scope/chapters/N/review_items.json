@@ -1,0 +1,56 @@
+{
+  "generated_at": "2026-08-26",
+  "chapter_code": "N",
+  "schema_note": "Chapter-local review-queue candidates only. This file is NOT the global research/scope/review_queue.json - it is merged into that coordinator-maintained file after this chapter passes validation.",
+  "items": [
+    {
+      "issue_type": "severe_two_column_toc_corruption_resolved_via_body_evidence",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-N-01, SU-N-08, SU-N-17, SU-N-18, SU-N-20, SU-N-27, SU-N-29, SU-N-30, SU-N-31, SU-N-32, SU-N-34, SU-N-35, SU-N-39, SU-N-40, SU-N-41, SU-N-42, SU-N-43, SU-N-44, SU-N-45, SU-N-46, SU-N-47, SU-N-49",
+      "title": "Chapter N's toc_inventory.json structure is substantially more corrupted than prior chapters (79/107 nodes LOW packet-confidence vs. NP's 5 unresolved headings); resolved via direct page-image review rather than OCR text re-parsing",
+      "summary": "Unlike NP (which had cleanly-anchored nodes but 5 entirely-missing headings), chapter N's toc_inventory.json nodes mostly exist but are frequently mistitled, have children attributed to the wrong parent heading, or concatenate two unrelated genuine headings into one corrupted title - a two-column-TOC-OCR failure mode. This was resolved by rendering the chapter's real TOC page (pdf 871) and 11 body pages to PNG via pdftoppm and visually reading them (the embedded PDF text layer itself preserves this same corruption under pdftotext -layout, confirming the defect originates in the source OCR/text-extraction, not just the chapter's TOC-parsing pipeline). See study_units.json's methodology_note for the full list of corruption patterns found and how each was resolved. No new content was invented; every real heading traces to an existing toc_inventory.json node_id, reused directly (not as a synthetic UNCATALOGUED: id) since the underlying node objects do genuinely exist, just mistitled or misparented.",
+      "recommended_action": "Coordinator should consider a TOC-extraction pipeline improvement for two-column pages (layout-aware column detection before line-linearization) given this chapter's severity, and should flag other not-yet-processed chapters for the same class of defect before their prepare-scope-chapter runs are trusted at face value.",
+      "affects_global_toc": true
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-N-08",
+      "title": "Cranial Nerve Deficits (CN I-XII Localizing Syndromes)",
+      "summary": "Nerve injury (109-11): Isolated cranial mononeuropathies are a component of objective 109-11 (Nerve injury)'s broader peripheral/cranial nerve injury scope, though 109-11 is framed around traumatic nerve injury rather than the medical causes emphasized here.",
+      "recommended_action": "Coordinator/reviewer to confirm whether this WEAK secondary citation adds value or should be dropped."
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-N-11",
+      "title": "Nutritional Deficiencies and Toxic Injuries (Neurologic)",
+      "summary": "Substance use or addictive disorders (103): Alcohol/toxin-related neurologic injury overlaps with objective 103's (substance use disorders) scope, though 103 is framed around the addiction/substance-use encounter rather than the resulting neurologic deficit itself.",
+      "recommended_action": "Coordinator/reviewer to confirm whether this WEAK secondary citation adds value or should be dropped."
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-N-16",
+      "title": "Creutzfeldt-Jakob Disease",
+      "summary": "Major or mild neurocognitive disorders (dementia) (58-3): CJD is a rare, rapidly progressive cause within objective 58-3's broad dementia differential; the objective's key/enabling text does not name CJD specifically.",
+      "recommended_action": "Coordinator/reviewer to confirm whether this WEAK secondary citation adds value or should be dropped."
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-N-18",
+      "title": "Apraxia and Agnosia",
+      "summary": "Cerebrovascular accident and transient ischemic attack (stroke) (41): Apraxia/agnosia can occur as non-dominant/dominant hemisphere cortical stroke findings within objective 41's broader neurologic-deficit scope, but neither is independently named in objective 41's key/enabling text.",
+      "recommended_action": "Coordinator/reviewer to confirm whether this WEAK secondary citation adds value or should be dropped."
+    },
+    {
+      "issue_type": "weak_mapping_scope_review",
+      "severity": "review-recommended",
+      "study_unit_id": "SU-N-41",
+      "title": "Spinal Cord Syndromes",
+      "summary": "Spinal trauma (109-13): Traumatic spinal cord injury overlaps objective 109-13's (spinal trauma) scope, but this heading's own content is a pure cross-reference with no independent detail on non-traumatic spinal cord syndromes (which have no dedicated MCC objective).",
+      "recommended_action": "Coordinator/reviewer to confirm whether this WEAK secondary citation adds value or should be dropped."
+    }
+  ]
+}
