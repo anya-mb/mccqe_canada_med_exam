@@ -14,13 +14,14 @@
     "GM",
     "GY",
     "H",
-    "ID"
+    "ID",
+    "MG"
   ],
   "chapters_without_review_items_file": [
     "C",
     "ELOM"
   ],
-  "total_items": 56,
+  "total_items": 61,
   "items": [
     {
       "issue_type": "structural_ambiguity",
@@ -616,6 +617,61 @@
       "recommended_action": "No action required; standard practice per chapter workflow instructions.",
       "affects_global_toc": false,
       "chapter_code": "ID"
+    },
+    {
+      "issue_type": "structural_severe_missing_t_children",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-MG-07, SU-MG-08, SU-MG-09, SU-MG-10",
+      "title": "MG.S03 ('GeneticConditions') contains four substantial real subsections (Chromosomal Aneuploidy, Sex Chromosome Disorders, Other Genetic Syndromes, Familial Cancer Syndromes) with no corresponding toc_inventory.json T-child",
+      "summary": "Raw-OCR verification (derived/toronto-notes-2025/clean-ocr/, pdf pages 779-790) found that MG.S03 is recorded with only two T-children ('Other Single Gene Disorders', 'Metabolic Diseases'), both LOW-confidence TOC_OCR_UNANCHORED. Body confirmation shows four additional, substantial table-based subsections (Table 2 Chromosomal Aneuploidy Syndromes, Table 3 Sex Chromosome Disorders, Table 4 Other Genetic Syndromes, Table 5 Familial Cancer Syndromes) at pdf 784-785/MG6-7, preceding the genuine 'Other Single Gene Disorders' heading (itself body-confirmed one page later than the parent node's own start_pdf_page would suggest). This is the same class of defect already documented in chapters GY, H, and ID (real content merged ahead of or dropped from a recorded T-child), here affecting four distinct high-yield topic clusters within a single node rather than one.",
+      "resolution_status": "INDEPENDENTLY RESOLVED - each real topic is represented as its own study unit citing the parent node MG.S03 (SU-MG-07 through SU-MG-10), per the GY-Fibroids/H-Sickle-Cell/ID-Endemic-Mycoses dual/multi-unit precedent for real content sharing one node id.",
+      "recommended_action": "Coordinator should consider adding four T-children to MG.S03 in toc_inventory.json ('Chromosomal Aneuploidy Syndromes', 'Sex Chromosome Disorders', 'Other Genetic Syndromes', 'Familial Cancer Syndromes', at pdf 784-785) in a future TOC-extraction pass; also correct 'Other Single Gene Disorders' start_pdf_page from 784 to 785 and 'Metabolic Diseases' start_pdf_page from 784 to 787.",
+      "affects_global_toc": true,
+      "chapter_code": "MG"
+    },
+    {
+      "issue_type": "cross_reference_only_entries",
+      "severity": "informational",
+      "study_unit_id": "SU-MG-11",
+      "title": "Two entries within 'Other Single Gene Disorders' (Sickle Cell Disease, Cystic Fibrosis) carry no independent MG-chapter content - pure cross-references to other chapters",
+      "summary": "Body confirmation at pdf 785/MG7 shows Sickle Cell Disease is a single-line cross-reference ('see Hematology, H21') and Cystic Fibrosis is explicitly marked 'More information found in other chapters', each followed immediately by unrelated, genuine single-gene-disorder content (Wilson Disease, Duchenne Muscular Dystrophy) that TOC extraction would otherwise merge into one T-child.",
+      "resolution_status": "RESOLVED - represented as its own REFERENCE_ONLY study unit (SU-MG-11) with zero planned question coverage; the genuine adjacent content is represented separately (SU-MG-12 Wilson Disease, SU-MG-13 Duchenne Muscular Dystrophy).",
+      "recommended_action": "No action required for this chapter; consistent with the same pattern already seen in chapters G, GS, GY, ID.",
+      "affects_global_toc": false,
+      "chapter_code": "MG"
+    },
+    {
+      "issue_type": "mcc_registry_coverage_gap",
+      "severity": "informational",
+      "study_unit_id": "SU-MG-09, SU-MG-10, SU-MG-12, SU-MG-13",
+      "title": "MCC objectives registry has no dedicated objective for most individually named genetic syndromes and single-gene disorders",
+      "summary": "MCC's Medical Expert objectives (198 total) name only one genetics-specific presentation ('Genetic concerns', objective 36) plus one congenital-anomaly presentation (36-2); neither is titled for '22q11.2 deletion syndrome', 'Prader-Willi syndrome', 'hereditary cancer syndromes', 'Wilson disease', or 'Duchenne muscular dystrophy'. This is the same registry-coverage-gap pattern already flagged in chapters E, G, GS, GM, GY, H, ID. Every affected topic was still mapped to the closest available objective (36 or 36-2) whose causal_conditions/enabling_objectives text names the general category (chromosomal, monogenic, imprinting) or, where no text match exists at all (Wilson disease, DMD), mapped at WEAK strength with requires_scope_review: true rather than left unmapped or fabricated.",
+      "resolution_status": "RESOLVED FOR THIS CHAPTER - no evidence fabricated; see crosswalk.json's per-unit mapping_rationale.",
+      "recommended_action": "Coordinator may want to continue folding this into the broader MCC-objectives-registry-gap note (now confirmed in eight chapters: E, G, GS, GM, GY, H, ID, MG).",
+      "affects_global_toc": false,
+      "chapter_code": "MG"
+    },
+    {
+      "issue_type": "cross_discipline_overlap_candidate",
+      "severity": "review_recommended",
+      "study_unit_id": "SU-MG-10, SU-MG-11",
+      "title": "Candidate cross-discipline overlaps requiring later global resolution",
+      "summary": "SU-MG-10 (Familial Cancer Syndromes) overlaps Gynecology (BRCA/hereditary breast-ovarian cancer, GY already completed) and General/Thoracic Surgery and Gastroenterology (colorectal-cancer syndromes, both already completed) - none of those chapters' crosswalks were re-opened to check for an existing overlapping unit as part of this chapter's mapping. SU-MG-11 (Sickle Cell Disease cross-reference) overlaps chapter H (Hematology, already completed, owns the substantive content); Cystic Fibrosis ownership is not yet resolved since its owning chapter (likely Respirology or Pediatrics) is not yet mapped.",
+      "resolution_status": "NOT RESOLVED BY DESIGN - deferred per task instructions until all relevant chapters are mapped.",
+      "recommended_action": "Coordinator should review during the global cross-chapter overlap audit once Respirology/Pediatrics are mapped, and cross-check GY/GS/G's existing cancer-syndrome units against SU-MG-10.",
+      "affects_global_toc": false,
+      "chapter_code": "MG"
+    },
+    {
+      "issue_type": "current_guidance_sensitive_content",
+      "severity": "informational",
+      "study_unit_id": "SU-MG-04, SU-MG-15",
+      "title": "Newborn/prenatal genetic screening panel content and testing-technology recommendations are current-guidance-sensitive",
+      "summary": "Per project instructions, exact newborn-screening panel contents, specific genetic-test technology recommendations, and jurisdiction-specific screening program details are not encoded into the scope layer even where Toronto Notes provides Ontario-specific examples. freshness.verification_required is set to true (verification_types: [SCREENING]) on SU-MG-04 and SU-MG-15 accordingly.",
+      "resolution_status": "RESOLVED - competencies are mapped at the recognition/referral level only; current Canadian screening-program specifics will be researched during question generation.",
+      "recommended_action": "No action required; standard practice per chapter workflow instructions.",
+      "affects_global_toc": false,
+      "chapter_code": "MG"
     }
   ]
 }
