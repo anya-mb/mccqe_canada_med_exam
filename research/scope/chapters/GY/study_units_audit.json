@@ -6,7 +6,7 @@
     "total_source_nodes_in_packet": 55,
     "chapter_root": 1,
     "organizational_sections_no_direct_unit": 3,
-    "total_study_units": 39,
+    "total_study_units": 40,
     "coverage_check": "PASS - every canonical source node in derived/scope_packets/GY.json (55 nodes) is represented in at least one study unit's source_node_ids or organizational_header_nodes; verified by scripts.qbank validate-scope-chapter GY (source_accounting: PASS)."
   },
   "confidence_counts": {
@@ -15,6 +15,7 @@
     "LOW": 24
   },
   "page_precision_counts": {
+    "EXACT_TOPIC": 1,
     "EXACT_SECTION": 9,
     "SECTION_INHERITED": 30
   },
@@ -60,8 +61,8 @@
       "note": "GY.S04 ('Disorders of Menstruation') carries merged_duplicate_headings 'Endometriosis' and 'Adenomyosis' alongside its three T-children (Amenorrhea, Abnormal Uterine Bleeding, Dysmenorrhea). Unlike the GM.S05/GM.S01-style merges (alternate labels for the SAME content), these are clinically distinct diagnoses with no dedicated child node; each is broken out into its own study unit cited against the parent section node rather than silently dropped or folded into an existing T-child."
     },
     {
-      "study_unit_ids": ["SU-GY-10"],
-      "note": "GY.S05's printed title 'Fibroids' (BODY_HEADING_CONFIRMATION) conflicts with all three of its own T-children (Hormonal Methods, IUD, Emergency Postcoital Contraception), which unambiguously match its merged_duplicate_headings entry 'Contraception'. The section is represented as Contraception; Fibroids/uterine leiomyoma is NOT fabricated as a separate study unit since no source node in this inventory carries fibroid content - see unrecoverable_coverage_gaps below."
+      "study_unit_ids": ["SU-GY-10", "SU-GY-40"],
+      "note": "GY.S05's printed title 'Fibroids' (BODY_HEADING_CONFIRMATION) conflicts with all three of its own T-children (Hormonal Methods, IUD, Emergency Postcoital Contraception), which unambiguously match its merged_duplicate_headings entry 'Contraception'. RESOLVED (targeted raw-OCR follow-up, 2026-08-25): pdf pages 608-612 confirmed GY.S05's node merges two genuine adjacent body sections - fibroid-specific content (pdf 608-609, TN GY14-GY15) followed by a body-confirmed 'Contraception' heading mid-page-609. Represented as two study units against the shared source node: SU-GY-10 (Contraception, pdf 609-612, unchanged) and SU-GY-40 (Fibroids/uterine leiomyoma, pdf 608-609, page range corrected against raw OCR). See resolved_coverage_gaps below (formerly unrecoverable_coverage_gaps)."
     },
     {
       "study_unit_ids": ["SU-GY-22", "SU-GY-23"],
@@ -72,11 +73,12 @@
       "note": "GY.S18's printed title 'References' is a structural mislabel: unlike the genuine terminal bibliography sections in every other completed chapter, its four T-children (Menstrual Cycle, Stages of Puberty, Premenstrual Syndrome, Premenstrual Dysphoric Disorder) are real appendix-style clinical content. Each is represented under its own real topic rather than dismissed as bibliographic reference material."
     }
   ],
-  "unrecoverable_coverage_gaps": [
+  "unrecoverable_coverage_gaps": [],
+  "resolved_coverage_gaps": [
     {
       "heading_candidate": "Fibroids (uterine leiomyoma)",
-      "source": "derived/scope_packets/GY.json source_nodes[GY.S05].merged_duplicate_headings vs. printed title, plus source_quality.unresolved_headings (0)",
-      "status": "GY.S05's printed title is 'Fibroids' (body-heading-confirmed), but every one of its T-children is unambiguously Contraception content and the section's merged_duplicate_headings entry is 'Contraception'. No source node in this inventory's 55 nodes carries dedicated fibroid content, so Fibroids has no independent study unit here - not treated as unresolved_headings by the deterministic tool (which reports 0), but flagged here for global/raw-source review before question generation, per the instruction to use explicit unresolved status rather than invent a heading. Fibroid-adjacent testable content (AUB, pelvic mass) is already captured under SU-GY-06 and SU-GY-28."
+      "source": "derived/scope_packets/GY.json source_nodes[GY.S05].merged_duplicate_headings vs. printed title, plus targeted raw-OCR verification of derived/toronto-notes-2025/ocr/pages/0608.json-0609.json (TN GY14-GY15) performed 2026-08-25",
+      "resolution": "CONFIRMED_REAL_HEADING_AND_CONTENT. Raw OCR of pdf page 608 (TN 'GY14') shows a standalone Definition/Epidemiology/Pathogenesis section for uterine fibroids beginning immediately after the Adenomyosis treatment content ends, continuing with fibroid-specific management (GnRH agonists/antagonists, UAE, myomectomy, hysterectomy) through pdf page 609 (TN 'GY15') until a body-confirmed 'Contraception' heading appears mid-page. GY.S05's node correctly body-confirms the printed title 'Fibroids' but its inherited page range (609-612) and T-children were carried over from the adjacent Contraception section during TOC extraction, omitting pdf page 608 where Fibroids content actually begins. Added SU-GY-40 (Fibroids/uterine leiomyoma) against source node GY.S05 with page range corrected to pdf 608-609 based on direct raw-OCR verification. No Toronto Notes heading was invented - the heading and its content were independently confirmed in the source body text before this unit was added, per the accuracy rule requiring actual source evidence."
     }
   ]
 }

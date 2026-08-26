@@ -38,7 +38,7 @@ Chapter GY is a large, structurally noisy chapter: 0 `unresolved_headings` per t
 
 - **SU-GY-08 / SU-GY-09**: GY.S04 ('Disorders of Menstruation') carries `merged_duplicate_headings` 'Endometriosis' and 'Adenomyosis' in addition to its three T-children. Unlike a same-content alternate label, these are clinically distinct diagnoses with no dedicated child node, so each was broken out as its own study unit cited against the parent section node.
 
-- **SU-GY-10**: GY.S05's printed title 'Fibroids' (BODY_HEADING_CONFIRMATION) conflicts with all three of its own T-children (Hormonal Methods, IUD, Emergency Postcoital Contraception), which match its `merged_duplicate_headings` entry 'Contraception'. Represented as Contraception; see the coverage-gap note below regarding Fibroids.
+- **SU-GY-10 / SU-GY-40**: GY.S05's printed title 'Fibroids' (BODY_HEADING_CONFIRMATION) conflicts with all three of its own T-children (Hormonal Methods, IUD, Emergency Postcoital Contraception), which match its `merged_duplicate_headings` entry 'Contraception'. RESOLVED (raw-OCR follow-up, 2026-08-25): pdf pages 608-612 confirm GY.S05 merges two genuine adjacent sections - Fibroids content (pdf 608-609, TN GY14-GY15) followed by a body-confirmed 'Contraception' heading mid-page-609. Represented as SU-GY-10 (Contraception, pdf 609-612) and SU-GY-40 (Fibroids, pdf 608-609); see the resolved coverage-gap note below.
 
 - **SU-GY-22 / SU-GY-23**: GY.S12's printed title 'SexualAbuse' with merged heading 'Sexuality and Sexual Dysfunction' names two clinically distinct topics rather than one topic under two labels; split into two units against the shared parent node.
 
@@ -52,6 +52,6 @@ Chapter GY is a large, structurally noisy chapter: 0 `unresolved_headings` per t
 
 - SU-GY-11 (Termination of Pregnancy), SU-GY-12 (Early Pregnancy Loss/First-Trimester Bleeding), and SU-GY-13 (Ectopic Pregnancy) all genuinely appear as GY-chapter source nodes (GY.S06-GY.S08) and are mapped here rather than deferred to Obstetrics, per the instruction against moving genuine GY content out simply because it is pregnancy-related. Final PRIMARY_OWNER/CROSS_LINK/DISTINCT_CONTEXT decisions against OB are deferred to the global boundary audit once OB is mapped.
 
-## Unrecoverable coverage gaps
+## Resolved coverage gaps
 
-- **Fibroids (uterine leiomyoma)**: No source node in this 55-node inventory carries dedicated fibroid content - GY.S05's body-confirmed printed title names it, but its own T-children and merged heading are unambiguously Contraception. Not fabricated as a separate unit; flagged for raw-source/global review. Fibroid-adjacent testable content (heavy bleeding, pelvic mass) is already captured under SU-GY-06 and SU-GY-28.
+- **Fibroids (uterine leiomyoma)** - RESOLVED 2026-08-25 as CONFIRMED_REAL_HEADING_AND_CONTENT: GY.S05's body-confirmed printed title 'Fibroids' names a genuine section, but its inherited page range and T-children were carried over from an adjacent 'Contraception' section during TOC extraction. Targeted raw-OCR verification of pdf pages 608-609 (TN GY14-GY15) confirmed standalone Fibroids Definition/Epidemiology/Pathogenesis/Management content ending where a body-confirmed 'Contraception' heading begins mid-page-609. Added as SU-GY-40 against source node GY.S05, page range corrected to pdf 608-609.
