@@ -33,6 +33,7 @@ from .scope_packet import (
     search_objectives,
 )
 from .scope_validate import report_output_path, validate_scope_chapter
+from .master_scope import build_master_scope, validate_master_scope
 from .source import scan_deploy_leaks, validate_source
 
 
@@ -406,6 +407,24 @@ def _command_search_mcc_objectives(args: argparse.Namespace) -> None:
         print(f"  {match['mcc_id']}\t{match['role']}\t{match['title']}")
 
 
+def _command_build_master_scope(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    try:
+        report = build_master_scope(root)
+    except QbankError as exc:
+        raise CommandError("MASTER_SCOPE_BUILD_FAILURE", str(exc)) from exc
+    print(f"MASTER_SCOPE_BUILT: chapters={report['total_chapters']} study_units={report['total_study_units']}")
+
+
+def _command_validate_master_scope(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    result = validate_master_scope(root)
+    print(f"MASTER_SCOPE_VALIDATION: {result.status}")
+    for name, status in result.checks.items(): print(f"  {name}: {status}")
+    for error in result.errors: print(f"ERROR: {error}")
+    if result.status != "PASS": raise CommandError("MASTER_SCOPE_VALIDATION_FAILED", f"{len(result.errors)} error(s)")
+
+
 def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--root",
@@ -466,6 +485,8 @@ def _parser() -> argparse.ArgumentParser:
             "on-demand deterministic full-registry MCC objective search",
             _command_search_mcc_objectives,
         ),
+        ("build-master-scope", "build deterministic master scope outputs", _command_build_master_scope),
+        ("validate-master-scope", "validate deterministic master scope outputs", _command_validate_master_scope),
     )
     parsers = {}
     for name, help_text, handler in commands:
