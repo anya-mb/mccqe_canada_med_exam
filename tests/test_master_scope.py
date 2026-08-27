@@ -112,18 +112,18 @@ def test_tier1_decomposition_partitions_tier1_and_keeps_packets_compact(tmp_path
         for entry in packet["entries"]
     ]
     tier1_ids = {entry["study_unit_id"] for entry in tier1["entries"]}
-    assert result["total_study_units"] == 15
+    assert result["total_study_units"] == 10
     assert set(packet_ids) == tier1_ids
-    assert len(packet_ids) == len(set(packet_ids)) == 15
+    assert len(packet_ids) == len(set(packet_ids)) == 10
     assert result["work_type_counts"] == {
         "SOURCE_REVIEW": 0,
-        "MAPPING_REVIEW": 15,
+        "MAPPING_REVIEW": 10,
         "JURISDICTION_REVIEW": 0,
         "STATUS_ADJUDICATION": 0,
         "OTHER": 0,
     }
     assert mapping["mapping_review_counts"] == {
-        "UNCERTAIN_PRIMARY": 15,
+        "UNCERTAIN_PRIMARY": 10,
         "ONLY_WEAK": 0,
         "OTHER_MAPPING_ISSUE": 0,
     }

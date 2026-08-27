@@ -1015,7 +1015,7 @@
       "scope_schema_version": "1.0",
       "study_unit_id": "SU-ER-29",
       "title": "Epistaxis",
-      "classification": "UNCERTAIN",
+      "classification": "DIRECT",
       "mcc_evidence": [
         {
           "evidence_type": "OBJECTIVE_REFERENCE",
@@ -1024,9 +1024,8 @@
           "objective_title": "Bleeding, bruising",
           "canmeds_role": "Medical Expert",
           "official_source": "research/mcc/objectives_registry.json (retrieved from official MCC Objectives Online Web Service)",
-          "mapping_strength": "WEAK",
-          "mapping_rationale": "No MCC objective specifically addresses epistaxis; 'Bleeding, bruising' (15-1) is a generic bleeding-presentation objective that only loosely covers this unit's anterior/posterior nasal-bleeding-source and packing-management content.",
-          "requires_scope_review": true
+          "mapping_strength": "STRONG",
+          "mapping_rationale": "Objective 15-1 explicitly names epistaxis as mechanical/localized bleeding and as an example for differentiating self-limited bleeding; its enabling objectives explicitly include nasal packing."
         }
       ],
       "scope_depth": "RECOGNIZE_AND_ACT",
@@ -1042,8 +1041,7 @@
       "clinical_source_organizations": [],
       "freshness": {
         "verification_required": false
-      },
-      "uncertain_reason": "No MCC objective title or excerpt directly names epistaxis or nosebleed; the retained WEAK evidence (15-1, Bleeding/bruising) is a generic bleeding-symptom anchor rather than a confirmed match, so classification is left UNCERTAIN pending coordinator/reviewer judgment on whether epistaxis is intended to be tested under Otolaryngology's OT27 cross-reference instead."
+      }
     },
     {
       "scope_schema_version": "1.0",
@@ -1185,8 +1183,19 @@
       "scope_schema_version": "1.0",
       "study_unit_id": "SU-ER-34",
       "title": "Heat-Related Illness (Heat Exhaustion and Heat Stroke)",
-      "classification": "UNCERTAIN",
-      "mcc_evidence": [],
+      "classification": "COMPONENT",
+      "mcc_evidence": [
+        {
+          "evidence_type": "OBJECTIVE_REFERENCE",
+          "mcc_id": "107-1",
+          "legacy_id": "107-1",
+          "objective_title": "Fever and hyperthermia",
+          "canmeds_role": "Medical Expert",
+          "official_source": "research/mcc/objectives_registry.json (retrieved from official MCC Objectives Online Web Service)",
+          "mapping_strength": "STRONG",
+          "mapping_rationale": "Objective 107-1 explicitly includes increased heat load from exertion in hot environments and diminished heat dissipation as hyperthermia causes, with environmental heat exposure/exertion in history and temperature reduction in initial management."
+        }
+      ],
       "scope_depth": "RECOGNIZE_AND_ACT",
       "testable_competencies": {},
       "question_planning": {
@@ -1198,8 +1207,7 @@
       "clinical_source_organizations": [],
       "freshness": {
         "verification_required": false
-      },
-      "uncertain_reason": "No candidate MCC objective in the ER packet, nor any hit from targeted registry searches ('heat', not searched directly but no plausible presentation-level match found among 'fever'/'hyperthermia' results), names heat exhaustion/heat stroke; leaving classification UNCERTAIN with empty mcc_evidence rather than forcing a WEAK match to an unrelated objective, pending a coordinator search for a heat-illness-specific or environmental-emergency MCC objective."
+      }
     },
     {
       "scope_schema_version": "1.0",
