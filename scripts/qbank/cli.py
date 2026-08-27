@@ -36,6 +36,10 @@ from .scope_validate import report_output_path, validate_scope_chapter
 from .master_scope import build_master_scope, validate_master_scope
 from .global_review_triage import build_global_review_triage, validate_global_review_triage
 from .global_ownership_triage import build_global_ownership_triage, validate_global_ownership_triage
+from .global_ownership_decisions import (
+    build_global_ownership_batch_audit,
+    validate_global_ownership_decisions,
+)
 from .source import scan_deploy_leaks, validate_source
 
 
@@ -463,6 +467,33 @@ def _command_validate_global_ownership_triage(args: argparse.Namespace) -> None:
     if result.status != "PASS": raise CommandError("GLOBAL_OWNERSHIP_TRIAGE_VALIDATION_FAILED", f"{len(result.errors)} error(s)")
 
 
+def _command_build_global_ownership_audit(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    try:
+        result = build_global_ownership_batch_audit(root, args.batch_id)
+    except QbankError as exc:
+        raise CommandError("GLOBAL_OWNERSHIP_AUDIT_BUILD_FAILURE", str(exc)) from exc
+    print(
+        "GLOBAL_OWNERSHIP_AUDIT_BUILT: "
+        f"batch={result['batch_id']} groups={result['groups_reviewed']}"
+    )
+
+
+def _command_validate_global_ownership_decisions(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    result = validate_global_ownership_decisions(root)
+    print(f"GLOBAL_OWNERSHIP_DECISION_VALIDATION: {result.status}")
+    for name, status in result.checks.items():
+        print(f"  {name}: {status}")
+    for error in result.errors:
+        print(f"ERROR: {error}")
+    if result.status != "PASS":
+        raise CommandError(
+            "GLOBAL_OWNERSHIP_DECISION_VALIDATION_FAILED",
+            f"{len(result.errors)} error(s)",
+        )
+
+
 def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--root",
@@ -529,6 +560,8 @@ def _parser() -> argparse.ArgumentParser:
         ("validate-global-review-triage", "validate deterministic global scope-review triage", _command_validate_global_review_triage),
         ("build-global-ownership-triage", "build deterministic global ownership triage", _command_build_global_ownership_triage),
         ("validate-global-ownership-triage", "validate deterministic global ownership triage", _command_validate_global_ownership_triage),
+        ("build-global-ownership-audit", "build one deterministic global ownership batch audit", _command_build_global_ownership_audit),
+        ("validate-global-ownership-decisions", "validate incremental global ownership decisions", _command_validate_global_ownership_decisions),
     )
     parsers = {}
     for name, help_text, handler in commands:
@@ -549,6 +582,7 @@ def _parser() -> argparse.ArgumentParser:
     parsers["validate-scope-chapter"].add_argument("chapter_code")
     parsers["search-mcc-objectives"].add_argument("query")
     parsers["search-mcc-objectives"].add_argument("--limit", type=int, default=20)
+    parsers["build-global-ownership-audit"].add_argument("batch_id")
     return parser
 
 
