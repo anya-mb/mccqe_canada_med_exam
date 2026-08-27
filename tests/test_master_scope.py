@@ -316,6 +316,27 @@ def test_accounting_weak_metrics_candidates_and_coverage_reconcile(tmp_path):
     assert {item["objective_id"] for item in coverage["objectives"] if item["mapped_study_unit_count"]} == mapped_ids
 
 
+def test_final_adjudication_packet_reconciles_coverage_and_persistent_uncertainties(tmp_path):
+    """The final packet contains only deterministic coverage-risk records and links."""
+    root = _project_copy(tmp_path)
+    _build(root)
+    coverage = _load(root, "mcc_objective_coverage.json")
+    packet = _load(root, "final_scope_adjudication_candidates.json")
+
+    states = [item["coverage_state"] for item in coverage["objectives"]]
+    assert len(states) == 198
+    assert states.count("UNMAPPED_OBJECTIVE_CANDIDATE") == 9
+    assert sum(states.count(state) for state in (
+        "STRONG_OR_MODERATE_COVERAGE",
+        "WEAK_ONLY_COVERAGE",
+        "UNMAPPED_OBJECTIVE_CANDIDATE",
+    )) == 198
+    assert len(packet["unmapped_objective_candidates"]) == 9
+    assert len(packet["persistent_uncertain_study_units"]) == 10
+    assert packet["validation"]["status"] == "PASS"
+    assert _validate(root).status == "PASS"
+
+
 def test_build_output_is_deterministic(tmp_path):
     root = _project_copy(tmp_path)
     _build(root)
@@ -327,6 +348,7 @@ def test_build_output_is_deterministic(tmp_path):
             "global_review_candidates.json",
             "global_ownership_candidates.json",
             "mcc_objective_coverage.json",
+            "final_scope_adjudication_candidates.json",
         )
     }
     _build(root)

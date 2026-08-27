@@ -36,8 +36,10 @@ _OUTPUT_NAMES = (
     "master_scope_crosswalk.json", "master_scope_report.json",
     "global_review_candidates.json", "global_ownership_candidates.json",
     "mcc_objective_coverage.json",
+    "final_scope_adjudication_candidates.json",
 )
 _UNIT_ID_PATTERN = re.compile(r"\bSU-[A-Z]+-\d{2,3}\b")
+_OBJECTIVE_ID_PATTERN = re.compile(r"(?<![A-Za-z-])\b\d{1,3}(?:-\d)?\b")
 
 
 class MasterScopeError(QbankError):
@@ -222,6 +224,11 @@ def _ownership_candidates(entries: list[dict[str, Any]]) -> dict[str, Any]:
     return {"schema_version": "1.0", "assignment_status": "CANDIDATE_GROUPING_ONLY", "total_candidate_groups": len(groups), "groups": groups}
 
 
+def _objective_record_key(objective: dict[str, Any]) -> str:
+    objective_id = objective["mcc_id"]
+    return f"OBJECTIVE:{objective_id}" if objective_id is not None else f"ROLE:{objective['role_code']}"
+
+
 def _objective_coverage(root: Path, entries: list[dict[str, Any]]) -> dict[str, Any]:
     registry = _read_object(root, Path("research/mcc/objectives_registry.json"), "objectives registry")
     objectives = registry.get("objectives")
@@ -236,9 +243,159 @@ def _objective_coverage(root: Path, entries: list[dict[str, Any]]) -> dict[str, 
         if not isinstance(objective, dict) or not (isinstance(objective.get("mcc_id"), str) or objective.get("mcc_id") is None): raise MasterScopeError("objectives registry contains invalid objective record")
         objective_id = objective["mcc_id"]
         refs = mapped.get(objective_id, []) if objective_id is not None else []
-        types = sorted({evidence["evidence_type"] for _, evidence in refs})
-        output.append({"objective_id": objective_id, "mapped_study_unit_count": len({entry["study_unit_id"] for entry, _ in refs}), "chapters_represented": sorted({entry["chapter_code"] for entry, _ in refs}), "strongest_evidence_strength": max((evidence["mapping_strength"] for _, evidence in refs), key=lambda value: rank[value], default=None), "evidence_types": types, "status": "MAPPED" if refs else "UNMAPPED_OBJECTIVE_CANDIDATE"})
-    return {"schema_version": "1.0", "total_objectives": len(output), "mapped_objectives": sum(item["status"] == "MAPPED" for item in output), "unmapped_objective_candidates": sum(item["status"] == "UNMAPPED_OBJECTIVE_CANDIDATE" for item in output), "objectives": output}
+        strengths = Counter(evidence["mapping_strength"] for _, evidence in refs)
+        strongest = max((evidence["mapping_strength"] for _, evidence in refs), key=lambda value: rank[value], default=None)
+        state = (
+            "STRONG_OR_MODERATE_COVERAGE" if strongest in {"STRONG", "MODERATE"}
+            else "WEAK_ONLY_COVERAGE" if strongest == "WEAK"
+            else "UNMAPPED_OBJECTIVE_CANDIDATE"
+        )
+        output.append({
+            "record_key": _objective_record_key(objective),
+            "objective_id": objective_id,
+            "title": objective["title"],
+            "objective_type": "ROLE_LEVEL_RECORD" if objective_id is None else "PRESENTATION_LEVEL_OBJECTIVE",
+            "role": objective["role"],
+            "role_code": objective["role_code"],
+            "parent_context": objective.get("group"),
+            "mapped_study_unit_count": len({entry["study_unit_id"] for entry, _ in refs}),
+            "mapped_study_unit_ids": sorted({entry["study_unit_id"] for entry, _ in refs}),
+            "chapters_represented": sorted({entry["chapter_code"] for entry, _ in refs}),
+            "evidence_reference_count": len(refs),
+            "strongest_evidence_strength": strongest,
+            "evidence_strength_counts": {strength: strengths[strength] for strength in _STRENGTHS},
+            "primary_classifications_represented": sorted({entry["classification"] for entry, _ in refs}),
+            "evidence_types": sorted({evidence["evidence_type"] for _, evidence in refs}),
+            "coverage_state": state,
+            "status": "MAPPED" if refs else "UNMAPPED_OBJECTIVE_CANDIDATE",
+        })
+    counts = Counter(item["coverage_state"] for item in output)
+    return {
+        "schema_version": "1.0",
+        "total_objectives": len(output),
+        "mapped_objectives": len(output) - counts["UNMAPPED_OBJECTIVE_CANDIDATE"],
+        "unmapped_objective_candidates": counts["UNMAPPED_OBJECTIVE_CANDIDATE"],
+        "coverage_state_counts": {state: counts[state] for state in ("STRONG_OR_MODERATE_COVERAGE", "WEAK_ONLY_COVERAGE", "UNMAPPED_OBJECTIVE_CANDIDATE")},
+        "role_level_records": sum(item["objective_type"] == "ROLE_LEVEL_RECORD" for item in output),
+        "unattributed_role_level_evidence_references": sum(
+            evidence["evidence_type"] == "ROLE_LEVEL_REFERENCE"
+            for entry in entries for evidence in entry["mcc_evidence"]
+        ),
+        "objectives": output,
+    }
+
+
+def _persistent_review_records(root: Path) -> dict[str, dict[str, Any]]:
+    records: dict[str, dict[str, Any]] = {}
+    for code in _chapter_codes(root):
+        path = resolve_root_path(root, Path("research/scope/chapters") / code / "review_items.json", label="review items")
+        if not path.is_file():
+            continue
+        for item in read_json(path).get("items", []):
+            if not isinstance(item, dict) or item.get("issue_type") != "persistent_global_scope_uncertainty":
+                continue
+            ids = _extract_unit_ids(item.get("study_unit_id"))
+            for unit_id in ids:
+                if unit_id in records:
+                    raise MasterScopeError(f"duplicate persistent uncertainty review record: {unit_id}")
+                records[unit_id] = item
+    return records
+
+
+def _unit_mapping_search(root: Path, chapter_code: str, unit_id: str) -> list[str]:
+    paths = (
+        Path("research/scope/chapters") / chapter_code / "unresolved_mappings.json",
+        Path("research/scope/chapters") / chapter_code / "review_items.json",
+    )
+    values: list[str] = []
+    for path in paths:
+        absolute = resolve_root_path(root, path, label="chapter mapping review")
+        if not absolute.is_file():
+            continue
+        document = read_json(absolute)
+        records = document.get("items", document.get("unresolved_mappings", document.get("unresolved", [])))
+        for record in records:
+            if isinstance(record, dict) and unit_id in _extract_unit_ids(record.get("study_unit_id")):
+                values.extend(str(value) for key, value in record.items() if key in {"issue", "reason"} and isinstance(value, str))
+    return values
+
+
+def _final_adjudication_packet(root: Path, entries: list[dict[str, Any]], coverage: dict[str, Any]) -> dict[str, Any]:
+    objectives = coverage["objectives"]
+    by_record_key = {item["record_key"]: item for item in objectives}
+    by_objective_id = {item["objective_id"]: item for item in objectives if item["objective_id"] is not None}
+    persistent_reviews = _persistent_review_records(root)
+    persistent_entries = [entry for entry in entries if entry["study_unit_id"] in persistent_reviews]
+    persistent_entries.sort(key=lambda entry: entry["study_unit_id"])
+    links: list[dict[str, Any]] = []
+    uncertainty_items: list[dict[str, Any]] = []
+    for entry in persistent_entries:
+        unit_id = entry["study_unit_id"]
+        review = persistent_reviews[unit_id]
+        search_values = _unit_mapping_search(root, entry["chapter_code"], unit_id)
+        candidate_text = "\n".join([entry.get("uncertain_reason", ""), *search_values])
+        candidate_keys = {
+            by_objective_id[candidate_id]["record_key"]
+            for candidate_id in _OBJECTIVE_ID_PATTERN.findall(candidate_text)
+            if candidate_id in by_objective_id
+        }
+        for objective in objectives:
+            if objective["objective_type"] == "ROLE_LEVEL_RECORD" and re.search(rf"\b{re.escape(objective['role'])}\s+role\b", candidate_text, flags=re.IGNORECASE):
+                candidate_keys.add(objective["record_key"])
+        candidate_records = [by_record_key[key] for key in sorted(candidate_keys)]
+        states = {record["coverage_state"] for record in candidate_records}
+        relationship = (
+            "CANDIDATE_OVERLAP_UNMAPPED_OBJECTIVE" if "UNMAPPED_OBJECTIVE_CANDIDATE" in states
+            else "CANDIDATE_OVERLAP_WEAK_ONLY_OBJECTIVE" if "WEAK_ONLY_COVERAGE" in states
+            else "ONLY_ALREADY_STRONG_OR_MODERATE_COVERED_OBJECTIVES" if states
+            else "NO_CANONICAL_CANDIDATE_OBJECTIVE"
+        )
+        uncertainty_items.append({
+            "study_unit_id": unit_id,
+            "chapter_code": entry["chapter_code"],
+            "chapter_title": entry["chapter_title"],
+            "title": entry["title"],
+            "established_source_status": {"extraction_confidence": entry["extraction_confidence"], "page_mapping_precision": entry["page_mapping_precision"]},
+            "previous_mapping_search_result": {"uncertain_reason": entry.get("uncertain_reason"), "review_summary": review.get("summary"), "search_records": search_values},
+            "current_evidence": entry["mcc_evidence"],
+            "existing_candidate_objective_ids": [record["objective_id"] for record in candidate_records],
+            "existing_candidate_record_keys": [record["record_key"] for record in candidate_records],
+            "candidate_overlap_state": relationship,
+        })
+        for record in candidate_records:
+            links.append({"study_unit_id": unit_id, "objective_record_key": record["record_key"], "objective_id": record["objective_id"], "coverage_state": record["coverage_state"], "link_basis": "EXISTING_CANONICAL_TEXTUAL_CANDIDATE"})
+    selected_states = {"UNMAPPED_OBJECTIVE_CANDIDATE", "WEAK_ONLY_COVERAGE"}
+    selected_objectives = [item for item in objectives if item["coverage_state"] in selected_states]
+    selected_objectives.sort(key=lambda item: item["record_key"])
+    counts = Counter(item["candidate_overlap_state"] for item in uncertainty_items)
+    validation_errors: list[str] = []
+    if len(objectives) != 198: validation_errors.append("objective records do not reconcile to 198")
+    if sum(coverage["coverage_state_counts"].values()) != len(objectives): validation_errors.append("coverage states do not reconcile")
+    if len(persistent_entries) != 10: validation_errors.append("persistent uncertainties do not reconcile to 10")
+    if len([item for item in objectives if item["coverage_state"] == "UNMAPPED_OBJECTIVE_CANDIDATE"]) != 9: validation_errors.append("unmapped candidates do not reconcile to 9")
+    entry_ids = {entry["study_unit_id"] for entry in entries}
+    if any(unit_id not in entry_ids for item in objectives for unit_id in item["mapped_study_unit_ids"]): validation_errors.append("coverage references an unknown study unit")
+    objective_reference_count = sum(item["evidence_reference_count"] for item in objectives)
+    master_reference_count = sum(evidence["evidence_type"] == "OBJECTIVE_REFERENCE" for entry in entries for evidence in entry["mcc_evidence"])
+    if objective_reference_count != master_reference_count: validation_errors.append("objective evidence count does not reconcile with master scope")
+    return {
+        "schema_version": "1.0",
+        "scope": "DETERMINISTIC_CANDIDATE_TRIAGE_ONLY",
+        "coverage_summary": coverage["coverage_state_counts"],
+        "role_level_reference_records": coverage["role_level_records"],
+        "unattributed_role_level_evidence_references": coverage["unattributed_role_level_evidence_references"],
+        "unmapped_objective_candidates": [item for item in selected_objectives if item["coverage_state"] == "UNMAPPED_OBJECTIVE_CANDIDATE"],
+        "weak_only_coverage_objectives": [item for item in selected_objectives if item["coverage_state"] == "WEAK_ONLY_COVERAGE"],
+        "persistent_uncertain_study_units": uncertainty_items,
+        "deterministic_links": links,
+        "persistent_overlap_counts": {
+            "candidate_overlap_unmapped_objective": counts["CANDIDATE_OVERLAP_UNMAPPED_OBJECTIVE"],
+            "candidate_overlap_weak_only_objective": counts["CANDIDATE_OVERLAP_WEAK_ONLY_OBJECTIVE"],
+            "only_already_strong_or_moderate_covered_objectives": counts["ONLY_ALREADY_STRONG_OR_MODERATE_COVERED_OBJECTIVES"],
+            "no_canonical_candidate_objective": counts["NO_CANONICAL_CANDIDATE_OBJECTIVE"],
+        },
+        "validation": {"status": "PASS" if not validation_errors else "FAIL", "errors": validation_errors},
+    }
 
 
 def _aggregate(root: Path) -> dict[str, dict[str, Any]]:
@@ -252,7 +409,8 @@ def _aggregate(root: Path) -> dict[str, dict[str, Any]]:
     if len({entry["study_unit_id"] for entry in entries}) != len(entries):
         raise MasterScopeError("duplicate study_unit_id across canonical chapter crosswalks")
     master = {"schema_version": "1.0", "total_chapters": len(codes), "total_study_units": len(entries), "chapter_codes": codes, "entries": entries}
-    return {"master_scope_crosswalk.json": master, "master_scope_report.json": _report(entries, codes), "global_review_candidates.json": _review_candidates(entries, unresolved), "global_ownership_candidates.json": _ownership_candidates(entries), "mcc_objective_coverage.json": _objective_coverage(root, entries)}
+    coverage = _objective_coverage(root, entries)
+    return {"master_scope_crosswalk.json": master, "master_scope_report.json": _report(entries, codes), "global_review_candidates.json": _review_candidates(entries, unresolved), "global_ownership_candidates.json": _ownership_candidates(entries), "mcc_objective_coverage.json": coverage, "final_scope_adjudication_candidates.json": _final_adjudication_packet(root, entries, coverage)}
 
 
 def build_master_scope(root: Path) -> dict[str, Any]:
