@@ -325,7 +325,11 @@ def _final_adjudication_packet(root: Path, entries: list[dict[str, Any]], covera
     by_record_key = {item["record_key"]: item for item in objectives}
     by_objective_id = {item["objective_id"]: item for item in objectives if item["objective_id"] is not None}
     persistent_reviews = _persistent_review_records(root)
-    persistent_entries = [entry for entry in entries if entry["study_unit_id"] in persistent_reviews]
+    persistent_entries = [
+        entry for entry in entries
+        if entry["study_unit_id"] in persistent_reviews
+        and entry["classification"] == "UNCERTAIN"
+    ]
     persistent_entries.sort(key=lambda entry: entry["study_unit_id"])
     links: list[dict[str, Any]] = []
     uncertainty_items: list[dict[str, Any]] = []
@@ -371,7 +375,6 @@ def _final_adjudication_packet(root: Path, entries: list[dict[str, Any]], covera
     validation_errors: list[str] = []
     if len(objectives) != 198: validation_errors.append("objective records do not reconcile to 198")
     if sum(coverage["coverage_state_counts"].values()) != len(objectives): validation_errors.append("coverage states do not reconcile")
-    if len(persistent_entries) != 10: validation_errors.append("persistent uncertainties do not reconcile to 10")
     if len([item for item in objectives if item["coverage_state"] == "UNMAPPED_OBJECTIVE_CANDIDATE"]) != 9: validation_errors.append("unmapped candidates do not reconcile to 9")
     entry_ids = {entry["study_unit_id"] for entry in entries}
     if any(unit_id not in entry_ids for item in objectives for unit_id in item["mapped_study_unit_ids"]): validation_errors.append("coverage references an unknown study unit")

@@ -332,9 +332,33 @@ def test_final_adjudication_packet_reconciles_coverage_and_persistent_uncertaint
         "UNMAPPED_OBJECTIVE_CANDIDATE",
     )) == 198
     assert len(packet["unmapped_objective_candidates"]) == 9
-    assert len(packet["persistent_uncertain_study_units"]) == 10
+    assert len(packet["persistent_uncertain_study_units"]) == 3
     assert packet["validation"]["status"] == "PASS"
     assert _validate(root).status == "PASS"
+
+
+def test_final_adjudication_packet_excludes_resolved_persistent_uncertainties(tmp_path):
+    """A final non-UNCERTAIN classification leaves the adjudication candidate set."""
+    root = _project_copy(tmp_path)
+    path = root / "research/scope/chapters/GS/crosswalk.json"
+    crosswalk = json.loads(path.read_text(encoding="utf-8"))
+    entry = next(
+        item for item in crosswalk["entries"]
+        if item["study_unit_id"] == "SU-GS-75"
+    )
+    entry["classification"] = "SUPPORTING_KNOWLEDGE"
+    entry.pop("uncertain_reason")
+    path.write_text(json.dumps(crosswalk), encoding="utf-8")
+
+    _build(root)
+    packet = _load(root, "final_scope_adjudication_candidates.json")
+
+    assert len(packet["persistent_uncertain_study_units"]) == 2
+    assert "SU-GS-75" not in {
+        item["study_unit_id"]
+        for item in packet["persistent_uncertain_study_units"]
+    }
+    assert packet["validation"]["status"] == "PASS"
 
 
 def test_build_output_is_deterministic(tmp_path):
