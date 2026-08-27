@@ -152,6 +152,63 @@ def test_global_review_triage_commands_are_registered():
     assert "validate-global-review-triage" in commands
 
 
+def test_global_ownership_triage_accounts_for_every_candidate_group(tmp_path):
+    """Ownership packets retain all valid groups and are compactly batched."""
+    from qbank.global_ownership_triage import (
+        build_global_ownership_triage,
+        validate_global_ownership_triage,
+    )
+
+    root = _project_copy(tmp_path)
+    _build(root)
+    result = build_global_ownership_triage(root)
+    triage = _load(root, "global_ownership_triage.json")
+    batches = _load(root, "global_ownership_batches.json")
+
+    original = _load(root, "global_ownership_candidates.json")["groups"]
+    assert result["ownership_candidate_groups"] == len(original)
+    assert len(triage["groups"]) == len(original)
+    assert {item["group_id"] for item in triage["groups"]} == {
+        item["candidate_group_id"] for item in original
+    }
+    assert sum(triage["candidate_type_counts"].values()) == len(original)
+    assert sum(triage["priority_counts"].values()) == len(original)
+    assert all(len(batch["group_ids"]) <= 10 for batch in batches["batches"])
+    assert validate_global_ownership_triage(root).status == "PASS"
+
+
+def test_global_ownership_triage_prioritizes_deterministic_signals():
+    """The classifier does not turn a triage signal into an ownership decision."""
+    from qbank.global_ownership_triage import _candidate_type_and_priority
+
+    assert _candidate_type_and_priority({
+        "source_signal": "IDENTICAL_NORMALIZED_TITLE",
+        "study_unit_ids": ["SU-A-01", "SU-B-01"],
+        "chapter_codes": ["A", "B"],
+        "normalized_titles_equal": True,
+        "shared_mcc_objective_ids": ["1-1"],
+        "shared_direct_or_component_evidence": True,
+    }) == ("EXACT_DUPLICATE_CANDIDATE", "PRIORITY_A")
+    assert _candidate_type_and_priority({
+        "source_signal": "EXPLICIT_CROSS_DISCIPLINE_NOTE_LINK",
+        "study_unit_ids": ["SU-A-01", "SU-B-01"],
+        "chapter_codes": ["A", "B"],
+    }) == ("EXPLICIT_CROSS_LINK_CANDIDATE", "PRIORITY_A")
+    assert _candidate_type_and_priority({
+        "source_signal": "IDENTICAL_NORMALIZED_TITLE",
+        "study_unit_ids": ["SU-A-01", "SU-B-01", "SU-C-01"],
+        "chapter_codes": ["A", "B", "C"],
+        "normalized_titles_equal": True,
+    }) == ("COMPLEX_MULTI_CHAPTER_GROUP", "PRIORITY_C")
+
+
+def test_global_ownership_triage_commands_are_registered():
+    """The ownership-only deterministic build and validation commands remain available."""
+    commands = _parser()._subparsers._group_actions[0].choices
+    assert "build-global-ownership-triage" in commands
+    assert "validate-global-ownership-triage" in commands
+
+
 def test_tier1_decomposition_partitions_tier1_and_keeps_packets_compact(tmp_path):
     """A Tier-1 unit cannot be omitted, duplicated, or mixed with another tier."""
     from qbank.global_review_triage import build_global_review_triage
