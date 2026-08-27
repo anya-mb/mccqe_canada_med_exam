@@ -174,7 +174,13 @@ def _validate_core(documents: dict[str, dict[str, Any]]) -> list[str]:
             errors.append(f"{label}: candidate_type does not match canonical triage")
         if unit_id not in master_ids:
             errors.append(f"{label}: unknown study_unit_id {unit_id}")
-        if unit_id not in group.get("study_unit_ids", []):
+        group_unit_ids = group.get("study_unit_ids", [])
+        is_targeted_external_owner = (
+            unit_id not in group_unit_ids
+            and len(group_unit_ids) == 1
+            and role == "PRIMARY_OWNER"
+        )
+        if unit_id not in group_unit_ids and not is_targeted_external_owner:
             errors.append(f"{label}: study_unit_id is not a member of {group_id}")
         if role not in _ALLOWED_ROLES:
             errors.append(f"{label}: disallowed ownership_role {role}")
@@ -251,7 +257,13 @@ def _validate_core(documents: dict[str, dict[str, Any]]) -> list[str]:
         assignments = assignments_by_group[group_id]
         expected_ids = set(group.get("study_unit_ids", []))
         actual_ids = {item.get("study_unit_id") for item in assignments}
-        if actual_ids != expected_ids or len(assignments) != len(expected_ids):
+        external_ids = actual_ids - expected_ids
+        if (
+            not expected_ids.issubset(actual_ids)
+            or len(assignments) != len(actual_ids)
+            or len(external_ids) > 1
+            or (external_ids and len(expected_ids) != 1)
+        ):
             errors.append(f"{group_id}: resolved assignments do not reconcile to group members")
         confidences = {item.get("confidence") for item in assignments}
         if len(confidences) != 1:
@@ -262,6 +274,20 @@ def _validate_core(documents: dict[str, dict[str, Any]]) -> list[str]:
                 errors.append(f"{group_id}: DISTINCT_CONTEXT cannot suppress or mix with shared ownership")
         elif roles.count("PRIMARY_OWNER") != 1 or roles.count("CROSS_LINK") != len(roles) - 1:
             errors.append(f"{group_id}: shared ownership requires one PRIMARY_OWNER and direct CROSS_LINKs")
+        else:
+            group_primary = next(
+                item["study_unit_id"]
+                for item in assignments
+                if item["ownership_role"] == "PRIMARY_OWNER"
+            )
+            if any(
+                item.get("primary_owner_study_unit_id") != group_primary
+                for item in assignments
+                if item["ownership_role"] == "CROSS_LINK"
+            ):
+                errors.append(
+                    f"{group_id}: every CROSS_LINK must reference the group PRIMARY_OWNER"
+                )
 
     for unit_id, roles in sorted(roles_by_unit.items()):
         if {"PRIMARY_OWNER", "CROSS_LINK"}.issubset(roles):

@@ -1,14 +1,14 @@
 {
   "assignment_counts": {
-    "CROSS_LINK": 0,
-    "DISTINCT_CONTEXT": 5,
-    "PRIMARY_OWNER": 0
+    "CROSS_LINK": 3,
+    "DISTINCT_CONTEXT": 6,
+    "PRIMARY_OWNER": 3
   },
   "batch_id": "PRIORITY_B-B01",
   "confidence_counts": {
-    "HIGH": 3,
-    "LOW": 5,
-    "MODERATE": 2
+    "HIGH": 5,
+    "LOW": 1,
+    "MODERATE": 4
   },
   "groups": [
     {
@@ -18,7 +18,7 @@
       "decision_status": "DEFERRED_COMPLEX_OWNERSHIP",
       "final_ownership_roles": [],
       "primary_owner_study_unit_id": null,
-      "rationale": "Psychiatry is a zero-coverage cross-reference to Pediatrics, but the canonical candidate group contains no pediatric counterpart for a safe ownership relationship.",
+      "rationale": "The zero-coverage Psychiatry unit bundles ASD and ADHD, which map to separate pediatric owners (SU-P-046 and SU-P-047); one PRIMARY_OWNER cannot represent both safely without splitting the established unit.",
       "study_unit_ids": [
         "SU-PS-55"
       ]
@@ -60,11 +60,16 @@
     {
       "candidate_group_id": "GOC-10e8ac2b80b4",
       "candidate_type": "SHARED_OBJECTIVE_OVERLAP",
-      "confidence": "LOW",
-      "decision_status": "DEFERRED_COMPLEX_OWNERSHIP",
-      "final_ownership_roles": [],
+      "confidence": "MODERATE",
+      "decision_status": "RESOLVED",
+      "final_ownership_roles": [
+        {
+          "ownership_role": "DISTINCT_CONTEXT",
+          "study_unit_id": "SU-MG-10"
+        }
+      ],
       "primary_owner_study_unit_id": null,
-      "rationale": "The only MCC link is weak and the heterogeneous familial-cancer syndromes span several discipline-specific counterparts absent from this candidate group.",
+      "rationale": "Medical Genetics tests cross-syndrome gene-cancer pattern recognition and genetics referral or surveillance, distinct from organ-specific presentation, diagnosis, and management tasks.",
       "study_unit_ids": [
         "SU-MG-10"
       ]
@@ -72,11 +77,21 @@
     {
       "candidate_group_id": "GOC-14f19fa9f232",
       "candidate_type": "SHARED_OBJECTIVE_OVERLAP",
-      "confidence": "LOW",
-      "decision_status": "DEFERRED_COMPLEX_OWNERSHIP",
-      "final_ownership_roles": [],
-      "primary_owner_study_unit_id": null,
-      "rationale": "The Respirology record is a zero-coverage cardiology cross-reference; its missing counterpart prevents a safe direct ownership assignment in this batch.",
+      "confidence": "MODERATE",
+      "decision_status": "RESOLVED",
+      "final_ownership_roles": [
+        {
+          "ownership_role": "PRIMARY_OWNER",
+          "study_unit_id": "SU-C-08"
+        },
+        {
+          "ownership_role": "CROSS_LINK",
+          "primary_owner_study_unit_id": "SU-C-08",
+          "study_unit_id": "SU-R-21"
+        }
+      ],
+      "primary_owner_study_unit_id": "SU-C-08",
+      "rationale": "Cardiology's acute cardiac-dyspnea unit is the natural home for the shared recognition, initial investigation, and emergency-stabilization competency.",
       "study_unit_ids": [
         "SU-R-21"
       ]
@@ -84,11 +99,21 @@
     {
       "candidate_group_id": "GOC-1618106e83bc",
       "candidate_type": "SHARED_OBJECTIVE_OVERLAP",
-      "confidence": "LOW",
-      "decision_status": "DEFERRED_COMPLEX_OWNERSHIP",
-      "final_ownership_roles": [],
-      "primary_owner_study_unit_id": null,
-      "rationale": "The Respirology record is a zero-coverage thoracic-surgery cross-reference; its missing postoperative counterpart prevents a safe direct ownership assignment in this batch.",
+      "confidence": "HIGH",
+      "decision_status": "RESOLVED",
+      "final_ownership_roles": [
+        {
+          "ownership_role": "PRIMARY_OWNER",
+          "study_unit_id": "SU-GS-10"
+        },
+        {
+          "ownership_role": "CROSS_LINK",
+          "primary_owner_study_unit_id": "SU-GS-10",
+          "study_unit_id": "SU-R-25"
+        }
+      ],
+      "primary_owner_study_unit_id": "SU-GS-10",
+      "rationale": "General and Thoracic Surgery is the explicit source-designated home and tests recognition and initial management of postoperative atelectasis.",
       "study_unit_ids": [
         "SU-R-25"
       ]
@@ -113,11 +138,21 @@
     {
       "candidate_group_id": "GOC-211b93667548",
       "candidate_type": "SHARED_OBJECTIVE_OVERLAP",
-      "confidence": "LOW",
-      "decision_status": "DEFERRED_COMPLEX_OWNERSHIP",
-      "final_ownership_roles": [],
-      "primary_owner_study_unit_id": null,
-      "rationale": "The apparent acoustic-neuroma overlap is substantial, but the canonical group excludes the Otolaryngology counterpart needed to assign a direct, non-conflicting owner.",
+      "confidence": "HIGH",
+      "decision_status": "RESOLVED",
+      "final_ownership_roles": [
+        {
+          "ownership_role": "CROSS_LINK",
+          "primary_owner_study_unit_id": "SU-OT-12",
+          "study_unit_id": "SU-NS-14"
+        },
+        {
+          "ownership_role": "PRIMARY_OWNER",
+          "study_unit_id": "SU-OT-12"
+        }
+      ],
+      "primary_owner_study_unit_id": "SU-OT-12",
+      "rationale": "Otolaryngology is the direct, core-action home for acoustic-neuroma recognition and gadolinium-enhanced MRI selection.",
       "study_unit_ids": [
         "SU-NS-14"
       ]
@@ -157,8 +192,8 @@
       ]
     }
   ],
-  "groups_deferred": 5,
-  "groups_resolved": 5,
+  "groups_deferred": 1,
+  "groups_resolved": 9,
   "groups_reviewed": 10,
   "priority": "PRIORITY_B",
   "schema_version": "1.0",

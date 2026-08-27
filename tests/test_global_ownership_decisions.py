@@ -269,6 +269,75 @@ def test_distinct_context_can_coexist_with_a_role_in_another_group(tmp_path):
     assert validate_global_ownership_decisions(root).status == "PASS"
 
 
+def test_singleton_group_can_cross_link_to_one_targeted_external_primary_owner(tmp_path):
+    """A deferred singleton may resolve through one directly linked canonical counterpart."""
+    from qbank.global_ownership_decisions import (
+        build_global_ownership_batch_audit,
+        validate_global_ownership_decisions,
+    )
+
+    root = _fixture(tmp_path)
+    triage_path = root / "research/scope/global_ownership_triage.json"
+    triage = json.loads(triage_path.read_text(encoding="utf-8"))
+    triage["groups"][2]["study_unit_ids"] = ["SU-E"]
+    _write(triage_path, triage)
+    value = _load_decisions(root)
+    value["deferred_groups"] = []
+    value["decisions"].extend(
+        [
+            {
+                "candidate_group_id": "G-3",
+                "candidate_type": "EXPLICIT_CROSS_LINK_CANDIDATE",
+                "study_unit_id": "SU-G",
+                "ownership_role": "PRIMARY_OWNER",
+                "rationale": "The targeted canonical counterpart is the natural teaching home.",
+                "decision_status": "RESOLVED",
+                "confidence": "HIGH",
+                "adjudication_batch": "PRIORITY_A-B01",
+            },
+            {
+                "candidate_group_id": "G-3",
+                "candidate_type": "EXPLICIT_CROSS_LINK_CANDIDATE",
+                "study_unit_id": "SU-E",
+                "ownership_role": "CROSS_LINK",
+                "primary_owner_study_unit_id": "SU-G",
+                "rationale": "The original singleton directly links to its targeted owner.",
+                "decision_status": "RESOLVED",
+                "confidence": "HIGH",
+                "adjudication_batch": "PRIORITY_A-B01",
+            },
+        ]
+    )
+    _save_decisions(root, value)
+
+    audit = build_global_ownership_batch_audit(root, "PRIORITY_A-B01")
+
+    assert validate_global_ownership_decisions(root).status == "PASS"
+    group = next(item for item in audit["groups"] if item["candidate_group_id"] == "G-3")
+    assert group["study_unit_ids"] == ["SU-E"]
+    assert group["primary_owner_study_unit_id"] == "SU-G"
+    assert {item["study_unit_id"] for item in group["final_ownership_roles"]} == {
+        "SU-E",
+        "SU-G",
+    }
+
+
+def test_shared_group_cross_links_must_target_its_own_primary_owner(tmp_path):
+    """A group cannot cross-link one member to a primary owner from another group."""
+    root = _fixture(tmp_path)
+    value = _load_decisions(root)
+    value["decisions"][1]["primary_owner_study_unit_id"] = "SU-C"
+    value["decisions"][2].update(
+        {
+            "ownership_role": "PRIMARY_OWNER",
+            "rationale": "SU-C owns its distinct group.",
+        }
+    )
+    _save_decisions(root, value)
+
+    assert any("group PRIMARY_OWNER" in error for error in _errors(root))
+
+
 def test_ownership_validator_rejects_disallowed_role(tmp_path):
     """Only the three canonical ownership roles are accepted."""
     root = _fixture(tmp_path)
