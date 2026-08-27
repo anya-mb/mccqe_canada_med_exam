@@ -111,6 +111,33 @@ def test_triage_retains_unresolved_review_recommended_chapter_items(tmp_path):
     assert item["primary_triage_category"] == "TIER_3_SECONDARY"
 
 
+def test_triage_treats_resolved_status_with_unresolved_detail_as_resolved():
+    """Resolution-status text must take precedence over explanatory detail."""
+    from qbank.global_review_triage import _is_open_review_item
+
+    assert not _is_open_review_item(
+        {
+            "resolution_status": (
+                "INDEPENDENTLY RESOLVED - retained with UNRESOLVED "
+                "page_mapping_precision."
+            ),
+            "severity": "informational",
+        }
+    )
+
+
+def test_triage_treats_resolved_issue_type_without_status_as_resolved():
+    """A structured resolved issue type must not be reopened by severity."""
+    from qbank.global_review_triage import _is_open_review_item
+
+    assert not _is_open_review_item(
+        {
+            "issue_type": "severe_two_column_toc_corruption_resolved_via_body_evidence",
+            "severity": "review_recommended",
+        }
+    )
+
+
 def test_build_includes_every_chapter_crosswalk_entry_once(tmp_path):
     root = _project_copy(tmp_path)
     result = _build(root)

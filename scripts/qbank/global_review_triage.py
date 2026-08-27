@@ -71,7 +71,7 @@ def _direct_ids(item: dict[str, Any]) -> set[str]:
 
 def _is_resolved(status: object) -> bool:
     value = str(status or "").upper()
-    return bool(value) and "UNRESOLVED" not in value and ("RESOLVED" in value or "NO ACTION" in value)
+    return bool(value) and not value.startswith("UNRESOLVED") and ("RESOLVED" in value or "NO ACTION" in value)
 
 
 def _is_unresolved(status: object) -> bool:
@@ -80,8 +80,12 @@ def _is_unresolved(status: object) -> bool:
 
 def _is_open_review_item(item: dict[str, Any]) -> bool:
     """Use only its recorded status/severity; do not interpret clinical text."""
+    if _is_resolved(item.get("resolution_status")):
+        return False
     if _is_unresolved(item.get("resolution_status")):
         return True
+    if "resolved_via_body_evidence" in str(item.get("issue_type") or "").lower():
+        return False
     if item.get("resolution_status"):
         return False
     severity = str(item.get("severity") or "").lower()
