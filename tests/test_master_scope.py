@@ -138,6 +138,30 @@ def test_triage_treats_resolved_issue_type_without_status_as_resolved():
     )
 
 
+def test_explicit_review_record_statuses_control_triage_semantics():
+    """Canonical status overrides historic severity and free-text wording."""
+    from qbank.global_review_triage import _review_record_status
+
+    assert _review_record_status({"resolution_status": "RESOLVED", "summary": "unresolved"}) == "RESOLVED"
+    assert _review_record_status({"resolution_status": "INFORMATIONAL"}) == "INFORMATIONAL"
+    assert _review_record_status({"resolution_status": "DEFERRED_OWNERSHIP"}) == "DEFERRED_OWNERSHIP"
+    assert _review_record_status({"resolution_status": "OPEN_SOURCE"}) == "OPEN_SOURCE"
+    assert _review_record_status({"resolution_status": "OPEN_MAPPING"}) == "OPEN_MAPPING"
+    assert _review_record_status({"resolution_status": "INSUFFICIENT_METADATA"}) == "INSUFFICIENT_METADATA"
+
+
+def test_explicit_review_record_statuses_map_to_required_triage_categories():
+    """Each standardized record status has a deterministic review destination."""
+    from qbank.global_review_triage import _category
+
+    assert _category(["RESOLVED_CHAPTER_REVIEW_ITEM"]) == "NO_CURRENT_SEMANTIC_REVIEW"
+    assert _category(["INFORMATIONAL_CHAPTER_REVIEW_ITEM"]) == "NO_CURRENT_SEMANTIC_REVIEW"
+    assert _category(["DEFERRED_OWNERSHIP_REVIEW_ITEM"]) == "OWNERSHIP_ONLY"
+    assert _category(["OPEN_SOURCE_REVIEW_ITEM"]) == "TIER_1_CRITICAL"
+    assert _category(["OPEN_MAPPING_REVIEW_ITEM"]) == "TIER_3_SECONDARY"
+    assert _category(["STATUS_REQUIRES_ADJUDICATION"]) == "TIER_1_CRITICAL"
+
+
 def test_build_includes_every_chapter_crosswalk_entry_once(tmp_path):
     root = _project_copy(tmp_path)
     result = _build(root)

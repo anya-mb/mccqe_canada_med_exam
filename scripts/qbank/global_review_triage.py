@@ -27,6 +27,10 @@ _OUTPUT_NAMES = (
 )
 _ACTIVE_TIERS = ("TIER_1_CRITICAL", "TIER_2_MAPPING", "TIER_3_SECONDARY")
 _CATEGORIES = (*_ACTIVE_TIERS, "OWNERSHIP_ONLY", "NO_CURRENT_SEMANTIC_REVIEW")
+_REVIEW_RECORD_STATUSES = frozenset({
+    "RESOLVED", "OPEN_SOURCE", "OPEN_MAPPING", "DEFERRED_OWNERSHIP",
+    "INFORMATIONAL", "INSUFFICIENT_METADATA",
+})
 _UNIT_ID_PATTERN = re.compile(r"\bSU-[A-Z]+-\d{2,3}\b")
 _STRUCTURAL_ISSUE = re.compile(r"(?:structural|toc|heading|ocr|page|source|body_recovered|merged|wrapped)", re.I)
 
@@ -78,10 +82,23 @@ def _is_unresolved(status: object) -> bool:
     return "UNRESOLVED" in str(status or "").upper()
 
 
+def _review_record_status(item: dict[str, Any]) -> str | None:
+    """Return an explicit canonical status, preserving legacy conventions."""
+    status = str(item.get("resolution_status") or "").upper()
+    if status in _REVIEW_RECORD_STATUSES:
+        return status
+    if _is_resolved(status) or "resolved_via_body_evidence" in str(item.get("issue_type") or "").lower():
+        return "RESOLVED"
+    return None
+
+
 def _is_open_review_item(item: dict[str, Any]) -> bool:
     """Use only its recorded status/severity; do not interpret clinical text."""
-    if _is_resolved(item.get("resolution_status")):
+    explicit_status = _review_record_status(item)
+    if explicit_status in {"RESOLVED", "INFORMATIONAL", "DEFERRED_OWNERSHIP"}:
         return False
+    if explicit_status in {"OPEN_SOURCE", "OPEN_MAPPING", "INSUFFICIENT_METADATA"}:
+        return True
     if _is_unresolved(item.get("resolution_status")):
         return True
     if "resolved_via_body_evidence" in str(item.get("issue_type") or "").lower():
@@ -105,6 +122,7 @@ def _review_metadata(root: Path) -> tuple[dict[str, list[dict[str, Any]]], dict[
                 continue
             for unit_id in _direct_ids(item):
                 record = {key: item.get(key) for key in ("issue_type", "resolution_status", "recommended_action", "summary")}
+                record["review_record_status"] = _review_record_status(item)
                 (unresolved if _is_open_review_item(item) else resolved)[unit_id].append(record)
     for path in sorted(chapters.glob("*/unresolved_mappings.json")):
         doc = read_json(path)
@@ -122,6 +140,7 @@ def _review_metadata(root: Path) -> tuple[dict[str, list[dict[str, Any]]], dict[
                     "resolution_status": "UNRESOLVED_CHAPTER_MAPPING",
                     "recommended_action": item.get("recommended_action"),
                     "summary": item.get("reason") or item.get("uncertain_reason"),
+                    "review_record_status": "OPEN_MAPPING",
                 })
     return unresolved, resolved
 
@@ -141,9 +160,16 @@ def _reasons(entry: dict[str, Any], original_reasons: list[str], unresolved: lis
     if strengths == {"WEAK"}: reasons.append("ONLY_WEAK_EVIDENCE")
     elif "WEAK" in strengths: reasons.append("ANY_WEAK_EVIDENCE")
     if any(item.get("requires_scope_review") is True for item in evidence if isinstance(item, dict)): reasons.append("REQUIRES_SCOPE_REVIEW")
+    statuses = {item.get("review_record_status") for item in unresolved}
+    resolved_statuses = {item.get("review_record_status") for item in resolved}
     if unresolved: reasons.append("UNRESOLVED_CHAPTER_REVIEW_ITEM")
-    if resolved or ("UNRESOLVED_CHAPTER_REVIEW_ITEM" in original_reasons and not unresolved): reasons.append("RESOLVED_CHAPTER_REVIEW_ITEM")
-    if any(_STRUCTURAL_ISSUE.search(str(item.get("issue_type") or "")) for item in unresolved) or entry.get("page_mapping_precision") == "UNRESOLVED": reasons.append("SOURCE_AMBIGUITY_UNRESOLVED")
+    if "OPEN_SOURCE" in statuses: reasons.append("OPEN_SOURCE_REVIEW_ITEM")
+    if "OPEN_MAPPING" in statuses: reasons.append("OPEN_MAPPING_REVIEW_ITEM")
+    if "INSUFFICIENT_METADATA" in statuses: reasons.append("STATUS_REQUIRES_ADJUDICATION")
+    if "RESOLVED" in resolved_statuses or ("UNRESOLVED_CHAPTER_REVIEW_ITEM" in original_reasons and not unresolved): reasons.append("RESOLVED_CHAPTER_REVIEW_ITEM")
+    if "INFORMATIONAL" in resolved_statuses: reasons.append("INFORMATIONAL_CHAPTER_REVIEW_ITEM")
+    if "DEFERRED_OWNERSHIP" in resolved_statuses: reasons.append("DEFERRED_OWNERSHIP_REVIEW_ITEM")
+    if ("OPEN_SOURCE" in statuses or any(_STRUCTURAL_ISSUE.search(str(item.get("issue_type") or "")) for item in unresolved if not item.get("review_record_status"))) or entry.get("page_mapping_precision") == "UNRESOLVED": reasons.append("SOURCE_AMBIGUITY_UNRESOLVED")
     jurisdiction = entry.get("jurisdiction")
     if isinstance(jurisdiction, dict) and jurisdiction.get("scope") == "UNRESOLVED": reasons.append("JURISDICTION_UNRESOLVED")
     freshness = entry.get("freshness")
@@ -158,13 +184,13 @@ def _reasons(entry: dict[str, Any], original_reasons: list[str], unresolved: lis
 
 def _category(reasons: list[str]) -> str:
     values = set(reasons)
-    if values & {"UNCERTAIN_PRIMARY", "SOURCE_AMBIGUITY_UNRESOLVED", "JURISDICTION_UNRESOLVED"}:
+    if values & {"UNCERTAIN_PRIMARY", "SOURCE_AMBIGUITY_UNRESOLVED", "JURISDICTION_UNRESOLVED", "OPEN_SOURCE_REVIEW_ITEM", "STATUS_REQUIRES_ADJUDICATION"}:
         return "TIER_1_CRITICAL"
     if values & {"ONLY_WEAK_EVIDENCE", "REQUIRES_SCOPE_REVIEW"}:
         return "TIER_2_MAPPING"
-    if "ANY_WEAK_EVIDENCE" in values or "UNRESOLVED_CHAPTER_REVIEW_ITEM" in values:
+    if "ANY_WEAK_EVIDENCE" in values or "UNRESOLVED_CHAPTER_REVIEW_ITEM" in values or "OPEN_MAPPING_REVIEW_ITEM" in values:
         return "TIER_3_SECONDARY"
-    if values & {"PRIMARY_CROSS_DISCIPLINE", "CROSS_DISCIPLINE_NOTE_ONLY", "OWNERSHIP_ONLY"}:
+    if values & {"PRIMARY_CROSS_DISCIPLINE", "CROSS_DISCIPLINE_NOTE_ONLY", "OWNERSHIP_ONLY", "DEFERRED_OWNERSHIP_REVIEW_ITEM"}:
         return "OWNERSHIP_ONLY"
     return "NO_CURRENT_SEMANTIC_REVIEW"
 
