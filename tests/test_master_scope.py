@@ -7,6 +7,8 @@ import json
 from pathlib import Path
 import shutil
 
+import pytest
+
 from qbank.cli import _parser
 
 
@@ -18,6 +20,10 @@ def _project_copy(tmp_path: Path) -> Path:
     root.mkdir()
     (root / "research").mkdir()
     shutil.copytree(REPO / "research/scope/chapters", root / "research/scope/chapters")
+    shutil.copy(
+        REPO / "research/scope/mcc_gap_fill_units.json",
+        root / "research/scope/mcc_gap_fill_units.json",
+    )
     shutil.copytree(REPO / "research/mcc", root / "research/mcc")
     shutil.copytree(REPO / "schemas", root / "schemas")
     (root / "reports").mkdir()
@@ -47,6 +53,64 @@ def _load(root: Path, filename: str) -> dict:
 def _save(root: Path, filename: str, value: dict) -> None:
     (root / "research/scope" / filename).write_text(
         json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+
+
+def _write_mcc_gap_fill(root: Path) -> None:
+    document = {
+        "schema_version": "1.0",
+        "source_type": "MCC_GAP_FILL",
+        "total_study_units": 1,
+        "study_units": [{
+            "scope_schema_version": "1.0",
+            "study_unit_id": "SU-MCC-001",
+            "title": "Adults with developmental disabilities",
+            "chapter_code": "MCC",
+            "chapter_title": "MCC Objective Gap Fills",
+            "source_type": "MCC_GAP_FILL",
+            "source_provenance": {
+                "objective_id": "21-1",
+                "objective_title": "Adults with developmental disabilities",
+                "role": "Medical Expert",
+                "registry_path": "research/mcc/objectives_registry.json",
+                "official_url": "https://mcc.ca/objectives/medical-expert/adults-with-developmental-disabilities/",
+                "version": "March 2022",
+            },
+            "structural_rationale": "Canonical MCC objective not represented by a Toronto Notes study unit.",
+            "extraction_confidence": "HIGH",
+            "page_mapping_precision": "NOT_APPLICABLE",
+        }],
+        "crosswalk_entries": [{
+            "scope_schema_version": "1.0",
+            "study_unit_id": "SU-MCC-001",
+            "title": "Adults with developmental disabilities",
+            "classification": "DIRECT",
+            "mcc_evidence": [{
+                "evidence_type": "OBJECTIVE_REFERENCE",
+                "mcc_id": "21-1",
+                "legacy_id": "21-1",
+                "objective_title": "Adults with developmental disabilities",
+                "canmeds_role": "Medical Expert",
+                "official_source": "research/mcc/objectives_registry.json",
+                "mapping_strength": "STRONG",
+                "mapping_rationale": "Direct canonical objective match.",
+            }],
+            "scope_depth": "CORE_ACTION",
+            "testable_competencies": {
+                "adult_disability_care": "Assess and initiate coordinated care for an adult with developmental disability."
+            },
+            "question_planning": {
+                "coverage_weight": 3,
+                "minimum_question_coverage": 1,
+                "preferred_item_forms": ["vignette-based single-best-answer"],
+            },
+            "page_mapping_precision": "NOT_APPLICABLE",
+            "clinical_source_organizations": [],
+            "freshness": {"verification_required": False},
+        }],
+    }
+    (root / "research/scope/mcc_gap_fill_units.json").write_text(
+        json.dumps(document), encoding="utf-8"
     )
 
 
@@ -253,10 +317,45 @@ def test_build_includes_every_chapter_crosswalk_entry_once(tmp_path):
         len(json.loads(path.read_text(encoding="utf-8"))["entries"])
         for path in (root / "research/scope/chapters").glob("*/crosswalk.json")
     )
+    expected += json.loads(
+        (root / "research/scope/mcc_gap_fill_units.json").read_text(encoding="utf-8")
+    )["total_study_units"]
     ids = [entry["study_unit_id"] for entry in master["entries"]]
     assert result["total_study_units"] == expected
     assert len(ids) == expected
     assert len(ids) == len(set(ids))
+
+
+def test_build_includes_mcc_gap_fill_without_toronto_notes_provenance(tmp_path):
+    """A canonical MCC gap fill is aggregated and maps its objective without fake TN pages."""
+    root = _project_copy(tmp_path)
+    _write_mcc_gap_fill(root)
+
+    result = _build(root)
+    master = _load(root, "master_scope_crosswalk.json")
+    coverage = _load(root, "mcc_objective_coverage.json")
+
+    entry = next(item for item in master["entries"] if item["study_unit_id"] == "SU-MCC-001")
+    objective = next(item for item in coverage["objectives"] if item["objective_id"] == "21-1")
+    assert result["total_study_units"] == 1487
+    assert entry["source_type"] == "MCC_GAP_FILL"
+    assert "source_node_ids" not in entry
+    assert "tn_page_range" not in entry
+    assert "pdf_page_range" not in entry
+    assert objective["mapped_study_unit_ids"] == ["SU-MCC-001"]
+    assert coverage["mapped_objectives"] == 190
+    assert coverage["unmapped_objective_candidates"] == 8
+
+
+def test_build_requires_resolved_canonical_mcc_gap_fill(tmp_path):
+    """Once the true gap is resolved, deleting its canonical input must break the build."""
+    from qbank.master_scope import MasterScopeError
+
+    root = _project_copy(tmp_path)
+    (root / "research/scope/mcc_gap_fill_units.json").unlink()
+
+    with pytest.raises(MasterScopeError, match="required file is missing"):
+        _build(root)
 
 
 def test_duplicate_study_unit_id_fails_validation(tmp_path):
@@ -325,13 +424,13 @@ def test_final_adjudication_packet_reconciles_coverage_and_persistent_uncertaint
 
     states = [item["coverage_state"] for item in coverage["objectives"]]
     assert len(states) == 198
-    assert states.count("UNMAPPED_OBJECTIVE_CANDIDATE") == 9
+    assert states.count("UNMAPPED_OBJECTIVE_CANDIDATE") == 8
     assert sum(states.count(state) for state in (
         "STRONG_OR_MODERATE_COVERAGE",
         "WEAK_ONLY_COVERAGE",
         "UNMAPPED_OBJECTIVE_CANDIDATE",
     )) == 198
-    assert len(packet["unmapped_objective_candidates"]) == 9
+    assert len(packet["unmapped_objective_candidates"]) == 8
     assert len(packet["persistent_uncertain_study_units"]) == 3
     assert packet["validation"]["status"] == "PASS"
     assert _validate(root).status == "PASS"

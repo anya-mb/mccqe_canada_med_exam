@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mccqe-qbank.invalid/schemas/mcc-gap-fill-unit.schema.json",
+  "title": "Canonical MCC-derived scope gap-fill study unit",
+  "description": "A learner-meaningful scope unit derived directly from a canonical MCC objective after deterministic comparison found no adequate Toronto Notes study unit. Toronto Notes node and page provenance is intentionally not part of this schema.",
+  "$defs": {
+    "nonempty": {"type": "string", "minLength": 1, "pattern": "\\S"}
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "scope_schema_version", "study_unit_id", "title", "chapter_code",
+    "chapter_title", "source_type", "source_provenance",
+    "structural_rationale", "extraction_confidence",
+    "page_mapping_precision"
+  ],
+  "properties": {
+    "scope_schema_version": {"const": "1.0"},
+    "study_unit_id": {"$ref": "#/$defs/nonempty", "pattern": "^SU-MCC-\\d{3}$"},
+    "title": {"$ref": "#/$defs/nonempty"},
+    "chapter_code": {"const": "MCC"},
+    "chapter_title": {"const": "MCC Objective Gap Fills"},
+    "source_type": {"const": "MCC_GAP_FILL"},
+    "source_provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "objective_id", "objective_title", "role", "registry_path",
+        "official_url", "version"
+      ],
+      "properties": {
+        "objective_id": {"$ref": "#/$defs/nonempty"},
+        "objective_title": {"$ref": "#/$defs/nonempty"},
+        "role": {"$ref": "#/$defs/nonempty"},
+        "registry_path": {"const": "research/mcc/objectives_registry.json"},
+        "official_url": {"type": "string", "format": "uri"},
+        "version": {"$ref": "#/$defs/nonempty"}
+      }
+    },
+    "structural_rationale": {"$ref": "#/$defs/nonempty"},
+    "extraction_confidence": {"enum": ["HIGH", "MEDIUM", "LOW"]},
+    "page_mapping_precision": {"const": "NOT_APPLICABLE"}
+  }
+}

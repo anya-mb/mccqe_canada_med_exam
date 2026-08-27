@@ -68,6 +68,41 @@ def valid_crosswalk_entry(**overrides):
     return base
 
 
+def valid_mcc_gap_fill_unit(**overrides):
+    base = {
+        "scope_schema_version": "1.0",
+        "study_unit_id": "SU-MCC-001",
+        "title": "Adults with developmental disabilities",
+        "chapter_code": "MCC",
+        "chapter_title": "MCC Objective Gap Fills",
+        "source_type": "MCC_GAP_FILL",
+        "source_provenance": {
+            "objective_id": "21-1",
+            "objective_title": "Adults with developmental disabilities",
+            "role": "Medical Expert",
+            "registry_path": "research/mcc/objectives_registry.json",
+            "official_url": "https://mcc.ca/objectives/example/",
+            "version": "March 2022",
+        },
+        "structural_rationale": "Canonical MCC objective not represented by a Toronto Notes study unit.",
+        "extraction_confidence": "HIGH",
+        "page_mapping_precision": "NOT_APPLICABLE",
+    }
+    base.update(overrides)
+    return base
+
+
+def test_mcc_gap_fill_unit_schema_accepts_mcc_provenance_without_toronto_notes_pages():
+    """An MCC-derived scope unit must validate without fabricated TN nodes or pages."""
+    unit = valid_mcc_gap_fill_unit()
+
+    validate_instance(REPO, "mcc-gap-fill-unit", unit)
+
+    assert "source_node_ids" not in unit
+    assert "tn_page_range" not in unit
+    assert "pdf_page_range" not in unit
+
+
 class TestStudyUnitSchema:
     def test_valid_minimal_unit_passes(self):
         validate_instance(REPO, "study-unit", valid_study_unit())

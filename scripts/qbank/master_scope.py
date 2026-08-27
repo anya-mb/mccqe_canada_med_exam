@@ -153,6 +153,92 @@ def _join_chapter(root: Path, code: str) -> tuple[list[dict[str, Any]], set[str]
     return entries, unresolved
 
 
+def _join_mcc_gap_fills(root: Path) -> list[dict[str, Any]]:
+    relative = Path("research/scope/mcc_gap_fill_units.json")
+    document = _read_object(root, relative, "MCC gap-fill units")
+    units = document.get("study_units")
+    crosswalk = document.get("crosswalk_entries")
+    if document.get("source_type") != "MCC_GAP_FILL":
+        raise MasterScopeError("MCC gap-fill document must declare source_type MCC_GAP_FILL")
+    if not isinstance(units, list) or not isinstance(crosswalk, list):
+        raise MasterScopeError("MCC gap-fill study_units/crosswalk_entries must be arrays")
+    if document.get("total_study_units") != len(units):
+        raise MasterScopeError("MCC gap-fill total_study_units does not reconcile")
+
+    unit_schema = _read_object(root, Path("schemas/mcc-gap-fill-unit.schema.json"), "MCC gap-fill unit schema")
+    crosswalk_schema = _read_object(root, Path("schemas/crosswalk-entry.schema.json"), "crosswalk entry schema")
+    unit_validator = Draft202012Validator(unit_schema)
+    crosswalk_validator = Draft202012Validator(crosswalk_schema)
+    registry = _read_object(root, Path("research/mcc/objectives_registry.json"), "objectives registry")
+    objectives = {
+        item.get("mcc_id"): item
+        for item in registry.get("objectives", [])
+        if isinstance(item, dict) and isinstance(item.get("mcc_id"), str)
+    }
+
+    by_id: dict[str, dict[str, Any]] = {}
+    for unit in units:
+        if not isinstance(unit, dict):
+            raise MasterScopeError("MCC gap-fill unit must be an object")
+        errors = sorted(unit_validator.iter_errors(unit), key=lambda error: list(error.path))
+        if errors:
+            raise MasterScopeError(f"MCC gap-fill unit schema validation failed: {errors[0].message}")
+        unit_id = unit["study_unit_id"]
+        if unit_id in by_id:
+            raise MasterScopeError(f"duplicate MCC gap-fill study_unit_id: {unit_id}")
+        provenance = unit["source_provenance"]
+        objective = objectives.get(provenance["objective_id"])
+        if objective is None:
+            raise MasterScopeError(f"{unit_id}: unknown canonical objective {provenance['objective_id']!r}")
+        expected = {
+            "objective_title": objective.get("title"),
+            "role": objective.get("role"),
+            "official_url": objective.get("official_url"),
+            "version": objective.get("version"),
+        }
+        for key, value in expected.items():
+            if provenance.get(key) != value:
+                raise MasterScopeError(f"{unit_id}: source_provenance {key} does not match canonical registry")
+        by_id[unit_id] = unit
+
+    entries: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for entry in crosswalk:
+        if not isinstance(entry, dict):
+            raise MasterScopeError("MCC gap-fill crosswalk entry must be an object")
+        errors = sorted(crosswalk_validator.iter_errors(entry), key=lambda error: list(error.path))
+        if errors:
+            raise MasterScopeError(f"MCC gap-fill crosswalk schema validation failed: {errors[0].message}")
+        semantic_errors = crosswalk_entry_semantic_errors(entry)
+        if semantic_errors:
+            raise MasterScopeError(f"MCC gap-fill crosswalk semantic validation failed: {semantic_errors[0][1]}")
+        unit_id = entry.get("study_unit_id")
+        if not isinstance(unit_id, str) or unit_id not in by_id:
+            raise MasterScopeError(f"MCC gap-fill crosswalk references unknown study_unit_id: {unit_id!r}")
+        if unit_id in seen:
+            raise MasterScopeError(f"duplicate MCC gap-fill crosswalk study_unit_id: {unit_id}")
+        seen.add(unit_id)
+        unit = by_id[unit_id]
+        if entry.get("scope_schema_version") != unit.get("scope_schema_version") or entry.get("title") != unit.get("title"):
+            raise MasterScopeError(f"{unit_id}: MCC gap-fill unit and crosswalk identity fields differ")
+        objective_id = unit["source_provenance"]["objective_id"]
+        if not any(
+            evidence.get("evidence_type") == "OBJECTIVE_REFERENCE"
+            and evidence.get("mcc_id") == objective_id
+            for evidence in entry["mcc_evidence"]
+        ):
+            raise MasterScopeError(f"{unit_id}: crosswalk does not map its canonical source objective {objective_id}")
+        merged = dict(unit)
+        merged["study_unit_title"] = unit["title"]
+        merged["study_unit_page_mapping_precision"] = unit["page_mapping_precision"]
+        merged.update(entry)
+        entries.append(merged)
+    missing = sorted(set(by_id) - seen)
+    if missing:
+        raise MasterScopeError(f"MCC gap-fill units without crosswalk entries: {missing}")
+    return entries
+
+
 def _report(entries: list[dict[str, Any]], chapter_codes: list[str]) -> dict[str, Any]:
     classification_counts = Counter(entry["classification"] for entry in entries)
     evidence_counts = Counter(
@@ -375,7 +461,7 @@ def _final_adjudication_packet(root: Path, entries: list[dict[str, Any]], covera
     validation_errors: list[str] = []
     if len(objectives) != 198: validation_errors.append("objective records do not reconcile to 198")
     if sum(coverage["coverage_state_counts"].values()) != len(objectives): validation_errors.append("coverage states do not reconcile")
-    if len([item for item in objectives if item["coverage_state"] == "UNMAPPED_OBJECTIVE_CANDIDATE"]) != 9: validation_errors.append("unmapped candidates do not reconcile to 9")
+    if coverage["unmapped_objective_candidates"] != len([item for item in objectives if item["coverage_state"] == "UNMAPPED_OBJECTIVE_CANDIDATE"]): validation_errors.append("unmapped candidates do not reconcile")
     entry_ids = {entry["study_unit_id"] for entry in entries}
     if any(unit_id not in entry_ids for item in objectives for unit_id in item["mapped_study_unit_ids"]): validation_errors.append("coverage references an unknown study unit")
     objective_reference_count = sum(item["evidence_reference_count"] for item in objectives)
@@ -408,6 +494,7 @@ def _aggregate(root: Path) -> dict[str, dict[str, Any]]:
     for code in codes:
         chapter_entries, chapter_unresolved = _join_chapter(root, code)
         entries.extend(chapter_entries); unresolved |= chapter_unresolved
+    entries.extend(_join_mcc_gap_fills(root))
     entries.sort(key=lambda entry: entry["study_unit_id"])
     if len({entry["study_unit_id"] for entry in entries}) != len(entries):
         raise MasterScopeError("duplicate study_unit_id across canonical chapter crosswalks")
