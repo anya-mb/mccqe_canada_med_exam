@@ -88,6 +88,51 @@ def test_global_review_triage_commands_are_registered():
     assert "validate-global-review-triage" in commands
 
 
+def test_tier1_decomposition_partitions_tier1_and_keeps_packets_compact(tmp_path):
+    """A Tier-1 unit cannot be omitted, duplicated, or mixed with another tier."""
+    from qbank.global_review_triage import build_global_review_triage
+    from qbank.tier1_decomposition import (
+        build_tier1_decomposition,
+        validate_tier1_decomposition,
+    )
+
+    root = _project_copy(tmp_path)
+    _build(root)
+    build_global_review_triage(root)
+    result = build_tier1_decomposition(root)
+    source = _load(root, "tier1_source_review.json")
+    mapping = _load(root, "tier1_mapping_review.json")
+    jurisdiction = _load(root, "tier1_jurisdiction_review.json")
+    status = _load(root, "tier1_status_adjudication.json")
+    tier1 = _load(root, "global_review_tier1.json")
+
+    packet_ids = [
+        entry["study_unit_id"]
+        for packet in (source, mapping, jurisdiction, status)
+        for entry in packet["entries"]
+    ]
+    tier1_ids = {entry["study_unit_id"] for entry in tier1["entries"]}
+    assert result["total_study_units"] == 47
+    assert set(packet_ids) == tier1_ids
+    assert len(packet_ids) == len(set(packet_ids)) == 47
+    assert result["work_type_counts"] == {
+        "SOURCE_REVIEW": 33,
+        "MAPPING_REVIEW": 14,
+        "JURISDICTION_REVIEW": 0,
+        "STATUS_ADJUDICATION": 0,
+        "OTHER": 0,
+    }
+    assert mapping["mapping_review_counts"] == {
+        "UNCERTAIN_PRIMARY": 14,
+        "ONLY_WEAK": 0,
+        "OTHER_MAPPING_ISSUE": 0,
+    }
+    assert source["reason_counts"]["OPEN_SOURCE"] == 12
+    assert all(entry["primary_work_type"] == "SOURCE_REVIEW" for entry in source["entries"])
+    assert all("source_provenance" in entry for entry in source["entries"])
+    assert validate_tier1_decomposition(root).status == "PASS"
+
+
 def test_triage_retains_unresolved_review_recommended_chapter_items(tmp_path):
     """An open, review-recommended local item cannot be downgraded as history."""
     from qbank.global_review_triage import build_global_review_triage
