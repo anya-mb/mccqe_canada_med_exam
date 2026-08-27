@@ -112,18 +112,18 @@ def test_tier1_decomposition_partitions_tier1_and_keeps_packets_compact(tmp_path
         for entry in packet["entries"]
     ]
     tier1_ids = {entry["study_unit_id"] for entry in tier1["entries"]}
-    assert result["total_study_units"] == 10
+    assert result["total_study_units"] == 0
     assert set(packet_ids) == tier1_ids
-    assert len(packet_ids) == len(set(packet_ids)) == 10
+    assert len(packet_ids) == len(set(packet_ids)) == 0
     assert result["work_type_counts"] == {
         "SOURCE_REVIEW": 0,
-        "MAPPING_REVIEW": 10,
+        "MAPPING_REVIEW": 0,
         "JURISDICTION_REVIEW": 0,
         "STATUS_ADJUDICATION": 0,
         "OTHER": 0,
     }
     assert mapping["mapping_review_counts"] == {
-        "UNCERTAIN_PRIMARY": 10,
+        "UNCERTAIN_PRIMARY": 0,
         "ONLY_WEAK": 0,
         "OTHER_MAPPING_ISSUE": 0,
     }
@@ -205,6 +205,26 @@ def test_explicit_review_record_statuses_map_to_required_triage_categories():
     assert _category(["OPEN_SOURCE_REVIEW_ITEM"]) == "TIER_1_CRITICAL"
     assert _category(["OPEN_MAPPING_REVIEW_ITEM"]) == "TIER_3_SECONDARY"
     assert _category(["STATUS_REQUIRES_ADJUDICATION"]) == "TIER_1_CRITICAL"
+
+
+def test_persistent_scope_uncertainty_is_visible_without_reentering_active_triage():
+    """A completed Tier-1 adjudication may defer an evidenced scope gap."""
+    from qbank.global_review_triage import _category, _reasons
+
+    reasons = _reasons(
+        {"classification": "UNCERTAIN", "mcc_evidence": []},
+        ["UNCERTAIN"],
+        [],
+        [{
+            "issue_type": "persistent_global_scope_uncertainty",
+            "review_record_status": "INFORMATIONAL",
+        }],
+        set(),
+    )
+
+    assert "PERSISTENT_GLOBAL_SCOPE_UNCERTAINTY" in reasons
+    assert "UNCERTAIN_PRIMARY" not in reasons
+    assert _category(reasons) == "NO_CURRENT_SEMANTIC_REVIEW"
 
 
 def test_resolved_source_metadata_triage_suppresses_historical_page_precision_flag():

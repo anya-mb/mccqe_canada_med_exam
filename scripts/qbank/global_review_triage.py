@@ -142,6 +142,20 @@ def _review_metadata(root: Path) -> tuple[dict[str, list[dict[str, Any]]], dict[
                     "summary": item.get("reason") or item.get("uncertain_reason"),
                     "review_record_status": "OPEN_MAPPING",
                 })
+    persistent_ids = {
+        unit_id
+        for unit_id, records in resolved.items()
+        if any(
+            record.get("issue_type") == "persistent_global_scope_uncertainty"
+            and record.get("review_record_status") == "INFORMATIONAL"
+            for record in records
+        )
+    }
+    for unit_id in persistent_ids:
+        unresolved[unit_id] = [
+            record for record in unresolved[unit_id]
+            if record.get("review_record_status") != "OPEN_MAPPING"
+        ]
     return unresolved, resolved
 
 
@@ -156,7 +170,16 @@ def _reasons(entry: dict[str, Any], original_reasons: list[str], unresolved: lis
     evidence = entry.get("mcc_evidence", [])
     strengths = {item.get("mapping_strength") for item in evidence if isinstance(item, dict)}
     reasons: list[str] = []
-    if entry.get("classification") == "UNCERTAIN": reasons.append("UNCERTAIN_PRIMARY")
+    persistent_scope_uncertainty = any(
+        item.get("issue_type") == "persistent_global_scope_uncertainty"
+        and item.get("review_record_status") == "INFORMATIONAL"
+        for item in resolved
+    )
+    if entry.get("classification") == "UNCERTAIN":
+        reasons.append(
+            "PERSISTENT_GLOBAL_SCOPE_UNCERTAINTY"
+            if persistent_scope_uncertainty else "UNCERTAIN_PRIMARY"
+        )
     if strengths == {"WEAK"}: reasons.append("ONLY_WEAK_EVIDENCE")
     elif "WEAK" in strengths: reasons.append("ANY_WEAK_EVIDENCE")
     if any(item.get("requires_scope_review") is True for item in evidence if isinstance(item, dict)): reasons.append("REQUIRES_SCOPE_REVIEW")
