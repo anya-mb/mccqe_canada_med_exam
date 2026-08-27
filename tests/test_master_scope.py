@@ -60,6 +60,57 @@ def test_validate_master_scope_command_is_registered():
     assert "validate-master-scope" in commands
 
 
+def test_build_global_review_triage_accounts_for_every_review_candidate(tmp_path):
+    """A dropped candidate or an oversized active-review batch must fail triage."""
+    from qbank.global_review_triage import build_global_review_triage, validate_global_review_triage
+
+    root = _project_copy(tmp_path)
+    _build(root)
+    result = build_global_review_triage(root)
+    triage = _load(root, "global_review_triage.json")
+    batches = _load(root, "global_review_batches.json")
+
+    assert result["original_candidates"] == 598
+    assert sum(triage["category_counts"].values()) == 598
+    assert len(triage["entries"]) == 598
+    assert {entry["study_unit_id"] for entry in triage["entries"]} == {
+        item["study_unit_id"]
+        for item in _load(root, "global_review_candidates.json")["candidates"]
+    }
+    assert all(len(batch["study_unit_ids"]) <= 25 for batch in batches["batches"])
+    assert validate_global_review_triage(root).status == "PASS"
+
+
+def test_global_review_triage_commands_are_registered():
+    """The deterministic build and validation entry points remain available to operators."""
+    commands = _parser()._subparsers._group_actions[0].choices
+    assert "build-global-review-triage" in commands
+    assert "validate-global-review-triage" in commands
+
+
+def test_triage_retains_unresolved_review_recommended_chapter_items(tmp_path):
+    """An open, review-recommended local item cannot be downgraded as history."""
+    from qbank.global_review_triage import build_global_review_triage
+
+    root = _project_copy(tmp_path)
+    _build(root)
+    path = root / "research/scope/chapters/A/review_items.json"
+    review_items = json.loads(path.read_text(encoding="utf-8"))
+    review_items["items"].append(
+        {
+            "issue_type": "mapping_scope_review",
+            "severity": "review-recommended",
+            "study_unit_id": "SU-A-07",
+            "summary": "Existing deterministic review record without a resolution status.",
+        }
+    )
+    path.write_text(json.dumps(review_items), encoding="utf-8")
+    triage = build_global_review_triage(root)
+    item = next(entry for entry in triage["entries"] if entry["study_unit_id"] == "SU-A-07")
+    assert "UNRESOLVED_CHAPTER_REVIEW_ITEM" in item["review_reasons"]
+    assert item["primary_triage_category"] == "TIER_3_SECONDARY"
+
+
 def test_build_includes_every_chapter_crosswalk_entry_once(tmp_path):
     root = _project_copy(tmp_path)
     result = _build(root)

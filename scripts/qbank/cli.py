@@ -34,6 +34,7 @@ from .scope_packet import (
 )
 from .scope_validate import report_output_path, validate_scope_chapter
 from .master_scope import build_master_scope, validate_master_scope
+from .global_review_triage import build_global_review_triage, validate_global_review_triage
 from .source import scan_deploy_leaks, validate_source
 
 
@@ -425,6 +426,24 @@ def _command_validate_master_scope(args: argparse.Namespace) -> None:
     if result.status != "PASS": raise CommandError("MASTER_SCOPE_VALIDATION_FAILED", f"{len(result.errors)} error(s)")
 
 
+def _command_build_global_review_triage(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    try:
+        result = build_global_review_triage(root)
+    except QbankError as exc:
+        raise CommandError("GLOBAL_REVIEW_TRIAGE_BUILD_FAILURE", str(exc)) from exc
+    print(f"GLOBAL_REVIEW_TRIAGE_BUILT: candidates={result['original_candidates']}")
+
+
+def _command_validate_global_review_triage(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    result = validate_global_review_triage(root)
+    print(f"GLOBAL_REVIEW_TRIAGE_VALIDATION: {result.status}")
+    for name, status in result.checks.items(): print(f"  {name}: {status}")
+    for error in result.errors: print(f"ERROR: {error}")
+    if result.status != "PASS": raise CommandError("GLOBAL_REVIEW_TRIAGE_VALIDATION_FAILED", f"{len(result.errors)} error(s)")
+
+
 def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--root",
@@ -487,6 +506,8 @@ def _parser() -> argparse.ArgumentParser:
         ),
         ("build-master-scope", "build deterministic master scope outputs", _command_build_master_scope),
         ("validate-master-scope", "validate deterministic master scope outputs", _command_validate_master_scope),
+        ("build-global-review-triage", "build deterministic global scope-review triage", _command_build_global_review_triage),
+        ("validate-global-review-triage", "validate deterministic global scope-review triage", _command_validate_global_review_triage),
     )
     parsers = {}
     for name, help_text, handler in commands:
