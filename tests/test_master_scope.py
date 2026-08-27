@@ -112,11 +112,11 @@ def test_tier1_decomposition_partitions_tier1_and_keeps_packets_compact(tmp_path
         for entry in packet["entries"]
     ]
     tier1_ids = {entry["study_unit_id"] for entry in tier1["entries"]}
-    assert result["total_study_units"] == 35
+    assert result["total_study_units"] == 17
     assert set(packet_ids) == tier1_ids
-    assert len(packet_ids) == len(set(packet_ids)) == 35
+    assert len(packet_ids) == len(set(packet_ids)) == 17
     assert result["work_type_counts"] == {
-        "SOURCE_REVIEW": 21,
+        "SOURCE_REVIEW": 3,
         "MAPPING_REVIEW": 14,
         "JURISDICTION_REVIEW": 0,
         "STATUS_ADJUDICATION": 0,
@@ -127,7 +127,7 @@ def test_tier1_decomposition_partitions_tier1_and_keeps_packets_compact(tmp_path
         "ONLY_WEAK": 0,
         "OTHER_MAPPING_ISSUE": 0,
     }
-    assert source["source_review_counts"] == {"OPEN_SOURCE": 0, "OTHER": 21}
+    assert source["source_review_counts"] == {"OPEN_SOURCE": 3, "OTHER": 0}
     assert all(entry["primary_work_type"] == "SOURCE_REVIEW" for entry in source["entries"])
     assert all("source_provenance" in entry for entry in source["entries"])
     assert validate_tier1_decomposition(root).status == "PASS"
@@ -205,6 +205,24 @@ def test_explicit_review_record_statuses_map_to_required_triage_categories():
     assert _category(["OPEN_SOURCE_REVIEW_ITEM"]) == "TIER_1_CRITICAL"
     assert _category(["OPEN_MAPPING_REVIEW_ITEM"]) == "TIER_3_SECONDARY"
     assert _category(["STATUS_REQUIRES_ADJUDICATION"]) == "TIER_1_CRITICAL"
+
+
+def test_resolved_source_metadata_triage_suppresses_historical_page_precision_flag():
+    """An explicit source-triage resolution prevents reopening known history."""
+    from qbank.global_review_triage import _reasons
+
+    reasons = _reasons(
+        {"page_mapping_precision": "UNRESOLVED"},
+        [],
+        [],
+        [{
+            "issue_type": "source_review_other_metadata_triage",
+            "review_record_status": "RESOLVED",
+        }],
+        set(),
+    )
+
+    assert "SOURCE_AMBIGUITY_UNRESOLVED" not in reasons
 
 
 def test_build_includes_every_chapter_crosswalk_entry_once(tmp_path):

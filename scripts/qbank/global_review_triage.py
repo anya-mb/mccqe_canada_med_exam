@@ -162,6 +162,11 @@ def _reasons(entry: dict[str, Any], original_reasons: list[str], unresolved: lis
     if any(item.get("requires_scope_review") is True for item in evidence if isinstance(item, dict)): reasons.append("REQUIRES_SCOPE_REVIEW")
     statuses = {item.get("review_record_status") for item in unresolved}
     resolved_statuses = {item.get("review_record_status") for item in resolved}
+    source_metadata_resolved = any(
+        item.get("issue_type") == "source_review_other_metadata_triage"
+        and item.get("review_record_status") in {"RESOLVED", "INFORMATIONAL", "DEFERRED_OWNERSHIP"}
+        for item in resolved
+    )
     if unresolved: reasons.append("UNRESOLVED_CHAPTER_REVIEW_ITEM")
     if "OPEN_SOURCE" in statuses: reasons.append("OPEN_SOURCE_REVIEW_ITEM")
     if "OPEN_MAPPING" in statuses: reasons.append("OPEN_MAPPING_REVIEW_ITEM")
@@ -169,7 +174,15 @@ def _reasons(entry: dict[str, Any], original_reasons: list[str], unresolved: lis
     if "RESOLVED" in resolved_statuses or ("UNRESOLVED_CHAPTER_REVIEW_ITEM" in original_reasons and not unresolved): reasons.append("RESOLVED_CHAPTER_REVIEW_ITEM")
     if "INFORMATIONAL" in resolved_statuses: reasons.append("INFORMATIONAL_CHAPTER_REVIEW_ITEM")
     if "DEFERRED_OWNERSHIP" in resolved_statuses: reasons.append("DEFERRED_OWNERSHIP_REVIEW_ITEM")
-    if ("OPEN_SOURCE" in statuses or any(_STRUCTURAL_ISSUE.search(str(item.get("issue_type") or "")) for item in unresolved if not item.get("review_record_status"))) or entry.get("page_mapping_precision") == "UNRESOLVED": reasons.append("SOURCE_AMBIGUITY_UNRESOLVED")
+    if (
+        "OPEN_SOURCE" in statuses
+        or (
+            not source_metadata_resolved
+            and any(_STRUCTURAL_ISSUE.search(str(item.get("issue_type") or "")) for item in unresolved if not item.get("review_record_status"))
+        )
+        or (entry.get("page_mapping_precision") == "UNRESOLVED" and not source_metadata_resolved)
+    ):
+        reasons.append("SOURCE_AMBIGUITY_UNRESOLVED")
     jurisdiction = entry.get("jurisdiction")
     if isinstance(jurisdiction, dict) and jurisdiction.get("scope") == "UNRESOLVED": reasons.append("JURISDICTION_UNRESOLVED")
     freshness = entry.get("freshness")
