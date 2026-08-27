@@ -4,7 +4,7 @@
   "chapter_code": "OP",
   "chapter_title": "Ophthalmology",
   "source_toc_inventory": "research/tn2025/toc_inventory.json",
-  "methodology_note": "Study units derived from Toronto Notes source structure (toc_inventory.json / derived/scope_packets/OP.json). OP's packet flags source-structure corruption at three points beyond the standard chapter-opening acronym-glossary merge (OP.S01, 'ACTOMYMS'/'Basic Anatomy Review', matching the OB/NS precedent): (1) OP.S03 ('OcularEmergencies') co-locates the real heading 'The Ocular Examination' via merged_duplicate_headings, and both are clinically substantive, so the node is split into two units (SU-OP-11, SU-OP-12) per the OB.S07 compound-title-split precedent rather than discarding one heading; (2) OP.S15 ('Malignancies') co-locates the real heading 'Ocular Manifestations of Systemic Disease', and its 13 topic children in fact span two themes, so they are grouped into a malignancy unit (SU-OP-42) and six systemic-disease units (SU-OP-43 to 49) by theme rather than by raw section title; (3) OP.S19's raw title 'Uveitis Common Medications' is RESOLVED (targeted follow-up, 2026-08-26) as a two-column OCR merge, not a genuine compound heading: 'The Uveal Tract' (research/tn2025/unresolved_headings.json's UNRESOLVED candidate) is a real, body-confirmed heading at pdf 1060 (TN OP20) introducing 'Uveitis' clinical content spanning pdf 1060-1061, while OP.S19's actual body content at OP44-45 is 'Common Medications' alone (no uveitis content). SU-OP-60 ('Uveitis') is now sourced from a synthetic UNCATALOGUED:TheUvealTract@pdf1060 id (chapter-A 'Monitoring' precedent) at pdf 1060-1061; SU-OP-61 (retitled 'Common Medications (Ophthalmic Reference Table)', REFERENCE_ONLY) remains sourced from OP.S19 at OP44-45. See research/scope/chapters/OP/review_items.json for the full resolution record. All 84 T-level topic nodes (OP.S0X.T0Y) are LOW-confidence TOC_OCR_UNANCHORED extractions inheriting their parent section's page range (SECTION_INHERITED precision). No page-image rendering was performed for this pass; the structural notes above are based on TOC-level evidence (titles, merged_duplicate_headings, unresolved_headings) only and are flagged for human page-image confirmation rather than asserted as resolved. Excluded as non-clinical organizational/reference material: the chapter root (OP), the Acronyms portion of OP.S01, OP.S20 (Landmark Ophthalmology Trials -- an EBM-summary table, consistent with the OB.S18/NS.S20 References-section precedent), and the References portion of OP.S21 ('Cataracts References'; its substantive T-child, Dislocated Lens, is retained as SU-OP-62).",
+  "methodology_note": "Study units derived from Toronto Notes source structure (toc_inventory.json / derived/scope_packets/OP.json). OP's packet flags source-structure corruption at three points beyond the standard chapter-opening acronym-glossary merge (OP.S01, 'ACTOMYMS'/'Basic Anatomy Review', matching the OB/NS precedent): (1) OP.S03 ('OcularEmergencies') co-locates the real heading 'The Ocular Examination' via merged_duplicate_headings, and both are clinically substantive, so the node is split into two units (SU-OP-11, SU-OP-12) per the OB.S07 compound-title-split precedent rather than discarding one heading; targeted body OCR confirms both headings on pdf 1045, with Ocular Examination continuing through pdf 1046. (2) OP.S15 ('Malignancies') co-locates the real heading 'Ocular Manifestations of Systemic Disease'; targeted body OCR confirms the malignancy content on pdf 1073 and the separate systemic-disease topics on pdf 1073-1076, so the existing theme-based units carry exact body page ranges. (3) OP.S19's raw title 'Uveitis Common Medications' is RESOLVED (targeted follow-up, 2026-08-26) as a two-column OCR merge, not a genuine compound heading: 'The Uveal Tract' (research/tn2025/unresolved_headings.json's UNRESOLVED candidate) is a real, body-confirmed heading at pdf 1060 (TN OP20) introducing 'Uveitis' clinical content spanning pdf 1060-1061, while OP.S19's actual body content at OP44-45 is 'Common Medications' alone (no uveitis content). SU-OP-60 ('Uveitis') is now sourced from a synthetic UNCATALOGUED:TheUvealTract@pdf1060 id (chapter-A 'Monitoring' precedent) at pdf 1060-1061; SU-OP-61 (retitled 'Common Medications (Ophthalmic Reference Table)', REFERENCE_ONLY) remains sourced from OP.S19 at OP44-45. See research/scope/chapters/OP/review_items.json for the full resolution record. All remaining T-level topic nodes (OP.S0X.T0Y) are LOW-confidence TOC_OCR_UNANCHORED extractions inheriting their parent section's page range unless a unit states body-confirmed exact precision. Excluded as non-clinical organizational/reference material: the chapter root (OP), the Acronyms portion of OP.S01, OP.S20 (Landmark Ophthalmology Trials -- an EBM-summary table, consistent with the OB.S18/NS.S20 References-section precedent), and the References portion of OP.S21 ('Cataracts References'; its substantive T-child, Dislocated Lens, is retained as SU-OP-62).",
   "total_study_units": 62,
   "organizational_header_nodes": [
     "OP",
@@ -267,9 +267,9 @@
         "Ophthalmology",
         "The Ocular Examination"
       ],
-      "structural_rationale": "OP.S03 is titled 'OcularEmergencies' (concatenated, no OCR-garbling) but merged_duplicate_headings records the co-located real heading 'The Ocular Examination' on the same OP5-OP6 page span. Unlike the OB.S01 acronym-glossary precedent (where one of the two co-located headings was non-clinical and discarded), both co-located headings here are independently clinically substantive, so -- following the OB.S07 compound-title-split precedent -- this node is represented as two study units: this one (examination technique) and 'Ocular Emergencies (Triage Overview)' below. FLAGGED for source-structure risk review: the true page split between the two headings could not be determined from the TOC alone.",
+      "structural_rationale": "OP.S03 is titled 'OcularEmergencies' but merged_duplicate_headings records the co-located real heading 'The Ocular Examination'. Targeted body OCR confirms both headings on pdf 1045/OP5: Ocular Emergencies precedes The Ocular Examination, which continues through pdf 1046/OP6. Both are independently substantive and remain separate units.",
       "extraction_confidence": "HIGH",
-      "page_mapping_precision": "SECTION_INHERITED"
+      "page_mapping_precision": "EXACT_SECTION"
     },
     {
       "scope_schema_version": "1.0",
@@ -280,18 +280,18 @@
       "source_node_ids": [
         "OP.S03"
       ],
-      "tn_page_range": "OP5-OP6",
+      "tn_page_range": "OP5",
       "pdf_page_range": [
         1045,
-        1046
+        1045
       ],
       "source_hierarchy_path": [
         "Ophthalmology",
         "Ocular Emergencies (Triage Overview)"
       ],
-      "structural_rationale": "See structural note on unit 'The Ocular Examination' above: OP.S03's raw title 'OcularEmergencies' is represented here as its own overview/triage-list unit, distinct from the co-located 'The Ocular Examination' heading. The individual emergencies it enumerates (chemical burn, acute angle-closure glaucoma, retinal artery occlusion, globe rupture, orbital compartment syndrome) are separately mapped under their own disease-specific units elsewhere in this crosswalk (angle-closure glaucoma, retinal artery occlusion, ocular trauma, chemical burns) to avoid double-counting question coverage.",
+      "structural_rationale": "Targeted body OCR confirms Ocular Emergencies as the first heading on pdf 1045/OP5, immediately before The Ocular Examination. The individual emergencies it enumerates are separately represented under disease-specific units elsewhere in this crosswalk.",
       "extraction_confidence": "HIGH",
-      "page_mapping_precision": "SECTION_INHERITED"
+      "page_mapping_precision": "EXACT_TOPIC"
     },
     {
       "scope_schema_version": "1.0",
@@ -995,24 +995,24 @@
         "OP.S15.T02",
         "OP.S15.T03"
       ],
-      "tn_page_range": "OP33-OP36",
+      "tn_page_range": "OP33",
       "pdf_page_range": [
         1073,
-        1076
+        1073
       ],
       "source_hierarchy_path": [
         "Ophthalmology",
         "Malignancies and Ocular Manifestations of Systemic Disease",
         "Lid Carcinoma / Uveal Melanoma / Metastases"
       ],
-      "structural_rationale": "OP.S15.T01-T03 are LOW-confidence TOC_OCR_UNANCHORED topics under OP.S15, which is titled 'Malignancies' but merged_duplicate_headings records the co-located real heading 'Ocular Manifestations of Systemic Disease' on the same OP33-OP36 span -- the section in fact covers two distinct themes (ocular malignancy and systemic-disease ocular signs). Following the OP.S03/OB.S07 split precedent, this node's topics are represented across two study units by theme: this malignancy-focused unit and the systemic-disease-focused units below (43-49).",
-      "extraction_confidence": "LOW",
-      "page_mapping_precision": "SECTION_INHERITED"
+      "structural_rationale": "Targeted body OCR confirms the Lid Carcinoma, Uveal Melanoma, and Metastases content under Malignancies on pdf 1073/OP33, immediately before Ocular Manifestations of Systemic Disease.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
     },
     {
       "scope_schema_version": "1.0",
       "study_unit_id": "SU-OP-43",
-      "title": "Ocular Manifestations of Systemic Infectious and Immune Disease (HIV, Sarcoidosis, Connective Tissue Disease)",
+      "title": "Ocular Manifestations of Systemic Infectious and Immune Disease (HIV, Other Systemic Infections, Connective Tissue Disease)",
       "chapter_code": "OP",
       "chapter_title": "Ophthalmology",
       "source_node_ids": [
@@ -1029,11 +1029,11 @@
       "source_hierarchy_path": [
         "Ophthalmology",
         "Ocular Manifestations of Systemic Disease",
-        "HIV/AIDS / Other Systemic Infections / Connective Tissue Disorders / Sarcoidosis"
+        "HIV/AIDS / Other Systemic Infections / Connective Tissue Disorders"
       ],
-      "structural_rationale": "OP.S15.T04, T05, T11, T13 are LOW-confidence TOC_OCR_UNANCHORED topics under OP.S15 (see structural note on unit 42 above), grouped by their shared systemic-infectious/immune theme.",
-      "extraction_confidence": "LOW",
-      "page_mapping_precision": "SECTION_INHERITED"
+      "structural_rationale": "Targeted body OCR confirms HIV/AIDS and other systemic infections on pdf 1073-1074/OP33-OP34 and Connective Tissue Disorders on pdf 1076/OP36. OP.S15.T13 (Sarcoidosis) has no corresponding body heading on these pages; it is retained only for source-node accounting as an OCR-only child, not as learner-facing scope.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
     },
     {
       "scope_schema_version": "1.0",
@@ -1044,19 +1044,19 @@
       "source_node_ids": [
         "OP.S15.T06"
       ],
-      "tn_page_range": "OP33-OP36",
+      "tn_page_range": "OP34-OP35",
       "pdf_page_range": [
-        1073,
-        1076
+        1074,
+        1075
       ],
       "source_hierarchy_path": [
         "Ophthalmology",
         "Ocular Manifestations of Systemic Disease",
         "Diabetes Mellitus"
       ],
-      "structural_rationale": "OP.S15.T06 is a LOW-confidence TOC_OCR_UNANCHORED topic under OP.S15 (see structural note on unit 42 above).",
-      "extraction_confidence": "LOW",
-      "page_mapping_precision": "SECTION_INHERITED"
+      "structural_rationale": "Targeted body OCR confirms Diabetes Mellitus and Diabetic Retinopathy on pdf 1074-1075/OP34-OP35.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
     },
     {
       "scope_schema_version": "1.0",
@@ -1067,9 +1067,9 @@
       "source_node_ids": [
         "OP.S15.T07"
       ],
-      "tn_page_range": "OP33-OP36",
+      "tn_page_range": "OP35-OP36",
       "pdf_page_range": [
-        1073,
+        1075,
         1076
       ],
       "source_hierarchy_path": [
@@ -1077,9 +1077,9 @@
         "Ocular Manifestations of Systemic Disease",
         "Hypertension"
       ],
-      "structural_rationale": "OP.S15.T07 is a LOW-confidence TOC_OCR_UNANCHORED topic under OP.S15 (see structural note on unit 42 above).",
-      "extraction_confidence": "LOW",
-      "page_mapping_precision": "SECTION_INHERITED"
+      "structural_rationale": "Targeted body OCR confirms Hypertension and its retinopathy content on pdf 1075-1076/OP35-OP36.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_SECTION"
     },
     {
       "scope_schema_version": "1.0",
@@ -1090,9 +1090,9 @@
       "source_node_ids": [
         "OP.S15.T08"
       ],
-      "tn_page_range": "OP33-OP36",
+      "tn_page_range": "OP36",
       "pdf_page_range": [
-        1073,
+        1076,
         1076
       ],
       "source_hierarchy_path": [
@@ -1100,9 +1100,9 @@
         "Ocular Manifestations of Systemic Disease",
         "Multiple Sclerosis"
       ],
-      "structural_rationale": "OP.S15.T08 is a LOW-confidence TOC_OCR_UNANCHORED topic under OP.S15 (see structural note on unit 42 above).",
-      "extraction_confidence": "LOW",
-      "page_mapping_precision": "SECTION_INHERITED"
+      "structural_rationale": "Targeted body OCR confirms Multiple Sclerosis and optic-neuritis content on pdf 1076/OP36.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
     },
     {
       "scope_schema_version": "1.0",
@@ -1113,9 +1113,9 @@
       "source_node_ids": [
         "OP.S15.T09"
       ],
-      "tn_page_range": "OP33-OP36",
+      "tn_page_range": "OP36",
       "pdf_page_range": [
-        1073,
+        1076,
         1076
       ],
       "source_hierarchy_path": [
@@ -1123,9 +1123,9 @@
         "Ocular Manifestations of Systemic Disease",
         "Transient Ischemic Attack/Amaurosis Fugax"
       ],
-      "structural_rationale": "OP.S15.T09 is a LOW-confidence TOC_OCR_UNANCHORED topic under OP.S15 (see structural note on unit 42 above).",
-      "extraction_confidence": "LOW",
-      "page_mapping_precision": "SECTION_INHERITED"
+      "structural_rationale": "Targeted body OCR confirms Transient Ischemic Attack/Amaurosis Fugax on pdf 1076/OP36.",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
     },
     {
       "scope_schema_version": "1.0",
@@ -1136,9 +1136,9 @@
       "source_node_ids": [
         "OP.S15.T10"
       ],
-      "tn_page_range": "OP33-OP36",
+      "tn_page_range": "OP36",
       "pdf_page_range": [
-        1073,
+        1076,
         1076
       ],
       "source_hierarchy_path": [
@@ -1146,9 +1146,9 @@
         "Ocular Manifestations of Systemic Disease",
         "Graves' Disease"
       ],
-      "structural_rationale": "OP.S15.T10 is a LOW-confidence TOC_OCR_UNANCHORED topic under OP.S15 (see structural note on unit 42 above). Cross-references Globe Displacement (unit 14).",
-      "extraction_confidence": "LOW",
-      "page_mapping_precision": "SECTION_INHERITED"
+      "structural_rationale": "Targeted body OCR confirms Graves' Disease ophthalmopathy on pdf 1076/OP36. Cross-references Globe Displacement (unit 14).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
     },
     {
       "scope_schema_version": "1.0",
@@ -1159,9 +1159,9 @@
       "source_node_ids": [
         "OP.S15.T12"
       ],
-      "tn_page_range": "OP33-OP36",
+      "tn_page_range": "OP36",
       "pdf_page_range": [
-        1073,
+        1076,
         1076
       ],
       "source_hierarchy_path": [
@@ -1169,9 +1169,9 @@
         "Ocular Manifestations of Systemic Disease",
         "Giant Cell Arteritis/Temporal Arteritis"
       ],
-      "structural_rationale": "OP.S15.T12 is a LOW-confidence TOC_OCR_UNANCHORED topic under OP.S15 (see structural note on unit 42 above). No dedicated MCC giant-cell-arteritis objective exists (confirmed via search-mcc-objectives).",
-      "extraction_confidence": "LOW",
-      "page_mapping_precision": "SECTION_INHERITED"
+      "structural_rationale": "Targeted body OCR confirms Giant Cell Arteritis/Temporal Arteritis on pdf 1076/OP36. No dedicated MCC giant-cell-arteritis objective exists (confirmed via search-mcc-objectives).",
+      "extraction_confidence": "HIGH",
+      "page_mapping_precision": "EXACT_TOPIC"
     },
     {
       "scope_schema_version": "1.0",

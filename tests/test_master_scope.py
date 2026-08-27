@@ -112,11 +112,11 @@ def test_tier1_decomposition_partitions_tier1_and_keeps_packets_compact(tmp_path
         for entry in packet["entries"]
     ]
     tier1_ids = {entry["study_unit_id"] for entry in tier1["entries"]}
-    assert result["total_study_units"] == 47
+    assert result["total_study_units"] == 35
     assert set(packet_ids) == tier1_ids
-    assert len(packet_ids) == len(set(packet_ids)) == 47
+    assert len(packet_ids) == len(set(packet_ids)) == 35
     assert result["work_type_counts"] == {
-        "SOURCE_REVIEW": 33,
+        "SOURCE_REVIEW": 21,
         "MAPPING_REVIEW": 14,
         "JURISDICTION_REVIEW": 0,
         "STATUS_ADJUDICATION": 0,
@@ -127,7 +127,7 @@ def test_tier1_decomposition_partitions_tier1_and_keeps_packets_compact(tmp_path
         "ONLY_WEAK": 0,
         "OTHER_MAPPING_ISSUE": 0,
     }
-    assert source["reason_counts"]["OPEN_SOURCE"] == 12
+    assert source["source_review_counts"] == {"OPEN_SOURCE": 0, "OTHER": 21}
     assert all(entry["primary_work_type"] == "SOURCE_REVIEW" for entry in source["entries"])
     assert all("source_provenance" in entry for entry in source["entries"])
     assert validate_tier1_decomposition(root).status == "PASS"
