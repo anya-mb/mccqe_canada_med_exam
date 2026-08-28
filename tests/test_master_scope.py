@@ -209,6 +209,49 @@ def test_global_ownership_triage_commands_are_registered():
     assert "validate-global-ownership-triage" in commands
 
 
+def test_priority_c_ownership_triage_builds_compact_non_decisional_packets(tmp_path):
+    """Priority-C review design is deterministic, complete, and non-semantic."""
+    from qbank.global_ownership_priority_c import (
+        build_global_ownership_priority_c_triage,
+        validate_global_ownership_priority_c_triage,
+    )
+
+    root = _project_copy(tmp_path)
+    shutil.copy(
+        REPO / "research/scope/global_ownership_decisions.json",
+        root / "research/scope/global_ownership_decisions.json",
+    )
+    _build(root)
+    from qbank.global_ownership_triage import build_global_ownership_triage
+
+    build_global_ownership_triage(root)
+    result = build_global_ownership_priority_c_triage(root)
+    triage = _load(root, "global_ownership_priority_c_triage.json")
+    batches = _load(root, "global_ownership_priority_c_batches.json")
+
+    assert result["priority_c_groups"] == 29
+    assert sum(triage["work_type_counts"].values()) == 29
+    assert sum(triage["subpriority_counts"].values()) == 29
+    assert triage["work_type_counts"] == {
+        "C_TITLE_COLLISION": 4,
+        "C_COMPLEX_MULTI_UNIT": 12,
+        "C_EXISTING_OWNERSHIP_INTERACTION": 2,
+        "C_POSSIBLE_MULTI_COMPETENCY": 0,
+        "C_WEAK_SIGNAL_OVERLAP": 0,
+        "C_TARGETED_COUNTERPART_NEEDED": 11,
+        "C_OTHER": 0,
+    }
+    assert triage["subpriority_counts"] == {"C1": 11, "C2": 4, "C3": 14}
+    assert triage["priority_c_groups_matching_multi_competency_pattern"] == 5
+    assert triage["schema_extension_timing"] == "DEFER_SCHEMA_EXTENSION_UNTIL_AFTER_PRIORITY_C"
+    assert {group["candidate_shape"] for group in triage["groups"]} == {
+        "SINGLETON", "PAIR", "THREE_OR_MORE_UNITS"
+    }
+    limits = {"C1": 8, "C2": 6, "C3": 4}
+    assert all(len(batch["group_ids"]) <= limits[batch["subpriority"]] for batch in batches["batches"])
+    assert validate_global_ownership_priority_c_triage(root).status == "PASS"
+
+
 def test_tier1_decomposition_partitions_tier1_and_keeps_packets_compact(tmp_path):
     """A Tier-1 unit cannot be omitted, duplicated, or mixed with another tier."""
     from qbank.global_review_triage import build_global_review_triage
