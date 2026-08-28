@@ -1,66 +1,134 @@
-## MCC scope pipeline
+# MCCQE QBank Repository Instructions
 
-`AGENTS.md` is the canonical agent instruction file.
+## Start here
 
-### General rules
+Before doing MCCQE pipeline work:
 
-- Follow `docs/scope-chapter-workflow.md`.
-- Resume state from `reports/scope_scaling_progress.json`.
-- Use `.venv/bin/python` for all Python commands and tests.
-- Use deterministic Python for validation, accounting, aggregation, and reporting.
-- Use model reasoning only for semantic/source decisions that cannot be resolved deterministically.
-- Never infer Toronto Notes structure from medical knowledge.
-- Never fabricate MCC objective IDs or mappings.
-- Do not freeze changing clinical recommendations during scope mapping.
-- Do not call external LLM APIs from project code.
-- Do not preload the full Toronto Notes corpus, complete MCC registry, or completed chapter artifacts unless specifically necessary.
-- Prefer targeted retrieval over broad context loading.
-- Do not read completed chapters merely as formatting examples; use schemas and project docs.
-- Keep narration concise and avoid rereading files unnecessarily.
-- Do not launch parallel chapter agents unless explicitly requested.
-- Do not commit unless the current user task explicitly authorizes commits.
+1. Read `MEMORY.md` for the current project phase, active blocker, frozen layers, and next step.
+2. Read the canonical artifacts relevant to the requested task.
+3. Treat canonical JSON artifacts and deterministic validator output as authoritative if they conflict with `MEMORY.md`.
 
-### Chapter scope mapping
+Do not resume work from an old phase merely because older reports remain in the repository.
 
-- Process exactly one `NEXT_CHAPTER` per task and stop afterward.
-- Start with `prepare-scope-chapter <CODE>` and use the compact packet.
-- TOC node != study unit.
-- Source structure must be source-grounded.
-- Use targeted registry/source retrieval only when needed.
-- Do not finalize `PRIMARY_OWNER`, `CROSS_LINK`, or `DISTINCT_CONTEXT` during chapter mapping.
-- Semantically review only genuine risk items:
-  - UNCERTAIN
-  - weak-only evidence
-  - unresolved source ambiguities
-  - recovered headings needing confirmation
-  - questionable SPECIALIST_DETAIL
-  - CROSS_DISCIPLINE only when the classification itself is uncertain
-- Run the chapter validator and one canonical full pytest run after final canonical edits.
-- Do not rerun the full suite after ledger-hash-only changes.
-- When commits are authorized:
-  1. chapter/content commit
-  2. ledger-hash follow-up commit
-- Stop after the requested chapter.
+## Current architecture
 
-### Global scope phase
+The pipeline is staged:
 
-After chapter scope scaling is complete:
+scope
+→ MCC mapping
+→ ownership
+→ competency-component ownership
+→ discipline routing
+→ question-bank targets
+→ final question allocation
+→ generation manifests
+→ current Canadian source packets
+→ MCQ generation
+→ independent verification
 
-- Global aggregation must be deterministic Python.
-- Do not load all chapter JSON into model context.
-- Scripts should read chapter artifacts directly from disk.
-- Do not semantically merge or rewrite chapter content during deterministic aggregation.
-- Preserve all chapter-local provenance.
-- Build candidate sets deterministically before using model reasoning.
-- Semantic global review should operate only on compact conflict/risk packets.
-- Do not create `MCC_GAP_FILL` units until the dedicated semantic gap-analysis phase.
-- Do not generate questions until global ownership, weak/uncertain review, and MCC gap analysis are complete.
+Do not skip prerequisite stages.
 
-### Agent efficiency
+## Canonical-data rules
 
-For deterministic pipeline work:
+- Never invent Toronto Notes headings.
+- Never invent MCC IDs.
+- Do not reconstruct missing source evidence from medical knowledge.
+- Toronto Notes is for organization/topic discovery; it is not the sole authority for current clinical recommendations.
+- Preserve provenance.
+- Fail closed when canonical evidence or policy is missing.
+- Model agreement is not evidence.
 
-- Do not load optional plugin/skill documentation unless the current user task explicitly requires it.
-- Do not use planning frameworks for simple read-only or deterministic maintenance tasks unless required by the user.
-- Inspect large JSON collections programmatically rather than placing them in model context.
-- For failures, identify the root cause before changing code.
+## Frozen-layer rule
+
+Completed canonical layers must remain unchanged unless the current task explicitly authorizes modifying them or a concrete validator/audit failure proves repair is necessary.
+
+In particular, do not casually reopen:
+
+- study-unit scope;
+- MCC mappings;
+- ownership decisions;
+- competency-component ownership;
+- Medical Imaging allocation routing;
+- question-bank targets.
+
+## Deterministic-first rule
+
+Use deterministic Python for:
+
+- parsing;
+- joins;
+- reconciliation;
+- counting;
+- allocation arithmetic;
+- sorting;
+- graph validation;
+- schema validation;
+- reproducibility checks.
+
+Use an LLM only for bounded semantic decisions that deterministic evidence cannot resolve.
+
+Do not use an LLM for bulk deterministic transformations.
+
+## Allocation rules
+
+The canonical final study-bank target is defined by:
+
+`research/scope/question_bank_targets.json`
+
+Current target:
+
+- MED: 1,086
+- PED: 1,000
+- OBGYN: 1,000
+- SURG: 1,000
+- PSY: 1,000
+- PHELO: 1,000
+- Total: 6,086
+
+The separate 230-question MCCQE simulation is not part of this bank.
+
+Do not reduce MED planning minima simply to force MED back to 1,000.
+
+Use canonical allocation discipline routing, including committed Medical Imaging routing.
+
+Zero-scope precedence must be preserved.
+
+Ownership-suppressed content must not receive independent question allocation.
+
+Component-mode parents must not be double-allocated at whole-unit level.
+
+## Testing and validation
+
+Prefer:
+
+1. focused deterministic validation;
+2. focused tests;
+3. one full test-suite run after final production/canonical changes.
+
+If code or canonical executable artifacts change after the full-suite run, rerun it.
+
+Never claim PASS without fresh verification.
+
+Keep the working tree clean between canonical stages where practical.
+
+## Question generation
+
+Do not generate MCQs until:
+
+- final question allocation passes;
+- generation manifests exist;
+- appropriate current Canadian source packets are available.
+
+Question generation must use small, evidence-grounded batches rather than sending the entire curriculum to an LLM.
+
+Clinical recommendations should be refreshed from current authoritative Canadian sources where available.
+
+Questions must remain original and must not reproduce Toronto Notes, actual/recalled MCC questions, or commercial QBank questions.
+
+## Current resume point
+
+Read `MEMORY.md`.
+
+Current expected next stage:
+
+`BUILD_FINAL_QUESTION_ALLOCATION`
