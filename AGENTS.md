@@ -20,7 +20,7 @@ scope
 → competency-component ownership
 → discipline routing
 → question-bank targets
-→ final question allocation
+→ final allocation
 → generation manifests
 → current Canadian source packets
 → MCQ generation
