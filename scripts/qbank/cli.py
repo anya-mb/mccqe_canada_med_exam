@@ -61,6 +61,7 @@ from .source_packet_plan import (
     validate_source_packet_plan,
     write_source_packet_plan,
 )
+from .source_packet_population import validate_source_packet_population
 from .source import scan_deploy_leaks, validate_source
 
 
@@ -634,6 +635,36 @@ def _command_validate_source_packet_plan(args: argparse.Namespace) -> None:
         raise CommandError("SOURCE_PACKET_PLAN_VALIDATION_FAILED", "; ".join(result.errors))
 
 
+def _command_validate_source_packet_pilot(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    population = read_json(resolve_root_path(
+        root,
+        "research/qgen/source_packet_population_srb_089.json",
+        label="source packet pilot population",
+    ))
+    audit = read_json(resolve_root_path(
+        root,
+        "reports/source_packet_pilot_srb_089_audit.json",
+        label="source packet pilot audit",
+    ))
+    if not isinstance(population, dict) or not isinstance(audit, dict):
+        raise CommandError(
+            "SOURCE_PACKET_POPULATION_FAILURE",
+            "source packet pilot artifacts must be objects",
+        )
+    result = validate_source_packet_population(root, population, audit)
+    print(f"SOURCE_PACKET_PILOT_VALIDATION: {result.status}")
+    for name, status in result.checks.items():
+        print(f"  {name}: {status}")
+    for error in result.errors:
+        print(f"ERROR: {error}")
+    if result.status != "PASS":
+        raise CommandError(
+            "SOURCE_PACKET_POPULATION_VALIDATION_FAILED",
+            "; ".join(result.errors),
+        )
+
+
 def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--root",
@@ -720,6 +751,7 @@ def _parser() -> argparse.ArgumentParser:
         ("validate-question-generation-manifests", "validate deterministic question generation manifests", _command_validate_question_generation_manifests),
         ("build-source-packet-plan", "build deterministic pending current-Canadian source-packet plan", _command_build_source_packet_plan),
         ("validate-source-packet-plan", "validate deterministic source-packet plan", _command_validate_source_packet_plan),
+        ("validate-source-packet-pilot", "validate the plan-bound SRB-089 source-packet pilot", _command_validate_source_packet_pilot),
     )
     parsers = {}
     for name, help_text, handler in commands:
