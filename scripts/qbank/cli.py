@@ -53,6 +53,10 @@ from .final_question_allocation import (
     validate_final_question_allocation,
     write_final_question_allocation,
 )
+from .question_generation_manifest import (
+    validate_question_generation_manifest,
+    write_question_generation_manifest,
+)
 from .source import scan_deploy_leaks, validate_source
 
 
@@ -580,6 +584,29 @@ def _command_validate_final_question_allocation(args: argparse.Namespace) -> Non
         raise CommandError("FINAL_QUESTION_ALLOCATION_VALIDATION_FAILED", "; ".join(result.errors))
 
 
+def _command_build_question_generation_manifests(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    try:
+        manifest, audit = write_question_generation_manifest(root)
+    except QbankError as exc:
+        raise CommandError("QUESTION_GENERATION_MANIFEST_FAILURE", str(exc)) from exc
+    print(f"QUESTION_GENERATION_MANIFESTS_WRITTEN: jobs={len(manifest['jobs'])} total={audit['reconciliation']['TOTAL_MANIFEST_QUESTIONS']}")
+
+
+def _command_validate_question_generation_manifests(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    manifest = read_json(resolve_root_path(root, "research/qgen/question_generation_manifest.json", label="question generation manifest"))
+    audit = read_json(resolve_root_path(root, "reports/question_generation_manifest_audit.json", label="question generation manifest audit"))
+    if not isinstance(manifest, dict) or not isinstance(audit, dict):
+        raise CommandError("QUESTION_GENERATION_MANIFEST_FAILURE", "manifest artifacts must be objects")
+    result = validate_question_generation_manifest(root, manifest, audit)
+    print(f"QUESTION_GENERATION_MANIFEST_VALIDATION: {result.status}")
+    for name, status in result.checks.items(): print(f"  {name}: {status}")
+    for error in result.errors: print(f"ERROR: {error}")
+    if result.status != "PASS":
+        raise CommandError("QUESTION_GENERATION_MANIFEST_VALIDATION_FAILED", "; ".join(result.errors))
+
+
 def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--root",
@@ -662,6 +689,8 @@ def _parser() -> argparse.ArgumentParser:
         ),
         ("build-final-question-allocation", "build frozen-input final question allocation", _command_build_final_question_allocation),
         ("validate-final-question-allocation", "validate final question allocation", _command_validate_final_question_allocation),
+        ("build-question-generation-manifests", "build deterministic source-packet-gated generation manifests", _command_build_question_generation_manifests),
+        ("validate-question-generation-manifests", "validate deterministic question generation manifests", _command_validate_question_generation_manifests),
     )
     parsers = {}
     for name, help_text, handler in commands:
