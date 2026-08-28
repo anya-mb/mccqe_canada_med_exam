@@ -1,25 +1,18 @@
 # MCCQE project
 
-## Current state
+## Current phase
 
-CURRENT_PHASE =
-CURRENT_CANADIAN_SOURCE_PACKET_POPULATION
-
-Final allocation: PASS, 6086/6086.
-Question-generation manifests: PASS.
-Generation jobs: 220.
-Question slots: 6086.
-Allocation addresses manifested: 1175/1175.
-Manifest commit: d733de0.
-
-Source-packet plan:
-PASS
-
-TOTAL_SOURCE_PACKETS = 1524
-RESEARCH_BATCHES = 159
-
-Current next step:
-POPULATE_CURRENT_CANADIAN_SOURCE_PACKETS
+- Current phase: scaled current-Canadian source-packet research.
+- Source-packet plan: PASS.
+- Total planned source packets: 1,524.
+- Research batches: 159.
+- Pilot batch `SRB-089`: PASS.
+- Pilot packets ready: 10/10.
+- Pilot source-packet validator: PASS.
+- Pilot commit: `f5ae57b`.
+- Full test baseline: 644 passed / 0 failed.
+- Approximately 1,514 source packets remain to research.
+- Current next step: `SCALE_SOURCE_PACKET_RESEARCH`.
 
 ## Frozen layers
 
