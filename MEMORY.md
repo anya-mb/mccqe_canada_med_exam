@@ -2,7 +2,8 @@
 
 ## Current state
 
-Current phase: current-Canadian source-packet planning.
+CURRENT_PHASE =
+CURRENT_CANADIAN_SOURCE_PACKET_POPULATION
 
 Final allocation: PASS, 6086/6086.
 Question-generation manifests: PASS.
@@ -11,8 +12,14 @@ Question slots: 6086.
 Allocation addresses manifested: 1175/1175.
 Manifest commit: d733de0.
 
+Source-packet plan:
+PASS
+
+TOTAL_SOURCE_PACKETS = 1524
+RESEARCH_BATCHES = 159
+
 Current next step:
-BUILD_SOURCE_PACKET_PLAN
+POPULATE_CURRENT_CANADIAN_SOURCE_PACKETS
 
 ## Frozen layers
 
@@ -43,8 +50,8 @@ BUILD_SOURCE_PACKET_PLAN
 
 ## Blocker and next step
 
-- No upstream blocker remains. Build and validate the final question allocation.
-- NEXT_STEP = `BUILD_FINAL_QUESTION_ALLOCATION`
+- No upstream blocker remains. Populate the planned current Canadian source packets.
+- NEXT_STEP = `POPULATE_CURRENT_CANADIAN_SOURCE_PACKETS`
 
 ## Resume artifacts
 
