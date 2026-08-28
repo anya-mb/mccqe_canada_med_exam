@@ -57,6 +57,10 @@ from .question_generation_manifest import (
     validate_question_generation_manifest,
     write_question_generation_manifest,
 )
+from .source_packet_plan import (
+    validate_source_packet_plan,
+    write_source_packet_plan,
+)
 from .source import scan_deploy_leaks, validate_source
 
 
@@ -607,6 +611,29 @@ def _command_validate_question_generation_manifests(args: argparse.Namespace) ->
         raise CommandError("QUESTION_GENERATION_MANIFEST_VALIDATION_FAILED", "; ".join(result.errors))
 
 
+def _command_build_source_packet_plan(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    try:
+        plan, audit = write_source_packet_plan(root)
+    except QbankError as exc:
+        raise CommandError("SOURCE_PACKET_PLAN_FAILURE", str(exc)) from exc
+    print(f"SOURCE_PACKET_PLAN_WRITTEN: packets={len(plan['source_packets'])} batches={audit['research_batches']['RESEARCH_BATCH_COUNT']}")
+
+
+def _command_validate_source_packet_plan(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    plan = read_json(resolve_root_path(root, "research/qgen/source_packet_plan.json", label="source packet plan"))
+    audit = read_json(resolve_root_path(root, "reports/source_packet_plan_audit.json", label="source packet plan audit"))
+    if not isinstance(plan, dict) or not isinstance(audit, dict):
+        raise CommandError("SOURCE_PACKET_PLAN_FAILURE", "source packet plan artifacts must be objects")
+    result = validate_source_packet_plan(root, plan, audit)
+    print(f"SOURCE_PACKET_PLAN_VALIDATION: {result.status}")
+    for name, status in result.checks.items(): print(f"  {name}: {status}")
+    for error in result.errors: print(f"ERROR: {error}")
+    if result.status != "PASS":
+        raise CommandError("SOURCE_PACKET_PLAN_VALIDATION_FAILED", "; ".join(result.errors))
+
+
 def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--root",
@@ -691,6 +718,8 @@ def _parser() -> argparse.ArgumentParser:
         ("validate-final-question-allocation", "validate final question allocation", _command_validate_final_question_allocation),
         ("build-question-generation-manifests", "build deterministic source-packet-gated generation manifests", _command_build_question_generation_manifests),
         ("validate-question-generation-manifests", "validate deterministic question generation manifests", _command_validate_question_generation_manifests),
+        ("build-source-packet-plan", "build deterministic pending current-Canadian source-packet plan", _command_build_source_packet_plan),
+        ("validate-source-packet-plan", "validate deterministic source-packet plan", _command_validate_source_packet_plan),
     )
     parsers = {}
     for name, help_text, handler in commands:
