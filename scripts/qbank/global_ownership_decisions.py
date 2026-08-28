@@ -16,6 +16,7 @@ from .paths import resolve_root_path
 _ALLOWED_ROLES = ("PRIMARY_OWNER", "CROSS_LINK", "DISTINCT_CONTEXT")
 _CONFIDENCE = ("HIGH", "MODERATE", "LOW")
 _BATCH_ID = re.compile(r"PRIORITY_([ABC])-B(\d+)$")
+_PRIORITY_C_BATCH_ID = re.compile(r"(C[123])-B(\d+)$")
 
 
 class GlobalOwnershipDecisionError(QbankError):
@@ -37,22 +38,82 @@ def _read_object(root: Path, relative: str) -> dict[str, Any]:
 
 
 def _inputs(root: Path) -> dict[str, dict[str, Any]]:
-    return {
+    documents = {
         "master": _read_object(root, "research/scope/master_scope_crosswalk.json"),
         "batches": _read_object(root, "research/scope/global_ownership_batches.json"),
         "triage": _read_object(root, "research/scope/global_ownership_triage.json"),
         "decisions": _read_object(root, "research/scope/global_ownership_decisions.json"),
     }
+    priority_c_batches_path = root / "research/scope/global_ownership_priority_c_batches.json"
+    priority_c_triage_path = root / "research/scope/global_ownership_priority_c_triage.json"
+    if not priority_c_batches_path.exists() and not priority_c_triage_path.exists():
+        return documents
+    if not priority_c_batches_path.exists() or not priority_c_triage_path.exists():
+        raise GlobalOwnershipDecisionError(
+            "Priority-C ownership batch and triage inputs must be present together"
+        )
+    priority_c_batches = _read_object(
+        root, "research/scope/global_ownership_priority_c_batches.json"
+    ).get("batches")
+    priority_c_groups = _read_object(
+        root, "research/scope/global_ownership_priority_c_triage.json"
+    ).get("groups")
+    if not isinstance(priority_c_batches, list) or not isinstance(priority_c_groups, list):
+        raise GlobalOwnershipDecisionError(
+            "Priority-C ownership batch and triage arrays are required"
+        )
+    documents["batches"] = {
+        **documents["batches"],
+        "batches": [
+            *[
+                batch
+                for batch in documents["batches"].get("batches", [])
+                if not isinstance(batch, dict) or batch.get("priority") != "PRIORITY_C"
+            ],
+            *[
+                {**batch, "priority": batch.get("subpriority")}
+                for batch in priority_c_batches
+                if isinstance(batch, dict)
+            ],
+        ],
+    }
+    existing_group_ids = {
+        group.get("group_id")
+        for group in documents["triage"].get("groups", [])
+        if isinstance(group, dict)
+    }
+    documents["triage"] = {
+        **documents["triage"],
+        "groups": [
+            *documents["triage"].get("groups", []),
+            *[
+                {
+                    **group,
+                    "group_id": group.get("candidate_group_id"),
+                    "candidate_type": group.get("original_candidate_type"),
+                }
+                for group in priority_c_groups
+                if isinstance(group, dict)
+                and group.get("candidate_group_id") not in existing_group_ids
+            ],
+        ],
+    }
+    return documents
 
 
 def audit_path(root: Path, batch_id: str) -> Path:
     match = _BATCH_ID.fullmatch(batch_id)
-    if not match:
-        raise GlobalOwnershipDecisionError(f"invalid ownership batch_id: {batch_id}")
-    priority, number = match.groups()
-    filename = (
-        f"global_ownership_priority_{priority.lower()}_batch_{int(number)}_audit.json"
-    )
+    if match:
+        priority, number = match.groups()
+        filename = (
+            f"global_ownership_priority_{priority.lower()}_batch_{int(number)}_audit.json"
+        )
+    else:
+        match = _PRIORITY_C_BATCH_ID.fullmatch(batch_id)
+        if not match:
+            raise GlobalOwnershipDecisionError(f"invalid ownership batch_id: {batch_id}")
+        subpriority, number = match.groups()
+        filename = f"global_ownership_priority_{subpriority.lower()}_batch_{int(number)}_audit.json"
     return resolve_root_path(root, Path("reports") / filename, label="ownership audit")
 
 

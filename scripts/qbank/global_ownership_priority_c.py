@@ -71,6 +71,8 @@ def _existing_relationships(decisions: dict[str, Any]) -> dict[str, list[dict[st
     for item in decisions.get("decisions", []):
         if not isinstance(item, dict) or not isinstance(item.get("study_unit_id"), str):
             continue
+        if not str(item.get("adjudication_batch", "")).startswith(("PRIORITY_A-", "PRIORITY_B-")):
+            continue
         role = item.get("ownership_role")
         group_id = item.get("candidate_group_id")
         if role not in {"PRIMARY_OWNER", "CROSS_LINK", "DISTINCT_CONTEXT"} or not isinstance(group_id, str):

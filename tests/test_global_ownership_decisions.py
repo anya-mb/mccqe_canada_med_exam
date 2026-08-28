@@ -322,6 +322,76 @@ def test_singleton_group_can_cross_link_to_one_targeted_external_primary_owner(t
     }
 
 
+def test_priority_c_singleton_batch_uses_its_canonical_triage_and_audit(tmp_path):
+    """C1 singleton decisions reconcile against the separate Priority-C batch source."""
+    from qbank.global_ownership_decisions import (
+        build_global_ownership_batch_audit,
+        validate_global_ownership_decisions,
+    )
+
+    root = _fixture(tmp_path)
+    _write(
+        root / "research/scope/global_ownership_priority_c_batches.json",
+        {
+            "batches": [
+                {
+                    "batch_id": "C1-B01",
+                    "subpriority": "C1",
+                    "group_ids": ["G-C1"],
+                }
+            ]
+        },
+    )
+    _write(
+        root / "research/scope/global_ownership_priority_c_triage.json",
+        {
+            "groups": [
+                {
+                    "candidate_group_id": "G-C1",
+                    "original_candidate_type": "TITLE_ONLY_COLLISION",
+                    "study_unit_ids": ["SU-E"],
+                }
+            ]
+        },
+    )
+    value = _load_decisions(root)
+    value["adjudicated_batches"].append("C1-B01")
+    value["decisions"].extend(
+        [
+            {
+                "candidate_group_id": "G-C1",
+                "candidate_type": "TITLE_ONLY_COLLISION",
+                "study_unit_id": "SU-G",
+                "ownership_role": "PRIMARY_OWNER",
+                "rationale": "The targeted canonical counterpart is the natural teaching home.",
+                "decision_status": "RESOLVED",
+                "confidence": "HIGH",
+                "adjudication_batch": "C1-B01",
+            },
+            {
+                "candidate_group_id": "G-C1",
+                "candidate_type": "TITLE_ONLY_COLLISION",
+                "study_unit_id": "SU-E",
+                "ownership_role": "CROSS_LINK",
+                "primary_owner_study_unit_id": "SU-G",
+                "rationale": "The original singleton directly links to its targeted owner.",
+                "decision_status": "RESOLVED",
+                "confidence": "HIGH",
+                "adjudication_batch": "C1-B01",
+            },
+        ]
+    )
+    _save_decisions(root, value)
+
+    build_global_ownership_batch_audit(root, "PRIORITY_A-B01")
+    audit = build_global_ownership_batch_audit(root, "C1-B01")
+
+    assert validate_global_ownership_decisions(root).status == "PASS"
+    assert audit["priority"] == "C1"
+    assert audit["batch_id"] == "C1-B01"
+    assert audit["groups_reviewed"] == 1
+
+
 def test_shared_group_cross_links_must_target_its_own_primary_owner(tmp_path):
     """A group cannot cross-link one member to a primary owner from another group."""
     root = _fixture(tmp_path)
