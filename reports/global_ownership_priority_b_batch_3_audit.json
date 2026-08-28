@@ -1,14 +1,14 @@
 {
   "assignment_counts": {
-    "CROSS_LINK": 4,
+    "CROSS_LINK": 5,
     "DISTINCT_CONTEXT": 4,
-    "PRIMARY_OWNER": 4
+    "PRIMARY_OWNER": 5
   },
   "batch_id": "PRIORITY_B-B03",
   "confidence_counts": {
     "HIGH": 5,
-    "LOW": 2,
-    "MODERATE": 3
+    "LOW": 1,
+    "MODERATE": 4
   },
   "groups": [
     {
@@ -104,11 +104,21 @@
     {
       "candidate_group_id": "GOC-7483c637149a",
       "candidate_type": "SHARED_OBJECTIVE_OVERLAP",
-      "confidence": "LOW",
-      "decision_status": "DEFERRED_COMPLEX_OWNERSHIP",
-      "final_ownership_roles": [],
-      "primary_owner_study_unit_id": null,
-      "rationale": "The zero-allocation Respirology redirect does not identify one safe external owner: its stated pneumonia context spans Infectious Diseases, Emergency Medicine, Pediatrics, and Family Medicine, with unresolved pediatric internal overlap.",
+      "confidence": "MODERATE",
+      "decision_status": "RESOLVED",
+      "final_ownership_roles": [
+        {
+          "ownership_role": "PRIMARY_OWNER",
+          "study_unit_id": "SU-ID-02"
+        },
+        {
+          "ownership_role": "CROSS_LINK",
+          "primary_owner_study_unit_id": "SU-ID-02",
+          "study_unit_id": "SU-R-07"
+        }
+      ],
+      "primary_owner_study_unit_id": "SU-ID-02",
+      "rationale": "Infectious Diseases contains substantive general pneumonia teaching for diagnosis, severity assessment, and empiric initial management, making it the natural home for the shared competency.",
       "study_unit_ids": [
         "SU-R-07"
       ]
@@ -193,8 +203,8 @@
       ]
     }
   ],
-  "groups_deferred": 2,
-  "groups_resolved": 8,
+  "groups_deferred": 1,
+  "groups_resolved": 9,
   "groups_reviewed": 10,
   "priority": "PRIORITY_B",
   "schema_version": "1.0",
