@@ -5,7 +5,9 @@ from pathlib import Path
 
 from qbank.source_packet_population import (
     build_source_packet_population_audit,
+    build_source_packet_research_progress,
     validate_source_packet_population,
+    validate_source_packet_research_wave,
 )
 from qbank.cli import _parser
 
@@ -352,6 +354,13 @@ def test_cli_exposes_pilot_population_validator() -> None:
     assert args.command == "validate-source-packet-pilot"
 
 
+def test_cli_exposes_current_research_wave_validator() -> None:
+    args = _parser().parse_args(["validate-source-packet-wave", "SRB-001"])
+
+    assert args.command == "validate-source-packet-wave"
+    assert args.research_batch_id == "SRB-001"
+
+
 def test_committed_srb_089_population_and_audit_validate() -> None:
     population = json.loads(
         (REPO / "research/qgen/source_packet_population_srb_089.json").read_text(
@@ -369,3 +378,43 @@ def test_committed_srb_089_population_and_audit_validate() -> None:
     assert result.status == "PASS"
     assert audit["NON_PILOT_PACKETS_CHANGED"] == 0
     assert audit["UNSUPPORTED_EVIDENCE_REQUIREMENTS"] == 0
+
+
+def test_committed_wave_is_plan_bound_and_progress_is_derived() -> None:
+    pilot_population = json.loads(
+        (REPO / "research/qgen/source_packet_population_srb_089.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    wave_population = json.loads(
+        (REPO / "research/qgen/source_packet_population_srb_001.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    wave_audit = json.loads(
+        (REPO / "reports/source_packet_wave_srb_001_audit.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    result = validate_source_packet_research_wave(
+        REPO, wave_population, [pilot_population], wave_audit
+    )
+    progress = build_source_packet_research_progress(
+        REPO, [pilot_population, wave_population]
+    )
+    committed_progress = json.loads(
+        (REPO / "reports/source_packet_research_progress.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    assert result.status == "PASS"
+    assert progress["TOTAL_SOURCE_PACKETS"] == 1524
+    assert progress["SOURCE_PACKETS_READY"] == 16
+    assert progress["SOURCE_PACKETS_PENDING"] == 1508
+    assert progress["RESEARCH_BATCHES_COMPLETE"] == 2
+    assert progress["RESEARCH_BATCHES_PENDING"] == 157
+    assert progress["PREVIOUS_READY_PACKETS_CHANGED"] == 0
+    assert progress["NON_SELECTED_PACKETS_CHANGED"] == 0
+    assert committed_progress == progress

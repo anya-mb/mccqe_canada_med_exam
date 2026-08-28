@@ -61,7 +61,10 @@ from .source_packet_plan import (
     validate_source_packet_plan,
     write_source_packet_plan,
 )
-from .source_packet_population import validate_source_packet_population
+from .source_packet_population import (
+    validate_source_packet_population,
+    validate_source_packet_research_wave,
+)
 from .source import scan_deploy_leaks, validate_source
 
 
@@ -665,6 +668,36 @@ def _command_validate_source_packet_pilot(args: argparse.Namespace) -> None:
         )
 
 
+def _command_validate_source_packet_wave(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    batch_id = args.research_batch_id.lower().replace("-", "_")
+    population = read_json(resolve_root_path(
+        root,
+        f"research/qgen/source_packet_population_{batch_id}.json",
+        label="source packet research-wave population",
+    ))
+    audit = read_json(resolve_root_path(
+        root,
+        f"reports/source_packet_wave_{batch_id}_audit.json",
+        label="source packet research-wave audit",
+    ))
+    pilot = read_json(resolve_root_path(
+        root,
+        "research/qgen/source_packet_population_srb_089.json",
+        label="source packet pilot population",
+    ))
+    if not all(isinstance(item, dict) for item in (population, audit, pilot)):
+        raise CommandError("SOURCE_PACKET_POPULATION_FAILURE", "source packet research-wave artifacts must be objects")
+    result = validate_source_packet_research_wave(root, population, [pilot], audit)
+    print(f"SOURCE_PACKET_WAVE_VALIDATION: {result.status}")
+    for name, status in result.checks.items():
+        print(f"  {name}: {status}")
+    for error in result.errors:
+        print(f"ERROR: {error}")
+    if result.status != "PASS":
+        raise CommandError("SOURCE_PACKET_POPULATION_VALIDATION_FAILED", "; ".join(result.errors))
+
+
 def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--root",
@@ -752,6 +785,7 @@ def _parser() -> argparse.ArgumentParser:
         ("build-source-packet-plan", "build deterministic pending current-Canadian source-packet plan", _command_build_source_packet_plan),
         ("validate-source-packet-plan", "validate deterministic source-packet plan", _command_validate_source_packet_plan),
         ("validate-source-packet-pilot", "validate the plan-bound SRB-089 source-packet pilot", _command_validate_source_packet_pilot),
+        ("validate-source-packet-wave", "validate one plan-bound current Canadian source-packet research wave", _command_validate_source_packet_wave),
     )
     parsers = {}
     for name, help_text, handler in commands:
@@ -773,6 +807,7 @@ def _parser() -> argparse.ArgumentParser:
     parsers["search-mcc-objectives"].add_argument("query")
     parsers["search-mcc-objectives"].add_argument("--limit", type=int, default=20)
     parsers["build-global-ownership-audit"].add_argument("batch_id")
+    parsers["validate-source-packet-wave"].add_argument("research_batch_id")
     return parser
 
 

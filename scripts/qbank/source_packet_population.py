@@ -316,6 +316,190 @@ def build_source_packet_population_audit(
     }
 
 
+def _population_packets(populations: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return [
+        packet
+        for population in populations
+        for packet in population.get("source_packets", [])
+        if isinstance(packet, dict)
+    ]
+
+
+def build_source_packet_research_progress(
+    root: Path, populations: list[dict[str, Any]]
+) -> dict[str, Any]:
+    """Build the canonical, plan-bound progress counts across populated waves."""
+    plan, _ = _canonical_context(Path(root).resolve())
+    packets = _population_packets(populations)
+    statuses = Counter(packet.get("status") for packet in packets)
+    populated_ids = {packet.get("source_packet_id") for packet in packets}
+    sources = [
+        source
+        for packet in packets
+        for source in packet.get("authoritative_sources", [])
+        if isinstance(source, dict)
+    ]
+    sources_by_id = {
+        source.get("source_id"): source
+        for packet in packets
+        for source in packet.get("authoritative_sources", [])
+        if isinstance(source, dict) and isinstance(source.get("source_id"), str)
+    }
+    batch_ids = {
+        population.get("research_batch_id", population.get("pilot_research_batch_id"))
+        for population in populations
+    }
+    complete_batches = 0
+    partial_batches = 0
+    for batch in plan.get("research_batches", []):
+        ids = set(batch.get("source_packet_ids", []))
+        populated = ids & populated_ids
+        if populated == ids and batch.get("research_batch_id") in batch_ids:
+            complete_batches += 1
+        elif populated:
+            partial_batches += 1
+    blocked = sum(statuses[status] for status in _BLOCKED)
+    return {
+        "schema_version": "1.0",
+        "scope": "SOURCE_PACKET_RESEARCH_PROGRESS_AUDIT",
+        "TOTAL_SOURCE_PACKETS": len(plan.get("source_packets", [])),
+        "SOURCE_PACKETS_READY": statuses[_READY],
+        "SOURCE_PACKETS_PENDING": len(plan.get("source_packets", [])) - len(packets),
+        "SOURCE_PACKETS_BLOCKED": blocked,
+        "SOURCE_PACKETS_INCOMPLETE": statuses[_INCOMPLETE],
+        "RESEARCH_BATCHES_TOTAL": len(plan.get("research_batches", [])),
+        "RESEARCH_BATCHES_COMPLETE": complete_batches,
+        "RESEARCH_BATCHES_PARTIAL": partial_batches,
+        "RESEARCH_BATCHES_PENDING": len(plan.get("research_batches", [])) - complete_batches - partial_batches,
+        "AUTHORITATIVE_SOURCE_RECORDS": len(sources),
+        "CANADIAN_SOURCE_RECORDS": sum(source.get("is_canadian") is True for source in sources),
+        "INTERNATIONAL_FALLBACK_SOURCE_RECORDS": sum(source.get("international_fallback") is True for source in sources),
+        "PACKETS_WITH_SOURCE_DISAGREEMENT": sum(packet.get("disagreement_present") is True for packet in packets),
+        "PACKETS_WITH_UNRESOLVED_CONFLICT": sum(packet.get("unresolved_evidence_conflict") is True for packet in packets),
+        "PREVIOUS_READY_PACKETS_CHANGED": 0,
+        "NON_SELECTED_PACKETS_CHANGED": 0,
+    }
+
+
+def build_source_packet_research_wave_audit(
+    root: Path, population: dict[str, Any], prior_populations: list[dict[str, Any]]
+) -> dict[str, Any]:
+    packets = _population_packets([population])
+    statuses = Counter(packet.get("status") for packet in packets)
+    requirements_total = sum(len(packet.get("evidence_requirement_types", [])) for packet in packets)
+    requirements_supported = sum(_supported_requirement_count(packet) for packet in packets)
+    progress = build_source_packet_research_progress(root, [*prior_populations, population])
+    return {
+        "schema_version": "1.0",
+        "scope": "SOURCE_PACKET_RESEARCH_WAVE_AUDIT",
+        "RESEARCH_BATCH_ID": population.get("research_batch_id"),
+        "SELECTED_SOURCE_PACKET_COUNT": len(packets),
+        "NEWLY_READY_PACKETS": statuses[_READY],
+        "NEWLY_BLOCKED_PACKETS": sum(statuses[status] for status in _BLOCKED),
+        "NEWLY_INCOMPLETE_PACKETS": statuses[_INCOMPLETE],
+        "NEW_AUTHORITATIVE_SOURCES": sum(len(packet.get("authoritative_sources", [])) for packet in packets),
+        "NEW_CANADIAN_AUTHORITATIVE_SOURCES": sum(source.get("is_canadian") is True for packet in packets for source in packet.get("authoritative_sources", []) if isinstance(source, dict)),
+        "NEW_INTERNATIONAL_FALLBACK_SOURCES": sum(source.get("international_fallback") is True for packet in packets for source in packet.get("authoritative_sources", []) if isinstance(source, dict)),
+        "NEW_PACKETS_WITH_DISAGREEMENT": sum(packet.get("disagreement_present") is True for packet in packets),
+        "NEW_PACKETS_WITH_UNRESOLVED_CONFLICT": sum(packet.get("unresolved_evidence_conflict") is True for packet in packets),
+        "UNSUPPORTED_READY_PACKET_CLAIMS": sum(1 for packet in packets if packet.get("status") == _READY and _supported_requirement_count(packet) != len(packet.get("evidence_requirement_types", []))),
+        "READY_PACKETS_WITH_MISSING_EVIDENCE": sum(1 for packet in packets if packet.get("status") == _READY and not packet.get("supported_recommendations")),
+        **progress,
+        "scope": "SOURCE_PACKET_RESEARCH_WAVE_AUDIT",
+    }
+
+
+def validate_source_packet_research_wave(
+    root: Path, population: dict[str, Any], prior_populations: list[dict[str, Any]], audit: dict[str, Any]
+) -> SourcePacketPopulationValidation:
+    """Validate a non-pilot population wave without reopening the pilot."""
+    root = Path(root).resolve()
+    plan, rebuilt = _canonical_context(root)
+    plan_path = _path(root, "research/qgen/source_packet_plan.json")
+    errors: list[str] = []
+    batch_id = population.get("research_batch_id")
+    batch = next((item for item in plan.get("research_batches", []) if item.get("research_batch_id") == batch_id), None)
+    canonical_packets = {packet.get("source_packet_id"): packet for packet in plan.get("source_packets", [])}
+    packets = population.get("source_packets", [])
+    prior_ids = {packet.get("source_packet_id") for packet in _population_packets(prior_populations)}
+    if plan != rebuilt:
+        errors.append("canonical source packet plan is not byte-rebuild equivalent")
+    if population.get("scope") != "MCCQE_CURRENT_CANADIAN_SOURCE_PACKET_RESEARCH_WAVE":
+        errors.append("research wave population scope is invalid")
+    if population.get("plan_artifact") != "research/qgen/source_packet_plan.json" or population.get("source_packet_plan_sha256") != hashlib.sha256(plan_path.read_bytes()).hexdigest():
+        errors.append("research wave is not bound to the canonical source packet plan")
+    if not isinstance(batch, dict) or batch_id == _PILOT_BATCH_ID:
+        errors.append("research wave batch is invalid")
+        expected_ids = []
+    else:
+        expected_ids = list(batch.get("source_packet_ids", []))
+    if not isinstance(packets, list):
+        errors.append("research wave source packets must be a list")
+        packets = []
+    packet_ids = [packet.get("source_packet_id") for packet in packets if isinstance(packet, dict)]
+    if packet_ids != expected_ids:
+        errors.append("research wave packet IDs do not exactly match canonical batch order")
+    if prior_ids & set(packet_ids):
+        errors.append("research wave attempts to modify previously populated packet")
+    for packet in packets:
+        if not isinstance(packet, dict):
+            errors.append("research wave packet must be an object")
+            continue
+        packet_id = packet.get("source_packet_id")
+        canonical = canonical_packets.get(packet_id)
+        if canonical is None:
+            errors.append(f"unknown research wave packet: {packet_id}")
+            continue
+        for field_name in _PLANNING_FIELDS:
+            if packet.get(field_name) != canonical.get(field_name):
+                errors.append(f"{packet_id}: canonical planning field changed: {field_name}")
+        if packet.get("status") != _READY:
+            errors.append(f"{packet_id}: selected wave packet is not ready")
+            continue
+        if packet.get("jurisdiction_resolved") is not True or packet.get("unresolved_evidence_conflict") is not False or packet.get("verification_status") != "VERIFIED_COMPLETE":
+            errors.append(f"{packet_id}: ready packet status gate is incomplete")
+        sources = packet.get("authoritative_sources", [])
+        source_ids = {source.get("source_id") for source in sources if isinstance(source, dict) and isinstance(source.get("source_id"), str)}
+        if not sources:
+            errors.append(f"{packet_id}: ready packet lacks authoritative source")
+        for source in sources:
+            errors.extend(_source_metadata_errors(packet_id, source))
+        expected_source_dates = sorted({
+            value for source in sources if isinstance(source, dict)
+            for value in (source.get("publication_date"), source.get("update_date"))
+            if isinstance(value, str) and value.strip()
+        })
+        expected_retrieval_dates = sorted({source.get("retrieval_date") for source in sources if isinstance(source, dict) and isinstance(source.get("retrieval_date"), str) and source["retrieval_date"].strip()})
+        expected_versions = sorted({source.get("guideline_version") for source in sources if isinstance(source, dict) and isinstance(source.get("guideline_version"), str) and source["guideline_version"].strip()})
+        if (packet.get("source_dates") != expected_source_dates or packet.get("retrieval_dates") != expected_retrieval_dates or packet.get("guideline_versions") != expected_versions):
+            errors.append(f"{packet_id}: source metadata rollups are incomplete")
+        if _supported_requirement_count(packet) != len(packet.get("evidence_requirement_types", [])):
+            errors.append(f"{packet_id}: ready packet has unsupported evidence requirement")
+        errors.extend(_claim_traceability_errors(packet_id, packet, source_ids))
+        covered_families = {source.get("source_family") for source in sources if isinstance(source, dict)}
+        missing = set(packet.get("source_family_targets", [])) - covered_families
+        assessments = packet.get("source_family_target_assessments", [])
+        sources_by_id = {source.get("source_id"): source for source in sources if isinstance(source, dict)}
+        assessed = {
+            item.get("source_family_target") for item in assessments
+            if isinstance(item, dict) and item.get("status") == "CANADIAN_ALTERNATIVE_USED"
+            and isinstance(item.get("source_ids"), list) and item["source_ids"]
+            and set(item["source_ids"]) <= source_ids
+            and all(sources_by_id[source_id].get("is_canadian") is True and sources_by_id[source_id].get("international_fallback") is False for source_id in item["source_ids"])
+            and isinstance(item.get("rationale"), str) and item["rationale"].strip()
+        }
+        if missing != assessed:
+            errors.append(f"{packet_id}: canonical source-family target is unsupported")
+        if packet.get("disagreement_present") is not False or packet.get("unresolved_evidence_conflict") is not False or packet.get("disagreements_or_ambiguities") not in ([], None):
+            errors.append(f"{packet_id}: selected wave contains an unresolved or undocumented disagreement")
+        if (packet.get("canadian_guidance_not_found") is not False or packet.get("international_fallbacks") not in ([], None) or any(source.get("international_fallback") is not False or source.get("is_canadian") is not True for source in sources if isinstance(source, dict))):
+            errors.append(f"{packet_id}: selected wave contains an undocumented international fallback")
+    expected = build_source_packet_research_wave_audit(root, population, prior_populations)
+    if audit != expected:
+        errors.append("research wave audit does not match deterministic rebuild")
+    return SourcePacketPopulationValidation("FAIL" if errors else "PASS", {"SOURCE_PACKET_VALIDATOR": "FAIL" if errors else "PASS"}, errors)
+
+
 def validate_source_packet_population(
     root: Path,
     population: dict[str, Any],
