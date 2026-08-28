@@ -45,6 +45,10 @@ from .competency_component_ownership import (
     materialize_competency_component_migration,
     validate_competency_component_ownership,
 )
+from .allocation_discipline_routing import (
+    preflight_allocation_disciplines,
+    validate_allocation_discipline_routing,
+)
 from .source import scan_deploy_leaks, validate_source
 
 
@@ -524,6 +528,31 @@ def _command_materialize_competency_component_migration(args: argparse.Namespace
     )
 
 
+def _command_validate_allocation_discipline_routing(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    result = validate_allocation_discipline_routing(root)
+    print(f"ALLOCATION_DISCIPLINE_ROUTING_VALIDATION: {result.status}")
+    for name, status in result.checks.items():
+        print(f"  {name}: {status}")
+    for name, value in result.summary.items():
+        print(f"  {name.upper()}: {value}")
+    for error in result.errors:
+        print(f"ERROR: {error}")
+    if result.status != "PASS":
+        raise CommandError("ALLOCATION_DISCIPLINE_ROUTING_VALIDATION_FAILED", f"{len(result.errors)} error(s)")
+    preflight = preflight_allocation_disciplines(root)
+    print("ALLOCATION_DISCIPLINE_PREFLIGHT:")
+    print(f"  TOTAL_ALLOCATION_ADDRESSES: {preflight.total_allocation_addresses}")
+    print(f"  ELIGIBLE_ALLOCATION_ADDRESSES: {preflight.eligible_allocation_addresses}")
+    print(f"  SUPPRESSED_ALLOCATION_ADDRESSES: {preflight.suppressed_allocation_addresses}")
+    print(f"  ZERO_SCOPE_ALLOCATION_ADDRESSES: {preflight.zero_scope_allocation_addresses}")
+    print(f"  MEDICAL_IMAGING_AMBIGUOUS_ADDRESSES: {preflight.medical_imaging_ambiguous_addresses}")
+    print(f"  UNASSIGNED_ELIGIBLE_ADDRESSES: {preflight.unassigned_eligible_addresses}")
+    print(f"  MULTI_ASSIGNED_ELIGIBLE_ADDRESSES: {preflight.multi_assigned_eligible_addresses}")
+    if preflight.unassigned_eligible_addresses or preflight.multi_assigned_eligible_addresses:
+        raise CommandError("ALLOCATION_DISCIPLINE_PREFLIGHT_FAILED", "eligible allocation addresses are not uniquely assigned")
+
+
 def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--root",
@@ -598,6 +627,11 @@ def _parser() -> argparse.ArgumentParser:
             "materialize-competency-component-migration",
             "materialize the committed competency-component migration",
             _command_materialize_competency_component_migration,
+        ),
+        (
+            "validate-allocation-discipline-routing",
+            "validate exceptional allocation-discipline routing and dry-run assignment",
+            _command_validate_allocation_discipline_routing,
         ),
     )
     parsers = {}
