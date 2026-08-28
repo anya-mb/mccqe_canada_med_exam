@@ -49,6 +49,10 @@ from .allocation_discipline_routing import (
     preflight_allocation_disciplines,
     validate_allocation_discipline_routing,
 )
+from .final_question_allocation import (
+    validate_final_question_allocation,
+    write_final_question_allocation,
+)
 from .source import scan_deploy_leaks, validate_source
 
 
@@ -553,6 +557,29 @@ def _command_validate_allocation_discipline_routing(args: argparse.Namespace) ->
         raise CommandError("ALLOCATION_DISCIPLINE_PREFLIGHT_FAILED", "eligible allocation addresses are not uniquely assigned")
 
 
+def _command_build_final_question_allocation(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    try:
+        allocation, audit = write_final_question_allocation(root)
+    except QbankError as exc:
+        raise CommandError("FINAL_QUESTION_ALLOCATION_FAILURE", str(exc)) from exc
+    print(f"FINAL_QUESTION_ALLOCATION_WRITTEN: addresses={len(allocation['allocation_addresses'])} total={audit['reconciliation']['TOTAL_ALLOCATED_QUESTIONS']}")
+
+
+def _command_validate_final_question_allocation(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    allocation = read_json(resolve_root_path(root, "research/scope/final_question_allocation.json", label="final allocation"))
+    audit = read_json(resolve_root_path(root, "reports/final_question_allocation_audit.json", label="final allocation audit"))
+    if not isinstance(allocation, dict) or not isinstance(audit, dict):
+        raise CommandError("FINAL_QUESTION_ALLOCATION_FAILURE", "final allocation artifacts must be objects")
+    result = validate_final_question_allocation(root, allocation, audit)
+    print(f"FINAL_QUESTION_ALLOCATION_VALIDATION: {result.status}")
+    for name, status in result.checks.items(): print(f"  {name}: {status}")
+    for error in result.errors: print(f"ERROR: {error}")
+    if result.status != "PASS":
+        raise CommandError("FINAL_QUESTION_ALLOCATION_VALIDATION_FAILED", "; ".join(result.errors))
+
+
 def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--root",
@@ -633,6 +660,8 @@ def _parser() -> argparse.ArgumentParser:
             "validate exceptional allocation-discipline routing and dry-run assignment",
             _command_validate_allocation_discipline_routing,
         ),
+        ("build-final-question-allocation", "build frozen-input final question allocation", _command_build_final_question_allocation),
+        ("validate-final-question-allocation", "validate final question allocation", _command_validate_final_question_allocation),
     )
     parsers = {}
     for name, help_text, handler in commands:
