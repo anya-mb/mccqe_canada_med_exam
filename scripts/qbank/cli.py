@@ -42,6 +42,7 @@ from .global_ownership_decisions import (
 )
 from .competency_component_ownership import (
     build_competency_component_artifact,
+    materialize_competency_component_migration,
     validate_competency_component_ownership,
 )
 from .source import scan_deploy_leaks, validate_source
@@ -514,6 +515,15 @@ def _command_validate_competency_components(args: argparse.Namespace) -> None:
         raise CommandError("COMPETENCY_COMPONENT_VALIDATION_FAILED", f"{len(result.errors)} error(s)")
 
 
+def _command_materialize_competency_component_migration(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    result = materialize_competency_component_migration(root)
+    print(
+        "COMPETENCY_COMPONENT_MIGRATION_MATERIALIZED: "
+        f"components={result.components_created} relationships={result.relationships_created}"
+    )
+
+
 def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--root",
@@ -584,6 +594,11 @@ def _parser() -> argparse.ArgumentParser:
         ("validate-global-ownership-decisions", "validate incremental global ownership decisions", _command_validate_global_ownership_decisions),
         ("build-competency-components", "rewrite the deterministic competency-component artifact", _command_build_competency_components),
         ("validate-competency-components", "validate competency-component ownership", _command_validate_competency_components),
+        (
+            "materialize-competency-component-migration",
+            "materialize the committed competency-component migration",
+            _command_materialize_competency_component_migration,
+        ),
     )
     parsers = {}
     for name, help_text, handler in commands:

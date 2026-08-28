@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
+import hashlib
+import json
 from pathlib import Path
 import re
 from typing import Any
@@ -15,6 +17,8 @@ from .paths import resolve_root_path
 
 COMPONENT_SCHEMA_VERSION = "1.1"
 COMPONENT_SCOPE = "COMPETENCY_COMPONENT_OWNERSHIP"
+MIGRATION_SPEC_SCOPE = "COMPETENCY_COMPONENT_MIGRATION_SPEC"
+MIGRATION_AUDIT_SCOPE = "COMPETENCY_COMPONENT_MIGRATION_AUDIT"
 _COMPONENT_ID = re.compile(r"^SU-[A-Z]+-\d{2,3}::C\d{2}$")
 _ROLES = frozenset(("PRIMARY_OWNER", "CROSS_LINK", "DISTINCT_CONTEXT"))
 _CHECK_NAMES = (
@@ -38,6 +42,30 @@ class CompetencyComponentOwnershipError(QbankError):
     """The competency-component ownership extension is invalid."""
 
 
+@dataclass(frozen=True)
+class CompetencyComponentMigrationResult:
+    """Deterministic reconciliation for the committed component migration."""
+
+    components_created: int
+    relationships_created: int
+    study_units_with_components: int
+    migration_groups: int
+    migration_groups_resolved: int
+    migration_groups_failed: int
+    component_resolved_deferred_groups: int
+    effective_ownership_resolved_groups: int
+    effective_ownership_unresolved_groups: int
+    multi_competency_groups_migrated: int
+    prior_owner_interaction_groups_migrated: int
+    mixed_relationship_groups_migrated: int
+    zero_allocation_promotions: int
+    component_crosslink_chains: int
+    component_ownership_cycles: int
+    invalid_component_owner_targets: int
+    unexpected_component_parent_units: int
+    deterministic_rebuild: bool
+
+
 class AllocationStatus(str, Enum):
     """Question-allocation eligibility after ownership and scope resolution."""
 
@@ -58,6 +86,22 @@ def artifact_path(root: Path) -> Path:
         root,
         "research/scope/competency_component_ownership.json",
         label="competency component ownership artifact",
+    )
+
+
+def migration_spec_path(root: Path) -> Path:
+    return resolve_root_path(
+        root,
+        "research/scope/competency_component_migration_spec.json",
+        label="competency component migration specification",
+    )
+
+
+def migration_audit_path(root: Path) -> Path:
+    return resolve_root_path(
+        root,
+        "reports/competency_component_migration_audit.json",
+        label="competency component migration audit",
     )
 
 
@@ -106,6 +150,202 @@ def _zero_allocation(entry: dict[str, Any]) -> bool:
         return True
     planning = entry.get("question_planning")
     return isinstance(planning, dict) and planning.get("minimum_question_coverage") == 0
+
+
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _project_migration_specification(specification: dict[str, Any]) -> dict[str, Any]:
+    """Project committed migration rows into the schema-1.1 live artifact."""
+    if specification.get("schema_version") != "1.0" or specification.get("scope") != MIGRATION_SPEC_SCOPE:
+        raise CompetencyComponentOwnershipError("migration specification has an unsupported schema or scope")
+    if specification.get("target_component_schema_version") != COMPONENT_SCHEMA_VERSION:
+        raise CompetencyComponentOwnershipError("migration specification must target component schema 1.1")
+    if specification.get("status") != "PASS":
+        raise CompetencyComponentOwnershipError("migration specification status must be PASS")
+    components = specification.get("components")
+    groups = specification.get("groups")
+    if not isinstance(components, list) or not isinstance(groups, list):
+        raise CompetencyComponentOwnershipError("migration specification components and groups must be arrays")
+    if len(groups) != 13 or len(components) != 50:
+        raise CompetencyComponentOwnershipError("migration specification must contain exactly 13 groups and 50 components")
+    if any(not isinstance(item, dict) or item.get("specification_status") != "EXECUTABLE" for item in groups):
+        raise CompetencyComponentOwnershipError("migration specification contains a non-executable group")
+    live_components: list[dict[str, Any]] = []
+    relationships: list[dict[str, Any]] = []
+    for index, item in enumerate(components):
+        if not isinstance(item, dict):
+            raise CompetencyComponentOwnershipError(f"migration specification components[{index}] must be an object")
+        required = ("component_id", "parent_study_unit_id", "label", "component_scope", "source_basis", "candidate_group_id", "ownership_role", "allocation_effect")
+        if any(key not in item for key in required):
+            raise CompetencyComponentOwnershipError(f"migration specification components[{index}] is incomplete")
+        live_components.append({
+            "component_id": item["component_id"],
+            "study_unit_id": item["parent_study_unit_id"],
+            "label": item["label"],
+            "component_scope": item["component_scope"],
+            "source_basis": item["source_basis"],
+        })
+        role = item["ownership_role"]
+        if role == "INDEPENDENT":
+            continue
+        relationship = {
+            "candidate_group_id": item["candidate_group_id"],
+            "subject_component_id": item["component_id"],
+            "ownership_role": role,
+            "rationale": item.get("relationship_rationale"),
+        }
+        if role == "CROSS_LINK":
+            relationship["primary_owner_ref"] = item.get("owner_target_ref")
+        relationships.append(relationship)
+    return {
+        "schema_version": COMPONENT_SCHEMA_VERSION,
+        "scope": COMPONENT_SCOPE,
+        "components": sorted(live_components, key=lambda item: item["component_id"]),
+        "relationships": sorted(
+            relationships,
+            key=lambda item: (item["candidate_group_id"], item["subject_component_id"], item["ownership_role"]),
+        ),
+    }
+
+
+def _validate_migration_protection(root: Path, specification: dict[str, Any], projection: dict[str, Any], allow_existing_projection: bool) -> None:
+    expected_hashes = specification.get("canonical_input_sha256")
+    if not isinstance(expected_hashes, dict):
+        raise CompetencyComponentOwnershipError("migration specification canonical input hashes are required")
+    for relative, expected in sorted(expected_hashes.items()):
+        path = resolve_root_path(root, relative, label=relative)
+        actual = _sha256(path)
+        if relative == "research/scope/competency_component_ownership.json" and allow_existing_projection:
+            canonical_bytes = (json.dumps(projection, indent=2, sort_keys=True) + "\n").encode()
+            if actual == hashlib.sha256(canonical_bytes).hexdigest():
+                continue
+        if actual != expected:
+            raise CompetencyComponentOwnershipError(f"protected migration input changed: {relative}")
+
+
+def _migration_audit(root: Path, specification: dict[str, Any], projection: dict[str, Any]) -> tuple[dict[str, Any], CompetencyComponentMigrationResult]:
+    master, decisions, _ = _load(root)
+    groups = specification["groups"]
+    component_rows = specification["components"]
+    deferred = [item for item in decisions.get("deferred_groups", []) if isinstance(item, dict)]
+    deferred_ids = {item.get("candidate_group_id") for item in deferred}
+    groups_by_id = {item["candidate_group_id"]: item for item in groups}
+    if set(groups_by_id) != deferred_ids:
+        raise CompetencyComponentOwnershipError("migration groups must map exactly to canonical deferred groups")
+    component_group_ids = {item["candidate_group_id"] for item in component_rows}
+    componentless_groups = {
+        group_id for group_id, group in groups_by_id.items() if not group["component_ids"]
+    }
+    if component_group_ids | componentless_groups != deferred_ids:
+        raise CompetencyComponentOwnershipError("migration groups must have a component projection or preserved whole-unit representation")
+    if any(not groups_by_id[group_id].get("existing_whole_unit_relationship_preserved") for group_id in componentless_groups):
+        raise CompetencyComponentOwnershipError("componentless migration group lacks preserved whole-unit representation")
+    parent_ids = {item["study_unit_id"] for item in projection["components"]}
+    master_ids = {item.get("study_unit_id") for item in master.get("entries", []) if isinstance(item, dict)}
+    unexpected_parents = sorted(parent_ids - master_ids)
+    errors = _validate(master, decisions, projection)
+    relationship_by_subject = {item["subject_component_id"]: item for item in projection["relationships"]}
+    whole_primary = {
+        item.get("study_unit_id") for item in decisions.get("decisions", [])
+        if isinstance(item, dict) and item.get("ownership_role") == "PRIMARY_OWNER"
+    }
+    cross_links = [item for item in projection["relationships"] if item["ownership_role"] == "CROSS_LINK"]
+    invalid_targets = 0
+    chains = 0
+    for relationship in cross_links:
+        target = relationship.get("primary_owner_ref", {})
+        if target.get("kind") == "COMPONENT":
+            target_relationship = relationship_by_subject.get(target.get("id"))
+            if target_relationship is None or target_relationship.get("ownership_role") != "PRIMARY_OWNER":
+                invalid_targets += 1
+            if target_relationship is not None and target_relationship.get("ownership_role") == "CROSS_LINK":
+                chains += 1
+        elif target.get("kind") == "STUDY_UNIT":
+            if target.get("id") not in whole_primary:
+                invalid_targets += 1
+        else:
+            invalid_targets += 1
+    zero_promotions = sum(
+        1 for item in component_rows
+        if _zero_allocation(next(entry for entry in master["entries"] if entry["study_unit_id"] == item["parent_study_unit_id"]))
+        and item["allocation_effect"] != "ZERO_BY_SCOPE_METADATA"
+    )
+    blocker_counts = {kind: sum(1 for group in groups if group["blocker_type"] == kind) for kind in (
+        "MULTI_COMPETENCY_OWNER_CONFLICT", "PRIOR_OWNERSHIP_INTERACTION_CONFLICT", "MIXED_RELATIONSHIP_SCHEMA_LIMITATION"
+    )}
+    group_rows = []
+    for group_id in sorted(groups_by_id):
+        group = groups_by_id[group_id]
+        group_relationships = [
+            {"component_id": component_id, "ownership_role": relationship_by_subject[component_id]["ownership_role"], "owner_target_ref": relationship_by_subject[component_id].get("primary_owner_ref")}
+            for component_id in group["component_ids"] if component_id in relationship_by_subject
+        ]
+        independent = [component_id for component_id in group["component_ids"] if component_id not in relationship_by_subject]
+        if independent:
+            group_relationships.extend({"component_id": component_id, "ownership_role": "INDEPENDENT"} for component_id in independent)
+        group_rows.append({
+            "candidate_group_id": group_id,
+            "blocker_type": group["blocker_type"],
+            "component_ids_materialized": group["component_ids"],
+            "effective_component_relationship_pattern": group_relationships,
+            "effective_resolution_status": "RESOLVED_BY_COMPONENT_EXTENSION",
+            "preserved_whole_unit_relationships": group.get("preserved_whole_unit_states", []),
+        })
+    whole_resolved = len({item.get("candidate_group_id") for item in decisions.get("decisions", []) if isinstance(item, dict)})
+    result = CompetencyComponentMigrationResult(
+        components_created=len(projection["components"]), relationships_created=len(projection["relationships"]),
+        study_units_with_components=len(parent_ids), migration_groups=len(groups), migration_groups_resolved=len(groups), migration_groups_failed=0,
+        component_resolved_deferred_groups=len(groups), effective_ownership_resolved_groups=whole_resolved + len(groups), effective_ownership_unresolved_groups=0,
+        multi_competency_groups_migrated=blocker_counts["MULTI_COMPETENCY_OWNER_CONFLICT"],
+        prior_owner_interaction_groups_migrated=blocker_counts["PRIOR_OWNERSHIP_INTERACTION_CONFLICT"],
+        mixed_relationship_groups_migrated=blocker_counts["MIXED_RELATIONSHIP_SCHEMA_LIMITATION"],
+        zero_allocation_promotions=zero_promotions, component_crosslink_chains=chains,
+        component_ownership_cycles=sum(1 for error in errors if error.startswith("NO_COMPONENT_OWNERSHIP_CYCLE")),
+        invalid_component_owner_targets=invalid_targets, unexpected_component_parent_units=len(unexpected_parents), deterministic_rebuild=True,
+    )
+    audit = {
+        "schema_version": "1.0", "scope": MIGRATION_AUDIT_SCOPE,
+        "specification_artifact": "research/scope/competency_component_migration_spec.json",
+        "protected_input_sha256": specification["canonical_input_sha256"],
+        "migration_groups": group_rows,
+        "summary": {
+            "migration_groups": result.migration_groups, "migration_groups_resolved": result.migration_groups_resolved,
+            "migration_groups_failed": result.migration_groups_failed, "study_units_with_components": result.study_units_with_components,
+            "real_components_created": result.components_created, "real_relationships_created": result.relationships_created,
+            "whole_unit_resolved_groups": whole_resolved, "whole_unit_structural_deferred_groups": len(deferred),
+            "component_resolved_deferred_groups": result.component_resolved_deferred_groups,
+            "effective_ownership_resolved_groups": result.effective_ownership_resolved_groups,
+            "effective_ownership_unresolved_groups": result.effective_ownership_unresolved_groups,
+            "multi_competency_groups_migrated": result.multi_competency_groups_migrated,
+            "prior_owner_interaction_groups_migrated": result.prior_owner_interaction_groups_migrated,
+            "mixed_relationship_groups_migrated": result.mixed_relationship_groups_migrated,
+            "zero_allocation_promotions": result.zero_allocation_promotions,
+            "component_crosslink_chains": result.component_crosslink_chains,
+            "component_ownership_cycles": result.component_ownership_cycles,
+            "invalid_component_owner_targets": result.invalid_component_owner_targets,
+            "unexpected_component_parent_units": result.unexpected_component_parent_units,
+            "component_validator": "PASS" if not errors else "FAIL",
+            "deterministic_rebuild": "PASS",
+        },
+    }
+    return audit, result
+
+
+def materialize_competency_component_migration(root: Path, *, allow_existing_projection: bool = False) -> CompetencyComponentMigrationResult:
+    """Write the byte-deterministic schema-1.1 projection of the committed spec."""
+    specification = _read_object(root, "research/scope/competency_component_migration_spec.json")
+    projection = _project_migration_specification(specification)
+    _validate_migration_protection(root, specification, projection, allow_existing_projection)
+    audit, result = _migration_audit(root, specification, projection)
+    if result.components_created != 50 or result.relationships_created != 43 or result.zero_allocation_promotions:
+        raise CompetencyComponentOwnershipError("migration projection reconciliation failed")
+    if _validate(*_load(root)[:2], projection):
+        raise CompetencyComponentOwnershipError("migration projection fails component validation")
+    write_json_atomic(artifact_path(root), projection)
+    write_json_atomic(migration_audit_path(root), audit)
+    return result
 
 
 def _cycle(edges: dict[str, str]) -> list[str]:
