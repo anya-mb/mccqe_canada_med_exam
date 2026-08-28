@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0",
+  "scope": "FINAL_GLOBAL_OWNERSHIP_AGGREGATE_AUDIT",
+  "source_artifacts": [
+    "research/scope/global_ownership_candidates.json",
+    "research/scope/global_ownership_triage.json",
+    "research/scope/global_ownership_priority_c_triage.json",
+    "research/scope/global_ownership_batches.json",
+    "research/scope/global_ownership_priority_c_batches.json",
+    "research/scope/global_ownership_decisions.json",
+    "research/scope/master_scope_crosswalk.json"
+  ],
+  "candidate_accounting": {
+    "total_candidate_groups": 106,
+    "reviewed_groups": 106,
+    "resolved_groups": 93,
+    "deferred_groups": 13,
+    "unreviewed_groups": 0,
+    "candidate_ids_reconcile_exactly_once": true,
+    "priority_accounting": {
+      "A": { "reviewed": 28, "resolved": 28, "deferred": 0 },
+      "B": { "reviewed": 49, "resolved": 44, "deferred": 5 },
+      "C1": { "reviewed": 11, "resolved": 7, "deferred": 4 },
+      "C2": { "reviewed": 4, "resolved": 3, "deferred": 1 },
+      "C3": { "reviewed": 14, "resolved": 11, "deferred": 3 }
+    }
+  },
+  "final_role_counts": {
+    "shared_owner_groups": 45,
+    "distinct_context_groups": 48,
+    "mixed_resolved_groups": 0,
+    "assignment_counts": { "PRIMARY_OWNER": 45, "CROSS_LINK": 46, "DISTINCT_CONTEXT": 91 },
+    "unique_study_unit_counts": { "PRIMARY_OWNER": 41, "CROSS_LINK": 43, "DISTINCT_CONTEXT": 88 },
+    "external_primary_owner_groups": 23,
+    "study_units_participating_in_more_than_one_candidate_group": 8,
+    "study_units_in_resolved_and_deferred_relationships": ["SU-E-48", "SU-FM-46"],
+    "primary_owners_reused_by_multiple_groups": ["SU-ELOM-09", "SU-G-31", "SU-NS-32", "SU-PS-25"]
+  },
+  "ownership_graph_audit": {
+    "self_links": 0,
+    "ownership_cycles": 0,
+    "cross_link_chains": 0,
+    "competing_primary_owners": 0,
+    "contradictory_owner_crosslink_roles": 0,
+    "invalid_owner_targets": 0,
+    "all_cross_links_target_direct_canonical_primary_owner": true,
+    "multi_group_study_units": 8,
+    "multi_group_graph_conflicts": 0,
+    "multi_group_relationships_inspected": {
+      "SU-E-48": ["GOC-01b92489a96f", "GOC-42eb06c73f5c"],
+      "SU-ER-18": ["GOC-03fdd107b15c", "GOC-f252d029d0a1"],
+      "SU-ER-20": ["GOC-03fdd107b15c", "GOC-f252d029d0a1"],
+      "SU-FM-46": ["GOC-01b92489a96f", "GOC-42eb06c73f5c"],
+      "SU-GM-04": ["GOC-a76cc3fb78d4", "GOC-be35171f9e80"],
+      "SU-GS-40": ["GOC-360da40376dc", "GOC-847fcd5d8c96"],
+      "SU-MI-12": ["GOC-221b9f3dce69", "GOC-41c69994d27d"],
+      "SU-N-41": ["GOC-394932be4a33", "GOC-8f79ddbbd910"]
+    }
+  },
+  "whole_unit_crosslink_risk_audit": {
+    "method": "Flagged every CROSS_LINK relationship whose canonical unit metadata indicated multiple source nodes, multiple MCC mappings, multiple testable competency components, explicit cross-discipline metadata, or prior DISTINCT_CONTEXT participation. Only flagged relationships were semantically checked against their compact existing rationale and final graph.",
+    "risk_candidates": 16,
+    "confirmed_existing_decision": 16,
+    "revised_to_deferred": 0,
+    "candidates": [
+      { "candidate_group_id": "GOC-3458325cc494", "cross_link": "SU-P-091", "primary_owner": "SU-H-39", "signal": "explicit_cross_discipline_component", "outcome": "CONFIRM_EXISTING_DECISION" },
+      { "candidate_group_id": "GOC-42eb06c73f5c", "cross_link": "SU-FM-46", "primary_owner": "SU-E-48", "signal": "explicit_cross_discipline_component", "outcome": "CONFIRM_EXISTING_DECISION" },
+      { "candidate_group_id": "GOC-46a4257a69cb", "cross_link": "SU-RH-05", "primary_owner": "SU-OR-10", "signal": "multiple_question_planning_components", "outcome": "CONFIRM_EXISTING_DECISION" },
+      { "candidate_group_id": "GOC-751d83278481", "cross_link": "SU-GM-03", "primary_owner": "SU-G-25", "signal": "explicit_cross_discipline_component", "outcome": "CONFIRM_EXISTING_DECISION" },
+      { "candidate_group_id": "GOC-bdb940044c32", "cross_link": "SU-R-38", "primary_owner": "SU-ID-12", "signal": "multiple_question_planning_components", "outcome": "CONFIRM_EXISTING_DECISION" },
+      { "candidate_group_id": "GOC-14f19fa9f232", "cross_link": "SU-R-21", "primary_owner": "SU-C-08", "signal": "multiple_question_planning_components", "outcome": "CONFIRM_EXISTING_DECISION" },
+      { "candidate_group_id": "GOC-1618106e83bc", "cross_link": "SU-R-25", "primary_owner": "SU-GS-10", "signal": "multiple_question_planning_components", "outcome": "CONFIRM_EXISTING_DECISION" },
+      { "candidate_group_id": "GOC-51dd1de2ea1d", "cross_link": "SU-RH-19", "primary_owner": "SU-OP-49", "signal": "multiple_question_planning_components", "outcome": "CONFIRM_EXISTING_DECISION" },
+      { "candidate_group_id": "GOC-5ece433e6980", "cross_link": "SU-R-30", "primary_owner": "SU-GS-16", "signal": "multiple_question_planning_components", "outcome": "CONFIRM_EXISTING_DECISION" },
+      { "candidate_group_id": "GOC-7483c637149a", "cross_link": "SU-R-07", "primary_owner": "SU-ID-02", "signal": "multiple_question_planning_components", "outcome": "CONFIRM_EXISTING_DECISION" },
+      { "candidate_group_id": "GOC-a76cc3fb78d4", "cross_link": "SU-GM-04", "primary_owner": "SU-PS-25", "signal": "multiple_question_planning_components", "outcome": "CONFIRM_EXISTING_DECISION" },
+      { "candidate_group_id": "GOC-be35171f9e80", "cross_link": "SU-GM-04", "primary_owner": "SU-PS-25", "signal": "multiple_question_planning_components", "outcome": "CONFIRM_EXISTING_DECISION" },
+      { "candidate_group_id": "GOC-c601583505e4", "cross_link": "SU-R-31", "primary_owner": "SU-MI-04", "signal": "multiple_question_planning_components", "outcome": "CONFIRM_EXISTING_DECISION" },
+      { "candidate_group_id": "GOC-c8117659ddd9", "cross_link": "SU-GY-27", "primary_owner": "SU-U-05", "signal": "multiple_question_planning_components", "outcome": "CONFIRM_EXISTING_DECISION" },
+      { "candidate_group_id": "GOC-d1744db8dbf4", "cross_link": "SU-R-22", "primary_owner": "SU-GS-23", "signal": "multiple_question_planning_components", "outcome": "CONFIRM_EXISTING_DECISION" },
+      { "candidate_group_id": "GOC-ae3d59fa76cc", "cross_link": "SU-FM-53", "primary_owner": "SU-ELOM-09", "signal": "multiple_source_nodes", "outcome": "CONFIRM_EXISTING_DECISION" }
+    ]
+  },
+  "moderate_confidence_audit": {
+    "moderate_confidence_groups": 30,
+    "confirmed": 30,
+    "revised": 0,
+    "deferred_complex": 0,
+    "outcome": "CONFIRM_DECISION",
+    "candidate_group_ids": ["GOC-06abbe78daa0", "GOC-079e09e34649", "GOC-10e8ac2b80b4", "GOC-14f19fa9f232", "GOC-263c0f28fd4a", "GOC-28165af51135", "GOC-3319cd30ed45", "GOC-3498e1f29e1f", "GOC-3edb142a6fe9", "GOC-42eb06c73f5c", "GOC-4af2d7b9f1d5", "GOC-4d496c4d6401", "GOC-50d9a11c0757", "GOC-5207b4212617", "GOC-68ff70c092a5", "GOC-6fc6e8b2fded", "GOC-7483c637149a", "GOC-75228a7594a4", "GOC-86031eaf8689", "GOC-9ca8b8e730f7", "GOC-a76cc3fb78d4", "GOC-bb534a60e33a", "GOC-bdb940044c32", "GOC-be35171f9e80", "GOC-c6e94e0dd3f8", "GOC-c8117659ddd9", "GOC-d70c64291754", "GOC-dfa7b7538207", "GOC-ec74af35f1c8", "GOC-ef6560711419"]
+  },
+  "deferred_group_classification": {
+    "groups": [
+      { "candidate_group_id": "GOC-02fc2bef8021", "primary_structural_reason": "MULTI_COMPETENCY_OWNER_CONFLICT", "classification": "OWNERSHIP_MODEL_LIMITATION", "needs_further_semantic_adjudication": false },
+      { "candidate_group_id": "GOC-3b1fba49ba4f", "primary_structural_reason": "MULTI_COMPETENCY_OWNER_CONFLICT", "classification": "OWNERSHIP_MODEL_LIMITATION", "needs_further_semantic_adjudication": false },
+      { "candidate_group_id": "GOC-6e7de6e1004d", "primary_structural_reason": "MULTI_COMPETENCY_OWNER_CONFLICT", "classification": "OWNERSHIP_MODEL_LIMITATION", "needs_further_semantic_adjudication": false },
+      { "candidate_group_id": "GOC-d2b95ab5e96b", "primary_structural_reason": "MULTI_COMPETENCY_OWNER_CONFLICT", "classification": "OWNERSHIP_MODEL_LIMITATION", "needs_further_semantic_adjudication": false },
+      { "candidate_group_id": "GOC-da256e74edb3", "primary_structural_reason": "MULTI_COMPETENCY_OWNER_CONFLICT", "classification": "OWNERSHIP_MODEL_LIMITATION", "needs_further_semantic_adjudication": false },
+      { "candidate_group_id": "GOC-47bcd6aa3fd2", "primary_structural_reason": "MULTI_COMPETENCY_OWNER_CONFLICT", "classification": "OWNERSHIP_MODEL_LIMITATION", "needs_further_semantic_adjudication": false },
+      { "candidate_group_id": "GOC-4cc6ee4a976b", "primary_structural_reason": "MULTI_COMPETENCY_OWNER_CONFLICT", "classification": "OWNERSHIP_MODEL_LIMITATION", "needs_further_semantic_adjudication": false },
+      { "candidate_group_id": "GOC-affe28b0a599", "primary_structural_reason": "MULTI_COMPETENCY_OWNER_CONFLICT", "classification": "OWNERSHIP_MODEL_LIMITATION", "needs_further_semantic_adjudication": false },
+      { "candidate_group_id": "GOC-bc2393b18440", "primary_structural_reason": "MULTI_COMPETENCY_OWNER_CONFLICT", "classification": "OWNERSHIP_MODEL_LIMITATION", "needs_further_semantic_adjudication": false },
+      { "candidate_group_id": "GOC-35d3276ee022", "primary_structural_reason": "MULTI_COMPETENCY_OWNER_CONFLICT", "classification": "OWNERSHIP_MODEL_LIMITATION", "needs_further_semantic_adjudication": false },
+      { "candidate_group_id": "GOC-01b92489a96f", "primary_structural_reason": "PRIOR_OWNERSHIP_INTERACTION_CONFLICT", "classification": "OWNERSHIP_MODEL_LIMITATION", "needs_further_semantic_adjudication": false },
+      { "candidate_group_id": "GOC-298783746993", "primary_structural_reason": "MULTI_COMPETENCY_OWNER_CONFLICT", "classification": "OWNERSHIP_MODEL_LIMITATION", "needs_further_semantic_adjudication": false },
+      { "candidate_group_id": "GOC-ab4868457a6c", "primary_structural_reason": "MIXED_RELATIONSHIP_SCHEMA_LIMITATION", "classification": "OWNERSHIP_MODEL_LIMITATION", "needs_further_semantic_adjudication": false }
+    ],
+    "reason_counts": { "MULTI_COMPETENCY_OWNER_CONFLICT": 11, "PRIOR_OWNERSHIP_INTERACTION_CONFLICT": 1, "MIXED_RELATIONSHIP_SCHEMA_LIMITATION": 1, "INSUFFICIENT_CONTEXT": 0, "NO_SAFE_OWNER": 0, "OTHER": 0 },
+    "classification_counts": { "OWNERSHIP_MODEL_LIMITATION": 13, "SEMANTICALLY_UNRESOLVED": 0, "SOURCE_EVIDENCE_INSUFFICIENT": 0 },
+    "deferred_needing_more_semantic_review": 0,
+    "deferred_schema_limitations": 13
+  },
+  "schema_capability_analysis": {
+    "COMPETENCY_LEVEL_OWNERSHIP": "REQUIRED",
+    "PARTIAL_CROSSLINK": "REQUIRED",
+    "MULTIPLE_COMPETENCY_OWNERS": "REQUIRED",
+    "RELATIONSHIP_WITH_PRIOR_OWNER": "REQUIRED",
+    "MIXED_GROUP_RELATIONSHIPS": "REQUIRED",
+    "recommendation": "MINIMAL_COMPETENCY_COMPONENT_EXTENSION",
+    "rationale": "All 13 deferrals are understood whole-unit representation limits. Component-level ownership and partial cross-links can preserve the existing direct-owner graph while allocating independently testable components; no deferral requires a fundamentally broader graph semantic."
+  },
+  "completion": {
+    "ownership_candidate_review_complete": true,
+    "ownership_model_complete_for_question_allocation": false,
+    "block_question_allocation_until_schema_extension": true,
+    "next_step": "DESIGN_MINIMAL_COMPETENCY_OWNERSHIP_EXTENSION"
+  }
+}
