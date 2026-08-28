@@ -2,13 +2,17 @@
 
 ## Current state
 
-- Current phase: FINAL QUESTION ALLOCATION.
-- Total study units: 1,487.
-- Ownership candidates effectively resolved: 106 / 106.
-- Component schema: 1.1; 50 component records across 30 study units.
-- Final effective ownership audit: PASS.
-- Allocation addresses: 1,507 (eligible 1,175; ownership-suppressed 31; zero-scope 301).
-- Medical Imaging routing: MED 18 / SURG 8 / deferred 0.
+Current phase: current-Canadian source-packet planning.
+
+Final allocation: PASS, 6086/6086.
+Question-generation manifests: PASS.
+Generation jobs: 220.
+Question slots: 6086.
+Allocation addresses manifested: 1175/1175.
+Manifest commit: d733de0.
+
+Current next step:
+BUILD_SOURCE_PACKET_PLAN
 
 ## Frozen layers
 
