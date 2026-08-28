@@ -9,7 +9,7 @@ from qbank.source_packet_population import (
     validate_source_packet_population,
     validate_source_packet_research_wave,
 )
-from qbank.cli import _parser
+from qbank.cli import _parser, main
 
 
 REPO = Path(__file__).resolve().parents[1]
@@ -361,6 +361,18 @@ def test_cli_exposes_current_research_wave_validator() -> None:
     assert args.research_batch_id == "SRB-001"
 
 
+def test_cli_reconciles_all_preceding_waves_for_a_later_wave(
+    capsys: object,
+) -> None:
+    """A later wave must be validated against every prior population artifact."""
+    result = main(["validate-source-packet-wave", "SRB-002"])
+
+    captured = capsys.readouterr()
+
+    assert result == 0
+    assert "SOURCE_PACKET_WAVE_VALIDATION: PASS" in captured.out
+
+
 def test_committed_srb_089_population_and_audit_validate() -> None:
     population = json.loads(
         (REPO / "research/qgen/source_packet_population_srb_089.json").read_text(
@@ -396,12 +408,28 @@ def test_committed_wave_is_plan_bound_and_progress_is_derived() -> None:
             encoding="utf-8"
         )
     )
+    latest_wave_population = json.loads(
+        (REPO / "research/qgen/source_packet_population_srb_002.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    latest_wave_audit = json.loads(
+        (REPO / "reports/source_packet_wave_srb_002_audit.json").read_text(
+            encoding="utf-8"
+        )
+    )
 
     result = validate_source_packet_research_wave(
         REPO, wave_population, [pilot_population], wave_audit
     )
+    latest_result = validate_source_packet_research_wave(
+        REPO,
+        latest_wave_population,
+        [pilot_population, wave_population],
+        latest_wave_audit,
+    )
     progress = build_source_packet_research_progress(
-        REPO, [pilot_population, wave_population]
+        REPO, [pilot_population, wave_population, latest_wave_population]
     )
     committed_progress = json.loads(
         (REPO / "reports/source_packet_research_progress.json").read_text(
@@ -410,11 +438,12 @@ def test_committed_wave_is_plan_bound_and_progress_is_derived() -> None:
     )
 
     assert result.status == "PASS"
+    assert latest_result.status == "PASS"
     assert progress["TOTAL_SOURCE_PACKETS"] == 1524
-    assert progress["SOURCE_PACKETS_READY"] == 16
-    assert progress["SOURCE_PACKETS_PENDING"] == 1508
-    assert progress["RESEARCH_BATCHES_COMPLETE"] == 2
-    assert progress["RESEARCH_BATCHES_PENDING"] == 157
+    assert progress["SOURCE_PACKETS_READY"] == 20
+    assert progress["SOURCE_PACKETS_PENDING"] == 1504
+    assert progress["RESEARCH_BATCHES_COMPLETE"] == 3
+    assert progress["RESEARCH_BATCHES_PENDING"] == 156
     assert progress["PREVIOUS_READY_PACKETS_CHANGED"] == 0
     assert progress["NON_SELECTED_PACKETS_CHANGED"] == 0
     assert committed_progress == progress
