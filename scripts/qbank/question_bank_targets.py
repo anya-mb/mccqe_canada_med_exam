@@ -9,7 +9,15 @@ from .schema import validate_instance
 
 
 _TARGET_PATH = "research/scope/question_bank_targets.json"
-_EXPECTED_DISCIPLINE_TARGET = 1000
+_EXPECTED_TOTAL_TARGET_QUESTIONS = 6086
+_EXPECTED_DISCIPLINE_TARGETS = {
+    "MED": 1086,
+    "OBGYN": 1000,
+    "PED": 1000,
+    "PHELO": 1000,
+    "PSY": 1000,
+    "SURG": 1000,
+}
 
 
 def validate_question_bank_targets(root: Path, targets: object) -> dict:
@@ -33,10 +41,13 @@ def validate_question_bank_targets(root: Path, targets: object) -> dict:
             f"{discipline_total}, which must equal total_target_questions "
             f"({total_target_questions})"
         )
-    if total_target_questions != 6000:
-        raise ConfigError("total_target_questions must equal 6000")
-    if any(target != _EXPECTED_DISCIPLINE_TARGET for target in discipline_targets.values()):
-        raise ConfigError("every discipline target must equal 1000")
+    if total_target_questions != _EXPECTED_TOTAL_TARGET_QUESTIONS:
+        raise ConfigError(
+            "total_target_questions must equal "
+            f"{_EXPECTED_TOTAL_TARGET_QUESTIONS}"
+        )
+    if discipline_targets != _EXPECTED_DISCIPLINE_TARGETS:
+        raise ConfigError("discipline targets must match the canonical final-bank budgets")
     return targets
 
 

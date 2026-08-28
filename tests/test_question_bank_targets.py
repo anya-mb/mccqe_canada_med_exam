@@ -17,9 +17,9 @@ def test_canonical_final_question_bank_targets_validate():
     targets = load_question_bank_targets(REPO)
 
     assert targets["scope"] == "FINAL_MCCQE_QUESTION_BANK"
-    assert targets["total_target_questions"] == 6000
+    assert targets["total_target_questions"] == 6086
     assert targets["discipline_targets"] == {
-        "MED": 1000,
+        "MED": 1086,
         "OBGYN": 1000,
         "PED": 1000,
         "PHELO": 1000,
