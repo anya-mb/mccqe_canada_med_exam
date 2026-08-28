@@ -40,6 +40,10 @@ from .global_ownership_decisions import (
     build_global_ownership_batch_audit,
     validate_global_ownership_decisions,
 )
+from .competency_component_ownership import (
+    build_competency_component_artifact,
+    validate_competency_component_ownership,
+)
 from .source import scan_deploy_leaks, validate_source
 
 
@@ -494,6 +498,22 @@ def _command_validate_global_ownership_decisions(args: argparse.Namespace) -> No
         )
 
 
+def _command_build_competency_components(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    result = build_competency_component_artifact(root)
+    print(f"COMPETENCY_COMPONENTS_BUILT: components={len(result['components'])}")
+
+
+def _command_validate_competency_components(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    result = validate_competency_component_ownership(root)
+    print(f"COMPETENCY_COMPONENT_VALIDATION: {result.status}")
+    for name, status in result.checks.items(): print(f"  {name}: {status}")
+    for error in result.errors: print(f"ERROR: {error}")
+    if result.status != "PASS":
+        raise CommandError("COMPETENCY_COMPONENT_VALIDATION_FAILED", f"{len(result.errors)} error(s)")
+
+
 def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--root",
@@ -562,6 +582,8 @@ def _parser() -> argparse.ArgumentParser:
         ("validate-global-ownership-triage", "validate deterministic global ownership triage", _command_validate_global_ownership_triage),
         ("build-global-ownership-audit", "build one deterministic global ownership batch audit", _command_build_global_ownership_audit),
         ("validate-global-ownership-decisions", "validate incremental global ownership decisions", _command_validate_global_ownership_decisions),
+        ("build-competency-components", "rewrite the deterministic competency-component artifact", _command_build_competency_components),
+        ("validate-competency-components", "validate competency-component ownership", _command_validate_competency_components),
     )
     parsers = {}
     for name, help_text, handler in commands:
