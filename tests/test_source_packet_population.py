@@ -458,6 +458,16 @@ def test_committed_wave_is_plan_bound_and_progress_is_derived() -> None:
             encoding="utf-8"
         )
     )
+    seventh_wave_population = json.loads(
+        (REPO / "research/qgen/source_packet_population_srb_007.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    seventh_wave_audit = json.loads(
+        (REPO / "reports/source_packet_wave_srb_007_audit.json").read_text(
+            encoding="utf-8"
+        )
+    )
 
     result = validate_source_packet_research_wave(
         REPO, wave_population, [pilot_population], wave_audit
@@ -510,8 +520,9 @@ def test_committed_wave_is_plan_bound_and_progress_is_derived() -> None:
         ],
         sixth_wave_audit,
     )
-    progress = build_source_packet_research_progress(
+    seventh_result = validate_source_packet_research_wave(
         REPO,
+        seventh_wave_population,
         [
             pilot_population,
             wave_population,
@@ -520,6 +531,20 @@ def test_committed_wave_is_plan_bound_and_progress_is_derived() -> None:
             fourth_wave_population,
             next_wave_population,
             sixth_wave_population,
+        ],
+        seventh_wave_audit,
+    )
+    progress = build_source_packet_research_progress(
+        REPO,
+        [
+            pilot_population,
+            wave_population,
+            latest_wave_population,
+            newest_wave_population,
+                fourth_wave_population,
+                next_wave_population,
+                sixth_wave_population,
+                seventh_wave_population,
         ],
     )
     committed_progress = json.loads(
@@ -534,11 +559,12 @@ def test_committed_wave_is_plan_bound_and_progress_is_derived() -> None:
     assert fourth_result.status == "PASS"
     assert next_result.status == "PASS"
     assert sixth_result.status == "PASS"
+    assert seventh_result.status == "PASS"
     assert progress["TOTAL_SOURCE_PACKETS"] == 1524
-    assert progress["SOURCE_PACKETS_READY"] == 60
-    assert progress["SOURCE_PACKETS_PENDING"] == 1464
-    assert progress["RESEARCH_BATCHES_COMPLETE"] == 7
-    assert progress["RESEARCH_BATCHES_PENDING"] == 152
+    assert progress["SOURCE_PACKETS_READY"] == 70
+    assert progress["SOURCE_PACKETS_PENDING"] == 1454
+    assert progress["RESEARCH_BATCHES_COMPLETE"] == 8
+    assert progress["RESEARCH_BATCHES_PENDING"] == 151
     assert progress["PREVIOUS_READY_PACKETS_CHANGED"] == 0
     assert progress["NON_SELECTED_PACKETS_CHANGED"] == 0
     assert committed_progress == progress
