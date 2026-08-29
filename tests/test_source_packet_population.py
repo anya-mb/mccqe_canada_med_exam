@@ -428,12 +428,12 @@ def test_committed_wave_is_plan_bound_and_progress_is_derived() -> None:
             encoding="utf-8"
         )
     )
-    current_wave_population = json.loads(
+    fourth_wave_population = json.loads(
         (REPO / "research/qgen/source_packet_population_srb_004.json").read_text(
             encoding="utf-8"
         )
     )
-    current_wave_audit = json.loads(
+    fourth_wave_audit = json.loads(
         (REPO / "reports/source_packet_wave_srb_004_audit.json").read_text(
             encoding="utf-8"
         )
@@ -445,6 +445,16 @@ def test_committed_wave_is_plan_bound_and_progress_is_derived() -> None:
     )
     next_wave_audit = json.loads(
         (REPO / "reports/source_packet_wave_srb_005_audit.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    sixth_wave_population = json.loads(
+        (REPO / "research/qgen/source_packet_population_srb_006.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    sixth_wave_audit = json.loads(
+        (REPO / "reports/source_packet_wave_srb_006_audit.json").read_text(
             encoding="utf-8"
         )
     )
@@ -464,16 +474,16 @@ def test_committed_wave_is_plan_bound_and_progress_is_derived() -> None:
         [pilot_population, wave_population, latest_wave_population],
         newest_wave_audit,
     )
-    current_result = validate_source_packet_research_wave(
+    fourth_result = validate_source_packet_research_wave(
         REPO,
-        current_wave_population,
+        fourth_wave_population,
         [
             pilot_population,
             wave_population,
             latest_wave_population,
             newest_wave_population,
         ],
-        current_wave_audit,
+        fourth_wave_audit,
     )
     next_result = validate_source_packet_research_wave(
         REPO,
@@ -483,9 +493,22 @@ def test_committed_wave_is_plan_bound_and_progress_is_derived() -> None:
             wave_population,
             latest_wave_population,
             newest_wave_population,
-            current_wave_population,
+            fourth_wave_population,
         ],
         next_wave_audit,
+    )
+    sixth_result = validate_source_packet_research_wave(
+        REPO,
+        sixth_wave_population,
+        [
+            pilot_population,
+            wave_population,
+            latest_wave_population,
+            newest_wave_population,
+            fourth_wave_population,
+            next_wave_population,
+        ],
+        sixth_wave_audit,
     )
     progress = build_source_packet_research_progress(
         REPO,
@@ -494,8 +517,9 @@ def test_committed_wave_is_plan_bound_and_progress_is_derived() -> None:
             wave_population,
             latest_wave_population,
             newest_wave_population,
-            current_wave_population,
+            fourth_wave_population,
             next_wave_population,
+            sixth_wave_population,
         ],
     )
     committed_progress = json.loads(
@@ -507,13 +531,14 @@ def test_committed_wave_is_plan_bound_and_progress_is_derived() -> None:
     assert result.status == "PASS"
     assert latest_result.status == "PASS"
     assert newest_result.status == "PASS"
-    assert current_result.status == "PASS"
+    assert fourth_result.status == "PASS"
     assert next_result.status == "PASS"
+    assert sixth_result.status == "PASS"
     assert progress["TOTAL_SOURCE_PACKETS"] == 1524
-    assert progress["SOURCE_PACKETS_READY"] == 50
-    assert progress["SOURCE_PACKETS_PENDING"] == 1474
-    assert progress["RESEARCH_BATCHES_COMPLETE"] == 6
-    assert progress["RESEARCH_BATCHES_PENDING"] == 153
+    assert progress["SOURCE_PACKETS_READY"] == 60
+    assert progress["SOURCE_PACKETS_PENDING"] == 1464
+    assert progress["RESEARCH_BATCHES_COMPLETE"] == 7
+    assert progress["RESEARCH_BATCHES_PENDING"] == 152
     assert progress["PREVIOUS_READY_PACKETS_CHANGED"] == 0
     assert progress["NON_SELECTED_PACKETS_CHANGED"] == 0
     assert committed_progress == progress

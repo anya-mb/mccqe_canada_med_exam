@@ -5,15 +5,15 @@
 - Current phase: scaled current-Canadian source-packet research.
 - Source-packet planning is complete and frozen (`SOURCE_PACKET_PLAN = PASS`).
 - Total planned source packets: 1,524.
-- Source packets READY: 50.
-- Source packets PENDING: 1,474.
+- Source packets READY: 60.
+- Source packets PENDING: 1,464.
 - Source packets BLOCKED: 0.
 - Source packets INCOMPLETE: 0.
 - Total research batches: 159.
-- Research batches complete: 6.
-- Research batches pending: 153.
-- Completed batches: `SRB-089`, `SRB-001`, `SRB-002`, `SRB-003`, `SRB-004`, `SRB-005`.
-- Latest completed batch: `SRB-005`.
+- Research batches complete: 7.
+- Research batches pending: 152.
+- Completed batches: `SRB-089`, `SRB-001`, `SRB-002`, `SRB-003`, `SRB-004`, `SRB-005`, `SRB-006`.
+- Latest completed batch: `SRB-006`.
 - Latest research commit: `e1cb015`.
 - Current focused source-packet test baseline: 28 passed / 0 failed.
 - Current next step: `CONTINUE_SOURCE_PACKET_RESEARCH`.
