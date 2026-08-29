@@ -67,6 +67,11 @@ from .source_packet_population import (
     validate_source_packet_research_batch,
     validate_source_packet_research_wave,
 )
+from .generation_source_state import (
+    validate_generation_queue,
+    validate_generation_source_readiness,
+    write_generation_source_state,
+)
 from .source import scan_deploy_leaks, validate_source
 
 
@@ -701,6 +706,49 @@ def _command_validate_source_packet_wave(args: argparse.Namespace) -> None:
         raise CommandError("SOURCE_PACKET_POPULATION_VALIDATION_FAILED", "; ".join(result.errors))
 
 
+def _command_build_generation_source_state(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    try:
+        readiness, queue = write_generation_source_state(
+            root, load_integrated_source_packet_populations(root)
+        )
+    except (OSError, QbankError, TypeError, ValueError) as exc:
+        raise CommandError("GENERATION_SOURCE_STATE_FAILURE", str(exc)) from exc
+    print(
+        "GENERATION_SOURCE_STATE_WRITTEN: "
+        f"jobs={readiness['summary']['GENERATION_JOBS_TOTAL']} "
+        f"source_ready={readiness['summary']['GENERATION_JOBS_SOURCE_READY']} "
+        f"queue_jobs={queue['summary']['GENERATION_QUEUE_JOBS']}"
+    )
+
+
+def _command_validate_generation_source_state(args: argparse.Namespace) -> None:
+    root = _selected_root(args)
+    try:
+        readiness = read_json(resolve_root_path(
+            root, "research/qgen/generation_source_readiness.json", label="generation source readiness"
+        ))
+        queue = read_json(resolve_root_path(
+            root, "research/qgen/generation_queue.json", label="generation queue"
+        ))
+        if not isinstance(readiness, dict) or not isinstance(queue, dict):
+            raise ValueError("generation source-state artifacts must be objects")
+        populations = load_integrated_source_packet_populations(root)
+        readiness_result = validate_generation_source_readiness(root, populations, readiness)
+        queue_result = validate_generation_queue(root, readiness, queue)
+    except (OSError, QbankError, TypeError, ValueError) as exc:
+        raise CommandError("GENERATION_SOURCE_STATE_FAILURE", str(exc)) from exc
+    print(f"GENERATION_SOURCE_READINESS_VALIDATION: {readiness_result.status}")
+    print(f"GENERATION_QUEUE_VALIDATION: {queue_result.status}")
+    for error in [*readiness_result.errors, *queue_result.errors]:
+        print(f"ERROR: {error}")
+    if readiness_result.status != "PASS" or queue_result.status != "PASS":
+        raise CommandError(
+            "GENERATION_SOURCE_STATE_VALIDATION_FAILED",
+            "; ".join([*readiness_result.errors, *queue_result.errors]),
+        )
+
+
 def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--root",
@@ -789,6 +837,8 @@ def _parser() -> argparse.ArgumentParser:
         ("validate-source-packet-plan", "validate deterministic source-packet plan", _command_validate_source_packet_plan),
         ("validate-source-packet-pilot", "validate the plan-bound SRB-089 source-packet pilot", _command_validate_source_packet_pilot),
         ("validate-source-packet-wave", "validate one plan-bound current Canadian source-packet research wave", _command_validate_source_packet_wave),
+        ("build-generation-source-state", "build deterministic generation source readiness and queue", _command_build_generation_source_state),
+        ("validate-generation-source-state", "validate deterministic generation source readiness and queue", _command_validate_generation_source_state),
     )
     parsers = {}
     for name, help_text, handler in commands:

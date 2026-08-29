@@ -18,8 +18,8 @@
 - Latest completed batch: `SRB-007`.
 - Latest research commit before this wave: `5758ab4`.
 - Current focused source-packet test baseline: 28 passed / 0 failed.
-- Acceleration implementation: Task 2 of 6 complete.
-- Current next step: `IMPLEMENT_ACCELERATED_SOURCE_RESEARCH_TASK_3`.
+- Acceleration implementation: Task 3 of 6 complete.
+- Current next step: `IMPLEMENT_ACCELERATED_SOURCE_RESEARCH_TASK_4`.
 - Select the next deterministic pending batch from canonical progress; do not hard-code `SRB-006` without checking canonical artifacts first.
 
 ## Frozen layers
@@ -52,7 +52,7 @@
 ## Blocker and next step
 
 - No upstream blocker remains. Continue research one bounded canonical wave at a time.
-- NEXT_STEP = `IMPLEMENT_ACCELERATED_SOURCE_RESEARCH_TASK_3`
+- NEXT_STEP = `IMPLEMENT_ACCELERATED_SOURCE_RESEARCH_TASK_4`
 
 <!-- SOURCE_RESEARCH_RESUME:END -->
 
