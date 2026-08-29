@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 from collections.abc import Callable, Sequence
 from datetime import datetime, timezone
+import json
 from pathlib import Path
 import subprocess
 import sys
@@ -71,6 +72,11 @@ from .generation_source_state import (
     validate_generation_queue,
     validate_generation_source_readiness,
     write_generation_source_state,
+)
+from .source_research_coordinator import (
+    discover_source_research_workers,
+    resolve_git_commit,
+    validate_worker_commit,
 )
 from .source import scan_deploy_leaks, validate_source
 
@@ -749,6 +755,43 @@ def _command_validate_generation_source_state(args: argparse.Namespace) -> None:
         )
 
 
+def _command_status_source_research_workers(args: argparse.Namespace) -> None:
+    """Print the read-only durable worker ledger at the selected checkpoint."""
+    root = _selected_root(args)
+    try:
+        canonical = resolve_git_commit(root, "HEAD")
+        workers = discover_source_research_workers(root, canonical)
+    except (OSError, ValueError, subprocess.CalledProcessError) as exc:
+        raise CommandError("SOURCE_RESEARCH_WORKER_STATUS_FAILURE", str(exc)) from exc
+    print(json.dumps({"canonical_commit": canonical, "workers": workers}, sort_keys=True))
+
+
+def _command_validate_source_research_worker_set(args: argparse.Namespace) -> None:
+    """Validate named worker commits without changing Git state."""
+    root = _selected_root(args)
+    try:
+        canonical = resolve_git_commit(root, "HEAD")
+        discovered = discover_source_research_workers(root, canonical)
+        by_commit = {resolve_git_commit(root, item["commit"]): item for item in discovered}
+        results = []
+        errors = []
+        for revision in args.commits:
+            commit = resolve_git_commit(root, revision)
+            worker = by_commit.get(commit)
+            if worker is None:
+                errors.append(f"worker commit is not on a canonical worker branch: {commit}")
+                continue
+            result = validate_worker_commit(root, worker, canonical)
+            results.append({"commit": commit, "batch_id": worker["batch_id"], "status": result.status, "errors": result.errors})
+            errors.extend(result.errors)
+    except (OSError, ValueError, subprocess.CalledProcessError) as exc:
+        raise CommandError("SOURCE_RESEARCH_WORKER_VALIDATION_FAILURE", str(exc)) from exc
+    status = "FAIL" if errors else "PASS"
+    print(json.dumps({"canonical_commit": canonical, "status": status, "workers": results, "errors": errors}, sort_keys=True))
+    if status != "PASS":
+        raise CommandError("SOURCE_RESEARCH_WORKER_VALIDATION_FAILED", "; ".join(errors))
+
+
 def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--root",
@@ -839,6 +882,8 @@ def _parser() -> argparse.ArgumentParser:
         ("validate-source-packet-wave", "validate one plan-bound current Canadian source-packet research wave", _command_validate_source_packet_wave),
         ("build-generation-source-state", "build deterministic generation source readiness and queue", _command_build_generation_source_state),
         ("validate-generation-source-state", "validate deterministic generation source readiness and queue", _command_validate_generation_source_state),
+        ("status-source-research-workers", "classify source-research worker branches without mutating Git", _command_status_source_research_workers),
+        ("validate-source-research-worker-set", "validate selected source-research worker commits without mutating Git", _command_validate_source_research_worker_set),
     )
     parsers = {}
     for name, help_text, handler in commands:
@@ -861,6 +906,7 @@ def _parser() -> argparse.ArgumentParser:
     parsers["search-mcc-objectives"].add_argument("--limit", type=int, default=20)
     parsers["build-global-ownership-audit"].add_argument("batch_id")
     parsers["validate-source-packet-wave"].add_argument("research_batch_id")
+    parsers["validate-source-research-worker-set"].add_argument("commits", nargs="+")
     return parser
 
 
