@@ -62,7 +62,9 @@ from .source_packet_plan import (
     write_source_packet_plan,
 )
 from .source_packet_population import (
+    load_integrated_source_packet_populations,
     validate_source_packet_population,
+    validate_source_packet_research_batch,
     validate_source_packet_research_wave,
 )
 from .source import scan_deploy_leaks, validate_source
@@ -681,36 +683,15 @@ def _command_validate_source_packet_wave(args: argparse.Namespace) -> None:
         f"reports/source_packet_wave_{batch_id}_audit.json",
         label="source packet research-wave audit",
     ))
-    plan = read_json(resolve_root_path(
-        root,
-        "research/qgen/source_packet_plan.json",
-        label="source packet plan",
-    ))
-    selected_batch_id = args.research_batch_id.upper()
-    batch_ids = [
-        item.get("research_batch_id")
-        for item in plan.get("research_batches", [])
-        if isinstance(item, dict)
-    ] if isinstance(plan, dict) else []
-    try:
-        selected_index = batch_ids.index(selected_batch_id)
-    except ValueError:
-        raise CommandError(
-            "SOURCE_PACKET_POPULATION_FAILURE",
-            f"unknown source packet research batch: {selected_batch_id}",
-        ) from None
-    prior_batch_ids = ["SRB-089", *batch_ids[:selected_index]]
-    prior_populations = [
-        read_json(resolve_root_path(
-            root,
-            f"research/qgen/source_packet_population_{prior_id.lower().replace('-', '_')}.json",
-            label="prior source packet population",
-        ))
-        for prior_id in prior_batch_ids
+    integrated_populations = [
+        item
+        for item in load_integrated_source_packet_populations(root)
+        if item is not population and item.get("research_batch_id", item.get("pilot_research_batch_id"))
+        != args.research_batch_id.upper()
     ]
-    if not all(isinstance(item, dict) for item in [population, audit, *prior_populations]):
+    if not all(isinstance(item, dict) for item in [population, audit, *integrated_populations]):
         raise CommandError("SOURCE_PACKET_POPULATION_FAILURE", "source packet research-wave artifacts must be objects")
-    result = validate_source_packet_research_wave(root, population, prior_populations, audit)
+    result = validate_source_packet_research_batch(root, population, integrated_populations, audit)
     print(f"SOURCE_PACKET_WAVE_VALIDATION: {result.status}")
     for name, status in result.checks.items():
         print(f"  {name}: {status}")

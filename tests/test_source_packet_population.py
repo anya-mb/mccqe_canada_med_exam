@@ -6,13 +6,32 @@ from pathlib import Path
 from qbank.source_packet_population import (
     build_source_packet_population_audit,
     build_source_packet_research_progress,
+    build_source_packet_research_wave_audit,
+    load_integrated_source_packet_populations,
     validate_source_packet_population,
+    validate_source_packet_research_batch,
     validate_source_packet_research_wave,
 )
 from qbank.cli import _parser, main
 
 
 REPO = Path(__file__).resolve().parents[1]
+
+
+def _committed_wave(batch_id: str) -> tuple[dict, dict]:
+    stem = batch_id.lower().replace("-", "_")
+    return (
+        json.loads(
+            (REPO / f"research/qgen/source_packet_population_{stem}.json").read_text(
+                encoding="utf-8"
+            )
+        ),
+        json.loads(
+            (REPO / f"reports/source_packet_wave_{stem}_audit.json").read_text(
+                encoding="utf-8"
+            )
+        ),
+    )
 
 
 def _ready_population() -> dict:
@@ -369,6 +388,82 @@ def test_cli_reconciles_all_preceding_waves_for_a_later_wave(
 
     captured = capsys.readouterr()
 
+    assert result == 0
+    assert "SOURCE_PACKET_WAVE_VALIDATION: PASS" in captured.out
+
+
+def test_batch_validator_accepts_ready_blocked_and_incomplete_packets() -> None:
+    population, _ = _committed_wave("SRB-002")
+    packets = population["source_packets"]
+    packets[0]["status"] = "INCOMPLETE_RESEARCH"
+    packets[0]["verification_status"] = "INCOMPLETE_RESEARCH"
+    packets[1]["status"] = "BLOCKED_EVIDENCE_CONFLICT"
+    packets[1]["verification_status"] = "BLOCKED_EVIDENCE_CONFLICT"
+    packets[1]["disagreement_present"] = True
+    packets[1]["unresolved_evidence_conflict"] = True
+    packets[1]["disagreements_or_ambiguities"] = [{
+        "disagreement_id": "SRC-MED-439-DIS-01",
+        "summary": "Current sources materially conflict.",
+        "source_ids": [source["source_id"] for source in packets[1]["authoritative_sources"]],
+        "resolution_status": "UNRESOLVED",
+        "canadian_mccqe_applicability": "Cannot be safely resolved.",
+    }]
+    packets[2]["status"] = "BLOCKED_JURISDICTION"
+    packets[2]["verification_status"] = "BLOCKED_JURISDICTION"
+    packets[2]["jurisdiction_resolved"] = False
+    audit = build_source_packet_research_wave_audit(REPO, population, [])
+
+    result = validate_source_packet_research_batch(REPO, population, [], audit)
+
+    assert result.status == "PASS"
+
+
+def test_batch_validator_rejects_changed_planning_field_and_wrong_packet_order() -> None:
+    population, _ = _committed_wave("SRB-001")
+    population["source_packets"][0]["covered_generation_job_ids"] = ["QGEN-MED-001"]
+    population["source_packets"].reverse()
+    audit = build_source_packet_research_wave_audit(REPO, population, [])
+
+    result = validate_source_packet_research_batch(REPO, population, [], audit)
+
+    assert result.status == "FAIL"
+    assert any("canonical planning field changed" in error for error in result.errors)
+    assert any("canonical batch order" in error for error in result.errors)
+
+
+def test_batch_validator_rejects_packet_already_present_in_any_integrated_population() -> None:
+    population, _ = _committed_wave("SRB-001")
+    audit = build_source_packet_research_wave_audit(REPO, population, [])
+
+    result = validate_source_packet_research_batch(REPO, population, [population], audit)
+
+    assert result.status == "FAIL"
+    assert any("previously populated packet" in error for error in result.errors)
+
+
+def test_cli_wave_validation_does_not_require_every_earlier_batch_file(
+    monkeypatch: object, capsys: object
+) -> None:
+    from qbank.source_packet_population import SourcePacketPopulationValidation
+
+    monkeypatch.setattr(
+        "qbank.cli.load_integrated_source_packet_populations",
+        lambda root: [
+            item
+            for item in load_integrated_source_packet_populations(root)
+            if item.get("research_batch_id") != "SRB-006"
+        ],
+    )
+    monkeypatch.setattr(
+        "qbank.cli.validate_source_packet_research_batch",
+        lambda root, population, integrated, audit: SourcePacketPopulationValidation(
+            "PASS", {"SOURCE_PACKET_VALIDATOR": "PASS"}
+        ),
+    )
+
+    result = main(["validate-source-packet-wave", "SRB-007"])
+
+    captured = capsys.readouterr()
     assert result == 0
     assert "SOURCE_PACKET_WAVE_VALIDATION: PASS" in captured.out
 

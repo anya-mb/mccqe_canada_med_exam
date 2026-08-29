@@ -325,6 +325,178 @@ def _population_packets(populations: list[dict[str, Any]]) -> list[dict[str, Any
     ]
 
 
+def _population_batch_id(population: dict[str, Any]) -> str | None:
+    batch_id = population.get("research_batch_id", population.get("pilot_research_batch_id"))
+    return batch_id if isinstance(batch_id, str) else None
+
+
+def load_integrated_source_packet_populations(root: Path) -> list[dict[str, Any]]:
+    """Load committed packet populations in frozen research-batch order."""
+    root = Path(root).resolve()
+    plan, _ = _canonical_context(root)
+    order = {
+        batch.get("research_batch_id"): index
+        for index, batch in enumerate(plan.get("research_batches", []))
+        if isinstance(batch, dict) and isinstance(batch.get("research_batch_id"), str)
+    }
+    populations: list[dict[str, Any]] = []
+    for path in (root / "research/qgen").glob("source_packet_population_srb_*.json"):
+        population = read_json(path)
+        if not isinstance(population, dict):
+            raise TypeError(f"source packet population must be an object: {path}")
+        populations.append(population)
+    return sorted(
+        populations,
+        key=lambda population: (order.get(_population_batch_id(population), len(order)), _population_batch_id(population) or ""),
+    )
+
+
+def _batch_packet_semantic_errors(
+    packet_id: str, packet: dict[str, Any], canonical: dict[str, Any]
+) -> list[str]:
+    """Apply the established packet-state and ready-packet evidence gates."""
+    errors: list[str] = []
+    status = packet.get("status")
+    if status not in {_READY, _INCOMPLETE, *_BLOCKED}:
+        return [f"{packet_id}: population status is invalid"]
+    disagreements = packet.get("disagreements_or_ambiguities", [])
+    sources = [source for source in packet.get("authoritative_sources", []) if isinstance(source, dict)]
+    source_ids = {source.get("source_id") for source in sources if isinstance(source.get("source_id"), str)}
+    if status == "BLOCKED_EVIDENCE_CONFLICT" and not (
+        packet.get("disagreement_present") is True
+        and packet.get("unresolved_evidence_conflict") is True
+        and isinstance(disagreements, list)
+        and disagreements
+        and packet.get("verification_status") == "BLOCKED_EVIDENCE_CONFLICT"
+    ):
+        errors.append(f"{packet_id}: conflict block lacks unresolved disagreement")
+    if status == "BLOCKED_JURISDICTION":
+        if canonical.get("jurisdiction_resolution_required") is not True:
+            errors.append(f"{packet_id}: canonical packet does not require jurisdiction resolution")
+        if not (packet.get("jurisdiction_resolved") is False and packet.get("verification_status") == "BLOCKED_JURISDICTION"):
+            errors.append(f"{packet_id}: jurisdiction block state is inconsistent")
+    if status == _INCOMPLETE and packet.get("verification_status") != _INCOMPLETE:
+        errors.append(f"{packet_id}: incomplete research state is inconsistent")
+    if packet.get("disagreement_present") is True:
+        if not isinstance(disagreements, list) or not disagreements:
+            errors.append(f"{packet_id}: disagreement details are missing")
+        else:
+            for disagreement in disagreements:
+                if not isinstance(disagreement, dict):
+                    errors.append(f"{packet_id}: disagreement must be an object")
+                    continue
+                if any(not isinstance(disagreement.get(name), str) or not disagreement[name].strip() for name in ("disagreement_id", "summary", "resolution_status", "canadian_mccqe_applicability")):
+                    errors.append(f"{packet_id}: disagreement details are incomplete")
+                linked = disagreement.get("source_ids", [])
+                if not isinstance(linked, list) or not linked or not set(linked) <= source_ids:
+                    errors.append(f"{packet_id}: disagreement source linkage is invalid")
+            unresolved = any(isinstance(item, dict) and item.get("resolution_status") == "UNRESOLVED" for item in disagreements)
+            if unresolved != (packet.get("unresolved_evidence_conflict") is True):
+                errors.append(f"{packet_id}: disagreement resolution state is inconsistent")
+    elif disagreements:
+        errors.append(f"{packet_id}: disagreement flag is inconsistent")
+    if status != _READY:
+        return errors
+    if not sources:
+        errors.append(f"{packet_id}: ready packet lacks authoritative source")
+    if not packet.get("supported_recommendations"):
+        errors.append(f"{packet_id}: ready packet lacks supported recommendation")
+    if _supported_requirement_count(packet) != len(packet.get("evidence_requirement_types", [])):
+        errors.append(f"{packet_id}: ready packet has unsupported evidence requirement")
+    if packet.get("jurisdiction_resolved") is not True:
+        errors.append(f"{packet_id}: ready packet jurisdiction is unresolved")
+    if packet.get("unresolved_evidence_conflict") is not False:
+        errors.append(f"{packet_id}: ready packet has unresolved evidence conflict")
+    if packet.get("verification_status") != "VERIFIED_COMPLETE":
+        errors.append(f"{packet_id}: ready packet verification is incomplete")
+    for source in sources:
+        errors.extend(_source_metadata_errors(packet_id, source))
+    if len(source_ids) != len(sources):
+        errors.append(f"{packet_id}: authoritative source IDs are not unique")
+    expected_dates = sorted({value for source in sources for value in (source.get("publication_date"), source.get("update_date")) if isinstance(value, str) and value.strip()})
+    expected_retrieval = sorted({source.get("retrieval_date") for source in sources if isinstance(source.get("retrieval_date"), str) and source["retrieval_date"].strip()})
+    expected_versions = sorted({source.get("guideline_version") for source in sources if isinstance(source.get("guideline_version"), str) and source["guideline_version"].strip()})
+    if packet.get("source_dates") != expected_dates or packet.get("retrieval_dates") != expected_retrieval or packet.get("guideline_versions") != expected_versions:
+        errors.append(f"{packet_id}: source metadata rollups are incomplete")
+    errors.extend(_claim_traceability_errors(packet_id, packet, source_ids))
+    covered = {source.get("source_family") for source in sources}
+    missing = set(packet.get("source_family_targets", [])) - covered
+    by_id = {source.get("source_id"): source for source in sources}
+    assessed = {item.get("source_family_target") for item in packet.get("source_family_target_assessments", []) if isinstance(item, dict) and item.get("status") == "CANADIAN_ALTERNATIVE_USED" and isinstance(item.get("source_ids"), list) and item["source_ids"] and set(item["source_ids"]) <= source_ids and all(by_id[source_id].get("is_canadian") is True and by_id[source_id].get("international_fallback") is False for source_id in item["source_ids"]) and isinstance(item.get("rationale"), str) and item["rationale"].strip()}
+    if missing != assessed:
+        errors.append(f"{packet_id}: canonical source-family target is unsupported")
+    fallback_ids = {source.get("source_id") for source in sources if source.get("international_fallback") is True}
+    if packet.get("canadian_guidance_not_found") is not False or packet.get("international_fallbacks") not in ([], None) or fallback_ids or any(source.get("is_canadian") is not True for source in sources):
+        errors.append(f"{packet_id}: ready packet has undocumented international fallback")
+    return errors
+
+
+def validate_source_packet_research_batch(
+    root: Path,
+    population: dict[str, Any],
+    integrated_populations: list[dict[str, Any]],
+    audit: dict[str, Any],
+) -> SourcePacketPopulationValidation:
+    """Validate one isolated worker population against all other integrated packets."""
+    root = Path(root).resolve()
+    plan, rebuilt = _canonical_context(root)
+    plan_path = _path(root, "research/qgen/source_packet_plan.json")
+    errors: list[str] = []
+    batch_id = _population_batch_id(population)
+    batch = next((item for item in plan.get("research_batches", []) if isinstance(item, dict) and item.get("research_batch_id") == batch_id), None)
+    packets = population.get("source_packets", [])
+    canonical = {item.get("source_packet_id"): item for item in plan.get("source_packets", []) if isinstance(item, dict)}
+    if plan != rebuilt:
+        errors.append("canonical source packet plan is not byte-rebuild equivalent")
+    if not isinstance(batch, dict):
+        errors.append("research batch is invalid")
+        expected_ids: list[str] = []
+    else:
+        expected_ids = list(batch.get("source_packet_ids", []))
+    expected_scope = "MCCQE_CURRENT_CANADIAN_SOURCE_PACKET_PILOT" if batch_id == _PILOT_BATCH_ID else "MCCQE_CURRENT_CANADIAN_SOURCE_PACKET_RESEARCH_WAVE"
+    if population.get("scope") != expected_scope:
+        errors.append("research batch population scope is invalid")
+    if population.get("plan_artifact") != "research/qgen/source_packet_plan.json" or population.get("source_packet_plan_sha256") != hashlib.sha256(plan_path.read_bytes()).hexdigest():
+        errors.append("research batch is not bound to the canonical source packet plan")
+    if not isinstance(packets, list):
+        errors.append("research batch source packets must be a list")
+        packets = []
+    packet_ids = [packet.get("source_packet_id") for packet in packets if isinstance(packet, dict)]
+    if packet_ids != expected_ids:
+        errors.append("research batch packet IDs do not exactly match canonical batch order")
+    integrated_ids = {packet.get("source_packet_id") for packet in _population_packets(integrated_populations)}
+    if integrated_ids & set(packet_ids):
+        errors.append("research batch attempts to modify previously populated packet")
+    for packet in packets:
+        if not isinstance(packet, dict):
+            errors.append("research batch packet must be an object")
+            continue
+        packet_id = packet.get("source_packet_id")
+        frozen = canonical.get(packet_id)
+        if not isinstance(frozen, dict):
+            errors.append(f"unknown research batch packet: {packet_id}")
+            continue
+        for field_name in _PLANNING_FIELDS:
+            if packet.get(field_name) != frozen.get(field_name):
+                errors.append(f"{packet_id}: canonical planning field changed: {field_name}")
+        errors.extend(_batch_packet_semantic_errors(str(packet_id), packet, frozen))
+    batch_order = {
+        item.get("research_batch_id"): index
+        for index, item in enumerate(plan.get("research_batches", []))
+        if isinstance(item, dict)
+    }
+    batch_order[_PILOT_BATCH_ID] = -1
+    prior = [
+        item
+        for item in integrated_populations
+        if batch_order.get(_population_batch_id(item), -1) < batch_order.get(batch_id, -1)
+    ]
+    expected_audit = build_source_packet_research_wave_audit(root, population, prior)
+    if audit != expected_audit:
+        errors.append("research batch audit does not match deterministic rebuild")
+    return SourcePacketPopulationValidation("FAIL" if errors else "PASS", {"SOURCE_PACKET_VALIDATOR": "FAIL" if errors else "PASS"}, errors)
+
+
 def build_source_packet_research_progress(
     root: Path, populations: list[dict[str, Any]]
 ) -> dict[str, Any]:
