@@ -111,6 +111,12 @@ Never claim PASS without fresh verification.
 
 Keep the working tree clean between canonical stages where practical.
 
+## Resume-state maintenance
+
+After every successfully completed canonical task, phase, or research wave, compare `MEMORY.md` with canonical repository state. If the resume state materially changed, update only its changing current/resume-state section. Derive all counts and state from canonical JSON artifacts, validators, and git history; canonical artifacts override `MEMORY.md` on conflict, and never invent state manually.
+
+Do not update `MEMORY.md` for failed or aborted work unless that failure is the new canonical blocker or resume point, and do not rewrite stable methodology or history. When an update merely reflects the completed task's resulting state, include it in that task's canonical commit; a separate documentation commit is normally unnecessary. Run `git diff --check` and include `MEMORY.md` in final verification. If the expected-next-stage line in this file remains correct, do not edit it repeatedly.
+
 ## Question generation
 
 Do not generate MCQs until:
