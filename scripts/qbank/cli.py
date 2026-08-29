@@ -77,6 +77,7 @@ from .source_research_coordinator import (
     discover_source_research_workers,
     resolve_git_commit,
     validate_worker_commit,
+    write_source_research_state,
 )
 from .source import scan_deploy_leaks, validate_source
 
@@ -792,6 +793,23 @@ def _command_validate_source_research_worker_set(args: argparse.Namespace) -> No
         raise CommandError("SOURCE_RESEARCH_WORKER_VALIDATION_FAILED", "; ".join(errors))
 
 
+def _command_rebuild_source_research_state(args: argparse.Namespace) -> None:
+    """Reconstruct only validated derived coordinator artifacts from canonical inputs."""
+    root = _selected_root(args)
+    try:
+        canonical = resolve_git_commit(root, args.input_commit)
+        state = write_source_research_state(root, canonical)
+    except (OSError, QbankError, TypeError, ValueError, subprocess.CalledProcessError) as exc:
+        raise CommandError("SOURCE_RESEARCH_STATE_REBUILD_FAILURE", str(exc)) from exc
+    print(
+        "SOURCE_RESEARCH_STATE_WRITTEN: "
+        f"ready_packets={state.progress['SOURCE_PACKETS_READY']} "
+        f"documents={len(state.registry['documents'])} "
+        f"jobs={state.readiness['summary']['GENERATION_JOBS_TOTAL']} "
+        f"queue_jobs={state.queue['summary']['GENERATION_QUEUE_JOBS']}"
+    )
+
+
 def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--root",
@@ -884,6 +902,7 @@ def _parser() -> argparse.ArgumentParser:
         ("validate-generation-source-state", "validate deterministic generation source readiness and queue", _command_validate_generation_source_state),
         ("status-source-research-workers", "classify source-research worker branches without mutating Git", _command_status_source_research_workers),
         ("validate-source-research-worker-set", "validate selected source-research worker commits without mutating Git", _command_validate_source_research_worker_set),
+        ("rebuild-source-research-state", "rebuild validated source-research coordinator artifacts", _command_rebuild_source_research_state),
     )
     parsers = {}
     for name, help_text, handler in commands:
@@ -907,6 +926,7 @@ def _parser() -> argparse.ArgumentParser:
     parsers["build-global-ownership-audit"].add_argument("batch_id")
     parsers["validate-source-packet-wave"].add_argument("research_batch_id")
     parsers["validate-source-research-worker-set"].add_argument("commits", nargs="+")
+    parsers["rebuild-source-research-state"].add_argument("--input-commit", required=True)
     return parser
 
 

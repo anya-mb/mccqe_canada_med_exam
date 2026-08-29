@@ -10,12 +10,24 @@ import re
 import subprocess
 from typing import Any
 
-from .generation_source_state import validate_generation_queue, validate_generation_source_readiness
-from .source_document_registry import validate_source_document_registry
+from .generation_source_state import (
+    build_generation_queue,
+    build_generation_source_readiness,
+    validate_generation_queue,
+    validate_generation_source_readiness,
+)
+from .jsonio import read_json, write_json_atomic
+from .paths import resolve_root_path
+from .source_document_registry import (
+    build_source_document_registry,
+    validate_source_document_registry,
+)
 from .source_packet_population import (
     _population_batch_id,
     _population_packets,
+    build_source_packet_research_progress,
     load_integrated_source_packet_populations,
+    validate_source_packet_population,
     validate_source_packet_research_batch,
 )
 
@@ -24,6 +36,14 @@ _WORKER_BRANCH = re.compile(r"codex/source-research/(SRB-\d{3})$")
 _FROZEN_INPUTS = (
     "research/qgen/source_packet_plan.json",
     "research/qgen/question_generation_manifest.json",
+    "research/scope",
+)
+_STATE_OUTPUTS = (
+    ("registry", "research/qgen/source_document_registry.json"),
+    ("readiness", "research/qgen/generation_source_readiness.json"),
+    ("queue", "research/qgen/generation_queue.json"),
+    ("progress", "reports/source_packet_research_progress.json"),
+    ("audit", "reports/source_research_integration_audit.json"),
 )
 
 
@@ -32,6 +52,17 @@ class SourceResearchCoordinatorValidation:
     status: str
     checks: dict[str, str] = field(default_factory=dict)
     errors: list[str] = field(default_factory=list)
+
+
+@dataclass(frozen=True)
+class SourceResearchState:
+    """Fully reconciled, write-ready coordinator artifacts."""
+
+    progress: dict[str, Any]
+    registry: dict[str, Any]
+    readiness: dict[str, Any]
+    queue: dict[str, Any]
+    audit: dict[str, Any]
 
 
 def _git(root: Path, *args: str) -> str:
@@ -192,14 +223,36 @@ def _sha256_json(value: Any) -> str:
     return hashlib.sha256(data.encode("utf-8")).hexdigest()
 
 
+def _frozen_paths(root: Path) -> list[str]:
+    paths: list[str] = []
+    for relative in _FROZEN_INPUTS:
+        path = root / relative
+        if path.is_file():
+            paths.append(relative)
+        elif path.is_dir():
+            paths.extend(item.relative_to(root).as_posix() for item in path.rglob("*") if item.is_file())
+        else:
+            raise ValueError(f"frozen input is missing: {relative}")
+    return sorted(paths)
+
+
 def _frozen_input_fingerprints(root: Path) -> list[dict[str, str]]:
-    return [{"path": relative, "sha256": hashlib.sha256((root / relative).read_bytes()).hexdigest()} for relative in _FROZEN_INPUTS]
+    return [
+        {"path": relative, "sha256": hashlib.sha256((root / relative).read_bytes()).hexdigest()}
+        for relative in _frozen_paths(root)
+    ]
 
 
 def _canonical_frozen_input_fingerprints(root: Path, canonical: str) -> list[dict[str, str]]:
+    paths: list[str] = []
+    for relative in _FROZEN_INPUTS:
+        entries = _git(root, "ls-tree", "-r", "--name-only", canonical, relative).splitlines()
+        if not entries:
+            raise ValueError(f"canonical frozen input is missing: {relative}")
+        paths.extend(entries)
     return [
         {"path": relative, "sha256": hashlib.sha256(_git(root, "show", f"{canonical}:{relative}").encode("utf-8")).hexdigest()}
-        for relative in _FROZEN_INPUTS
+        for relative in sorted(paths)
     ]
 
 
@@ -256,9 +309,11 @@ def build_source_research_integration_audit(root: Path, canonical_commit: str, p
         "GENERATION_SOURCE_READINESS": readiness_status,
         "GENERATION_QUEUE": queue_status,
     }
+    errors = [*ownership.errors, *worker_errors, *registry_errors, *readiness_errors, *queue_errors]
     return {
         "schema_version": "1.0", "scope": "SOURCE_RESEARCH_INTEGRATION_AUDIT",
         "canonical_base_checkpoint": canonical,
+        "coordinator_input_commit": canonical,
         "selected_batch_ids": sorted(item["batch_id"] for item in workers if isinstance(item.get("batch_id"), str)),
         "workers": worker_records,
         "packet_ownership": [{"source_packet_id": packet.get("source_packet_id"), "research_batch_id": _population_batch_id(population)} for population in populations for packet in _population_packets([population]) if isinstance(packet.get("source_packet_id"), str)],
@@ -267,7 +322,8 @@ def build_source_research_integration_audit(root: Path, canonical_commit: str, p
         "frozen_input_fingerprints": frozen_current,
         "canonical_frozen_input_fingerprints": frozen_canonical,
         "checks": checks,
-        "errors": [*ownership.errors, *worker_errors, *registry_errors, *readiness_errors, *queue_errors],
+        "errors": errors,
+        "status": "PASS" if not errors and all(status == "PASS" for status in checks.values()) else "FAIL",
     }
 
 
@@ -286,3 +342,93 @@ def validate_source_research_integration_audit(root: Path, audit: dict[str, Any]
         except (OSError, TypeError, ValueError, subprocess.CalledProcessError) as exc:
             errors.append(str(exc))
     return SourceResearchCoordinatorValidation("FAIL" if errors else "PASS", {"SOURCE_RESEARCH_INTEGRATION_AUDIT": "FAIL" if errors else "PASS"}, errors)
+
+
+def _population_audit(root: Path, population: dict[str, Any]) -> dict[str, Any]:
+    batch_id = _population_batch_id(population)
+    if not batch_id:
+        raise ValueError("integrated source packet population batch ID is missing")
+    stem = batch_id.lower().replace("-", "_")
+    relative = (
+        f"reports/source_packet_pilot_{stem}_audit.json"
+        if batch_id == "SRB-089"
+        else f"reports/source_packet_wave_{stem}_audit.json"
+    )
+    audit = read_json(resolve_root_path(root, relative, label="source packet population audit"))
+    if not isinstance(audit, dict):
+        raise ValueError(f"source packet population audit must be an object: {relative}")
+    return audit
+
+
+def _validate_integrated_populations(root: Path, populations: list[dict[str, Any]]) -> None:
+    errors: list[str] = []
+    for population in populations:
+        audit = _population_audit(root, population)
+        if _population_batch_id(population) == "SRB-089":
+            result = validate_source_packet_population(root, population, audit)
+        else:
+            result = validate_source_packet_research_batch(
+                root,
+                population,
+                [other for other in populations if other is not population],
+                audit,
+            )
+        errors.extend(result.errors)
+    if errors:
+        raise ValueError("integrated source packet validation failed: " + "; ".join(errors))
+
+
+def _validate_source_research_state(
+    root: Path, state: SourceResearchState, populations: list[dict[str, Any]], workers: list[dict[str, Any]]
+) -> None:
+    errors: list[str] = []
+    if state.progress != build_source_packet_research_progress(root, populations):
+        errors.append("source packet research progress does not match deterministic rebuild")
+    for result in (
+        validate_source_document_registry(root, populations, state.registry),
+        validate_generation_source_readiness(root, populations, state.readiness),
+        validate_generation_queue(root, state.readiness, state.queue),
+        validate_source_research_integration_audit(
+            root, state.audit, populations, state.registry, state.readiness, state.queue, workers
+        ),
+    ):
+        errors.extend(result.errors)
+    if state.audit.get("status") != "PASS":
+        errors.append("source research integration audit is not PASS")
+    if errors:
+        raise ValueError("source research state validation failed: " + "; ".join(errors))
+
+
+def build_source_research_state(root: Path, coordinator_input_commit: str) -> SourceResearchState:
+    """Build and validate the entire deterministic coordinator state in memory."""
+    root = Path(root).resolve()
+    canonical = resolve_git_commit(root, coordinator_input_commit)
+    populations = load_integrated_source_packet_populations(root)
+    _validate_integrated_populations(root, populations)
+    registry = build_source_document_registry(root, populations)
+    readiness = build_generation_source_readiness(root, populations)
+    queue = build_generation_queue(root, readiness)
+    workers = discover_source_research_workers(root, canonical)
+    audit = build_source_research_integration_audit(
+        root, canonical, populations, registry, readiness, queue, workers
+    )
+    state = SourceResearchState(
+        progress=build_source_packet_research_progress(root, populations),
+        registry=registry,
+        readiness=readiness,
+        queue=queue,
+        audit=audit,
+    )
+    _validate_source_research_state(root, state, populations, workers)
+    return state
+
+
+def write_source_research_state(root: Path, coordinator_input_commit: str) -> SourceResearchState:
+    """Validate every derived artifact before atomically materializing any of them."""
+    root = Path(root).resolve()
+    state = build_source_research_state(root, coordinator_input_commit)
+    for _, relative in _STATE_OUTPUTS:
+        resolve_root_path(root, relative, label="source research state output")
+    for name, relative in _STATE_OUTPUTS:
+        write_json_atomic(resolve_root_path(root, relative, label="source research state output"), getattr(state, name))
+    return state
