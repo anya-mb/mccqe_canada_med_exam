@@ -46,6 +46,15 @@ _STATE_OUTPUTS = (
     ("audit", "reports/source_research_integration_audit.json"),
 )
 
+_NEXT_ACTIONS = (
+    "INTEGRATE_SOURCE_RESEARCH_WORKERS",
+    "RESUME_SOURCE_RESEARCH_BATCH",
+    "PLAN_SOURCE_READY_GENERATION",
+    "CONTINUE_SOURCE_PACKET_RESEARCH",
+    "RESOLVE_SOURCE_PACKET_BLOCKERS",
+    "SOURCE_RESEARCH_COMPLETE",
+)
+
 
 @dataclass
 class SourceResearchCoordinatorValidation:
@@ -63,6 +72,45 @@ class SourceResearchState:
     readiness: dict[str, Any]
     queue: dict[str, Any]
     audit: dict[str, Any]
+
+
+def derive_next_source_research_action(
+    progress: dict[str, Any], queue: dict[str, Any], workers: list[dict[str, Any]]
+) -> str:
+    """Derive the one authorized operational action from validated state only."""
+    if not isinstance(progress, dict) or not isinstance(queue, dict) or not isinstance(workers, list):
+        raise ValueError("source research resume inputs must be objects and a worker list")
+    summary = queue.get("summary")
+    jobs = queue.get("jobs")
+    if not isinstance(summary, dict) or not isinstance(jobs, list):
+        raise ValueError("generation queue is malformed")
+    queue_jobs = summary.get("GENERATION_QUEUE_JOBS")
+    pending = progress.get("SOURCE_PACKETS_PENDING")
+    blocked = progress.get("SOURCE_PACKETS_BLOCKED")
+    if any(not isinstance(value, int) or isinstance(value, bool) or value < 0 for value in (queue_jobs, pending, blocked)):
+        raise ValueError("source research resume counts are invalid")
+    if queue_jobs != len(jobs):
+        raise ValueError("generation queue count disagrees with queue jobs")
+    states: list[str] = []
+    for worker in workers:
+        if not isinstance(worker, dict) or not isinstance(worker.get("state"), str):
+            raise ValueError("source research worker state is malformed")
+        states.append(worker["state"])
+    known_worker_states = {"AWAITING_INTEGRATION", "RETRY_RESUME", "INTEGRATED"}
+    unknown_states = sorted(set(states) - known_worker_states)
+    if unknown_states:
+        raise ValueError("unreconciled source research worker state: " + ", ".join(unknown_states))
+    if "AWAITING_INTEGRATION" in states:
+        return _NEXT_ACTIONS[0]
+    if "RETRY_RESUME" in states:
+        return _NEXT_ACTIONS[1]
+    if queue_jobs:
+        return _NEXT_ACTIONS[2]
+    if pending:
+        return _NEXT_ACTIONS[3]
+    if blocked:
+        return _NEXT_ACTIONS[4]
+    return _NEXT_ACTIONS[5]
 
 
 def _git(root: Path, *args: str) -> str:
@@ -427,8 +475,14 @@ def write_source_research_state(root: Path, coordinator_input_commit: str) -> So
     """Validate every derived artifact before atomically materializing any of them."""
     root = Path(root).resolve()
     state = build_source_research_state(root, coordinator_input_commit)
+    write_validated_source_research_state(root, state)
+    return state
+
+
+def write_validated_source_research_state(root: Path, state: SourceResearchState) -> None:
+    """Materialize a state that has already passed complete in-memory validation."""
+    root = Path(root).resolve()
     for _, relative in _STATE_OUTPUTS:
         resolve_root_path(root, relative, label="source research state output")
     for name, relative in _STATE_OUTPUTS:
         write_json_atomic(resolve_root_path(root, relative, label="source research state output"), getattr(state, name))
-    return state

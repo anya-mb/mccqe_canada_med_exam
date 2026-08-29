@@ -79,6 +79,7 @@ from .source_research_coordinator import (
     validate_worker_commit,
     write_source_research_state,
 )
+from .source_research_checkpoint import checkpoint_source_research
 from .source import scan_deploy_leaks, validate_source
 
 
@@ -810,6 +811,21 @@ def _command_rebuild_source_research_state(args: argparse.Namespace) -> None:
     )
 
 
+def _command_checkpoint_source_research(args: argparse.Namespace) -> None:
+    """Materialize a complete validated source-research resume checkpoint."""
+    root = _selected_root(args)
+    try:
+        checkpoint = checkpoint_source_research(root, args.input_commit)
+    except (OSError, QbankError, TypeError, ValueError, subprocess.CalledProcessError) as exc:
+        raise CommandError("SOURCE_RESEARCH_CHECKPOINT_FAILURE", str(exc)) from exc
+    print(
+        "SOURCE_RESEARCH_CHECKPOINT_WRITTEN: "
+        f"ready_packets={checkpoint.state.progress['SOURCE_PACKETS_READY']} "
+        f"queue_jobs={checkpoint.state.queue['summary']['GENERATION_QUEUE_JOBS']} "
+        f"next_action={checkpoint.next_action}"
+    )
+
+
 def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--root",
@@ -903,6 +919,7 @@ def _parser() -> argparse.ArgumentParser:
         ("status-source-research-workers", "classify source-research worker branches without mutating Git", _command_status_source_research_workers),
         ("validate-source-research-worker-set", "validate selected source-research worker commits without mutating Git", _command_validate_source_research_worker_set),
         ("rebuild-source-research-state", "rebuild validated source-research coordinator artifacts", _command_rebuild_source_research_state),
+        ("checkpoint-source-research", "write a validated deterministic source-research checkpoint", _command_checkpoint_source_research),
     )
     parsers = {}
     for name, help_text, handler in commands:
@@ -927,6 +944,7 @@ def _parser() -> argparse.ArgumentParser:
     parsers["validate-source-packet-wave"].add_argument("research_batch_id")
     parsers["validate-source-research-worker-set"].add_argument("commits", nargs="+")
     parsers["rebuild-source-research-state"].add_argument("--input-commit", required=True)
+    parsers["checkpoint-source-research"].add_argument("--input-commit", required=True)
     return parser
 
 

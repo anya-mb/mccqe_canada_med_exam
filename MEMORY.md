@@ -1,7 +1,6 @@
 # MCCQE project
 
 <!-- SOURCE_RESEARCH_RESUME:START -->
-
 ## Current phase
 
 - Current phase: scaled current-Canadian source-packet research.
@@ -14,13 +13,16 @@
 - Total research batches: 159.
 - Research batches complete: 8.
 - Research batches pending: 151.
-- Completed batches: `SRB-089`, `SRB-001`, `SRB-002`, `SRB-003`, `SRB-004`, `SRB-005`, `SRB-006`, `SRB-007`.
-- Latest completed batch: `SRB-007`.
-- Latest research commit before this wave: `5758ab4`.
-- Current focused source-packet test baseline: 28 passed / 0 failed.
-- Acceleration implementation: Task 5 of 6 complete.
-- Current next step: `IMPLEMENT_ACCELERATED_SOURCE_RESEARCH_TASK_6`.
-- Select the next deterministic pending batch from canonical progress; do not hard-code `SRB-006` without checking canonical artifacts first.
+- Source documents: 67.
+- Generation jobs total: 220.
+- Generation jobs SOURCE_READY: 0.
+- Generation jobs PENDING: 220.
+- Generation jobs BLOCKED: 0.
+- Generation queue jobs: 0.
+- Worker states: none.
+- Canonical checkpoint: current Git HEAD.
+- Audited coordinator input commit: `1ddf0e330bcbef0b72a7c92be189741f6738bd77`.
+- Current next action: `CONTINUE_SOURCE_PACKET_RESEARCH`.
 
 ## Frozen layers
 
@@ -39,21 +41,10 @@
 - MED exactly equals its effective minimum; do not reduce MED minima merely to restore a 1,000-question MED target.
 - The separate 230-question MCCQE simulation is not part of the 6,086-question study bank.
 
-## Effective minimums
-
-- MED = 1,086 / target 1,086.
-- PED = 187 / target 1,000.
-- OBGYN = 131 / target 1,000.
-- SURG = 424 / target 1,000.
-- PSY = 106 / target 1,000.
-- PHELO = 138 / target 1,000.
-- All six discipline targets are feasible.
-
 ## Blocker and next step
 
 - No upstream blocker remains. Continue research one bounded canonical wave at a time.
-- NEXT_STEP = `IMPLEMENT_ACCELERATED_SOURCE_RESEARCH_TASK_6`
-
+- NEXT_STEP = `CONTINUE_SOURCE_PACKET_RESEARCH`
 <!-- SOURCE_RESEARCH_RESUME:END -->
 
 ## Research-level policy
