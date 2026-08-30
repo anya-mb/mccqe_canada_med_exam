@@ -1,5 +1,6 @@
 import copy
 import hashlib
+import json
 from pathlib import Path
 
 from qbank.foundational_evidence import (
@@ -13,6 +14,7 @@ from qbank.jsonio import read_json
 REPO = Path(__file__).resolve().parents[1]
 ARTIFACT_PATH = REPO / "research/qgen/foundational_evidence_claim_cards.json"
 REGISTRY_PATH = REPO / "research/qgen/source_document_registry.json"
+SOURCE_PACKET_PATHS = sorted((REPO / "research/qgen").glob("source_packet_population_srb_*.json"))
 
 
 def _canonical_artifact() -> dict:
@@ -150,3 +152,64 @@ def test_audit_rebuild_detects_changed_input_fingerprint() -> None:
 
     assert result.status == "FAIL"
     assert any("deterministic rebuild" in error for error in result.errors)
+
+
+def test_empty_corpus_and_audit_are_byte_deterministic() -> None:
+    artifact_bytes = ARTIFACT_PATH.read_bytes()
+    artifact = _canonical_artifact()
+    registry = _registry()
+
+    first_audit = build_foundational_evidence_audit(REPO, artifact, registry)
+    second_audit = build_foundational_evidence_audit(
+        REPO,
+        copy.deepcopy(artifact),
+        copy.deepcopy(registry),
+    )
+
+    assert artifact_bytes == (
+        json.dumps(artifact, indent=2, sort_keys=True).encode() + b"\n"
+    )
+    assert json.dumps(first_audit, indent=2, sort_keys=True).encode() == (
+        json.dumps(second_audit, indent=2, sort_keys=True).encode()
+    )
+    assert validate_foundational_evidence(REPO, artifact, registry).status == "PASS"
+    assert validate_foundational_evidence_audit(
+        REPO,
+        artifact,
+        registry,
+        first_audit,
+    ).status == "PASS"
+
+
+def test_foundational_validation_does_not_mutate_registry_or_source_packets() -> None:
+    artifact = _canonical_artifact()
+    registry = _registry()
+    registry_before = copy.deepcopy(registry)
+    registry_sha256 = hashlib.sha256(REGISTRY_PATH.read_bytes()).hexdigest()
+    packets_before = {
+        path: read_json(path)
+        for path in SOURCE_PACKET_PATHS
+    }
+    packet_sha256 = {
+        path: hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in SOURCE_PACKET_PATHS
+    }
+
+    validation = validate_foundational_evidence(REPO, artifact, registry)
+    audit = build_foundational_evidence_audit(REPO, artifact, registry)
+    audit_validation = validate_foundational_evidence_audit(
+        REPO,
+        artifact,
+        registry,
+        audit,
+    )
+
+    assert validation.status == "PASS"
+    assert audit_validation.status == "PASS"
+    assert registry == registry_before
+    assert hashlib.sha256(REGISTRY_PATH.read_bytes()).hexdigest() == registry_sha256
+    assert {path: read_json(path) for path in SOURCE_PACKET_PATHS} == packets_before
+    assert {
+        path: hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in SOURCE_PACKET_PATHS
+    } == packet_sha256
