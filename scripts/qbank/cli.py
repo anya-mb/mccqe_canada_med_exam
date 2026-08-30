@@ -80,7 +80,10 @@ from .source_research_coordinator import (
     write_source_research_state,
 )
 from .source_research_checkpoint import checkpoint_source_research
-from .foundational_evidence import validate_foundational_evidence
+from .foundational_evidence import (
+    validate_foundational_evidence,
+    write_foundational_evidence_audit,
+)
 from .source import scan_deploy_leaks, validate_source
 
 
@@ -857,6 +860,19 @@ def _command_validate_foundational_evidence(args: argparse.Namespace) -> None:
         raise CommandError("FOUNDATIONAL_EVIDENCE_VALIDATION_FAILED", "; ".join(result.errors))
 
 
+def _command_build_foundational_evidence_audit(args: argparse.Namespace) -> None:
+    """Validate and atomically materialize the foundational evidence audit."""
+    root = _selected_root(args)
+    try:
+        audit = write_foundational_evidence_audit(root)
+    except (OSError, QbankError, TypeError, ValueError) as exc:
+        raise CommandError("FOUNDATIONAL_EVIDENCE_AUDIT_FAILURE", str(exc)) from exc
+    print(
+        "FOUNDATIONAL_EVIDENCE_AUDIT_WRITTEN: "
+        f"claim_cards={audit['counts']['CLAIM_CARDS']} citations={audit['counts']['CITATIONS']}"
+    )
+
+
 def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--root",
@@ -952,6 +968,7 @@ def _parser() -> argparse.ArgumentParser:
         ("rebuild-source-research-state", "rebuild validated source-research coordinator artifacts", _command_rebuild_source_research_state),
         ("checkpoint-source-research", "write a validated deterministic source-research checkpoint", _command_checkpoint_source_research),
         ("validate-foundational-evidence", "validate canonical foundational evidence claim cards", _command_validate_foundational_evidence),
+        ("build-foundational-evidence-audit", "build canonical foundational evidence audit", _command_build_foundational_evidence_audit),
     )
     parsers = {}
     for name, help_text, handler in commands:
