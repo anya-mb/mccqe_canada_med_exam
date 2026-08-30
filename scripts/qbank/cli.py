@@ -80,6 +80,7 @@ from .source_research_coordinator import (
     write_source_research_state,
 )
 from .source_research_checkpoint import checkpoint_source_research
+from .foundational_evidence import validate_foundational_evidence
 from .source import scan_deploy_leaks, validate_source
 
 
@@ -826,6 +827,36 @@ def _command_checkpoint_source_research(args: argparse.Namespace) -> None:
     )
 
 
+def _command_validate_foundational_evidence(args: argparse.Namespace) -> None:
+    """Validate the read-only foundational-evidence canonical corpus."""
+    root = _selected_root(args)
+    try:
+        artifact = _read_object(
+            resolve_root_path(
+                root,
+                "research/qgen/foundational_evidence_claim_cards.json",
+                label="foundational evidence claim cards",
+            ),
+            "foundational evidence claim cards",
+        )
+        registry = _read_object(
+            resolve_root_path(
+                root,
+                "research/qgen/source_document_registry.json",
+                label="source document registry",
+            ),
+            "source document registry",
+        )
+        result = validate_foundational_evidence(root, artifact, registry)
+    except (OSError, QbankError, TypeError, ValueError) as exc:
+        raise CommandError("FOUNDATIONAL_EVIDENCE_FAILURE", str(exc)) from exc
+    print(f"FOUNDATIONAL_EVIDENCE_VALIDATION: {result.status}")
+    for error in result.errors:
+        print(f"ERROR: {error}")
+    if result.status != "PASS":
+        raise CommandError("FOUNDATIONAL_EVIDENCE_VALIDATION_FAILED", "; ".join(result.errors))
+
+
 def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--root",
@@ -920,6 +951,7 @@ def _parser() -> argparse.ArgumentParser:
         ("validate-source-research-worker-set", "validate selected source-research worker commits without mutating Git", _command_validate_source_research_worker_set),
         ("rebuild-source-research-state", "rebuild validated source-research coordinator artifacts", _command_rebuild_source_research_state),
         ("checkpoint-source-research", "write a validated deterministic source-research checkpoint", _command_checkpoint_source_research),
+        ("validate-foundational-evidence", "validate canonical foundational evidence claim cards", _command_validate_foundational_evidence),
     )
     parsers = {}
     for name, help_text, handler in commands:

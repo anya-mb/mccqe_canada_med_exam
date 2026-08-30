@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Foundational evidence claim cards",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "scope",
+    "source_document_registry",
+    "documents",
+    "claim_cards"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "scope": {"const": "FOUNDATIONAL_EVIDENCE_CLAIM_CARDS"},
+    "source_document_registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"const": "research/qgen/source_document_registry.json"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "documents": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/fndoc"}
+    },
+    "claim_cards": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/claim_card"}
+    }
+  },
+  "$defs": {
+    "fndoc": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "document_id", "canonical_url", "title", "issuing_organization",
+        "source_family", "source_type", "jurisdiction", "is_canadian",
+        "international_fallback", "publication_date", "update_date",
+        "guideline_version", "date_status", "version_status", "currentness_status"
+      ],
+      "properties": {
+        "document_id": {"type": "string", "pattern": "^FNDOC-[0-9A-F]{16}$"},
+        "canonical_url": {"type": "string", "pattern": "^https://\\S+$"},
+        "title": {"type": "string", "minLength": 1},
+        "issuing_organization": {"type": "string", "minLength": 1},
+        "source_family": {"type": "string", "minLength": 1},
+        "source_type": {"type": "string", "minLength": 1},
+        "jurisdiction": {"type": "string", "minLength": 1},
+        "is_canadian": {"type": "boolean"},
+        "international_fallback": {"type": "boolean"},
+        "publication_date": {"type": ["string", "null"]},
+        "update_date": {"type": ["string", "null"]},
+        "guideline_version": {"type": ["string", "null"]},
+        "date_status": {"type": "string", "minLength": 1},
+        "version_status": {"type": "string", "minLength": 1},
+        "currentness_status": {"type": "string", "minLength": 1}
+      }
+    },
+    "scope_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "study_unit_id": {"type": "string", "minLength": 1},
+        "allocation_address_id": {"type": "string", "minLength": 1}
+      },
+      "oneOf": [
+        {"required": ["study_unit_id"]},
+        {"required": ["allocation_address_id"]}
+      ]
+    },
+    "citation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["document_id", "locator"],
+      "properties": {
+        "document_id": {"type": "string", "pattern": "^(SRDOC|FNDOC)-[0-9A-F]{16}$"},
+        "locator": {"type": "string", "pattern": ".*\\S.*"}
+      }
+    },
+    "claim_card": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_card_id", "claim", "scope_references", "citations",
+        "use_classification", "verification_status"
+      ],
+      "properties": {
+        "claim_card_id": {"type": "string", "pattern": "^FNDCLM-[0-9A-Z-]+$"},
+        "claim": {"type": "string", "minLength": 1, "pattern": "^[^;\\n\\r]+$"},
+        "scope_references": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/scope_reference"}},
+        "citations": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/citation"}},
+        "use_classification": {"const": "STABLE_FACTUAL_SUPPORT"},
+        "verification_status": {"const": "VERIFIED_COMPLETE"}
+      }
+    }
+  }
+}
