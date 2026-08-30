@@ -6,23 +6,23 @@
 - Current phase: scaled current-Canadian source-packet research.
 - Source-packet planning is complete and frozen (`SOURCE_PACKET_PLAN = PASS`).
 - Total planned source packets: 1,524.
-- Source packets READY: 70.
-- Source packets PENDING: 1,454.
+- Source packets READY: 90.
+- Source packets PENDING: 1,434.
 - Source packets BLOCKED: 0.
 - Source packets INCOMPLETE: 0.
 - Total research batches: 159.
-- Research batches complete: 8.
-- Research batches pending: 151.
-- Source documents: 67.
+- Research batches complete: 10.
+- Research batches pending: 149.
+- Source documents: 75.
 - Generation jobs total: 220.
-- Generation jobs SOURCE_READY: 0.
-- Generation jobs PENDING: 220.
+- Generation jobs SOURCE_READY: 11.
+- Generation jobs PENDING: 209.
 - Generation jobs BLOCKED: 0.
-- Generation queue jobs: 0.
-- Worker states: none.
+- Generation queue jobs: 11.
+- Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `1ddf0e330bcbef0b72a7c92be189741f6738bd77`.
-- Current next action: `CONTINUE_SOURCE_PACKET_RESEARCH`.
+- Audited coordinator input commit: `5d102945a562eddce7e14269c09ea03dccd39e2d`.
+- Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
 
@@ -44,7 +44,7 @@
 ## Blocker and next step
 
 - No upstream blocker remains. Continue research one bounded canonical wave at a time.
-- NEXT_STEP = `CONTINUE_SOURCE_PACKET_RESEARCH`
+- NEXT_STEP = `PLAN_SOURCE_READY_GENERATION`
 <!-- SOURCE_RESEARCH_RESUME:END -->
 
 ## Research-level policy

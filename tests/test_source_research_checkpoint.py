@@ -61,16 +61,16 @@ def test_memory_renderer_uses_artifact_counts_and_current_head_checkpoint_marker
 
     rendered = render_memory_source_research_resume(existing, state, [])
 
-    assert "Source packets READY: 70." in rendered
-    assert "Source packets PENDING: 1,454." in rendered
-    assert "Research batches complete: 8." in rendered
-    assert "Research batches pending: 151." in rendered
-    assert "Source documents: 67." in rendered
-    assert "Generation jobs SOURCE_READY: 0." in rendered
-    assert "Generation queue jobs: 0." in rendered
+    assert "Source packets READY: 90." in rendered
+    assert "Source packets PENDING: 1,434." in rendered
+    assert "Research batches complete: 10." in rendered
+    assert "Research batches pending: 149." in rendered
+    assert "Source documents: 75." in rendered
+    assert "Generation jobs SOURCE_READY: 11." in rendered
+    assert "Generation queue jobs: 11." in rendered
     assert "Canonical checkpoint: current Git HEAD." in rendered
     assert state.audit["coordinator_input_commit"] in rendered
-    assert "Current next action: `CONTINUE_SOURCE_PACKET_RESEARCH`." in rendered
+    assert "Current next action: `PLAN_SOURCE_READY_GENERATION`." in rendered
 
 
 def test_memory_renderer_uses_counts_from_state_artifacts() -> None:
@@ -83,7 +83,7 @@ def test_memory_renderer_uses_counts_from_state_artifacts() -> None:
     readiness["summary"]["GENERATION_JOBS_SOURCE_READY"] = 1
     readiness["summary"]["GENERATION_JOBS_PENDING"] = 219
     queue["summary"]["GENERATION_QUEUE_JOBS"] = 1
-    queue["jobs"].append({"job_id": "derived-test"})
+    queue["jobs"] = [{"job_id": "derived-test"}]
     registry["documents"].append({"document_id": "derived-test"})
 
     rendered = render_memory_source_research_resume(
@@ -94,7 +94,7 @@ def test_memory_renderer_uses_counts_from_state_artifacts() -> None:
 
     assert "Source packets READY: 71." in rendered
     assert "Source packets PENDING: 1,453." in rendered
-    assert "Source documents: 68." in rendered
+    assert "Source documents: 76." in rendered
     assert "Generation jobs SOURCE_READY: 1." in rendered
     assert "Generation queue jobs: 1." in rendered
 
@@ -133,7 +133,7 @@ def test_checkpoint_command_is_idempotent_and_fails_before_write_on_invalid_stat
     }
     second = checkpoint_source_research(REPO, "HEAD")
 
-    assert first.next_action == second.next_action == "CONTINUE_SOURCE_PACKET_RESEARCH"
+    assert first.next_action == second.next_action == "PLAN_SOURCE_READY_GENERATION"
     assert snapshot == {path: path.read_bytes() for path in snapshot}
 
 
@@ -142,4 +142,4 @@ def test_fresh_session_contract_is_reconstructible_from_repo_and_git_state() -> 
     state = build_source_research_state(REPO, canonical)
     workers = discover_source_research_workers(REPO, canonical)
 
-    assert derive_next_source_research_action(state.progress, state.queue, workers) == "CONTINUE_SOURCE_PACKET_RESEARCH"
+    assert derive_next_source_research_action(state.progress, state.queue, workers) == "PLAN_SOURCE_READY_GENERATION"
