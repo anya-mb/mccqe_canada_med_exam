@@ -149,6 +149,59 @@ def _git_json(root: Path, revision: str, relative: str) -> dict[str, Any]:
     return value
 
 
+def _git_integrated_source_packet_populations(
+    root: Path, revision: str
+) -> list[dict[str, Any]]:
+    """Load the exact integrated population snapshot at an immutable revision."""
+    plan = _git_json(root, revision, "research/qgen/source_packet_plan.json")
+    order = {
+        batch.get("research_batch_id"): index
+        for index, batch in enumerate(plan.get("research_batches", []))
+        if isinstance(batch, dict) and isinstance(batch.get("research_batch_id"), str)
+    }
+    paths = [
+        path
+        for path in _git(
+            root, "ls-tree", "-r", "--name-only", revision, "research/qgen"
+        ).splitlines()
+        if re.fullmatch(r"research/qgen/source_packet_population_srb_\d{3}\.json", path)
+    ]
+    populations = [_git_json(root, revision, path) for path in paths]
+    return sorted(
+        populations,
+        key=lambda population: (
+            order.get(_population_batch_id(population), len(order)),
+            _population_batch_id(population) or "",
+        ),
+    )
+
+
+def _population_introduction_parent(
+    root: Path, revision: str, batch_id: str
+) -> str:
+    """Resolve the immutable snapshot immediately before a population was added."""
+    population_path, _ = _worker_paths(batch_id)
+    additions = _git(
+        root,
+        "log",
+        "--diff-filter=A",
+        "--format=%H %P",
+        revision,
+        "--",
+        population_path,
+    ).splitlines()
+    if not additions:
+        raise ValueError(
+            f"population introduction commit is missing: {population_path}"
+        )
+    commit_and_parents = additions[0].split()
+    if len(commit_and_parents) != 2:
+        raise ValueError(
+            f"population introduction must have one parent: {population_path}"
+        )
+    return commit_and_parents[1]
+
+
 def _worktree_states(root: Path) -> dict[str, tuple[Path, bool]]:
     records: list[dict[str, str]] = []
     record: dict[str, str] = {}
@@ -230,7 +283,14 @@ def validate_worker_commit(root: Path, worker: dict[str, Any], canonical_commit:
                 population = _git_json(root, commit, population_path)
                 audit = _git_json(root, commit, audit_path)
                 integrated = [item for item in load_integrated_source_packet_populations(root) if _population_batch_id(item) != batch_id]
-                result = validate_source_packet_research_batch(root, population, integrated, audit)
+                audit_base = _git_integrated_source_packet_populations(root, canonical)
+                result = validate_source_packet_research_batch(
+                    root,
+                    population,
+                    integrated,
+                    audit,
+                    audit_base_populations=audit_base,
+                )
                 if result.status != "PASS":
                     errors.extend(result.errors)
             except (OSError, TypeError, ValueError, subprocess.CalledProcessError) as exc:
@@ -331,22 +391,52 @@ def build_source_research_integration_audit(root: Path, canonical_commit: str, p
     canonical = resolve_git_commit(root, canonical_commit)
     worker_records: list[dict[str, Any]] = []
     selected_populations: list[dict[str, Any]] = []
+    selected_batch_ids: list[str] = []
     worker_errors: list[str] = []
     for worker in sorted(workers, key=lambda item: (str(item.get("batch_id", "")), str(item.get("branch", "")))):
-        validation = validate_worker_commit(root, worker, canonical)
+        validation_base = canonical
+        if worker.get("state") == "INTEGRATED":
+            try:
+                worker_commit = resolve_git_commit(
+                    root, str(worker.get("commit", worker.get("branch", "")))
+                )
+                commit_and_parents = _git(
+                    root, "rev-list", "--parents", "-n", "1", worker_commit
+                ).split()
+                if len(commit_and_parents) == 2:
+                    validation_base = commit_and_parents[1]
+            except subprocess.CalledProcessError:
+                pass
+        validation = validate_worker_commit(root, worker, validation_base)
         worker_records.append({"branch": worker.get("branch"), "batch_id": worker.get("batch_id"), "commit": worker.get("commit"), "state": worker.get("state"), "validation": validation.status, "errors": validation.errors})
         worker_errors.extend(validation.errors)
-        if validation.status == "PASS" and isinstance(worker.get("batch_id"), str):
+        if (
+            validation.status == "PASS"
+            and worker.get("state") != "INTEGRATED"
+            and isinstance(worker.get("batch_id"), str)
+        ):
             path, _ = _worker_paths(worker["batch_id"])
             selected_populations.append(_git_json(root, str(worker.get("commit")), path))
-    ownership = validate_disjoint_worker_ownership(root, [item["batch_id"] for item in workers if isinstance(item.get("batch_id"), str)], [*populations, *selected_populations])
+            selected_batch_ids.append(worker["batch_id"])
+    ownership = validate_disjoint_worker_ownership(
+        root,
+        selected_batch_ids,
+        [*populations, *selected_populations],
+    )
     registry_status, registry_errors = _validation_result(lambda: validate_source_document_registry(root, populations, registry))
     readiness_status, readiness_errors = _validation_result(lambda: validate_generation_source_readiness(root, populations, readiness))
     queue_status, queue_errors = _validation_result(lambda: validate_generation_queue(root, readiness, queue))
     frozen_current = _frozen_input_fingerprints(root)
     frozen_canonical = _canonical_frozen_input_fingerprints(root, canonical)
-    ready_current = _ready_packet_fingerprints(populations)
     ready_canonical = _canonical_ready_packet_fingerprints(root, canonical)
+    canonical_ready_ids = {
+        item["source_packet_id"] for item in ready_canonical
+    }
+    ready_current = [
+        item
+        for item in _ready_packet_fingerprints(populations)
+        if item["source_packet_id"] in canonical_ready_ids
+    ]
     checks = {
         "CANONICAL_BASE_CHECKPOINT": "PASS",
         "DISJOINT_WORKER_OWNERSHIP": ownership.checks["DISJOINT_WORKER_OWNERSHIP"],
@@ -408,18 +498,41 @@ def _population_audit(root: Path, population: dict[str, Any]) -> dict[str, Any]:
     return audit
 
 
-def _validate_integrated_populations(root: Path, populations: list[dict[str, Any]]) -> None:
+def _validate_integrated_populations(
+    root: Path,
+    populations: list[dict[str, Any]],
+    canonical_commit: str,
+) -> None:
     errors: list[str] = []
+    canonical_populations = _git_integrated_source_packet_populations(
+        root, canonical_commit
+    )
+    canonical_batch_ids = {
+        _population_batch_id(item) for item in canonical_populations
+    }
     for population in populations:
         audit = _population_audit(root, population)
         if _population_batch_id(population) == "SRB-089":
             result = validate_source_packet_population(root, population, audit)
         else:
+            batch_id = _population_batch_id(population)
+            if not isinstance(batch_id, str):
+                errors.append("integrated source packet population batch ID is missing")
+                continue
+            audit_base_revision = (
+                _population_introduction_parent(root, canonical_commit, batch_id)
+                if batch_id in canonical_batch_ids
+                else canonical_commit
+            )
+            audit_base = _git_integrated_source_packet_populations(
+                root, audit_base_revision
+            )
             result = validate_source_packet_research_batch(
                 root,
                 population,
                 [other for other in populations if other is not population],
                 audit,
+                audit_base_populations=audit_base,
             )
         errors.extend(result.errors)
     if errors:
@@ -452,7 +565,7 @@ def build_source_research_state(root: Path, coordinator_input_commit: str) -> So
     root = Path(root).resolve()
     canonical = resolve_git_commit(root, coordinator_input_commit)
     populations = load_integrated_source_packet_populations(root)
-    _validate_integrated_populations(root, populations)
+    _validate_integrated_populations(root, populations, canonical)
     registry = build_source_document_registry(root, populations)
     readiness = build_generation_source_readiness(root, populations)
     queue = build_generation_queue(root, readiness)

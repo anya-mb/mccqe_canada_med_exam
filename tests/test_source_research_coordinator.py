@@ -8,9 +8,13 @@ from qbank.generation_source_state import (
     build_generation_source_readiness,
 )
 from qbank.source_document_registry import build_source_document_registry
-from qbank.source_packet_population import load_integrated_source_packet_populations
+from qbank.source_packet_population import (
+    build_source_packet_research_wave_audit,
+    load_integrated_source_packet_populations,
+)
 from qbank.source_research_coordinator import (
     build_source_research_integration_audit,
+    build_source_research_state,
     discover_source_research_workers,
     resolve_git_commit,
     validate_disjoint_worker_ownership,
@@ -96,6 +100,72 @@ def _commit_worker_pair(root: Path, canonical: str, payloads: dict[str, str], ba
     _git(root, "add", str(population_path.relative_to(root)), str(audit_path.relative_to(root)))
     _git(root, "commit", "-m", f"populate {batch_id}")
     return branch, _git(root, "rev-parse", "HEAD")
+
+
+def test_parallel_worker_audits_remain_valid_after_disjoint_merges(tmp_path: Path) -> None:
+    """Merging a sibling worker must not change either worker's audit inputs."""
+    root = tmp_path / "repo"
+    subprocess.run(
+        ["git", "clone", "--quiet", str(REPO), str(root)],
+        check=True,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    _git(root, "checkout", "-B", "canonical-fixture", "71f87971046b2773eb856916fac97cb26c3f1515")
+    for batch_id in ("SRB-001", "SRB-002"):
+        stem = batch_id.lower().replace("-", "_")
+        (root / f"research/qgen/source_packet_population_{stem}.json").unlink()
+        (root / f"reports/source_packet_wave_{stem}_audit.json").unlink()
+    _git(root, "add", "-A")
+    _git(root, "commit", "-m", "prepare parallel worker base")
+    canonical = _git(root, "rev-parse", "HEAD")
+    audit_base = [
+        population
+        for population in load_integrated_source_packet_populations(root)
+        if population.get("pilot_research_batch_id") == "SRB-089"
+    ]
+    workers: list[dict[str, str]] = []
+    for batch_id in ("SRB-001", "SRB-002"):
+        stem = batch_id.lower().replace("-", "_")
+        population_text = (
+            REPO / f"research/qgen/source_packet_population_{stem}.json"
+        ).read_text(encoding="utf-8")
+        population = json.loads(population_text)
+        audit = build_source_packet_research_wave_audit(root, population, audit_base)
+        payloads = {
+            "population": population_text,
+            "audit": json.dumps(audit, ensure_ascii=False, indent=2, sort_keys=True)
+            + "\n",
+        }
+        branch, commit = _commit_worker_pair(root, canonical, payloads, batch_id)
+        workers.append({"branch": branch, "batch_id": batch_id, "commit": commit})
+
+    _git(root, "checkout", "-B", "integration", canonical)
+    for worker in workers:
+        _git(root, "merge", "--no-ff", "--no-edit", worker["branch"])
+
+    results = [validate_worker_commit(root, worker, canonical) for worker in workers]
+
+    assert [result.status for result in results] == ["PASS", "PASS"]
+    populations = load_integrated_source_packet_populations(root)
+    registry = build_source_document_registry(root, populations)
+    readiness = build_generation_source_readiness(root, populations)
+    queue = build_generation_queue(root, readiness)
+    audit = build_source_research_integration_audit(
+        root,
+        canonical,
+        populations,
+        registry,
+        readiness,
+        queue,
+        discover_source_research_workers(root, canonical),
+    )
+
+    assert audit["status"] == "PASS"
+    assert build_source_research_state(root, resolve_git_commit(root, "HEAD")).audit[
+        "status"
+    ] == "PASS"
 
 
 def test_discovery_classifies_dirty_worktree_retry_and_committed_branch_awaiting_integration(tmp_path: Path) -> None:

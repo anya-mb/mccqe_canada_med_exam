@@ -436,6 +436,8 @@ def validate_source_packet_research_batch(
     population: dict[str, Any],
     integrated_populations: list[dict[str, Any]],
     audit: dict[str, Any],
+    *,
+    audit_base_populations: list[dict[str, Any]] | None = None,
 ) -> SourcePacketPopulationValidation:
     """Validate one isolated worker population against all other integrated packets."""
     root = Path(root).resolve()
@@ -486,9 +488,14 @@ def validate_source_packet_research_batch(
         if isinstance(item, dict)
     }
     batch_order[_PILOT_BATCH_ID] = -1
+    audit_candidates = (
+        integrated_populations
+        if audit_base_populations is None
+        else audit_base_populations
+    )
     prior = [
         item
-        for item in integrated_populations
+        for item in audit_candidates
         if batch_order.get(_population_batch_id(item), -1) < batch_order.get(batch_id, -1)
     ]
     expected_audit = build_source_packet_research_wave_audit(root, population, prior)
