@@ -17,6 +17,18 @@ class SourceReadyGenerationPilotError(ValueError):
     """A supplied job, generation artifact, or verifier artifact is unsafe."""
 
 
+RETRY_CONCEPT_PLAN_PATH = "research/qgen/pilot/QGEN-PHELO-011.retry-10.concept-plan.json"
+RETRY_GENERATED_ARTIFACT_PATH = "research/qgen/pilot/QGEN-PHELO-011.retry-10.generated.json"
+FAILED_PILOT_ARTIFACT_PATH = "research/qgen/pilot/QGEN-PHELO-011.generated.json"
+_RETRY_ASSERTION_PARTS = {
+    "stem",
+    "options",
+    "correct_answer",
+    "correct_answer_rationale",
+    "distractor_rationales",
+}
+
+
 def _sha256(value: Any) -> str:
     return hashlib.sha256(
         json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()
@@ -86,6 +98,205 @@ def build_generator_input(root: Path, job_id: str) -> dict[str, Any]:
             for packet in packets
         ],
     }
+
+
+def _retry_card_fields(card: dict[str, Any], job_id: str) -> None:
+    required_strings = (
+        "retry_slot_id", "concept_card_id", "allocation_address_id", "study_unit_id",
+        "reasoning_task", "concept_target", "intended_item_form", "evidence_route",
+    )
+    if card.get("original_job_id") != job_id or any(
+        not isinstance(card.get(field), str) or not card[field] for field in required_strings
+    ):
+        raise SourceReadyGenerationPilotError("retry concept card identifiers are invalid")
+    competency = card.get("target_competency")
+    notes = card.get("toronto_notes_context")
+    if (
+        not isinstance(competency, dict)
+        or any(not isinstance(competency.get(field), str) or not competency[field] for field in ("mcc_objective_id", "competency_key"))
+        or not isinstance(notes, dict)
+        or not isinstance(notes.get("node_ids"), list)
+        or not notes["node_ids"]
+        or any(not isinstance(node_id, str) or not node_id for node_id in notes["node_ids"])
+        or not isinstance(notes.get("tn_page_range"), str)
+        or not notes["tn_page_range"]
+    ):
+        raise SourceReadyGenerationPilotError("retry concept card competency or Toronto Notes context is invalid")
+    for field in ("foundational_claim_ids", "current_packet_references"):
+        if not isinstance(card.get(field), list):
+            raise SourceReadyGenerationPilotError(f"retry concept card {field} is invalid")
+    if (
+        any(not isinstance(claim_id, str) or not claim_id for claim_id in card["foundational_claim_ids"])
+        or len(set(card["foundational_claim_ids"])) != len(card["foundational_claim_ids"])
+    ):
+        raise SourceReadyGenerationPilotError("retry concept card foundational claim IDs are invalid")
+    route = card["evidence_route"]
+    if route == "FOUNDATIONAL_ONLY" and (not card["foundational_claim_ids"] or card["current_packet_references"]):
+        raise SourceReadyGenerationPilotError("FOUNDATIONAL_ONLY retry card has invalid evidence route")
+    if route == "READY_PACKET_ONLY" and (card["foundational_claim_ids"] or not card["current_packet_references"]):
+        raise SourceReadyGenerationPilotError("READY_PACKET_ONLY retry card has invalid evidence route")
+    if route not in {"FOUNDATIONAL_ONLY", "READY_PACKET_ONLY"}:
+        raise SourceReadyGenerationPilotError("retry concept card evidence route is invalid")
+
+
+def _retry_foundational_claims(root: Path, card: dict[str, Any]) -> list[dict[str, Any]]:
+    registry = _object(root, "research/qgen/foundational_evidence_claim_cards.json")
+    claims = {claim.get("claim_card_id"): claim for claim in registry.get("claim_cards", []) if isinstance(claim, dict)}
+    selected = [claims.get(claim_id) for claim_id in card["foundational_claim_ids"]]
+    if any(
+        claim is None
+        or claim.get("verification_status") != "VERIFIED_COMPLETE"
+        or card["study_unit_id"] not in {
+            reference.get("study_unit_id") for reference in claim.get("scope_references", []) if isinstance(reference, dict)
+        }
+        for claim in selected
+    ):
+        raise SourceReadyGenerationPilotError("retry card references missing or unverified foundational claim")
+    return selected
+
+
+def _retry_packet_recommendations(
+    packets: list[dict[str, Any]], card: dict[str, Any]
+) -> list[dict[str, Any]]:
+    by_id = {packet.get("source_packet_id"): packet for packet in packets}
+    selected: list[dict[str, Any]] = []
+    for reference in card["current_packet_references"]:
+        if not isinstance(reference, dict):
+            raise SourceReadyGenerationPilotError("retry card packet reference is invalid")
+        packet_id, recommendation_id = reference.get("source_packet_id"), reference.get("recommendation_id")
+        packet = by_id.get(packet_id)
+        if packet is None or packet.get("status") != "SOURCE_PACKET_READY" or packet.get("verification_status") != "VERIFIED_COMPLETE":
+            raise SourceReadyGenerationPilotError("retry card references unavailable READY packet")
+        if (
+            card["allocation_address_id"] not in packet.get("covered_allocation_address_ids", [])
+            or card["original_job_id"] not in packet.get("covered_generation_job_ids", [])
+        ):
+            raise SourceReadyGenerationPilotError("retry card packet is outside card scope")
+        recommendations = [
+            recommendation for recommendation in packet.get("supported_recommendations", [])
+            if isinstance(recommendation, dict) and recommendation.get("recommendation_id") == recommendation_id
+        ]
+        if len(recommendations) != 1:
+            raise SourceReadyGenerationPilotError("retry card references unsupported packet recommendation")
+        selected.append({"source_packet_id": packet_id, **recommendations[0]})
+    return selected
+
+
+def _retry_evidence_references(
+    claims: list[dict[str, Any]], recommendations: list[dict[str, Any]]
+) -> list[dict[str, Any]]:
+    return (
+        [{"evidence_type": "FOUNDATIONAL_CLAIM", "claim_card_id": claim["claim_card_id"]} for claim in claims]
+        + [
+            {
+                "evidence_type": "CURRENT_PACKET_RECOMMENDATION",
+                "source_packet_id": recommendation["source_packet_id"],
+                "recommendation_id": recommendation["recommendation_id"],
+            }
+            for recommendation in recommendations
+        ]
+    )
+
+
+def build_retry_generator_input(root: Path, job_id: str) -> dict[str, Any]:
+    """Build exact, slot-isolated context for the approved ten-item retry only."""
+    root = Path(root).resolve()
+    job, _, packets = _job_context(root, job_id)
+    plan = _object(root, RETRY_CONCEPT_PLAN_PATH)
+    cards = plan.get("concept_cards")
+    if plan.get("scope") != "QGEN_PHELO_011_RETRY_10_CONCEPT_PLAN" or plan.get("job_id") != job_id or not isinstance(cards, list) or len(cards) != 10:
+        raise SourceReadyGenerationPilotError("retry concept plan must contain exactly 10 cards for the job")
+    if plan.get("toronto_notes_authority") != "TOPIC_CONTEXT_ONLY":
+        raise SourceReadyGenerationPilotError("retry Toronto Notes authority must be TOPIC_CONTEXT_ONLY")
+    if any(not isinstance(card, dict) for card in cards):
+        raise SourceReadyGenerationPilotError("retry concept cards are invalid")
+    for card in cards:
+        _retry_card_fields(card, job_id)
+    slot_ids = [card["retry_slot_id"] for card in cards]
+    card_ids = [card["concept_card_id"] for card in cards]
+    if len(set(slot_ids)) != 10 or len(set(card_ids)) != 10:
+        raise SourceReadyGenerationPilotError("retry concept card IDs must be unique")
+    scoped_cards = []
+    for card in cards:
+        claims = _retry_foundational_claims(root, card)
+        recommendations = _retry_packet_recommendations(packets, card)
+        scoped_cards.append({
+            **card,
+            "foundational_claims": claims,
+            "current_packet_recommendations": recommendations,
+            "authorized_evidence": _retry_evidence_references(claims, recommendations),
+        })
+    return {
+        "schema_version": "1.0",
+        "scope": "SOURCE_READY_RETRY_GENERATOR_INPUT",
+        "job": {"job_id": job["job_id"]},
+        "concept_plan_path": RETRY_CONCEPT_PLAN_PATH,
+        "toronto_notes_authority": "TOPIC_CONTEXT_ONLY",
+        "concept_cards": scoped_cards,
+    }
+
+
+def validate_retry_output_path(root: Path, output_path: str) -> str:
+    """Permit only the new canonical retry artifact, never the failed pilot output."""
+    if output_path == FAILED_PILOT_ARTIFACT_PATH:
+        raise SourceReadyGenerationPilotError("failed pilot artifact path is forbidden for retry output")
+    if output_path != RETRY_GENERATED_ARTIFACT_PATH:
+        raise SourceReadyGenerationPilotError("retry output path must be the canonical new retry artifact path")
+    resolve_root_path(Path(root).resolve(), output_path, label="retry output path")
+    return output_path
+
+
+def _retry_reference_key(reference: dict[str, Any]) -> tuple[Any, ...]:
+    evidence_type = reference.get("evidence_type")
+    if evidence_type == "FOUNDATIONAL_CLAIM":
+        return evidence_type, reference.get("claim_card_id")
+    if evidence_type == "CURRENT_PACKET_RECOMMENDATION":
+        return evidence_type, reference.get("source_packet_id"), reference.get("recommendation_id")
+    return (evidence_type,)
+
+
+def _retry_item_evidence_is_authorized(item: dict[str, Any], authorized: set[tuple[Any, ...]]) -> None:
+    references = item.get("evidence_references")
+    if not isinstance(references, list) or not references:
+        raise SourceReadyGenerationPilotError("each retry item requires item-level evidence references")
+    if any(not isinstance(reference, dict) or _retry_reference_key(reference) not in authorized for reference in references):
+        raise SourceReadyGenerationPilotError("evidence reference is not authorized for retry slot")
+    closure = item.get("assertion_evidence")
+    if not isinstance(closure, dict) or set(closure) != _RETRY_ASSERTION_PARTS:
+        raise SourceReadyGenerationPilotError("retry item requires evidence closure for every factual assertion part")
+    for references_for_part in closure.values():
+        if not isinstance(references_for_part, list) or not references_for_part or any(
+            not isinstance(reference, dict) or _retry_reference_key(reference) not in authorized
+            for reference in references_for_part
+        ):
+            raise SourceReadyGenerationPilotError("evidence reference is not authorized for retry slot")
+
+
+def validate_retry_generated_artifact(root: Path, job_id: str, artifact: dict[str, Any]) -> dict[str, Any]:
+    """Fail closed unless every retry item preserves its plan and card-scoped evidence closure."""
+    if not isinstance(artifact, dict) or artifact.get("job_id") != job_id or not isinstance(artifact.get("generator_id"), str) or not artifact["generator_id"]:
+        raise SourceReadyGenerationPilotError("retry generated artifact job_id or generator_id is invalid")
+    cards = build_retry_generator_input(root, job_id)["concept_cards"]
+    items = artifact.get("items")
+    expected_slots = [card["retry_slot_id"] for card in cards]
+    if not isinstance(items, list) or [item.get("retry_slot_id") for item in items if isinstance(item, dict)] != expected_slots or len(items) != 10:
+        raise SourceReadyGenerationPilotError("retry generated artifact must exactly match the 10 retry slots")
+    required_item_strings = ("stem", "correct_answer_rationale")
+    plan_fields = ("concept_card_id", "allocation_address_id", "study_unit_id", "reasoning_task", "concept_target", "intended_item_form")
+    for item, card in zip(items, cards, strict=True):
+        if not isinstance(item, dict) or any(not isinstance(item.get(field), str) or not item[field].strip() for field in required_item_strings):
+            raise SourceReadyGenerationPilotError("each retry item requires stem and correct-answer rationale")
+        if any(item.get(field) != card[field] for field in plan_fields) or item.get("planned_competency") != card["target_competency"]:
+            raise SourceReadyGenerationPilotError("retry item plan identifier does not match concept card")
+        options = item.get("options")
+        keys = [option.get("key") for option in options] if isinstance(options, list) and all(isinstance(option, dict) for option in options) else []
+        if len(keys) < 2 or len(set(keys)) != len(keys) or item.get("correct_answer") not in keys:
+            raise SourceReadyGenerationPilotError("each retry item requires keyed options and a correct answer")
+        distractors = item.get("distractor_rationales")
+        if not isinstance(distractors, dict) or set(distractors) != set(keys) - {item["correct_answer"]} or any(not isinstance(value, str) or not value.strip() for value in distractors.values()):
+            raise SourceReadyGenerationPilotError("each retry item requires rationales for every distractor")
+        _retry_item_evidence_is_authorized(item, {_retry_reference_key(reference) for reference in card["authorized_evidence"]})
+    return artifact
 
 
 def _supported_references(packets: list[dict[str, Any]]) -> set[tuple[str, str, str, str]]:
