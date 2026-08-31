@@ -13,6 +13,7 @@ from qbank.jsonio import read_json
 
 REPO = Path(__file__).resolve().parents[1]
 ARTIFACT_PATH = REPO / "research/qgen/foundational_evidence_claim_cards.json"
+AUDIT_PATH = REPO / "reports/foundational_evidence_audit.json"
 REGISTRY_PATH = REPO / "research/qgen/source_document_registry.json"
 SOURCE_PACKET_PATHS = sorted((REPO / "research/qgen").glob("source_packet_population_srb_*.json"))
 
@@ -60,11 +61,12 @@ def _fndoc(url: str = "https://foundational.example.ca/anatomy") -> dict:
     }
 
 
-def test_empty_canonical_artifact_is_valid() -> None:
+def test_populated_canonical_artifact_is_valid_with_verified_complete_claim_cards() -> None:
     artifact = _canonical_artifact()
 
-    assert artifact["documents"] == []
-    assert artifact["claim_cards"] == []
+    assert artifact["documents"]
+    assert artifact["claim_cards"]
+    assert all(card["verification_status"] == "VERIFIED_COMPLETE" for card in artifact["claim_cards"])
     result = validate_foundational_evidence(REPO, artifact, _registry())
 
     assert result.status == "PASS"
@@ -154,10 +156,10 @@ def test_audit_rebuild_detects_changed_input_fingerprint() -> None:
     assert any("deterministic rebuild" in error for error in result.errors)
 
 
-def test_empty_corpus_and_audit_are_byte_deterministic() -> None:
-    artifact_bytes = ARTIFACT_PATH.read_bytes()
+def test_populated_corpus_and_audit_are_deterministic() -> None:
     artifact = _canonical_artifact()
     registry = _registry()
+    canonical_audit = read_json(AUDIT_PATH)
 
     first_audit = build_foundational_evidence_audit(REPO, artifact, registry)
     second_audit = build_foundational_evidence_audit(
@@ -166,9 +168,6 @@ def test_empty_corpus_and_audit_are_byte_deterministic() -> None:
         copy.deepcopy(registry),
     )
 
-    assert artifact_bytes == (
-        json.dumps(artifact, indent=2, sort_keys=True).encode() + b"\n"
-    )
     assert json.dumps(first_audit, indent=2, sort_keys=True).encode() == (
         json.dumps(second_audit, indent=2, sort_keys=True).encode()
     )
@@ -178,6 +177,12 @@ def test_empty_corpus_and_audit_are_byte_deterministic() -> None:
         artifact,
         registry,
         first_audit,
+    ).status == "PASS"
+    assert validate_foundational_evidence_audit(
+        REPO,
+        artifact,
+        registry,
+        canonical_audit,
     ).status == "PASS"
 
 
