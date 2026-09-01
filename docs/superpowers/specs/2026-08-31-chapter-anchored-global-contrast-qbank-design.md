@@ -1,6 +1,6 @@
 # Chapter-Anchored Global-Contrast QBank Design
 
-**Status:** Ready for user review
+**Status:** Approved architecture checkpoint; amended for staged item construction
 **Date:** 2026-08-31
 **Scope:** Research and architecture only; no production implementation, question generation, canonical-data migration, or allocation change.
 
@@ -152,6 +152,7 @@ Every item must record:
 | `anchor_tn_pages` | Canonical printed page range |
 | `anchor_pdf_pages` | Canonical physical PDF page range |
 | `primary_mcc_objective` | One primary existing MCC ID; secondary mappings may be separate |
+| `primary_physician_activity` | One canonical MCC physician activity applicable to the allocated objective and learner decision |
 | `primary_competency` | Existing testable competency/component and depth |
 | `primary_learner_decision` | One observable diagnosis, investigation, management, interpretation, communication, professional, ethical/legal, or population-health decision |
 | `anchor_fidelity` | Verdict, assessor identity, exact input fingerprints, criteria results, and explanation |
@@ -293,24 +294,49 @@ At least three rows must be `VALIDATED`. A fourth distractor is optional. A stro
 
 ## 12. Staged construction model
 
-The V3 architecture becomes:
+The final architecture is **CHAPTER_ANCHORED_GLOBAL_CONTRASTS with staged item construction**. Chapter-global contrast retrieval is not a standalone generation feature and cannot emit options directly. The normative sequence is:
+
+`TORONTO NOTES ANCHOR`
+→ `MCC OBJECTIVE / PHYSICIAN ACTIVITY`
+→ `PRIMARY LEARNER DECISION`
+→ `ANCHOR FIDELITY`
+→ `OPEN-ENDED STEM + KEY`
+→ `BLIND COVER-THE-OPTIONS SOLVER`
+→ `GLOBAL CONTRAST RETRIEVAL`
+→ `CONTRASTIVE EVIDENCE MATRIX`
+→ `SEPARATE DISTRACTOR CONSTRUCTION`
+→ `DISTRACTOR ADVERSARIAL RANKING`
+→ `MCQ ASSEMBLY`
+→ `PLAN-FIDELITY / SHORTCUT / CUE CHECK`
+→ `RATIONALES`
+→ `FRESH INDEPENDENT VERIFICATION`
+
+The executable stages are:
 
 1. **Anchor topic resolution** — join the frozen assignment to canonical TN/MCC/competency provenance.
-2. **Primary learner decision** — define one observable decision at the allocated depth.
-3. **Anchor-fidelity preflight** — fail closed before prose generation.
-4. **Open-ended stem/key model** — construct the original problem without options.
-5. **Blind cover-the-options solver** — independently derive the answer and reasoning.
-6. **Global contrast retrieval** — retrieve across the complete TN inventory plus cached validated edges.
-7. **Contrastive evidence matrix** — validate plausibility, discriminants, evidence, and drift.
-8. **Distractor construction** — realize each validated contrast in homogeneous option form.
-9. **Distractor adversarial ranking** — test plausibility, uniqueness, scenario binding, and single-best-answer status.
-10. **MCQ assembly** — select one key plus three or four strong distractors.
-11. **Shortcut/cue review** — reject lexical, grammatical, length, specificity, convergence, and option-position cues.
-12. **Anchor-fidelity postflight** — ensure assembly did not migrate the target.
-13. **Rationale construction** — explain key and every option from the matrix.
-14. **Independent verification** — bind verdicts to exact anchor, evidence, matrix, and item bytes.
+2. **MCC objective and physician activity resolution** — bind one canonical objective and physician activity without inventing identifiers or labels.
+3. **Primary learner decision** — define one observable decision at the allocated depth.
+4. **Anchor-fidelity preflight** — fail closed before prose generation.
+5. **Open-ended stem/key model** — construct the original problem without options and record the intended answer and reasoning chain.
+6. **Blind cover-the-options solver** — a fresh solver independently derives the answer and reasoning without seeing the intended answer, contrast candidates, options, or author self-evaluation. A mismatch revises the stem/decision model; options cannot rescue it.
+7. **Global contrast retrieval** — retrieve across the complete TN inventory plus cached validated edges.
+8. **Contrastive evidence matrix** — validate the key row and at least three plausible competitor rows for provenance, shared features, partial reasoning, decisive discriminants, authoritative evidence, ambiguity, and drift before option wording exists.
+9. **Separate distractor construction** — realize only validated matrix rows in the same option dimension as the key. The constructor is not asked for generic “wrong answers.”
+10. **Distractor adversarial ranking** — a fresh reviewer tests plausibility, MCC relevance, medical/professional confusability, uniqueness, scenario binding, evidence-grounded discrimination, and single-best-answer status.
+11. **MCQ assembly** — select one key plus three or four strong distractors without materially rewriting approved components.
+12. **Plan-fidelity, shortcut, and cue review** — repeat cover-the-options and anchor-fidelity checks; verify item-spec/learner-decision fidelity, context necessity, option-only cues, clang/keyword overlap, option homogeneity, answer-length/specificity cues, and target drift.
+13. **Rationale construction** — only after the assembled item is accepted, explain the key and every option from the approved matrix without adding teaching claims.
+14. **Fresh independent verification** — a verifier fresh relative to authorship, blind solving, distractor construction, and adversarial ranking binds verdicts to exact anchor, evidence, matrix, plan, and item bytes.
 
 The generator cannot create the item monolithically. Each stage consumes an approved, fingerprinted predecessor and emits a separately reviewable artifact. Model agreement is not evidence.
+
+### 12.1 Context necessity
+
+Context form follows the competency. Clinical decisions may require a patient presentation; public-health, ethical/legal, communication, or professional decisions may instead require study results, a policy, a population, a program, or a professional scenario. Application items fail closed when removing the context leaves the same decision answerable, except for facts deliberately retained as realistic but non-decisive texture and identified as such. No artificial patient vignette is required.
+
+### 12.2 Matrix insufficiency fallback
+
+If fewer than three genuinely plausible evidence-grounded competitors validate, the ordered fallback is: inspect other whole-book candidates; select another learner decision within the same anchor unit; then perform targeted research for one specifically identified missing discriminator. Broad evidence enrichment is forbidden, and a weak distractor is never manufactured to satisfy option count.
 
 ## 13. Option-count policy
 
