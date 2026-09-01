@@ -11,6 +11,7 @@ from qbank.chapter_staged_generation import (
     ChapterStagedGenerationError,
     build_global_study_unit_index,
     canonical_sha256,
+    find_option_text_cues,
     find_option_shape_cues,
     find_option_position_cues,
     resolve_chapter_anchor,
@@ -18,6 +19,7 @@ from qbank.chapter_staged_generation import (
     validate_contrast_library,
     validate_micro_failure_review,
     validate_micro_pilot,
+    validate_option_cue_review,
     validate_staged_item,
 )
 
@@ -39,6 +41,19 @@ STAGES = [
     "RATIONALES",
     "FRESH_INDEPENDENT_VERIFICATION",
 ]
+STAGES_V2 = STAGES[:10] + [
+    "OPTION_REALIZATION",
+    "PARALLEL_OPTION_SET_REVIEW",
+] + STAGES[10:]
+SEMANTIC_CUE_CHECKS = {
+    "key_only_specificity",
+    "semantic_odd_one_out",
+    "option_category_match",
+    "convergence",
+    "clang_testwise_detectability",
+    "natural_parallelism",
+    "meaning_preservation",
+}
 DEFECTS = {
     "FACTUAL_ERROR",
     "UNSUPPORTED_CLAIM",
@@ -401,6 +416,69 @@ def _verification(staged: dict) -> dict:
     }
 
 
+def _upgrade_to_schema_1_1(item: dict) -> dict:
+    item = deepcopy(item)
+    item["schema_version"] = "1.1"
+    item["stage_sequence"] = STAGES_V2
+    dimension = {
+        "DIAGNOSIS_DIFFERENTIAL": "DIAGNOSIS",
+        "INVESTIGATION_INTERPRETATION": "DIAGNOSTIC_APPROACH",
+        "MANAGEMENT_NEXT_BEST_STEP": "MANAGEMENT_ACTION",
+    }[item["item_type"]]
+    grammatical_form = "NOUN_PHRASE" if dimension == "DIAGNOSIS" else "IMPERATIVE_ACTION"
+    semantic_distractors = {
+        row["contrast_id"]: row for row in item["distractor_construction"]["distractors"]
+    }
+    realized_options = []
+    for option in item["assembly"]["options"]:
+        if option["role"] == "KEY":
+            semantic_text = item["open_ended_stem_key"]["intended_answer"]
+            evidence_refs = item["contrastive_evidence_matrix"]["key"]["anchor_evidence_refs"]
+        else:
+            semantic = semantic_distractors[option["contrast_id"]]
+            semantic_text = semantic["option_text"]
+            evidence_refs = semantic["evidence_refs"]
+        realized_options.append({
+            "position": option["key"],
+            "role": option["role"],
+            **({"contrast_id": option["contrast_id"]} if option["role"] == "DISTRACTOR" else {}),
+            "semantic_option_text": semantic_text,
+            "surface_text": option["text"],
+            "option_dimension": dimension,
+            "grammatical_form": grammatical_form,
+            "meaning_preservation": "PASS",
+            "evidence_refs": evidence_refs,
+        })
+    realization = {
+        "realizer_id": "option-realizer",
+        "adversarial_review_sha256": _sha(item["distractor_adversarial_review"]),
+        "policy": "SEMANTIC_TO_CONCISE_NATURAL_PARALLEL_SURFACE",
+        "options": realized_options,
+    }
+    review = {
+        "reviewer_id": "parallel-option-reviewer",
+        "realization_sha256": _sha(realization),
+        "deterministic_findings": [],
+        "semantic_checks": {name: "PASS" for name in sorted(SEMANTIC_CUE_CHECKS)},
+        "option_only_key_identifiable": False,
+        "verdict": "PASS",
+    }
+    item["option_realization"] = realization
+    item["parallel_option_set_review"] = review
+    assembly = item["assembly"]
+    assembly.pop("adversarial_review_sha256")
+    assembly["parallel_option_set_review_sha256"] = _sha(review)
+    assembly["approved_component_sha256"] = {
+        "open_ended": _sha(item["open_ended_stem_key"]),
+        "option_realization": _sha(realization),
+        "parallel_option_set_review": _sha(review),
+    }
+    assembly["rewrite_status"] = "SURFACE_REALIZATION_ONLY"
+    item["acceptance_review"]["assembly_sha256"] = _sha(assembly)
+    item["rationales"]["acceptance_sha256"] = _sha(item["acceptance_review"])
+    return item
+
+
 def test_global_index_and_anchor_resolution_join_canonical_lineage():
     index = build_global_study_unit_index(REPO)
     assert len(index) >= 1400
@@ -498,6 +576,88 @@ def test_option_shape_rule_detects_uniquely_long_specific_key():
     assert find_option_shape_cues(options) == ["KEY_UNIQUELY_LONG_AND_SPECIFIC"]
 
 
+def test_option_text_checks_reject_duplicate_nonparallel_and_key_only_phrase():
+    duplicate = [
+        {"role": "KEY", "text": "Repeat cardiac testing", "grammatical_form": "IMPERATIVE_ACTION"},
+        {"role": "DISTRACTOR", "text": "Repeat cardiac testing", "grammatical_form": "IMPERATIVE_ACTION"},
+        {"role": "DISTRACTOR", "text": "Obtain aortic imaging", "grammatical_form": "IMPERATIVE_ACTION"},
+    ]
+    assert "DUPLICATE_OPTION_TEXT" in find_option_text_cues("A clinical stem.", duplicate)
+
+    nonparallel = deepcopy(duplicate)
+    nonparallel[1]["text"] = "Pulmonary embolism"
+    nonparallel[1]["grammatical_form"] = "NOUN_PHRASE"
+    assert "NONPARALLEL_GRAMMATICAL_FORM" in find_option_text_cues("A clinical stem.", nonparallel)
+
+    key_only_phrase = [
+        {"role": "KEY", "text": "Use the locally validated pathway", "grammatical_form": "IMPERATIVE_ACTION"},
+        {"role": "DISTRACTOR", "text": "Obtain aortic imaging", "grammatical_form": "IMPERATIVE_ACTION"},
+        {"role": "DISTRACTOR", "text": "Arrange reflux monitoring", "grammatical_form": "IMPERATIVE_ACTION"},
+    ]
+    assert "KEY_ONLY_STEM_PHRASE" in find_option_text_cues(
+        "The locally validated pathway is available.", key_only_phrase
+    )
+
+
+def test_option_text_checks_allow_natural_length_variation_and_medical_specificity():
+    options = [
+        {"role": "KEY", "text": "Repeat ECG and hs-cTn testing in 1–2 hours", "grammatical_form": "IMPERATIVE_ACTION"},
+        {"role": "DISTRACTOR", "text": "Use D-dimer testing, with CTPA if indicated", "grammatical_form": "IMPERATIVE_ACTION"},
+        {"role": "DISTRACTOR", "text": "Obtain urgent aortic CT angiography", "grammatical_form": "IMPERATIVE_ACTION"},
+        {"role": "DISTRACTOR", "text": "Obtain inflammatory markers and echocardiography", "grammatical_form": "IMPERATIVE_ACTION"},
+        {"role": "DISTRACTOR", "text": "Arrange upper endoscopy or reflux monitoring", "grammatical_form": "IMPERATIVE_ACTION"},
+    ]
+    assert find_option_text_cues(
+        "The first electrocardiogram and high-sensitivity troponin are nondiagnostic.", options
+    ) == []
+
+
+def test_option_text_checks_allow_repeated_parallel_grammatical_frames():
+    options = [
+        {"role": "KEY", "text": "Administer oral acetylsalicylic acid", "grammatical_form": "IMPERATIVE_ACTION"},
+        {"role": "DISTRACTOR", "text": "Administer oral clopidogrel", "grammatical_form": "IMPERATIVE_ACTION"},
+        {"role": "DISTRACTOR", "text": "Administer oral rivaroxaban", "grammatical_form": "IMPERATIVE_ACTION"},
+        {"role": "DISTRACTOR", "text": "Administer intravenous alteplase", "grammatical_form": "IMPERATIVE_ACTION"},
+    ]
+    assert find_option_text_cues("Select the most appropriate medication.", options) == []
+
+
+def test_schema_1_1_option_realization_accepts_strong_cross_chapter_options():
+    evidence = _evidence()
+    library = _library(evidence)
+    item = _upgrade_to_schema_1_1(_staged_item(evidence, library))
+    assert validate_staged_item(REPO, item, library, evidence) == item
+
+
+@pytest.mark.parametrize(("mutate", "message"), [
+    (
+        lambda item: item["option_realization"]["options"][1].__setitem__("option_dimension", "DIAGNOSIS"),
+        "option dimension",
+    ),
+    (
+        lambda item: item["option_realization"]["options"][1].__setitem__("grammatical_form", "NOUN_PHRASE"),
+        "grammatical form",
+    ),
+    (
+        lambda item: item["parallel_option_set_review"]["semantic_checks"].__setitem__("convergence", "FAIL"),
+        "semantic cue review",
+    ),
+])
+def test_schema_1_1_option_realization_fails_closed(mutate, message):
+    evidence = _evidence()
+    library = _library(evidence)
+    item = _upgrade_to_schema_1_1(
+        _staged_item(
+            evidence,
+            library,
+            item_type="INVESTIGATION_INTERPRETATION",
+        )
+    )
+    mutate(item)
+    with pytest.raises(ChapterStagedGenerationError, match=message):
+        validate_staged_item(REPO, item, library, evidence)
+
+
 def test_position_rule_detects_unbalanced_micro_batch():
     items = [{"assembly": {"correct_answer": "A"}} for _ in range(3)]
     assert find_option_position_cues(items) == ["CORRECT_POSITION_REPEATED_ACROSS_ENTIRE_BATCH"]
@@ -561,6 +721,56 @@ def test_micro_gate_requires_exact_item_mix_three_passes_and_zero_defects():
         validate_micro_pilot(REPO, staged, library, evidence, failed)
 
 
+@pytest.mark.parametrize(("field", "value"), [
+    ("candidate_status", "REJECTED_BY_FRESH_OPTION_CUE_REVIEW"),
+    ("provisional_parallel_option_review", True),
+])
+def test_micro_success_gate_rejects_rejected_or_provisional_candidates(field, value):
+    evidence = _evidence()
+    library = _library(evidence)
+    staged = {
+        "schema_version": "1.0",
+        "scope": "CHAPTER_REVIEW_CLINICAL_MICRO_3",
+        "pilot_id": "QGEN-MED-007-CHAPTER-REVIEW-MICRO-3",
+        "micro_chapter": "Cardiology and Cardiac Surgery",
+        "anchor_chapter_id": "C",
+        "anchor_study_unit_id": "SU-C-21",
+        "items": [
+            _staged_item(evidence, library, item_id="CHREV-C-ACS-001", item_type="DIAGNOSIS_DIFFERENTIAL"),
+            _staged_item(evidence, library, item_id="CHREV-C-ACS-002", item_type="INVESTIGATION_INTERPRETATION"),
+            _staged_item(evidence, library, item_id="CHREV-C-ACS-003", item_type="MANAGEMENT_NEXT_BEST_STEP"),
+        ],
+        field: value,
+    }
+    with pytest.raises(ChapterStagedGenerationError, match="rejected or provisional"):
+        validate_micro_pilot(REPO, staged, library, evidence, _verification(staged))
+
+
+@pytest.mark.parametrize("role", ["realizer_id", "reviewer_id"])
+def test_micro_success_gate_requires_verifier_fresh_from_option_realization_roles(role):
+    evidence = _evidence()
+    library = _library(evidence)
+    items = [
+        _upgrade_to_schema_1_1(_staged_item(evidence, library, item_id="CHREV-C-ACS-001", item_type="DIAGNOSIS_DIFFERENTIAL")),
+        _upgrade_to_schema_1_1(_staged_item(evidence, library, item_id="CHREV-C-ACS-002", item_type="INVESTIGATION_INTERPRETATION")),
+        _upgrade_to_schema_1_1(_staged_item(evidence, library, item_id="CHREV-C-ACS-003", item_type="MANAGEMENT_NEXT_BEST_STEP")),
+    ]
+    staged = {
+        "schema_version": "1.1",
+        "scope": "CHAPTER_REVIEW_CLINICAL_MICRO_3",
+        "pilot_id": "QGEN-MED-007-CHAPTER-REVIEW-MICRO-3-OPTION-REALIZATION",
+        "micro_chapter": "Cardiology and Cardiac Surgery",
+        "anchor_chapter_id": "C",
+        "anchor_study_unit_id": "SU-C-21",
+        "items": items,
+    }
+    verification = _verification(staged)
+    source = items[0]["option_realization"] if role == "realizer_id" else items[0]["parallel_option_set_review"]
+    verification["verifier_id"] = source[role]
+    with pytest.raises(ChapterStagedGenerationError, match="prior generation role"):
+        validate_micro_pilot(REPO, staged, library, evidence, verification)
+
+
 def test_committed_acs_micro_pilot_records_fail_closed_adversarial_gate():
     evidence_path = REPO / "research/qgen/pilot/QGEN-MED-007.chapter-review-micro-3.evidence.json"
     library_path = REPO / "research/qgen/chapter_global_contrast_library.json"
@@ -591,3 +801,93 @@ def test_committed_acs_micro_pilot_records_fail_closed_adversarial_gate():
     assert result["micro_items_generated"] == 3
     assert result["micro_items_passed"] == 1
     assert result["defect_counts"]["OPTION_CUE_FAILURE"] == 3
+
+
+def test_committed_option_retry_records_fresh_cue_gate_failure_without_overwrite():
+    evidence_path = REPO / "research/qgen/pilot/QGEN-MED-007.chapter-review-micro-3.evidence.json"
+    library_path = REPO / "research/qgen/chapter_global_contrast_library.json"
+    staged_path = REPO / "research/qgen/pilot/QGEN-MED-007.chapter-review-micro-3.option-retry-1.staged.json"
+    cue_review_path = REPO / "reports/qgen_med_007_chapter_review_micro_3_option_retry_1_cue_review.json"
+    prior_staged_path = REPO / "research/qgen/pilot/QGEN-MED-007.chapter-review-micro-3.staged.json"
+    for path in (evidence_path, library_path, staged_path, cue_review_path, prior_staged_path):
+        assert path.is_file(), path
+
+    staged = json.loads(staged_path.read_text())
+    cue_review = json.loads(cue_review_path.read_text())
+    prior_staged = json.loads(prior_staged_path.read_text())
+    assert all(item["schema_version"] == "1.1" for item in staged["items"])
+    assert staged["candidate_status"] == "REJECTED_BY_FRESH_OPTION_CUE_REVIEW"
+    assert staged["provisional_parallel_option_review"] is True
+    assert staged["derivative_lineage"]["parent_artifact_sha256"] == canonical_sha256(prior_staged)
+    assert find_option_position_cues(staged["items"]) == []
+    assert cue_review["staged_artifact_sha256"] == canonical_sha256(staged)
+    assert validate_option_cue_review(staged, cue_review) == {
+        "micro_items_generated": 3,
+        "micro_items_passed": 2,
+        "material_cue_findings": 2,
+        "false_positive_cue_findings": 2,
+        "verdict": "FAIL",
+    }
+    assert cue_review["fresh_independent_verification_run"] is False
+    assert cue_review["regeneration_attempted_after_failure"] is False
+    assert cue_review["next_step"] == "DIAGNOSE_REMAINING_MICRO_FAILURE"
+
+
+@pytest.mark.parametrize(("mutate", "message"), [
+    (
+        lambda staged, review: review.__setitem__("staged_artifact_sha256", "0" * 64),
+        "lineage",
+    ),
+    (
+        lambda staged, review: review.__setitem__("reviewer_id", staged["items"][0]["author_id"]),
+        "fresh reviewer",
+    ),
+    (
+        lambda staged, review: review.__setitem__(
+            "reviewer_id", staged["items"][0]["anchor_fidelity_preflight"]["reviewer_id"]
+        ),
+        "fresh reviewer",
+    ),
+    (
+        lambda staged, review: review.__setitem__("material_cue_findings", 0),
+        "counts",
+    ),
+])
+def test_option_cue_review_fails_closed_on_forged_lineage_reviewer_or_counts(mutate, message):
+    staged = json.loads((
+        REPO / "research/qgen/pilot/QGEN-MED-007.chapter-review-micro-3.option-retry-1.staged.json"
+    ).read_text())
+    review = json.loads((
+        REPO / "reports/qgen_med_007_chapter_review_micro_3_option_retry_1_cue_review.json"
+    ).read_text())
+    mutate(staged, review)
+    with pytest.raises(ChapterStagedGenerationError, match=message):
+        validate_option_cue_review(staged, review)
+
+
+def test_option_cue_review_reconciles_verdict_with_candidate_status():
+    staged = json.loads((
+        REPO / "research/qgen/pilot/QGEN-MED-007.chapter-review-micro-3.option-retry-1.staged.json"
+    ).read_text())
+    review = json.loads((
+        REPO / "reports/qgen_med_007_chapter_review_micro_3_option_retry_1_cue_review.json"
+    ).read_text())
+
+    failed_as_accepted = deepcopy(staged)
+    failed_as_accepted["candidate_status"] = "ACCEPTED"
+    failed_as_accepted["provisional_parallel_option_review"] = False
+    failed_review = deepcopy(review)
+    failed_review["staged_artifact_sha256"] = canonical_sha256(failed_as_accepted)
+    with pytest.raises(ChapterStagedGenerationError, match="candidate status"):
+        validate_option_cue_review(failed_as_accepted, failed_review)
+
+    passed_as_rejected = deepcopy(staged)
+    passed_review = deepcopy(review)
+    passed_review["items"][2]["verdict"] = "PASS"
+    passed_review["items"][2]["real_findings"] = []
+    passed_review["micro_items_passed"] = 3
+    passed_review["material_cue_findings"] = 0
+    passed_review["verdict"] = "PASS"
+    passed_review["staged_artifact_sha256"] = canonical_sha256(passed_as_rejected)
+    with pytest.raises(ChapterStagedGenerationError, match="candidate status"):
+        validate_option_cue_review(passed_as_rejected, passed_review)

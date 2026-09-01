@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "scope": "CHAPTER_REVIEW_MICRO_OPTION_RETRY_FRESH_CUE_REVIEW",
+  "pilot_id": "QGEN-MED-007-CHAPTER-REVIEW-MICRO-3-OPTION-RETRY-1",
+  "review_date": "2026-09-01",
+  "staged_artifact_sha256": "4d838eab3a86b4ae25b2b002f1da94ebe6d5f3a7514b6cd19e08d35ee126068c",
+  "reviewer_id": "fresh-option-only-reviewer-option-retry-1",
+  "independent_context": {
+    "first_pass_shown": [
+      "realized_option_text"
+    ],
+    "first_pass_hidden": [
+      "stem",
+      "lead_in",
+      "correct_answer",
+      "semantic_option_text",
+      "contrast_ids",
+      "evidence",
+      "provisional_self_review",
+      "acceptance_review",
+      "rationales"
+    ],
+    "second_pass_purpose": "Adjudicate first-pass suspicions against medically necessary specificity and preserved semantic lineage; no wording revision was permitted.",
+    "verdict_independent_of_provisional_self_review": true
+  },
+  "items": [
+    {
+      "item_id": "CHREV-C-ACS-001-OR1",
+      "verdict": "PASS",
+      "real_findings": [],
+      "false_positive_findings": [
+        {
+          "finding_id": "OR1-CUE-001-CONVENTIONAL-NAME",
+          "suspected_categories": [
+            "ANSWER_LENGTH_CUE",
+            "ANSWER_SPECIFICITY_CUE"
+          ],
+          "adjudication": "FALSE_POSITIVE",
+          "reason": "The conventional diagnosis name is necessarily longer than the other diagnosis labels and contains no dispensable qualifier; recognizing it still requires the intended ECG and troponin reasoning."
+        }
+      ],
+      "semantic_and_evidence_preservation": "PASS",
+      "single_best_answer": "PASS"
+    },
+    {
+      "item_id": "CHREV-C-ACS-002-OR1",
+      "verdict": "PASS",
+      "real_findings": [],
+      "false_positive_findings": [
+        {
+          "finding_id": "OR1-CUE-002-NECESSARY-INTERVAL",
+          "suspected_categories": [
+            "ANSWER_LENGTH_CUE",
+            "ANSWER_SPECIFICITY_CUE",
+            "KEY_ONLY_QUALIFIER"
+          ],
+          "adjudication": "FALSE_POSITIVE",
+          "reason": "The 1-2-hour interval is necessary operational precision for the approved accelerated serial ECG and hs-cTn pathway; the option set is otherwise naturally balanced and homogeneous."
+        }
+      ],
+      "semantic_and_evidence_preservation": "PASS",
+      "single_best_answer": "PASS"
+    },
+    {
+      "item_id": "CHREV-C-ACS-003-OR1",
+      "verdict": "FAIL",
+      "real_findings": [
+        {
+          "finding_id": "OR1-CUE-003-COMPLETENESS",
+          "categories": [
+            "ANSWER_SPECIFICITY_CUE",
+            "KEY_ONLY_QUALIFIER",
+            "PARALLELISM_FAILURE"
+          ],
+          "testwise_exploitable": true,
+          "cause": "OPTION_REALIZATION",
+          "reason": "The key alone reads as a complete, positively framed two-stage pathway while three competitors carry conspicuously adverse or restrictive framing."
+        },
+        {
+          "finding_id": "OR1-CUE-003-CONVERGENCE",
+          "categories": [
+            "OPTION_CONVERGENCE",
+            "SEMANTIC_ODD_ONE_OUT"
+          ],
+          "testwise_exploitable": true,
+          "cause": "OPTION_REALIZATION_AND_PARALLEL_REVIEW_MISS",
+          "reason": "The key combines immediate fibrinolysis represented by one competitor with routine PCI-centre transfer represented by another, making the complete union identifiable without applying the clinical discriminants."
+        }
+      ],
+      "false_positive_findings": [],
+      "semantic_and_evidence_preservation": "PASS",
+      "single_best_answer": "PASS"
+    }
+  ],
+  "micro_items_generated": 3,
+  "micro_items_passed": 2,
+  "material_cue_findings": 2,
+  "false_positive_cue_findings": 2,
+  "same_root_as_original_failure": true,
+  "root_cause": "OPTION_REALIZATION_AND_PARALLEL_OPTION_SET_REVIEW_FALSE_NEGATIVE",
+  "verdict": "FAIL",
+  "pipeline_stop_stage": "PARALLEL_OPTION_SET_REVIEW",
+  "fresh_independent_verification_run": false,
+  "regeneration_attempted_after_failure": false,
+  "next_step": "DIAGNOSE_REMAINING_MICRO_FAILURE"
+}

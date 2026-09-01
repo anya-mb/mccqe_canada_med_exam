@@ -1,0 +1,154 @@
+{
+  "schema_version": "1.0",
+  "scope": "CHAPTER_REVIEW_MICRO_OPTION_CUE_ROOT_CAUSE",
+  "pilot_id": "QGEN-MED-007-CHAPTER-REVIEW-MICRO-3",
+  "diagnosis_date": "2026-09-01",
+  "report_counting_inconsistency": "EXPECTED_COUNTING_SEMANTICS",
+  "counting_semantics": {
+    "micro_items_passed": "Count of item-local PASS verdicts.",
+    "option_cue_failures": "Count of material cue defect instances across item and batch scopes, not count of failed items.",
+    "reconciliation": {
+      "item_local_passes": 1,
+      "item_local_failures": 2,
+      "item_level_cue_defects": 2,
+      "batch_level_position_defects": 1,
+      "reported_option_cue_failures": 3
+    }
+  },
+  "full_suite": {
+    "prior_result": {
+      "passed": 749,
+      "failed": 3,
+      "errors": 4
+    },
+    "exact_nonpassing_tests": [
+      "tests/test_cli.py::test_validate_project_succeeds",
+      "tests/test_cli.py::test_validate_project_stops_on_missing_source",
+      "tests/test_source_research_coordinator.py::test_discovery_classifies_dirty_worktree_retry_and_committed_branch_awaiting_integration",
+      "tests/test_toc_inventory.py::TestChapterCoverage::test_exactly_32_chapters_expected_on_disk",
+      "tests/test_toc_inventory.py::TestChapterCoverage::test_all_disk_chapters_represented_in_inventory",
+      "tests/test_toc_inventory.py::TestHierarchyValidity::test_every_node_belongs_to_a_real_chapter",
+      "tests/test_toc_inventory.py::TestUnresolvedCompleteness::test_unresolved_chapter_codes_are_real_chapters"
+    ],
+    "root_causes": [
+      {
+        "root_cause_id": "FULL-SUITE-ENV-01",
+        "affected_tests": 6,
+        "classification": "WORKTREE_LOCAL_IGNORED_DEPENDENCIES_MISSING",
+        "detail": "The linked worktree did not contain ignored config/project.local.json or derived/toronto-notes-2025/chapters. The same six tests pass in the saved project checkout where those local dependencies exist."
+      },
+      {
+        "root_cause_id": "FULL-SUITE-ENV-02",
+        "affected_tests": 1,
+        "classification": "LINKED_WORKTREE_CLONE_DEFAULT_BRANCH_ASSUMPTION",
+        "detail": "The coordinator fixture clones REPO and later checks out main. When REPO is a linked feature worktree, the fixture's removal commit is made on the feature branch while main still points at the integrated baseline, so SRB-001 is classified INTEGRATED. The test passes from the saved main checkout."
+      }
+    ],
+    "architecture_regressions": 0,
+    "test_side_effects": "The prior full run rewrote MEMORY.md and reports/source_research_integration_audit.json; both were restored before commit de247e9735e5f323bcfc3f603be41ebab6db8af3."
+  },
+  "item_findings": [
+    {
+      "item_id": "CHREV-C-ACS-001",
+      "item_local_verdict": "PASS",
+      "material_findings": [],
+      "batch_findings": ["CUE-BATCH-POSITION-01"],
+      "rejected_false_positives": [
+        "ANSWER_LENGTH_CUE",
+        "ANSWER_SPECIFICITY_CUE",
+        "LEXICAL_OVERLAP_CLANG"
+      ],
+      "note": "The conventional NSTEMI diagnosis name is necessarily longer and semantically related to the ECG finding; exploiting that relationship requires the intended clinical recognition."
+    },
+    {
+      "item_id": "CHREV-C-ACS-002",
+      "item_local_verdict": "FAIL",
+      "material_findings": [
+        {
+          "finding_id": "CUE-ACS-002-STANDOUT-01",
+          "categories": [
+            "ANSWER_LENGTH_CUE",
+            "ANSWER_SPECIFICITY_CUE",
+            "KEY_ONLY_QUALIFIER",
+            "PARALLELISM_FAILURE"
+          ],
+          "testwise_exploitable": true,
+          "cause": "KEY_WORDING_AND_OPTION_REALIZATION",
+          "pre_assembly": true,
+          "detail": "The 22-word key is the only elaborate double action and the only option with a time interval plus a validated-pathway qualifier."
+        },
+        {
+          "finding_id": "CUE-ACS-002-ODD-ONE-OUT-01",
+          "categories": ["SEMANTIC_ODD_ONE_OUT"],
+          "testwise_exploitable": true,
+          "cause": "STEM_WORDING_AND_DISTRACTOR_SET",
+          "pre_assembly": true,
+          "detail": "The stem explicitly negates features for every alternative disease, leaving the key as the sole ACS-directed pathway."
+        }
+      ],
+      "batch_findings": ["CUE-BATCH-POSITION-01"],
+      "rejected_false_positives": [
+        "LEXICAL_OVERLAP_CLANG",
+        "ABSOLUTE_LANGUAGE_CUE"
+      ]
+    },
+    {
+      "item_id": "CHREV-C-ACS-003",
+      "item_local_verdict": "FAIL",
+      "material_findings": [
+        {
+          "finding_id": "CUE-ACS-003-STANDOUT-01",
+          "categories": [
+            "ANSWER_LENGTH_CUE",
+            "ANSWER_SPECIFICITY_CUE",
+            "KEY_ONLY_QUALIFIER",
+            "PARALLELISM_FAILURE"
+          ],
+          "testwise_exploitable": true,
+          "cause": "KEY_WORDING_AND_OPTION_REALIZATION",
+          "pre_assembly": true,
+          "detail": "The 15-word key alone states the complete two-step pathway and names the pharmacoinvasive strategy."
+        },
+        {
+          "finding_id": "CUE-ACS-003-CONVERGENCE-01",
+          "categories": ["OPTION_CONVERGENCE", "SEMANTIC_ODD_ONE_OUT"],
+          "testwise_exploitable": true,
+          "cause": "DISTRACTOR_WORDING_AND_OPTION_SET_REALIZATION",
+          "pre_assembly": true,
+          "detail": "The key appears to unite the fibrinolysis element of one competitor with the transfer/PCI element of another."
+        }
+      ],
+      "batch_findings": ["CUE-BATCH-POSITION-01"],
+      "rejected_false_positives": [
+        "LEXICAL_OVERLAP_CLANG",
+        "ABSOLUTE_LANGUAGE_CUE"
+      ]
+    }
+  ],
+  "batch_findings": [
+    {
+      "finding_id": "CUE-BATCH-POSITION-01",
+      "categories": ["POSITION_CUE"],
+      "testwise_exploitable": true,
+      "cause": "ASSEMBLY_POSITION_ASSIGNMENT",
+      "pre_assembly": false,
+      "detail": "All three keys occupy position A; this is a batch-level defect and does not convert item 1's local PASS to FAIL."
+    }
+  ],
+  "material_finding_count": 5,
+  "false_positive_candidate_count": 7,
+  "primary_root_cause": "COMBINATION",
+  "root_cause_detail": "The pipeline lacked a distinct semantic-to-surface option realization and parallel option-set review. Items 2 and 3 carried overly complete key wording into assembly, item 2 over-negated every competitor in the stem, item 3 exposed convergence among partial management pathways, and assembly placed every key in A. The prior deterministic length and position checks were true positives but the semantic review contract did not expose specificity, odd-one-out, or convergence as separate gates.",
+  "assessment_guidance": [
+    {
+      "authority": "Medical Council of Canada",
+      "url": "https://mcc.ca/wp-content/uploads/Multiple-choice-question-guidelines.pdf",
+      "relevance": "Options should be homogeneous, plausible, grammatically consistent, logically compatible, and relatively similar in length."
+    },
+    {
+      "authority": "National Board of Medical Examiners",
+      "url": "https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf",
+      "relevance": "Correct answers should not stand out by length or instructional detail; options should be homogeneous and parallel; clang and convergence can permit testwise guessing."
+    }
+  ]
+}

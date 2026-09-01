@@ -29,6 +29,10 @@ STAGE_SEQUENCE = [
     "RATIONALES",
     "FRESH_INDEPENDENT_VERIFICATION",
 ]
+STAGE_SEQUENCE_V2 = STAGE_SEQUENCE[:10] + [
+    "OPTION_REALIZATION",
+    "PARALLEL_OPTION_SET_REVIEW",
+] + STAGE_SEQUENCE[10:]
 PHYSICIAN_ACTIVITIES = {
     "Assessment/Diagnosis",
     "Management",
@@ -92,6 +96,32 @@ DEFECT_CATEGORIES = {
     "RATIONALE_DEFICIENCY",
     "MATERIAL_DUPLICATION",
 }
+SEMANTIC_CUE_CHECKS = {
+    "key_only_specificity",
+    "semantic_odd_one_out",
+    "option_category_match",
+    "convergence",
+    "clang_testwise_detectability",
+    "natural_parallelism",
+    "meaning_preservation",
+}
+OPTION_CUE_CATEGORIES = {
+    "ANSWER_LENGTH_CUE",
+    "ANSWER_SPECIFICITY_CUE",
+    "LEXICAL_OVERLAP_CLANG",
+    "GRAMMATICAL_CUE",
+    "OPTION_CATEGORY_MISMATCH",
+    "KEY_ONLY_QUALIFIER",
+    "ABSOLUTE_LANGUAGE_CUE",
+    "OPTION_CONVERGENCE",
+    "SEMANTIC_ODD_ONE_OUT",
+    "POSITION_CUE",
+    "PARALLELISM_FAILURE",
+    "OTHER",
+}
+_PHRASE_STOPWORDS = {
+    "and", "for", "from", "into", "only", "that", "the", "then", "this", "with",
+}
 
 
 def find_option_shape_cues(options: list[dict[str, Any]]) -> list[str]:
@@ -128,6 +158,54 @@ def find_option_shape_cues(options: list[dict[str, Any]]) -> list[str]:
     return cues
 
 
+def _meaningful_bigrams(text_value: str) -> set[tuple[str, str]]:
+    tokens = re.findall(r"[a-z0-9]+(?:-[a-z0-9]+)*", text_value.lower())
+    return {
+        (left, right)
+        for left, right in zip(tokens, tokens[1:])
+        if left not in _PHRASE_STOPWORDS
+        and right not in _PHRASE_STOPWORDS
+        and len(left) >= 4
+        and len(right) >= 4
+    }
+
+
+def find_option_text_cues(stem: str, options: list[dict[str, Any]]) -> list[str]:
+    """Return deterministic surface defects without judging medical semantics."""
+    if not isinstance(stem, str) or not isinstance(options, list):
+        return ["INVALID_OPTION_TEXT_SET"]
+    findings = find_option_shape_cues(options)
+    normalized = [
+        " ".join(re.findall(r"[a-z0-9]+(?:-[a-z0-9]+)*", option.get("text", "").lower()))
+        if isinstance(option, dict)
+        else ""
+        for option in options
+    ]
+    if any(not value for value in normalized):
+        return sorted(set(findings + ["INVALID_OPTION_TEXT_SET"]))
+    if len(set(normalized)) != len(normalized):
+        findings.append("DUPLICATE_OPTION_TEXT")
+    forms = {
+        option.get("grammatical_form")
+        for option in options
+        if isinstance(option, dict)
+    }
+    if len(forms) != 1 or any(not isinstance(form, str) or not form for form in forms):
+        findings.append("NONPARALLEL_GRAMMATICAL_FORM")
+
+    key_options = [option for option in options if option.get("role") == "KEY"]
+    distractors = [option for option in options if option.get("role") == "DISTRACTOR"]
+    if len(key_options) != 1 or not distractors:
+        return sorted(set(findings + ["INVALID_OPTION_TEXT_SET"]))
+    key_phrases = _meaningful_bigrams(key_options[0]["text"])
+    distractor_phrases = [_meaningful_bigrams(option["text"]) for option in distractors]
+    if key_phrases.intersection(_meaningful_bigrams(stem)).difference(
+        set().union(*distractor_phrases)
+    ):
+        findings.append("KEY_ONLY_STEM_PHRASE")
+    return sorted(set(findings))
+
+
 def find_option_position_cues(items: list[dict[str, Any]]) -> list[str]:
     """Detect a repeated correct-answer position across an entire multi-item batch."""
     positions = [
@@ -145,6 +223,165 @@ def find_option_position_cues(items: list[dict[str, Any]]) -> list[str]:
     if len(positions) > 5 and max(counts.values()) - min(counts.values()) > 1:
         return ["CORRECT_POSITIONS_NOT_BALANCED"]
     return []
+
+
+def validate_option_cue_review(
+    staged: dict[str, Any],
+    review: dict[str, Any],
+) -> dict[str, Any]:
+    """Validate a fresh, option-only semantic cue review and its stop decision."""
+    items = staged.get("items") if isinstance(staged, dict) else None
+    if not isinstance(items, list) or len(items) != 3:
+        raise ChapterStagedGenerationError("option cue review requires exactly three staged items")
+    if (
+        not isinstance(review, dict)
+        or review.get("staged_artifact_sha256") != canonical_sha256(staged)
+        or review.get("pilot_id") != staged.get("pilot_id")
+    ):
+        raise ChapterStagedGenerationError("option cue review lineage is invalid")
+
+    reviewer_id = _nonempty(review.get("reviewer_id"), "option cue reviewer ID")
+    prior_actors = {
+        actor
+        for item in items
+        for actor in (
+            item.get("author_id"),
+            item.get("anchor_fidelity_preflight", {}).get("reviewer_id"),
+            item.get("blind_solver", {}).get("solver_id"),
+            item.get("global_contrast_retrieval", {}).get("semantic_ranker_id"),
+            item.get("distractor_construction", {}).get("constructor_id"),
+            item.get("distractor_adversarial_review", {}).get("reviewer_id"),
+            item.get("option_realization", {}).get("realizer_id"),
+            item.get("parallel_option_set_review", {}).get("reviewer_id"),
+            item.get("assembly", {}).get("assembler_id"),
+            item.get("acceptance_review", {}).get("reviewer_id"),
+        )
+        if actor
+    }
+    if reviewer_id in prior_actors:
+        raise ChapterStagedGenerationError("option cue review requires a fresh reviewer")
+
+    context = review.get("independent_context")
+    expected_hidden = {
+        "stem",
+        "lead_in",
+        "correct_answer",
+        "semantic_option_text",
+        "contrast_ids",
+        "evidence",
+        "provisional_self_review",
+        "acceptance_review",
+        "rationales",
+    }
+    if (
+        not isinstance(context, dict)
+        or context.get("first_pass_shown") != ["realized_option_text"]
+        or set(context.get("first_pass_hidden", [])) != expected_hidden
+        or context.get("verdict_independent_of_provisional_self_review") is not True
+    ):
+        raise ChapterStagedGenerationError("option cue review context is not independent")
+
+    results = review.get("items")
+    item_ids = [item.get("item_id") for item in items]
+    if (
+        not isinstance(results, list)
+        or [row.get("item_id") for row in results if isinstance(row, dict)] != item_ids
+    ):
+        raise ChapterStagedGenerationError("option cue review item coverage is invalid")
+
+    passed = 0
+    material_count = 0
+    false_positive_count = 0
+    finding_ids: set[str] = set()
+    for row in results:
+        real_findings = row.get("real_findings")
+        false_findings = row.get("false_positive_findings")
+        if not isinstance(real_findings, list) or not isinstance(false_findings, list):
+            raise ChapterStagedGenerationError("option cue review findings are invalid")
+        if row.get("semantic_and_evidence_preservation") != "PASS" or row.get("single_best_answer") != "PASS":
+            raise ChapterStagedGenerationError("option cue review detected semantic or answer drift")
+        verdict = row.get("verdict")
+        if verdict == "PASS":
+            passed += 1
+            if real_findings:
+                raise ChapterStagedGenerationError("passing option set has a material cue")
+        elif verdict == "FAIL":
+            if not real_findings:
+                raise ChapterStagedGenerationError("failed option set lacks a material cue")
+        else:
+            raise ChapterStagedGenerationError("option cue review verdict is invalid")
+
+        for finding in real_findings:
+            categories = finding.get("categories") if isinstance(finding, dict) else None
+            finding_id = finding.get("finding_id") if isinstance(finding, dict) else None
+            if (
+                not isinstance(finding_id, str)
+                or not finding_id
+                or finding_id in finding_ids
+                or not isinstance(categories, list)
+                or not categories
+                or not set(categories).issubset(OPTION_CUE_CATEGORIES)
+                or finding.get("testwise_exploitable") is not True
+            ):
+                raise ChapterStagedGenerationError("material option cue finding is invalid")
+            _nonempty(finding.get("cause"), "material option cue cause")
+            _nonempty(finding.get("reason"), "material option cue reason")
+            finding_ids.add(finding_id)
+        for finding in false_findings:
+            categories = finding.get("suspected_categories") if isinstance(finding, dict) else None
+            finding_id = finding.get("finding_id") if isinstance(finding, dict) else None
+            if (
+                not isinstance(finding_id, str)
+                or not finding_id
+                or finding_id in finding_ids
+                or not isinstance(categories, list)
+                or not categories
+                or not set(categories).issubset(OPTION_CUE_CATEGORIES)
+                or finding.get("adjudication") != "FALSE_POSITIVE"
+            ):
+                raise ChapterStagedGenerationError("false-positive option cue finding is invalid")
+            _nonempty(finding.get("reason"), "false-positive option cue reason")
+            finding_ids.add(finding_id)
+        material_count += len(real_findings)
+        false_positive_count += len(false_findings)
+
+    if (
+        review.get("micro_items_generated") != 3
+        or review.get("micro_items_passed") != passed
+        or review.get("material_cue_findings") != material_count
+        or review.get("false_positive_cue_findings") != false_positive_count
+    ):
+        raise ChapterStagedGenerationError("option cue review counts do not reconcile")
+    expected_verdict = "PASS" if passed == 3 and material_count == 0 else "FAIL"
+    if review.get("verdict") != expected_verdict:
+        raise ChapterStagedGenerationError("option cue review aggregate verdict is invalid")
+    candidate_status = staged.get("candidate_status")
+    provisional = staged.get("provisional_parallel_option_review")
+    if (
+        expected_verdict == "PASS"
+        and (candidate_status != "ACCEPTED" or provisional is not False)
+    ) or (
+        expected_verdict == "FAIL"
+        and (
+            candidate_status != "REJECTED_BY_FRESH_OPTION_CUE_REVIEW"
+            or provisional is not True
+        )
+    ):
+        raise ChapterStagedGenerationError("option cue verdict contradicts candidate status")
+    if expected_verdict == "FAIL" and (
+        review.get("pipeline_stop_stage") != "PARALLEL_OPTION_SET_REVIEW"
+        or review.get("fresh_independent_verification_run") is not False
+        or review.get("regeneration_attempted_after_failure") is not False
+        or review.get("next_step") != "DIAGNOSE_REMAINING_MICRO_FAILURE"
+    ):
+        raise ChapterStagedGenerationError("failed option cue review did not stop correctly")
+    return {
+        "micro_items_generated": 3,
+        "micro_items_passed": passed,
+        "material_cue_findings": material_count,
+        "false_positive_cue_findings": false_positive_count,
+        "verdict": expected_verdict,
+    }
 
 
 def canonical_sha256(value: Any) -> str:
@@ -462,6 +699,88 @@ def _semantic_fingerprint(item: dict[str, Any]) -> str:
     })
 
 
+def _validate_option_realization(
+    item: dict[str, Any],
+    open_ended: dict[str, Any],
+    key_row: dict[str, Any],
+    distractors: list[dict[str, Any]],
+    adversarial: dict[str, Any],
+    claims: dict[str, dict[str, Any]],
+) -> tuple[dict[str, Any], dict[str, Any], list[dict[str, Any]]]:
+    realization = item.get("option_realization")
+    if (
+        not isinstance(realization, dict)
+        or realization.get("adversarial_review_sha256") != canonical_sha256(adversarial)
+        or realization.get("policy") != "SEMANTIC_TO_CONCISE_NATURAL_PARALLEL_SURFACE"
+    ):
+        raise ChapterStagedGenerationError("option realization identity or lineage is invalid")
+    realized = realization.get("options")
+    if not isinstance(realized, list) or len(realized) != len(distractors) + 1:
+        raise ChapterStagedGenerationError("option realization coverage is invalid")
+    positions = [row.get("position") for row in realized if isinstance(row, dict)]
+    if positions != list("ABCDE")[:len(realized)] or len(positions) != len(realized):
+        raise ChapterStagedGenerationError("option realization positions are invalid")
+    key_options = [row for row in realized if row.get("role") == "KEY"]
+    realized_distractors = [row for row in realized if row.get("role") == "DISTRACTOR"]
+    if len(key_options) != 1 or len(realized_distractors) != len(distractors):
+        raise ChapterStagedGenerationError("option realization roles are invalid")
+    dimensions = {row.get("option_dimension") for row in realized}
+    if len(dimensions) != 1 or any(not isinstance(value, str) or not value for value in dimensions):
+        raise ChapterStagedGenerationError("option realization option dimension is not homogeneous")
+    grammatical_forms = {row.get("grammatical_form") for row in realized}
+    if len(grammatical_forms) != 1 or any(
+        not isinstance(value, str) or not value for value in grammatical_forms
+    ):
+        raise ChapterStagedGenerationError("option realization grammatical form is not parallel")
+
+    key = key_options[0]
+    if (
+        key.get("semantic_option_text") != open_ended["intended_answer"]
+        or key.get("meaning_preservation") != "PASS"
+        or _evidence_refs_exist(key.get("evidence_refs"), claims, "realized key evidence")
+        != key_row.get("anchor_evidence_refs")
+    ):
+        raise ChapterStagedGenerationError("realized key drifted from approved semantics")
+    _nonempty(key.get("surface_text"), "realized key surface text")
+    if key.get("contrast_id") is not None:
+        raise ChapterStagedGenerationError("realized key cannot have a contrast ID")
+
+    semantic_by_id = {row["contrast_id"]: row for row in distractors}
+    realized_ids = [row.get("contrast_id") for row in realized_distractors]
+    if set(realized_ids) != set(semantic_by_id) or len(realized_ids) != len(set(realized_ids)):
+        raise ChapterStagedGenerationError("realized distractor contrast coverage is invalid")
+    for row in realized_distractors:
+        semantic = semantic_by_id[row["contrast_id"]]
+        if (
+            row.get("semantic_option_text") != semantic["option_text"]
+            or row.get("meaning_preservation") != "PASS"
+            or _evidence_refs_exist(
+                row.get("evidence_refs"), claims, "realized distractor evidence"
+            ) != semantic["evidence_refs"]
+        ):
+            raise ChapterStagedGenerationError("realized distractor drifted from approved semantics")
+        _nonempty(row.get("surface_text"), "realized distractor surface text")
+
+    review = item.get("parallel_option_set_review")
+    if not isinstance(review, dict) or review.get("realization_sha256") != canonical_sha256(realization):
+        raise ChapterStagedGenerationError("parallel option-set review lineage is invalid")
+    deterministic_options = [
+        {
+            "role": row["role"],
+            "text": row["surface_text"],
+            "grammatical_form": row["grammatical_form"],
+        }
+        for row in realized
+    ]
+    findings = find_option_text_cues(open_ended["stem"], deterministic_options)
+    if review.get("deterministic_findings") != findings or findings:
+        raise ChapterStagedGenerationError("parallel option-set deterministic cue review failed")
+    _pass_map(review.get("semantic_checks"), SEMANTIC_CUE_CHECKS, "semantic cue review")
+    if review.get("option_only_key_identifiable") is not False or review.get("verdict") != "PASS":
+        raise ChapterStagedGenerationError("semantic cue review must pass without option-only key identification")
+    return realization, review, realized
+
+
 def validate_staged_item(
     root: Path,
     item: dict[str, Any],
@@ -477,7 +796,11 @@ def validate_staged_item(
     _nonempty(item.get("item_id"), "staged item ID")
     _nonempty(item.get("item_type"), "staged item type")
     author_id = _nonempty(item.get("author_id"), "staged item author")
-    if item.get("stage_sequence") != STAGE_SEQUENCE:
+    schema_version = item.get("schema_version")
+    if schema_version not in {"1.0", "1.1"}:
+        raise ChapterStagedGenerationError("staged item schema version is invalid")
+    staged_sequence = STAGE_SEQUENCE_V2 if schema_version == "1.1" else STAGE_SEQUENCE
+    if item.get("stage_sequence") != staged_sequence:
         raise ChapterStagedGenerationError("staged item sequence is invalid")
 
     anchor = item.get("anchor")
@@ -618,19 +941,49 @@ def validate_staged_item(
     if adversarial.get("verdict") != "PASS":
         raise ChapterStagedGenerationError("distractor adversarial review must pass")
 
+    realization = None
+    parallel_review = None
+    realized_options = None
+    if schema_version == "1.1":
+        realization, parallel_review, realized_options = _validate_option_realization(
+            item,
+            open_ended,
+            key_row,
+            distractors,
+            adversarial,
+            claims,
+        )
+
     assembly = item.get("assembly")
-    if not isinstance(assembly, dict) or assembly.get("adversarial_review_sha256") != canonical_sha256(adversarial):
+    if not isinstance(assembly, dict):
+        raise ChapterStagedGenerationError("MCQ assembly fingerprint is invalid")
+    if schema_version == "1.1":
+        if assembly.get("parallel_option_set_review_sha256") != canonical_sha256(parallel_review):
+            raise ChapterStagedGenerationError("MCQ assembly option-review fingerprint is invalid")
+    elif assembly.get("adversarial_review_sha256") != canonical_sha256(adversarial):
         raise ChapterStagedGenerationError("MCQ assembly fingerprint is invalid")
     if assembly.get("stem") != open_ended["stem"] or assembly.get("lead_in") != open_ended["lead_in"]:
         raise ChapterStagedGenerationError("MCQ assembly did not preserve the approved stem")
-    if assembly.get("rewrite_status") != "COMPONENTS_UNCHANGED":
+    expected_rewrite_status = (
+        "SURFACE_REALIZATION_ONLY" if schema_version == "1.1" else "COMPONENTS_UNCHANGED"
+    )
+    if assembly.get("rewrite_status") != expected_rewrite_status:
         raise ChapterStagedGenerationError("MCQ assembly substantially rewrote approved components")
     component_hashes = assembly.get("approved_component_sha256")
-    if component_hashes != {
-        "open_ended": canonical_sha256(open_ended),
-        "key": canonical_sha256(key_row),
-        "distractors": canonical_sha256(distractors),
-    }:
+    expected_component_hashes = (
+        {
+            "open_ended": canonical_sha256(open_ended),
+            "option_realization": canonical_sha256(realization),
+            "parallel_option_set_review": canonical_sha256(parallel_review),
+        }
+        if schema_version == "1.1"
+        else {
+            "open_ended": canonical_sha256(open_ended),
+            "key": canonical_sha256(key_row),
+            "distractors": canonical_sha256(distractors),
+        }
+    )
+    if component_hashes != expected_component_hashes:
         raise ChapterStagedGenerationError("MCQ assembly approved-component fingerprints are invalid")
     options = assembly.get("options")
     if not isinstance(options, list) or len(options) != len(distractors) + 1 or len(options) not in {4, 5}:
@@ -639,15 +992,49 @@ def validate_staged_item(
     if keys != list("ABCDE")[:len(options)] or len(keys) != len(options):
         raise ChapterStagedGenerationError("MCQ assembly option keys are invalid")
     key_options = [option for option in options if option.get("role") == "KEY"]
-    if len(key_options) != 1 or assembly.get("correct_answer") != key_options[0]["key"] or key_options[0].get("text") != open_ended["intended_answer"]:
+    expected_key_text = (
+        next(row["surface_text"] for row in realized_options if row["role"] == "KEY")
+        if schema_version == "1.1"
+        else open_ended["intended_answer"]
+    )
+    if len(key_options) != 1 or assembly.get("correct_answer") != key_options[0]["key"] or key_options[0].get("text") != expected_key_text:
         raise ChapterStagedGenerationError("MCQ assembly key does not match the approved open-ended answer")
     actual_distractors = [option for option in options if option.get("role") == "DISTRACTOR"]
-    if [option.get("contrast_id") for option in actual_distractors] != competitor_ids or [option.get("text") for option in actual_distractors] != [row["option_text"] for row in distractors]:
+    if schema_version == "1.1":
+        expected_assembly_options = [
+            {
+                "key": row["position"],
+                "text": row["surface_text"],
+                "role": row["role"],
+                **({"contrast_id": row["contrast_id"]} if row["role"] == "DISTRACTOR" else {}),
+            }
+            for row in realized_options
+        ]
+        if options != expected_assembly_options:
+            raise ChapterStagedGenerationError("MCQ assembly options do not match reviewed realization")
+    elif [option.get("contrast_id") for option in actual_distractors] != competitor_ids or [option.get("text") for option in actual_distractors] != [row["option_text"] for row in distractors]:
         raise ChapterStagedGenerationError("MCQ assembly distractors do not match validated constructions")
-    option_shape_cues = find_option_shape_cues(options)
-    if option_shape_cues:
+    option_text_cues = find_option_text_cues(
+        open_ended["stem"],
+        [
+            {
+                **option,
+                "grammatical_form": (
+                    next(
+                        row["grammatical_form"]
+                        for row in realized_options
+                        if row["position"] == option["key"]
+                    )
+                    if schema_version == "1.1"
+                    else "LEGACY_UNSTRUCTURED"
+                ),
+            }
+            for option in options
+        ],
+    )
+    if option_text_cues:
         raise ChapterStagedGenerationError(
-            f"MCQ assembly has deterministic option-shape cue: {', '.join(option_shape_cues)}"
+            f"MCQ assembly has deterministic option-shape cue: {', '.join(option_text_cues)}"
         )
 
     acceptance = item.get("acceptance_review")
@@ -696,6 +1083,7 @@ def validate_staged_item(
         retrieval.get("semantic_ranker_id"),
         construction.get("constructor_id"),
         adversarial.get("reviewer_id"),
+        *( [realization.get("realizer_id"), parallel_review.get("reviewer_id")] if schema_version == "1.1" else [] ),
         assembly.get("assembler_id"),
         acceptance.get("reviewer_id"),
     ]
@@ -716,6 +1104,12 @@ def validate_micro_pilot(
     """Enforce the exact 3/3 clinical micro-pilot success gate."""
     if not isinstance(artifact, dict) or artifact.get("scope") != "CHAPTER_REVIEW_CLINICAL_MICRO_3":
         raise ChapterStagedGenerationError("clinical micro-pilot identity is invalid")
+    candidate_status = artifact.get("candidate_status")
+    if (
+        candidate_status not in {None, "ACCEPTED"}
+        or artifact.get("provisional_parallel_option_review") not in {None, False}
+    ):
+        raise ChapterStagedGenerationError("rejected or provisional micro-pilot cannot pass the success gate")
     items = artifact.get("items")
     if not isinstance(items, list) or len(items) != 3:
         raise ChapterStagedGenerationError("clinical micro-pilot must contain exactly three items")
@@ -767,9 +1161,12 @@ def validate_micro_pilot(
             item["global_contrast_retrieval"]["semantic_ranker_id"],
             item["distractor_construction"]["constructor_id"],
             item["distractor_adversarial_review"]["reviewer_id"],
+            item.get("option_realization", {}).get("realizer_id"),
+            item.get("parallel_option_set_review", {}).get("reviewer_id"),
             item["assembly"]["assembler_id"],
             item["acceptance_review"]["reviewer_id"],
         )
+        if actor
     }
     if verifier_id in prior_actors:
         raise ChapterStagedGenerationError("fresh independent verifier cannot share a prior generation role")
