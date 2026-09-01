@@ -21,9 +21,10 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Retry V2.1 micro-pilot: `FAIL` (1/3 semantically accepted; V2.1 execution enforcement is implemented, but two generated distractor/rationale instantiations were not fully scenario-bound).
+- Chapter-anchored staged global-contrast micro-pilot: `FAIL` (1/3 accepted; all 12 distractors passed fresh adversarial review, but two items failed the answer-length/specificity cue gate and the batch failed option-position balancing). No regeneration was attempted.
 - Canonical checkpoint: current Git HEAD.
 - Audited coordinator input commit: `5d102945a562eddce7e14269c09ea03dccd39e2d`.
-- Current next action: `DIAGNOSE_MICRO_PILOT_FAILURE`.
+- Current next action: `DIAGNOSE_MICRO_FAILURE`.
 
 ## Frozen layers
 
@@ -45,7 +46,8 @@
 ## Blocker and next step
 
 - V2.1 scale-up is blocked by the failed semantic micro-pilot: card 03 omitted the planned clinical-distractor scenario feature, and card 05 contained a non-decisive raw-count distractor rationale.
-- NEXT_STEP = `DIAGNOSE_MICRO_PILOT_FAILURE`
+- Chapter-staged scale-up is blocked by two independently detected answer-length/specificity cues plus a deterministic batch position-balancing defect; global contrast quality itself passed 12/12 distractor checks.
+- NEXT_STEP = `DIAGNOSE_MICRO_FAILURE`
 <!-- SOURCE_RESEARCH_RESUME:END -->
 
 ## Research-level policy

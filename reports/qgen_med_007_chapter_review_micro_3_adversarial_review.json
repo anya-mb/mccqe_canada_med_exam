@@ -1,0 +1,127 @@
+{
+  "schema_version": "1.0",
+  "scope": "CHAPTER_REVIEW_MICRO_DISTRACTOR_ADVERSARIAL_REVIEW",
+  "pilot_id": "QGEN-MED-007-CHAPTER-REVIEW-MICRO-3",
+  "reviewer_id": "fresh-independent-distractor-reviewer-2026-09-01",
+  "included_context": [
+    "staged item artifact",
+    "validated contrast library",
+    "targeted evidence packet",
+    "adversarial quality rubric"
+  ],
+  "excluded_context": [
+    "author deliberation",
+    "author self-evaluation",
+    "intended review verdict"
+  ],
+  "staged_artifact_sha256": "e76064b98c15789fb2198e9340469670705b55184642378e95b0375ea269484e",
+  "contrast_library_sha256": "78cc7813001ef4ea400203a7bacf34866348d6225bb7b64b54c07ad785b1522b",
+  "evidence_packet_sha256": "f3d9beeebce174bce8d4509e0037f2b74ed64160aa8e5c2b11abc5514e37ce74",
+  "distractor_results": [
+    {
+      "item_id": "CHREV-C-ACS-001",
+      "contrast_id": "CONTRAST-C21-DX-R19-PE",
+      "verdict": "PASS"
+    },
+    {
+      "item_id": "CHREV-C-ACS-001",
+      "contrast_id": "CONTRAST-C21-DX-VS03-AAS",
+      "verdict": "PASS"
+    },
+    {
+      "item_id": "CHREV-C-ACS-001",
+      "contrast_id": "CONTRAST-C21-DX-C33-PERICARDITIS",
+      "verdict": "PASS"
+    },
+    {
+      "item_id": "CHREV-C-ACS-001",
+      "contrast_id": "CONTRAST-C21-DX-G04-GERD",
+      "verdict": "PASS"
+    },
+    {
+      "item_id": "CHREV-C-ACS-002",
+      "contrast_id": "CONTRAST-C21-INV-R19-PE",
+      "verdict": "PASS"
+    },
+    {
+      "item_id": "CHREV-C-ACS-002",
+      "contrast_id": "CONTRAST-C21-INV-VS03-AORTIC-CTA",
+      "verdict": "PASS"
+    },
+    {
+      "item_id": "CHREV-C-ACS-002",
+      "contrast_id": "CONTRAST-C21-INV-C33-PERICARDITIS",
+      "verdict": "PASS"
+    },
+    {
+      "item_id": "CHREV-C-ACS-002",
+      "contrast_id": "CONTRAST-C21-INV-G04-GERD",
+      "verdict": "PASS"
+    },
+    {
+      "item_id": "CHREV-C-ACS-003",
+      "contrast_id": "CONTRAST-C21-MGMT-C22-DELAYED-PPCI",
+      "verdict": "PASS"
+    },
+    {
+      "item_id": "CHREV-C-ACS-003",
+      "contrast_id": "CONTRAST-C21-MGMT-C22-NO-TRANSFER",
+      "verdict": "PASS"
+    },
+    {
+      "item_id": "CHREV-C-ACS-003",
+      "contrast_id": "CONTRAST-C21-MGMT-C21-WAIT-TROPONIN",
+      "verdict": "PASS"
+    },
+    {
+      "item_id": "CHREV-C-ACS-003",
+      "contrast_id": "CONTRAST-C21-MGMT-VS03-AAS",
+      "verdict": "PASS"
+    }
+  ],
+  "item_results": [
+    {
+      "item_id": "CHREV-C-ACS-001",
+      "verdict": "PASS",
+      "failed_checks": [],
+      "root_cause": null
+    },
+    {
+      "item_id": "CHREV-C-ACS-002",
+      "verdict": "FAIL",
+      "failed_checks": [
+        "option_only_cues",
+        "answer_length_specificity"
+      ],
+      "root_cause": "The 22-word key is uniquely detailed and qualified relative to distractors of 7-11 words, creating a material option-only answer-length and specificity cue."
+    },
+    {
+      "item_id": "CHREV-C-ACS-003",
+      "verdict": "FAIL",
+      "failed_checks": [
+        "option_only_cues",
+        "answer_length_specificity"
+      ],
+      "root_cause": "The 15-word key uniquely names the complete pharmacoinvasive strategy relative to distractors of 7-9 words, creating a material option-only answer-length and specificity cue."
+    }
+  ],
+  "defect_counts": {
+    "FACTUAL_ERROR": 0,
+    "UNSUPPORTED_CLAIM": 0,
+    "AMBIGUOUS_BEST_ANSWER": 0,
+    "ANCHOR_FIDELITY_FAILURE": 0,
+    "PLAN_MISMATCH": 0,
+    "WEAK_DISTRACTOR": 0,
+    "CONTEXT_NECESSITY_FAILURE": 0,
+    "COVER_OPTIONS_FAILURE": 0,
+    "OPTION_CUE_FAILURE": 3,
+    "RATIONALE_DEFICIENCY": 0,
+    "MATERIAL_DUPLICATION": 0
+  },
+  "root_cause_attribution": "The staged architecture produced evidence-grounded global contrasts and faithful learner decisions, but the post-assembly cue gate was not independently enforced before provisional acceptance. Two keys retained substantially greater length and specificity than every competitor, and all three provisional keys occupied position A rather than being balanced across the batch.",
+  "micro_items_generated": 3,
+  "micro_items_passed": 1,
+  "micro_pilot_assessment": "FAILURE",
+  "next_step": "DIAGNOSE_MICRO_FAILURE",
+  "regeneration_attempted": false
+}
