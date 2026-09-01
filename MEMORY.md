@@ -20,9 +20,10 @@
 - Generation jobs BLOCKED: 0.
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
+- Retry V2 quality pilot: `PILOT_NOT_ACCEPTED` (3/10 passed; systemic applied-reasoning and distractor-quality failure; no factual errors or unsupported claims).
 - Canonical checkpoint: current Git HEAD.
 - Audited coordinator input commit: `5d102945a562eddce7e14269c09ea03dccd39e2d`.
-- Current next action: `PLAN_SOURCE_READY_GENERATION`.
+- Current next action: `DIAGNOSE_V2_REMAINING_FAILURE`.
 
 ## Frozen layers
 
@@ -43,8 +44,8 @@
 
 ## Blocker and next step
 
-- No upstream blocker remains. Continue research one bounded canonical wave at a time.
-- NEXT_STEP = `PLAN_SOURCE_READY_GENERATION`
+- V2 scale-up is blocked by a systemic generator-quality failure: applied item specs were repeatedly flattened into definition/paraphrase recognition with noncompetitive distractors.
+- NEXT_STEP = `DIAGNOSE_V2_REMAINING_FAILURE`
 <!-- SOURCE_RESEARCH_RESUME:END -->
 
 ## Research-level policy
