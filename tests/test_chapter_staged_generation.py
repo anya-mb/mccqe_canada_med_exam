@@ -11,6 +11,7 @@ from qbank.chapter_staged_generation import (
     ChapterStagedGenerationError,
     build_global_study_unit_index,
     canonical_sha256,
+    find_decision_granularity_cues,
     find_option_text_cues,
     find_option_shape_cues,
     find_option_position_cues,
@@ -620,6 +621,60 @@ def test_option_text_checks_allow_repeated_parallel_grammatical_frames():
         {"role": "DISTRACTOR", "text": "Administer intravenous alteplase", "grammatical_form": "IMPERATIVE_ACTION"},
     ]
     assert find_option_text_cues("Select the most appropriate medication.", options) == []
+
+
+def test_decision_granularity_gate_rejects_key_only_management_bundle():
+    options = [
+        {"role": "KEY", "decision_granularity": "SINGLE_NEXT_ACTION", "independent_action_components": ["fibrinolysis", "pci_transfer", "angiography"]},
+        {"role": "DISTRACTOR", "decision_granularity": "SINGLE_NEXT_ACTION", "independent_action_components": ["primary_pci"]},
+        {"role": "DISTRACTOR", "decision_granularity": "SINGLE_NEXT_ACTION", "independent_action_components": ["fibrinolysis"]},
+        {"role": "DISTRACTOR", "decision_granularity": "SINGLE_NEXT_ACTION", "independent_action_components": ["biomarker_testing"]},
+        {"role": "DISTRACTOR", "decision_granularity": "SINGLE_NEXT_ACTION", "independent_action_components": ["aortic_imaging"]},
+    ]
+    assert "KEY_ONLY_COMPLETENESS" in find_decision_granularity_cues(options)
+
+
+def test_decision_granularity_gate_rejects_convergent_partial_distractors():
+    options = [
+        {"role": "DISTRACTOR", "decision_granularity": "MANAGEMENT_STRATEGY", "independent_action_components": ["lysis"]},
+        {"role": "DISTRACTOR", "decision_granularity": "MANAGEMENT_STRATEGY", "independent_action_components": ["transfer"]},
+        {"role": "DISTRACTOR", "decision_granularity": "MANAGEMENT_STRATEGY", "independent_action_components": ["angiography"]},
+        {"role": "KEY", "decision_granularity": "MANAGEMENT_STRATEGY", "independent_action_components": ["lysis", "transfer", "angiography"]},
+        {"role": "DISTRACTOR", "decision_granularity": "MANAGEMENT_STRATEGY", "independent_action_components": ["anti_impulse"]},
+    ]
+    assert "CONCEPTUAL_CONVERGENCE" in find_decision_granularity_cues(options)
+
+
+def test_decision_granularity_gate_rejects_mixed_levels_and_specific_diagnosis():
+    mixed = [
+        {"role": "KEY", "decision_granularity": "DIAGNOSTIC_TEST", "independent_action_components": ["serial_ecg"]},
+        {"role": "DISTRACTOR", "decision_granularity": "MANAGEMENT_STRATEGY", "independent_action_components": ["primary_pci"]},
+    ]
+    diagnoses = [
+        {"role": "KEY", "decision_granularity": "DIAGNOSIS", "specificity_level": 4, "independent_action_components": []},
+        {"role": "DISTRACTOR", "decision_granularity": "DIAGNOSIS", "specificity_level": 1, "independent_action_components": []},
+        {"role": "DISTRACTOR", "decision_granularity": "DIAGNOSIS", "specificity_level": 1, "independent_action_components": []},
+    ]
+    assert "DECISION_GRANULARITY_PARITY" in find_decision_granularity_cues(mixed)
+    assert "KEY_ONLY_DIAGNOSTIC_SPECIFICITY" in find_decision_granularity_cues(diagnoses)
+
+
+def test_decision_granularity_gate_allows_natural_precision_and_comparable_actions():
+    strategies = [
+        {"role": "KEY", "decision_granularity": "MANAGEMENT_STRATEGY", "independent_action_components": ["pharmacoinvasive_strategy"]},
+        {"role": "DISTRACTOR", "decision_granularity": "MANAGEMENT_STRATEGY", "independent_action_components": ["delayed_primary_pci"]},
+        {"role": "DISTRACTOR", "decision_granularity": "MANAGEMENT_STRATEGY", "independent_action_components": ["rescue_only_strategy"]},
+        {"role": "DISTRACTOR", "decision_granularity": "MANAGEMENT_STRATEGY", "independent_action_components": ["biomarker_delay"]},
+        {"role": "DISTRACTOR", "decision_granularity": "MANAGEMENT_STRATEGY", "independent_action_components": ["anti_impulse_strategy"]},
+    ]
+    actions = [
+        {"role": "KEY", "decision_granularity": "SINGLE_NEXT_ACTION", "independent_action_components": ["serial_ecg"]},
+        {"role": "DISTRACTOR", "decision_granularity": "SINGLE_NEXT_ACTION", "independent_action_components": ["d_dimer"]},
+        {"role": "DISTRACTOR", "decision_granularity": "SINGLE_NEXT_ACTION", "independent_action_components": ["aortic_cta"]},
+        {"role": "DISTRACTOR", "decision_granularity": "SINGLE_NEXT_ACTION", "independent_action_components": ["echocardiography"]},
+    ]
+    assert find_decision_granularity_cues(strategies) == []
+    assert find_decision_granularity_cues(actions) == []
 
 
 def test_schema_1_1_option_realization_accepts_strong_cross_chapter_options():

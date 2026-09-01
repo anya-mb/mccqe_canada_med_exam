@@ -33,6 +33,9 @@ STAGE_SEQUENCE_V2 = STAGE_SEQUENCE[:10] + [
     "OPTION_REALIZATION",
     "PARALLEL_OPTION_SET_REVIEW",
 ] + STAGE_SEQUENCE[10:]
+STAGE_SEQUENCE_V3 = STAGE_SEQUENCE_V2[:12] + [
+    "DECISION_GRANULARITY_PARITY",
+] + STAGE_SEQUENCE_V2[12:]
 PHYSICIAN_ACTIVITIES = {
     "Assessment/Diagnosis",
     "Management",
@@ -119,6 +122,15 @@ OPTION_CUE_CATEGORIES = {
     "PARALLELISM_FAILURE",
     "OTHER",
 }
+DECISION_GRANULARITIES = {
+    "SINGLE_NEXT_ACTION",
+    "MANAGEMENT_STRATEGY",
+    "DIAGNOSTIC_TEST",
+    "DISPOSITION",
+    "TREATMENT_BUNDLE",
+    "DIAGNOSIS",
+    "OTHER",
+}
 _PHRASE_STOPWORDS = {
     "and", "for", "from", "into", "only", "that", "the", "then", "this", "with",
 }
@@ -203,6 +215,45 @@ def find_option_text_cues(stem: str, options: list[dict[str, Any]]) -> list[str]
         set().union(*distractor_phrases)
     ):
         findings.append("KEY_ONLY_STEM_PHRASE")
+    return sorted(set(findings))
+
+
+def find_decision_granularity_cues(options: list[dict[str, Any]]) -> list[str]:
+    """Detect semantic option-set shortcuts without using option length.
+
+    Component identifiers describe independent decisions, not every clinical
+    modifier.  This keeps medically required precision permissible while
+    rejecting a key that is visibly assembled from partial competitor actions.
+    """
+    if not isinstance(options, list):
+        return ["INVALID_DECISION_GRANULARITY_SET"]
+    keys = [row for row in options if isinstance(row, dict) and row.get("role") == "KEY"]
+    distractors = [row for row in options if isinstance(row, dict) and row.get("role") == "DISTRACTOR"]
+    if len(keys) != 1 or not distractors or len(keys) + len(distractors) != len(options):
+        return ["INVALID_DECISION_GRANULARITY_SET"]
+    granularities = {row.get("decision_granularity") for row in options}
+    if len(granularities) != 1 or not granularities.issubset(DECISION_GRANULARITIES):
+        return ["DECISION_GRANULARITY_PARITY"]
+    if any(not isinstance(row.get("independent_action_components"), list)
+           or any(not isinstance(value, str) or not value for value in row["independent_action_components"])
+           for row in options):
+        return ["INVALID_DECISION_GRANULARITY_SET"]
+
+    key_components = set(keys[0]["independent_action_components"])
+    distractor_components = [set(row["independent_action_components"]) for row in distractors]
+    findings: list[str] = []
+    if len(key_components) > 1 and len(key_components) > max(map(len, distractor_components)):
+        findings.append("KEY_ONLY_COMPLETENESS")
+    supporting_distractors = sum(bool(key_components.intersection(parts)) for parts in distractor_components)
+    if len(key_components) > 1 and key_components.issubset(set().union(*distractor_components)) and supporting_distractors >= 2:
+        findings.append("CONCEPTUAL_CONVERGENCE")
+    if granularities == {"DIAGNOSIS"}:
+        specificity = [row.get("specificity_level") for row in options]
+        if (all(isinstance(value, int) and value >= 1 for value in specificity)
+                and keys[0].get("specificity_level") - max(
+                    row.get("specificity_level", 0) for row in distractors
+                ) >= 2):
+            findings.append("KEY_ONLY_DIAGNOSTIC_SPECIFICITY")
     return sorted(set(findings))
 
 
@@ -781,6 +832,30 @@ def _validate_option_realization(
     return realization, review, realized
 
 
+def _validate_decision_granularity_parity(realized: list[dict[str, Any]]) -> None:
+    """Require schema-1.2 option records to encode parity for independent audit."""
+    for row in realized:
+        _nonempty(row.get("action_or_concept_head"), "option action or concept head")
+        modifiers = row.get("medically_required_modifiers")
+        if not isinstance(modifiers, list) or any(not isinstance(value, str) or not value for value in modifiers):
+            raise ChapterStagedGenerationError("option medically required modifiers are invalid")
+        fingerprint = canonical_sha256({
+            "semantic_option_text": row.get("semantic_option_text"),
+            "decision_granularity": row.get("decision_granularity"),
+            "action_or_concept_head": row.get("action_or_concept_head"),
+            "medically_required_modifiers": modifiers,
+            "independent_action_components": row.get("independent_action_components"),
+            "specificity_level": row.get("specificity_level"),
+        })
+        if row.get("semantic_meaning_fingerprint") != fingerprint:
+            raise ChapterStagedGenerationError("option semantic meaning fingerprint is invalid")
+    findings = find_decision_granularity_cues(realized)
+    if findings:
+        raise ChapterStagedGenerationError(
+            f"decision-granularity parity failed: {', '.join(findings)}"
+        )
+
+
 def validate_staged_item(
     root: Path,
     item: dict[str, Any],
@@ -797,9 +872,13 @@ def validate_staged_item(
     _nonempty(item.get("item_type"), "staged item type")
     author_id = _nonempty(item.get("author_id"), "staged item author")
     schema_version = item.get("schema_version")
-    if schema_version not in {"1.0", "1.1"}:
+    if schema_version not in {"1.0", "1.1", "1.2"}:
         raise ChapterStagedGenerationError("staged item schema version is invalid")
-    staged_sequence = STAGE_SEQUENCE_V2 if schema_version == "1.1" else STAGE_SEQUENCE
+    staged_sequence = (
+        STAGE_SEQUENCE_V3 if schema_version == "1.2"
+        else STAGE_SEQUENCE_V2 if schema_version == "1.1"
+        else STAGE_SEQUENCE
+    )
     if item.get("stage_sequence") != staged_sequence:
         raise ChapterStagedGenerationError("staged item sequence is invalid")
 
@@ -944,7 +1023,7 @@ def validate_staged_item(
     realization = None
     parallel_review = None
     realized_options = None
-    if schema_version == "1.1":
+    if schema_version in {"1.1", "1.2"}:
         realization, parallel_review, realized_options = _validate_option_realization(
             item,
             open_ended,
@@ -953,11 +1032,13 @@ def validate_staged_item(
             adversarial,
             claims,
         )
+        if schema_version == "1.2":
+            _validate_decision_granularity_parity(realized_options)
 
     assembly = item.get("assembly")
     if not isinstance(assembly, dict):
         raise ChapterStagedGenerationError("MCQ assembly fingerprint is invalid")
-    if schema_version == "1.1":
+    if schema_version in {"1.1", "1.2"}:
         if assembly.get("parallel_option_set_review_sha256") != canonical_sha256(parallel_review):
             raise ChapterStagedGenerationError("MCQ assembly option-review fingerprint is invalid")
     elif assembly.get("adversarial_review_sha256") != canonical_sha256(adversarial):
@@ -965,7 +1046,7 @@ def validate_staged_item(
     if assembly.get("stem") != open_ended["stem"] or assembly.get("lead_in") != open_ended["lead_in"]:
         raise ChapterStagedGenerationError("MCQ assembly did not preserve the approved stem")
     expected_rewrite_status = (
-        "SURFACE_REALIZATION_ONLY" if schema_version == "1.1" else "COMPONENTS_UNCHANGED"
+        "SURFACE_REALIZATION_ONLY" if schema_version in {"1.1", "1.2"} else "COMPONENTS_UNCHANGED"
     )
     if assembly.get("rewrite_status") != expected_rewrite_status:
         raise ChapterStagedGenerationError("MCQ assembly substantially rewrote approved components")
@@ -976,7 +1057,7 @@ def validate_staged_item(
             "option_realization": canonical_sha256(realization),
             "parallel_option_set_review": canonical_sha256(parallel_review),
         }
-        if schema_version == "1.1"
+        if schema_version in {"1.1", "1.2"}
         else {
             "open_ended": canonical_sha256(open_ended),
             "key": canonical_sha256(key_row),
@@ -994,13 +1075,13 @@ def validate_staged_item(
     key_options = [option for option in options if option.get("role") == "KEY"]
     expected_key_text = (
         next(row["surface_text"] for row in realized_options if row["role"] == "KEY")
-        if schema_version == "1.1"
+        if schema_version in {"1.1", "1.2"}
         else open_ended["intended_answer"]
     )
     if len(key_options) != 1 or assembly.get("correct_answer") != key_options[0]["key"] or key_options[0].get("text") != expected_key_text:
         raise ChapterStagedGenerationError("MCQ assembly key does not match the approved open-ended answer")
     actual_distractors = [option for option in options if option.get("role") == "DISTRACTOR"]
-    if schema_version == "1.1":
+    if schema_version in {"1.1", "1.2"}:
         expected_assembly_options = [
             {
                 "key": row["position"],
@@ -1025,7 +1106,7 @@ def validate_staged_item(
                         for row in realized_options
                         if row["position"] == option["key"]
                     )
-                    if schema_version == "1.1"
+                    if schema_version in {"1.1", "1.2"}
                     else "LEGACY_UNSTRUCTURED"
                 ),
             }
@@ -1083,7 +1164,7 @@ def validate_staged_item(
         retrieval.get("semantic_ranker_id"),
         construction.get("constructor_id"),
         adversarial.get("reviewer_id"),
-        *( [realization.get("realizer_id"), parallel_review.get("reviewer_id")] if schema_version == "1.1" else [] ),
+        *( [realization.get("realizer_id"), parallel_review.get("reviewer_id")] if schema_version in {"1.1", "1.2"} else [] ),
         assembly.get("assembler_id"),
         acceptance.get("reviewer_id"),
     ]
