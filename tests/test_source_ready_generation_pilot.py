@@ -16,11 +16,15 @@ from qbank.source_ready_generation_pilot import (
     build_generator_input,
     build_retry_generator_input,
     build_retry_v2_generator_input,
+    build_retry_v2_1_generator_input,
     build_retry_v2_preflight_input,
     build_retry_v2_verifier_input,
     build_verifier_input,
     retry_v2_semantic_signature,
+    retry_v2_1_generation_candidate_sha256,
     validate_retry_v2_generated_artifact,
+    validate_retry_v2_1_generated_artifact,
+    validate_retry_v2_1_semantic_generation_review,
     validate_retry_v2_item_specs,
     validate_retry_v2_output_path,
     validate_retry_v2_semantic_preflight,
@@ -329,6 +333,130 @@ def _v2_generated(specs: dict, preflight: dict, generator_id: str = "v2-generato
         "revised_item_spec_ids": [],
         "items": items,
     }
+
+
+def _v2_1_generated(specs: dict, preflight: dict, selected_ids: list[str]) -> dict:
+    cards = [card for card in specs["cards"] if card["v2_item_spec_id"] in selected_ids]
+    items = []
+    for card, correct_key in zip(cards, ("A", "B", "C"), strict=True):
+        distractors = iter(card["distractor_blueprint"])
+        options = []
+        for key in ("A", "B", "C", "D"):
+            if key == correct_key:
+                options.append({"key": key, "text": "Best evidence-supported response", "blueprint_role": "BEST_ANSWER"})
+            else:
+                blueprint = next(distractors)
+                options.append({
+                    "key": key,
+                    "text": f"Plausible option for {blueprint['competing_concept_id']}",
+                    "distractor_id": blueprint["distractor_id"],
+                    "competing_concept_id": blueprint["competing_concept_id"],
+                })
+        references = card["authorized_evidence"]
+        items.append({
+            "v2_item_spec_id": card["v2_item_spec_id"],
+            "retry_slot_id": card["retry_slot_id"],
+            "item_spec_sha256": _canonical_sha(card),
+            "semantic_signature": card["semantic_signature"],
+            "learner_decision": card["learner_decision"],
+            "answer_category": card["answer_category"],
+            "realized_reasoning_steps": card["reasoning_chain"],
+            "stem": f"Scenario facts require decision for {card['v2_item_spec_id']}.",
+            "options": options,
+            "correct_answer": correct_key,
+            "correct_answer_rationale": "Positive evidence and the decisive discriminator support the best response.",
+            "distractor_rationales": {
+                key: f"The scenario makes {key} tempting, but the approved discriminator makes it not best."
+                for key in ("A", "B", "C", "D") if key != correct_key
+            },
+            "vignette_requirement_ids_used": [fact["requirement_id"] for fact in card["vignette_requirements"]["facts"]],
+            "evidence_references": references,
+            "assertion_evidence": {part: references for part in (
+                "stem", "options", "correct_answer", "correct_answer_rationale", "distractor_rationales",
+            )},
+            "spec_instantiation": {
+                "learner_decision": card["learner_decision"],
+                "reasoning_chain": [
+                    {"step": step, "scenario_fact": f"Scenario fact implementing {step}", "location": "stem"}
+                    for step in card["reasoning_chain"]
+                ],
+                "evidence_discriminants": [
+                    {"fact": entry["fact"], "scenario_fact": f"Scenario fact implementing {entry['fact']}", "location": "stem", "evidence_references": entry["evidence_refs"]}
+                    for entry in card["evidence_discriminants"]
+                ],
+                "distractor_instantiations": [
+                    {
+                        "distractor_id": entry["distractor_id"],
+                        "competing_concept_id": entry["competing_concept_id"],
+                        "tempting_feature": entry["temptation"],
+                        "scenario_feature": entry["scenario_feature"],
+                        "disqualifying_discriminant": entry["evidence_discriminator"],
+                        "evidence_references": entry["evidence_refs"],
+                    }
+                    for entry in card["distractor_blueprint"]
+                ],
+                "vignette_ablation": {
+                    "scenario_facts": [fact["fact"] for fact in card["vignette_requirements"]["facts"]],
+                    "answerable_without_scenario": False,
+                    "explanation": "Removing the scenario facts removes the required applied distinction.",
+                },
+                "prohibited_shortcuts_checked": {"checked": card["prohibited_shortcuts"], "detected": []},
+                "rationale_mapping": {
+                    "best_answer": {"positive_evidence": "Correct rationale", "decisive_discriminant": "Correct rationale"},
+                    "distractors": [
+                        {"distractor_id": entry["distractor_id"], "plausibility": "Distractor rationale", "discriminator": "Distractor rationale"}
+                        for entry in card["distractor_blueprint"]
+                    ],
+                },
+            },
+        })
+    return {
+        "schema_version": "2.1",
+        "scope": "RETRY_V2_1_GENERATED_QUESTIONS",
+        "job_id": JOB_ID,
+        "generator_id": "v2-1-generator",
+        "item_spec_path": RETRY_V2_ITEM_SPEC_PATH,
+        "item_spec_sha256": _canonical_sha(specs),
+        "semantic_preflight_path": RETRY_V2_PREFLIGHT_PATH,
+        "semantic_preflight_sha256": _canonical_sha(preflight),
+        "selected_v2_item_spec_ids": selected_ids,
+        "items": items,
+    }
+
+
+def _v2_1_semantic_review(specs: dict, generated: dict, reviewer_id: str = "fresh-v2-1-semantic-reviewer") -> dict:
+    return {
+        "schema_version": "2.1",
+        "scope": "RETRY_V2_1_SEMANTIC_GENERATION_REVIEW",
+        "job_id": JOB_ID,
+        "reviewer_id": reviewer_id,
+        "generated_candidate_sha256": retry_v2_1_generation_candidate_sha256(generated),
+        "verdicts": [
+            {
+                "v2_item_spec_id": item["v2_item_spec_id"],
+                "retry_slot_id": item["retry_slot_id"],
+                "verdict": "ACCEPT_GENERATED_ITEM",
+                "assessments": {
+                    "learner_decision_instantiated": "PASS",
+                    "reasoning_chain_instantiated": "PASS",
+                    "vignette_necessary": "PASS",
+                    "evidence_discriminant_instantiated": "PASS",
+                    "distractor_blueprint_faithful": "PASS",
+                    "prohibited_shortcuts_absent": "PASS",
+                    "rationale_requirements_met": "PASS",
+                },
+                "explanation": "Fresh semantic review found the candidate faithfully instantiates its approved V2 spec.",
+            }
+            for item in generated["items"]
+        ],
+    }
+
+
+def _attach_v2_1_review(generated: dict, review: dict) -> dict:
+    value = deepcopy(generated)
+    value["semantic_generation_review_path"] = "reports/qgen_phelo_011_retry_v2_1_semantic_generation_review.json"
+    value["semantic_generation_review_sha256"] = _canonical_sha(review)
+    return value
 
 
 _V2_FINAL_ASSESSMENTS = (
@@ -702,6 +830,74 @@ def test_retry_v2_fresh_verifier_input_and_all_pass_verification_reach_pilot_gat
     assert packet["generated_artifact_fingerprint"]["sha256"] == _canonical_sha(generated)
     assert result["status"] == "PILOT_ACCEPTED"
     assert result["questions_passed"] == 10
+
+
+def test_retry_v2_1_generator_input_selects_only_approved_v2_specs_and_requires_execution_contract():
+    specs = _v2_item_specs()
+    preflight = _v2_preflight(specs)
+    selected = [card["v2_item_spec_id"] for card in specs["cards"][:3]]
+
+    payload = build_retry_v2_1_generator_input(REPO, JOB_ID, specs, preflight, selected)
+
+    assert payload["selected_v2_item_spec_ids"] == selected
+    assert payload["generation_policy"]["semantic_instantiation_review_required"] is True
+    assert payload["generation_policy"]["definition_or_keyword_flattening_forbidden"] is True
+
+
+def test_retry_v2_1_generated_contract_requires_complete_instantiation_and_fresh_acceptance():
+    specs = _v2_item_specs()
+    preflight = _v2_preflight(specs)
+    selected = [card["v2_item_spec_id"] for card in specs["cards"][:3]]
+    candidate = _v2_1_generated(specs, preflight, selected)
+    review = _v2_1_semantic_review(specs, candidate)
+    generated = _attach_v2_1_review(candidate, review)
+
+    assert validate_retry_v2_1_semantic_generation_review(REPO, JOB_ID, specs, preflight, generated, review) == review
+    assert validate_retry_v2_1_generated_artifact(REPO, JOB_ID, specs, preflight, generated, review) == generated
+
+
+@pytest.mark.parametrize(
+    ("mutate", "message"),
+    [
+        (lambda value: value["items"][0]["spec_instantiation"].__setitem__("reasoning_chain", []), "reasoning instantiation"),
+        (lambda value: value["items"][0]["spec_instantiation"]["vignette_ablation"].__setitem__("answerable_without_scenario", True), "vignette ablation"),
+        (lambda value: value["items"][0]["spec_instantiation"]["distractor_instantiations"][0].__setitem__("competing_concept_id", "UNPLANNED"), "distractor instantiation"),
+        (lambda value: value["items"][0]["spec_instantiation"]["prohibited_shortcuts_checked"].__setitem__("detected", ["keyword cue"]), "prohibited shortcuts"),
+    ],
+)
+def test_retry_v2_1_generated_contract_rejects_actual_flattening_regressions(mutate, message):
+    specs = _v2_item_specs()
+    preflight = _v2_preflight(specs)
+    selected = [card["v2_item_spec_id"] for card in specs["cards"][:3]]
+    candidate = _v2_1_generated(specs, preflight, selected)
+    mutate(candidate)
+    review = _v2_1_semantic_review(specs, candidate)
+    generated = _attach_v2_1_review(candidate, review)
+
+    with pytest.raises(SourceReadyGenerationPilotError, match=message):
+        validate_retry_v2_1_generated_artifact(REPO, JOB_ID, specs, preflight, generated, review)
+
+
+def test_retry_v2_1_semantic_gate_rejects_definition_flattening_even_with_complete_metadata():
+    specs = _v2_item_specs()
+    preflight = _v2_preflight(specs)
+    selected = [card["v2_item_spec_id"] for card in specs["cards"][:3]]
+    candidate = _v2_1_generated(specs, preflight, selected)
+    review = _v2_1_semantic_review(specs, candidate)
+    row = review["verdicts"][0]
+    row["verdict"] = "REGENERATE_FROM_SAME_SPEC"
+    row["assessments"]["vignette_necessary"] = "FAIL"
+    row["assessments"]["prohibited_shortcuts_absent"] = "FAIL"
+    row["explanation"] = "The candidate can be answered by definition recognition after scenario ablation."
+    generated = _attach_v2_1_review(candidate, review)
+
+    assert validate_retry_v2_1_semantic_generation_review(REPO, JOB_ID, specs, preflight, generated, review) == review
+    with pytest.raises(SourceReadyGenerationPilotError, match="semantic generation review acceptance"):
+        validate_retry_v2_1_generated_artifact(REPO, JOB_ID, specs, preflight, generated, review)
+
+
+def test_retry_v2_1_contract_does_not_change_v1_retry_validation():
+    assert validate_retry_generated_artifact(REPO, JOB_ID, _retry_generated_artifact())["job_id"] == JOB_ID
 
 
 def test_retry_v2_verification_rejects_context_overlap_incomplete_rows_and_acceptance_defects():

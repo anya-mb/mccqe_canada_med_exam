@@ -23,6 +23,10 @@ RETRY_V2_ITEM_SPEC_PATH = "research/qgen/pilot/QGEN-PHELO-011.retry-v2-10.item-s
 RETRY_V2_PREFLIGHT_PATH = "reports/qgen_phelo_011_retry_v2_semantic_preflight.json"
 RETRY_V2_GENERATED_ARTIFACT_PATH = "research/qgen/pilot/QGEN-PHELO-011.retry-v2-10.generated.json"
 RETRY_V2_VERIFICATION_PATH = "research/qgen/pilot/QGEN-PHELO-011.retry-v2-10.verification.json"
+RETRY_V2_1_MICRO_GENERATED_ARTIFACT_PATH = "research/qgen/pilot/QGEN-PHELO-011.retry-v2-1-micro-3.generated.json"
+RETRY_V2_1_FULL_GENERATED_ARTIFACT_PATH = "research/qgen/pilot/QGEN-PHELO-011.retry-v2-1-10.generated.json"
+RETRY_V2_1_MICRO_SEMANTIC_REVIEW_PATH = "reports/qgen_phelo_011_retry_v2_1_micro_semantic_generation_review.json"
+RETRY_V2_1_FULL_SEMANTIC_REVIEW_PATH = "reports/qgen_phelo_011_retry_v2_1_semantic_generation_review.json"
 FAILED_PILOT_ARTIFACT_PATH = "research/qgen/pilot/QGEN-PHELO-011.generated.json"
 _RETRY_ASSERTION_PARTS = {
     "stem",
@@ -59,6 +63,11 @@ _RETRY_V2_REJECTION_CATEGORIES = {
     "FACTUAL_ERROR", "UNSUPPORTED_CLAIM", "AMBIGUOUS_BEST_ANSWER", "WEAK_DISTRACTORS",
     "INAPPROPRIATE_DIFFICULTY", "PLAN_MISMATCH", "RATIONALE_DEFICIENCY",
     "ITEM_WRITING_PROBLEM", "MATERIAL_DUPLICATION", "OTHER",
+}
+_RETRY_V2_1_SEMANTIC_GENERATION_ASSESSMENTS = {
+    "learner_decision_instantiated", "reasoning_chain_instantiated", "vignette_necessary",
+    "evidence_discriminant_instantiated", "distractor_blueprint_faithful",
+    "prohibited_shortcuts_absent", "rationale_requirements_met",
 }
 
 
@@ -847,6 +856,267 @@ def validate_retry_v2_generated_artifact(
         for item in items:
             if item["v2_item_spec_id"] not in revised_ids and item != previous_by_id[item["v2_item_spec_id"]]:
                 raise SourceReadyGenerationPilotError("retry V2 revision changed an item outside the local revision set")
+    return artifact
+
+
+def retry_v2_1_generation_candidate_sha256(artifact: dict[str, Any]) -> str:
+    """Fingerprint candidate content independently of its later semantic-review receipt."""
+    candidate = dict(artifact)
+    candidate.pop("semantic_generation_review_path", None)
+    candidate.pop("semantic_generation_review_sha256", None)
+    return _sha256(candidate)
+
+
+def build_retry_v2_1_generator_input(
+    root: Path,
+    job_id: str,
+    item_specs: dict[str, Any],
+    semantic_preflight: dict[str, Any],
+    selected_v2_item_spec_ids: list[str],
+) -> dict[str, Any]:
+    """Build a V2.1 execution contract for an exact non-empty subset of approved specs."""
+    root = Path(root).resolve()
+    base = build_retry_v2_generator_input(root, job_id, item_specs, semantic_preflight)
+    valid_ids = [card["v2_item_spec_id"] for card in base["item_specs"]["cards"]]
+    if (
+        not isinstance(selected_v2_item_spec_ids, list)
+        or not 1 <= len(selected_v2_item_spec_ids) <= 10
+        or len(set(selected_v2_item_spec_ids)) != len(selected_v2_item_spec_ids)
+        or any(identifier not in valid_ids for identifier in selected_v2_item_spec_ids)
+        or selected_v2_item_spec_ids != [identifier for identifier in valid_ids if identifier in selected_v2_item_spec_ids]
+    ):
+        raise SourceReadyGenerationPilotError("retry V2.1 selected item specs are invalid")
+    selected = [
+        card for card in base["item_specs"]["cards"]
+        if card["v2_item_spec_id"] in selected_v2_item_spec_ids
+    ]
+    return {
+        **base,
+        "schema_version": "2.1",
+        "scope": "RETRY_V2_1_GENERATOR_INPUT",
+        "selected_v2_item_spec_ids": selected_v2_item_spec_ids,
+        "item_specs": {**base["item_specs"], "cards": selected},
+        "generation_policy": {
+            **base["generation_policy"],
+            "semantic_instantiation_review_required": True,
+            "definition_or_keyword_flattening_forbidden": True,
+            "reasoning_chain_scenario_mapping_required": True,
+            "vignette_ablation_review_required": True,
+            "evidence_discriminant_location_required": True,
+            "distractor_instantiation_required": True,
+            "prohibited_shortcuts_must_be_reviewed": True,
+            "rationale_discriminators_required": True,
+        },
+    }
+
+
+def _retry_v2_1_expected_items(
+    root: Path,
+    job_id: str,
+    item_specs: dict[str, Any],
+    semantic_preflight: dict[str, Any],
+    artifact: dict[str, Any],
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    selected_ids = artifact.get("selected_v2_item_spec_ids") if isinstance(artifact, dict) else None
+    context = build_retry_v2_1_generator_input(
+        root, job_id, item_specs, semantic_preflight, selected_ids
+    )
+    cards = context["item_specs"]["cards"]
+    if (
+        artifact.get("schema_version") != "2.1"
+        or artifact.get("scope") != "RETRY_V2_1_GENERATED_QUESTIONS"
+        or artifact.get("job_id") != job_id
+        or not isinstance(artifact.get("generator_id"), str)
+        or not artifact["generator_id"].strip()
+        or artifact.get("item_spec_path") != RETRY_V2_ITEM_SPEC_PATH
+        or artifact.get("item_spec_sha256") != _sha256(item_specs)
+        or artifact.get("semantic_preflight_path") != RETRY_V2_PREFLIGHT_PATH
+        or artifact.get("semantic_preflight_sha256") != _sha256(semantic_preflight)
+    ):
+        raise SourceReadyGenerationPilotError("retry V2.1 generated artifact identity or lineage is invalid")
+    if _actor_key(artifact["generator_id"]) in {
+        _actor_key(item_specs["author_id"]), _actor_key(semantic_preflight["reviewer_id"])
+    }:
+        raise SourceReadyGenerationPilotError("retry V2.1 generator must be independent of authorship and preflight")
+    items = artifact.get("items")
+    expected = [(card["v2_item_spec_id"], card["retry_slot_id"]) for card in cards]
+    actual = [(item.get("v2_item_spec_id"), item.get("retry_slot_id")) for item in items if isinstance(item, dict)] if isinstance(items, list) else []
+    if not isinstance(items, list) or actual != expected:
+        raise SourceReadyGenerationPilotError("retry V2.1 generated items must exactly match selected item specs")
+    return context, cards
+
+
+def _retry_v2_1_validate_instantiation(card: dict[str, Any], item: dict[str, Any]) -> None:
+    mapping = item.get("spec_instantiation")
+    if not isinstance(mapping, dict) or mapping.get("learner_decision") != card["learner_decision"]:
+        raise SourceReadyGenerationPilotError("retry V2.1 learner-decision instantiation is invalid")
+    reasoning = mapping.get("reasoning_chain")
+    expected_steps = card["reasoning_chain"]
+    if (
+        not isinstance(reasoning, list)
+        or [entry.get("step") for entry in reasoning if isinstance(entry, dict)] != expected_steps
+        or len(reasoning) != len(expected_steps)
+        or any(not isinstance(entry.get("scenario_fact"), str) or not entry["scenario_fact"].strip() or entry.get("location") not in {"stem", "options"} for entry in reasoning)
+    ):
+        raise SourceReadyGenerationPilotError("retry V2.1 reasoning instantiation is invalid")
+    discriminants = mapping.get("evidence_discriminants")
+    expected_discriminants = card["evidence_discriminants"]
+    if (
+        not isinstance(discriminants, list)
+        or [entry.get("fact") for entry in discriminants if isinstance(entry, dict)] != [entry["fact"] for entry in expected_discriminants]
+        or len(discriminants) != len(expected_discriminants)
+    ):
+        raise SourceReadyGenerationPilotError("retry V2.1 evidence-discriminant instantiation is invalid")
+    for actual, expected in zip(discriminants, expected_discriminants, strict=True):
+        if (
+            not isinstance(actual.get("scenario_fact"), str) or not actual["scenario_fact"].strip()
+            or actual.get("location") not in {"stem", "options"}
+            or actual.get("evidence_references") != expected["evidence_refs"]
+        ):
+            raise SourceReadyGenerationPilotError("retry V2.1 evidence-discriminant instantiation is invalid")
+    distractors = mapping.get("distractor_instantiations")
+    blueprint = card["distractor_blueprint"]
+    if not isinstance(distractors, list) or len(distractors) != len(blueprint):
+        raise SourceReadyGenerationPilotError("retry V2.1 distractor instantiation is invalid")
+    for actual, expected in zip(distractors, blueprint, strict=True):
+        if not isinstance(actual, dict) or any(actual.get(key) != expected[source] for key, source in {
+            "distractor_id": "distractor_id", "competing_concept_id": "competing_concept_id",
+            "tempting_feature": "temptation", "scenario_feature": "scenario_feature",
+            "disqualifying_discriminant": "evidence_discriminator", "evidence_references": "evidence_refs",
+        }.items()):
+            raise SourceReadyGenerationPilotError("retry V2.1 distractor instantiation is invalid")
+    ablation = mapping.get("vignette_ablation")
+    required_facts = [fact["fact"] for fact in card["vignette_requirements"]["facts"]]
+    if (
+        not isinstance(ablation, dict)
+        or ablation.get("scenario_facts") != required_facts
+        or ablation.get("answerable_without_scenario") is not False
+        or not isinstance(ablation.get("explanation"), str)
+        or not ablation["explanation"].strip()
+    ):
+        raise SourceReadyGenerationPilotError("retry V2.1 vignette ablation is invalid")
+    shortcuts = mapping.get("prohibited_shortcuts_checked")
+    if not isinstance(shortcuts, dict) or shortcuts.get("checked") != card["prohibited_shortcuts"] or shortcuts.get("detected") != []:
+        raise SourceReadyGenerationPilotError("retry V2.1 prohibited shortcuts are invalid")
+    rationale = mapping.get("rationale_mapping")
+    best = rationale.get("best_answer") if isinstance(rationale, dict) else None
+    alternatives = rationale.get("distractors") if isinstance(rationale, dict) else None
+    if (
+        not isinstance(best, dict)
+        or not all(isinstance(best.get(key), str) and best[key].strip() for key in {"positive_evidence", "decisive_discriminant"})
+        or not isinstance(alternatives, list)
+        or [entry.get("distractor_id") for entry in alternatives if isinstance(entry, dict)] != [entry["distractor_id"] for entry in blueprint]
+        or len(alternatives) != len(blueprint)
+        or any(not all(isinstance(entry.get(key), str) and entry[key].strip() for key in {"plausibility", "discriminator"}) for entry in alternatives)
+    ):
+        raise SourceReadyGenerationPilotError("retry V2.1 rationale instantiation is invalid")
+
+
+def validate_retry_v2_1_semantic_generation_review(
+    root: Path,
+    job_id: str,
+    item_specs: dict[str, Any],
+    semantic_preflight: dict[str, Any],
+    artifact: dict[str, Any],
+    review: dict[str, Any],
+) -> dict[str, Any]:
+    """Bind a fresh semantic reviewer to the exact V2.1 candidate without self-approval."""
+    root = Path(root).resolve()
+    _, cards = _retry_v2_1_expected_items(root, job_id, item_specs, semantic_preflight, artifact)
+    if (
+        not isinstance(review, dict)
+        or review.get("schema_version") != "2.1"
+        or review.get("scope") != "RETRY_V2_1_SEMANTIC_GENERATION_REVIEW"
+        or review.get("job_id") != job_id
+        or review.get("generated_candidate_sha256") != retry_v2_1_generation_candidate_sha256(artifact)
+        or not isinstance(review.get("reviewer_id"), str)
+        or not review["reviewer_id"].strip()
+    ):
+        raise SourceReadyGenerationPilotError("retry V2.1 semantic generation review identity is invalid")
+    excluded = {
+        _actor_key(item_specs["author_id"]), _actor_key(semantic_preflight["reviewer_id"]),
+        _actor_key(artifact["generator_id"]),
+    }
+    if _actor_key(review["reviewer_id"]) in excluded:
+        raise SourceReadyGenerationPilotError("retry V2.1 semantic generation reviewer must be fresh")
+    rows = review.get("verdicts")
+    expected = [(card["v2_item_spec_id"], card["retry_slot_id"]) for card in cards]
+    actual = [(row.get("v2_item_spec_id"), row.get("retry_slot_id")) for row in rows if isinstance(row, dict)] if isinstance(rows, list) else []
+    if not isinstance(rows, list) or actual != expected:
+        raise SourceReadyGenerationPilotError("retry V2.1 semantic generation review must cover every candidate")
+    for row in rows:
+        assessments = row.get("assessments")
+        if (
+            row.get("verdict") not in {"ACCEPT_GENERATED_ITEM", "REGENERATE_FROM_SAME_SPEC"}
+            or not isinstance(assessments, dict)
+            or set(assessments) != _RETRY_V2_1_SEMANTIC_GENERATION_ASSESSMENTS
+            or any(value not in {"PASS", "FAIL"} for value in assessments.values())
+            or not isinstance(row.get("explanation"), str)
+            or not row["explanation"].strip()
+        ):
+            raise SourceReadyGenerationPilotError("retry V2.1 semantic generation review row is invalid")
+        if row["verdict"] == "ACCEPT_GENERATED_ITEM" and any(value != "PASS" for value in assessments.values()):
+            raise SourceReadyGenerationPilotError("retry V2.1 accepted semantic review contains a failure")
+        if row["verdict"] == "REGENERATE_FROM_SAME_SPEC" and all(value == "PASS" for value in assessments.values()):
+            raise SourceReadyGenerationPilotError("retry V2.1 rejected semantic review lacks a concrete failure")
+    return review
+
+
+def validate_retry_v2_1_generated_artifact(
+    root: Path,
+    job_id: str,
+    item_specs: dict[str, Any],
+    semantic_preflight: dict[str, Any],
+    artifact: dict[str, Any],
+    semantic_review: dict[str, Any],
+) -> dict[str, Any]:
+    """Fail closed unless every V2.1 item maps to its spec and is semantically accepted fresh."""
+    root = Path(root).resolve()
+    _, cards = _retry_v2_1_expected_items(root, job_id, item_specs, semantic_preflight, artifact)
+    allowed_paths = {RETRY_V2_1_MICRO_SEMANTIC_REVIEW_PATH, RETRY_V2_1_FULL_SEMANTIC_REVIEW_PATH}
+    if artifact.get("semantic_generation_review_path") not in allowed_paths or artifact.get("semantic_generation_review_sha256") != _sha256(semantic_review):
+        raise SourceReadyGenerationPilotError("retry V2.1 semantic generation review receipt is invalid")
+    review = validate_retry_v2_1_semantic_generation_review(
+        root, job_id, item_specs, semantic_preflight, artifact, semantic_review
+    )
+    if any(row["verdict"] != "ACCEPT_GENERATED_ITEM" for row in review["verdicts"]):
+        raise SourceReadyGenerationPilotError("retry V2.1 semantic generation review acceptance is required")
+    for card, item in zip(cards, artifact["items"], strict=True):
+        if (
+            item.get("item_spec_sha256") != _sha256(card)
+            or item.get("semantic_signature") != card["semantic_signature"]
+            or item.get("learner_decision") != card["learner_decision"]
+            or item.get("answer_category") != card["answer_category"]
+            or item.get("realized_reasoning_steps") != card["reasoning_chain"]
+            or not isinstance(item.get("stem"), str)
+            or not item["stem"].strip()
+        ):
+            raise SourceReadyGenerationPilotError("retry V2.1 generated item does not preserve its approved spec")
+        options = item.get("options")
+        if not isinstance(options, list) or len(options) != 4 or [option.get("key") for option in options if isinstance(option, dict)] != ["A", "B", "C", "D"]:
+            raise SourceReadyGenerationPilotError("retry V2.1 generated options are invalid")
+        correct = item.get("correct_answer")
+        best = [option for option in options if option.get("blueprint_role") == "BEST_ANSWER"]
+        if correct not in {"A", "B", "C", "D"} or len(best) != 1 or best[0].get("key") != correct:
+            raise SourceReadyGenerationPilotError("retry V2.1 generated item requires one best answer")
+        actual_blueprint = [(option.get("distractor_id"), option.get("competing_concept_id")) for option in options if option.get("key") != correct]
+        expected_blueprint = [(entry["distractor_id"], entry["competing_concept_id"]) for entry in card["distractor_blueprint"]]
+        if actual_blueprint != expected_blueprint:
+            raise SourceReadyGenerationPilotError("retry V2.1 generated distractor blueprint is invalid")
+        rationales = item.get("distractor_rationales")
+        if not isinstance(item.get("correct_answer_rationale"), str) or not item["correct_answer_rationale"].strip() or not isinstance(rationales, dict) or set(rationales) != ({"A", "B", "C", "D"} - {correct}) or any(not isinstance(value, str) or not value.strip() for value in rationales.values()):
+            raise SourceReadyGenerationPilotError("retry V2.1 generated rationales are invalid")
+        required_vignettes = [fact["requirement_id"] for fact in card["vignette_requirements"]["facts"]]
+        if item.get("vignette_requirement_ids_used") != required_vignettes:
+            raise SourceReadyGenerationPilotError("retry V2.1 generated vignette requirements are invalid")
+        authorized = {_retry_reference_key(reference) for reference in card["authorized_evidence"]}
+        _retry_v2_evidence_refs_valid(item.get("evidence_references"), authorized, "V2.1 generated item")
+        closure = item.get("assertion_evidence")
+        if not isinstance(closure, dict) or set(closure) != _RETRY_ASSERTION_PARTS:
+            raise SourceReadyGenerationPilotError("retry V2.1 generated assertion closure is invalid")
+        for part, references in closure.items():
+            _retry_v2_evidence_refs_valid(references, authorized, f"V2.1 generated {part} assertion")
+        _retry_v2_1_validate_instantiation(card, item)
     return artifact
 
 
