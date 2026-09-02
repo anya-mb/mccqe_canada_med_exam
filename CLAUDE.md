@@ -1,75 +1,12 @@
-# MCCQE QBank Project
+# Claude Code Repository Instructions
 
-## Current phase
+Before substantive work:
 
-We are building the Toronto Notes 2025 → MCC scope crosswalk.
-
-Do NOT generate practice questions yet.
-
-Canonical resume state:
-`reports/scope_scaling_progress.json`
-
-Always read that file first.
-
-## Source authority
-
-Toronto Notes structure:
-`research/tn2025/toc_inventory.json`
-
-MCC objective authority:
-`research/mcc/objectives_registry.json`
-
-Study Smarter:
-`research/mcc/study_smarter_discipline_mapping.json`
-
-Frozen scope schema:
-<actual schema path>
-
-## Chapter helper commands
-
-Use these deterministic (non-LLM) helpers per chapter, see
-`docs/scope-chapter-workflow.md`:
-
-- `python -m scripts.qbank prepare-scope-chapter <CODE>` builds a compact
-  context packet at `derived/scope_packets/<CODE>.json`. Use the packet, not
-  the full TOC inventory or objectives registry, for study-unit derivation
-  and MCC mapping.
-- `python -m scripts.qbank validate-scope-chapter <CODE>` replaces manual
-  deterministic rechecking (schema, source accounting, MCC ID existence,
-  hygiene). Only review what it flags as WEAK/UNCERTAIN/warning.
-- `python -m scripts.qbank search-mcc-objectives "<query>"` searches the full
-  registry when a packet's candidate set doesn't contain the right objective.
-
-## Accuracy rules
-
-- Never invent Toronto Notes headings.
-- Never invent MCC IDs.
-- DIRECT/COMPONENT requires actual MCC evidence.
-- If evidence is insufficient, use WEAK/UNCERTAIN.
-- Do not use model memory as evidence.
-- Do not encode changing treatment recommendations at scope stage.
-- Keep all source-node traceability.
-- One chapter at a time.
-- Run deterministic validation before committing.
-- Commit every completed chapter.
-- Stop after one chapter unless explicitly told otherwise.
-
-## Chapter lifecycle
-
-1. Read progress ledger.
-2. Process `next_chapter` only.
-3. Build study units.
-4. Map to MCC.
-5. Run chapter validator.
-6. Run tests.
-7. Update review queue + progress ledger.
-8. Commit.
-9. Report checkpoint.
-10. STOP.
-
-## Important
-
-Do not re-read historical reports unless needed to resolve a specific problem.
-
-Use Cardiology and ELOM only as examples when the frozen schema/methodology
-does not make a rule clear.
+1. Read `AGENTS.md` and follow it as the canonical repository operating policy.
+2. Read `MEMORY.md` for the current project checkpoint and resume state.
+3. Canonical repository artifacts, validators, tests, and Git history override `MEMORY.md` if they disagree.
+4. Do not duplicate changing project state in this file.
+5. Use `.venv/bin/python` and `.venv/bin/python -m pytest` as the canonical Python/test runtime unless `AGENTS.md` explicitly says otherwise.
+6. Preserve historical/frozen question-bank artifacts unless the task explicitly authorizes changing them.
+7. After a successful canonical checkpoint, reconcile/update the changing resume-state section of `MEMORY.md` according to `AGENTS.md`.
+8. Fail closed on unresolved medical evidence, provenance, or single-best-answer ambiguity.
