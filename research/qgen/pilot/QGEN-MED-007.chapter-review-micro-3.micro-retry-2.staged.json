@@ -1,0 +1,2017 @@
+{
+  "schema_version": "1.2",
+  "scope": "CHAPTER_REVIEW_CLINICAL_MICRO_3",
+  "candidate_status": "ACCEPTED",
+  "provisional_parallel_option_review": false,
+  "pilot_id": "QGEN-MED-007-CHAPTER-REVIEW-MICRO-3-MICRO-RETRY-2",
+  "micro_chapter": "Cardiology and Cardiac Surgery",
+  "anchor_chapter_id": "C",
+  "anchor_study_unit_id": "SU-C-21",
+  "allocation_effect": "MICRO_TEST_ONLY_NO_CANONICAL_SLOT_CONSUMED",
+  "option_count_policy": "Five options used because four evidence-grounded competitors passed for each item.",
+  "items": [
+    {
+      "schema_version": "1.2",
+      "item_id": "CHREV-C-ACS-001-MR2",
+      "learning_mode": "CHAPTER_REVIEW",
+      "item_type": "DIAGNOSIS_DIFFERENTIAL",
+      "author_id": "micro-retry-2-author-diagnosis-differential",
+      "stage_sequence": [
+        "TORONTO_NOTES_ANCHOR",
+        "MCC_OBJECTIVE_PHYSICIAN_ACTIVITY",
+        "PRIMARY_LEARNER_DECISION",
+        "ANCHOR_FIDELITY",
+        "OPEN_ENDED_STEM_KEY",
+        "BLIND_COVER_OPTIONS_SOLVER",
+        "GLOBAL_CONTRAST_RETRIEVAL",
+        "CONTRASTIVE_EVIDENCE_MATRIX",
+        "SEPARATE_DISTRACTOR_CONSTRUCTION",
+        "DISTRACTOR_ADVERSARIAL_RANKING",
+        "OPTION_REALIZATION",
+        "PARALLEL_OPTION_SET_REVIEW",
+        "DECISION_GRANULARITY_PARITY",
+        "MCQ_ASSEMBLY",
+        "PLAN_FIDELITY_SHORTCUT_CUE_CHECK",
+        "RATIONALES",
+        "FRESH_INDEPENDENT_VERIFICATION"
+      ],
+      "anchor": {
+        "anchor_chapter_id": "C",
+        "anchor_chapter_title": "Cardiology and Cardiac Surgery",
+        "anchor_topic": "Acute Coronary Syndromes",
+        "anchor_allocation_address_id": "SU-C-21",
+        "anchor_study_unit_id": "SU-C-21",
+        "anchor_source_node_ids": [
+          "C.S06.T02",
+          "C.S06.T03"
+        ],
+        "anchor_tn_pages": "C30-C39",
+        "anchor_pdf_pages": [
+          120,
+          129
+        ],
+        "primary_mcc_objective": {
+          "mcc_id": "14",
+          "title": "Chest pain"
+        },
+        "primary_physician_activity": "Assessment/Diagnosis",
+        "primary_competency": {
+          "depth": "CORE_ACTION",
+          "preferred_item_forms": [
+            "COMPLICATION_RECOGNITION",
+            "EMERGENCY_STABILIZATION",
+            "INITIAL_MANAGEMENT",
+            "INTERPRET_RESULTS",
+            "MOST_LIKELY_DIAGNOSIS"
+          ]
+        },
+        "primary_learner_decision": "Diagnose NSTEMI by integrating an ischemic presentation, regional ECG change, and a dynamic high-sensitivity troponin rise."
+      },
+      "anchor_fidelity_preflight": {
+        "reviewer_id": "fresh-micro-retry-2-stage-anchor-reviewer-diagnosis-differential",
+        "anchor_sha256": "758373f28114c1e24f77361927fc7a2e413317dd1434f64d9b64e3a054a19664",
+        "criteria": {
+          "decision_ownership": "PASS",
+          "key_ownership": "PASS",
+          "positive_anchor_evidence": "PASS",
+          "immediate_review_fit": "PASS",
+          "counterfactual_necessity": "PASS",
+          "contrast_role_integrity": "PASS",
+          "allocation_integrity": "PASS"
+        },
+        "verdict": "PASS",
+        "explanation": "The ACS allocation owns the diagnosis decision: the positive ischemic presentation, regional ST depression, and dynamic troponin rise establish NSTEMI under MCC 14, while PE, acute aortic dissection, pericarditis, and GERD remain elimination contrasts.",
+        "review_status": "FRESH_NON_AUTHOR_STAGE_REVIEW_COMPLETE"
+      },
+      "open_ended_stem_key": {
+        "anchor_fidelity_sha256": "d7c3ff8a9cf63f7c96f631c2c1cfbf5db0aff060faace9bd83ea74946e2e87a3",
+        "context": "A chest-pain presentation with competing gastrointestinal timing but decisive ischemic ECG and biomarker findings.",
+        "stem": "A 58-year-old man with hypertension and dyslipidemia develops 45 minutes of central pressure-like chest pain, nausea, and diaphoresis while carrying boxes shortly after a heavy meal. The pain is not pleuritic or positional. He has no dyspnea, hemoptysis, regurgitation, abrupt maximal-onset pain, neurologic symptoms, or pulse asymmetry. ECG shows new 1-mm horizontal ST depression in V4-V6. High-sensitivity troponin is 18 ng/L (assay 99th percentile 15 ng/L) and rises to 54 ng/L one hour later.",
+        "lead_in": "What is the most likely diagnosis?",
+        "intended_answer": "Non-ST-segment elevation myocardial infarction",
+        "reasoning_chain": [
+          "Recognize an ischemic symptom complex rather than isolated nonspecific chest discomfort.",
+          "Interpret new territorial ST depression as regional ischemia.",
+          "Interpret the rising hs-cTn with a value above the assay 99th percentile as acute myocardial injury in an ischemic context.",
+          "Use the absent decisive features of PE, aortic dissection, pericarditis, and GERD to keep NSTEMI single best."
+        ],
+        "context_necessity": {
+          "context_type": "PATIENT_PRESENTATION",
+          "answerable_after_context_ablation": false,
+          "explanation": "Removing the symptom quality, territorial ECG distribution, or dynamic troponin change destroys the diagnosis/differential decision."
+        },
+        "key_evidence_refs": [
+          "CLM-ACS-DIAGNOSIS-01"
+        ]
+      },
+      "blind_solver": {
+        "solver_id": "fresh-independent-micro-retry-2-blind-solver",
+        "open_ended_sha256": "fc2d2a5c375b6557cf14bad18f960a185990b67779463740cc69dd120fa51b16",
+        "hidden_context": [
+          "intended_answer",
+          "contrast_candidates",
+          "answer_options",
+          "author_self_evaluation"
+        ],
+        "independent_answer": "Non-ST-segment elevation myocardial infarction",
+        "independent_reasoning": "Typical ischemic chest pain, new lateral ST-segment depression, and a dynamic high-sensitivity troponin rise above the 99th percentile establish acute myocardial infarction without ST elevation.",
+        "verdict": "PASS",
+        "verbatim_reported_answer": "Non-ST-elevation myocardial infarction (NSTEMI)",
+        "source_report": "reports/qgen_med_007_chapter_review_micro_3_micro_retry_2_blind_solver.json",
+        "source_report_sha256": "8ab1450b23b31ae75481d01698ec359c5c038c87de443588e647468b4e6c4728"
+      },
+      "global_contrast_retrieval": {
+        "blind_solver_sha256": "99799edffd7ffd32968527a33bb60fdc5eeee6a467c862fd7299b41e25a76847",
+        "strategy": "HYBRID_CACHE_FIRST_SEMANTIC_SECOND_EVIDENCE_THIRD",
+        "complete_tn_corpus": true,
+        "learner_progress_used": false,
+        "lexical_similarity_only": false,
+        "selected_contrast_ids": [
+          "CONTRAST-C21-DX-R19-PE",
+          "CONTRAST-C21-DX-VS03-AAS",
+          "CONTRAST-C21-DX-C33-PERICARDITIS",
+          "CONTRAST-C21-DX-G04-GERD"
+        ],
+        "cache_hits_first": [
+          "CONTRAST-C21-DX-R19-PE",
+          "CONTRAST-C21-DX-VS03-AAS",
+          "CONTRAST-C21-DX-C33-PERICARDITIS",
+          "CONTRAST-C21-DX-G04-GERD"
+        ],
+        "semantic_ranker_id": "micro-retry-2-contrast-ranker-diagnosis-differential",
+        "candidate_assessment": "Candidates were ranked by same decision context, overlapping presentation, plausible graduate error, neighboring choice, and decisive discriminant; lexical similarity was not sufficient."
+      },
+      "contrastive_evidence_matrix": {
+        "retrieval_sha256": "809de1e9807393276bafe667ae397b30e208b8f306d2f24082e023771fd1a23d",
+        "key": {
+          "concept": "Non-ST-segment elevation myocardial infarction",
+          "anchor_evidence_refs": [
+            "CLM-ACS-DIAGNOSIS-01"
+          ],
+          "decisive_discriminants": [
+            "Pressure-like ischemic symptoms with diaphoresis.",
+            "New regional ST depression in contiguous lateral leads.",
+            "A dynamic hs-cTn rise with values above the assay 99th percentile."
+          ],
+          "tn_alignment": "CURRENT"
+        },
+        "competitors": [
+          {
+            "contrast_id": "CONTRAST-C21-DX-R19-PE",
+            "contrast_concept": "Pulmonary embolism",
+            "tn_provenance": {
+              "study_unit_id": "SU-R-19",
+              "chapter_id": "R",
+              "source_node_ids": [
+                "R.S05"
+              ],
+              "tn_pages": "R20-R22",
+              "pdf_pages": [
+                1474,
+                1476
+              ]
+            },
+            "why_plausible": "Acute chest discomfort and autonomic symptoms can occur in PE, so a learner may overgeneralize the dangerous-chest-pain differential.",
+            "shared_features": [
+              "acute chest discomfort",
+              "potentially serious presentation"
+            ],
+            "partial_mistaken_reasoning": "Overweight danger and chest pain while ignoring the territorial ischemic findings.",
+            "decisive_discriminant": "The stem has no dyspnea, pleuritic pain, hypoxemia, hemoptysis, or VTE risk and instead has a regional ischemic ECG change with a dynamic troponin rise.",
+            "authoritative_evidence_refs": [
+              "CLM-PE-DIAGNOSIS-01",
+              "CLM-ACS-DIAGNOSIS-01"
+            ],
+            "ambiguity_verdict": "KEY_REMAINS_SINGLE_BEST",
+            "target_drift": "ABSENT",
+            "status": "VALIDATED"
+          },
+          {
+            "contrast_id": "CONTRAST-C21-DX-VS03-AAS",
+            "contrast_concept": "Acute aortic dissection",
+            "tn_provenance": {
+              "study_unit_id": "SU-VS-03",
+              "chapter_id": "VS",
+              "source_node_ids": [
+                "VS.S02.T01"
+              ],
+              "tn_pages": "VS6-VS8",
+              "pdf_pages": [
+                1586,
+                1588
+              ]
+            },
+            "why_plausible": "Severe chest pain and hypertension can trigger concern for an acute aortic syndrome.",
+            "shared_features": [
+              "acute chest discomfort",
+              "hypertension"
+            ],
+            "partial_mistaken_reasoning": "Treat any severe pain in a hypertensive patient as dissection without checking high-risk aortic features.",
+            "decisive_discriminant": "The pain was not abrupt or maximal at onset and there is no pulse, blood-pressure, neurologic, or malperfusion finding; the ECG and troponin pattern is territorial and ischemic.",
+            "authoritative_evidence_refs": [
+              "CLM-AORTIC-DISSECTION-01",
+              "CLM-ACS-DIAGNOSIS-01"
+            ],
+            "ambiguity_verdict": "KEY_REMAINS_SINGLE_BEST",
+            "target_drift": "ABSENT",
+            "status": "VALIDATED"
+          },
+          {
+            "contrast_id": "CONTRAST-C21-DX-C33-PERICARDITIS",
+            "contrast_concept": "Acute pericarditis",
+            "tn_provenance": {
+              "study_unit_id": "SU-C-33",
+              "chapter_id": "C",
+              "source_node_ids": [
+                "C.S12.T01"
+              ],
+              "tn_pages": "C61-C67",
+              "pdf_pages": [
+                151,
+                157
+              ]
+            },
+            "why_plausible": "Both ACS and pericarditis can cause acute chest pain with ST-segment abnormalities.",
+            "shared_features": [
+              "acute chest pain",
+              "ECG ST-segment abnormality"
+            ],
+            "partial_mistaken_reasoning": "Recall pericarditis from any chest pain plus ST change without examining pain quality and ECG distribution.",
+            "decisive_discriminant": "The pressure is neither pleuritic nor positional and the ECG change is regional ST depression rather than widespread ST elevation or PR depression.",
+            "authoritative_evidence_refs": [
+              "CLM-PERICARDITIS-01",
+              "CLM-ACS-DIAGNOSIS-01"
+            ],
+            "ambiguity_verdict": "KEY_REMAINS_SINGLE_BEST",
+            "target_drift": "ABSENT",
+            "status": "VALIDATED"
+          },
+          {
+            "contrast_id": "CONTRAST-C21-DX-G04-GERD",
+            "contrast_concept": "Gastroesophageal reflux disease",
+            "tn_provenance": {
+              "study_unit_id": "SU-G-04",
+              "chapter_id": "G",
+              "source_node_ids": [
+                "G.S02.T01"
+              ],
+              "tn_pages": "G6-G9",
+              "pdf_pages": [
+                440,
+                443
+              ]
+            },
+            "why_plausible": "Retrosternal symptoms began after a heavy meal, which can tempt attribution to reflux.",
+            "shared_features": [
+              "retrosternal discomfort",
+              "postprandial temporal association"
+            ],
+            "partial_mistaken_reasoning": "Anchor on the meal and prematurely close on a benign gastrointestinal explanation.",
+            "decisive_discriminant": "There is no heartburn or regurgitation, and the regional ischemic ECG change with dynamic troponin rise requires an ACS diagnosis rather than reflux attribution.",
+            "authoritative_evidence_refs": [
+              "CLM-GERD-01",
+              "CLM-ACS-DIAGNOSIS-01"
+            ],
+            "ambiguity_verdict": "KEY_REMAINS_SINGLE_BEST",
+            "target_drift": "ABSENT",
+            "status": "VALIDATED"
+          }
+        ],
+        "verdict": "PASS"
+      },
+      "distractor_construction": {
+        "constructor_id": "micro-retry-2-distractor-constructor-diagnosis-differential",
+        "matrix_sha256": "9b03968323a3a0579df172cb2a3984e2c8fd5bd42e06ee30887443bb26758823",
+        "distractors": [
+          {
+            "contrast_id": "CONTRAST-C21-DX-R19-PE",
+            "competing_concept": "Pulmonary embolism",
+            "option_text": "Pulmonary embolism",
+            "why_temporarily_plausible": "Acute chest discomfort and autonomic symptoms can occur in PE, so a learner may overgeneralize the dangerous-chest-pain differential.",
+            "shared_features": [
+              "acute chest discomfort",
+              "potentially serious presentation"
+            ],
+            "disqualifying_discriminant": "The stem has no dyspnea, pleuritic pain, hypoxemia, hemoptysis, or VTE risk and instead has a regional ischemic ECG change with a dynamic troponin rise.",
+            "evidence_refs": [
+              "CLM-PE-DIAGNOSIS-01",
+              "CLM-ACS-DIAGNOSIS-01"
+            ]
+          },
+          {
+            "contrast_id": "CONTRAST-C21-DX-VS03-AAS",
+            "competing_concept": "Acute aortic dissection",
+            "option_text": "Acute aortic dissection",
+            "why_temporarily_plausible": "Severe chest pain and hypertension can trigger concern for an acute aortic syndrome.",
+            "shared_features": [
+              "acute chest discomfort",
+              "hypertension"
+            ],
+            "disqualifying_discriminant": "The pain was not abrupt or maximal at onset and there is no pulse, blood-pressure, neurologic, or malperfusion finding; the ECG and troponin pattern is territorial and ischemic.",
+            "evidence_refs": [
+              "CLM-AORTIC-DISSECTION-01",
+              "CLM-ACS-DIAGNOSIS-01"
+            ]
+          },
+          {
+            "contrast_id": "CONTRAST-C21-DX-C33-PERICARDITIS",
+            "competing_concept": "Acute pericarditis",
+            "option_text": "Acute pericarditis",
+            "why_temporarily_plausible": "Both ACS and pericarditis can cause acute chest pain with ST-segment abnormalities.",
+            "shared_features": [
+              "acute chest pain",
+              "ECG ST-segment abnormality"
+            ],
+            "disqualifying_discriminant": "The pressure is neither pleuritic nor positional and the ECG change is regional ST depression rather than widespread ST elevation or PR depression.",
+            "evidence_refs": [
+              "CLM-PERICARDITIS-01",
+              "CLM-ACS-DIAGNOSIS-01"
+            ]
+          },
+          {
+            "contrast_id": "CONTRAST-C21-DX-G04-GERD",
+            "competing_concept": "Gastroesophageal reflux disease",
+            "option_text": "Gastroesophageal reflux disease",
+            "why_temporarily_plausible": "Retrosternal symptoms began after a heavy meal, which can tempt attribution to reflux.",
+            "shared_features": [
+              "retrosternal discomfort",
+              "postprandial temporal association"
+            ],
+            "disqualifying_discriminant": "There is no heartburn or regurgitation, and the regional ischemic ECG change with dynamic troponin rise requires an ACS diagnosis rather than reflux attribution.",
+            "evidence_refs": [
+              "CLM-GERD-01",
+              "CLM-ACS-DIAGNOSIS-01"
+            ]
+          }
+        ]
+      },
+      "distractor_adversarial_review": {
+        "reviewer_id": "fresh-micro-retry-2-stage-distractor-reviewer-diagnosis-differential",
+        "construction_sha256": "389d6368ec84e1c391af15967e7b67b90101df5aa64f4d1b2b7bdc4876d6a3e9",
+        "rows": [
+          {
+            "contrast_id": "CONTRAST-C21-DX-R19-PE",
+            "assessments": {
+              "plausibility": "PASS",
+              "same_option_dimension": "PASS",
+              "mcc_level_relevance": "PASS",
+              "medical_professional_confusability": "PASS",
+              "no_key_ambiguity": "PASS",
+              "evidence_grounded_discriminator": "PASS"
+            },
+            "verdict": "PASS",
+            "explanation": "Pulmonary embolism is a clinically relevant dangerous chest-pain alternative, but the absent PE features and positive regional ischemic ECG plus dynamic troponin pattern disqualify it."
+          },
+          {
+            "contrast_id": "CONTRAST-C21-DX-VS03-AAS",
+            "assessments": {
+              "plausibility": "PASS",
+              "same_option_dimension": "PASS",
+              "mcc_level_relevance": "PASS",
+              "medical_professional_confusability": "PASS",
+              "no_key_ambiguity": "PASS",
+              "evidence_grounded_discriminator": "PASS"
+            },
+            "verdict": "PASS",
+            "explanation": "Acute aortic dissection is a clinically relevant dangerous chest-pain alternative in a hypertensive patient, but the absent high-risk aortic features and positive ischemic findings disqualify it."
+          },
+          {
+            "contrast_id": "CONTRAST-C21-DX-C33-PERICARDITIS",
+            "assessments": {
+              "plausibility": "PASS",
+              "same_option_dimension": "PASS",
+              "mcc_level_relevance": "PASS",
+              "medical_professional_confusability": "PASS",
+              "no_key_ambiguity": "PASS",
+              "evidence_grounded_discriminator": "PASS"
+            },
+            "verdict": "PASS",
+            "explanation": "Acute pericarditis is a relevant cardiac chest-pain alternative with possible ECG changes, but the nonpleuritic, nonpositional pain and territorial depression rather than diffuse ST/PR changes disqualify it."
+          },
+          {
+            "contrast_id": "CONTRAST-C21-DX-G04-GERD",
+            "assessments": {
+              "plausibility": "PASS",
+              "same_option_dimension": "PASS",
+              "mcc_level_relevance": "PASS",
+              "medical_professional_confusability": "PASS",
+              "no_key_ambiguity": "PASS",
+              "evidence_grounded_discriminator": "PASS"
+            },
+            "verdict": "PASS",
+            "explanation": "GERD is temporarily plausible from postprandial timing, but absent reflux symptoms and the objective ischemic ECG and biomarker findings disqualify it."
+          }
+        ],
+        "verdict": "PASS",
+        "review_status": "FRESH_NON_AUTHOR_STAGE_REVIEW_COMPLETE"
+      },
+      "assembly": {
+        "assembler_id": "micro-retry-2-assembler-diagnosis-differential",
+        "approved_component_sha256": {
+          "open_ended": "fc2d2a5c375b6557cf14bad18f960a185990b67779463740cc69dd120fa51b16",
+          "option_realization": "db5ff6f3a390a02cf374c17ae9442b31f5fefc218c7f30bfbf560b6bef6bf356",
+          "parallel_option_set_review": "5f6ba4afd51dc8e12f415ddbb2dd1ca85a52a5dce0b97913b06e2bf7ffd3dd10"
+        },
+        "stem": "A 58-year-old man with hypertension and dyslipidemia develops 45 minutes of central pressure-like chest pain, nausea, and diaphoresis while carrying boxes shortly after a heavy meal. The pain is not pleuritic or positional. He has no dyspnea, hemoptysis, regurgitation, abrupt maximal-onset pain, neurologic symptoms, or pulse asymmetry. ECG shows new 1-mm horizontal ST depression in V4-V6. High-sensitivity troponin is 18 ng/L (assay 99th percentile 15 ng/L) and rises to 54 ng/L one hour later.",
+        "lead_in": "What is the most likely diagnosis?",
+        "options": [
+          {
+            "key": "A",
+            "text": "Pulmonary embolism",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-DX-R19-PE"
+          },
+          {
+            "key": "B",
+            "text": "Acute aortic dissection",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-DX-VS03-AAS"
+          },
+          {
+            "key": "C",
+            "text": "Non-ST-segment elevation myocardial infarction",
+            "role": "KEY"
+          },
+          {
+            "key": "D",
+            "text": "Acute pericarditis",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-DX-C33-PERICARDITIS"
+          },
+          {
+            "key": "E",
+            "text": "Gastroesophageal reflux disease",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-DX-G04-GERD"
+          }
+        ],
+        "correct_answer": "C",
+        "rewrite_status": "SURFACE_REALIZATION_ONLY",
+        "parallel_option_set_review_sha256": "5f6ba4afd51dc8e12f415ddbb2dd1ca85a52a5dce0b97913b06e2bf7ffd3dd10"
+      },
+      "acceptance_review": {
+        "reviewer_id": "fresh-micro-retry-2-stage-acceptance-reviewer-diagnosis-differential",
+        "assembly_sha256": "af69521038dfbc50a469ab56265212d95414bd0bbf91690bc591cc98b8b0561b",
+        "checks": {
+          "cover_the_options": "PASS",
+          "option_only_cues": "PASS",
+          "clang_keyword": "PASS",
+          "option_homogeneity": "PASS",
+          "answer_length_specificity": "PASS",
+          "plan_fidelity": "PASS",
+          "anchor_fidelity": "PASS",
+          "context_necessity": "PASS"
+        },
+        "verdict": "PASS",
+        "explanation": "Fresh non-author semantic review confirms anchor and plan fidelity, medical correctness, cover-the-options performance, context necessity, natural option parallelism, absence of exploitable cues, and complete evidence-traceable rationales.",
+        "provisional_only": false,
+        "stage_acceptance_authority": true,
+        "final_acceptance_authority": false,
+        "review_status": "FRESH_NON_AUTHOR_STAGE_REVIEW_COMPLETE"
+      },
+      "rationales": {
+        "acceptance_sha256": "58c5eba39451e3479345e67451b400369a90fc7fdfe9af8605678e7d90392f03",
+        "correct": {
+          "why_best": "Use the absent decisive features of PE, aortic dissection, pericarditis, and GERD to keep NSTEMI single best.",
+          "decisive_evidence": [
+            "Pressure-like ischemic symptoms with diaphoresis.",
+            "New regional ST depression in contiguous lateral leads.",
+            "A dynamic hs-cTn rise with values above the assay 99th percentile."
+          ],
+          "anchor_tn_topic_pages": "Acute Coronary Syndromes; TN C30-C39; PDF 120-129",
+          "evidence_refs": [
+            "CLM-ACS-DIAGNOSIS-01"
+          ],
+          "decisive_discriminants": [
+            "Pressure-like ischemic symptoms with diaphoresis.",
+            "New regional ST depression in contiguous lateral leads.",
+            "A dynamic hs-cTn rise with values above the assay 99th percentile."
+          ]
+        },
+        "distractors": [
+          {
+            "contrast_id": "CONTRAST-C21-DX-R19-PE",
+            "why_plausible": "Acute chest discomfort and autonomic symptoms can occur in PE, so a learner may overgeneralize the dangerous-chest-pain differential.",
+            "exact_discriminator": "The stem has no dyspnea, pleuritic pain, hypoxemia, hemoptysis, or VTE risk and instead has a regional ischemic ECG change with a dynamic troponin rise.",
+            "evidence_refs": [
+              "CLM-PE-DIAGNOSIS-01",
+              "CLM-ACS-DIAGNOSIS-01"
+            ]
+          },
+          {
+            "contrast_id": "CONTRAST-C21-DX-VS03-AAS",
+            "why_plausible": "Severe chest pain and hypertension can trigger concern for an acute aortic syndrome.",
+            "exact_discriminator": "The pain was not abrupt or maximal at onset and there is no pulse, blood-pressure, neurologic, or malperfusion finding; the ECG and troponin pattern is territorial and ischemic.",
+            "evidence_refs": [
+              "CLM-AORTIC-DISSECTION-01",
+              "CLM-ACS-DIAGNOSIS-01"
+            ]
+          },
+          {
+            "contrast_id": "CONTRAST-C21-DX-C33-PERICARDITIS",
+            "why_plausible": "Both ACS and pericarditis can cause acute chest pain with ST-segment abnormalities.",
+            "exact_discriminator": "The pressure is neither pleuritic nor positional and the ECG change is regional ST depression rather than widespread ST elevation or PR depression.",
+            "evidence_refs": [
+              "CLM-PERICARDITIS-01",
+              "CLM-ACS-DIAGNOSIS-01"
+            ]
+          },
+          {
+            "contrast_id": "CONTRAST-C21-DX-G04-GERD",
+            "why_plausible": "Retrosternal symptoms began after a heavy meal, which can tempt attribution to reflux.",
+            "exact_discriminator": "There is no heartburn or regurgitation, and the regional ischemic ECG change with dynamic troponin rise requires an ACS diagnosis rather than reflux attribution.",
+            "evidence_refs": [
+              "CLM-GERD-01",
+              "CLM-ACS-DIAGNOSIS-01"
+            ]
+          }
+        ],
+        "unsupported_new_teaching_facts": false
+      },
+      "semantic_fingerprint": "3bcf65e70a95129e42265fb7b89b2d1bea60e45b1cc87e6c5d8dbcfae6ea8da5",
+      "option_realization": {
+        "realizer_id": "micro-retry-2-option-realizer-diagnosis-differential",
+        "adversarial_review_sha256": "3f4cba5a8a9788cf1a9ed1db7f733126447761e069ecf34922fd062f1cd04c4d",
+        "policy": "SEMANTIC_TO_CONCISE_NATURAL_PARALLEL_SURFACE",
+        "options": [
+          {
+            "position": "A",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-DX-R19-PE",
+            "semantic_option_text": "Pulmonary embolism",
+            "surface_text": "Pulmonary embolism",
+            "option_dimension": "DIAGNOSIS",
+            "grammatical_form": "NOUN_PHRASE",
+            "meaning_preservation": "PASS",
+            "evidence_refs": [
+              "CLM-PE-DIAGNOSIS-01",
+              "CLM-ACS-DIAGNOSIS-01"
+            ],
+            "decision_granularity": "DIAGNOSIS",
+            "action_or_concept_head": "pulmonary embolism",
+            "medically_required_modifiers": [],
+            "independent_action_components": [],
+            "specificity_level": 2,
+            "semantic_meaning_fingerprint": "38c0342fa58e6409a00f0abbd190643fc27fd058582a6edf52914763be04cf5c"
+          },
+          {
+            "position": "B",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-DX-VS03-AAS",
+            "semantic_option_text": "Acute aortic dissection",
+            "surface_text": "Acute aortic dissection",
+            "option_dimension": "DIAGNOSIS",
+            "grammatical_form": "NOUN_PHRASE",
+            "meaning_preservation": "PASS",
+            "evidence_refs": [
+              "CLM-AORTIC-DISSECTION-01",
+              "CLM-ACS-DIAGNOSIS-01"
+            ],
+            "decision_granularity": "DIAGNOSIS",
+            "action_or_concept_head": "aortic dissection",
+            "medically_required_modifiers": [
+              "acute"
+            ],
+            "independent_action_components": [],
+            "specificity_level": 2,
+            "semantic_meaning_fingerprint": "4718207b68eb4cf5ea9d0d5adb0ae2f11878bf666caecd5ce9f0915bde2045e4"
+          },
+          {
+            "position": "C",
+            "role": "KEY",
+            "semantic_option_text": "Non-ST-segment elevation myocardial infarction",
+            "surface_text": "Non-ST-segment elevation myocardial infarction",
+            "option_dimension": "DIAGNOSIS",
+            "grammatical_form": "NOUN_PHRASE",
+            "meaning_preservation": "PASS",
+            "evidence_refs": [
+              "CLM-ACS-DIAGNOSIS-01"
+            ],
+            "decision_granularity": "DIAGNOSIS",
+            "action_or_concept_head": "myocardial infarction",
+            "medically_required_modifiers": [
+              "non-ST-segment elevation"
+            ],
+            "independent_action_components": [],
+            "specificity_level": 2,
+            "semantic_meaning_fingerprint": "a81666277b9afc573e5c52c7f9bb1c0e45bbd16449921b06c344a9535abc7305"
+          },
+          {
+            "position": "D",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-DX-C33-PERICARDITIS",
+            "semantic_option_text": "Acute pericarditis",
+            "surface_text": "Acute pericarditis",
+            "option_dimension": "DIAGNOSIS",
+            "grammatical_form": "NOUN_PHRASE",
+            "meaning_preservation": "PASS",
+            "evidence_refs": [
+              "CLM-PERICARDITIS-01",
+              "CLM-ACS-DIAGNOSIS-01"
+            ],
+            "decision_granularity": "DIAGNOSIS",
+            "action_or_concept_head": "pericarditis",
+            "medically_required_modifiers": [
+              "acute"
+            ],
+            "independent_action_components": [],
+            "specificity_level": 2,
+            "semantic_meaning_fingerprint": "8ac3c2b90f25664408e378dbe389cf79ca8b8e426328afb502a58be9a6aeb243"
+          },
+          {
+            "position": "E",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-DX-G04-GERD",
+            "semantic_option_text": "Gastroesophageal reflux disease",
+            "surface_text": "Gastroesophageal reflux disease",
+            "option_dimension": "DIAGNOSIS",
+            "grammatical_form": "NOUN_PHRASE",
+            "meaning_preservation": "PASS",
+            "evidence_refs": [
+              "CLM-GERD-01",
+              "CLM-ACS-DIAGNOSIS-01"
+            ],
+            "decision_granularity": "DIAGNOSIS",
+            "action_or_concept_head": "gastroesophageal reflux disease",
+            "medically_required_modifiers": [],
+            "independent_action_components": [],
+            "specificity_level": 2,
+            "semantic_meaning_fingerprint": "36655eaac324a6bcde72f8b443983de94381bac01e610be99cb4d9b89a6e1ae9"
+          }
+        ]
+      },
+      "parallel_option_set_review": {
+        "reviewer_id": "fresh-micro-retry-2-stage-parallel-reviewer-diagnosis-differential",
+        "realization_sha256": "db5ff6f3a390a02cf374c17ae9442b31f5fefc218c7f30bfbf560b6bef6bf356",
+        "deterministic_findings": [],
+        "semantic_checks": {
+          "clang_testwise_detectability": "PASS",
+          "convergence": "PASS",
+          "key_only_specificity": "PASS",
+          "meaning_preservation": "PASS",
+          "natural_parallelism": "PASS",
+          "option_category_match": "PASS",
+          "semantic_odd_one_out": "PASS"
+        },
+        "option_only_key_identifiable": false,
+        "verdict": "PASS",
+        "decision_granularity_findings": [],
+        "review_status": "FRESH_NON_AUTHOR_STAGE_REVIEW_COMPLETE",
+        "explanation": "All five options are diagnosis labels at the same specificity level. The conventional NSTEMI name is necessarily longer but contains no dispensable qualifier, cannot be selected from option form alone, and is not a union of distractor concepts."
+      },
+      "verification": null
+    },
+    {
+      "schema_version": "1.2",
+      "item_id": "CHREV-C-ACS-002-MR2",
+      "learning_mode": "CHAPTER_REVIEW",
+      "item_type": "INVESTIGATION_INTERPRETATION",
+      "author_id": "micro-retry-2-author-investigation-interpretation",
+      "stage_sequence": [
+        "TORONTO_NOTES_ANCHOR",
+        "MCC_OBJECTIVE_PHYSICIAN_ACTIVITY",
+        "PRIMARY_LEARNER_DECISION",
+        "ANCHOR_FIDELITY",
+        "OPEN_ENDED_STEM_KEY",
+        "BLIND_COVER_OPTIONS_SOLVER",
+        "GLOBAL_CONTRAST_RETRIEVAL",
+        "CONTRASTIVE_EVIDENCE_MATRIX",
+        "SEPARATE_DISTRACTOR_CONSTRUCTION",
+        "DISTRACTOR_ADVERSARIAL_RANKING",
+        "OPTION_REALIZATION",
+        "PARALLEL_OPTION_SET_REVIEW",
+        "DECISION_GRANULARITY_PARITY",
+        "MCQ_ASSEMBLY",
+        "PLAN_FIDELITY_SHORTCUT_CUE_CHECK",
+        "RATIONALES",
+        "FRESH_INDEPENDENT_VERIFICATION"
+      ],
+      "anchor": {
+        "anchor_chapter_id": "C",
+        "anchor_chapter_title": "Cardiology and Cardiac Surgery",
+        "anchor_topic": "Acute Coronary Syndromes",
+        "anchor_allocation_address_id": "SU-C-21",
+        "anchor_study_unit_id": "SU-C-21",
+        "anchor_source_node_ids": [
+          "C.S06.T02",
+          "C.S06.T03"
+        ],
+        "anchor_tn_pages": "C30-C39",
+        "anchor_pdf_pages": [
+          120,
+          129
+        ],
+        "primary_mcc_objective": {
+          "mcc_id": "14",
+          "title": "Chest pain"
+        },
+        "primary_physician_activity": "Assessment/Diagnosis",
+        "primary_competency": {
+          "depth": "CORE_ACTION",
+          "preferred_item_forms": [
+            "COMPLICATION_RECOGNITION",
+            "EMERGENCY_STABILIZATION",
+            "INITIAL_MANAGEMENT",
+            "INTERPRET_RESULTS",
+            "MOST_LIKELY_DIAGNOSIS"
+          ]
+        },
+        "primary_learner_decision": "Choose serial ECGs and assay-specific repeat high-sensitivity troponin when early initial ACS tests are nondiagnostic."
+      },
+      "anchor_fidelity_preflight": {
+        "reviewer_id": "fresh-micro-retry-2-stage-anchor-reviewer-investigation-interpretation",
+        "anchor_sha256": "179e6e39328e4eb63895d30ffd7ff805d243a7c6c1c28c1ef01c04bc7156da59",
+        "criteria": {
+          "decision_ownership": "PASS",
+          "key_ownership": "PASS",
+          "positive_anchor_evidence": "PASS",
+          "immediate_review_fit": "PASS",
+          "counterfactual_necessity": "PASS",
+          "contrast_role_integrity": "PASS",
+          "allocation_integrity": "PASS"
+        },
+        "verdict": "PASS",
+        "explanation": "The ACS allocation owns interpretation of early nondiagnostic ECG and troponin findings under MCC 14; serial ECG and assay-specific hs-cTn testing directly instantiates the SU-C-21 investigation competency.",
+        "review_status": "FRESH_NON_AUTHOR_STAGE_REVIEW_COMPLETE"
+      },
+      "open_ended_stem_key": {
+        "anchor_fidelity_sha256": "36ad030bdef206621b063a1a474c4df8fd51ab3e8b29b50ed2620f234cbaef4a",
+        "context": "A 62-year-old woman with diabetes develops 30 minutes of pressure-like chest pain radiating to her left arm. It began 45 minutes before arrival and has now resolved. She is hemodynamically stable. The initial ECG has no ischemic changes, and the first high-sensitivity troponin is below the assay 99th percentile. She has no dyspnea or abrupt maximal-onset chest or back pain. Clinical suspicion for acute coronary syndrome remains moderate.",
+        "stem": "A 62-year-old woman with diabetes develops 30 minutes of pressure-like chest pain radiating to her left arm. It began 45 minutes before arrival and has now resolved. She is hemodynamically stable. The initial ECG has no ischemic changes, and the first high-sensitivity troponin is below the assay 99th percentile. She has no dyspnea or abrupt maximal-onset chest or back pain. Clinical suspicion for acute coronary syndrome remains moderate.",
+        "lead_in": "What is the most appropriate next diagnostic approach?",
+        "intended_answer": "Repeat ECG and serial hs-cTn using a validated accelerated pathway",
+        "reasoning_chain": [
+          "Recognize that the first ECG and hs-cTn were obtained early and do not exclude ACS.",
+          "Maintain the stated moderate ACS suspicion despite nondiagnostic initial tests.",
+          "Repeat ECG and serial hs-cTn using the validated accelerated pathway rather than redirecting to an unsupported contrast diagnosis."
+        ],
+        "context_necessity": {
+          "context_type": "PATIENT_PRESENTATION",
+          "answerable_after_context_ablation": false,
+          "explanation": "Removing the early timing, moderate residual ACS suspicion, or nondiagnostic initial results eliminates the need for serial testing."
+        },
+        "key_evidence_refs": [
+          "CLM-ACS-INVESTIGATION-01"
+        ]
+      },
+      "blind_solver": {
+        "solver_id": "fresh-independent-micro-retry-2-blind-solver",
+        "open_ended_sha256": "469e7a0f5981f853dac132a0d020aeb7276bdcb3c0efd7376c91700f950c0b0c",
+        "hidden_context": [
+          "intended_answer",
+          "contrast_candidates",
+          "answer_options",
+          "author_self_evaluation"
+        ],
+        "independent_answer": "Repeat ECG and serial hs-cTn using a validated accelerated pathway",
+        "independent_reasoning": "A single normal ECG and an early troponin below the 99th percentile do not exclude acute coronary syndrome when symptoms began recently and clinical suspicion remains moderate; serial biomarker and ECG assessment is required.",
+        "verdict": "PASS",
+        "verbatim_reported_answer": "Obtain serial high-sensitivity troponin testing with repeat ECG assessment using a validated accelerated ACS diagnostic pathway",
+        "source_report": "reports/qgen_med_007_chapter_review_micro_3_micro_retry_2_blind_solver.json",
+        "source_report_sha256": "8ab1450b23b31ae75481d01698ec359c5c038c87de443588e647468b4e6c4728"
+      },
+      "global_contrast_retrieval": {
+        "blind_solver_sha256": "86624fbef314b6fd981e693c7837c69c82741be77a7e3344e6de2c6761f8ab66",
+        "strategy": "HYBRID_CACHE_FIRST_SEMANTIC_SECOND_EVIDENCE_THIRD",
+        "complete_tn_corpus": true,
+        "learner_progress_used": false,
+        "lexical_similarity_only": false,
+        "selected_contrast_ids": [
+          "CONTRAST-C21-INV-R19-PE",
+          "CONTRAST-C21-INV-VS03-AORTIC-CTA",
+          "CONTRAST-C21-INV-C33-PERICARDITIS",
+          "CONTRAST-C21-INV-G04-GERD"
+        ],
+        "cache_hits_first": [
+          "CONTRAST-C21-INV-R19-PE",
+          "CONTRAST-C21-INV-VS03-AORTIC-CTA",
+          "CONTRAST-C21-INV-C33-PERICARDITIS",
+          "CONTRAST-C21-INV-G04-GERD"
+        ],
+        "semantic_ranker_id": "micro-retry-2-contrast-ranker-investigation-interpretation",
+        "candidate_assessment": "Candidates were ranked by same decision context, overlapping presentation, plausible graduate error, neighboring choice, and decisive discriminant; lexical similarity was not sufficient."
+      },
+      "contrastive_evidence_matrix": {
+        "retrieval_sha256": "982f304b949fe8e20fa941b84c89093e9c8476fac9a23ccee0c933d35029a1a9",
+        "key": {
+          "concept": "Repeat the 12-lead ECG during the emergency assessment and repeat high-sensitivity troponin in 1 to 2 hours using the local validated pathway",
+          "anchor_evidence_refs": [
+            "CLM-ACS-INVESTIGATION-01"
+          ],
+          "decisive_discriminants": [
+            "The first tests were obtained early after symptom onset.",
+            "Clinical suspicion for ACS remains moderate.",
+            "No probability-defining features redirect the work-up to PE, aortic disease, pericarditis, or GERD."
+          ],
+          "tn_alignment": "CURRENT"
+        },
+        "competitors": [
+          {
+            "contrast_id": "CONTRAST-C21-INV-R19-PE",
+            "contrast_concept": "Probability-directed pulmonary embolism testing",
+            "tn_provenance": {
+              "study_unit_id": "SU-R-19",
+              "chapter_id": "R",
+              "source_node_ids": [
+                "R.S05"
+              ],
+              "tn_pages": "R20-R22",
+              "pdf_pages": [
+                1474,
+                1476
+              ]
+            },
+            "why_plausible": "An initially nondiagnostic ECG in a chest-pain patient can prompt a broad search for another dangerous cause.",
+            "shared_features": [
+              "acute chest symptoms",
+              "initially nondiagnostic ECG"
+            ],
+            "partial_mistaken_reasoning": "Substitute a generic dangerous-chest-pain work-up for a probability-directed PE pathway.",
+            "decisive_discriminant": "There are no PE symptoms or risk factors; moderate ACS suspicion after early nondiagnostic tests calls for serial ECG and assay-specific serial hs-cTn.",
+            "authoritative_evidence_refs": [
+              "CLM-PE-DIAGNOSIS-01",
+              "CLM-ACS-INVESTIGATION-01"
+            ],
+            "ambiguity_verdict": "KEY_REMAINS_SINGLE_BEST",
+            "target_drift": "ABSENT",
+            "status": "VALIDATED"
+          },
+          {
+            "contrast_id": "CONTRAST-C21-INV-VS03-AORTIC-CTA",
+            "contrast_concept": "CT angiography for acute aortic syndrome",
+            "tn_provenance": {
+              "study_unit_id": "SU-VS-03",
+              "chapter_id": "VS",
+              "source_node_ids": [
+                "VS.S02.T01"
+              ],
+              "tn_pages": "VS6-VS8",
+              "pdf_pages": [
+                1586,
+                1588
+              ]
+            },
+            "why_plausible": "Aortic CTA is time-critical when chest pain has high-risk aortic features.",
+            "shared_features": [
+              "acute chest symptoms",
+              "potential need for time-sensitive imaging"
+            ],
+            "partial_mistaken_reasoning": "Equate any important chest pain with aortic catastrophe despite absent aortic discriminants.",
+            "decisive_discriminant": "No abrupt maximal-onset pain, pulse/BP difference, neurologic finding, or malperfusion feature is present; serial ACS testing is the scenario-bound next step.",
+            "authoritative_evidence_refs": [
+              "CLM-AORTIC-DISSECTION-01",
+              "CLM-ACS-INVESTIGATION-01"
+            ],
+            "ambiguity_verdict": "KEY_REMAINS_SINGLE_BEST",
+            "target_drift": "ABSENT",
+            "status": "VALIDATED"
+          },
+          {
+            "contrast_id": "CONTRAST-C21-INV-C33-PERICARDITIS",
+            "contrast_concept": "Pericarditis-directed inflammatory and effusion work-up",
+            "tn_provenance": {
+              "study_unit_id": "SU-C-33",
+              "chapter_id": "C",
+              "source_node_ids": [
+                "C.S12.T01"
+              ],
+              "tn_pages": "C61-C67",
+              "pdf_pages": [
+                151,
+                157
+              ]
+            },
+            "why_plausible": "ECG and echocardiography can be relevant in both ACS and pericardial disease.",
+            "shared_features": [
+              "chest pain",
+              "cardiac testing remains relevant"
+            ],
+            "partial_mistaken_reasoning": "Redirect to pericarditis testing after any nondiagnostic initial ACS result.",
+            "decisive_discriminant": "The case lacks pleuritic/positional pain, widespread ST/PR changes, rub, or effusion evidence; it remains an early possible ACS requiring serial ECG and hs-cTn.",
+            "authoritative_evidence_refs": [
+              "CLM-PERICARDITIS-01",
+              "CLM-ACS-INVESTIGATION-01"
+            ],
+            "ambiguity_verdict": "KEY_REMAINS_SINGLE_BEST",
+            "target_drift": "ABSENT",
+            "status": "VALIDATED"
+          },
+          {
+            "contrast_id": "CONTRAST-C21-INV-G04-GERD",
+            "contrast_concept": "Objective GERD testing",
+            "tn_provenance": {
+              "study_unit_id": "SU-G-04",
+              "chapter_id": "G",
+              "source_node_ids": [
+                "G.S02.T01"
+              ],
+              "tn_pages": "G6-G9",
+              "pdf_pages": [
+                440,
+                443
+              ]
+            },
+            "why_plausible": "Normal early cardiac tests may tempt premature closure on a gastrointestinal cause.",
+            "shared_features": [
+              "retrosternal symptoms",
+              "normal first cardiac tests"
+            ],
+            "partial_mistaken_reasoning": "Treat one early ECG and troponin as an adequate cardiac evaluation.",
+            "decisive_discriminant": "Objective reflux testing for unexplained chest pain follows adequate cardiac evaluation; a single early nondiagnostic ECG and hs-cTn do not complete that evaluation.",
+            "authoritative_evidence_refs": [
+              "CLM-GERD-01",
+              "CLM-ACS-INVESTIGATION-01"
+            ],
+            "ambiguity_verdict": "KEY_REMAINS_SINGLE_BEST",
+            "target_drift": "ABSENT",
+            "status": "VALIDATED"
+          }
+        ],
+        "verdict": "PASS"
+      },
+      "distractor_construction": {
+        "constructor_id": "micro-retry-2-distractor-constructor-investigation-interpretation",
+        "matrix_sha256": "1bc5273644f78b3cc40fffbd1da85dcca7bd376c56e4c440fe805db376286157",
+        "distractors": [
+          {
+            "contrast_id": "CONTRAST-C21-INV-R19-PE",
+            "competing_concept": "Probability-directed pulmonary embolism testing",
+            "option_text": "Order a D-dimer and proceed to CTPA if it is positive",
+            "why_temporarily_plausible": "An initially nondiagnostic ECG in a chest-pain patient can prompt a broad search for another dangerous cause.",
+            "shared_features": [
+              "acute chest symptoms",
+              "initially nondiagnostic ECG"
+            ],
+            "disqualifying_discriminant": "There are no PE symptoms or risk factors; moderate ACS suspicion after early nondiagnostic tests calls for serial ECG and assay-specific serial hs-cTn.",
+            "evidence_refs": [
+              "CLM-PE-DIAGNOSIS-01",
+              "CLM-ACS-INVESTIGATION-01"
+            ]
+          },
+          {
+            "contrast_id": "CONTRAST-C21-INV-VS03-AORTIC-CTA",
+            "competing_concept": "CT angiography for acute aortic syndrome",
+            "option_text": "Obtain immediate CT angiography of the aorta",
+            "why_temporarily_plausible": "Aortic CTA is time-critical when chest pain has high-risk aortic features.",
+            "shared_features": [
+              "acute chest symptoms",
+              "potential need for time-sensitive imaging"
+            ],
+            "disqualifying_discriminant": "No abrupt maximal-onset pain, pulse/BP difference, neurologic finding, or malperfusion feature is present; serial ACS testing is the scenario-bound next step.",
+            "evidence_refs": [
+              "CLM-AORTIC-DISSECTION-01",
+              "CLM-ACS-INVESTIGATION-01"
+            ]
+          },
+          {
+            "contrast_id": "CONTRAST-C21-INV-C33-PERICARDITIS",
+            "competing_concept": "Pericarditis-directed inflammatory and effusion work-up",
+            "option_text": "Order inflammatory markers and echocardiography specifically for pericarditis",
+            "why_temporarily_plausible": "ECG and echocardiography can be relevant in both ACS and pericardial disease.",
+            "shared_features": [
+              "chest pain",
+              "cardiac testing remains relevant"
+            ],
+            "disqualifying_discriminant": "The case lacks pleuritic/positional pain, widespread ST/PR changes, rub, or effusion evidence; it remains an early possible ACS requiring serial ECG and hs-cTn.",
+            "evidence_refs": [
+              "CLM-PERICARDITIS-01",
+              "CLM-ACS-INVESTIGATION-01"
+            ]
+          },
+          {
+            "contrast_id": "CONTRAST-C21-INV-G04-GERD",
+            "competing_concept": "Objective GERD testing",
+            "option_text": "Arrange immediate upper endoscopy or reflux monitoring",
+            "why_temporarily_plausible": "Normal early cardiac tests may tempt premature closure on a gastrointestinal cause.",
+            "shared_features": [
+              "retrosternal symptoms",
+              "normal first cardiac tests"
+            ],
+            "disqualifying_discriminant": "Objective reflux testing for unexplained chest pain follows adequate cardiac evaluation; a single early nondiagnostic ECG and hs-cTn do not complete that evaluation.",
+            "evidence_refs": [
+              "CLM-GERD-01",
+              "CLM-ACS-INVESTIGATION-01"
+            ]
+          }
+        ]
+      },
+      "distractor_adversarial_review": {
+        "reviewer_id": "fresh-micro-retry-2-stage-distractor-reviewer-investigation-interpretation",
+        "construction_sha256": "a0b5cf2a790451ffa4f3469131a82019c936a75e57affa3d71ec60978948afa8",
+        "rows": [
+          {
+            "contrast_id": "CONTRAST-C21-INV-R19-PE",
+            "assessments": {
+              "plausibility": "PASS",
+              "same_option_dimension": "PASS",
+              "mcc_level_relevance": "PASS",
+              "medical_professional_confusability": "PASS",
+              "no_key_ambiguity": "PASS",
+              "evidence_grounded_discriminator": "PASS"
+            },
+            "verdict": "PASS",
+            "explanation": "A D-dimer-first PE pathway is a plausible dangerous-chest-pain alternative after an initially normal ECG, but absent PE features and persistent moderate ACS suspicion make serial ACS testing the supported next approach."
+          },
+          {
+            "contrast_id": "CONTRAST-C21-INV-VS03-AORTIC-CTA",
+            "assessments": {
+              "plausibility": "PASS",
+              "same_option_dimension": "PASS",
+              "mcc_level_relevance": "PASS",
+              "medical_professional_confusability": "PASS",
+              "no_key_ambiguity": "PASS",
+              "evidence_grounded_discriminator": "PASS"
+            },
+            "verdict": "PASS",
+            "explanation": "Urgent aortic CTA is appropriate for suspected acute aortic syndrome, but the stem lacks high-risk aortic features and instead preserves moderate ACS suspicion after early nondiagnostic tests."
+          },
+          {
+            "contrast_id": "CONTRAST-C21-INV-C33-PERICARDITIS",
+            "assessments": {
+              "plausibility": "PASS",
+              "same_option_dimension": "PASS",
+              "mcc_level_relevance": "PASS",
+              "medical_professional_confusability": "PASS",
+              "no_key_ambiguity": "PASS",
+              "evidence_grounded_discriminator": "PASS"
+            },
+            "verdict": "PASS",
+            "explanation": "Inflammatory markers and echocardiography form a coherent pericarditis pathway, but the stem lacks pleuritic or positional symptoms and diffuse ECG features; serial ACS testing remains indicated."
+          },
+          {
+            "contrast_id": "CONTRAST-C21-INV-G04-GERD",
+            "assessments": {
+              "plausibility": "PASS",
+              "same_option_dimension": "PASS",
+              "mcc_level_relevance": "PASS",
+              "medical_professional_confusability": "PASS",
+              "no_key_ambiguity": "PASS",
+              "evidence_grounded_discriminator": "PASS"
+            },
+            "verdict": "PASS",
+            "explanation": "Endoscopy or reflux monitoring can follow adequate cardiac exclusion for unexplained chest pain, but one early ECG and troponin have not completed that exclusion."
+          }
+        ],
+        "verdict": "PASS",
+        "review_status": "FRESH_NON_AUTHOR_STAGE_REVIEW_COMPLETE"
+      },
+      "assembly": {
+        "assembler_id": "micro-retry-2-assembler-investigation-interpretation",
+        "approved_component_sha256": {
+          "open_ended": "469e7a0f5981f853dac132a0d020aeb7276bdcb3c0efd7376c91700f950c0b0c",
+          "option_realization": "333d1f5e584e87109718344afccec6eced7c0bf33d321edada6ef443e7a22d30",
+          "parallel_option_set_review": "a9b05783f90c95c13b558562fcd9a28edcc8d9dd2b3a0dad36de480e7f40058d"
+        },
+        "stem": "A 62-year-old woman with diabetes develops 30 minutes of pressure-like chest pain radiating to her left arm. It began 45 minutes before arrival and has now resolved. She is hemodynamically stable. The initial ECG has no ischemic changes, and the first high-sensitivity troponin is below the assay 99th percentile. She has no dyspnea or abrupt maximal-onset chest or back pain. Clinical suspicion for acute coronary syndrome remains moderate.",
+        "lead_in": "What is the most appropriate next diagnostic approach?",
+        "options": [
+          {
+            "key": "A",
+            "text": "Use D-dimer testing, with CTPA if indicated",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-INV-R19-PE"
+          },
+          {
+            "key": "B",
+            "text": "Obtain urgent aortic CT angiography",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-INV-VS03-AORTIC-CTA"
+          },
+          {
+            "key": "C",
+            "text": "Obtain inflammatory markers and echocardiography",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-INV-C33-PERICARDITIS"
+          },
+          {
+            "key": "D",
+            "text": "Arrange upper endoscopy or reflux monitoring",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-INV-G04-GERD"
+          },
+          {
+            "key": "E",
+            "text": "Repeat ECG and hs-cTn testing in 1–2 hours",
+            "role": "KEY"
+          }
+        ],
+        "correct_answer": "E",
+        "rewrite_status": "SURFACE_REALIZATION_ONLY",
+        "parallel_option_set_review_sha256": "a9b05783f90c95c13b558562fcd9a28edcc8d9dd2b3a0dad36de480e7f40058d"
+      },
+      "acceptance_review": {
+        "reviewer_id": "fresh-micro-retry-2-stage-acceptance-reviewer-investigation-interpretation",
+        "assembly_sha256": "5511e98d3761f7d9f3cf366e234536f2fa58254c9be6f5e323bd95b215f69c4d",
+        "checks": {
+          "cover_the_options": "PASS",
+          "option_only_cues": "PASS",
+          "clang_keyword": "PASS",
+          "option_homogeneity": "PASS",
+          "answer_length_specificity": "PASS",
+          "plan_fidelity": "PASS",
+          "anchor_fidelity": "PASS",
+          "context_necessity": "PASS"
+        },
+        "verdict": "PASS",
+        "explanation": "Fresh non-author semantic review confirms anchor and plan fidelity, medical correctness, cover-the-options performance, context necessity, natural diagnostic-pathway parallelism, absence of exploitable cues, and complete evidence-traceable rationales.",
+        "provisional_only": false,
+        "stage_acceptance_authority": true,
+        "final_acceptance_authority": false,
+        "review_status": "FRESH_NON_AUTHOR_STAGE_REVIEW_COMPLETE"
+      },
+      "rationales": {
+        "acceptance_sha256": "839b9fa767f68cef2fbb53c375a7799659a29670afa3d7fd5aa7970eebb33077",
+        "correct": {
+          "why_best": "Repeat ECG and serial hs-cTn using the validated accelerated pathway rather than redirecting to an unsupported contrast diagnosis.",
+          "decisive_evidence": [
+            "The first tests were obtained early after symptom onset.",
+            "Clinical suspicion for ACS remains moderate.",
+            "No probability-defining features redirect the work-up to PE, aortic disease, pericarditis, or GERD."
+          ],
+          "anchor_tn_topic_pages": "Acute Coronary Syndromes; TN C30-C39; PDF 120-129",
+          "evidence_refs": [
+            "CLM-ACS-INVESTIGATION-01"
+          ],
+          "decisive_discriminants": [
+            "The first tests were obtained early after symptom onset.",
+            "Clinical suspicion for ACS remains moderate.",
+            "No probability-defining features redirect the work-up to PE, aortic disease, pericarditis, or GERD."
+          ]
+        },
+        "distractors": [
+          {
+            "contrast_id": "CONTRAST-C21-INV-R19-PE",
+            "why_plausible": "An initially nondiagnostic ECG in a chest-pain patient can prompt a broad search for another dangerous cause.",
+            "exact_discriminator": "There are no PE symptoms or risk factors; moderate ACS suspicion after early nondiagnostic tests calls for serial ECG and assay-specific serial hs-cTn.",
+            "evidence_refs": [
+              "CLM-PE-DIAGNOSIS-01",
+              "CLM-ACS-INVESTIGATION-01"
+            ]
+          },
+          {
+            "contrast_id": "CONTRAST-C21-INV-VS03-AORTIC-CTA",
+            "why_plausible": "Aortic CTA is time-critical when chest pain has high-risk aortic features.",
+            "exact_discriminator": "No abrupt maximal-onset pain, pulse/BP difference, neurologic finding, or malperfusion feature is present; serial ACS testing is the scenario-bound next step.",
+            "evidence_refs": [
+              "CLM-AORTIC-DISSECTION-01",
+              "CLM-ACS-INVESTIGATION-01"
+            ]
+          },
+          {
+            "contrast_id": "CONTRAST-C21-INV-C33-PERICARDITIS",
+            "why_plausible": "ECG and echocardiography can be relevant in both ACS and pericardial disease.",
+            "exact_discriminator": "The case lacks pleuritic/positional pain, widespread ST/PR changes, rub, or effusion evidence; it remains an early possible ACS requiring serial ECG and hs-cTn.",
+            "evidence_refs": [
+              "CLM-PERICARDITIS-01",
+              "CLM-ACS-INVESTIGATION-01"
+            ]
+          },
+          {
+            "contrast_id": "CONTRAST-C21-INV-G04-GERD",
+            "why_plausible": "Normal early cardiac tests may tempt premature closure on a gastrointestinal cause.",
+            "exact_discriminator": "Objective reflux testing for unexplained chest pain follows adequate cardiac evaluation; a single early nondiagnostic ECG and hs-cTn do not complete that evaluation.",
+            "evidence_refs": [
+              "CLM-GERD-01",
+              "CLM-ACS-INVESTIGATION-01"
+            ]
+          }
+        ],
+        "unsupported_new_teaching_facts": false
+      },
+      "semantic_fingerprint": "cb8dba75c022aa2302f139a1045766f7bf8c53f74105eb6cdbdb28e7d8a2e2d8",
+      "option_realization": {
+        "realizer_id": "micro-retry-2-option-realizer-investigation-interpretation",
+        "adversarial_review_sha256": "5ea72244f54e32d5f5cecc47d7cce7451e5544c7bcfa1eddc2f32b71e0d0af5d",
+        "policy": "SEMANTIC_TO_CONCISE_NATURAL_PARALLEL_SURFACE",
+        "options": [
+          {
+            "position": "A",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-INV-R19-PE",
+            "semantic_option_text": "Order a D-dimer and proceed to CTPA if it is positive",
+            "surface_text": "Use D-dimer testing, with CTPA if indicated",
+            "option_dimension": "DIAGNOSTIC_APPROACH",
+            "grammatical_form": "IMPERATIVE_ACTION",
+            "meaning_preservation": "PASS",
+            "evidence_refs": [
+              "CLM-PE-DIAGNOSIS-01",
+              "CLM-ACS-INVESTIGATION-01"
+            ],
+            "decision_granularity": "DIAGNOSTIC_TEST",
+            "action_or_concept_head": "pulmonary-embolism diagnostic pathway",
+            "medically_required_modifiers": [
+              "D-dimer first",
+              "conditional CTPA"
+            ],
+            "independent_action_components": [
+              "d_dimer_ctpa_pathway"
+            ],
+            "specificity_level": 2,
+            "semantic_meaning_fingerprint": "333c9e9fb300fccb961627f3f89cbc2a588b3663f075ecd9ed3717e6b7323ae6"
+          },
+          {
+            "position": "B",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-INV-VS03-AORTIC-CTA",
+            "semantic_option_text": "Obtain immediate CT angiography of the aorta",
+            "surface_text": "Obtain urgent aortic CT angiography",
+            "option_dimension": "DIAGNOSTIC_APPROACH",
+            "grammatical_form": "IMPERATIVE_ACTION",
+            "meaning_preservation": "PASS",
+            "evidence_refs": [
+              "CLM-AORTIC-DISSECTION-01",
+              "CLM-ACS-INVESTIGATION-01"
+            ],
+            "decision_granularity": "DIAGNOSTIC_TEST",
+            "action_or_concept_head": "aortic CT angiography",
+            "medically_required_modifiers": [
+              "immediate"
+            ],
+            "independent_action_components": [
+              "aortic_cta_pathway"
+            ],
+            "specificity_level": 2,
+            "semantic_meaning_fingerprint": "f73c80dc6596f9a0dc404eab904c461badedccfce2e2020e300da39038675909"
+          },
+          {
+            "position": "C",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-INV-C33-PERICARDITIS",
+            "semantic_option_text": "Order inflammatory markers and echocardiography specifically for pericarditis",
+            "surface_text": "Obtain inflammatory markers and echocardiography",
+            "option_dimension": "DIAGNOSTIC_APPROACH",
+            "grammatical_form": "IMPERATIVE_ACTION",
+            "meaning_preservation": "PASS",
+            "evidence_refs": [
+              "CLM-PERICARDITIS-01",
+              "CLM-ACS-INVESTIGATION-01"
+            ],
+            "decision_granularity": "DIAGNOSTIC_TEST",
+            "action_or_concept_head": "pericarditis diagnostic pathway",
+            "medically_required_modifiers": [
+              "inflammatory markers",
+              "echocardiography"
+            ],
+            "independent_action_components": [
+              "pericarditis_testing_pathway"
+            ],
+            "specificity_level": 2,
+            "semantic_meaning_fingerprint": "906e3d7848ce0366d6a8c2be7c8a3813f53d1010a4fd7e217811b663363d3ce9"
+          },
+          {
+            "position": "D",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-INV-G04-GERD",
+            "semantic_option_text": "Arrange immediate upper endoscopy or reflux monitoring",
+            "surface_text": "Arrange upper endoscopy or reflux monitoring",
+            "option_dimension": "DIAGNOSTIC_APPROACH",
+            "grammatical_form": "IMPERATIVE_ACTION",
+            "meaning_preservation": "PASS",
+            "evidence_refs": [
+              "CLM-GERD-01",
+              "CLM-ACS-INVESTIGATION-01"
+            ],
+            "decision_granularity": "DIAGNOSTIC_TEST",
+            "action_or_concept_head": "gastroesophageal-reflux diagnostic pathway",
+            "medically_required_modifiers": [
+              "upper endoscopy or reflux monitoring"
+            ],
+            "independent_action_components": [
+              "gerd_testing_pathway"
+            ],
+            "specificity_level": 2,
+            "semantic_meaning_fingerprint": "a972e57bef981484fd76f586b7e19a54d771d4386cfd9b0c2b97c1beab43ab50"
+          },
+          {
+            "position": "E",
+            "role": "KEY",
+            "semantic_option_text": "Repeat ECG and serial hs-cTn using a validated accelerated pathway",
+            "surface_text": "Repeat ECG and hs-cTn testing in 1–2 hours",
+            "option_dimension": "DIAGNOSTIC_APPROACH",
+            "grammatical_form": "IMPERATIVE_ACTION",
+            "meaning_preservation": "PASS",
+            "evidence_refs": [
+              "CLM-ACS-INVESTIGATION-01"
+            ],
+            "decision_granularity": "DIAGNOSTIC_TEST",
+            "action_or_concept_head": "acute-coronary-syndrome serial testing pathway",
+            "medically_required_modifiers": [
+              "repeat ECG",
+              "serial hs-cTn",
+              "1-2-hour interval"
+            ],
+            "independent_action_components": [
+              "serial_ecg_hsctn_pathway"
+            ],
+            "specificity_level": 2,
+            "semantic_meaning_fingerprint": "46c83223714b07622dc87e1c175e6cf8a89755440bdef07aab88d9ca12ec5280"
+          }
+        ]
+      },
+      "parallel_option_set_review": {
+        "reviewer_id": "fresh-micro-retry-2-stage-parallel-reviewer-investigation-interpretation",
+        "realization_sha256": "333d1f5e584e87109718344afccec6eced7c0bf33d321edada6ef443e7a22d30",
+        "deterministic_findings": [],
+        "semantic_checks": {
+          "clang_testwise_detectability": "PASS",
+          "convergence": "PASS",
+          "key_only_specificity": "PASS",
+          "meaning_preservation": "PASS",
+          "natural_parallelism": "PASS",
+          "option_category_match": "PASS",
+          "semantic_odd_one_out": "PASS"
+        },
+        "option_only_key_identifiable": false,
+        "verdict": "PASS",
+        "decision_granularity_findings": [],
+        "review_status": "FRESH_NON_AUTHOR_STAGE_REVIEW_COMPLETE",
+        "explanation": "All five options are single diagnostic pathways at the same decision granularity and specificity level. The key-only 1–2-hour interval is medically required assay-pathway precision, not an exploitable completeness cue, and no option convergence identifies the answer."
+      },
+      "verification": null
+    },
+    {
+      "schema_version": "1.2",
+      "item_id": "CHREV-C-ACS-003-MR2",
+      "learning_mode": "CHAPTER_REVIEW",
+      "item_type": "MANAGEMENT_NEXT_BEST_STEP",
+      "author_id": "micro-retry-2-author-management-next-best-step",
+      "stage_sequence": [
+        "TORONTO_NOTES_ANCHOR",
+        "MCC_OBJECTIVE_PHYSICIAN_ACTIVITY",
+        "PRIMARY_LEARNER_DECISION",
+        "ANCHOR_FIDELITY",
+        "OPEN_ENDED_STEM_KEY",
+        "BLIND_COVER_OPTIONS_SOLVER",
+        "GLOBAL_CONTRAST_RETRIEVAL",
+        "CONTRASTIVE_EVIDENCE_MATRIX",
+        "SEPARATE_DISTRACTOR_CONSTRUCTION",
+        "DISTRACTOR_ADVERSARIAL_RANKING",
+        "OPTION_REALIZATION",
+        "PARALLEL_OPTION_SET_REVIEW",
+        "DECISION_GRANULARITY_PARITY",
+        "MCQ_ASSEMBLY",
+        "PLAN_FIDELITY_SHORTCUT_CUE_CHECK",
+        "RATIONALES",
+        "FRESH_INDEPENDENT_VERIFICATION"
+      ],
+      "anchor": {
+        "anchor_chapter_id": "C",
+        "anchor_chapter_title": "Cardiology and Cardiac Surgery",
+        "anchor_topic": "Acute Coronary Syndromes",
+        "anchor_allocation_address_id": "SU-C-21",
+        "anchor_study_unit_id": "SU-C-21",
+        "anchor_source_node_ids": [
+          "C.S06.T02",
+          "C.S06.T03"
+        ],
+        "anchor_tn_pages": "C30-C39",
+        "anchor_pdf_pages": [
+          120,
+          129
+        ],
+        "primary_mcc_objective": {
+          "mcc_id": "14",
+          "title": "Chest pain"
+        },
+        "primary_physician_activity": "Management",
+        "primary_competency": {
+          "depth": "CORE_ACTION",
+          "preferred_item_forms": [
+            "COMPLICATION_RECOGNITION",
+            "EMERGENCY_STABILIZATION",
+            "INITIAL_MANAGEMENT",
+            "INTERPRET_RESULTS",
+            "MOST_LIKELY_DIAGNOSIS"
+          ]
+        },
+        "primary_learner_decision": "Choose immediate fibrinolysis followed by rapid PCI-centre transfer for an early STEMI when primary PCI cannot occur within 120 minutes."
+      },
+      "anchor_fidelity_preflight": {
+        "reviewer_id": "fresh-micro-retry-2-stage-anchor-reviewer-management-next-best-step",
+        "anchor_sha256": "0b1782e45def86907210c3d1513c83dcd7c9cf074ead31d42e493744bde2582c",
+        "criteria": {
+          "decision_ownership": "PASS",
+          "key_ownership": "PASS",
+          "positive_anchor_evidence": "PASS",
+          "immediate_review_fit": "PASS",
+          "counterfactual_necessity": "PASS",
+          "contrast_role_integrity": "PASS",
+          "allocation_integrity": "PASS"
+        },
+        "verdict": "PASS",
+        "explanation": "The ACS allocation owns emergent reperfusion-pathway selection under MCC 14; the delayed device time, early presentation, low bleeding risk, and absence of fibrinolysis contraindications make pharmacoinvasive reperfusion the SU-C-21 management decision.",
+        "review_status": "FRESH_NON_AUTHOR_STAGE_REVIEW_COMPLETE"
+      },
+      "open_ended_stem_key": {
+        "anchor_fidelity_sha256": "a906558ae86069ead200492de8782738de9e7afb05af9a60c71e39ef9dcd972f",
+        "context": "A Canadian rural STEMI-system scenario in which symptom time, PCI delay, bleeding risk, and fibrinolysis eligibility all determine reperfusion.",
+        "stem": "A 59-year-old man presents to a non-PCI-capable rural emergency department 75 minutes after onset of persistent central chest pressure with diaphoresis. ECG shows diagnostic anterior ST-segment elevation. He is hemodynamically stable. The regional STEMI network estimates first-medical-contact-to-device time of 150 minutes. He has low bleeding risk and no contraindication to fibrinolysis. There was no abrupt maximal-onset chest or back pain, pulse or blood-pressure asymmetry, or neurologic deficit.",
+        "lead_in": "What is the most appropriate immediate reperfusion strategy?",
+        "intended_answer": "Give fibrinolysis immediately and arrange rapid transfer to a PCI centre for a pharmacoinvasive strategy",
+        "reasoning_chain": [
+          "Recognize ECG-diagnostic STEMI requiring immediate reperfusion without waiting for biomarkers.",
+          "Compare the estimated 150-minute device time with the Canadian 120-minute threshold.",
+          "Confirm early presentation, low bleeding risk, and absence of a fibrinolysis contraindication.",
+          "Choose fibrinolysis now and routine rapid PCI-centre transfer rather than delayed primary PCI or fibrinolysis without transfer."
+        ],
+        "context_necessity": {
+          "context_type": "PATIENT_PRESENTATION",
+          "answerable_after_context_ablation": false,
+          "explanation": "Changing the device delay, fibrinolysis contraindication, bleeding risk, or symptom time changes the reperfusion choice."
+        },
+        "key_evidence_refs": [
+          "CLM-ACS-PHARMACOINVASIVE-01",
+          "CLM-ACS-REPERFUSION-NO-DELAY-01"
+        ]
+      },
+      "blind_solver": {
+        "solver_id": "fresh-independent-micro-retry-2-blind-solver",
+        "open_ended_sha256": "6056e7725443f7250789bf4d05ed60abade4bee2792eb7051a30143a7cc1426f",
+        "hidden_context": [
+          "intended_answer",
+          "contrast_candidates",
+          "answer_options",
+          "author_self_evaluation"
+        ],
+        "independent_answer": "Give fibrinolysis immediately and arrange rapid transfer to a PCI centre for a pharmacoinvasive strategy",
+        "independent_reasoning": "This is an eligible patient with STEMI presenting within the reperfusion window, and the estimated first-medical-contact-to-device time of 150 minutes exceeds the usual 120-minute threshold for primary PCI; fibrinolysis should therefore be given without delay, followed by transfer.",
+        "verdict": "PASS",
+        "verbatim_reported_answer": "Immediate fibrinolysis followed by prompt transfer to a PCI-capable centre for a pharmaco-invasive strategy",
+        "source_report": "reports/qgen_med_007_chapter_review_micro_3_micro_retry_2_blind_solver.json",
+        "source_report_sha256": "8ab1450b23b31ae75481d01698ec359c5c038c87de443588e647468b4e6c4728"
+      },
+      "global_contrast_retrieval": {
+        "blind_solver_sha256": "3fe09b45ab7515834b190626cd4a4fa2155eb46999277f954ce7a4ae85f5fd46",
+        "strategy": "HYBRID_CACHE_FIRST_SEMANTIC_SECOND_EVIDENCE_THIRD",
+        "complete_tn_corpus": true,
+        "learner_progress_used": false,
+        "lexical_similarity_only": false,
+        "selected_contrast_ids": [
+          "CONTRAST-C21-MGMT-C22-DELAYED-PPCI",
+          "CONTRAST-C21-MGMT-C22-NO-TRANSFER",
+          "CONTRAST-C21-MGMT-C21-WAIT-TROPONIN",
+          "CONTRAST-C21-MGMT-VS03-AAS"
+        ],
+        "cache_hits_first": [
+          "CONTRAST-C21-MGMT-C22-DELAYED-PPCI",
+          "CONTRAST-C21-MGMT-C22-NO-TRANSFER",
+          "CONTRAST-C21-MGMT-C21-WAIT-TROPONIN",
+          "CONTRAST-C21-MGMT-VS03-AAS"
+        ],
+        "semantic_ranker_id": "micro-retry-2-contrast-ranker-management-next-best-step",
+        "candidate_assessment": "Candidates were ranked by same decision context, overlapping presentation, plausible graduate error, neighboring choice, and decisive discriminant; lexical similarity was not sufficient."
+      },
+      "contrastive_evidence_matrix": {
+        "retrieval_sha256": "680e4d051511d11520f05d50b2a0ce2cb6cbc5906e137104de4ff38407410ee2",
+        "key": {
+          "concept": "Give fibrinolysis immediately and arrange rapid transfer to a PCI centre for a pharmacoinvasive strategy",
+          "anchor_evidence_refs": [
+            "CLM-ACS-PHARMACOINVASIVE-01",
+            "CLM-ACS-REPERFUSION-NO-DELAY-01"
+          ],
+          "decisive_discriminants": [
+            "Diagnostic STEMI is already established.",
+            "Expected first-medical-contact-to-device time is 150 minutes.",
+            "The patient is an early presenter with low bleeding risk and no fibrinolysis contraindication."
+          ],
+          "tn_alignment": "CURRENT"
+        },
+        "competitors": [
+          {
+            "contrast_id": "CONTRAST-C21-MGMT-C22-DELAYED-PPCI",
+            "contrast_concept": "Transfer for primary PCI without fibrinolysis despite excessive delay",
+            "tn_provenance": {
+              "study_unit_id": "SU-C-22",
+              "chapter_id": "C",
+              "source_node_ids": [
+                "C.S06.T04"
+              ],
+              "tn_pages": "C30-C39",
+              "pdf_pages": [
+                120,
+                129
+              ]
+            },
+            "why_plausible": "Primary PCI is generally preferred when it can be delivered promptly.",
+            "shared_features": [
+              "definitive coronary reperfusion",
+              "interfacility transfer available"
+            ],
+            "partial_mistaken_reasoning": "Remember the preference for primary PCI but ignore the stated 150-minute device delay.",
+            "decisive_discriminant": "The expected device time exceeds 120 minutes in an early low-bleeding-risk patient with no fibrinolysis contraindication, so accepting the delay is inferior to a pharmacoinvasive strategy.",
+            "authoritative_evidence_refs": [
+              "CLM-ACS-PHARMACOINVASIVE-01"
+            ],
+            "ambiguity_verdict": "KEY_REMAINS_SINGLE_BEST",
+            "target_drift": "ABSENT",
+            "status": "VALIDATED"
+          },
+          {
+            "contrast_id": "CONTRAST-C21-MGMT-C22-NO-TRANSFER",
+            "contrast_concept": "Fibrinolysis without routine pharmacoinvasive transfer",
+            "tn_provenance": {
+              "study_unit_id": "SU-C-22",
+              "chapter_id": "C",
+              "source_node_ids": [
+                "C.S06.T04"
+              ],
+              "tn_pages": "C30-C39",
+              "pdf_pages": [
+                120,
+                129
+              ]
+            },
+            "why_plausible": "Fibrinolysis can restore perfusion, and rescue PCI is required when it fails.",
+            "shared_features": [
+              "immediate fibrinolytic reperfusion",
+              "rescue PCI after failed reperfusion"
+            ],
+            "partial_mistaken_reasoning": "Remember rescue PCI but omit routine PCI-centre transfer after apparently successful lysis.",
+            "decisive_discriminant": "Canadian guidance calls for routine rapid transfer after fibrinolysis and angiography within 24 hours even when reperfusion appears successful.",
+            "authoritative_evidence_refs": [
+              "CLM-ACS-PHARMACOINVASIVE-01"
+            ],
+            "ambiguity_verdict": "KEY_REMAINS_SINGLE_BEST",
+            "target_drift": "ABSENT",
+            "status": "VALIDATED"
+          },
+          {
+            "contrast_id": "CONTRAST-C21-MGMT-C21-WAIT-TROPONIN",
+            "contrast_concept": "Delay reperfusion for biomarker confirmation",
+            "tn_provenance": {
+              "study_unit_id": "SU-C-21",
+              "chapter_id": "C",
+              "source_node_ids": [
+                "C.S06.T02",
+                "C.S06.T03"
+              ],
+              "tn_pages": "C30-C39",
+              "pdf_pages": [
+                120,
+                129
+              ]
+            },
+            "why_plausible": "Serial troponin is central when suspected ACS remains diagnostically uncertain.",
+            "shared_features": [
+              "acute chest pain",
+              "cardiac troponin is relevant to MI classification"
+            ],
+            "partial_mistaken_reasoning": "Overgeneralize the serial-troponin pathway from nondiagnostic NSTE-ACS to ECG-diagnostic STEMI.",
+            "decisive_discriminant": "The ECG already establishes STEMI; reperfusion should not be delayed pending biomarker results.",
+            "authoritative_evidence_refs": [
+              "CLM-ACS-REPERFUSION-NO-DELAY-01"
+            ],
+            "ambiguity_verdict": "KEY_REMAINS_SINGLE_BEST",
+            "target_drift": "ABSENT",
+            "status": "VALIDATED"
+          },
+          {
+            "contrast_id": "CONTRAST-C21-MGMT-VS03-AAS",
+            "contrast_concept": "Acute aortic syndrome anti-impulse and CTA pathway",
+            "tn_provenance": {
+              "study_unit_id": "SU-VS-03",
+              "chapter_id": "VS",
+              "source_node_ids": [
+                "VS.S02.T01"
+              ],
+              "tn_pages": "VS6-VS8",
+              "pdf_pages": [
+                1586,
+                1588
+              ]
+            },
+            "why_plausible": "Severe acute chest pain and hypertension can make an aortic emergency salient.",
+            "shared_features": [
+              "acute severe chest pain",
+              "time-critical management"
+            ],
+            "partial_mistaken_reasoning": "Choose the aortic emergency pathway without its decisive clinical features despite a diagnostic territorial STEMI.",
+            "decisive_discriminant": "No abrupt maximal-onset pain, pulse/BP difference, neurologic deficit, or malperfusion feature is present; diagnostic STEMI requires immediate reperfusion.",
+            "authoritative_evidence_refs": [
+              "CLM-AORTIC-DISSECTION-01",
+              "CLM-ACS-REPERFUSION-NO-DELAY-01"
+            ],
+            "ambiguity_verdict": "KEY_REMAINS_SINGLE_BEST",
+            "target_drift": "ABSENT",
+            "status": "VALIDATED"
+          }
+        ],
+        "verdict": "PASS"
+      },
+      "distractor_construction": {
+        "constructor_id": "micro-retry-2-distractor-constructor-management-next-best-step",
+        "matrix_sha256": "8b400e7dd895217eb7d070ab87704175def8b1db9ab6e9142d12fd7db0f3a22c",
+        "distractors": [
+          {
+            "contrast_id": "CONTRAST-C21-MGMT-C22-DELAYED-PPCI",
+            "competing_concept": "Transfer for primary PCI without fibrinolysis despite excessive delay",
+            "option_text": "Transfer for primary PCI without giving fibrinolysis",
+            "why_temporarily_plausible": "Primary PCI is generally preferred when it can be delivered promptly.",
+            "shared_features": [
+              "definitive coronary reperfusion",
+              "interfacility transfer available"
+            ],
+            "disqualifying_discriminant": "The expected device time exceeds 120 minutes in an early low-bleeding-risk patient with no fibrinolysis contraindication, so accepting the delay is inferior to a pharmacoinvasive strategy.",
+            "evidence_refs": [
+              "CLM-ACS-PHARMACOINVASIVE-01"
+            ]
+          },
+          {
+            "contrast_id": "CONTRAST-C21-MGMT-C22-NO-TRANSFER",
+            "competing_concept": "Fibrinolysis without routine pharmacoinvasive transfer",
+            "option_text": "Give fibrinolysis and transfer only if reperfusion fails",
+            "why_temporarily_plausible": "Fibrinolysis can restore perfusion, and rescue PCI is required when it fails.",
+            "shared_features": [
+              "immediate fibrinolytic reperfusion",
+              "rescue PCI after failed reperfusion"
+            ],
+            "disqualifying_discriminant": "Canadian guidance calls for routine rapid transfer after fibrinolysis and angiography within 24 hours even when reperfusion appears successful.",
+            "evidence_refs": [
+              "CLM-ACS-PHARMACOINVASIVE-01"
+            ]
+          },
+          {
+            "contrast_id": "CONTRAST-C21-MGMT-C21-WAIT-TROPONIN",
+            "competing_concept": "Delay reperfusion for biomarker confirmation",
+            "option_text": "Wait for serial high-sensitivity troponin before selecting reperfusion",
+            "why_temporarily_plausible": "Serial troponin is central when suspected ACS remains diagnostically uncertain.",
+            "shared_features": [
+              "acute chest pain",
+              "cardiac troponin is relevant to MI classification"
+            ],
+            "disqualifying_discriminant": "The ECG already establishes STEMI; reperfusion should not be delayed pending biomarker results.",
+            "evidence_refs": [
+              "CLM-ACS-REPERFUSION-NO-DELAY-01"
+            ]
+          },
+          {
+            "contrast_id": "CONTRAST-C21-MGMT-VS03-AAS",
+            "competing_concept": "Acute aortic syndrome anti-impulse and CTA pathway",
+            "option_text": "Begin intravenous anti-impulse therapy and obtain urgent aortic CTA",
+            "why_temporarily_plausible": "Severe acute chest pain and hypertension can make an aortic emergency salient.",
+            "shared_features": [
+              "acute severe chest pain",
+              "time-critical management"
+            ],
+            "disqualifying_discriminant": "No abrupt maximal-onset pain, pulse/BP difference, neurologic deficit, or malperfusion feature is present; diagnostic STEMI requires immediate reperfusion.",
+            "evidence_refs": [
+              "CLM-AORTIC-DISSECTION-01",
+              "CLM-ACS-REPERFUSION-NO-DELAY-01"
+            ]
+          }
+        ]
+      },
+      "distractor_adversarial_review": {
+        "reviewer_id": "fresh-micro-retry-2-stage-distractor-reviewer-management-next-best-step",
+        "construction_sha256": "6f02c797ba4c56e939602ba02d4f8dd0044a50e5177121859840cb779a4b5574",
+        "rows": [
+          {
+            "contrast_id": "CONTRAST-C21-MGMT-C22-DELAYED-PPCI",
+            "assessments": {
+              "plausibility": "PASS",
+              "same_option_dimension": "PASS",
+              "mcc_level_relevance": "PASS",
+              "medical_professional_confusability": "PASS",
+              "no_key_ambiguity": "PASS",
+              "evidence_grounded_discriminator": "PASS"
+            },
+            "verdict": "PASS",
+            "explanation": "Transfer for primary PCI is ordinarily attractive, but accepting a predicted 150-minute FMC-to-device delay is inferior in this eligible early presenter."
+          },
+          {
+            "contrast_id": "CONTRAST-C21-MGMT-C22-NO-TRANSFER",
+            "assessments": {
+              "plausibility": "PASS",
+              "same_option_dimension": "PASS",
+              "mcc_level_relevance": "PASS",
+              "medical_professional_confusability": "PASS",
+              "no_key_ambiguity": "PASS",
+              "evidence_grounded_discriminator": "PASS"
+            },
+            "verdict": "PASS",
+            "explanation": "Local fibrinolysis with rescue-only PCI is plausible if one overlooks routine post-lysis transfer, but it omits the required pharmacoinvasive follow-through."
+          },
+          {
+            "contrast_id": "CONTRAST-C21-MGMT-C21-WAIT-TROPONIN",
+            "assessments": {
+              "plausibility": "PASS",
+              "same_option_dimension": "PASS",
+              "mcc_level_relevance": "PASS",
+              "medical_professional_confusability": "PASS",
+              "no_key_ambiguity": "PASS",
+              "evidence_grounded_discriminator": "PASS"
+            },
+            "verdict": "PASS",
+            "explanation": "Serial troponin is relevant in diagnostically uncertain ACS, but established STEMI makes biomarker delay inappropriate."
+          },
+          {
+            "contrast_id": "CONTRAST-C21-MGMT-VS03-AAS",
+            "assessments": {
+              "plausibility": "PASS",
+              "same_option_dimension": "PASS",
+              "mcc_level_relevance": "PASS",
+              "medical_professional_confusability": "PASS",
+              "no_key_ambiguity": "PASS",
+              "evidence_grounded_discriminator": "PASS"
+            },
+            "verdict": "PASS",
+            "explanation": "An acute-aortic-syndrome pathway is a coherent alternative for high-risk aortic features, which are absent while diagnostic anterior STEMI is present."
+          }
+        ],
+        "verdict": "PASS",
+        "review_status": "FRESH_NON_AUTHOR_STAGE_REVIEW_COMPLETE"
+      },
+      "assembly": {
+        "assembler_id": "micro-retry-2-assembler-management-next-best-step",
+        "approved_component_sha256": {
+          "open_ended": "6056e7725443f7250789bf4d05ed60abade4bee2792eb7051a30143a7cc1426f",
+          "option_realization": "bf104b2c85ee83a85472423d8a3d68e82e573ff6e61d16c550aef0e11fc90a3c",
+          "parallel_option_set_review": "838e2161d9d691778032d95ebba57440673921954f072871a0856c300292d817"
+        },
+        "stem": "A 59-year-old man presents to a non-PCI-capable rural emergency department 75 minutes after onset of persistent central chest pressure with diaphoresis. ECG shows diagnostic anterior ST-segment elevation. He is hemodynamically stable. The regional STEMI network estimates first-medical-contact-to-device time of 150 minutes. He has low bleeding risk and no contraindication to fibrinolysis. There was no abrupt maximal-onset chest or back pain, pulse or blood-pressure asymmetry, or neurologic deficit.",
+        "lead_in": "What is the most appropriate immediate reperfusion strategy?",
+        "options": [
+          {
+            "key": "A",
+            "text": "Use delayed primary PCI after interfacility transfer",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-MGMT-C22-DELAYED-PPCI"
+          },
+          {
+            "key": "B",
+            "text": "Use pharmacoinvasive reperfusion after immediate fibrinolysis",
+            "role": "KEY"
+          },
+          {
+            "key": "C",
+            "text": "Use rescue-only PCI after local fibrinolysis",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-MGMT-C22-NO-TRANSFER"
+          },
+          {
+            "key": "D",
+            "text": "Use biomarker-confirmed reperfusion after serial troponin testing",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-MGMT-C21-WAIT-TROPONIN"
+          },
+          {
+            "key": "E",
+            "text": "Use an acute-aortic-syndrome pathway with anti-impulse therapy and CT angiography",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-MGMT-VS03-AAS"
+          }
+        ],
+        "correct_answer": "B",
+        "rewrite_status": "SURFACE_REALIZATION_ONLY",
+        "parallel_option_set_review_sha256": "838e2161d9d691778032d95ebba57440673921954f072871a0856c300292d817"
+      },
+      "acceptance_review": {
+        "reviewer_id": "fresh-micro-retry-2-stage-acceptance-reviewer-management-next-best-step",
+        "assembly_sha256": "562725f6917617f637da7497e89db8a4a5a61b048028f6b9b1a75db7e4b65bb3",
+        "checks": {
+          "cover_the_options": "PASS",
+          "option_only_cues": "PASS",
+          "clang_keyword": "PASS",
+          "option_homogeneity": "PASS",
+          "answer_length_specificity": "PASS",
+          "plan_fidelity": "PASS",
+          "anchor_fidelity": "PASS",
+          "context_necessity": "PASS"
+        },
+        "verdict": "PASS",
+        "explanation": "Fresh non-author semantic review confirms anchor and plan fidelity, medical correctness, cover-the-options performance, context necessity, natural management-strategy parallelism, absence of exploitable cues, and complete evidence-traceable rationales.",
+        "provisional_only": false,
+        "stage_acceptance_authority": true,
+        "final_acceptance_authority": false,
+        "review_status": "FRESH_NON_AUTHOR_STAGE_REVIEW_COMPLETE"
+      },
+      "rationales": {
+        "acceptance_sha256": "94ee8aea7beef90a92285ef6db4ee5c9cecc1a6d9ad62c38304f2e6033fed83c",
+        "correct": {
+          "why_best": "Choose fibrinolysis now and routine rapid PCI-centre transfer rather than delayed primary PCI or fibrinolysis without transfer.",
+          "decisive_evidence": [
+            "Diagnostic STEMI is already established.",
+            "Expected first-medical-contact-to-device time is 150 minutes.",
+            "The patient is an early presenter with low bleeding risk and no fibrinolysis contraindication."
+          ],
+          "anchor_tn_topic_pages": "Acute Coronary Syndromes; TN C30-C39; PDF 120-129",
+          "evidence_refs": [
+            "CLM-ACS-PHARMACOINVASIVE-01",
+            "CLM-ACS-REPERFUSION-NO-DELAY-01"
+          ],
+          "decisive_discriminants": [
+            "Diagnostic STEMI is already established.",
+            "Expected first-medical-contact-to-device time is 150 minutes.",
+            "The patient is an early presenter with low bleeding risk and no fibrinolysis contraindication."
+          ]
+        },
+        "distractors": [
+          {
+            "contrast_id": "CONTRAST-C21-MGMT-C22-DELAYED-PPCI",
+            "why_plausible": "Primary PCI is generally preferred when it can be delivered promptly.",
+            "exact_discriminator": "The expected device time exceeds 120 minutes in an early low-bleeding-risk patient with no fibrinolysis contraindication, so accepting the delay is inferior to a pharmacoinvasive strategy.",
+            "evidence_refs": [
+              "CLM-ACS-PHARMACOINVASIVE-01"
+            ]
+          },
+          {
+            "contrast_id": "CONTRAST-C21-MGMT-C22-NO-TRANSFER",
+            "why_plausible": "Fibrinolysis can restore perfusion, and rescue PCI is required when it fails.",
+            "exact_discriminator": "Canadian guidance calls for routine rapid transfer after fibrinolysis and angiography within 24 hours even when reperfusion appears successful.",
+            "evidence_refs": [
+              "CLM-ACS-PHARMACOINVASIVE-01"
+            ]
+          },
+          {
+            "contrast_id": "CONTRAST-C21-MGMT-C21-WAIT-TROPONIN",
+            "why_plausible": "Serial troponin is central when suspected ACS remains diagnostically uncertain.",
+            "exact_discriminator": "The ECG already establishes STEMI; reperfusion should not be delayed pending biomarker results.",
+            "evidence_refs": [
+              "CLM-ACS-REPERFUSION-NO-DELAY-01"
+            ]
+          },
+          {
+            "contrast_id": "CONTRAST-C21-MGMT-VS03-AAS",
+            "why_plausible": "Severe acute chest pain and hypertension can make an aortic emergency salient.",
+            "exact_discriminator": "No abrupt maximal-onset pain, pulse/BP difference, neurologic deficit, or malperfusion feature is present; diagnostic STEMI requires immediate reperfusion.",
+            "evidence_refs": [
+              "CLM-AORTIC-DISSECTION-01",
+              "CLM-ACS-REPERFUSION-NO-DELAY-01"
+            ]
+          }
+        ],
+        "unsupported_new_teaching_facts": false
+      },
+      "semantic_fingerprint": "44488c9ff6fb1d27ae0d857d0bc533c14c66dd8e931ab987a2751002a8556d4a",
+      "option_realization": {
+        "realizer_id": "micro-retry-2-option-realizer-management-next-best-step",
+        "adversarial_review_sha256": "a71c9b97616ea0d160700d118cd203e1eda10991de3cf15f0fbdfa12cf0dfa1c",
+        "policy": "SEMANTIC_TO_CONCISE_NATURAL_PARALLEL_SURFACE",
+        "options": [
+          {
+            "position": "A",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-MGMT-C22-DELAYED-PPCI",
+            "semantic_option_text": "Transfer for primary PCI without giving fibrinolysis",
+            "surface_text": "Use delayed primary PCI after interfacility transfer",
+            "option_dimension": "MANAGEMENT_STRATEGY",
+            "grammatical_form": "IMPERATIVE_ACTION",
+            "meaning_preservation": "PASS",
+            "evidence_refs": [
+              "CLM-ACS-PHARMACOINVASIVE-01"
+            ],
+            "decision_granularity": "MANAGEMENT_STRATEGY",
+            "action_or_concept_head": "delayed primary-PCI strategy",
+            "medically_required_modifiers": [
+              "interfacility transfer",
+              "no pretransfer fibrinolysis"
+            ],
+            "independent_action_components": [
+              "delayed_primary_pci_strategy"
+            ],
+            "specificity_level": 2,
+            "semantic_meaning_fingerprint": "24e8bfeb36c78c666a1905aac6491da3161398cf775df56dcc3a1644edf36f92"
+          },
+          {
+            "position": "B",
+            "role": "KEY",
+            "semantic_option_text": "Give fibrinolysis immediately and arrange rapid transfer to a PCI centre for a pharmacoinvasive strategy",
+            "surface_text": "Use pharmacoinvasive reperfusion after immediate fibrinolysis",
+            "option_dimension": "MANAGEMENT_STRATEGY",
+            "grammatical_form": "IMPERATIVE_ACTION",
+            "meaning_preservation": "PASS",
+            "evidence_refs": [
+              "CLM-ACS-PHARMACOINVASIVE-01",
+              "CLM-ACS-REPERFUSION-NO-DELAY-01"
+            ],
+            "decision_granularity": "MANAGEMENT_STRATEGY",
+            "action_or_concept_head": "pharmacoinvasive reperfusion strategy",
+            "medically_required_modifiers": [
+              "immediate fibrinolysis",
+              "routine rapid PCI-centre transfer"
+            ],
+            "independent_action_components": [
+              "pharmacoinvasive_strategy"
+            ],
+            "specificity_level": 2,
+            "semantic_meaning_fingerprint": "302f312b0d710926cb232d5c315da3f851ebf29bb110ac949343b5d2c7b1b446"
+          },
+          {
+            "position": "C",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-MGMT-C22-NO-TRANSFER",
+            "semantic_option_text": "Give fibrinolysis and transfer only if reperfusion fails",
+            "surface_text": "Use rescue-only PCI after local fibrinolysis",
+            "option_dimension": "MANAGEMENT_STRATEGY",
+            "grammatical_form": "IMPERATIVE_ACTION",
+            "meaning_preservation": "PASS",
+            "evidence_refs": [
+              "CLM-ACS-PHARMACOINVASIVE-01"
+            ],
+            "decision_granularity": "MANAGEMENT_STRATEGY",
+            "action_or_concept_head": "rescue-only fibrinolysis strategy",
+            "medically_required_modifiers": [
+              "local fibrinolysis",
+              "transfer only for failed reperfusion"
+            ],
+            "independent_action_components": [
+              "rescue_only_strategy"
+            ],
+            "specificity_level": 2,
+            "semantic_meaning_fingerprint": "48f8275bfdfa98cb7fa3d91100eabcce1a0d8a9f856e7290756e6d6003303f8e"
+          },
+          {
+            "position": "D",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-MGMT-C21-WAIT-TROPONIN",
+            "semantic_option_text": "Wait for serial high-sensitivity troponin before selecting reperfusion",
+            "surface_text": "Use biomarker-confirmed reperfusion after serial troponin testing",
+            "option_dimension": "MANAGEMENT_STRATEGY",
+            "grammatical_form": "IMPERATIVE_ACTION",
+            "meaning_preservation": "PASS",
+            "evidence_refs": [
+              "CLM-ACS-REPERFUSION-NO-DELAY-01"
+            ],
+            "decision_granularity": "MANAGEMENT_STRATEGY",
+            "action_or_concept_head": "biomarker-confirmation strategy",
+            "medically_required_modifiers": [
+              "serial high-sensitivity troponin before reperfusion"
+            ],
+            "independent_action_components": [
+              "biomarker_delay_strategy"
+            ],
+            "specificity_level": 2,
+            "semantic_meaning_fingerprint": "41cd4b7375e975e1b9dea7a01aaea9178898ec1b22e2758e6836dc8fa0337c05"
+          },
+          {
+            "position": "E",
+            "role": "DISTRACTOR",
+            "contrast_id": "CONTRAST-C21-MGMT-VS03-AAS",
+            "semantic_option_text": "Begin intravenous anti-impulse therapy and obtain urgent aortic CTA",
+            "surface_text": "Use an acute-aortic-syndrome pathway with anti-impulse therapy and CT angiography",
+            "option_dimension": "MANAGEMENT_STRATEGY",
+            "grammatical_form": "IMPERATIVE_ACTION",
+            "meaning_preservation": "PASS",
+            "evidence_refs": [
+              "CLM-AORTIC-DISSECTION-01",
+              "CLM-ACS-REPERFUSION-NO-DELAY-01"
+            ],
+            "decision_granularity": "MANAGEMENT_STRATEGY",
+            "action_or_concept_head": "acute-aortic-syndrome strategy",
+            "medically_required_modifiers": [
+              "intravenous anti-impulse therapy",
+              "urgent aortic CTA"
+            ],
+            "independent_action_components": [
+              "anti_impulse_aortic_cta_strategy"
+            ],
+            "specificity_level": 2,
+            "semantic_meaning_fingerprint": "5b1b57564261f4975f94603a141badba28fc9e2cebb6677dd112f2ced237a6d7"
+          }
+        ]
+      },
+      "parallel_option_set_review": {
+        "reviewer_id": "fresh-micro-retry-2-stage-parallel-reviewer-management-next-best-step",
+        "realization_sha256": "bf104b2c85ee83a85472423d8a3d68e82e573ff6e61d16c550aef0e11fc90a3c",
+        "deterministic_findings": [],
+        "semantic_checks": {
+          "clang_testwise_detectability": "PASS",
+          "convergence": "PASS",
+          "key_only_specificity": "PASS",
+          "meaning_preservation": "PASS",
+          "natural_parallelism": "PASS",
+          "option_category_match": "PASS",
+          "semantic_odd_one_out": "PASS"
+        },
+        "option_only_key_identifiable": false,
+        "verdict": "PASS",
+        "decision_granularity_findings": [],
+        "review_status": "FRESH_NON_AUTHOR_STAGE_REVIEW_COMPLETE",
+        "explanation": "All five options are single management strategies with one independent action component and matched specificity. The key names one established pharmacoinvasive strategy rather than combining partial distractor actions, so neither key-only completeness nor conceptual convergence is present."
+      },
+      "verification": null
+    }
+  ],
+  "derivative_lineage": {
+    "parent_artifact": "research/qgen/pilot/QGEN-MED-007.chapter-review-micro-3.option-retry-1.staged.json",
+    "parent_artifact_sha256": "4d838eab3a86b4ae25b2b002f1da94ebe6d5f3a7514b6cd19e08d35ee126068c",
+    "prior_cue_review": "reports/qgen_med_007_chapter_review_micro_3_option_retry_1_cue_review.json",
+    "prior_cue_review_sha256": "71cf978505b1388e40b64b15ef729c96079354035045da56c2fa2d9d0133530b",
+    "unchanged_evidence_packet": "research/qgen/pilot/QGEN-MED-007.chapter-review-micro-3.evidence.json",
+    "unchanged_evidence_packet_sha256": "f3d9beeebce174bce8d4509e0037f2b74ed64160aa8e5c2b11abc5514e37ce74",
+    "unchanged_global_contrast_library": "research/qgen/chapter_global_contrast_library.json",
+    "unchanged_global_contrast_library_sha256": "78cc7813001ef4ea400203a7bacf34866348d6225bb7b64b54c07ad785b1522b",
+    "repair_scope": [
+      "SCHEMA_1_2_DECISION_GRANULARITY_PARITY",
+      "MANAGEMENT_OPTION_SURFACE_REALIZATION",
+      "FRESH_AUTHOR_SOLVER_REVIEWER_ROLES"
+    ],
+    "exact_three_targets_reused": true,
+    "semantic_lineage_reused_unchanged": true,
+    "evidence_reused_unchanged": true,
+    "contrast_edges_reused_unchanged": true,
+    "targeted_new_evidence_count": 0,
+    "fresh_independent_verification_run": false,
+    "final_verification_report_created": false
+  }
+}

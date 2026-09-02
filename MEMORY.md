@@ -20,11 +20,11 @@
 - Generation jobs BLOCKED: 0.
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
-- Retry V2.1 micro-pilot: `FAIL` (1/3 semantically accepted; V2.1 execution enforcement is implemented, but two generated distractor/rationale instantiations were not fully scenario-bound).
-- Chapter-anchored staged global-contrast option retry: `FAIL` (2/3 passed a fresh option-only cue review; the management item retained two material completeness/convergence cues from the original failure root). The retry stopped at the parallel option-set gate; no repeated regeneration or final independent verification was attempted.
+- Cardiology `MICRO_RETRY_2`: PASS (3/3; zero factual, evidence, ambiguity, anchor, plan, distractor, context, cover-options, cue, granularity, rationale, or duplication defects).
+- Cardiology ACS 10-item chapter-review pilot: SUCCESS (9/10). One item (`QGEN-MED-007-ACS-CR10-I05`) failed locally for key-only completeness/conceptual convergence; all factual, evidence-support, ambiguity, anchor, plan, distractor, context, cover-options, granularity, rationale, and duplication counts remained zero, and no systemic problem was identified. Per the approved pilot protocol, the item was recorded and not repaired.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `5d102945a562eddce7e14269c09ea03dccd39e2d`.
-- Current next action: `DIAGNOSE_REMAINING_MICRO_FAILURE`.
+- Audited coordinator input commit: `3f397387fe0e244ef09c59ee71287c7281424cc7`.
+- Current next action: `TEST_GENERALIZATION_ACROSS_DISCIPLINES`.
 
 ## Frozen layers
 
@@ -45,8 +45,8 @@
 
 ## Blocker and next step
 
-- Chapter-review scale-up is blocked by the option-retry management item: its keyed pharmacoinvasive pathway remains identifiable through key-only completeness and conceptual convergence before the clinical discriminants are applied.
-- NEXT_STEP = `DIAGNOSE_REMAINING_MICRO_FAILURE`
+- No upstream blocker remains. The bounded Cardiology execution is complete; do not generate more Cardiology questions or scale toward the full bank yet.
+- NEXT_STEP = `TEST_GENERALIZATION_ACROSS_DISCIPLINES`
 <!-- SOURCE_RESEARCH_RESUME:END -->
 
 ## Research-level policy

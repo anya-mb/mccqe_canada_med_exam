@@ -1,0 +1,426 @@
+{
+  "schema_version": "1.0",
+  "scope": "ACS_CHAPTER_REVIEW_PILOT_10_SEMANTIC_ITEM_SPEC",
+  "pilot_id": "QGEN-MED-007-ACS-CHAPTER-REVIEW-PILOT-10",
+  "job_id": "QGEN-MED-007",
+  "allocation_effect": "NONE_EXPERIMENTAL_PILOT",
+  "learning_mode": "CHAPTER_REVIEW",
+  "generation_attempt_limit": 2,
+  "generation_authorized": false,
+  "generation_blocker": "Seven targets require the exact evidence gaps and proposed contrast-edge validation recorded below; this artifact contains no MCQ stems or options.",
+  "anchor": {
+    "chapter_id": "C",
+    "chapter_title": "Cardiology and Cardiac Surgery",
+    "study_unit_id": "SU-C-21",
+    "study_unit_title": "Acute Coronary Syndromes",
+    "allocation_address_id": "SU-C-21",
+    "source_node_ids": [
+      "C.S06.T02",
+      "C.S06.T03"
+    ],
+    "tn_pages": "C30-C39",
+    "pdf_pages": [
+      120,
+      129
+    ],
+    "mcc_objective": {
+      "mcc_id": "14",
+      "title": "Chest pain",
+      "mapping_strength": "STRONG"
+    },
+    "scope_depth": "CORE_ACTION",
+    "canonical_testable_competencies": [
+      "recognition",
+      "investigation",
+      "initial_management",
+      "emergency",
+      "complications"
+    ],
+    "excluded_target_detail": [
+      "Exact fibrinolytic agent dosing",
+      "Detailed PCI technique"
+    ]
+  },
+  "lineage": {
+    "lineage_id": "QGEN-MED-007-ACS-CR10-PREFLIGHT-LINEAGE-001",
+    "lineage_type": "NEW_TEN_TARGET_DERIVATIVE_PREFLIGHT",
+    "canonical_anchor_sources": [
+      {
+        "path": "research/scope/chapters/C/study_units.json",
+        "sha256": "21dc0818ab070f6e8f81b355bdb5daa9707511de5ceaa0bf1d5acdbf02089e58"
+      },
+      {
+        "path": "research/scope/chapters/C/crosswalk.json",
+        "sha256": "3603902cb6e7e684805bc6bf006dd59c2b93a864f5e71a7a7aedcf6de74dc24f"
+      }
+    ],
+    "ready_source_packet": {
+      "source_packet_id": "SRC-MED-018",
+      "path": "research/qgen/source_packet_population_srb_004.json",
+      "sha256": "49596ec1071f22d466c0a1b3b2319e7028e946a97a2fc7be1b4753a768c17318"
+    },
+    "targeted_micro_evidence": {
+      "path": "research/qgen/pilot/QGEN-MED-007.chapter-review-micro-3.evidence.json",
+      "sha256": "8c152ad5b8616b9abd3cb130272641123b94b7492615e5f3779666e926605f83"
+    },
+    "global_contrast_library": {
+      "path": "research/qgen/chapter_global_contrast_library.json",
+      "sha256": "b0b2e2895f775a43f570e9c180e9da91cbd4daa9e1fc66e166b66f541cba182c"
+    },
+    "passed_micro_retry_2": [
+      {
+        "path": "research/qgen/pilot/QGEN-MED-007.chapter-review-micro-3.micro-retry-2.staged.json",
+        "sha256": "0a3e02302cb9cb98048317ce509f275d71fd94c423b1324bb39251d225de8441"
+      },
+      {
+        "path": "reports/qgen_med_007_chapter_review_micro_3_micro_retry_2_authoring.json",
+        "sha256": "83809dbda92a4ee17c9f61a67155be01db44203122f2771d2cedc27bf89b74ff"
+      },
+      {
+        "path": "reports/qgen_med_007_chapter_review_micro_3_micro_retry_2_blind_solver.json",
+        "sha256": "7895800cc16eb85f1b8a769f29527cf7b9a5a178976bc11bcd625a641abdb9c4"
+      },
+      {
+        "path": "reports/qgen_med_007_chapter_review_micro_3_micro_retry_2_cue_review.json",
+        "sha256": "0a14f4aa940edb71e29b47993e643d9728207fe9e0ec37dc3499dee0ea2758ae"
+      },
+      {
+        "path": "reports/qgen_med_007_chapter_review_micro_3_micro_retry_2_independent_verification.json",
+        "sha256": "94f16ccbf5bd53e2e219668465187419138824ded553559b6a9d17ac45f20ac0"
+      },
+      {
+        "path": "reports/qgen_med_007_chapter_review_micro_3_micro_retry_2_stage_review.json",
+        "sha256": "281be6b986159ea98fa939703454a92ecfe841f26689df49c8c0d775051a6703"
+      }
+    ]
+  },
+  "fingerprint_contract": {
+    "algorithm": "SHA256_UTF8",
+    "normalization": "Join the normalized planned_item_form, physician_activity, learner_decision_token, reasoning_pathway_token, decisive_discriminator_token, intended_key_token, and lexicographically sorted planned contrast-edge IDs with a vertical bar. Target ID and demographic facts are excluded so semantic duplicates cannot acquire different fingerprints merely through renaming or demographic rewording.",
+    "set_fingerprint_method": "Join target distinctness_fingerprint values in target_id order with a vertical bar and apply SHA-256.",
+    "set_fingerprint": "efc4c1bc318657dbaab27ae86d1fbf38708ae0a4bddae3fdf3ca30e1e5a43992"
+  },
+  "target_count": 10,
+  "targets": [
+    {
+      "target_id": "QGEN-MED-007-ACS-CR10-T01",
+      "target_category": "SUPPORTED_DIAGNOSIS",
+      "planned_item_form": "MOST_LIKELY_DIAGNOSIS",
+      "physician_activity": "Assessment/Diagnosis",
+      "learner_decision": "Diagnose NSTEMI by integrating an ischemic presentation, a regional ST-segment depression pattern, and a dynamic high-sensitivity troponin rise rather than relying on one historical feature.",
+      "learner_decision_token": "DIAGNOSE_NSTEMI_FROM_ISCHEMIC_PRESENTATION_REGIONAL_ST_DEPRESSION_AND_DYNAMIC_HS_CTN_RISE",
+      "reasoning_pathway": "Syndrome recognition -> territorial ECG interpretation -> biomarker dynamics -> differential exclusion.",
+      "reasoning_pathway_token": "SYNDROME_TO_ECG_TERRITORY_TO_BIOMARKER_DYNAMICS",
+      "decisive_discriminator": "Regional ischemic ECG change plus an acute troponin rise in an ischemic context, rather than isolated chest-pain wording, distinguishes NSTEMI from the planned alternatives.",
+      "decisive_discriminator_token": "REGIONAL_ISCHEMIA_PLUS_DYNAMIC_MYOCARDIAL_INJURY",
+      "intended_key": "Non-ST-segment elevation myocardial infarction",
+      "intended_key_token": "NON_ST_ELEVATION_MYOCARDIAL_INFARCTION",
+      "planned_contrast_set": [
+        {"contrast_edge_id": "CONTRAST-C21-DX-R19-PE", "edge_status": "VALIDATED_EXISTING"},
+        {"contrast_edge_id": "CONTRAST-C21-DX-VS03-AAS", "edge_status": "VALIDATED_EXISTING"},
+        {"contrast_edge_id": "CONTRAST-C21-DX-C33-PERICARDITIS", "edge_status": "VALIDATED_EXISTING"},
+        {"contrast_edge_id": "CONTRAST-C21-DX-G04-GERD", "edge_status": "VALIDATED_EXISTING"}
+      ],
+      "existing_evidence_refs": [
+        "SRC-MED-018-REC-01",
+        "SRC-MED-018-BOUNDARY-01",
+        "CLM-ACS-DIAGNOSIS-01",
+        "CONTRAST-C21-DX-R19-PE",
+        "CONTRAST-C21-DX-VS03-AAS",
+        "CONTRAST-C21-DX-C33-PERICARDITIS",
+        "CONTRAST-C21-DX-G04-GERD"
+      ],
+      "evidence_status": "EVIDENCE_COMPLETE_FOR_PREFLIGHT",
+      "evidence_gap": [],
+      "distinctness_fingerprint": "67dae0f45932fcda44530f86f561a92c2b3534299774f57589a7c50c584e8e23"
+    },
+    {
+      "target_id": "QGEN-MED-007-ACS-CR10-T02",
+      "target_category": "INVESTIGATION_INTERPRETATION",
+      "planned_item_form": "INTERPRET_RESULTS",
+      "physician_activity": "Assessment/Diagnosis",
+      "learner_decision": "Choose serial ECG assessment and assay-specific repeat high-sensitivity troponin when initial early tests are nondiagnostic but clinical suspicion for ACS persists.",
+      "learner_decision_token": "CHOOSE_SERIAL_ECG_AND_ASSAY_SPECIFIC_REPEAT_HS_CTN_AFTER_EARLY_NONDIAGNOSTIC_TESTS_WITH_PERSISTENT_ACS_SUSPICION",
+      "reasoning_pathway": "Test timing -> residual pretest probability -> limits of an early negative result -> serial reassessment.",
+      "reasoning_pathway_token": "TEST_TIMING_TO_RESIDUAL_PRETEST_PROBABILITY_TO_SERIAL_REASSESSMENT",
+      "decisive_discriminator": "The tests were obtained early and residual ACS suspicion remains meaningful; a single nondiagnostic ECG and troponin therefore do not justify an alternative pathway or discharge.",
+      "decisive_discriminator_token": "EARLY_SAMPLING_PLUS_PERSISTENT_CLINICAL_SUSPICION",
+      "intended_key": "Serial ECG assessment and assay-specific repeat high-sensitivity troponin",
+      "intended_key_token": "SERIAL_ECG_AND_ASSAY_SPECIFIC_REPEAT_HS_CTN",
+      "planned_contrast_set": [
+        {"contrast_edge_id": "CONTRAST-C21-INV-R19-PE", "edge_status": "VALIDATED_EXISTING"},
+        {"contrast_edge_id": "CONTRAST-C21-INV-VS03-AORTIC-CTA", "edge_status": "VALIDATED_EXISTING"},
+        {"contrast_edge_id": "CONTRAST-C21-INV-C33-PERICARDITIS", "edge_status": "VALIDATED_EXISTING"},
+        {"contrast_edge_id": "CONTRAST-C21-INV-G04-GERD", "edge_status": "VALIDATED_EXISTING"}
+      ],
+      "existing_evidence_refs": [
+        "SRC-MED-018-REC-01",
+        "SRC-MED-018-EX-01",
+        "SRC-MED-018-BOUNDARY-01",
+        "CLM-ACS-INVESTIGATION-01",
+        "CONTRAST-C21-INV-R19-PE",
+        "CONTRAST-C21-INV-VS03-AORTIC-CTA",
+        "CONTRAST-C21-INV-C33-PERICARDITIS",
+        "CONTRAST-C21-INV-G04-GERD"
+      ],
+      "evidence_status": "EVIDENCE_COMPLETE_FOR_PREFLIGHT",
+      "evidence_gap": [],
+      "distinctness_fingerprint": "ca196ce642ce004476e6fe1d7389dd61b21a5157c0b227eb929d7482838d8c1f"
+    },
+    {
+      "target_id": "QGEN-MED-007-ACS-CR10-T03",
+      "target_category": "ACUTE_STABILIZATION",
+      "planned_item_form": "EMERGENCY_STABILIZATION",
+      "physician_activity": "Management",
+      "learner_decision": "Select cautious intravenous crystalloid preload support for hypotension due to right ventricular infarction rather than giving preload-reducing treatment.",
+      "learner_decision_token": "SELECT_CAUTIOUS_IV_CRYSTALLOID_PRELOAD_SUPPORT_FOR_HYPOTENSIVE_RIGHT_VENTRICULAR_INFARCTION",
+      "reasoning_pathway": "Infer infarct territory -> identify right-ventricular preload dependence -> choose hemodynamic support matched to that physiology.",
+      "reasoning_pathway_token": "INFARCT_TERRITORY_TO_RV_PRELOAD_DEPENDENCE_TO_HEMODYNAMIC_SUPPORT",
+      "decisive_discriminator": "Hypotension with elevated jugular venous pressure, clear lungs, and right-sided ST elevation indicates right-ventricular preload dependence rather than left-sided congestion.",
+      "decisive_discriminator_token": "HYPOTENSION_ELEVATED_JVP_CLEAR_LUNGS_AND_RIGHT_SIDED_ST_ELEVATION",
+      "intended_key": "Cautious intravenous crystalloid preload support",
+      "intended_key_token": "CAUTIOUS_IV_CRYSTALLOID_PRELOAD_SUPPORT",
+      "planned_contrast_set": [
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-STAB-C21-NITRATE-RV", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Give sublingual nitrate despite hypotension and right-ventricular preload dependence"},
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-STAB-C21-DIURESIS-RV", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Give intravenous loop diuresis despite clear lungs"},
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-STAB-C21-BETA-BLOCKER-RV", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Escalate beta blockade during hypotension"}
+      ],
+      "existing_evidence_refs": [
+        "ANCHOR-SU-C-21-COMPETENCY-emergency",
+        "ANCHOR-SU-C-21-COMPETENCY-complications"
+      ],
+      "evidence_status": "EVIDENCE_PENDING",
+      "evidence_gap": [
+        {
+          "gap_id": "QGEN-MED-007-ACS-CR10-GAP-01",
+          "exact_gap": "Current authoritative guidance is needed for the diagnostic hemodynamic pattern of right-ventricular infarction, cautious crystalloid preload support, nitrate avoidance in hypotension/right-ventricular infarction, and discriminators against diuresis or beta-blocker escalation in this exact stabilization context.",
+          "research_required": true
+        }
+      ],
+      "distinctness_fingerprint": "8cad50d5f8c40643abff5f28b558054ee287a9b4d5ede68ed6876b79f45d88ab"
+    },
+    {
+      "target_id": "QGEN-MED-007-ACS-CR10-T04",
+      "target_category": "ACUTE_STABILIZATION",
+      "planned_item_form": "EMERGENCY_STABILIZATION",
+      "physician_activity": "Management",
+      "learner_decision": "Prioritize emergency coronary revascularization while concurrently initiating shock support when acute myocardial infarction causes cardiogenic shock.",
+      "learner_decision_token": "PRIORITIZE_EMERGENCY_CORONARY_REVASCULARIZATION_WITH_CONCURRENT_SHOCK_SUPPORT_FOR_AMI_CARDIOGENIC_SHOCK",
+      "reasoning_pathway": "Recognize shock physiology -> link shock to acute myocardial infarction -> prioritize causal reperfusion while supporting perfusion.",
+      "reasoning_pathway_token": "SHOCK_PHENOTYPE_TO_MI_CAUSALITY_TO_REVASCULARIZATION_PRIORITY",
+      "decisive_discriminator": "Persistent hypotension with end-organ hypoperfusion caused by acute myocardial infarction makes revascularization time-critical; temporary hemodynamic support alone does not treat the cause.",
+      "decisive_discriminator_token": "PERSISTENT_HYPOPERFUSION_FROM_AMI_MAKES_REVASCULARIZATION_TIME_CRITICAL",
+      "intended_key": "Emergency coronary revascularization with concurrent shock support",
+      "intended_key_token": "EMERGENCY_CORONARY_REVASCULARIZATION_WITH_CONCURRENT_SHOCK_SUPPORT",
+      "planned_contrast_set": [
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-STAB-C21-VASOACTIVE-ONLY", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Use vasoactive support without urgent revascularization"},
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-STAB-C21-DEFER-ANGIOGRAPHY", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Defer angiography until shock has fully resolved"},
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-STAB-C21-FLUIDS-ONLY-SHOCK", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Use intravenous fluid resuscitation alone"}
+      ],
+      "existing_evidence_refs": [
+        "ANCHOR-SU-C-21-COMPETENCY-emergency",
+        "ANCHOR-SU-C-21-COMPETENCY-complications"
+      ],
+      "evidence_status": "EVIDENCE_PENDING",
+      "evidence_gap": [
+        {
+          "gap_id": "QGEN-MED-007-ACS-CR10-GAP-02",
+          "exact_gap": "Current authoritative guidance is needed for recognition of acute-MI cardiogenic shock, the priority and timing of emergency coronary revascularization with concurrent shock support, and why vasoactive support, fluids, or delayed angiography alone are insufficient.",
+          "research_required": true
+        }
+      ],
+      "distinctness_fingerprint": "171a46746e7caaefa31364dd02947a17b4db583deb4c1799ed8dc28bb70c8867"
+    },
+    {
+      "target_id": "QGEN-MED-007-ACS-CR10-T05",
+      "target_category": "MANAGEMENT_TREATMENT_SELECTION",
+      "planned_item_form": "INITIAL_MANAGEMENT",
+      "physician_activity": "Management",
+      "learner_decision": "Select aspirin plus guideline-concordant parenteral anticoagulation as initial antithrombotic treatment for confirmed NSTE-ACS when no bleeding contraindication is present.",
+      "learner_decision_token": "SELECT_ASPIRIN_PLUS_GUIDELINE_CONCORDANT_PARENTERAL_ANTICOAGULATION_FOR_CONFIRMED_NSTE_ACS_WITHOUT_BLEEDING_CONTRAINDICATION",
+      "reasoning_pathway": "Classify ACS subtype -> screen bleeding contraindications -> select the required antiplatelet and anticoagulant treatment components.",
+      "reasoning_pathway_token": "ACS_CLASSIFICATION_TO_BLEEDING_CONTRAINDICATION_SCREEN_TO_ANTITHROMBOTIC_SELECTION",
+      "decisive_discriminator": "Confirmed NSTE-ACS without a bleeding contraindication requires an antiplatelet and anticoagulant strategy; fibrinolysis is not the NSTE-ACS reperfusion pathway and either component alone is incomplete.",
+      "decisive_discriminator_token": "CONFIRMED_NSTE_ACS_WITHOUT_BLEEDING_CONTRAINDICATION_REQUIRES_ANTIPLATELET_AND_ANTICOAGULANT_COMPONENTS_NOT_FIBRINOLYSIS",
+      "intended_key": "Aspirin plus guideline-concordant parenteral anticoagulation",
+      "intended_key_token": "ASPIRIN_PLUS_GUIDELINE_CONCORDANT_PARENTERAL_ANTICOAGULATION",
+      "planned_contrast_set": [
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-MGMT-C21-FIBRINOLYSIS-NSTEACS", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Give fibrinolysis for NSTE-ACS"},
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-MGMT-C21-ASPIRIN-ONLY", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Use aspirin alone"},
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-MGMT-C21-ANTICOAGULATION-ONLY", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Use parenteral anticoagulation alone"}
+      ],
+      "existing_evidence_refs": [
+        "ANCHOR-SU-C-21-COMPETENCY-initial_management"
+      ],
+      "evidence_status": "EVIDENCE_PENDING",
+      "evidence_gap": [
+        {
+          "gap_id": "QGEN-MED-007-ACS-CR10-GAP-03",
+          "exact_gap": "Current authoritative Canadian-applicable guidance is needed for the initial aspirin and parenteral-anticoagulation strategy in confirmed NSTE-ACS, relevant bleeding contraindications/exceptions, and evidence-backed discriminators against fibrinolysis or single-component antithrombotic treatment.",
+          "research_required": true
+        }
+      ],
+      "distinctness_fingerprint": "1e349ef9c93fa8422d2381eb1d902beb4e1a0e01acc5a0634d0f1438e57d7513"
+    },
+    {
+      "target_id": "QGEN-MED-007-ACS-CR10-T06",
+      "target_category": "MANAGEMENT_TREATMENT_SELECTION",
+      "planned_item_form": "INITIAL_MANAGEMENT",
+      "physician_activity": "Management",
+      "learner_decision": "Choose immediate fibrinolysis followed by rapid transfer to a PCI-capable centre when diagnostic STEMI presents early, expected device time exceeds 120 minutes, bleeding risk is low, and fibrinolysis is not contraindicated.",
+      "learner_decision_token": "CHOOSE_IMMEDIATE_FIBRINOLYSIS_AND_RAPID_PCI_CENTRE_TRANSFER_WHEN_STEMI_DEVICE_TIME_EXCEEDS_120_MINUTES_AND_LYSIS_IS_ELIGIBLE",
+      "reasoning_pathway": "Establish reperfusion need -> compare device delay with threshold -> confirm fibrinolysis eligibility -> select a pharmacoinvasive pathway.",
+      "reasoning_pathway_token": "REPERFUSION_NEED_TO_DEVICE_DELAY_TO_LYSIS_ELIGIBILITY_TO_PHARMACOINVASIVE_PATHWAY",
+      "decisive_discriminator": "The expected device time is greater than 120 minutes while presentation is early, bleeding risk is low, and no fibrinolysis contraindication is present.",
+      "decisive_discriminator_token": "DEVICE_TIME_ABOVE_120_MINUTES_WITH_EARLY_PRESENTATION_LOW_BLEEDING_RISK_AND_NO_LYSIS_CONTRAINDICATION",
+      "intended_key": "Immediate fibrinolysis followed by rapid PCI-centre transfer",
+      "intended_key_token": "IMMEDIATE_FIBRINOLYSIS_FOLLOWED_BY_RAPID_PCI_CENTRE_TRANSFER",
+      "planned_contrast_set": [
+        {"contrast_edge_id": "CONTRAST-C21-MGMT-C22-DELAYED-PPCI", "edge_status": "VALIDATED_EXISTING"},
+        {"contrast_edge_id": "CONTRAST-C21-MGMT-C22-NO-TRANSFER", "edge_status": "VALIDATED_EXISTING"},
+        {"contrast_edge_id": "CONTRAST-C21-MGMT-C21-WAIT-TROPONIN", "edge_status": "VALIDATED_EXISTING"},
+        {"contrast_edge_id": "CONTRAST-C21-MGMT-VS03-AAS", "edge_status": "VALIDATED_EXISTING"}
+      ],
+      "existing_evidence_refs": [
+        "CLM-ACS-REPERFUSION-NO-DELAY-01",
+        "CLM-ACS-PHARMACOINVASIVE-01",
+        "CONTRAST-C21-MGMT-C22-DELAYED-PPCI",
+        "CONTRAST-C21-MGMT-C22-NO-TRANSFER",
+        "CONTRAST-C21-MGMT-C21-WAIT-TROPONIN",
+        "CONTRAST-C21-MGMT-VS03-AAS"
+      ],
+      "evidence_status": "EVIDENCE_COMPLETE_FOR_PREFLIGHT",
+      "evidence_gap": [],
+      "distinctness_fingerprint": "07e65e162c4e6ba7fc92121568d61b988a346444d92312a66a11f16cde6f163e"
+    },
+    {
+      "target_id": "QGEN-MED-007-ACS-CR10-T07",
+      "target_category": "CONTRAINDICATION_ADVERSE_EFFECT_REASONING",
+      "planned_item_form": "INITIAL_MANAGEMENT",
+      "physician_activity": "Management",
+      "learner_decision": "Select urgent transfer for primary PCI without fibrinolysis when diagnostic STEMI has an absolute fibrinolysis contraindication, even though expected device time exceeds the usual pharmacoinvasive threshold.",
+      "learner_decision_token": "SELECT_URGENT_TRANSFER_FOR_PRIMARY_PCI_WITHOUT_FIBRINOLYSIS_WHEN_STEMI_HAS_AN_ABSOLUTE_LYSIS_CONTRAINDICATION",
+      "reasoning_pathway": "Establish reperfusion need -> screen for fibrinolysis contraindications -> override the delay-based lysis branch -> choose the alternate reperfusion pathway.",
+      "reasoning_pathway_token": "STEMI_REPERFUSION_NEED_TO_CONTRAINDICATION_SCREEN_TO_ALTERNATE_REPERFUSION_PATHWAY",
+      "decisive_discriminator": "An absolute fibrinolysis contraindication overrides the otherwise eligible delay-based fibrinolysis branch; diagnostic STEMI still requires an urgent reperfusion plan.",
+      "decisive_discriminator_token": "ABSOLUTE_FIBRINOLYSIS_CONTRAINDICATION_OVERRIDES_THE_DELAY_BASED_LYSIS_BRANCH",
+      "intended_key": "Urgent transfer for primary PCI without fibrinolysis",
+      "intended_key_token": "URGENT_TRANSFER_FOR_PRIMARY_PCI_WITHOUT_FIBRINOLYSIS",
+      "planned_contrast_set": [
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-CONTRA-C21-FIBRINOLYSIS-DESPITE-CONTRAINDICATION", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Give fibrinolysis despite the absolute contraindication"},
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-CONTRA-C21-NO-REPERFUSION", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Provide medical therapy without an urgent reperfusion pathway"},
+        {"contrast_edge_id": "CONTRAST-C21-MGMT-C21-WAIT-TROPONIN", "edge_status": "VALIDATED_EXISTING"}
+      ],
+      "existing_evidence_refs": [
+        "CLM-ACS-REPERFUSION-NO-DELAY-01",
+        "CLM-ACS-PHARMACOINVASIVE-01",
+        "CONTRAST-C21-MGMT-C21-WAIT-TROPONIN"
+      ],
+      "evidence_status": "EVIDENCE_PENDING",
+      "evidence_gap": [
+        {
+          "gap_id": "QGEN-MED-007-ACS-CR10-GAP-04",
+          "exact_gap": "Current authoritative Canadian-applicable guidance is needed to enumerate the exact absolute fibrinolysis contraindication used in the future vignette and to support urgent primary-PCI transfer without fibrinolysis, including discriminators against giving lysis anyway or abandoning reperfusion.",
+          "research_required": true
+        }
+      ],
+      "distinctness_fingerprint": "659bf777edfd6f62c71ab7fea4b4f5c00417b1517f0e9f1a5be8a5567815356a"
+    },
+    {
+      "target_id": "QGEN-MED-007-ACS-CR10-T08",
+      "target_category": "COMPLICATION_RECOGNITION_MANAGEMENT",
+      "planned_item_form": "COMPLICATION_RECOGNITION",
+      "physician_activity": "Assessment/Diagnosis",
+      "learner_decision": "Recognize post-MI papillary muscle rupture causing acute severe mitral regurgitation from the timing, abrupt pulmonary edema, hypotension, and new apical systolic murmur.",
+      "learner_decision_token": "RECOGNIZE_POST_MI_PAPILLARY_MUSCLE_RUPTURE_CAUSING_ACUTE_SEVERE_MITRAL_REGURGITATION",
+      "reasoning_pathway": "Post-MI timing -> murmur location -> acute mitral-regurgitation physiology -> mechanical-complication diagnosis.",
+      "reasoning_pathway_token": "POST_MI_TIMING_TO_MURMUR_LOCATION_TO_ACUTE_MR_HEMODYNAMICS",
+      "decisive_discriminator": "Sudden pulmonary edema and an apical systolic murmur after myocardial infarction identify acute mitral regurgitation from papillary muscle rupture rather than another post-MI deterioration pattern.",
+      "decisive_discriminator_token": "SUDDEN_PULMONARY_EDEMA_AND_APICAL_SYSTOLIC_MURMUR_AFTER_MI",
+      "intended_key": "Papillary muscle rupture with acute severe mitral regurgitation",
+      "intended_key_token": "PAPILLARY_MUSCLE_RUPTURE_WITH_ACUTE_MITRAL_REGURGITATION",
+      "planned_contrast_set": [
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-COMP-C21-VENTRICULAR-SEPTAL-RUPTURE", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Post-MI ventricular septal rupture"},
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-COMP-C21-FREE-WALL-RUPTURE", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Post-MI free-wall rupture with tamponade"},
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-COMP-C21-RECURRENT-ISCHEMIA", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Recurrent ischemia without a mechanical complication"}
+      ],
+      "existing_evidence_refs": [
+        "ANCHOR-SU-C-21-COMPETENCY-complications"
+      ],
+      "evidence_status": "EVIDENCE_PENDING",
+      "evidence_gap": [
+        {
+          "gap_id": "QGEN-MED-007-ACS-CR10-GAP-05",
+          "exact_gap": "Current authoritative evidence is needed for the timing and diagnostic pattern of post-MI papillary muscle rupture with acute severe mitral regurgitation and for exact discriminators from ventricular septal rupture, free-wall rupture/tamponade, and recurrent ischemia without a mechanical lesion.",
+          "research_required": true
+        }
+      ],
+      "distinctness_fingerprint": "316d1908cbd2df71bfb86547b34c82712f0a73d90d651043726c1ee1d59a5278"
+    },
+    {
+      "target_id": "QGEN-MED-007-ACS-CR10-T09",
+      "target_category": "COMPLICATION_RECOGNITION_MANAGEMENT",
+      "planned_item_form": "INITIAL_MANAGEMENT",
+      "physician_activity": "Management",
+      "learner_decision": "Select an emergent cardiothoracic surgical repair pathway after echocardiography confirms post-MI ventricular septal rupture with hemodynamic collapse.",
+      "learner_decision_token": "SELECT_EMERGENT_CARDIOTHORACIC_SURGICAL_REPAIR_PATHWAY_FOR_CONFIRMED_POST_MI_VENTRICULAR_SEPTAL_RUPTURE_WITH_SHOCK",
+      "reasoning_pathway": "Confirm the mechanical septal defect -> assess shock severity -> distinguish temporary support from definitive repair.",
+      "reasoning_pathway_token": "MECHANICAL_DEFECT_CONFIRMATION_TO_SHOCK_SEVERITY_TO_DEFINITIVE_REPAIR",
+      "decisive_discriminator": "A confirmed post-MI septal defect with hemodynamic collapse requires a definitive surgical pathway; supportive medical therapy or coronary reperfusion alone does not close the rupture.",
+      "decisive_discriminator_token": "CONFIRMED_POST_MI_SEPTAL_DEFECT_WITH_HEMODYNAMIC_COLLAPSE_REQUIRES_DEFINITIVE_SURGICAL_PATHWAY",
+      "intended_key": "Emergent cardiothoracic surgical repair pathway",
+      "intended_key_token": "EMERGENT_CARDIOTHORACIC_SURGICAL_REPAIR_PATHWAY",
+      "planned_contrast_set": [
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-COMP-C21-MEDICAL-ONLY-VSR", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Continue medical stabilization without urgent surgical referral"},
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-COMP-C21-PCI-ONLY-VSR", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Perform coronary PCI as the only definitive intervention"},
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-COMP-C21-DELAYED-ELECTIVE-VSR-REPAIR", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Plan elective repair after discharge despite hemodynamic collapse"}
+      ],
+      "existing_evidence_refs": [
+        "ANCHOR-SU-C-21-COMPETENCY-complications"
+      ],
+      "evidence_status": "EVIDENCE_PENDING",
+      "evidence_gap": [
+        {
+          "gap_id": "QGEN-MED-007-ACS-CR10-GAP-06",
+          "exact_gap": "Current authoritative evidence is needed for definitive management and urgency of confirmed post-MI ventricular septal rupture with shock, the role of temporary stabilization, and why medical-only care, PCI alone, or elective outpatient repair are not adequate definitive pathways in this context.",
+          "research_required": true
+        }
+      ],
+      "distinctness_fingerprint": "4e8db0357a05b030f0e96cf7701984b35e2cc3bf9eb4cfed5da920c6210c7ccf"
+    },
+    {
+      "target_id": "QGEN-MED-007-ACS-CR10-T10",
+      "target_category": "RISK_DISPOSITION",
+      "planned_item_form": "INTERPRET_RESULTS",
+      "physician_activity": "Management",
+      "learner_decision": "Admit high-risk NSTE-ACS for early invasive coronary evaluation rather than discharge or outpatient testing when dynamic ischemic ECG changes and a troponin rise are present despite symptom resolution.",
+      "learner_decision_token": "ADMIT_HIGH_RISK_NSTE_ACS_FOR_EARLY_INVASIVE_CORONARY_EVALUATION_RATHER_THAN_OUTPATIENT_TESTING",
+      "reasoning_pathway": "Integrate ECG and biomarker risk features -> classify instability -> choose inpatient invasive disposition.",
+      "reasoning_pathway_token": "RISK_FEATURE_INTEGRATION_TO_INSTABILITY_CLASSIFICATION_TO_DISPOSITION",
+      "decisive_discriminator": "Dynamic ischemic ECG change and an acute troponin rise establish high-risk NSTE-ACS even if pain has resolved and current vital signs are stable.",
+      "decisive_discriminator_token": "DYNAMIC_ISCHEMIC_ECG_CHANGE_AND_TROPONIN_RISE_ESTABLISH_HIGH_RISK_NSTE_ACS_DESPITE_SYMPTOM_RESOLUTION",
+      "intended_key": "Admit for early invasive coronary evaluation",
+      "intended_key_token": "ADMIT_FOR_EARLY_INVASIVE_CORONARY_EVALUATION",
+      "planned_contrast_set": [
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-RISK-C21-DISCHARGE-SINGLE-NEGATIVE", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Discharge after one reassuring observation despite objective high-risk features"},
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-RISK-C21-OUTPATIENT-STRESS", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Arrange outpatient stress testing"},
+        {"contrast_edge_id": "PROPOSED-CONTRAST-C21-RISK-C21-OBSERVATION-NO-INVASIVE-PLAN", "edge_status": "PROPOSED_EVIDENCE_PENDING", "neighboring_choice": "Continue observation without an invasive evaluation plan"}
+      ],
+      "existing_evidence_refs": [
+        "SRC-MED-018-REC-01",
+        "SRC-MED-018-BOUNDARY-01",
+        "CLM-ACS-DIAGNOSIS-01",
+        "ANCHOR-SU-C-21-COMPETENCY-investigation"
+      ],
+      "evidence_status": "EVIDENCE_PENDING",
+      "evidence_gap": [
+        {
+          "gap_id": "QGEN-MED-007-ACS-CR10-GAP-07",
+          "exact_gap": "Current authoritative Canadian-applicable guidance is needed for the exact NSTE-ACS high-risk features that mandate inpatient early invasive coronary evaluation and for discriminators against discharge, outpatient stress testing, or observation without an invasive plan.",
+          "research_required": true
+        }
+      ],
+      "distinctness_fingerprint": "db5455cbe44706e47220158e39e8ae3d9742a291de7e2c643d8451acf5f84faf"
+    }
+  ]
+}

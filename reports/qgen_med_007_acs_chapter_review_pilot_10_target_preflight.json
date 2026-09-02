@@ -1,0 +1,165 @@
+{
+  "schema_version": "1.0",
+  "scope": "ACS_CHAPTER_REVIEW_PILOT_10_TARGET_PREFLIGHT",
+  "pilot_id": "QGEN-MED-007-ACS-CHAPTER-REVIEW-PILOT-10",
+  "reviewer_id": "QGEN-MED-007-ACS-CR10-TARGET-PREFLIGHT-REVIEWER",
+  "item_spec_path": "research/qgen/pilot/QGEN-MED-007.acs-chapter-review-pilot-10.item-spec.json",
+  "item_spec_sha256": "b32026a8b87b1b77733f069c3e8c19291d0fd31aaf6d8eddf6959ad6fd0c0109",
+  "allocation_effect": "NONE_EXPERIMENTAL_PILOT",
+  "target_count": 10,
+  "verdict": "PASS",
+  "verdict_basis": "All 10 targets are anchored to SU-C-21/MCC 14, have unique semantic fingerprints, test materially different educational decisions, and pass the complete 45-pair duplicate audit. Evidence-pending targets remain blocked from generation until their exact gaps and proposed edges are researched and validated.",
+  "generation_readiness": "BLOCKED_PENDING_TARGETED_EVIDENCE",
+  "generation_attempt_limit": 2,
+  "deterministic_checks": {
+    "target_count_exactly_10": "PASS",
+    "target_ids_unique": "PASS",
+    "distinctness_fingerprints_unique": "PASS",
+    "intended_keys_unique": "PASS",
+    "reasoning_pathway_tokens_unique": "PASS",
+    "decisive_discriminator_tokens_unique": "PASS",
+    "planned_contrast_sets_exact_duplicates": 0,
+    "demographic_rewording_targets": 0,
+    "pair_count_formula": "10*9/2",
+    "pair_count_expected": 45,
+    "pair_count_reviewed": 45,
+    "semantic_duplicate_pairs": 0,
+    "result": "PASS"
+  },
+  "category_distribution": {
+    "target_category": {
+      "SUPPORTED_DIAGNOSIS": 1,
+      "INVESTIGATION_INTERPRETATION": 1,
+      "ACUTE_STABILIZATION": 2,
+      "MANAGEMENT_TREATMENT_SELECTION": 2,
+      "CONTRAINDICATION_ADVERSE_EFFECT_REASONING": 1,
+      "COMPLICATION_RECOGNITION_MANAGEMENT": 2,
+      "RISK_DISPOSITION": 1
+    },
+    "planned_item_form": {
+      "MOST_LIKELY_DIAGNOSIS": 1,
+      "INTERPRET_RESULTS": 2,
+      "EMERGENCY_STABILIZATION": 2,
+      "INITIAL_MANAGEMENT": 4,
+      "COMPLICATION_RECOGNITION": 1
+    },
+    "physician_activity": {
+      "Assessment/Diagnosis": 3,
+      "Management": 7
+    },
+    "evidence_status": {
+      "EVIDENCE_COMPLETE_FOR_PREFLIGHT": 3,
+      "EVIDENCE_PENDING": 7
+    }
+  },
+  "gap_counts": {
+    "targets_with_evidence_gaps": 7,
+    "targets_without_evidence_gaps": 3,
+    "exact_evidence_gap_records": 7,
+    "proposed_new_contrast_edges": 20,
+    "existing_validated_contrast_edge_usages": 13,
+    "unique_existing_validated_contrast_edges_used": 12
+  },
+  "evidence_gaps": [
+    {
+      "gap_id": "QGEN-MED-007-ACS-CR10-GAP-01",
+      "target_id": "QGEN-MED-007-ACS-CR10-T03",
+      "exact_gap": "Right-ventricular infarction hemodynamic pattern, cautious crystalloid preload support, nitrate avoidance, and exact discriminators against diuresis or beta-blocker escalation."
+    },
+    {
+      "gap_id": "QGEN-MED-007-ACS-CR10-GAP-02",
+      "target_id": "QGEN-MED-007-ACS-CR10-T04",
+      "exact_gap": "Recognition of acute-MI cardiogenic shock, emergency revascularization priority with concurrent shock support, and exact discriminators against vasoactive-only, fluids-only, or delayed-angiography strategies."
+    },
+    {
+      "gap_id": "QGEN-MED-007-ACS-CR10-GAP-03",
+      "target_id": "QGEN-MED-007-ACS-CR10-T05",
+      "exact_gap": "Current Canadian-applicable initial aspirin and parenteral-anticoagulation strategy for confirmed NSTE-ACS, relevant bleeding exceptions, and exact discriminators against fibrinolysis or single-component therapy."
+    },
+    {
+      "gap_id": "QGEN-MED-007-ACS-CR10-GAP-04",
+      "target_id": "QGEN-MED-007-ACS-CR10-T07",
+      "exact_gap": "Exact absolute fibrinolysis contraindication to instantiate and the primary-PCI transfer pathway when fibrinolysis is prohibited, including no-reperfusion and lysis-anyway discriminators."
+    },
+    {
+      "gap_id": "QGEN-MED-007-ACS-CR10-GAP-05",
+      "target_id": "QGEN-MED-007-ACS-CR10-T08",
+      "exact_gap": "Timing and diagnostic pattern of papillary muscle rupture with acute severe mitral regurgitation and exact discriminators from septal rupture, free-wall rupture/tamponade, and recurrent ischemia."
+    },
+    {
+      "gap_id": "QGEN-MED-007-ACS-CR10-GAP-06",
+      "target_id": "QGEN-MED-007-ACS-CR10-T09",
+      "exact_gap": "Definitive management and urgency of post-MI ventricular septal rupture with shock, the role of temporary stabilization, and exact discriminators against medical-only, PCI-only, or elective repair pathways."
+    },
+    {
+      "gap_id": "QGEN-MED-007-ACS-CR10-GAP-07",
+      "target_id": "QGEN-MED-007-ACS-CR10-T10",
+      "exact_gap": "Current Canadian-applicable high-risk NSTE-ACS features requiring inpatient early invasive evaluation and exact discriminators against discharge, outpatient stress testing, or observation without an invasive plan."
+    }
+  ],
+  "pairwise_semantic_duplicate_audit": {
+    "comparison_dimensions": [
+      "learner_decision",
+      "physician_activity",
+      "reasoning_pathway",
+      "decisive_discriminator",
+      "intended_key",
+      "planned_contrast_set"
+    ],
+    "duplicate_rule": "FAIL when two targets test the same operative learner decision and differ only by demographics, incidental setting, wording, or a non-decisive vignette fact. Shared disease family or workflow adjacency is not duplication when the governing discriminator, reasoning path, and intended key materially change.",
+    "pairs": [
+      {"pair_id": "T01__T02", "target_ids": ["QGEN-MED-007-ACS-CR10-T01", "QGEN-MED-007-ACS-CR10-T02"], "decisive_difference": "T01 establishes a diagnosis from positive ECG/biomarker dynamics; T02 responds to early nondiagnostic tests with serial reassessment.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T01__T03", "target_ids": ["QGEN-MED-007-ACS-CR10-T01", "QGEN-MED-007-ACS-CR10-T03"], "decisive_difference": "T01 classifies NSTEMI; T03 stabilizes preload-dependent right-ventricular infarction hypotension.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T01__T04", "target_ids": ["QGEN-MED-007-ACS-CR10-T01", "QGEN-MED-007-ACS-CR10-T04"], "decisive_difference": "T01 is diagnosis; T04 prioritizes causal revascularization in cardiogenic shock.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T01__T05", "target_ids": ["QGEN-MED-007-ACS-CR10-T01", "QGEN-MED-007-ACS-CR10-T05"], "decisive_difference": "T01 identifies NSTEMI; T05 selects its initial antithrombotic components after classification and contraindication screening.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T01__T06", "target_ids": ["QGEN-MED-007-ACS-CR10-T01", "QGEN-MED-007-ACS-CR10-T06"], "decisive_difference": "T01 integrates ECG/troponin to diagnose NSTEMI; T06 uses STEMI logistics and lysis eligibility to choose pharmacoinvasive reperfusion.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T01__T07", "target_ids": ["QGEN-MED-007-ACS-CR10-T01", "QGEN-MED-007-ACS-CR10-T07"], "decisive_difference": "T01 is diagnostic classification; T07 is a contraindication-driven alternate STEMI reperfusion pathway.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T01__T08", "target_ids": ["QGEN-MED-007-ACS-CR10-T01", "QGEN-MED-007-ACS-CR10-T08"], "decisive_difference": "T01 identifies index NSTEMI; T08 recognizes a delayed mechanical complication from murmur and acute-MR physiology.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T01__T09", "target_ids": ["QGEN-MED-007-ACS-CR10-T01", "QGEN-MED-007-ACS-CR10-T09"], "decisive_difference": "T01 selects a diagnosis; T09 selects definitive surgical management after a septal rupture is already confirmed.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T01__T10", "target_ids": ["QGEN-MED-007-ACS-CR10-T01", "QGEN-MED-007-ACS-CR10-T10"], "decisive_difference": "T01 names NSTEMI; T10 uses objective high-risk features to determine inpatient invasive disposition.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T02__T03", "target_ids": ["QGEN-MED-007-ACS-CR10-T02", "QGEN-MED-007-ACS-CR10-T03"], "decisive_difference": "T02 interprets early negative tests; T03 treats right-ventricular preload-dependent hypotension.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T02__T04", "target_ids": ["QGEN-MED-007-ACS-CR10-T02", "QGEN-MED-007-ACS-CR10-T04"], "decisive_difference": "T02 preserves diagnostic uncertainty and retests; T04 recognizes established AMI shock and does not delay revascularization.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T02__T05", "target_ids": ["QGEN-MED-007-ACS-CR10-T02", "QGEN-MED-007-ACS-CR10-T05"], "decisive_difference": "T02 is an investigation choice before ACS confirmation; T05 is antithrombotic treatment after confirmed NSTE-ACS.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T02__T06", "target_ids": ["QGEN-MED-007-ACS-CR10-T02", "QGEN-MED-007-ACS-CR10-T06"], "decisive_difference": "T02 repeats nondiagnostic tests; T06 acts immediately on diagnostic STEMI using a delay threshold and lysis eligibility.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T02__T07", "target_ids": ["QGEN-MED-007-ACS-CR10-T02", "QGEN-MED-007-ACS-CR10-T07"], "decisive_difference": "T02 requires serial confirmation; T07 has diagnostic STEMI and uses an absolute contraindication to redirect reperfusion.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T02__T08", "target_ids": ["QGEN-MED-007-ACS-CR10-T02", "QGEN-MED-007-ACS-CR10-T08"], "decisive_difference": "T02 resolves early ACS uncertainty; T08 diagnoses a mechanical post-MI complication from a new murmur and pulmonary edema.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T02__T09", "target_ids": ["QGEN-MED-007-ACS-CR10-T02", "QGEN-MED-007-ACS-CR10-T09"], "decisive_difference": "T02 chooses serial diagnostic testing; T09 chooses urgent definitive surgery for a confirmed structural defect.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T02__T10", "target_ids": ["QGEN-MED-007-ACS-CR10-T02", "QGEN-MED-007-ACS-CR10-T10"], "decisive_difference": "Both interpret ECG/troponin, but T02 tests whether ACS remains unexcluded while T10 tests disposition after objective high-risk NSTE-ACS is established.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T03__T04", "target_ids": ["QGEN-MED-007-ACS-CR10-T03", "QGEN-MED-007-ACS-CR10-T04"], "decisive_difference": "Both stabilize hemodynamics, but T03 is preload selection in right-ventricular infarction whereas T04 is reperfusion priority in global hypoperfusion from cardiogenic shock.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T03__T05", "target_ids": ["QGEN-MED-007-ACS-CR10-T03", "QGEN-MED-007-ACS-CR10-T05"], "decisive_difference": "T03 selects physiology-matched fluid support; T05 selects antithrombotic therapy based on ACS subtype and bleeding eligibility.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T03__T06", "target_ids": ["QGEN-MED-007-ACS-CR10-T03", "QGEN-MED-007-ACS-CR10-T06"], "decisive_difference": "T03 addresses immediate preload-dependent hypotension; T06 chooses a regional reperfusion strategy from device delay and lysis eligibility.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T03__T07", "target_ids": ["QGEN-MED-007-ACS-CR10-T03", "QGEN-MED-007-ACS-CR10-T07"], "decisive_difference": "T03 is hemodynamic stabilization; T07 is contraindication-based selection between reperfusion pathways.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T03__T08", "target_ids": ["QGEN-MED-007-ACS-CR10-T03", "QGEN-MED-007-ACS-CR10-T08"], "decisive_difference": "T03 infers right-ventricular preload dependence and treats it; T08 recognizes acute mitral regurgitation from a post-MI mechanical lesion.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T03__T09", "target_ids": ["QGEN-MED-007-ACS-CR10-T03", "QGEN-MED-007-ACS-CR10-T09"], "decisive_difference": "T03 chooses temporary hemodynamic support for RV infarction; T09 chooses definitive repair for confirmed ventricular septal rupture.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T03__T10", "target_ids": ["QGEN-MED-007-ACS-CR10-T03", "QGEN-MED-007-ACS-CR10-T10"], "decisive_difference": "T03 manages unstable preload physiology; T10 determines disposition for currently stable but objectively high-risk NSTE-ACS.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T04__T05", "target_ids": ["QGEN-MED-007-ACS-CR10-T04", "QGEN-MED-007-ACS-CR10-T05"], "decisive_difference": "T04 prioritizes emergency revascularization in shock; T05 chooses initial NSTE-ACS antithrombotic components without shock.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T04__T06", "target_ids": ["QGEN-MED-007-ACS-CR10-T04", "QGEN-MED-007-ACS-CR10-T06"], "decisive_difference": "T04 is driven by cardiogenic shock and causal reperfusion urgency; T06 is driven by a regional device-time threshold and fibrinolysis eligibility in a stable early presenter.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T04__T07", "target_ids": ["QGEN-MED-007-ACS-CR10-T04", "QGEN-MED-007-ACS-CR10-T07"], "decisive_difference": "T04 prioritizes revascularization because of shock physiology; T07 selects PCI transfer because fibrinolysis is prohibited.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T04__T08", "target_ids": ["QGEN-MED-007-ACS-CR10-T04", "QGEN-MED-007-ACS-CR10-T08"], "decisive_difference": "T04 manages cardiogenic shock at syndrome level; T08 diagnoses a specific acute-mitral-regurgitation mechanical cause using a murmur pattern.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T04__T09", "target_ids": ["QGEN-MED-007-ACS-CR10-T04", "QGEN-MED-007-ACS-CR10-T09"], "decisive_difference": "T04 treats infarct-related shock through coronary revascularization; T09 treats a confirmed septal rupture through cardiothoracic repair.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T04__T10", "target_ids": ["QGEN-MED-007-ACS-CR10-T04", "QGEN-MED-007-ACS-CR10-T10"], "decisive_difference": "T04 is emergency shock stabilization; T10 is risk-based inpatient disposition for stable high-risk NSTE-ACS.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T05__T06", "target_ids": ["QGEN-MED-007-ACS-CR10-T05", "QGEN-MED-007-ACS-CR10-T06"], "decisive_difference": "Both select treatment, but T05 chooses NSTE-ACS antithrombotics while T06 chooses a STEMI reperfusion route from system delay and lysis eligibility.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T05__T07", "target_ids": ["QGEN-MED-007-ACS-CR10-T05", "QGEN-MED-007-ACS-CR10-T07"], "decisive_difference": "T05 screens bleeding risk to select NSTE-ACS antithrombotics; T07 applies an absolute fibrinolysis contraindication to redirect STEMI reperfusion.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T05__T08", "target_ids": ["QGEN-MED-007-ACS-CR10-T05", "QGEN-MED-007-ACS-CR10-T08"], "decisive_difference": "T05 is initial antithrombotic treatment; T08 is mechanical-complication diagnosis.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T05__T09", "target_ids": ["QGEN-MED-007-ACS-CR10-T05", "QGEN-MED-007-ACS-CR10-T09"], "decisive_difference": "T05 selects pharmacologic treatment for NSTE-ACS; T09 selects definitive surgical repair after a structural complication.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T05__T10", "target_ids": ["QGEN-MED-007-ACS-CR10-T05", "QGEN-MED-007-ACS-CR10-T10"], "decisive_difference": "T05 chooses antithrombotic treatment components; T10 chooses site and timing of further care from high-risk features.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T06__T07", "target_ids": ["QGEN-MED-007-ACS-CR10-T06", "QGEN-MED-007-ACS-CR10-T07"], "relatedness": "HIGH_SAME_REPERFUSION_ALGORITHM", "decisive_difference": "T06 tests the delay-plus-eligibility branch and keys fibrinolysis with transfer; T07 tests an absolute contraindication override and keys PCI transfer without fibrinolysis.", "verdict": "PASS_CLOSE_BUT_DISTINCT"},
+      {"pair_id": "T06__T08", "target_ids": ["QGEN-MED-007-ACS-CR10-T06", "QGEN-MED-007-ACS-CR10-T08"], "decisive_difference": "T06 is acute reperfusion logistics; T08 is recognition of a later mechanical complication.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T06__T09", "target_ids": ["QGEN-MED-007-ACS-CR10-T06", "QGEN-MED-007-ACS-CR10-T09"], "decisive_difference": "T06 selects fibrinolysis plus PCI transfer for the index STEMI; T09 selects surgical repair for a confirmed post-MI septal rupture.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T06__T10", "target_ids": ["QGEN-MED-007-ACS-CR10-T06", "QGEN-MED-007-ACS-CR10-T10"], "decisive_difference": "T06 uses STEMI time-to-device logistics; T10 uses NSTE-ACS risk features for inpatient invasive disposition.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T07__T08", "target_ids": ["QGEN-MED-007-ACS-CR10-T07", "QGEN-MED-007-ACS-CR10-T08"], "decisive_difference": "T07 is a treatment-contraindication decision at index STEMI; T08 is diagnosis of papillary muscle rupture after MI.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T07__T09", "target_ids": ["QGEN-MED-007-ACS-CR10-T07", "QGEN-MED-007-ACS-CR10-T09"], "decisive_difference": "T07 redirects coronary reperfusion because lysis is unsafe; T09 chooses cardiac surgery because a septal defect is confirmed.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T07__T10", "target_ids": ["QGEN-MED-007-ACS-CR10-T07", "QGEN-MED-007-ACS-CR10-T10"], "decisive_difference": "T07 is contraindication-based emergency STEMI management; T10 is high-risk NSTE-ACS disposition.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T08__T09", "target_ids": ["QGEN-MED-007-ACS-CR10-T08", "QGEN-MED-007-ACS-CR10-T09"], "relatedness": "HIGH_POST_MI_MECHANICAL_COMPLICATIONS", "decisive_difference": "T08 requires diagnosis of papillary muscle rupture from an acute-MR pattern; T09 starts from confirmed ventricular septal rupture and requires selection of definitive surgical management.", "verdict": "PASS_CLOSE_BUT_DISTINCT"},
+      {"pair_id": "T08__T10", "target_ids": ["QGEN-MED-007-ACS-CR10-T08", "QGEN-MED-007-ACS-CR10-T10"], "decisive_difference": "T08 recognizes acute mechanical deterioration; T10 risk-stratifies a stable NSTE-ACS presentation for disposition.", "verdict": "PASS_DISTINCT"},
+      {"pair_id": "T09__T10", "target_ids": ["QGEN-MED-007-ACS-CR10-T09", "QGEN-MED-007-ACS-CR10-T10"], "decisive_difference": "T09 selects emergency surgery for a confirmed structural rupture with shock; T10 selects early invasive coronary evaluation for high-risk NSTE-ACS without a mechanical rupture.", "verdict": "PASS_DISTINCT"}
+    ]
+  },
+  "pre_generation_constraints": [
+    "Do not generate stems or options until all seven exact evidence gaps are closed with assertion-level references.",
+    "Do not promote any of the 20 proposed contrast edges to VALIDATED without scenario-bound discriminator evidence and canonical provenance.",
+    "Re-run semantic duplicate review after evidence research if any intended key, reasoning pathway, decisive discriminator, or contrast set materially changes.",
+    "Do not replace an evidence-blocked target with a demographic or wording variant merely to retain a count of 10.",
+    "Do not consume or alter the frozen QGEN-MED-007 allocation; this remains an experimental pilot."
+  ]
+}
