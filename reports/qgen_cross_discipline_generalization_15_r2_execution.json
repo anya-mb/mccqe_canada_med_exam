@@ -1,0 +1,115 @@
+{
+  "baseline_commit": "c69fbae7a8814114cbafd92ff2f6dfb3eca0fb2f",
+  "defect_counts": {
+    "AMBIGUOUS_BEST_ANSWER": 1,
+    "ANCHOR_FIDELITY_FAILURE": 0,
+    "CONTEXT_NECESSITY_FAILURE": 6,
+    "COVER_OPTIONS_FAILURE": 0,
+    "DECISION_GRANULARITY_FAILURE": 2,
+    "FACTUAL_ERROR": 4,
+    "MATERIAL_DUPLICATION": 0,
+    "OPTION_CUE_FAILURE": 7,
+    "PLAN_MISMATCH": 0,
+    "RATIONALE_DEFICIENCY": 14,
+    "UNSUPPORTED_CLAIM": 6,
+    "WEAK_DISTRACTOR": 14
+  },
+  "derivative_of": "cross_discipline_generalization_15",
+  "diagnosis": {
+    "common_layer_failure_confirmed": true,
+    "confirming_evidence": {
+      "failed_run": "All 45 competitors across all 15 baseline items cited exactly one claim each, always the anchor key claim for that item; 15 claims served 15 items.",
+      "layer_attribution": {
+        "CONTRAST_COMPETITIVENESS": 5,
+        "CONTRAST_EVIDENCE": 3,
+        "DECISION_GRANULARITY": 1,
+        "OPTION_REALIZATION": 3
+      },
+      "positive_control": "In the successful 9/10 Cardiology pilot, competitors carried a competitor-specific claim in addition to the anchor claim."
+    },
+    "primary_root_cause": "The contrast layer enforced only referential consistency between an item competitor and its library edge. It required the competitor's evidence set to equal the edge's evidence set, never that the competitor's own plausibility and disqualification be traceable to evidence about the competitor concept, and never that either be grounded in the stem the candidate reads. Concept-level edges built on a single anchor claim therefore satisfied every gate.",
+    "secondary_root_causes": [
+      "The distractor adversarial review was a boolean checkbox map with no required grounding, so a competitor that was implausible under the actual stem could not be detected.",
+      "Polarity and completeness were assessed only after surface realization, by lexical and structural heuristics blind to semantic option-set architecture."
+    ]
+  },
+  "evidence_traceability": "PASS",
+  "fail_closed_no_valid_contrast_set": [
+    {
+      "discipline": "SURGERY",
+      "reason": "Two candidate contrast sets were attempted. Neither could supply an evidence-supported discriminator for the competing diagnoses: the source lists the gynaecological and gastrointestinal causes of right lower quadrant pain only as causes that imaging is used to rule out, and supplies no clinical feature that separates them from appendicitis. Manufacturing a discriminator was refused.",
+      "target_id": "QGEN-GEN-SURG-T01"
+    }
+  ],
+  "fix_effect_on_original_failure_mode": "The original mode is closed. Every competitor now carries competitor-specific evidence distinct from the anchor claim, and evidence traceability moved from FAIL to PASS. Unsupported competitor-evidence binding did not recur.",
+  "frozen_artifacts_changed": 0,
+  "generated": 14,
+  "historical_artifacts_changed": 0,
+  "independent_context": "PASS",
+  "independent_verification": 1,
+  "new_failure_modes_introduced": [
+    "EXCLUSION_BY_EXPLICIT_STEM_NEGATION, induced by requiring every defeating stem feature to be a verbatim stem quote.",
+    "KEY_AS_CATEGORY_ODD_ONE_OUT, not covered by the preflight's polarity, completeness and scope dimensions."
+  ],
+  "next_step": "IMPLEMENT_SECOND_BOUNDED_GENERAL_FIX",
+  "pilot_id": "cross_discipline_generalization_15_r2",
+  "production_change_summary": "Added staged schema 1.3 with two new fail-closed gates in scripts/qbank/chapter_staged_generation.py: CONTEXTUAL_COMPETITOR_PROOF, which requires each competitor to prove context-specific plausibility and an evidence-supported disqualifying discriminator against verbatim stem features and competitor-specific claims; and SEMANTIC_POLARITY_COMPLETENESS_PREFLIGHT, which rejects an unfair semantic competitor set before any surface wording exists.",
+  "production_code_changed": true,
+  "production_validator_result": {
+    "gate_failure_note": "The new gate rejected the first paediatric investigation item because its key was grounded on a competitor-specific claim rather than an anchor claim; the anchor claim was added.",
+    "gate_failures_repaired": 1,
+    "items_submitted": 14,
+    "items_validated": 14
+  },
+  "recommendation_rationale": "Both surviving failure modes are general rather than discipline-specific, and both sit in the same bounded layer just repaired. The competitor-proof gate needs the defeating feature to be derivable from positive stem findings rather than quotable from an explicit negation, and the preflight needs an option-category homogeneity dimension. Discipline-specific generators remain unjustified.",
+  "recommended_architecture_action": "ONE_MORE_BOUNDED_GENERAL_FIX",
+  "recurring_systemic_failure_modes": [
+    {
+      "attributed_to": "The CONTEXTUAL_COMPETITOR_PROOF requirement that every defeating stem feature be a verbatim stem quote.",
+      "description": "Stems terminate in clauses that verbatim negate each competitor's defining feature, converting clinical reasoning into stem-to-option text matching and destroying distractor competitiveness.",
+      "disciplines": [
+        "PED",
+        "OBGYN",
+        "SURG",
+        "PSY",
+        "PHELO"
+      ],
+      "mode": "EXCLUSION_BY_EXPLICIT_STEM_NEGATION"
+    },
+    {
+      "attributed_to": "The polarity and completeness preflight has no option-category homogeneity dimension.",
+      "description": "Three competitors share one action category and the key is the sole member of another, so the key is identifiable from option structure alone.",
+      "disciplines": [
+        "PED",
+        "OBGYN",
+        "PSY",
+        "PHELO"
+      ],
+      "mode": "KEY_AS_CATEGORY_ODD_ONE_OUT"
+    },
+    {
+      "attributed_to": "The existing lineage rule binding correct.why_best to the final reasoning-chain step.",
+      "description": "Every key rationale is a directive to the item writer rather than an explanation to the candidate.",
+      "disciplines": [
+        "PED",
+        "OBGYN",
+        "SURG",
+        "PSY",
+        "PHELO"
+      ],
+      "mode": "IMPERATIVE_KEY_RATIONALE"
+    }
+  ],
+  "retest_assessment": "FAILURE",
+  "retest_protocol": {
+    "anchors_and_learner_decisions_reused": true,
+    "evidence_note": "Baseline OBGYN claims cited PHAC maternity chapters that do not contain mastitis clinical content, so the retest replaced them with ABM Clinical Protocol #36; the paywalled WSES 2025 edition was replaced with the CAGS acute appendicitis chapter, and CANMAT/ISBD 2018 was added for the bipolar competitor.",
+    "evidence_reused": false,
+    "max_candidate_contrast_sets_per_target": 2,
+    "targets_reused": 15
+  },
+  "schema_version": "1.0",
+  "scope": "CROSS_DISCIPLINE_GENERALIZATION_RETEST_EXECUTION",
+  "total_generated": 14,
+  "total_passed": 1
+}

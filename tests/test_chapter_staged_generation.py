@@ -15,6 +15,7 @@ from qbank.chapter_staged_generation import (
     find_option_text_cues,
     find_option_shape_cues,
     find_option_position_cues,
+    find_polarity_completeness_defects,
     resolve_chapter_anchor,
     retrieve_global_contrasts,
     validate_contrast_library,
@@ -946,3 +947,388 @@ def test_option_cue_review_reconciles_verdict_with_candidate_status():
     passed_review["staged_artifact_sha256"] = canonical_sha256(passed_as_rejected)
     with pytest.raises(ChapterStagedGenerationError, match="candidate status"):
         validate_option_cue_review(passed_as_rejected, passed_review)
+
+
+STAGES_V3 = STAGES_V2[:12] + ["DECISION_GRANULARITY_PARITY"] + STAGES_V2[12:]
+STAGES_V4 = (
+    STAGES_V3[:8]
+    + ["CONTEXTUAL_COMPETITOR_PROOF"]
+    + STAGES_V3[8:10]
+    + ["SEMANTIC_POLARITY_COMPLETENESS_PREFLIGHT"]
+    + STAGES_V3[10:]
+)
+STEM_SUPPORT = "acute central chest pressure"
+STEM_DEFEAT = "new regional ischemic ECG change"
+
+
+def _semantic_option(role: str, text: str, **overrides) -> dict:
+    """An abstracted semantic option record for the preflight gate."""
+    row = {
+        "role": role,
+        "semantic_option_text": text,
+        "semantic_polarity": "AFFIRMATIVE_ACTION",
+        "polarity_rationale": "Declared after reading the option against the stem.",
+        "strategy_completeness": "COMPLETE_STRATEGY",
+        "decision_scope": "IMMEDIATE_CLINICAL_DECISION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "specificity_level": 2,
+        "independent_action_components": ["primary-action"],
+        "action_or_concept_head": text.split()[0].lower(),
+        "medically_required_modifiers": [],
+    }
+    row.update(overrides)
+    return row
+
+
+def _upgrade_to_schema_1_3(item: dict) -> dict:
+    """Add the contextual competitor proof and semantic polarity preflight stages."""
+    item = _upgrade_to_schema_1_1(item)
+    item["schema_version"] = "1.3"
+    item["stage_sequence"] = STAGES_V4
+    anchor = item["anchor"]
+    matrix = item["contrastive_evidence_matrix"]
+    key_refs = matrix["key"]["anchor_evidence_refs"]
+
+    proofs = []
+    for index, row in enumerate(matrix["competitors"]):
+        competitor_refs = [
+            ref for ref in row["authoritative_evidence_refs"] if ref not in key_refs
+        ]
+        proofs.append({
+            "contrast_id": row["contrast_id"],
+            "competitor_concept_id": f"CONCEPT-{row['contrast_id']}",
+            "anchor_concept_id": "CONCEPT-ACS",
+            "learner_decision": anchor["primary_learner_decision"],
+            "option_dimension": "DIAGNOSIS",
+            "decision_granularity": "DIAGNOSIS",
+            "why_plausible_in_this_specific_context": (
+                f"This stem's {STEM_SUPPORT} is genuinely compatible with {row['contrast_concept']}."
+            ),
+            "supporting_stem_features": [
+                {"feature": "acute-chest-pressure", "polarity": "PRESENT", "stem_quote": STEM_SUPPORT},
+            ],
+            "plausible_partial_reasoning": (
+                "A candidate who stops at the presenting symptom selects this competitor."
+            ),
+            "decisive_discriminator": (
+                f"The {STEM_DEFEAT} is not expected in {row['contrast_concept']}."
+            ),
+            "defeating_stem_features": [
+                {"feature": "regional-ischemic-ecg", "polarity": "PRESENT", "stem_quote": STEM_DEFEAT},
+            ],
+            "evidence_refs_for_plausibility": competitor_refs,
+            "evidence_refs_for_discriminator": competitor_refs,
+            "same_decision_alternative": True,
+            "polarity_parallel": True,
+            "completeness_parallel": True,
+            "competitor_status": "VALIDATED",
+            "adversarial_hidden_key_test": {
+                "reviewer_id": "adversarial-competitor-reviewer",
+                "could_reasonably_select": True,
+                "selection_reasoning": (
+                    "With the key hidden, this competitor explains the presenting complaint."
+                ),
+                "defeating_feature": "regional-ischemic-ecg",
+                "verdict": "PASS",
+            },
+        })
+    competitor_proof = {
+        "reviewer_id": "contextual-competitor-prover",
+        "matrix_sha256": _sha(matrix),
+        "proofs": proofs,
+        "verdict": "PASS",
+    }
+    item["contextual_competitor_proof"] = competitor_proof
+
+    proofs_by_id = {row["contrast_id"]: row for row in proofs}
+    for distractor in item["distractor_construction"]["distractors"]:
+        proof = proofs_by_id[distractor["contrast_id"]]
+        distractor["why_temporarily_plausible"] = proof["why_plausible_in_this_specific_context"]
+        distractor["disqualifying_discriminant"] = proof["decisive_discriminator"]
+        distractor["evidence_refs"] = sorted(
+            set(proof["evidence_refs_for_plausibility"])
+            | set(proof["evidence_refs_for_discriminator"])
+        )
+    construction = item["distractor_construction"]
+    adversarial = item["distractor_adversarial_review"]
+    adversarial["construction_sha256"] = _sha(construction)
+
+    preflight_options = []
+    for option in item["option_realization"]["options"]:
+        preflight_options.append(_semantic_option(
+            option["role"],
+            option["semantic_option_text"],
+            decision_granularity="DIAGNOSIS",
+            decision_scope="CHEST_PAIN_DIAGNOSTIC_DECISION",
+            independent_action_components=[option["semantic_option_text"]],
+            action_or_concept_head=option["semantic_option_text"],
+            **({"contrast_id": option["contrast_id"]} if option["role"] == "DISTRACTOR" else {}),
+        ))
+    preflight = {
+        "reviewer_id": "polarity-completeness-reviewer",
+        "adversarial_review_sha256": _sha(adversarial),
+        "options": preflight_options,
+        "deterministic_findings": [],
+        "key_identifiable_without_medical_reasoning": False,
+        "verdict": "PASS",
+    }
+    item["semantic_polarity_completeness_preflight"] = preflight
+
+    realization = item["option_realization"]
+    realization["adversarial_review_sha256"] = _sha(adversarial)
+    for option in realization["options"]:
+        if option["role"] == "DISTRACTOR":
+            option["evidence_refs"] = next(
+                row["evidence_refs"]
+                for row in construction["distractors"]
+                if row["contrast_id"] == option["contrast_id"]
+            )
+        option["decision_granularity"] = "DIAGNOSIS"
+        option["action_or_concept_head"] = option["semantic_option_text"]
+        option["medically_required_modifiers"] = []
+        option["independent_action_components"] = [option["semantic_option_text"]]
+        option["specificity_level"] = 2
+        option["semantic_meaning_fingerprint"] = _sha({
+            "semantic_option_text": option["semantic_option_text"],
+            "decision_granularity": option["decision_granularity"],
+            "action_or_concept_head": option["action_or_concept_head"],
+            "medically_required_modifiers": option["medically_required_modifiers"],
+            "independent_action_components": option["independent_action_components"],
+            "specificity_level": option["specificity_level"],
+        })
+    review = item["parallel_option_set_review"]
+    review["realization_sha256"] = _sha(realization)
+    assembly = item["assembly"]
+    assembly["parallel_option_set_review_sha256"] = _sha(review)
+    assembly["approved_component_sha256"] = {
+        "open_ended": _sha(item["open_ended_stem_key"]),
+        "option_realization": _sha(realization),
+        "parallel_option_set_review": _sha(review),
+    }
+    item["acceptance_review"]["assembly_sha256"] = _sha(assembly)
+    rationales = item["rationales"]
+    rationales["acceptance_sha256"] = _sha(item["acceptance_review"])
+    for row, distractor in zip(rationales["distractors"], construction["distractors"], strict=True):
+        row["why_plausible"] = distractor["why_temporarily_plausible"]
+        row["exact_discriminator"] = distractor["disqualifying_discriminant"]
+        row["evidence_refs"] = distractor["evidence_refs"]
+    return item
+
+
+def _staged_1_3() -> tuple[dict, dict, dict]:
+    evidence = _evidence()
+    library = _library(evidence)
+    return _upgrade_to_schema_1_3(_staged_item(evidence, library)), library, evidence
+
+
+def test_schema_1_3_accepts_contextually_proven_clinical_competitors():
+    item, library, evidence = _staged_1_3()
+    assert validate_staged_item(REPO, item, library, evidence) is item
+
+
+def test_contextual_proof_rejects_semantically_related_but_ungrounded_competitor():
+    """A concept-level neighbour whose plausibility is not visible in this stem."""
+    item, library, evidence = _staged_1_3()
+    item["contextual_competitor_proof"]["proofs"][0]["supporting_stem_features"] = [
+        {"feature": "wheeze", "polarity": "PRESENT", "stem_quote": "diffuse symmetric wheeze"},
+    ]
+    with pytest.raises(ChapterStagedGenerationError, match="not stated in the stem"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_contextual_proof_rejects_discriminator_supported_only_by_the_anchor_claim():
+    """The exact cross-discipline defect: one anchor claim used for every competitor."""
+    item, library, evidence = _staged_1_3()
+    item["contextual_competitor_proof"]["proofs"][0]["evidence_refs_for_discriminator"] = ["CLM-KEY"]
+    with pytest.raises(ChapterStagedGenerationError, match="beyond the anchor key claim"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_contextual_proof_rejects_plausibility_supported_only_by_the_anchor_claim():
+    item, library, evidence = _staged_1_3()
+    item["contextual_competitor_proof"]["proofs"][1]["evidence_refs_for_plausibility"] = ["CLM-KEY"]
+    with pytest.raises(ChapterStagedGenerationError, match="beyond the anchor key claim"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_contextual_proof_rejects_a_feature_that_both_supports_and_defeats():
+    item, library, evidence = _staged_1_3()
+    proof = item["contextual_competitor_proof"]["proofs"][0]
+    proof["defeating_stem_features"] = proof["supporting_stem_features"]
+    proof["adversarial_hidden_key_test"]["defeating_feature"] = "acute-chest-pressure"
+    with pytest.raises(ChapterStagedGenerationError, match="both establish and defeat"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_contextual_proof_rejects_competitor_at_a_different_decision_granularity():
+    item, library, evidence = _staged_1_3()
+    item["contextual_competitor_proof"]["proofs"][2]["decision_granularity"] = "MANAGEMENT_STRATEGY"
+    with pytest.raises(ChapterStagedGenerationError, match="single comparable set"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_contextual_proof_rejects_competitor_answering_a_different_learner_decision():
+    item, library, evidence = _staged_1_3()
+    item["contextual_competitor_proof"]["proofs"][0]["learner_decision"] = "Choose an antithrombotic regimen."
+    with pytest.raises(ChapterStagedGenerationError, match="anchored learner decision"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_adversarial_hidden_key_test_must_find_the_competitor_selectable():
+    item, library, evidence = _staged_1_3()
+    item["contextual_competitor_proof"]["proofs"][3]["adversarial_hidden_key_test"][
+        "could_reasonably_select"
+    ] = False
+    with pytest.raises(ChapterStagedGenerationError, match="reasonably selectable"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_adversarial_hidden_key_test_must_cite_a_proven_discriminator():
+    item, library, evidence = _staged_1_3()
+    item["contextual_competitor_proof"]["proofs"][0]["adversarial_hidden_key_test"][
+        "defeating_feature"
+    ] = "an unproven feature"
+    with pytest.raises(ChapterStagedGenerationError, match="discriminator absent from the proof"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_schema_1_3_distractor_must_carry_context_specific_reasoning():
+    item, library, evidence = _staged_1_3()
+    item["distractor_construction"]["distractors"][0]["why_temporarily_plausible"] = (
+        "A partially knowledgeable graduate overweights an overlapping feature."
+    )
+    with pytest.raises(ChapterStagedGenerationError, match="contextual competitor proof"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_schema_1_3_requires_a_fresh_adversarial_competitor_reviewer():
+    item, library, evidence = _staged_1_3()
+    for proof in item["contextual_competitor_proof"]["proofs"]:
+        proof["adversarial_hidden_key_test"]["reviewer_id"] = "distractor-reviewer"
+    with pytest.raises(ChapterStagedGenerationError, match="fresh staged reviewers"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_polarity_preflight_rejects_key_as_the_only_continuation_choice():
+    """Abstracted from the lactation item whose distractors were all cessation variants."""
+    options = [
+        _semantic_option("KEY", "Continue treatment from the affected site"),
+        _semantic_option("DISTRACTOR", "Stop treatment at the affected site", semantic_polarity="NEGATING_ACTION"),
+        _semantic_option("DISTRACTOR", "Discard the product of the affected site", semantic_polarity="NEGATING_ACTION"),
+        _semantic_option("DISTRACTOR", "Replace the affected route temporarily", semantic_polarity="NEGATING_ACTION"),
+    ]
+    assert find_polarity_completeness_defects(options) == ["KEY_ONLY_POLARITY"]
+
+
+def test_polarity_preflight_cannot_be_evaded_by_mislabelling_a_withholding_option():
+    options = [
+        _semantic_option("KEY", "Continue treatment from the affected site"),
+        _semantic_option("DISTRACTOR", "Stop treatment at the affected site"),
+        _semantic_option("DISTRACTOR", "Discard the product of the affected site", semantic_polarity="NEGATING_ACTION"),
+        _semantic_option("DISTRACTOR", "Replace the affected route temporarily", semantic_polarity="NEGATING_ACTION"),
+    ]
+    assert "DECLARED_POLARITY_CONTRADICTS_TEXT" in find_polarity_completeness_defects(options)
+
+
+def test_polarity_preflight_rejects_key_only_complete_program_strategy():
+    """Abstracted from the screening-programme item whose distractors were parameter tweaks."""
+    options = [
+        _semantic_option(
+            "KEY",
+            "Defer launch until downstream capacity exists",
+            semantic_polarity="NEGATING_ACTION",
+            decision_scope="PROGRAMME_IMPLEMENTATION_READINESS",
+        ),
+        _semantic_option("DISTRACTOR", "Lower the positivity threshold", strategy_completeness="PARTIAL_COMPONENT"),
+        _semantic_option("DISTRACTOR", "Launch with public advertising immediately", strategy_completeness="PARTIAL_COMPONENT"),
+        _semantic_option("DISTRACTOR", "Repeat every positive test automatically", strategy_completeness="PARTIAL_COMPONENT"),
+    ]
+    assert find_polarity_completeness_defects(options) == [
+        "KEY_ONLY_COMPLETE_STRATEGY",
+        "KEY_ONLY_POLARITY",
+        "NONPARALLEL_DECISION_SCOPE",
+    ]
+
+
+def test_polarity_preflight_rejects_partial_distractors_converging_into_the_key():
+    options = [
+        _semantic_option("KEY", "Start supportive care and arrange follow-up",
+                         independent_action_components=["supportive-care", "follow-up"]),
+        _semantic_option("DISTRACTOR", "Start supportive care alone",
+                         independent_action_components=["supportive-care"]),
+        _semantic_option("DISTRACTOR", "Arrange follow-up alone",
+                         independent_action_components=["follow-up"]),
+        _semantic_option("DISTRACTOR", "Refer for an unrelated procedure",
+                         independent_action_components=["unrelated-procedure"]),
+    ]
+    findings = find_polarity_completeness_defects(options)
+    assert "CONCEPTUAL_CONVERGENCE" in findings and "KEY_ONLY_COMPLETENESS" in findings
+
+
+def test_polarity_preflight_rejects_a_categorically_more_specific_key():
+    options = [
+        _semantic_option("KEY", "Begin a specified first-line agent at a stated dose", specificity_level=4),
+        _semantic_option("DISTRACTOR", "Begin an alternative agent class", specificity_level=2),
+        _semantic_option("DISTRACTOR", "Begin a second alternative agent class", specificity_level=2),
+        _semantic_option("DISTRACTOR", "Begin a third alternative agent class", specificity_level=3),
+    ]
+    assert find_polarity_completeness_defects(options) == ["KEY_ONLY_SPECIFICITY"]
+
+
+def test_polarity_preflight_accepts_a_valid_psychiatric_differential():
+    options = [
+        _semantic_option("KEY", "Major depressive disorder", decision_granularity="DIAGNOSIS"),
+        _semantic_option("DISTRACTOR", "Persistent depressive disorder", decision_granularity="DIAGNOSIS"),
+        _semantic_option("DISTRACTOR", "Bipolar disorder in a depressive episode", decision_granularity="DIAGNOSIS"),
+        _semantic_option("DISTRACTOR", "Adjustment disorder with depressed mood", decision_granularity="DIAGNOSIS"),
+    ]
+    assert find_polarity_completeness_defects(options) == []
+
+
+def test_polarity_preflight_accepts_neighbouring_screening_constructs():
+    options = [
+        _semantic_option("KEY", "Lead-time bias", decision_granularity="OTHER",
+                         decision_scope="SCREENING_EVALUATION_CONSTRUCT"),
+        _semantic_option("DISTRACTOR", "Length-time bias", decision_granularity="OTHER",
+                         decision_scope="SCREENING_EVALUATION_CONSTRUCT"),
+        _semantic_option("DISTRACTOR", "Overdiagnosis", decision_granularity="OTHER",
+                         decision_scope="SCREENING_EVALUATION_CONSTRUCT"),
+        _semantic_option("DISTRACTOR", "Healthy-volunteer selection effect", decision_granularity="OTHER",
+                         decision_scope="SCREENING_EVALUATION_CONSTRUCT"),
+    ]
+    assert find_polarity_completeness_defects(options) == []
+
+
+def test_polarity_preflight_accepts_comparable_management_alternatives():
+    options = [
+        _semantic_option("KEY", "Admit for intravenous therapy"),
+        _semantic_option("DISTRACTOR", "Discharge with oral therapy", semantic_polarity="NEGATING_ACTION"),
+        _semantic_option("DISTRACTOR", "Admit for observation without therapy"),
+        _semantic_option("DISTRACTOR", "Transfer for procedural management"),
+    ]
+    assert find_polarity_completeness_defects(options) == []
+
+
+def test_staged_1_3_fails_closed_when_the_semantic_option_set_is_unfair():
+    item, library, evidence = _staged_1_3()
+    for row in item["semantic_polarity_completeness_preflight"]["options"]:
+        if row["role"] == "DISTRACTOR":
+            row["strategy_completeness"] = "PARTIAL_COMPONENT"
+    with pytest.raises(ChapterStagedGenerationError, match="KEY_ONLY_COMPLETE_STRATEGY"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_staged_1_3_preflight_findings_must_be_reported_honestly():
+    item, library, evidence = _staged_1_3()
+    preflight = item["semantic_polarity_completeness_preflight"]
+    preflight["options"][1]["decision_scope"] = "A_DIFFERENT_SCOPE"
+    preflight["deterministic_findings"] = []
+    with pytest.raises(ChapterStagedGenerationError, match="NONPARALLEL_DECISION_SCOPE"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_staged_1_3_preflight_must_precede_and_bind_the_realized_options():
+    item, library, evidence = _staged_1_3()
+    item["semantic_polarity_completeness_preflight"]["options"][0]["semantic_option_text"] = "Something else"
+    with pytest.raises(ChapterStagedGenerationError, match="preflight"):
+        validate_staged_item(REPO, item, library, evidence)

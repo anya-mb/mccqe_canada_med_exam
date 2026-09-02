@@ -36,6 +36,13 @@ STAGE_SEQUENCE_V2 = STAGE_SEQUENCE[:10] + [
 STAGE_SEQUENCE_V3 = STAGE_SEQUENCE_V2[:12] + [
     "DECISION_GRANULARITY_PARITY",
 ] + STAGE_SEQUENCE_V2[12:]
+STAGE_SEQUENCE_V4 = (
+    STAGE_SEQUENCE_V3[:8]
+    + ["CONTEXTUAL_COMPETITOR_PROOF"]
+    + STAGE_SEQUENCE_V3[8:10]
+    + ["SEMANTIC_POLARITY_COMPLETENESS_PREFLIGHT"]
+    + STAGE_SEQUENCE_V3[10:]
+)
 PHYSICIAN_ACTIVITIES = {
     "Assessment/Diagnosis",
     "Management",
@@ -134,6 +141,16 @@ DECISION_GRANULARITIES = {
 _PHRASE_STOPWORDS = {
     "and", "for", "from", "into", "only", "that", "the", "then", "this", "with",
 }
+STEM_FEATURE_POLARITIES = {"PRESENT", "ABSENT"}
+SEMANTIC_POLARITIES = {"AFFIRMATIVE_ACTION", "NEGATING_ACTION"}
+STRATEGY_COMPLETENESS = {"COMPLETE_STRATEGY", "PARTIAL_COMPONENT"}
+_NEGATING_ACTION_HEADS = frozenset({
+    "abstain", "avoid", "cancel", "cease", "decline", "defer", "delay", "deny",
+    "discard", "discontinue", "discontinuation", "forgo", "hold", "omit",
+    "postpone", "refrain", "refuse", "stop", "suspend", "terminate", "withdraw",
+    "withhold",
+})
+_NEGATING_ACTION_MARKERS = frozenset({"no", "none", "not", "never", "without"})
 
 
 def find_option_shape_cues(options: list[dict[str, Any]]) -> list[str]:
@@ -255,6 +272,76 @@ def find_decision_granularity_cues(options: list[dict[str, Any]]) -> list[str]:
                 ) >= 2):
             findings.append("KEY_ONLY_DIAGNOSTIC_SPECIFICITY")
     return sorted(set(findings))
+
+
+def _normalize_prose(value: str) -> str:
+    return " ".join(str(value).lower().split())
+
+
+def detect_semantic_polarity(text: str) -> str:
+    """Classify an option's action polarity from a closed withholding vocabulary.
+
+    The detector has deliberate low recall and high precision: it only asserts
+    NEGATING_ACTION when an explicit withholding, discontinuation, or deferral
+    head appears. It exists to falsify a declared label, never to replace the
+    semantic reviewer's judgement.
+    """
+    tokens = re.findall(r"[a-z]+", str(text).lower())
+    if not tokens:
+        return "AFFIRMATIVE_ACTION"
+    if any(token in _NEGATING_ACTION_HEADS for token in tokens):
+        return "NEGATING_ACTION"
+    if tokens[0] in _NEGATING_ACTION_MARKERS:
+        return "NEGATING_ACTION"
+    return "AFFIRMATIVE_ACTION"
+
+
+def find_polarity_completeness_defects(options: list[dict[str, Any]]) -> list[str]:
+    """Reject a semantic competitor set whose key is detectable before medical reasoning.
+
+    This runs on approved semantic option meanings, before surface realization,
+    so a structurally unfair set is rejected instead of being reworded. The
+    downstream surface cue checks remain as defense in depth.
+    """
+    if not isinstance(options, list):
+        return ["INVALID_SEMANTIC_OPTION_SET"]
+    keys = [row for row in options if isinstance(row, dict) and row.get("role") == "KEY"]
+    distractors = [row for row in options if isinstance(row, dict) and row.get("role") == "DISTRACTOR"]
+    if len(keys) != 1 or not distractors or len(keys) + len(distractors) != len(options):
+        return ["INVALID_SEMANTIC_OPTION_SET"]
+    if any(
+        row.get("semantic_polarity") not in SEMANTIC_POLARITIES
+        or row.get("strategy_completeness") not in STRATEGY_COMPLETENESS
+        or not isinstance(row.get("decision_scope"), str)
+        or not row["decision_scope"]
+        or not isinstance(row.get("semantic_option_text"), str)
+        or not row["semantic_option_text"]
+        or not isinstance(row.get("specificity_level"), int)
+        or row["specificity_level"] < 1
+        for row in options
+    ):
+        return ["INVALID_SEMANTIC_OPTION_SET"]
+
+    key = keys[0]
+    findings: list[str] = []
+    if any(
+        detect_semantic_polarity(row["semantic_option_text"]) == "NEGATING_ACTION"
+        and row["semantic_polarity"] != "NEGATING_ACTION"
+        for row in options
+    ):
+        findings.append("DECLARED_POLARITY_CONTRADICTS_TEXT")
+    if all(row["semantic_polarity"] != key["semantic_polarity"] for row in distractors):
+        findings.append("KEY_ONLY_POLARITY")
+    if (
+        key["strategy_completeness"] == "COMPLETE_STRATEGY"
+        and all(row["strategy_completeness"] != "COMPLETE_STRATEGY" for row in distractors)
+    ):
+        findings.append("KEY_ONLY_COMPLETE_STRATEGY")
+    if len({row["decision_scope"] for row in options}) != 1:
+        findings.append("NONPARALLEL_DECISION_SCOPE")
+    if key["specificity_level"] > max(row["specificity_level"] for row in distractors):
+        findings.append("KEY_ONLY_SPECIFICITY")
+    return sorted(set(findings + find_decision_granularity_cues(options)))
 
 
 def find_option_position_cues(items: list[dict[str, Any]]) -> list[str]:
@@ -832,6 +919,179 @@ def _validate_option_realization(
     return realization, review, realized
 
 
+def _validate_stem_features(
+    value: Any,
+    stem: str,
+    label: str,
+) -> list[str]:
+    """Require every claimed stem feature to quote the stem the candidate actually reads."""
+    if not isinstance(value, list) or not value:
+        raise ChapterStagedGenerationError(f"{label} must cite at least one stem feature")
+    stem_text = _normalize_prose(stem)
+    features: list[str] = []
+    for row in value:
+        if not isinstance(row, dict):
+            raise ChapterStagedGenerationError(f"{label} entry is invalid")
+        feature = _nonempty(row.get("feature"), f"{label} feature")
+        if row.get("polarity") not in STEM_FEATURE_POLARITIES:
+            raise ChapterStagedGenerationError(f"{label} feature polarity is invalid")
+        quote = _nonempty(row.get("stem_quote"), f"{label} stem quote")
+        if _normalize_prose(quote) not in stem_text:
+            raise ChapterStagedGenerationError(
+                f"{label} cites a feature that is not stated in the stem"
+            )
+        features.append(feature)
+    if len(set(features)) != len(features):
+        raise ChapterStagedGenerationError(f"{label} repeats a stem feature")
+    return features
+
+
+def _validate_contextual_competitor_proofs(
+    item: dict[str, Any],
+    anchor: dict[str, Any],
+    open_ended: dict[str, Any],
+    matrix: dict[str, Any],
+    key_row: dict[str, Any],
+    competitor_ids: list[str],
+    claims: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    """Require each competitor to be proven plausible and defeated in THIS stem.
+
+    A concept-level contrast edge establishes that two concepts are confusable in
+    general. It does not establish that the competitor survives this stem, that a
+    partially knowledgeable candidate could choose it here, or that anything in
+    this stem defeats it. Those are separate, competitor-specific claims and each
+    needs its own evidence.
+    """
+    proof_block = item.get("contextual_competitor_proof")
+    if not isinstance(proof_block, dict) or proof_block.get("matrix_sha256") != canonical_sha256(matrix):
+        raise ChapterStagedGenerationError("contextual competitor proof lineage is invalid")
+    proofs = proof_block.get("proofs")
+    if not isinstance(proofs, list) or [
+        row.get("contrast_id") for row in proofs if isinstance(row, dict)
+    ] != competitor_ids:
+        raise ChapterStagedGenerationError("contextual competitor proof coverage is invalid")
+
+    anchor_concept_ids = set()
+    dimensions = set()
+    granularities = set()
+    key_refs = set(key_row.get("anchor_evidence_refs") or [])
+    for proof in proofs:
+        _nonempty(proof.get("competitor_concept_id"), "competitor concept ID")
+        anchor_concept_ids.add(_nonempty(proof.get("anchor_concept_id"), "proof anchor concept ID"))
+        if proof["competitor_concept_id"] == proof["anchor_concept_id"]:
+            raise ChapterStagedGenerationError("contextual competitor proof must join distinct concepts")
+        if proof.get("learner_decision") != anchor["primary_learner_decision"]:
+            raise ChapterStagedGenerationError(
+                "contextual competitor proof does not answer the anchored learner decision"
+            )
+        dimensions.add(_nonempty(proof.get("option_dimension"), "proof option dimension"))
+        if proof.get("decision_granularity") not in DECISION_GRANULARITIES:
+            raise ChapterStagedGenerationError("contextual competitor proof decision granularity is invalid")
+        granularities.add(proof["decision_granularity"])
+
+        _nonempty(proof.get("why_plausible_in_this_specific_context"), "context-specific plausibility")
+        _nonempty(proof.get("plausible_partial_reasoning"), "plausible partial reasoning")
+        _nonempty(proof.get("decisive_discriminator"), "competitor decisive discriminator")
+        supporting = _validate_stem_features(
+            proof.get("supporting_stem_features"), open_ended["stem"], "competitor plausibility"
+        )
+        defeating = _validate_stem_features(
+            proof.get("defeating_stem_features"), open_ended["stem"], "competitor discriminator"
+        )
+        if set(supporting).intersection(defeating):
+            raise ChapterStagedGenerationError(
+                "a stem feature cannot both establish and defeat the same competitor"
+            )
+
+        plausibility_refs = _evidence_refs_exist(
+            proof.get("evidence_refs_for_plausibility"), claims, "competitor plausibility evidence"
+        )
+        discriminator_refs = _evidence_refs_exist(
+            proof.get("evidence_refs_for_discriminator"), claims, "competitor discriminator evidence"
+        )
+        if set(discriminator_refs).issubset(key_refs):
+            raise ChapterStagedGenerationError(
+                "competitor discriminator requires evidence beyond the anchor key claim"
+            )
+        if set(plausibility_refs).issubset(key_refs):
+            raise ChapterStagedGenerationError(
+                "competitor plausibility requires evidence beyond the anchor key claim"
+            )
+
+        for field in ("same_decision_alternative", "polarity_parallel", "completeness_parallel"):
+            if proof.get(field) is not True:
+                raise ChapterStagedGenerationError(f"contextual competitor proof {field} must hold")
+        if proof.get("competitor_status") != "VALIDATED":
+            raise ChapterStagedGenerationError("contextual competitor proof status is not validated")
+
+        adversarial = proof.get("adversarial_hidden_key_test")
+        if not isinstance(adversarial, dict):
+            raise ChapterStagedGenerationError("adversarial hidden-key competitor test is missing")
+        _nonempty(adversarial.get("reviewer_id"), "adversarial competitor reviewer ID")
+        if adversarial.get("could_reasonably_select") is not True or adversarial.get("verdict") != "PASS":
+            raise ChapterStagedGenerationError(
+                "adversarial hidden-key test did not find the competitor reasonably selectable"
+            )
+        _nonempty(adversarial.get("selection_reasoning"), "adversarial selection reasoning")
+        if _nonempty(adversarial.get("defeating_feature"), "adversarial defeating feature") not in defeating:
+            raise ChapterStagedGenerationError(
+                "adversarial hidden-key test cites a discriminator absent from the proof"
+            )
+
+    if len(anchor_concept_ids) != 1 or len(dimensions) != 1 or len(granularities) != 1:
+        raise ChapterStagedGenerationError("contextual competitor proofs are not a single comparable set")
+    _nonempty(proof_block.get("reviewer_id"), "contextual competitor proof reviewer ID")
+    if proof_block.get("verdict") != "PASS":
+        raise ChapterStagedGenerationError("contextual competitor proof must pass")
+    return proof_block
+
+
+def _validate_polarity_completeness_preflight(
+    item: dict[str, Any],
+    open_ended: dict[str, Any],
+    distractors: list[dict[str, Any]],
+    adversarial: dict[str, Any],
+) -> dict[str, Any]:
+    """Reject an unfair semantic competitor set before any surface wording exists."""
+    preflight = item.get("semantic_polarity_completeness_preflight")
+    if (
+        not isinstance(preflight, dict)
+        or preflight.get("adversarial_review_sha256") != canonical_sha256(adversarial)
+    ):
+        raise ChapterStagedGenerationError("polarity and completeness preflight lineage is invalid")
+    _nonempty(preflight.get("reviewer_id"), "polarity and completeness reviewer ID")
+    options = preflight.get("options")
+    if not isinstance(options, list) or len(options) != len(distractors) + 1:
+        raise ChapterStagedGenerationError("polarity and completeness preflight coverage is invalid")
+    key_options = [row for row in options if isinstance(row, dict) and row.get("role") == "KEY"]
+    preflight_distractors = [row for row in options if isinstance(row, dict) and row.get("role") == "DISTRACTOR"]
+    if len(key_options) != 1 or len(preflight_distractors) != len(distractors):
+        raise ChapterStagedGenerationError("polarity and completeness preflight roles are invalid")
+    if key_options[0].get("semantic_option_text") != open_ended["intended_answer"]:
+        raise ChapterStagedGenerationError("polarity and completeness preflight key drifted from the approved answer")
+    semantic_by_id = {row["contrast_id"]: row for row in distractors}
+    if {row.get("contrast_id") for row in preflight_distractors} != set(semantic_by_id):
+        raise ChapterStagedGenerationError("polarity and completeness preflight distractor coverage is invalid")
+    for row in preflight_distractors:
+        if row.get("semantic_option_text") != semantic_by_id[row["contrast_id"]]["option_text"]:
+            raise ChapterStagedGenerationError(
+                "polarity and completeness preflight distractor drifted from approved semantics"
+            )
+    for row in options:
+        _nonempty(row.get("polarity_rationale"), "option polarity rationale")
+    findings = find_polarity_completeness_defects(options)
+    if preflight.get("deterministic_findings") != findings or findings:
+        raise ChapterStagedGenerationError(
+            f"semantic option set failed polarity and completeness preflight: {', '.join(findings) or 'unreported findings'}"
+        )
+    if preflight.get("key_identifiable_without_medical_reasoning") is not False or preflight.get("verdict") != "PASS":
+        raise ChapterStagedGenerationError(
+            "polarity and completeness preflight must pass without pre-reasoning key identification"
+        )
+    return preflight
+
+
 def _validate_decision_granularity_parity(realized: list[dict[str, Any]]) -> None:
     """Require schema-1.2 option records to encode parity for independent audit."""
     for row in realized:
@@ -872,10 +1132,11 @@ def validate_staged_item(
     _nonempty(item.get("item_type"), "staged item type")
     author_id = _nonempty(item.get("author_id"), "staged item author")
     schema_version = item.get("schema_version")
-    if schema_version not in {"1.0", "1.1", "1.2"}:
+    if schema_version not in {"1.0", "1.1", "1.2", "1.3"}:
         raise ChapterStagedGenerationError("staged item schema version is invalid")
     staged_sequence = (
-        STAGE_SEQUENCE_V3 if schema_version == "1.2"
+        STAGE_SEQUENCE_V4 if schema_version == "1.3"
+        else STAGE_SEQUENCE_V3 if schema_version == "1.2"
         else STAGE_SEQUENCE_V2 if schema_version == "1.1"
         else STAGE_SEQUENCE
     )
@@ -985,6 +1246,12 @@ def validate_staged_item(
     if matrix.get("verdict") != "PASS":
         raise ChapterStagedGenerationError("contrastive evidence matrix must pass")
 
+    competitor_proof = None
+    if schema_version == "1.3":
+        competitor_proof = _validate_contextual_competitor_proofs(
+            item, anchor, open_ended, matrix, key_row, competitor_ids, claims
+        )
+
     construction = item.get("distractor_construction")
     if not isinstance(construction, dict) or construction.get("matrix_sha256") != canonical_sha256(matrix):
         raise ChapterStagedGenerationError("separate distractor construction fingerprint is invalid")
@@ -993,16 +1260,47 @@ def validate_staged_item(
         raise ChapterStagedGenerationError("separate distractor construction is incomplete")
     if len(distractors) not in {3, 4}:
         raise ChapterStagedGenerationError("distractor construction must contain three or four strong distractors")
+    proofs_by_id = (
+        {row["contrast_id"]: row for row in competitor_proof["proofs"]}
+        if competitor_proof is not None
+        else {}
+    )
     for distractor, row in zip(distractors, competitors, strict=True):
         if not isinstance(distractor, dict) or distractor.get("contrast_id") != row["contrast_id"]:
             raise ChapterStagedGenerationError("every distractor must instantiate a validated contrast")
         expected_fields = {
             "competing_concept": "contrast_concept",
-            "why_temporarily_plausible": "why_plausible",
             "shared_features": "shared_features",
-            "disqualifying_discriminant": "decisive_discriminant",
-            "evidence_refs": "authoritative_evidence_refs",
         }
+        if schema_version == "1.3":
+            # A schema-1.3 distractor carries the proven context-specific reasoning
+            # rather than the generic concept-level edge wording.
+            proof = proofs_by_id[row["contrast_id"]]
+            expected_proof_fields = {
+                "why_temporarily_plausible": "why_plausible_in_this_specific_context",
+                "disqualifying_discriminant": "decisive_discriminator",
+            }
+            if any(
+                distractor.get(actual) != proof.get(expected)
+                for actual, expected in expected_proof_fields.items()
+            ):
+                raise ChapterStagedGenerationError(
+                    "distractor construction drifted from its contextual competitor proof"
+                )
+            expected_refs = sorted(
+                set(proof["evidence_refs_for_plausibility"])
+                | set(proof["evidence_refs_for_discriminator"])
+            )
+            if sorted(distractor.get("evidence_refs") or []) != expected_refs:
+                raise ChapterStagedGenerationError(
+                    "distractor evidence does not carry its contextual competitor proof"
+                )
+        else:
+            expected_fields |= {
+                "why_temporarily_plausible": "why_plausible",
+                "disqualifying_discriminant": "decisive_discriminant",
+                "evidence_refs": "authoritative_evidence_refs",
+            }
         if any(distractor.get(actual) != row.get(expected) for actual, expected in expected_fields.items()):
             raise ChapterStagedGenerationError("distractor construction drifted from its validated contrast")
         _nonempty(distractor.get("option_text"), "distractor option text")
@@ -1020,10 +1318,16 @@ def validate_staged_item(
     if adversarial.get("verdict") != "PASS":
         raise ChapterStagedGenerationError("distractor adversarial review must pass")
 
+    preflight = None
+    if schema_version == "1.3":
+        preflight = _validate_polarity_completeness_preflight(
+            item, open_ended, distractors, adversarial
+        )
+
     realization = None
     parallel_review = None
     realized_options = None
-    if schema_version in {"1.1", "1.2"}:
+    if schema_version in {"1.1", "1.2", "1.3"}:
         realization, parallel_review, realized_options = _validate_option_realization(
             item,
             open_ended,
@@ -1032,13 +1336,13 @@ def validate_staged_item(
             adversarial,
             claims,
         )
-        if schema_version == "1.2":
+        if schema_version in {"1.2", "1.3"}:
             _validate_decision_granularity_parity(realized_options)
 
     assembly = item.get("assembly")
     if not isinstance(assembly, dict):
         raise ChapterStagedGenerationError("MCQ assembly fingerprint is invalid")
-    if schema_version in {"1.1", "1.2"}:
+    if schema_version in {"1.1", "1.2", "1.3"}:
         if assembly.get("parallel_option_set_review_sha256") != canonical_sha256(parallel_review):
             raise ChapterStagedGenerationError("MCQ assembly option-review fingerprint is invalid")
     elif assembly.get("adversarial_review_sha256") != canonical_sha256(adversarial):
@@ -1046,7 +1350,7 @@ def validate_staged_item(
     if assembly.get("stem") != open_ended["stem"] or assembly.get("lead_in") != open_ended["lead_in"]:
         raise ChapterStagedGenerationError("MCQ assembly did not preserve the approved stem")
     expected_rewrite_status = (
-        "SURFACE_REALIZATION_ONLY" if schema_version in {"1.1", "1.2"} else "COMPONENTS_UNCHANGED"
+        "SURFACE_REALIZATION_ONLY" if schema_version in {"1.1", "1.2", "1.3"} else "COMPONENTS_UNCHANGED"
     )
     if assembly.get("rewrite_status") != expected_rewrite_status:
         raise ChapterStagedGenerationError("MCQ assembly substantially rewrote approved components")
@@ -1057,7 +1361,7 @@ def validate_staged_item(
             "option_realization": canonical_sha256(realization),
             "parallel_option_set_review": canonical_sha256(parallel_review),
         }
-        if schema_version in {"1.1", "1.2"}
+        if schema_version in {"1.1", "1.2", "1.3"}
         else {
             "open_ended": canonical_sha256(open_ended),
             "key": canonical_sha256(key_row),
@@ -1075,13 +1379,13 @@ def validate_staged_item(
     key_options = [option for option in options if option.get("role") == "KEY"]
     expected_key_text = (
         next(row["surface_text"] for row in realized_options if row["role"] == "KEY")
-        if schema_version in {"1.1", "1.2"}
+        if schema_version in {"1.1", "1.2", "1.3"}
         else open_ended["intended_answer"]
     )
     if len(key_options) != 1 or assembly.get("correct_answer") != key_options[0]["key"] or key_options[0].get("text") != expected_key_text:
         raise ChapterStagedGenerationError("MCQ assembly key does not match the approved open-ended answer")
     actual_distractors = [option for option in options if option.get("role") == "DISTRACTOR"]
-    if schema_version in {"1.1", "1.2"}:
+    if schema_version in {"1.1", "1.2", "1.3"}:
         expected_assembly_options = [
             {
                 "key": row["position"],
@@ -1106,7 +1410,7 @@ def validate_staged_item(
                         for row in realized_options
                         if row["position"] == option["key"]
                     )
-                    if schema_version in {"1.1", "1.2"}
+                    if schema_version in {"1.1", "1.2", "1.3"}
                     else "LEGACY_UNSTRUCTURED"
                 ),
             }
@@ -1164,7 +1468,19 @@ def validate_staged_item(
         retrieval.get("semantic_ranker_id"),
         construction.get("constructor_id"),
         adversarial.get("reviewer_id"),
-        *( [realization.get("realizer_id"), parallel_review.get("reviewer_id")] if schema_version in {"1.1", "1.2"} else [] ),
+        *( [realization.get("realizer_id"), parallel_review.get("reviewer_id")] if schema_version in {"1.1", "1.2", "1.3"} else [] ),
+        *(
+            [
+                competitor_proof.get("reviewer_id"),
+                preflight.get("reviewer_id"),
+                *sorted({
+                    proof["adversarial_hidden_key_test"]["reviewer_id"]
+                    for proof in competitor_proof["proofs"]
+                }),
+            ]
+            if schema_version == "1.3"
+            else []
+        ),
         assembly.get("assembler_id"),
         acceptance.get("reviewer_id"),
     ]
