@@ -22,9 +22,10 @@
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Cardiology `MICRO_RETRY_2`: PASS (3/3; zero factual, evidence, ambiguity, anchor, plan, distractor, context, cover-options, cue, granularity, rationale, or duplication defects).
 - Cardiology ACS 10-item chapter-review pilot: SUCCESS (9/10). One item (`QGEN-MED-007-ACS-CR10-I05`) failed locally for key-only completeness/conceptual convergence; all factual, evidence-support, ambiguity, anchor, plan, distractor, context, cover-options, granularity, rationale, and duplication counts remained zero, and no systemic problem was identified. Per the approved pilot protocol, the item was recorded and not repaired.
+- Frozen-architecture cross-discipline generalization experiment: COMPLETE, 7/15 PASS. PED Bronchiolitis = 2/3; OBGYN Mastitis = 1/3; SURG Appendicitis = 1/3; PSY Depressive Disorders = 2/3; PHELO Screening Principles and Screening Biases = 1/3. Independent review found zero factual errors, ambiguous best answers, anchor failures, plan mismatches, context failures, cover-options failures, rationale deficiencies, or material duplication; it found 3 unsupported distractor claims, 5 weak distractors, 3 option-cue failures, and 1 decision-granularity failure. `GENERALIZATION_ASSESSMENT = FAILED_GENERALIZATION`; no repair or production-generator change was made.
 - Canonical checkpoint: current Git HEAD.
 - Audited coordinator input commit: `3f397387fe0e244ef09c59ee71287c7281424cc7`.
-- Current next action: `TEST_GENERALIZATION_ACROSS_DISCIPLINES`.
+- Current next action: `DIAGNOSE_GENERALIZATION_FAILURE`.
 
 ## Frozen layers
 
@@ -45,8 +46,8 @@
 
 ## Blocker and next step
 
-- No upstream blocker remains. The bounded Cardiology execution is complete; do not generate more Cardiology questions or scale toward the full bank yet.
-- NEXT_STEP = `TEST_GENERALIZATION_ACROSS_DISCIPLINES`
+- The complete generalization matrix failed because contrast-specific evidence support and adversarial distractor plausibility did not generalize reliably across disciplines; do not scale question generation or repair individual pilot items yet.
+- NEXT_STEP = `DIAGNOSE_GENERALIZATION_FAILURE`
 <!-- SOURCE_RESEARCH_RESUME:END -->
 
 ## Research-level policy
