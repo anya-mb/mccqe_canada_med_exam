@@ -1,0 +1,182 @@
+{
+ "baseline_commit": "a85b8b6e566a7d6fe05fdd0810d9cb6a2a75183c",
+ "claude_md_changed": false,
+ "controlled_retest_r4": {
+  "answer_key_agreement": "The verifier independently reached the keyed answer on all 15 items.",
+  "fail_closed_insufficient_competitive_seeds": 0,
+  "generated": 15,
+  "independent_verification_passed": 7,
+  "items_recorded_as": "REVIEWED_NOT_REPAIRED",
+  "per_discipline": {
+   "OBGYN": 0,
+   "PED": 3,
+   "PHELO": 2,
+   "PSY": 1,
+   "SURG": 1
+  },
+  "run": true,
+  "staged_items_valid_under_production_gates": 15,
+  "targets": 15
+ },
+ "derived_from": "cross_discipline_generalization_15_r3",
+ "failed_contrast_root_causes": {
+  "QGEN-GEN-PED-T02": "WRONG_OPTION_SEMANTIC_CATEGORY -- the fixed inventory held only laboratory and imaging tests, leaving the observation key as the lone non-test.",
+  "QGEN-GEN-PED-T03": "NO_STRONG_COMPETITOR_AVAILABLE -- the three cached competitors were drugs the guideline says do not work, all pharmacologic against a non-pharmacologic key.",
+  "QGEN-GEN-PHELO-T02": "WRONG_OPTION_SEMANTIC_CATEGORY -- two cached competitors were programme-parameter changes rather than revisions to the invitation.",
+  "QGEN-GEN-PSY-T03": "WRONG_SEVERITY_DECISION_LEVEL -- the cached competitors sat two severity tiers from the scenario.",
+  "QGEN-GEN-SURG-T01": "INSUFFICIENT_EVIDENCE_FOR_COMPETITOR -- plausibility was citable from the guideline's differential list but no held source supplied a discriminator for any competitor.",
+  "QGEN-GEN-SURG-T02": "BAD_STRUCTURED_INPUT -- a numeric defect rather than a contrast defect; the contrast set was sound.",
+  "QGEN-GEN-SURG-T03": "STRONG_COMPETITOR_EXISTS_BUT_NOT_RETRIEVED -- the only discriminator held for the open-approach competitor was the absence of contraindications, which forces a terminal exclusion clause.",
+  "summary": "Five of seven failures were supply or category defects in the fixed inventory; one was numeric; one was a missing discriminator."
+ },
+ "focused_tests": {
+  "failed": 0,
+  "passed": 121
+ },
+ "frozen_artifacts_changed": 0,
+ "historical_artifacts_changed": 0,
+ "hypothesis_under_test": "That the limitation remaining after the second bounded general repair is insufficient supply of high-quality competitors, rather than a further defect in the generator or its validators.",
+ "next_stage_recommendations_implemented": false,
+ "next_step": "EVALUATE_DISCIPLINE_SPECIFIC_GENERATION_PROFILES",
+ "numeric_audit": {
+  "defect": "The r3 SURG item stated an Alvarado score of 5 that its own stem findings produce as 6.",
+  "detail": "NUMERIC_DERIVATION_VALIDATION recomputed the total from the components the generator declared, and those components summed to 5 correctly. Nothing checked the components against the stem, so a declared nausea_or_vomiting component of zero stood beside a stem recording mild nausea and the gate stayed silent. The stem feature map never carried features for nausea, anorexia or temperature at all, so the contradiction had nowhere to surface.",
+  "effect_on_the_r3_artifact": "Re-running the tightened gate over the frozen r3 staged artifact rejects QGEN-GEN3-SURG-I02 and nothing else, which is exactly the item the r3 independent verification flagged.",
+  "fix": "Every input of a scored-criteria formula must cite the grounded stem features it was read from and declare whether the criterion is met. A categorical criterion must agree with the polarity of every feature it cites; a measurement scored against a threshold must state the threshold comparison; a component may not be scored from an inferred feature. Scoped to SUM_OF_COMPONENTS, the formula class in which the defect arises.",
+  "fix_location": "scripts/qbank/chapter_staged_generation.py: _validate_scored_component_grounding, wired into _validate_numeric_derivations",
+  "gate_purpose_gap": "The gate's stated purpose is that a stated score is checked against its declared components rather than against prose. That is exactly the hole: recomputation is vacuous when the components themselves are ungrounded.",
+  "gate_should_have_caught_it": true,
+  "production_fix_required": true,
+  "regression_tests_added": 6,
+  "root_cause": "BAD_STRUCTURED_INPUT_UNGROUNDED_SCORE_COMPONENT",
+  "semantic_item_acceptance_v2_redesigned": false
+ },
+ "pilot_id": "cross_discipline_generalization_15_r4",
+ "production_change_summary": "One narrow deterministic repair inside the existing NUMERIC_DERIVATION_VALIDATION gate: components of a scored-criteria formula must be grounded in the candidate-visible stem feature map and must agree with it. Schema 1.0 through 1.4 behaviour is otherwise unchanged and SEMANTIC_ITEM_ACCEPTANCE_V2 was not redesigned.",
+ "recommendation_reasoning": "The experiment's own stop condition is unambiguous: a factual error reached a candidate-facing stem, an unsupported discriminator narrowed a guideline's severity band, and evidence entailment failed, against success criteria that required zero of each. The pass rate of 7 of 15 is far below the 13 of 15 target and the distractor and cueing budgets were exceeded several times over. The secondary finding, that the failure locus has moved from competitor supply to option-set selection and realization and clusters by discipline, points at DISCIPLINE_SPECIFIC_GENERATION_PROFILES as the next candidate to test, but no scaling of any kind is warranted while the factual-safety invariant is broken.",
+ "recommended_next_architecture": "DO_NOT_SCALE",
+ "schema_version": "1.0",
+ "scope": "COMPETITIVE_CONTRAST_SEED_EXPERIMENT",
+ "seed_acquisition": {
+  "approved_per_target": {
+   "QGEN-GEN-OBGYN-T01": 7,
+   "QGEN-GEN-OBGYN-T02": 4,
+   "QGEN-GEN-OBGYN-T03": 5,
+   "QGEN-GEN-PED-T01": 3,
+   "QGEN-GEN-PED-T02": 4,
+   "QGEN-GEN-PED-T03": 6,
+   "QGEN-GEN-PHELO-T01": 3,
+   "QGEN-GEN-PHELO-T02": 4,
+   "QGEN-GEN-PHELO-T03": 4,
+   "QGEN-GEN-PSY-T01": 4,
+   "QGEN-GEN-PSY-T02": 3,
+   "QGEN-GEN-PSY-T03": 4,
+   "QGEN-GEN-SURG-T01": 3,
+   "QGEN-GEN-SURG-T02": 5,
+   "QGEN-GEN-SURG-T03": 3
+  },
+  "approved_seeds": 62,
+  "author_strengths": {
+   "ACCEPTABLE": 22,
+   "REJECT": 11,
+   "STRONG": 49
+  },
+  "candidate_seeds_authored": 82,
+  "claims_added_this_wave": 47,
+  "frozen": true,
+  "frozen_sha256": "4a81fb305a2d97e59a8907f0cebb517a34f1672d44565be9f3068e7b01d573a6",
+  "independent_reviewer": "independent-seed-reviewer-r4",
+  "pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+  "reviewed_strengths": {
+   "ACCEPTABLE": 19,
+   "REJECT": 20,
+   "STRONG": 43
+  },
+  "reviewer_overturned_author": "The independent reviewer moved eight seeds against the author, all but one downward, and rejected nine seeds whose discriminator citation named the competing concept without stating anything that decides against it.",
+  "schema": "schemas/competitive-contrast-seed-pack.schema.json",
+  "sources_added_this_wave": [
+   "SRC-R4-PHAC-PID",
+   "SRC-R4-CUA-URETERAL",
+   "SRC-R4-STATPEARLS-TORSION"
+  ],
+  "targets": 15,
+  "targets_with_three_or_more_approved": 15
+ },
+ "seed_hypothesis": "PARTIALLY_SUPPORTED",
+ "seed_hypothesis_reasoning": "Better competitor supply removed the failure mode it was aimed at. No target failed closed, every target had at least three independently approved competitors, and the discipline whose source supplies explicit conditionals passed cleanly. It did not improve the item score, because the binding constraint moved rather than lifted: failures are now made at selection and realization time, when three approved seeds are chosen and written as an option set that is not comparable, rather than at acquisition time when no competitor existed. Seed-stage category review cannot see that, because it judges a competitor against the target's abstract lead-in dimension before the other two options and the stem exist.",
+ "success_criteria_assessment": {
+  "AMBIGUOUS_BEST_ANSWERS": {
+   "met": true,
+   "observed": 0,
+   "required": 0
+  },
+  "EVIDENCE_ENTAILMENT": {
+   "met": false,
+   "observed": "FAIL",
+   "required": "PASS"
+  },
+  "FACTUAL_ERRORS": {
+   "met": false,
+   "observed": 1,
+   "required": 0
+  },
+  "INDEPENDENT_CONTEXT": {
+   "met": true,
+   "observed": "PASS",
+   "required": "PASS"
+  },
+  "LONE_KEY_OPTION_CATEGORY_across_two_or_more_disciplines": {
+   "met": false,
+   "observed_disciplines": [
+    "SURG",
+    "PSY",
+    "PHELO"
+   ]
+  },
+  "NUMERIC_ERRORS": {
+   "met": false,
+   "note": "Both stated Alvarado-class derivations recomputed exactly; the recorded numeric defect is the propagated McBurney's point unit error.",
+   "observed": 1,
+   "required": 0
+  },
+  "OPTION_CUE_FAILURES": {
+   "met": false,
+   "observed": 4,
+   "required": "<=1"
+  },
+  "SEVERITY_OR_CATEGORY_MISMATCH_across_two_or_more_disciplines": {
+   "met": false,
+   "observed_disciplines": [
+    "OBGYN",
+    "SURG",
+    "PSY"
+   ]
+  },
+  "UNSUPPORTED_CLAIMS": {
+   "met": false,
+   "observed": 1,
+   "required": 0
+  },
+  "WEAK_DISTRACTORS": {
+   "met": false,
+   "observed": 5,
+   "required": "<=1"
+  },
+  "achieved_pass": "7/15",
+  "met": false,
+  "required_pass": "13/15"
+ },
+ "third_universal_distractor_patch_written": false,
+ "what_the_seeds_changed": [
+  "Both targets that recorded FAIL_CLOSED_NO_VALID_CONTRAST_SET in r2 and r3 were built, and one of them, the surgical diagnosis target, passed no dimension test only on a propagated source error rather than on contrast quality.",
+  "Fail-closed yield went from 2 of 15 to 0 of 15; every target cleared three independently approved competitors.",
+  "Pediatrics went from 1 of 3 to 3 of 3, the discipline whose seeds came from a source rich in explicit conditionals.",
+  "Terminal exclusions went from 1 to 0 and fatal rationale defects stayed at 0."
+ ],
+ "what_the_seeds_did_not_change": [
+  "Weak distractors rose from 2 to 5 and option-cue failures from 2 to 4 under the same rubric.",
+  "Lone-key option category recurred in three disciplines even though every seed had been reviewed for semantic-category match at the seed stage, because category parity was judged against the target's abstract lead-in dimension and not against the realized option set.",
+  "One severity-mismatched distractor survived per failing item, in each case a seed the reviewer had approved as ACCEPTABLE rather than STRONG.",
+  "A factual error entered a candidate-facing stem for the first time in three runs, by faithful quotation of a unit error in an authoritative source."
+ ]
+}

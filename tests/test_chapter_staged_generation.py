@@ -1954,13 +1954,27 @@ def test_pre_assembly_set_review_must_pass_before_any_wording_exists():
 
 
 # 13. A stated score that its own declared components do not produce.
+def _component_span(name: str, value: int) -> str:
+    return f"{name.replace('_', ' ')} is {'recorded' if value else 'not recorded'}"
+
+
 def _score_item(total: int, components: list[tuple[str, int]]) -> tuple[dict, dict, dict]:
     item, library, evidence = _staged_1_4()
+    spans = "; ".join(_component_span(name, value) for name, value in components)
     stem = (
         "A patient has acute central chest pressure with diaphoresis and a new regional "
-        f"ischemic ECG change. The clinical risk score is {total}."
+        f"ischemic ECG change. On structured scoring, {spans}. The clinical risk score is {total}."
     )
     features = deepcopy(item["stem_feature_map"]["features"])
+    for index, (name, value) in enumerate(components):
+        features.append({
+            "feature_id": f"F-C{index}",
+            "normalized_feature": f"the scored criterion {name}",
+            "clinical_role": "SCORED_CRITERION",
+            "polarity": "PRESENT" if value else "ABSENT",
+            "inference_type": "EXPLICIT_FINDING",
+            "source_span": _component_span(name, value),
+        })
     features.append({
         "feature_id": "F-SCORE",
         "normalized_feature": "the stated clinical risk score",
@@ -1976,8 +1990,14 @@ def _score_item(total: int, components: list[tuple[str, int]]) -> tuple[dict, di
             "claim_ref": "NUM-SCORE",
             "formula_id": "SUM_OF_COMPONENTS",
             "input_values": [
-                {"component": name, "value": value, "units": "points"}
-                for name, value in components
+                {
+                    "component": name,
+                    "value": value,
+                    "units": "points",
+                    "stem_feature_refs": [f"F-C{index}"],
+                    "criterion_met": bool(value),
+                }
+                for index, (name, value) in enumerate(components)
             ],
             "units": "points",
             "asserted_in": "STEM",
@@ -2008,6 +2028,79 @@ def test_numeric_gate_rejects_a_score_its_own_components_do_not_produce():
 def test_numeric_gate_accepts_a_correctly_summed_structured_score():
     item, library, evidence = _score_item(8, ALVARADO_COMPONENTS)
     assert validate_staged_item(REPO, item, library, evidence) is item
+
+
+def test_numeric_gate_rejects_a_scored_component_that_contradicts_the_stem():
+    """The r3 Alvarado defect: the total sums correctly, one component does not match the stem."""
+    item, library, evidence = _score_item(8, ALVARADO_COMPONENTS)
+    derivation = item["numeric_derivation_validation"]["derivations"][0]
+    nausea = next(row for row in derivation["input_values"] if row["component"] == "nausea_vomiting")
+    nausea.update({"value": 0, "criterion_met": False})
+    derivation["expected_result"] = 7
+    derivation["computed_result"] = 7
+    derivation["asserted_text"] = "The clinical risk score is 8"
+    _rebind_1_4(item)
+    with pytest.raises(ChapterStagedGenerationError, match="contradicts the stem"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_numeric_gate_rejects_a_scored_component_with_no_stem_grounding():
+    item, library, evidence = _score_item(8, ALVARADO_COMPONENTS)
+    derivation = item["numeric_derivation_validation"]["derivations"][0]
+    del derivation["input_values"][0]["stem_feature_refs"]
+    _rebind_1_4(item)
+    with pytest.raises(ChapterStagedGenerationError, match="stem feature references"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_numeric_gate_rejects_a_scored_component_citing_an_unknown_feature():
+    item, library, evidence = _score_item(8, ALVARADO_COMPONENTS)
+    derivation = item["numeric_derivation_validation"]["derivations"][0]
+    derivation["input_values"][0]["stem_feature_refs"] = ["F-NOT-IN-THE-MAP"]
+    _rebind_1_4(item)
+    with pytest.raises(ChapterStagedGenerationError, match="not in the feature map"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_numeric_gate_rejects_a_scored_component_whose_declared_criterion_contradicts_its_points():
+    item, library, evidence = _score_item(8, ALVARADO_COMPONENTS)
+    derivation = item["numeric_derivation_validation"]["derivations"][0]
+    derivation["input_values"][0]["criterion_met"] = False
+    _rebind_1_4(item)
+    with pytest.raises(ChapterStagedGenerationError, match="declares criterion_met"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_numeric_gate_requires_a_threshold_justification_for_a_measured_component():
+    item, library, evidence = _score_item(8, ALVARADO_COMPONENTS)
+    derivation = item["numeric_derivation_validation"]["derivations"][0]
+    leukocytosis = next(row for row in derivation["input_values"] if row["component"] == "leukocytosis")
+    leukocytosis["stem_feature_refs"] = ["F-SCORE"]
+    _rebind_1_4(item)
+    with pytest.raises(ChapterStagedGenerationError, match="threshold justification"):
+        validate_staged_item(REPO, item, library, evidence)
+    leukocytosis["threshold_justification"] = "The stated count sits above the scoring threshold."
+    _rebind_1_4(item)
+    assert validate_staged_item(REPO, item, library, evidence) is item
+
+
+def test_numeric_gate_rejects_a_scored_component_grounded_only_in_an_inference():
+    item, library, evidence = _score_item(8, ALVARADO_COMPONENTS)
+    features = item["stem_feature_map"]["features"]
+    features.append({
+        "feature_id": "F-INTEGRATED-SCORE",
+        "normalized_feature": "an integrated impression of intermediate risk",
+        "clinical_role": "INTEGRATED_CLINICAL_INFERENCE",
+        "polarity": "PRESENT",
+        "inference_type": "INTEGRATED_INFERENCE",
+        "derived_from": ["F-C0", "F-C1"],
+    })
+    item["numeric_derivation_validation"]["derivations"][0]["input_values"][0][
+        "stem_feature_refs"
+    ] = ["F-INTEGRATED-SCORE"]
+    _restem_1_4(item, item["open_ended_stem_key"]["stem"], features)
+    with pytest.raises(ChapterStagedGenerationError, match="cannot be scored from an inferred feature"):
+        validate_staged_item(REPO, item, library, evidence)
 
 
 def test_numeric_gate_rejects_a_stem_assertion_the_stem_never_makes():

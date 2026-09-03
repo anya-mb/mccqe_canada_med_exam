@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mccqe.local/schemas/competitive-contrast-seed-pack.schema.json",
+  "title": "Competitive contrast seed pack",
+  "description": "A derivative, reusable record of candidate competitors acquired for a specific educational target before any question wording exists. A seed pack is an input to item writing: an author may select from approved seeds and may not invent distractor concepts during item writing. Seeds are not curriculum: this artifact never changes frozen scope, allocation, or manifests.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scope", "pack_id", "baseline_commit", "acquisition_policy", "frozen", "targets"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "scope": {"const": "COMPETITIVE_CONTRAST_SEED_PACK"},
+    "pack_id": {"type": "string", "minLength": 1},
+    "baseline_commit": {"type": "string", "minLength": 7},
+    "derived_from": {"type": "string"},
+    "acquisition_policy": {"type": "string", "minLength": 1},
+    "frozen": {"type": "boolean"},
+    "frozen_sha256": {"type": "string"},
+    "targets": {"type": "array", "minItems": 1, "items": {"$ref": "#/definitions/target"}}
+  },
+  "definitions": {
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_id", "discipline", "anchor_study_unit_id", "anchor_topic",
+        "learner_decision", "learner_decision_type", "lead_in_dimension",
+        "option_semantic_category", "decision_granularity", "decision_context",
+        "intended_key", "key_evidence_refs", "candidates_considered", "seeds"
+      ],
+      "properties": {
+        "target_id": {"type": "string"},
+        "discipline": {"type": "string"},
+        "anchor_study_unit_id": {"type": "string"},
+        "anchor_topic": {"type": "string"},
+        "learner_decision": {"type": "string"},
+        "learner_decision_type": {
+          "enum": ["DIAGNOSIS", "INVESTIGATION", "MANAGEMENT", "SAFETY_DISPOSITION", "TREATMENT_SELECTION", "EVIDENCE_INTERPRETATION", "ETHICAL_DECISION", "POPULATION_DECISION"]
+        },
+        "lead_in_dimension": {"type": "string", "minLength": 1},
+        "option_semantic_category": {"type": "string", "minLength": 1},
+        "decision_granularity": {"type": "string", "minLength": 1},
+        "decision_context": {"type": "string", "minLength": 1},
+        "intended_key": {"type": "string"},
+        "key_evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "candidates_considered": {"type": "integer", "minimum": 4},
+        "acquisition_note": {"type": "string"},
+        "seeds": {"type": "array", "minItems": 4, "items": {"$ref": "#/definitions/seed"}}
+      }
+    },
+    "seed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "seed_id", "competitor_concept_id", "competitor_concept", "competitor_study_unit_id",
+        "competitor_semantic_category", "competitor_decision_granularity",
+        "why_plausible_for_this_decision", "conditions_under_which_competitor_would_be_correct",
+        "shared_features_with_key", "candidate_visible_discriminators",
+        "why_a_partially_knowledgeable_candidate_might_choose_it",
+        "evidence_refs_for_plausibility", "evidence_refs_for_discrimination",
+        "requires_terminal_exclusion_clue", "strength", "independent_seed_review"
+      ],
+      "properties": {
+        "seed_id": {"type": "string"},
+        "competitor_concept_id": {"type": "string"},
+        "competitor_concept": {"type": "string"},
+        "competitor_study_unit_id": {"type": "string", "description": "Canonical Toronto Notes study unit that owns the competing concept; it may sit in any chapter or discipline."},
+        "tn_provenance_note": {"type": "string"},
+        "competitor_semantic_category": {"type": "string"},
+        "competitor_decision_granularity": {"type": "string"},
+        "why_plausible_for_this_decision": {"type": "string", "minLength": 1},
+        "conditions_under_which_competitor_would_be_correct": {"type": "string", "minLength": 1},
+        "shared_features_with_key": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "candidate_visible_discriminators": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "why_a_partially_knowledgeable_candidate_might_choose_it": {"type": "string", "minLength": 1},
+        "evidence_refs_for_plausibility": {"type": "array", "items": {"type": "string"}},
+        "evidence_refs_for_discrimination": {"type": "array", "items": {"type": "string"}},
+        "requires_terminal_exclusion_clue": {"type": "boolean", "description": "True when the competitor can only be defeated by a stem clause written for that purpose. Such a seed must not be approved."},
+        "strength": {"enum": ["STRONG", "ACCEPTABLE", "REJECT"]},
+        "author_rejection_reason": {"type": "string"},
+        "independent_seed_review": {"$ref": "#/definitions/review"}
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["verdict"],
+      "properties": {
+        "reviewer_id": {"type": "string"},
+        "verdict": {"enum": ["PASS", "FAIL", "PENDING"]},
+        "same_lead_in_dimension": {"enum": ["PASS", "FAIL", "PENDING"]},
+        "same_semantic_category": {"enum": ["PASS", "FAIL", "PENDING"]},
+        "comparable_decision_granularity": {"enum": ["PASS", "FAIL", "PENDING"]},
+        "realistically_selectable": {"enum": ["PASS", "FAIL", "PENDING"]},
+        "plausible_in_planned_context": {"enum": ["PASS", "FAIL", "PENDING"]},
+        "discriminator_evidence_supported": {"enum": ["PASS", "FAIL", "PENDING"]},
+        "free_of_terminal_exclusion_requirement": {"enum": ["PASS", "FAIL", "PENDING"]},
+        "reviewed_strength": {"enum": ["STRONG", "ACCEPTABLE", "REJECT", "PENDING"]},
+        "comment": {"type": "string"}
+      }
+    }
+  }
+}

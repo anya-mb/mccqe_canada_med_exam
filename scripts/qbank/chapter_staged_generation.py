@@ -326,6 +326,25 @@ _PHRASE_STOPWORDS = {
     "and", "for", "from", "into", "only", "that", "the", "then", "this", "with",
 }
 STEM_FEATURE_POLARITIES = {"PRESENT", "ABSENT"}
+# A component of a summed clinical score is scored one of two ways: a criterion
+# that the stem either records or does not, or a measurement compared with a
+# threshold. Recomputing the total from declared components proves only internal
+# arithmetic, so each component must also say which grounding it claims and point
+# at the stem feature it was read from.
+CATEGORICAL_SCORE_FEATURE_TYPES = frozenset({
+    "EXPLICIT_FINDING",
+    "ABSENT_FINDING",
+    "TIME_COURSE",
+    "TREATMENT_RESPONSE",
+    "RISK_FACTOR",
+})
+MEASURED_SCORE_FEATURE_TYPES = frozenset({
+    "DEMOGRAPHIC_CONTEXT",
+    "LABORATORY_PATTERN",
+    "IMAGING_PATTERN",
+    "POLICY_DESIGN_FEATURE",
+})
+SCORED_COMPONENT_FORMULA_IDS = frozenset({"SUM_OF_COMPONENTS"})
 SEMANTIC_POLARITIES = {"AFFIRMATIVE_ACTION", "NEGATING_ACTION"}
 STRATEGY_COMPLETENESS = {"COMPLETE_STRATEGY", "PARTIAL_COMPONENT"}
 _NEGATING_ACTION_HEADS = frozenset({
@@ -1427,10 +1446,61 @@ def _feature_spans(features: dict[str, dict[str, Any]], feature_ids: list[str]) 
     return spans
 
 
+def _validate_scored_component_grounding(
+    claim_ref: str,
+    input_values: Any,
+    features: dict[str, dict[str, Any]],
+) -> None:
+    """Check the components of a summed score against the stem, not only against each other.
+
+    The arithmetic gate recomputes a total from whatever components are declared,
+    which is silent when a component contradicts the stem it claims to summarise:
+    a stem recording mild nausea alongside a nausea component scored zero sums
+    correctly and is still wrong. Every component of a scored formula therefore
+    cites the grounded stem features it was read from. A categorical criterion
+    must agree with the polarity of those features, and a measurement scored
+    against a threshold must say what the threshold comparison was.
+    """
+    for row in input_values:
+        component = _nonempty(row.get("component"), "numeric derivation component")
+        label = f"scored component {component} of {claim_ref}"
+        refs = _nonempty_strings(row.get("stem_feature_refs"), f"{label} stem feature references")
+        if len(set(refs)) != len(refs):
+            raise ChapterStagedGenerationError(f"{label} repeats a stem feature reference")
+        unknown = [ref for ref in refs if ref not in features]
+        if unknown:
+            raise ChapterStagedGenerationError(
+                f"{label} cites stem features that are not in the feature map: {', '.join(sorted(unknown))}"
+            )
+        criterion_met = row.get("criterion_met")
+        if not isinstance(criterion_met, bool):
+            raise ChapterStagedGenerationError(f"{label} must declare whether the criterion is met")
+        if criterion_met is not (Decimal(str(row["value"])) > 0):
+            raise ChapterStagedGenerationError(
+                f"{label} scores {row['value']} but declares criterion_met {criterion_met}"
+            )
+        for ref in refs:
+            feature = features[ref]
+            inference_type = feature["inference_type"]
+            if inference_type in CATEGORICAL_SCORE_FEATURE_TYPES:
+                if criterion_met is not (feature["polarity"] == "PRESENT"):
+                    raise ChapterStagedGenerationError(
+                        f"{label} contradicts the stem: feature {ref} is {feature['polarity']} "
+                        f"but the component is scored {row['value']}"
+                    )
+            elif inference_type in MEASURED_SCORE_FEATURE_TYPES:
+                _nonempty(row.get("threshold_justification"), f"{label} threshold justification")
+            else:
+                raise ChapterStagedGenerationError(
+                    f"{label} cannot be scored from an inferred feature; cite the finding the candidate reads"
+                )
+
+
 def _validate_numeric_derivations(
     item: dict[str, Any],
     open_ended: dict[str, Any],
     feature_map: dict[str, Any],
+    features: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
     """Recompute every asserted derived quantity instead of believing the prose.
 
@@ -1487,6 +1557,8 @@ def _validate_numeric_derivations(
                     "a registered formula must be declared deterministically recomputable"
                 )
             computed = compute_derived_value(formula_id, row.get("input_values"))
+            if formula_id in SCORED_COMPONENT_FORMULA_IDS:
+                _validate_scored_component_grounding(claim_ref, row["input_values"], features)
             if abs(computed - expected) > tolerance:
                 raise ChapterStagedGenerationError(
                     f"numeric derivation {claim_ref} recomputes to {computed}, not the asserted {expected}"
@@ -2042,7 +2114,7 @@ def validate_staged_item(
     features = None
     if schema_version == "1.4":
         features = _validate_stem_feature_map(item, open_ended)
-        _validate_numeric_derivations(item, open_ended, item["stem_feature_map"])
+        _validate_numeric_derivations(item, open_ended, item["stem_feature_map"], features)
 
     blind = item.get("blind_solver")
     hidden = {"intended_answer", "contrast_candidates", "answer_options", "author_self_evaluation"}
