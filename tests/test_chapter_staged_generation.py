@@ -15,9 +15,15 @@ from qbank.chapter_staged_generation import (
     find_option_text_cues,
     find_option_shape_cues,
     find_option_position_cues,
+    find_negated_stem_echo_cues,
+    find_option_category_parity_defects,
     find_polarity_completeness_defects,
+    find_rationale_register_defects,
+    find_terminal_exclusion_cues,
+    compute_derived_value,
     resolve_chapter_anchor,
     retrieve_global_contrasts,
+    validate_calibrated_rationale_assessment,
     validate_contrast_library,
     validate_micro_failure_review,
     validate_micro_pilot,
@@ -1332,3 +1338,853 @@ def test_staged_1_3_preflight_must_precede_and_bind_the_realized_options():
     item["semantic_polarity_completeness_preflight"]["options"][0]["semantic_option_text"] = "Something else"
     with pytest.raises(ChapterStagedGenerationError, match="preflight"):
         validate_staged_item(REPO, item, library, evidence)
+
+
+# --- SEMANTIC_ITEM_ACCEPTANCE_V2 (schema 1.4) --------------------------------
+
+STAGES_V5 = [
+    "TORONTO_NOTES_ANCHOR",
+    "MCC_OBJECTIVE_PHYSICIAN_ACTIVITY",
+    "PRIMARY_LEARNER_DECISION",
+    "ANCHOR_FIDELITY",
+    "OPEN_ENDED_STEM_KEY",
+    "CANDIDATE_VISIBLE_STEM_FEATURE_MAP",
+    "NUMERIC_DERIVATION_VALIDATION",
+    "BLIND_COVER_OPTIONS_SOLVER",
+    "GLOBAL_CONTRAST_RETRIEVAL",
+    "CONTRASTIVE_EVIDENCE_MATRIX",
+    "EVIDENCE_ENTAILMENT_ADJUDICATION",
+    "CONTEXTUAL_COMPETITOR_PROOF",
+    "TERMINAL_EXCLUSION_REVIEW",
+    "SEPARATE_DISTRACTOR_CONSTRUCTION",
+    "DISTRACTOR_ADVERSARIAL_RANKING",
+    "SEMANTIC_POLARITY_COMPLETENESS_PREFLIGHT",
+    "OPTION_SEMANTIC_CATEGORY_PARITY",
+    "PRE_ASSEMBLY_SEMANTIC_SET_REVIEW",
+    "OPTION_REALIZATION",
+    "PARALLEL_OPTION_SET_REVIEW",
+    "DECISION_GRANULARITY_PARITY",
+    "MCQ_ASSEMBLY",
+    "PLAN_FIDELITY_SHORTCUT_CUE_CHECK",
+    "RATIONALES",
+    "FRESH_INDEPENDENT_VERIFICATION",
+]
+
+
+def _rebind_1_4(item: dict) -> dict:
+    """Recompute every downstream fingerprint after a schema-1.4 stage edit."""
+    item["numeric_derivation_validation"]["stem_feature_map_sha256"] = _sha(item["stem_feature_map"])
+    item["evidence_entailment_adjudication"]["matrix_sha256"] = _sha(item["contrastive_evidence_matrix"])
+    item["contextual_competitor_proof"]["matrix_sha256"] = _sha(item["contrastive_evidence_matrix"])
+    item["terminal_exclusion_review"]["contextual_competitor_proof_sha256"] = _sha(
+        item["contextual_competitor_proof"]
+    )
+    construction = item["distractor_construction"]
+    construction["matrix_sha256"] = _sha(item["contrastive_evidence_matrix"])
+    adversarial = item["distractor_adversarial_review"]
+    adversarial["construction_sha256"] = _sha(construction)
+    preflight = item["semantic_polarity_completeness_preflight"]
+    preflight["adversarial_review_sha256"] = _sha(adversarial)
+    parity = item["option_semantic_category_parity"]
+    parity["preflight_sha256"] = _sha(preflight)
+    parity["deterministic_findings"] = find_option_category_parity_defects(parity["options"])
+    set_review = item["pre_assembly_semantic_set_review"]
+    set_review["category_parity_sha256"] = _sha(parity)
+    realization = item["option_realization"]
+    realization["adversarial_review_sha256"] = _sha(adversarial)
+    realization["pre_assembly_set_review_sha256"] = _sha(set_review)
+    review = item["parallel_option_set_review"]
+    review["realization_sha256"] = _sha(realization)
+    assembly = item["assembly"]
+    assembly["parallel_option_set_review_sha256"] = _sha(review)
+    assembly["approved_component_sha256"] = {
+        "open_ended": _sha(item["open_ended_stem_key"]),
+        "option_realization": _sha(realization),
+        "parallel_option_set_review": _sha(review),
+    }
+    item["acceptance_review"]["assembly_sha256"] = _sha(assembly)
+    item["rationales"]["acceptance_sha256"] = _sha(item["acceptance_review"])
+    item["semantic_fingerprint"] = _sha({
+        "item_type": item["item_type"],
+        "decision": item["anchor"]["primary_learner_decision"],
+        "stem": assembly["stem"],
+        "lead_in": assembly["lead_in"],
+        "answer": next(o for o in assembly["options"] if o["role"] == "KEY")["text"],
+    })
+    return item
+
+
+def _upgrade_to_schema_1_4(item: dict) -> dict:
+    """Ground the item in candidate-visible features and adjudicated entailment."""
+    item = _upgrade_to_schema_1_3(item)
+    item["schema_version"] = "1.4"
+    item["stage_sequence"] = STAGES_V5
+    open_ended = item["open_ended_stem_key"]
+    matrix = item["contrastive_evidence_matrix"]
+    key_refs = matrix["key"]["anchor_evidence_refs"]
+
+    item["stem_feature_map"] = {
+        "cartographer_id": "stem-feature-cartographer",
+        "open_ended_sha256": _sha(open_ended),
+        "features": [
+            {
+                "feature_id": "F-PRESSURE",
+                "normalized_feature": "acute central chest pressure",
+                "clinical_role": "PRESENTING_SYMPTOM",
+                "polarity": "PRESENT",
+                "inference_type": "EXPLICIT_FINDING",
+                "source_span": STEM_SUPPORT,
+            },
+            {
+                "feature_id": "F-ECG",
+                "normalized_feature": "new regional ischemic ECG change",
+                "clinical_role": "DECISIVE_INVESTIGATION_FINDING",
+                "polarity": "PRESENT",
+                "inference_type": "EXPLICIT_FINDING",
+                "source_span": STEM_DEFEAT,
+            },
+            {
+                "feature_id": "F-AUTONOMIC",
+                "normalized_feature": "diaphoresis accompanying the pain",
+                "clinical_role": "ASSOCIATED_FINDING",
+                "polarity": "PRESENT",
+                "inference_type": "EXPLICIT_FINDING",
+                "source_span": "diaphoresis",
+            },
+            {
+                "feature_id": "F-ISCHEMIC-SYNDROME",
+                "normalized_feature": "an ischemic syndrome rather than an isolated ECG abnormality",
+                "clinical_role": "INTEGRATED_CLINICAL_INFERENCE",
+                "polarity": "PRESENT",
+                "inference_type": "INTEGRATED_INFERENCE",
+                "derived_from": ["F-PRESSURE", "F-ECG", "F-AUTONOMIC"],
+            },
+        ],
+        "verdict": "PASS",
+    }
+    item["numeric_derivation_validation"] = {
+        "adjudicator_id": "numeric-adjudicator",
+        "stem_feature_map_sha256": _sha(item["stem_feature_map"]),
+        "derivations": [],
+        "no_derived_values_present": True,
+        "verdict": "PASS",
+    }
+
+    entailment_claims = [{
+        "claim_ref": "ENT-KEY",
+        "claim_text": "The regional ischemic ECG change decides ACS in this presentation.",
+        "claim_type": "KEY_DECISIVE",
+        "support_scope": "SCENARIO_APPLICABLE_RULE",
+        "entailment_status": "SUPPORTED_DIRECTLY",
+        "scope_justification": "The source states the rule for exactly this ECG-plus-symptom pattern.",
+        "evidence_refs": list(key_refs),
+    }]
+    proofs = item["contextual_competitor_proof"]["proofs"]
+    for proof in proofs:
+        contrast_id = proof["contrast_id"]
+        competitor_refs = proof["evidence_refs_for_plausibility"]
+        entailment_claims.append({
+            "claim_ref": f"ENT-{contrast_id}-P",
+            "claim_text": f"{contrast_id} shares this presentation's chest pressure.",
+            "claim_type": "COMPETITOR_PLAUSIBILITY",
+            "contrast_id": contrast_id,
+            "support_scope": "SCENARIO_APPLICABLE_RULE",
+            "entailment_status": "SUPPORTED_DIRECTLY",
+            "scope_justification": "The source describes this competitor in an acute chest-pain presentation.",
+            "evidence_refs": list(competitor_refs),
+        })
+        entailment_claims.append({
+            "claim_ref": f"ENT-{contrast_id}-D",
+            "claim_text": f"{contrast_id} does not produce a new regional ischemic ECG change.",
+            "claim_type": "COMPETITOR_DISCRIMINATOR",
+            "contrast_id": contrast_id,
+            "support_scope": "EXACT_SCENARIO_CLAIM",
+            "entailment_status": "SUPPORTED_DIRECTLY",
+            "scope_justification": "The source states this competitor's expected ECG behaviour directly.",
+            "evidence_refs": list(proof["evidence_refs_for_discriminator"]),
+        })
+        proof.pop("supporting_stem_features")
+        proof.pop("defeating_stem_features")
+        proof["supporting_stem_feature_ids"] = ["F-PRESSURE", "F-AUTONOMIC"]
+        proof["defeating_stem_feature_ids"] = ["F-ECG", "F-ISCHEMIC-SYNDROME"]
+        proof["discriminator_available_to_candidate"] = True
+        proof["post_stem_status"] = "STRONG_COMPETITOR"
+        proof["remains_plausible_after_full_stem"] = True
+        proof["option_text_self_defeats"] = False
+        proof["entailment_claim_refs"] = {
+            "plausibility": f"ENT-{contrast_id}-P",
+            "discriminator": f"ENT-{contrast_id}-D",
+        }
+        proof["adversarial_hidden_key_test"]["defeating_feature"] = "F-ECG"
+    item["evidence_entailment_adjudication"] = {
+        "adjudicator_id": "evidence-entailment-adjudicator",
+        "matrix_sha256": _sha(matrix),
+        "claims": entailment_claims,
+        "verdict": "PASS",
+    }
+    item["terminal_exclusion_review"] = {
+        "reviewer_id": "terminal-exclusion-reviewer",
+        "contextual_competitor_proof_sha256": _sha(item["contextual_competitor_proof"]),
+        "assessments": [
+            {
+                "contrast_id": proof["contrast_id"],
+                "defeating_stem_feature_ids": proof["defeating_stem_feature_ids"],
+                "exclusion_class": "NATURAL_DECISIVE_FINDING",
+                "justification": "The ECG belongs to the presentation and drives the intended decision.",
+                "immediately_rejectable_by_single_negative_phrase": False,
+            }
+            for proof in proofs
+        ],
+        "deterministic_findings": [],
+        "verdict": "PASS",
+    }
+
+    preflight = item["semantic_polarity_completeness_preflight"]
+    parity_options = []
+    for row in preflight["options"]:
+        parity_options.append({
+            "role": row["role"],
+            "semantic_option_text": row["semantic_option_text"],
+            "option_semantic_type": "DIAGNOSIS",
+            "option_action_type": "CLASSIFY",
+            "option_polarity": "AFFIRMATIVE_ACTION",
+            "option_scope": "CHEST_PAIN_DIAGNOSTIC_DECISION",
+            "decision_granularity": "DIAGNOSIS",
+            "completeness_level": "SINGLE_ACTION",
+            "category_rationale": "A single named diagnosis answering the same lead-in.",
+            **({"contrast_id": row["contrast_id"]} if row["role"] == "DISTRACTOR" else {}),
+        })
+    item["option_semantic_category_parity"] = {
+        "reviewer_id": "option-category-parity-reviewer",
+        "preflight_sha256": _sha(preflight),
+        "options": parity_options,
+        "parity_exceptions": [],
+        "deterministic_findings": [],
+        "key_identifiable_from_option_structure": False,
+        "verdict": "PASS",
+    }
+    item["pre_assembly_semantic_set_review"] = {
+        "reviewer_id": "pre-assembly-set-reviewer",
+        "category_parity_sha256": _sha(item["option_semantic_category_parity"]),
+        "checks": {name: "PASS" for name in PREASSEMBLY_CHECKS},
+        "verdict": "PASS",
+    }
+    open_ended["reasoning_chain"][-1] = (
+        "The new regional ischemic ECG change makes acute coronary syndrome the single best diagnosis."
+    )
+    item["rationales"]["correct"]["why_best"] = open_ended["reasoning_chain"][-1]
+    item["blind_solver"]["open_ended_sha256"] = _sha(open_ended)
+    item["global_contrast_retrieval"]["blind_solver_sha256"] = _sha(item["blind_solver"])
+    matrix["retrieval_sha256"] = _sha(item["global_contrast_retrieval"])
+    item["stem_feature_map"]["open_ended_sha256"] = _sha(open_ended)
+    item["option_realization"]["options"] = item["option_realization"]["options"]
+    return _rebind_1_4(item)
+
+
+PREASSEMBLY_CHECKS = {
+    "same_lead_in_dimension",
+    "compatible_semantic_category",
+    "comparable_decision_granularity",
+    "no_unique_completeness",
+    "no_polarity_odd_one_out",
+    "no_conceptual_convergence",
+    "no_trivially_excluded_competitor",
+    "competitor_specific_evidence_entailment",
+}
+
+
+def _staged_1_4() -> tuple[dict, dict, dict]:
+    evidence = _evidence()
+    library = _library(evidence)
+    return _upgrade_to_schema_1_4(_staged_item(evidence, library)), library, evidence
+
+
+def test_schema_1_4_accepts_a_semantically_grounded_item():
+    item, library, evidence = _staged_1_4()
+    assert validate_staged_item(REPO, item, library, evidence) is item
+
+
+def _restem_1_4(item: dict, stem: str, features: list[dict]) -> dict:
+    """Rewrite the stem the candidate reads and rebind the whole staged chain."""
+    open_ended = item["open_ended_stem_key"]
+    open_ended["stem"] = stem
+    item["assembly"]["stem"] = stem
+    item["blind_solver"]["open_ended_sha256"] = _sha(open_ended)
+    item["global_contrast_retrieval"]["blind_solver_sha256"] = _sha(item["blind_solver"])
+    item["contrastive_evidence_matrix"]["retrieval_sha256"] = _sha(item["global_contrast_retrieval"])
+    item["evidence_entailment_adjudication"]["matrix_sha256"] = _sha(item["contrastive_evidence_matrix"])
+    item["stem_feature_map"]["features"] = features
+    item["stem_feature_map"]["open_ended_sha256"] = _sha(open_ended)
+    return _rebind_1_4(item)
+
+
+def _rebind_terminal_review(item: dict) -> dict:
+    item["terminal_exclusion_review"]["contextual_competitor_proof_sha256"] = _sha(
+        item["contextual_competitor_proof"]
+    )
+    return _rebind_1_4(item)
+
+
+# 1. A cited claim that the adjudicator cannot make the evidence entail.
+def test_entailment_gate_rejects_a_citation_that_does_not_entail_its_claim():
+    item, library, evidence = _staged_1_4()
+    claims = item["evidence_entailment_adjudication"]["claims"]
+    claims[2]["entailment_status"] = "PARTIALLY_SUPPORTED"
+    _rebind_1_4(item)
+    with pytest.raises(ChapterStagedGenerationError, match="does not entail claim"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+@pytest.mark.parametrize("status", ["NOT_SUPPORTED", "CONFLICTING"])
+def test_entailment_gate_rejects_unsupported_and_conflicting_evidence(status):
+    item, library, evidence = _staged_1_4()
+    item["evidence_entailment_adjudication"]["claims"][0]["entailment_status"] = status
+    _rebind_1_4(item)
+    with pytest.raises(ChapterStagedGenerationError, match="does not entail claim"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+# 2. A general disease page cannot decide a scenario-specific discriminator.
+def test_entailment_gate_rejects_a_general_concept_source_behind_a_scenario_claim():
+    item, library, evidence = _staged_1_4()
+    claims = item["evidence_entailment_adjudication"]["claims"]
+    discriminator = next(row for row in claims if row["claim_type"] == "COMPETITOR_DISCRIMINATOR")
+    discriminator["support_scope"] = "GENERAL_CONCEPT_CLAIM"
+    _rebind_1_4(item)
+    with pytest.raises(ChapterStagedGenerationError, match="rests only on a general concept source"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_entailment_gate_requires_every_competitor_to_be_adjudicated():
+    item, library, evidence = _staged_1_4()
+    claims = item["evidence_entailment_adjudication"]["claims"]
+    item["evidence_entailment_adjudication"]["claims"] = [
+        row for row in claims if row["claim_ref"] != claims[-1]["claim_ref"]
+    ]
+    _rebind_1_4(item)
+    with pytest.raises(ChapterStagedGenerationError, match="unadjudicated"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+# 3. A discriminator may rest on several candidate-visible features at once.
+def test_candidate_visible_grounding_accepts_an_integrated_multi_feature_discriminator():
+    item, library, evidence = _staged_1_4()
+    for proof in item["contextual_competitor_proof"]["proofs"]:
+        proof["defeating_stem_feature_ids"] = ["F-ISCHEMIC-SYNDROME"]
+        proof["adversarial_hidden_key_test"]["defeating_feature"] = "F-ISCHEMIC-SYNDROME"
+    for row in item["terminal_exclusion_review"]["assessments"]:
+        row["defeating_stem_feature_ids"] = ["F-ISCHEMIC-SYNDROME"]
+    _rebind_terminal_review(item)
+    assert validate_staged_item(REPO, item, library, evidence) is item
+
+
+def test_candidate_visible_grounding_rejects_a_feature_absent_from_the_stem():
+    item, library, evidence = _staged_1_4()
+    item["stem_feature_map"]["features"][1]["source_span"] = "a troponin the stem never reports"
+    _rebind_1_4(item)
+    with pytest.raises(ChapterStagedGenerationError, match="cannot read in the stem"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_candidate_visible_grounding_rejects_an_integrated_feature_without_components():
+    item, library, evidence = _staged_1_4()
+    item["stem_feature_map"]["features"][3]["derived_from"] = ["F-ECG"]
+    _rebind_1_4(item)
+    with pytest.raises(ChapterStagedGenerationError, match="two or more previously grounded features"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+# 4. A closing clause whose only job is to make distractors false.
+def test_terminal_exclusion_gate_rejects_a_negative_checklist_written_for_the_options():
+    item, library, evidence = _staged_1_4()
+    stem = (
+        "A patient has acute central chest pressure with diaphoresis and a new regional "
+        "ischemic ECG change. There is no pleuritic pain, no tearing interscapular pain, "
+        "and no reflux symptoms."
+    )
+    features = [
+        {"feature_id": "F-PRESSURE", "normalized_feature": "acute central chest pressure",
+         "clinical_role": "PRESENTING_SYMPTOM", "polarity": "PRESENT",
+         "inference_type": "EXPLICIT_FINDING", "source_span": STEM_SUPPORT},
+        {"feature_id": "F-NO-PLEURITIC", "normalized_feature": "pleuritic pain absent",
+         "clinical_role": "EXCLUSIONARY_FINDING", "polarity": "ABSENT",
+         "inference_type": "ABSENT_FINDING", "source_span": "no pleuritic pain"},
+        {"feature_id": "F-NO-TEARING", "normalized_feature": "tearing interscapular pain absent",
+         "clinical_role": "EXCLUSIONARY_FINDING", "polarity": "ABSENT",
+         "inference_type": "ABSENT_FINDING", "source_span": "no tearing interscapular pain"},
+        {"feature_id": "F-NO-REFLUX", "normalized_feature": "reflux symptoms absent",
+         "clinical_role": "EXCLUSIONARY_FINDING", "polarity": "ABSENT",
+         "inference_type": "ABSENT_FINDING", "source_span": "no reflux symptoms"},
+        {"feature_id": "F-ECG", "normalized_feature": "new regional ischemic ECG change",
+         "clinical_role": "DECISIVE_INVESTIGATION_FINDING", "polarity": "PRESENT",
+         "inference_type": "EXPLICIT_FINDING", "source_span": STEM_DEFEAT},
+    ]
+    _restem_1_4(item, stem, features)
+    killers = ["F-NO-PLEURITIC", "F-NO-TEARING", "F-NO-REFLUX", "F-ECG"]
+    for proof, killer in zip(item["contextual_competitor_proof"]["proofs"], killers):
+        proof["supporting_stem_feature_ids"] = ["F-PRESSURE"]
+        proof["defeating_stem_feature_ids"] = [killer]
+        proof["adversarial_hidden_key_test"]["defeating_feature"] = killer
+    for row, killer in zip(item["terminal_exclusion_review"]["assessments"], killers):
+        row["defeating_stem_feature_ids"] = [killer]
+    _rebind_terminal_review(item)
+    with pytest.raises(ChapterStagedGenerationError, match="NEGATIVE_CHECKLIST_SENTENCE"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_terminal_exclusion_gate_rejects_a_declared_artificial_exclusion():
+    item, library, evidence = _staged_1_4()
+    item["terminal_exclusion_review"]["assessments"][0]["exclusion_class"] = "ARTIFICIAL_TERMINAL_EXCLUSION"
+    _rebind_1_4(item)
+    with pytest.raises(ChapterStagedGenerationError, match="artificial terminal exclusion"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_terminal_exclusion_gate_rejects_a_phrase_matchable_competitor():
+    item, library, evidence = _staged_1_4()
+    row = item["terminal_exclusion_review"]["assessments"][1]
+    row["immediately_rejectable_by_single_negative_phrase"] = True
+    _rebind_1_4(item)
+    with pytest.raises(ChapterStagedGenerationError, match="phrase matching rather than reasoning"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+# 5. A negative finding that belongs to the presentation is not a giveaway.
+def test_terminal_exclusion_gate_allows_a_natural_decisive_negative_finding():
+    item, library, evidence = _staged_1_4()
+    stem = (
+        "A patient has acute central chest pressure with diaphoresis and no relief after rest. "
+        "The electrocardiogram shows a new regional ischemic ECG change and the chest is clear."
+    )
+    features = [
+        {"feature_id": "F-PRESSURE", "normalized_feature": "acute central chest pressure",
+         "clinical_role": "PRESENTING_SYMPTOM", "polarity": "PRESENT",
+         "inference_type": "EXPLICIT_FINDING", "source_span": STEM_SUPPORT},
+        {"feature_id": "F-NO-REST-RELIEF", "normalized_feature": "pain persists at rest",
+         "clinical_role": "SYMPTOM_BEHAVIOUR", "polarity": "ABSENT",
+         "inference_type": "TREATMENT_RESPONSE", "source_span": "no relief after rest"},
+        {"feature_id": "F-ECG", "normalized_feature": "new regional ischemic ECG change",
+         "clinical_role": "DECISIVE_INVESTIGATION_FINDING", "polarity": "PRESENT",
+         "inference_type": "EXPLICIT_FINDING", "source_span": STEM_DEFEAT},
+    ]
+    _restem_1_4(item, stem, features)
+    for proof in item["contextual_competitor_proof"]["proofs"]:
+        proof["supporting_stem_feature_ids"] = ["F-PRESSURE"]
+        proof["defeating_stem_feature_ids"] = ["F-ECG", "F-NO-REST-RELIEF"]
+        proof["adversarial_hidden_key_test"]["defeating_feature"] = "F-ECG"
+    for row in item["terminal_exclusion_review"]["assessments"]:
+        row["defeating_stem_feature_ids"] = ["F-ECG", "F-NO-REST-RELIEF"]
+    _rebind_terminal_review(item)
+    assert validate_staged_item(REPO, item, library, evidence) is item
+
+
+# 6. A topic-adjacent competitor that the completed stem obviously contradicts.
+@pytest.mark.parametrize("status", ["TRIVIALLY_EXCLUDED", "NOT_CONTEXTUALLY_PLAUSIBLE", "UNSUPPORTED"])
+def test_competitor_test_v2_rejects_a_competitor_the_full_stem_destroys(status):
+    item, library, evidence = _staged_1_4()
+    item["contextual_competitor_proof"]["proofs"][2]["post_stem_status"] = status
+    _rebind_terminal_review(item)
+    with pytest.raises(ChapterStagedGenerationError, match="not a competitive distractor"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_competitor_test_v2_rejects_an_option_whose_own_wording_defeats_it():
+    item, library, evidence = _staged_1_4()
+    item["contextual_competitor_proof"]["proofs"][0]["option_text_self_defeats"] = True
+    _rebind_terminal_review(item)
+    with pytest.raises(ChapterStagedGenerationError, match="own option wording defeats it"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+# 7. A competitor that only falls once several features are read together.
+def test_competitor_test_v2_accepts_a_competitor_defeated_only_by_integration():
+    item, library, evidence = _staged_1_4()
+    for proof in item["contextual_competitor_proof"]["proofs"]:
+        proof["post_stem_status"] = "ACCEPTABLE_COMPETITOR"
+        proof["supporting_stem_feature_ids"] = ["F-PRESSURE", "F-AUTONOMIC"]
+        proof["defeating_stem_feature_ids"] = ["F-ISCHEMIC-SYNDROME"]
+        proof["adversarial_hidden_key_test"]["defeating_feature"] = "F-ISCHEMIC-SYNDROME"
+    for row in item["terminal_exclusion_review"]["assessments"]:
+        row["defeating_stem_feature_ids"] = ["F-ISCHEMIC-SYNDROME"]
+        row["exclusion_class"] = "LEGITIMATE_SINGLE_DISCRIMINATOR"
+    _rebind_terminal_review(item)
+    assert validate_staged_item(REPO, item, library, evidence) is item
+
+
+def _set_parity(item: dict, index: int, **fields) -> dict:
+    item["option_semantic_category_parity"]["options"][index].update(fields)
+    return _rebind_1_4(item)
+
+
+def _investigation_set(item: dict) -> dict:
+    """Recast the option set as four investigations answering one lead-in."""
+    for row in item["option_semantic_category_parity"]["options"]:
+        row.update({
+            "option_semantic_type": "INVESTIGATION",
+            "option_action_type": "INITIATE",
+            "option_scope": "IMMEDIATE_DIAGNOSTIC_DECISION",
+            "decision_granularity": "DIAGNOSTIC_TEST",
+        })
+    return _rebind_1_4(item)
+
+
+# 8. Three tests and a lone no-test key.
+def test_category_parity_rejects_three_tests_against_a_lone_no_test_key():
+    item, library, evidence = _staged_1_4()
+    _investigation_set(item)
+    _set_parity(
+        item, 0,
+        option_action_type="WITHHOLD",
+        option_polarity="NEGATING_ACTION",
+        option_semantic_type="MANAGEMENT_STRATEGY",
+    )
+    with pytest.raises(ChapterStagedGenerationError, match="exposes its key by category"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_category_parity_allows_a_no_test_key_only_on_independent_justification():
+    item, library, evidence = _staged_1_4()
+    _investigation_set(item)
+    _set_parity(item, 0, option_action_type="WITHHOLD")
+    parity = item["option_semantic_category_parity"]
+    parity["parity_exceptions"] = [{
+        "finding": "KEY_ONLY_OPTION_ACTION_TYPE",
+        "justification": "Withholding testing is the guideline's named alternative to each listed test.",
+        "genuinely_comparable_response_reasoning": (
+            "Every option answers whether to test now, so the set is one decision, not two."
+        ),
+        "independent_reviewer_id": "parity-exception-adjudicator",
+        "verdict": "PASS",
+    }]
+    _rebind_1_4(item)
+    assert validate_staged_item(REPO, item, library, evidence) is item
+
+
+def test_category_parity_exception_requires_a_reviewer_other_than_its_own():
+    item, library, evidence = _staged_1_4()
+    _investigation_set(item)
+    _set_parity(item, 0, option_action_type="WITHHOLD")
+    parity = item["option_semantic_category_parity"]
+    parity["parity_exceptions"] = [{
+        "finding": "KEY_ONLY_OPTION_ACTION_TYPE",
+        "justification": "Self-approved.",
+        "genuinely_comparable_response_reasoning": "Self-approved.",
+        "independent_reviewer_id": parity["reviewer_id"],
+        "verdict": "PASS",
+    }]
+    _rebind_1_4(item)
+    with pytest.raises(ChapterStagedGenerationError, match="requires an independent reviewer"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+# 9. Three drugs and one option from another category.
+def test_category_parity_rejects_three_medications_beside_a_different_category():
+    item, library, evidence = _staged_1_4()
+    for row in item["option_semantic_category_parity"]["options"]:
+        row.update({
+            "option_semantic_type": "MEDICATION",
+            "option_action_type": "INITIATE",
+            "option_scope": "IMMEDIATE_TREATMENT_DECISION",
+            "decision_granularity": "SINGLE_NEXT_ACTION",
+        })
+    _set_parity(item, 2, option_semantic_type="SUPPORTIVE_CARE")
+    with pytest.raises(ChapterStagedGenerationError, match="DISTRACTOR_OUTLIER_OPTION_SEMANTIC_TYPE"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+# 10. Genuine same-decision management alternatives stay acceptable.
+def test_category_parity_accepts_parallel_same_decision_management_alternatives():
+    item, library, evidence = _staged_1_4()
+    for row in item["option_semantic_category_parity"]["options"]:
+        row.update({
+            "option_semantic_type": "MANAGEMENT_STRATEGY",
+            "option_action_type": "INITIATE",
+            "option_scope": "IMMEDIATE_TREATMENT_DECISION",
+            "decision_granularity": "MANAGEMENT_STRATEGY",
+            "completeness_level": "SINGLE_ACTION",
+        })
+    _rebind_1_4(item)
+    assert validate_staged_item(REPO, item, library, evidence) is item
+
+
+# 11. A key that is the only complete strategy on offer.
+def test_category_parity_rejects_a_key_only_comprehensive_strategy():
+    item, library, evidence = _staged_1_4()
+    _set_parity(item, 0, completeness_level="FULL_BUNDLE")
+    with pytest.raises(ChapterStagedGenerationError, match="KEY_ONLY_COMPLETENESS_LEVEL"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_category_parity_rejects_a_lone_polarity_reversal():
+    item, library, evidence = _staged_1_4()
+    _set_parity(item, 0, option_polarity="NEGATING_ACTION")
+    with pytest.raises(ChapterStagedGenerationError, match="KEY_ONLY_OPTION_POLARITY"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+# 12. A key assembled from the parts its own distractors offer separately.
+def test_pre_assembly_set_review_rejects_conceptual_convergence():
+    item, library, evidence = _staged_1_4()
+    realized = item["option_realization"]["options"]
+    key = next(row for row in realized if row["role"] == "KEY")
+    distractors = [row for row in realized if row["role"] == "DISTRACTOR"]
+    key["independent_action_components"] = ["component-a", "component-b"]
+    distractors[0]["independent_action_components"] = ["component-a"]
+    distractors[1]["independent_action_components"] = ["component-b"]
+    for row in realized:
+        row["semantic_meaning_fingerprint"] = _sha({
+            "semantic_option_text": row["semantic_option_text"],
+            "decision_granularity": row["decision_granularity"],
+            "action_or_concept_head": row["action_or_concept_head"],
+            "medically_required_modifiers": row["medically_required_modifiers"],
+            "independent_action_components": row["independent_action_components"],
+            "specificity_level": row["specificity_level"],
+        })
+    _rebind_1_4(item)
+    with pytest.raises(ChapterStagedGenerationError, match="CONCEPTUAL_CONVERGENCE|KEY_ONLY_COMPLETENESS"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_pre_assembly_set_review_must_pass_before_any_wording_exists():
+    item, library, evidence = _staged_1_4()
+    item["pre_assembly_semantic_set_review"]["checks"]["no_trivially_excluded_competitor"] = "FAIL"
+    _rebind_1_4(item)
+    with pytest.raises(ChapterStagedGenerationError, match="pre-assembly semantic set review"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+# 13. A stated score that its own declared components do not produce.
+def _score_item(total: int, components: list[tuple[str, int]]) -> tuple[dict, dict, dict]:
+    item, library, evidence = _staged_1_4()
+    stem = (
+        "A patient has acute central chest pressure with diaphoresis and a new regional "
+        f"ischemic ECG change. The clinical risk score is {total}."
+    )
+    features = deepcopy(item["stem_feature_map"]["features"])
+    features.append({
+        "feature_id": "F-SCORE",
+        "normalized_feature": "the stated clinical risk score",
+        "clinical_role": "DERIVED_RISK_STRATIFICATION",
+        "polarity": "PRESENT",
+        "inference_type": "LABORATORY_PATTERN",
+        "source_span": f"the clinical risk score is {total}",
+    })
+    _restem_1_4(item, stem, features)
+    item["numeric_derivation_validation"].update({
+        "no_derived_values_present": False,
+        "derivations": [{
+            "claim_ref": "NUM-SCORE",
+            "formula_id": "SUM_OF_COMPONENTS",
+            "input_values": [
+                {"component": name, "value": value, "units": "points"}
+                for name, value in components
+            ],
+            "units": "points",
+            "asserted_in": "STEM",
+            "asserted_text": f"The clinical risk score is {total}",
+            "expected_result": total,
+            "computed_result": sum(value for _, value in components),
+            "tolerance": 0,
+            "recomputable": True,
+        }],
+    })
+    _rebind_1_4(item)
+    return item, library, evidence
+
+
+ALVARADO_COMPONENTS = [
+    ("migration", 1), ("anorexia", 1), ("nausea_vomiting", 1), ("rlq_tenderness", 2),
+    ("rebound", 0), ("elevated_temperature", 1), ("leukocytosis", 2), ("left_shift", 0),
+]
+
+
+def test_numeric_gate_rejects_a_score_its_own_components_do_not_produce():
+    item, library, evidence = _score_item(5, ALVARADO_COMPONENTS)
+    with pytest.raises(ChapterStagedGenerationError, match="recomputes to 8, not the asserted 5"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+# 14. The same score, stated correctly, is accepted.
+def test_numeric_gate_accepts_a_correctly_summed_structured_score():
+    item, library, evidence = _score_item(8, ALVARADO_COMPONENTS)
+    assert validate_staged_item(REPO, item, library, evidence) is item
+
+
+def test_numeric_gate_rejects_a_stem_assertion_the_stem_never_makes():
+    item, library, evidence = _score_item(8, ALVARADO_COMPONENTS)
+    item["numeric_derivation_validation"]["derivations"][0]["asserted_text"] = "The score is 8 of 10"
+    _rebind_1_4(item)
+    with pytest.raises(ChapterStagedGenerationError, match="stem assertion the stem does not make"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_numeric_gate_escalates_an_unrecomputable_value_to_an_independent_verifier():
+    item, library, evidence = _score_item(8, ALVARADO_COMPONENTS)
+    derivation = item["numeric_derivation_validation"]["derivations"][0]
+    derivation.update({"formula_id": "PROPRIETARY_INDEX", "recomputable": False})
+    _rebind_1_4(item)
+    with pytest.raises(ChapterStagedGenerationError, match="requires independent numeric verification"):
+        validate_staged_item(REPO, item, library, evidence)
+    derivation["independent_numeric_verification"] = {
+        "verifier_id": "independent-numeric-verifier",
+        "method": "Recomputed by hand from the published index definition.",
+        "verdict": "PASS",
+    }
+    _rebind_1_4(item)
+    assert validate_staged_item(REPO, item, library, evidence) is item
+
+
+@pytest.mark.parametrize(
+    "formula_id, inputs, expected",
+    [
+        ("ARR", {"control_event_rate": "0.20", "experimental_event_rate": "0.16"}, "0.04"),
+        ("RRR", {"control_event_rate": "0.20", "experimental_event_rate": "0.16"}, "0.2"),
+        ("NNT", {"absolute_risk_reduction": "0.04"}, "25"),
+        ("SENSITIVITY", {"true_positives": "90", "false_negatives": "10"}, "0.9"),
+        ("SPECIFICITY", {"true_negatives": "80", "false_positives": "20"}, "0.8"),
+        ("PPV", {"true_positives": "90", "false_positives": "20"}, "0.8181818181818181818181818182"),
+        ("LR_POSITIVE", {"sensitivity": "0.9", "specificity": "0.8"}, "4.5"),
+        ("LR_NEGATIVE", {"sensitivity": "0.9", "specificity": "0.8"}, "0.125"),
+        ("PERCENTAGE", {"numerator": "3", "denominator": "8"}, "37.5"),
+        ("WEIGHT_BASED_DOSE", {"weight_kg": "14.5", "dose_per_kg": "15"}, "217.5"),
+    ],
+)
+def test_derived_quantities_are_recomputed_deterministically(formula_id, inputs, expected):
+    from decimal import Decimal
+
+    values = [
+        {"component": name, "value": value, "units": "unit"} for name, value in inputs.items()
+    ]
+    assert compute_derived_value(formula_id, values) == Decimal(expected)
+
+
+def test_derived_quantity_recomputation_fails_closed_on_bad_inputs():
+    with pytest.raises(ChapterStagedGenerationError, match="not deterministically recomputable"):
+        compute_derived_value("MADE_UP", [{"component": "a", "value": 1, "units": "u"}])
+    with pytest.raises(ChapterStagedGenerationError, match="inputs are incomplete"):
+        compute_derived_value("ARR", [{"component": "control_event_rate", "value": 1, "units": "u"}])
+    with pytest.raises(ChapterStagedGenerationError, match="divides by zero"):
+        compute_derived_value("NNT", [{"component": "absolute_risk_reduction", "value": 0, "units": "u"}])
+
+
+# 15. Neighbouring public-health concepts along one semantic dimension.
+def test_phelo_style_neighbouring_concepts_share_one_semantic_dimension():
+    item, library, evidence = _staged_1_4()
+    for row in item["option_semantic_category_parity"]["options"]:
+        row.update({
+            "option_semantic_type": "EPIDEMIOLOGIC_CONCEPT",
+            "option_action_type": "CLASSIFY",
+            "option_scope": "SCREENING_PROGRAMME_BIAS_ATTRIBUTION",
+            "decision_granularity": "OTHER",
+            "completeness_level": "SINGLE_ACTION",
+        })
+    for row in item["option_realization"]["options"]:
+        row["decision_granularity"] = "OTHER"
+        row["semantic_meaning_fingerprint"] = _sha({
+            "semantic_option_text": row["semantic_option_text"],
+            "decision_granularity": row["decision_granularity"],
+            "action_or_concept_head": row["action_or_concept_head"],
+            "medically_required_modifiers": row["medically_required_modifiers"],
+            "independent_action_components": row["independent_action_components"],
+            "specificity_level": row["specificity_level"],
+        })
+    for row in item["semantic_polarity_completeness_preflight"]["options"]:
+        row["decision_granularity"] = "OTHER"
+    _rebind_1_4(item)
+    assert validate_staged_item(REPO, item, library, evidence) is item
+
+
+# 16. A psychiatric differential decided by course rather than by a single clause.
+def test_psychiatry_style_longitudinal_differential_is_accepted():
+    item, library, evidence = _staged_1_4()
+    stem = (
+        "A patient describes 7 weeks of continuously low mood with early-morning wakening "
+        "and weight loss, beginning after a promotion and unchanged since. Function at work "
+        "has deteriorated over the same period."
+    )
+    features = [
+        {"feature_id": "F-COURSE", "normalized_feature": "seven-week continuous episode",
+         "clinical_role": "TIME_COURSE", "polarity": "PRESENT",
+         "inference_type": "TIME_COURSE", "source_span": "7 weeks of continuously low mood"},
+        {"feature_id": "F-NEUROVEG", "normalized_feature": "neurovegetative features present",
+         "clinical_role": "SYMPTOM_CLUSTER", "polarity": "PRESENT",
+         "inference_type": "EXPLICIT_FINDING", "source_span": "early-morning wakening"},
+        {"feature_id": "F-FUNCTION", "normalized_feature": "functional deterioration",
+         "clinical_role": "SEVERITY_MARKER", "polarity": "PRESENT",
+         "inference_type": "EXPLICIT_FINDING", "source_span": "function at work has deteriorated"},
+        {"feature_id": "F-LONGITUDINAL", "normalized_feature":
+         "an episodic rather than chronic longitudinal course with functional impact",
+         "clinical_role": "INTEGRATED_CLINICAL_INFERENCE", "polarity": "PRESENT",
+         "inference_type": "INTEGRATED_INFERENCE",
+         "derived_from": ["F-COURSE", "F-NEUROVEG", "F-FUNCTION"]},
+    ]
+    _restem_1_4(item, stem, features)
+    for proof in item["contextual_competitor_proof"]["proofs"]:
+        proof["supporting_stem_feature_ids"] = ["F-NEUROVEG", "F-FUNCTION"]
+        proof["defeating_stem_feature_ids"] = ["F-LONGITUDINAL"]
+        proof["post_stem_status"] = "STRONG_COMPETITOR"
+        proof["adversarial_hidden_key_test"]["defeating_feature"] = "F-LONGITUDINAL"
+    for row in item["terminal_exclusion_review"]["assessments"]:
+        row["defeating_stem_feature_ids"] = ["F-LONGITUDINAL"]
+        row["exclusion_class"] = "LEGITIMATE_SINGLE_DISCRIMINATOR"
+    _rebind_terminal_review(item)
+    assert validate_staged_item(REPO, item, library, evidence) is item
+
+
+def test_key_rationale_must_explain_rather_than_instruct():
+    item, library, evidence = _staged_1_4()
+    directive = "Use the regional ischemic change to reject the listed alternatives."
+    item["open_ended_stem_key"]["reasoning_chain"][-1] = directive
+    item["rationales"]["correct"]["why_best"] = directive
+    _restem_1_4(item, item["open_ended_stem_key"]["stem"], item["stem_feature_map"]["features"])
+    with pytest.raises(ChapterStagedGenerationError, match="IMPERATIVE_KEY_RATIONALE"):
+        validate_staged_item(REPO, item, library, evidence)
+
+
+def test_realized_options_must_not_answer_a_negated_stem_clause_with_its_own_words():
+    assert find_negated_stem_echo_cues(
+        "The pamphlet contains no written description of the potential harms.",
+        [
+            {"role": "KEY", "text": "Provide written information about the potential harms"},
+            {"role": "DISTRACTOR", "text": "Proceed with the appointment as booked"},
+            {"role": "DISTRACTOR", "text": "Repeat the verbal explanation"},
+        ],
+    ) == ["KEY_ONLY_NEGATED_STEM_ECHO"]
+    assert find_negated_stem_echo_cues(
+        "The patient has no fever and no rigors.",
+        [
+            {"role": "KEY", "text": "Continue exclusive breastfeeding"},
+            {"role": "DISTRACTOR", "text": "Start oral antibiotics"},
+            {"role": "DISTRACTOR", "text": "Arrange breast ultrasonography"},
+        ],
+    ) == []
+
+
+def test_calibrated_rationale_standard_separates_fatal_defects_from_enhancements():
+    passing = {
+        "fatal_criteria": {name: "PASS" for name in [
+            "decisive_reason_stated", "distractor_discriminators_stated",
+            "no_unsupported_teaching_claim", "evidence_linkage_present",
+        ]},
+        "enhancement_opportunities": [
+            {"class": "EXPLANATORY_REGISTER", "note": "The key rationale reads as a directive."},
+            {"class": "TEACHING_VALUE", "note": "The threshold could be named."},
+        ],
+        "verdict": "PASS",
+    }
+    assert validate_calibrated_rationale_assessment(passing) == "PASS"
+    fatal = deepcopy(passing)
+    fatal["fatal_criteria"]["no_unsupported_teaching_claim"] = "FAIL"
+    fatal["verdict"] = "FAIL"
+    assert validate_calibrated_rationale_assessment(fatal) == "FAIL"
+    inconsistent = deepcopy(passing)
+    inconsistent["fatal_criteria"]["decisive_reason_stated"] = "FAIL"
+    with pytest.raises(ChapterStagedGenerationError, match="does not reconcile"):
+        validate_calibrated_rationale_assessment(inconsistent)
+
+
+def test_imperative_register_detector_is_head_anchored():
+    assert find_rationale_register_defects("Select the safest option.") == ["IMPERATIVE_KEY_RATIONALE"]
+    assert find_rationale_register_defects(
+        "The regional ischemic change makes acute coronary syndrome the single best diagnosis."
+    ) == []

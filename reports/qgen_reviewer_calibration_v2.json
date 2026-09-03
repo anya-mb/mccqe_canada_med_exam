@@ -1,0 +1,324 @@
+{
+ "calibration_id": "qgen_reviewer_calibration_v2",
+ "calibration_verdict": "PASS",
+ "cohort_summary": {
+  "A_PREV_ACCEPTED_CARDIOLOGY": {
+   "passed": 0,
+   "reviewed": 4
+  },
+  "B_PREV_ACCEPTED_BASELINE": {
+   "passed": 2,
+   "reviewed": 4
+  },
+  "C_KNOWN_DEFECTIVE": {
+   "passed": 0,
+   "reviewed": 3
+  }
+ },
+ "consequence_for_diagnosis": "EXCLUSION_BY_EXPLICIT_STEM_NEGATION and KEY_AS_CATEGORY_ODD_ONE_OUT predate schema 1.3. They are present in the Cardiology pilot and in the accepted baseline items. The schema-1.3 verbatim-quote requirement amplified the first mode; it did not create it. The r2 attribution of both modes to the new gate is corrected here.",
+ "control_cohorts": {
+  "A_PREV_ACCEPTED_CARDIOLOGY": [
+   "QGEN-MED-007-ACS-CR10-I01",
+   "QGEN-MED-007-ACS-CR10-I02",
+   "QGEN-MED-007-ACS-CR10-I06",
+   "QGEN-MED-007-ACS-CR10-I09"
+  ],
+  "B_PREV_ACCEPTED_BASELINE": [
+   "QGEN-GEN-PED-I02",
+   "QGEN-GEN-OBGYN-I01",
+   "QGEN-GEN-PSY-I01",
+   "QGEN-GEN-PHELO-I01"
+  ],
+  "C_KNOWN_DEFECTIVE": [
+   "QGEN-MED-007-ACS-CR10-I05",
+   "QGEN-GEN-SURG-I01",
+   "QGEN-GEN2-PSY-I03"
+  ]
+ },
+ "control_items_reviewed": 11,
+ "imperative_register_disposition": "An imperative key rationale is an enhancement opportunity for acceptance and never rejects a reviewed item. The generator nonetheless refuses to emit one at schema 1.4, so the generator holds a higher bar than the acceptance bar rather than the two disagreeing.",
+ "item_results": [
+  {
+   "cohort": "A_PREV_ACCEPTED_CARDIOLOGY",
+   "control_id": "QGEN-MED-007-ACS-CR10-I01",
+   "dimensions": {
+    "context_necessity": "PASS",
+    "cueing": "PASS",
+    "distractor_competitiveness": "FAIL",
+    "evidence_support": "PASS",
+    "factual_correctness": "PASS",
+    "mccqe_level": "PASS",
+    "option_polarity_completeness": "PASS",
+    "rationale_quality": "PASS",
+    "reasoning_demand": "PASS",
+    "single_best_answer": "PASS"
+   },
+   "failure_reason": "The stem carries an explicit negative checklist ('not pleuritic or positional... no regurgitation, sudden maximal-onset back pain, dyspnea, hemoptysis, or limb symptoms') that maps one-to-one onto all four distractors, so each is trivially killed by phrase matching rather than by clinical reasoning.",
+   "rationale_enhancement_opportunities": [
+    "Key rationale says 'the integrated ECG and biomarker pattern' without naming the actual decisive facts: a troponin crossing from below to above the 99th percentile with a large 90-minute delta, plus ischemic ST depression without ST elevation (which is also what separates NSTEMI from STEMI and from unstable angina).",
+    "No rationale explains why the delta magnitude, rather than the absolute second value, is what establishes acute myocardial injury."
+   ],
+   "rationale_fatal_defects": [],
+   "verdict": "FAIL"
+  },
+  {
+   "cohort": "A_PREV_ACCEPTED_CARDIOLOGY",
+   "control_id": "QGEN-MED-007-ACS-CR10-I02",
+   "dimensions": {
+    "context_necessity": "PASS",
+    "cueing": "FAIL",
+    "distractor_competitiveness": "FAIL",
+    "evidence_support": "PASS",
+    "factual_correctness": "PASS",
+    "mccqe_level": "PASS",
+    "option_polarity_completeness": "PASS",
+    "rationale_quality": "PASS",
+    "reasoning_demand": "PASS",
+    "single_best_answer": "PASS"
+   },
+   "failure_reason": "The stem's closing negative list ('no pleuritic pain, hypoxemia, abrupt tearing pain, pulse asymmetry, positional symptoms, heartburn, or regurgitation') eliminates each of the four distractors by direct phrase match, and the option set is further cued because only the key carries an endorsement qualifier ('at the validated interval') while three distractors self-defeat by naming the unsupported diagnosis they chase ('for a pericarditis-first evaluation', 'for possible reflux disease').",
+   "rationale_enhancement_opportunities": [
+    "Key rationale is in imperative register ('Repeat the ECG and hs-cTn...') but does convey the decisive reason (early nondiagnostic results do not exclude ACS); it could state why 40 minutes from onset is too early for a single-sample rule-out.",
+    "No rationale names the concrete assay-specific serial interval (e.g. 0/1h or 0/2h algorithms), leaving 'the validated interval' abstract."
+   ],
+   "rationale_fatal_defects": [],
+   "verdict": "FAIL"
+  },
+  {
+   "cohort": "A_PREV_ACCEPTED_CARDIOLOGY",
+   "control_id": "QGEN-MED-007-ACS-CR10-I06",
+   "dimensions": {
+    "context_necessity": "PASS",
+    "cueing": "PASS",
+    "distractor_competitiveness": "FAIL",
+    "evidence_support": "PASS",
+    "factual_correctness": "PASS",
+    "mccqe_level": "PASS",
+    "option_polarity_completeness": "FAIL",
+    "rationale_quality": "PASS",
+    "reasoning_demand": "PASS",
+    "single_best_answer": "PASS"
+   },
+   "failure_reason": "Only two of four distractors are competitive: option C self-defeats (no candidate waits for biomarkers in a stem that states diagnostic STEMI) and option D is killed by the explicit negative sentence about non-abrupt onset and absent pulse asymmetry, and the set is not homogeneous because the lead-in asks for a reperfusion strategy while D is aortic-syndrome management and C is a testing pathway.",
+   "rationale_enhancement_opportunities": [
+    "Key rationale is a bare imperative restatement of option E and supplies no reason; the decisive reason (expected device time of 165 minutes exceeding the 120-minute threshold, early presentation, no contraindication, low bleeding risk) is recoverable only from the distractor A rationale.",
+    "Neither the key nor any distractor rationale states the door-to-needle expectation or the 2-24 hour angiography window that operationalizes 'routine rapid transfer'."
+   ],
+   "rationale_fatal_defects": [],
+   "verdict": "FAIL"
+  },
+  {
+   "cohort": "A_PREV_ACCEPTED_CARDIOLOGY",
+   "control_id": "QGEN-MED-007-ACS-CR10-I09",
+   "dimensions": {
+    "context_necessity": "PASS",
+    "cueing": "FAIL",
+    "distractor_competitiveness": "FAIL",
+    "evidence_support": "PASS",
+    "factual_correctness": "PASS",
+    "mccqe_level": "PASS",
+    "option_polarity_completeness": "FAIL",
+    "rationale_quality": "PASS",
+    "reasoning_demand": "PASS",
+    "single_best_answer": "PASS"
+   },
+   "failure_reason": "All three distractors self-defeat from their own wording ('without urgent surgical referral', 'as definitive treatment' for a mechanical defect, 'elective repair after discharge' in a poorly perfused patient), and the options form an urgency gradient in which the single escalating-action option is identifiable from polarity alone once the stem describes collapse.",
+   "rationale_enhancement_opportunities": [
+    "Key rationale is a bare imperative restatement of option C with no reason given; the decisive reason (post-infarction ventricular septal rupture with cardiogenic shock carries prohibitive mortality without definitive closure, and medical or mechanical support is only a bridge) is recoverable only from the distractor rationales.",
+    "The mention of 'selected structural closure' in the PCI distractor rationale is not tied to when percutaneous device closure is actually considered."
+   ],
+   "rationale_fatal_defects": [],
+   "verdict": "FAIL"
+  },
+  {
+   "cohort": "B_PREV_ACCEPTED_BASELINE",
+   "control_id": "QGEN-GEN-PED-I02",
+   "dimensions": {
+    "context_necessity": "PASS",
+    "cueing": "PASS",
+    "distractor_competitiveness": "PASS",
+    "evidence_support": "PASS",
+    "factual_correctness": "PASS",
+    "mccqe_level": "PASS",
+    "option_polarity_completeness": "FAIL",
+    "rationale_quality": "FAIL",
+    "reasoning_demand": "PASS",
+    "single_best_answer": "PASS"
+   },
+   "failure_reason": "The option set is three 'order a test' options plus a lone opposite-polarity key ('manage clinically without routine diagnostic tests'), the exact three-of-one-category-plus-lone-key pattern, and the CBC distractor rationale asserts a finding ('Fever and respiratory distress may suggest infection') that the stem never describes.",
+   "rationale_enhancement_opportunities": [
+    "Key rationale asserts that tests 'will not improve management' without naming the decisive feature set (first episode, typical age, typical bronchiolitis findings, saturation above the supplemental-oxygen threshold, adequate feeding).",
+    "No rationale states the circumstances that would change the answer (apnea, dehydration, hypoxemia, atypical course), which is the teaching point behind the clinical-diagnosis rule."
+   ],
+   "rationale_fatal_defects": [
+    "Distractor rationale for the complete blood count is premised on fever, which is nowhere in the stem; the plausibility claim is therefore unsupported by the item as written (breaks criterion c)."
+   ],
+   "verdict": "FAIL"
+  },
+  {
+   "cohort": "B_PREV_ACCEPTED_BASELINE",
+   "control_id": "QGEN-GEN-OBGYN-I01",
+   "dimensions": {
+    "context_necessity": "PASS",
+    "cueing": "PASS",
+    "distractor_competitiveness": "PASS",
+    "evidence_support": "PASS",
+    "factual_correctness": "PASS",
+    "mccqe_level": "PASS",
+    "option_polarity_completeness": "PASS",
+    "rationale_quality": "PASS",
+    "reasoning_demand": "PASS",
+    "single_best_answer": "PASS"
+   },
+   "failure_reason": null,
+   "rationale_enhancement_opportunities": [
+    "Engorgement and plugged-duct discriminators rely on positive stem findings rather than explicit negatives, which is good; the abscess discriminator leans on the single explicit 'no fluctuant mass' phrase and could add that ultrasound is indicated if there is no improvement on antibiotics.",
+    "Key rationale could note the 18-day timing as evidence against engorgement, which peaks in the first postpartum week."
+   ],
+   "rationale_fatal_defects": [],
+   "verdict": "PASS"
+  },
+  {
+   "cohort": "B_PREV_ACCEPTED_BASELINE",
+   "control_id": "QGEN-GEN-PSY-I01",
+   "dimensions": {
+    "context_necessity": "PASS",
+    "cueing": "PASS",
+    "distractor_competitiveness": "FAIL",
+    "evidence_support": "PASS",
+    "factual_correctness": "PASS",
+    "mccqe_level": "PASS",
+    "option_polarity_completeness": "PASS",
+    "rationale_quality": "PASS",
+    "reasoning_demand": "PASS",
+    "single_best_answer": "PASS"
+   },
+   "failure_reason": "Two of three distractors are trivially killed by explicit criterion-language negations in the stem ('never had elevated mood, reduced need for sleep, or increased goal-directed activity' kills bipolar II; 'No single recent stressor explains the syndrome' kills adjustment disorder), leaving only the persistent-depressive-disorder option requiring reasoning.",
+   "rationale_enhancement_opportunities": [
+    "Key rationale is framed entirely as exclusion and never states the positive decisive reason: at least five criterion symptoms including depressed mood and anhedonia, present at least two weeks, with functional decline.",
+    "'A subthreshold stress response' is opaque phrasing for the adjustment-disorder exclusion.",
+    "Persistent depressive disorder discriminator says 'a much longer chronic course than 6 weeks' rather than naming the two-year threshold it clearly intends."
+   ],
+   "rationale_fatal_defects": [],
+   "verdict": "FAIL"
+  },
+  {
+   "cohort": "B_PREV_ACCEPTED_BASELINE",
+   "control_id": "QGEN-GEN-PHELO-I01",
+   "dimensions": {
+    "context_necessity": "PASS",
+    "cueing": "PASS",
+    "distractor_competitiveness": "PASS",
+    "evidence_support": "PASS",
+    "factual_correctness": "PASS",
+    "mccqe_level": "PASS",
+    "option_polarity_completeness": "PASS",
+    "rationale_quality": "PASS",
+    "reasoning_demand": "PASS",
+    "single_best_answer": "PASS"
+   },
+   "failure_reason": null,
+   "rationale_enhancement_opportunities": [
+    "Key rationale could make explicit that survival measured from diagnosis is the biased metric while disease-specific mortality and age at death are the unbiased ones, which is the transferable teaching point.",
+    "The overdiagnosis discriminator could add that unchanged average age at death is the specific finding arguing against overdiagnosis, since overdiagnosis would also leave disease-specific mortality unchanged."
+   ],
+   "rationale_fatal_defects": [],
+   "verdict": "PASS"
+  },
+  {
+   "cohort": "C_KNOWN_DEFECTIVE",
+   "control_id": "QGEN-MED-007-ACS-CR10-I05",
+   "dimensions": {
+    "context_necessity": "FAIL",
+    "cueing": "FAIL",
+    "distractor_competitiveness": "FAIL",
+    "evidence_support": "PASS",
+    "factual_correctness": "PASS",
+    "mccqe_level": "PASS",
+    "option_polarity_completeness": "FAIL",
+    "rationale_quality": "PASS",
+    "reasoning_demand": "FAIL",
+    "single_best_answer": "PASS"
+   },
+   "failure_reason": "The key is the union of two other options (aspirin-only plus anticoagulation-only), so it is identifiable as the most complete option without medical reasoning; option A is a different category (reperfusion) rather than an antithrombotic regimen; and because the stem hands over the diagnosis outright, the vignette does no work and the item reduces to recalling one labelled fact.",
+   "rationale_enhancement_opportunities": [
+    "Key rationale is a bare restatement of the option; the decisive reason (aspirin and parenteral anticoagulation act on different arms of coronary thrombosis and are both indicated at diagnosis) is recoverable only from the two subset-distractor rationales.",
+    "The key rationale specifies 'parenteral' anticoagulation while option D says only 'anticoagulation', an unresolved mismatch since oral anticoagulation would not be correct.",
+    "No rationale mentions P2Y12 inhibition or risk-stratified timing of invasive evaluation, which the distractor rationale alludes to but never develops."
+   ],
+   "rationale_fatal_defects": [],
+   "verdict": "FAIL"
+  },
+  {
+   "cohort": "C_KNOWN_DEFECTIVE",
+   "control_id": "QGEN-GEN-SURG-I01",
+   "dimensions": {
+    "context_necessity": "PASS",
+    "cueing": "PASS",
+    "distractor_competitiveness": "FAIL",
+    "evidence_support": "PASS",
+    "factual_correctness": "PASS",
+    "mccqe_level": "PASS",
+    "option_polarity_completeness": "PASS",
+    "rationale_quality": "PASS",
+    "reasoning_demand": "PASS",
+    "single_best_answer": "PASS"
+   },
+   "failure_reason": "The single sentence 'He has no diarrhea, hematuria, or previous similar episodes' maps one negative onto each of the three distractors in order (gastroenteritis, ureteric calculus, Crohn disease), so every distractor is eliminated by phrase matching alone.",
+   "rationale_enhancement_opportunities": [
+    "Discriminators restate the same explicit negatives the stem already supplies rather than resting on the positive discriminating findings (pain migration, focal peritonism, anorexia).",
+    "Key rationale could name the migratory periumbilical-to-right-lower-quadrant sequence as the single most decisive feature rather than listing it among equals."
+   ],
+   "rationale_fatal_defects": [],
+   "verdict": "FAIL"
+  },
+  {
+   "cohort": "C_KNOWN_DEFECTIVE",
+   "control_id": "QGEN-GEN2-PSY-I03",
+   "dimensions": {
+    "context_necessity": "PASS",
+    "cueing": "FAIL",
+    "distractor_competitiveness": "FAIL",
+    "evidence_support": "FAIL",
+    "factual_correctness": "FAIL",
+    "mccqe_level": "PASS",
+    "option_polarity_completeness": "PASS",
+    "rationale_quality": "FAIL",
+    "reasoning_demand": "PASS",
+    "single_best_answer": "PASS"
+   },
+   "failure_reason": "The antipsychotic distractor rationale asserts that the recommended role of atypical antipsychotics in depression is confined to combination therapy for severe psychotic episodes, which is not accurate for current Canadian practice (quetiapine is listed among first-line monotherapy agents for major depressive disorder, and adjunctive aripiprazole/quetiapine are recommended for inadequate response rather than only for psychotic depression); separately, the key option self-labels as 'first-line' against a lead-in asking for 'initial treatment', and all three distractors are eliminated by explicit stem negatives (no psychotic symptoms, no suicidality, no physical deterioration, prefers medication over psychotherapy).",
+   "rationale_enhancement_opportunities": [
+    "The ECT discriminator is directionally right but could name the specific first-choice indications (severe psychotic, catatonic, treatment-resistant, acutely life-threatening presentations).",
+    "No rationale states that shared decision-making and patient preference are the legitimate tie-breaker between two equally first-line modalities."
+   ],
+   "rationale_fatal_defects": [
+    "The atypical-antipsychotic discriminator states more absolutely and more narrowly than any authoritative source supports that the recommendation 'is for severe episodes with psychotic symptoms and is for the combination of an antidepressant with an atypical antipsychotic, not for antipsychotic monotherapy' (breaks criteria c and d; also makes the option partially overlap the key, since a first-line antidepressant agent list includes an atypical antipsychotic).",
+    "The key rationale ('Select an agent from the group with robust placebo-controlled evidence for safety and efficacy') never names the two facts that actually decide the item, moderate nonpsychotic severity and the patient's stated preference for medication over structured psychotherapy; the preference is recoverable only obliquely from the self-management distractor rationale (breaks criterion a)."
+   ],
+   "verdict": "FAIL"
+  }
+ ],
+ "method": "Eleven previously reviewed items were re-presented blind to a fresh reviewer applying the calibrated rubric: four accepted Cardiology pilot items, four accepted baseline cross-discipline items, and three items with established defects. No item was regenerated.",
+ "purpose": "Establish whether the stricter r2 independent review moved the acceptance standard, and fix a stable definition of PASS before changing generation behaviour.",
+ "rationale_enhancement_classes": [
+  "EDUCATIONAL_EXPANSIVENESS",
+  "EXPLANATORY_REGISTER",
+  "TEACHING_VALUE",
+  "WORKED_REASONING_DETAIL"
+ ],
+ "rationale_fatal_criteria": [
+  "decisive_reason_stated",
+  "distractor_discriminators_stated",
+  "evidence_linkage_present",
+  "no_unsupported_teaching_claim"
+ ],
+ "rationale_fatal_standard_defined": true,
+ "rationale_standard_location": "scripts/qbank/chapter_staged_generation.py::validate_calibrated_rationale_assessment",
+ "review_date": "2026-09-03",
+ "rubric_drift_finding": "Drift is real but is not where the r2 report attributed it. On the dimension under test the reviewer found no drift: zero controls failed solely on rationale register, and only two failed rationale_quality at all, both for substantive defects. The standard moved instead on distractor competitiveness and option-set category parity. Six of the eight previously accepted controls now fail, including all four Cardiology positive-control items, because their stems close with a negative checklist whose clauses map one-to-one onto the distractor list, or because the key is the only member of its option category. Neither dimension was tested at the baseline or the Cardiology review. Raw pass rates of 9/10, 7/15 and 1/14 are therefore not comparable with one another.",
+ "rubric_drift_found": true,
+ "rubric_drift_location": "DISTRACTOR_COMPETITIVENESS_AND_OPTION_CATEGORY_PARITY",
+ "schema_version": "1.0",
+ "scope": "QGEN_REVIEWER_CALIBRATION"
+}

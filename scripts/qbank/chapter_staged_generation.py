@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+from decimal import Decimal, InvalidOperation
 import json
 from pathlib import Path
 import re
@@ -43,6 +44,33 @@ STAGE_SEQUENCE_V4 = (
     + ["SEMANTIC_POLARITY_COMPLETENESS_PREFLIGHT"]
     + STAGE_SEQUENCE_V3[10:]
 )
+STAGE_SEQUENCE_V5 = [
+    "TORONTO_NOTES_ANCHOR",
+    "MCC_OBJECTIVE_PHYSICIAN_ACTIVITY",
+    "PRIMARY_LEARNER_DECISION",
+    "ANCHOR_FIDELITY",
+    "OPEN_ENDED_STEM_KEY",
+    "CANDIDATE_VISIBLE_STEM_FEATURE_MAP",
+    "NUMERIC_DERIVATION_VALIDATION",
+    "BLIND_COVER_OPTIONS_SOLVER",
+    "GLOBAL_CONTRAST_RETRIEVAL",
+    "CONTRASTIVE_EVIDENCE_MATRIX",
+    "EVIDENCE_ENTAILMENT_ADJUDICATION",
+    "CONTEXTUAL_COMPETITOR_PROOF",
+    "TERMINAL_EXCLUSION_REVIEW",
+    "SEPARATE_DISTRACTOR_CONSTRUCTION",
+    "DISTRACTOR_ADVERSARIAL_RANKING",
+    "SEMANTIC_POLARITY_COMPLETENESS_PREFLIGHT",
+    "OPTION_SEMANTIC_CATEGORY_PARITY",
+    "PRE_ASSEMBLY_SEMANTIC_SET_REVIEW",
+    "OPTION_REALIZATION",
+    "PARALLEL_OPTION_SET_REVIEW",
+    "DECISION_GRANULARITY_PARITY",
+    "MCQ_ASSEMBLY",
+    "PLAN_FIDELITY_SHORTCUT_CUE_CHECK",
+    "RATIONALES",
+    "FRESH_INDEPENDENT_VERIFICATION",
+]
 PHYSICIAN_ACTIVITIES = {
     "Assessment/Diagnosis",
     "Management",
@@ -138,6 +166,162 @@ DECISION_GRANULARITIES = {
     "DIAGNOSIS",
     "OTHER",
 }
+# --- SEMANTIC_ITEM_ACCEPTANCE_V2 vocabulary (schema 1.4) ---------------------
+#
+# Schema 1.3 proved that an evidence *reference* is not an evidence *entailment*,
+# that a discriminator forced to be a verbatim stem quote drives stems into
+# terminal negation clauses, and that a polarity-and-completeness preflight blind
+# to option category admits sets whose key is the only member of its category.
+# The vocabulary below is the shared language of the five gates that close those.
+
+ENTAILMENT_STATUSES = {
+    "SUPPORTED_DIRECTLY",
+    "SUPPORTED_BY_VALID_DERIVATION",
+    "PARTIALLY_SUPPORTED",
+    "NOT_SUPPORTED",
+    "CONFLICTING",
+}
+ACCEPTED_ENTAILMENT_STATUSES = {"SUPPORTED_DIRECTLY", "SUPPORTED_BY_VALID_DERIVATION"}
+EVIDENCE_SUPPORT_SCOPES = {
+    "EXACT_SCENARIO_CLAIM",
+    "SCENARIO_APPLICABLE_RULE",
+    "GENERAL_CONCEPT_CLAIM",
+    "DERIVED_CLAIM",
+}
+ENTAILMENT_CLAIM_TYPES = {
+    "KEY_DECISIVE",
+    "COMPETITOR_PLAUSIBILITY",
+    "COMPETITOR_DISCRIMINATOR",
+    "NUMERIC_DERIVED",
+    "BACKGROUND_CONCEPT",
+}
+# A claim that decides this scenario cannot rest on a page that only describes the
+# concept in general. These claim types therefore refuse GENERAL_CONCEPT_CLAIM scope.
+SCENARIO_SPECIFIC_CLAIM_TYPES = {
+    "KEY_DECISIVE",
+    "COMPETITOR_PLAUSIBILITY",
+    "COMPETITOR_DISCRIMINATOR",
+}
+STEM_FEATURE_INFERENCE_TYPES = {
+    "EXPLICIT_FINDING",
+    "ABSENT_FINDING",
+    "TIME_COURSE",
+    "DEMOGRAPHIC_CONTEXT",
+    "TREATMENT_RESPONSE",
+    "RISK_FACTOR",
+    "LABORATORY_PATTERN",
+    "IMAGING_PATTERN",
+    "POLICY_DESIGN_FEATURE",
+    "INTEGRATED_INFERENCE",
+}
+EXCLUSION_CLASSES = {
+    "NATURAL_DECISIVE_FINDING",
+    "LEGITIMATE_SINGLE_DISCRIMINATOR",
+    "ARTIFICIAL_TERMINAL_EXCLUSION",
+}
+ACCEPTED_EXCLUSION_CLASSES = {"NATURAL_DECISIVE_FINDING", "LEGITIMATE_SINGLE_DISCRIMINATOR"}
+COMPETITOR_POST_STEM_STATUSES = {
+    "STRONG_COMPETITOR",
+    "ACCEPTABLE_COMPETITOR",
+    "TRIVIALLY_EXCLUDED",
+    "NOT_CONTEXTUALLY_PLAUSIBLE",
+    "UNSUPPORTED",
+}
+ACCEPTED_COMPETITOR_STATUSES = {"STRONG_COMPETITOR", "ACCEPTABLE_COMPETITOR"}
+OPTION_SEMANTIC_TYPES = {
+    "DIAGNOSIS",
+    "INVESTIGATION",
+    "MEDICATION",
+    "PROCEDURE",
+    "DISPOSITION",
+    "MANAGEMENT_STRATEGY",
+    "SUPPORTIVE_CARE",
+    "COMMUNICATION_ACTION",
+    "ETHICAL_ACTION",
+    "LEGAL_ACTION",
+    "SCREENING_POLICY",
+    "EPIDEMIOLOGIC_CONCEPT",
+    "OTHER",
+}
+OPTION_ACTION_TYPES = {
+    "INITIATE",
+    "CONTINUE",
+    "WITHHOLD",
+    "DISCONTINUE",
+    "DEFER",
+    "ESCALATE",
+    "REFER",
+    "OBSERVE",
+    "INTERPRET",
+    "CLASSIFY",
+}
+OPTION_COMPLETENESS_LEVELS = {"SINGLE_ACTION", "PAIRED_ACTION", "FULL_BUNDLE"}
+OPTION_PARITY_FIELDS = (
+    "option_semantic_type",
+    "option_action_type",
+    "option_polarity",
+    "option_scope",
+    "completeness_level",
+)
+PREASSEMBLY_SET_CHECKS = {
+    "same_lead_in_dimension",
+    "compatible_semantic_category",
+    "comparable_decision_granularity",
+    "no_unique_completeness",
+    "no_polarity_odd_one_out",
+    "no_conceptual_convergence",
+    "no_trivially_excluded_competitor",
+    "competitor_specific_evidence_entailment",
+}
+# --- Calibrated rationale acceptance contract --------------------------------
+#
+# Reviewer calibration against previously accepted controls found that the r2
+# reviewer's rationale bar had not moved on substance, only on register. These
+# four criteria are the stable definition of a fatal rationale defect; everything
+# else a reviewer may legitimately want from a rationale is an enhancement and
+# must not reject an otherwise sound item.
+RATIONALE_FATAL_CRITERIA = {
+    "decisive_reason_stated",
+    "distractor_discriminators_stated",
+    "no_unsupported_teaching_claim",
+    "evidence_linkage_present",
+}
+RATIONALE_ENHANCEMENT_CLASSES = {
+    "EXPLANATORY_REGISTER",
+    "EDUCATIONAL_EXPANSIVENESS",
+    "TEACHING_VALUE",
+    "WORKED_REASONING_DETAIL",
+}
+# Heads that turn a candidate-facing explanation into an instruction to the item
+# writer. The generator refuses to emit one; a reviewer treats it as non-fatal.
+_IMPERATIVE_RATIONALE_HEADS = frozenset({
+    "apply", "ask", "assess", "avoid", "check", "choose", "compare", "conclude",
+    "confirm", "consider", "correct", "determine", "eliminate", "ensure",
+    "establish", "exclude", "identify", "note", "observe", "pick", "prefer",
+    "recall", "recognise", "recognize", "reject", "remember", "select", "start",
+    "treat", "use", "verify", "weigh",
+})
+_NUMERIC_FORMULA_INPUTS: dict[str, tuple[str, ...] | None] = {
+    "SUM_OF_COMPONENTS": None,
+    "ABSOLUTE_DIFFERENCE": ("minuend", "subtrahend"),
+    "ARR": ("control_event_rate", "experimental_event_rate"),
+    "RRR": ("control_event_rate", "experimental_event_rate"),
+    "NNT": ("absolute_risk_reduction",),
+    "NNH": ("absolute_risk_increase",),
+    "SENSITIVITY": ("true_positives", "false_negatives"),
+    "SPECIFICITY": ("true_negatives", "false_positives"),
+    "PPV": ("true_positives", "false_positives"),
+    "NPV": ("true_negatives", "false_negatives"),
+    "LR_POSITIVE": ("sensitivity", "specificity"),
+    "LR_NEGATIVE": ("sensitivity", "specificity"),
+    "PERCENTAGE": ("numerator", "denominator"),
+    "PREVALENCE": ("cases", "population"),
+    "UNIT_CONVERSION": ("value", "factor"),
+    "WEIGHT_BASED_DOSE": ("weight_kg", "dose_per_kg"),
+}
+NUMERIC_FORMULA_IDS = frozenset(_NUMERIC_FORMULA_INPUTS)
+NUMERIC_ASSERTION_SITES = {"STEM", "OPTION", "RATIONALE"}
+
 _PHRASE_STOPWORDS = {
     "and", "for", "from", "into", "only", "that", "the", "then", "this", "with",
 }
@@ -342,6 +526,223 @@ def find_polarity_completeness_defects(options: list[dict[str, Any]]) -> list[st
     if key["specificity_level"] > max(row["specificity_level"] for row in distractors):
         findings.append("KEY_ONLY_SPECIFICITY")
     return sorted(set(findings + find_decision_granularity_cues(options)))
+
+
+def compute_derived_value(formula_id: str, input_values: list[dict[str, Any]]) -> Decimal:
+    """Recompute a derived clinical or epidemiologic quantity deterministically.
+
+    Free-text arithmetic from a generator is never trusted. Every registered
+    formula is evaluated here with Decimal so that a stated score, rate or dose
+    is checked against its own declared components rather than against prose.
+    """
+    if formula_id not in _NUMERIC_FORMULA_INPUTS:
+        raise ChapterStagedGenerationError(f"numeric formula {formula_id} is not deterministically recomputable")
+    if not isinstance(input_values, list) or not input_values:
+        raise ChapterStagedGenerationError("numeric derivation inputs are invalid")
+    values: dict[str, Decimal] = {}
+    for row in input_values:
+        if not isinstance(row, dict):
+            raise ChapterStagedGenerationError("numeric derivation input is invalid")
+        component = _nonempty(row.get("component"), "numeric derivation component")
+        _nonempty(row.get("units"), "numeric derivation units")
+        raw = row.get("value")
+        if isinstance(raw, bool) or not isinstance(raw, (int, float, str)):
+            raise ChapterStagedGenerationError("numeric derivation value is invalid")
+        try:
+            value = Decimal(str(raw))
+        except InvalidOperation as error:
+            raise ChapterStagedGenerationError("numeric derivation value is not a number") from error
+        if component in values:
+            raise ChapterStagedGenerationError("numeric derivation repeats an input component")
+        values[component] = value
+
+    required = _NUMERIC_FORMULA_INPUTS[formula_id]
+    if required is None:
+        if len(values) < 2:
+            raise ChapterStagedGenerationError("a summed score requires at least two declared components")
+        return sum(values.values(), Decimal(0))
+    if set(values) != set(required):
+        raise ChapterStagedGenerationError(f"numeric formula {formula_id} inputs are incomplete")
+
+    def _divide(numerator: Decimal, denominator: Decimal) -> Decimal:
+        if denominator == 0:
+            raise ChapterStagedGenerationError(f"numeric formula {formula_id} divides by zero")
+        return numerator / denominator
+
+    if formula_id == "ABSOLUTE_DIFFERENCE":
+        return values["minuend"] - values["subtrahend"]
+    if formula_id == "ARR":
+        return values["control_event_rate"] - values["experimental_event_rate"]
+    if formula_id == "RRR":
+        return _divide(
+            values["control_event_rate"] - values["experimental_event_rate"],
+            values["control_event_rate"],
+        )
+    if formula_id == "NNT":
+        return _divide(Decimal(1), values["absolute_risk_reduction"])
+    if formula_id == "NNH":
+        return _divide(Decimal(1), values["absolute_risk_increase"])
+    if formula_id == "SENSITIVITY":
+        return _divide(values["true_positives"], values["true_positives"] + values["false_negatives"])
+    if formula_id == "SPECIFICITY":
+        return _divide(values["true_negatives"], values["true_negatives"] + values["false_positives"])
+    if formula_id == "PPV":
+        return _divide(values["true_positives"], values["true_positives"] + values["false_positives"])
+    if formula_id == "NPV":
+        return _divide(values["true_negatives"], values["true_negatives"] + values["false_negatives"])
+    if formula_id == "LR_POSITIVE":
+        return _divide(values["sensitivity"], Decimal(1) - values["specificity"])
+    if formula_id == "LR_NEGATIVE":
+        return _divide(Decimal(1) - values["sensitivity"], values["specificity"])
+    if formula_id == "PERCENTAGE":
+        return _divide(values["numerator"], values["denominator"]) * Decimal(100)
+    if formula_id == "PREVALENCE":
+        return _divide(values["cases"], values["population"])
+    if formula_id == "UNIT_CONVERSION":
+        return values["value"] * values["factor"]
+    return values["weight_kg"] * values["dose_per_kg"]
+
+
+def _stem_sentences(stem: str) -> list[str]:
+    return [part.strip() for part in re.split(r"(?<=[.!?])\s+", str(stem).strip()) if part.strip()]
+
+
+def find_terminal_exclusion_cues(
+    stem: str,
+    defeating_spans_by_competitor: dict[str, list[str]],
+) -> list[str]:
+    """Detect a stem clause whose apparent purpose is to make distractors false.
+
+    A negative checklist that eliminates several competitors in one breath turns
+    the item into stem-to-option text matching. So does a closing negation whose
+    only job is to kill a competitor. Neither finding is a judgement about a
+    medically decisive finding: a decisive finding earns its place inside the
+    presentation instead of being appended to the end of it.
+    """
+    if not isinstance(stem, str) or not stem.strip() or not isinstance(defeating_spans_by_competitor, dict):
+        return ["INVALID_TERMINAL_EXCLUSION_INPUT"]
+    sentences = [_normalize_prose(sentence) for sentence in _stem_sentences(stem)]
+    if not sentences:
+        return ["INVALID_TERMINAL_EXCLUSION_INPUT"]
+    spans_by_competitor = {
+        contrast_id: [_normalize_prose(span) for span in spans if isinstance(span, str)]
+        for contrast_id, spans in defeating_spans_by_competitor.items()
+        if isinstance(spans, list)
+    }
+    findings: list[str] = []
+    for index, sentence in enumerate(sentences):
+        if not set(re.findall(r"[a-z]+", sentence)).intersection(_NEGATING_ACTION_MARKERS):
+            continue
+        # Which competitors does each distinct span inside this one sentence defeat?
+        coverage: dict[str, set[str]] = {}
+        for contrast_id, spans in spans_by_competitor.items():
+            for span in spans:
+                if span and span in sentence:
+                    coverage.setdefault(span, set()).add(contrast_id)
+        covered = set().union(*coverage.values()) if coverage else set()
+        # One powerful negative finding may legitimately defeat several competitors.
+        # A checklist is several distinct negatives, none of which covers the rest.
+        if (
+            len(coverage) >= 2
+            and len(covered) >= 2
+            and not any(competitors == covered for competitors in coverage.values())
+        ):
+            findings.append("NEGATIVE_CHECKLIST_SENTENCE")
+        if index == len(sentences) - 1 and any(
+            spans and all(span in sentence for span in spans)
+            for spans in spans_by_competitor.values()
+        ):
+            findings.append("TERMINAL_NEGATION_DISQUALIFIER")
+    return sorted(set(findings))
+
+
+def find_negated_stem_echo_cues(stem: str, options: list[dict[str, Any]]) -> list[str]:
+    """Detect a key that answers a negated stem clause with the clause's own words."""
+    if not isinstance(stem, str) or not isinstance(options, list):
+        return ["INVALID_NEGATED_ECHO_SET"]
+    keys = [row for row in options if isinstance(row, dict) and row.get("role") == "KEY"]
+    distractors = [row for row in options if isinstance(row, dict) and row.get("role") == "DISTRACTOR"]
+    if len(keys) != 1 or not distractors:
+        return ["INVALID_NEGATED_ECHO_SET"]
+
+    def _content_words(text_value: str) -> set[str]:
+        return {
+            token
+            for token in re.findall(r"[a-z]+", str(text_value).lower())
+            if len(token) >= 6 and token not in _PHRASE_STOPWORDS
+        }
+
+    negated_words: set[str] = set()
+    for sentence in _stem_sentences(stem):
+        for clause in re.split(r"[,;]", sentence):
+            tokens = re.findall(r"[a-z]+", clause.lower())
+            if set(tokens).intersection(_NEGATING_ACTION_MARKERS):
+                negated_words |= _content_words(clause)
+    if not negated_words:
+        return []
+    key_words = _content_words(keys[0].get("text") or keys[0].get("semantic_option_text") or "")
+    distractor_words: set[str] = set()
+    for row in distractors:
+        distractor_words |= _content_words(row.get("text") or row.get("semantic_option_text") or "")
+    if key_words.intersection(negated_words).difference(distractor_words):
+        return ["KEY_ONLY_NEGATED_STEM_ECHO"]
+    return []
+
+
+def find_option_category_parity_defects(options: list[dict[str, Any]]) -> list[str]:
+    """Reject an option set whose key, or one distractor, is a lone category.
+
+    Three investigations plus a lone no-test key, three drugs plus oxygen, three
+    launch strategies plus a lone deferral: each exposes the key's identity from
+    option structure before any medical reasoning happens.
+    """
+    if not isinstance(options, list) or len(options) < 3:
+        return ["INVALID_OPTION_CATEGORY_SET"]
+    keys = [row for row in options if isinstance(row, dict) and row.get("role") == "KEY"]
+    distractors = [row for row in options if isinstance(row, dict) and row.get("role") == "DISTRACTOR"]
+    if len(keys) != 1 or len(distractors) < 2 or len(keys) + len(distractors) != len(options):
+        return ["INVALID_OPTION_CATEGORY_SET"]
+    enums = {
+        "option_semantic_type": OPTION_SEMANTIC_TYPES,
+        "option_action_type": OPTION_ACTION_TYPES,
+        "option_polarity": SEMANTIC_POLARITIES,
+        "completeness_level": OPTION_COMPLETENESS_LEVELS,
+    }
+    for field, allowed in enums.items():
+        if any(row.get(field) not in allowed for row in options):
+            return ["INVALID_OPTION_CATEGORY_SET"]
+    if any(not isinstance(row.get("option_scope"), str) or not row["option_scope"] for row in options):
+        return ["INVALID_OPTION_CATEGORY_SET"]
+
+    key = keys[0]
+    findings: list[str] = []
+    for field in OPTION_PARITY_FIELDS:
+        distractor_values = [row[field] for row in distractors]
+        if key[field] not in distractor_values and len(set(distractor_values)) == 1:
+            findings.append(f"KEY_ONLY_{field.upper()}")
+        for index, row in enumerate(distractors):
+            others = [key[field]] + [
+                other[field] for position, other in enumerate(distractors) if position != index
+            ]
+            if row[field] not in others and len(set(others)) == 1:
+                findings.append(f"DISTRACTOR_OUTLIER_{field.upper()}")
+    return sorted(set(findings))
+
+
+def find_rationale_register_defects(text: str) -> list[str]:
+    """Flag a key rationale written as an instruction to the writer, not the candidate.
+
+    Under the calibrated acceptance rubric an imperative register is an
+    enhancement opportunity and never rejects a reviewed item. The generator
+    nonetheless refuses to emit one, because a directive states what to do
+    instead of why the key is best.
+    """
+    tokens = re.findall(r"[a-z]+", str(text).lower())
+    if not tokens:
+        return ["EMPTY_RATIONALE"]
+    if tokens[0] in _IMPERATIVE_RATIONALE_HEADS:
+        return ["IMPERATIVE_KEY_RATIONALE"]
+    return []
 
 
 def find_option_position_cues(items: list[dict[str, Any]]) -> list[str]:
@@ -946,6 +1347,413 @@ def _validate_stem_features(
     return features
 
 
+def _validate_stem_feature_map(
+    item: dict[str, Any],
+    open_ended: dict[str, Any],
+) -> dict[str, dict[str, Any]]:
+    """Record what the candidate can actually see, as meaning rather than as quotes.
+
+    Schema 1.3 required every discriminating feature to be a verbatim stem quote.
+    That is satisfiable only by writing the discriminator into the stem as a
+    literal clause, which is exactly how the terminal negation habit arose. A
+    feature is instead grounded here: it names a normalized clinical fact, points
+    at the span it comes from, or is declared as an inference integrated from two
+    or more other grounded features.
+    """
+    block = item.get("stem_feature_map")
+    if not isinstance(block, dict) or block.get("open_ended_sha256") != canonical_sha256(open_ended):
+        raise ChapterStagedGenerationError("stem feature map lineage is invalid")
+    _nonempty(block.get("cartographer_id"), "stem feature cartographer ID")
+    rows = block.get("features")
+    if not isinstance(rows, list) or not rows:
+        raise ChapterStagedGenerationError("stem feature map must describe at least one feature")
+    stem_text = _normalize_prose(open_ended["stem"])
+    features: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            raise ChapterStagedGenerationError("stem feature map entry is invalid")
+        feature_id = _nonempty(row.get("feature_id"), "stem feature ID")
+        if feature_id in features:
+            raise ChapterStagedGenerationError("stem feature map repeats a feature ID")
+        _nonempty(row.get("normalized_feature"), "normalized stem feature")
+        _nonempty(row.get("clinical_role"), "stem feature clinical role")
+        if row.get("polarity") not in STEM_FEATURE_POLARITIES:
+            raise ChapterStagedGenerationError("stem feature polarity is invalid")
+        inference_type = row.get("inference_type")
+        if inference_type not in STEM_FEATURE_INFERENCE_TYPES:
+            raise ChapterStagedGenerationError("stem feature inference type is invalid")
+        if inference_type == "INTEGRATED_INFERENCE":
+            derived = row.get("derived_from")
+            if (
+                not isinstance(derived, list)
+                or len(derived) < 2
+                or len(set(derived)) != len(derived)
+                or any(value not in features for value in derived)
+            ):
+                raise ChapterStagedGenerationError(
+                    "an integrated stem feature must combine two or more previously grounded features"
+                )
+            if row.get("source_span") is not None:
+                raise ChapterStagedGenerationError("an integrated stem feature cannot claim its own span")
+        else:
+            if row.get("derived_from") is not None:
+                raise ChapterStagedGenerationError("only an integrated stem feature may declare derived_from")
+            span = _nonempty(row.get("source_span"), "stem feature source span")
+            if _normalize_prose(span) not in stem_text:
+                raise ChapterStagedGenerationError(
+                    "stem feature map cites a span the candidate cannot read in the stem"
+                )
+        features[feature_id] = row
+    if block.get("verdict") != "PASS":
+        raise ChapterStagedGenerationError("stem feature map must pass")
+    return features
+
+
+def _feature_spans(features: dict[str, dict[str, Any]], feature_ids: list[str]) -> list[str]:
+    """Resolve grounded spans for a feature list, following integrated inferences."""
+    spans: list[str] = []
+    pending = list(feature_ids)
+    seen: set[str] = set()
+    while pending:
+        feature_id = pending.pop()
+        if feature_id in seen:
+            continue
+        seen.add(feature_id)
+        row = features[feature_id]
+        if row["inference_type"] == "INTEGRATED_INFERENCE":
+            pending.extend(row["derived_from"])
+        else:
+            spans.append(row["source_span"])
+    return spans
+
+
+def _validate_numeric_derivations(
+    item: dict[str, Any],
+    open_ended: dict[str, Any],
+    feature_map: dict[str, Any],
+) -> dict[str, Any]:
+    """Recompute every asserted derived quantity instead of believing the prose.
+
+    A stated Alvarado score, an absolute risk reduction, a number needed to treat
+    or a weight-based dose is either recomputed here from its declared components
+    or escalated to an independent numeric verifier. Nothing derived is accepted
+    on the generator's word.
+    """
+    block = item.get("numeric_derivation_validation")
+    if not isinstance(block, dict) or block.get("stem_feature_map_sha256") != canonical_sha256(feature_map):
+        raise ChapterStagedGenerationError("numeric derivation lineage is invalid")
+    _nonempty(block.get("adjudicator_id"), "numeric derivation adjudicator ID")
+    rows = block.get("derivations")
+    if not isinstance(rows, list):
+        raise ChapterStagedGenerationError("numeric derivation record is invalid")
+    if not rows:
+        if block.get("no_derived_values_present") is not True or block.get("verdict") != "PASS":
+            raise ChapterStagedGenerationError(
+                "an item with no derived values must say so explicitly and pass"
+            )
+        return block
+    if block.get("no_derived_values_present") is not False:
+        raise ChapterStagedGenerationError("numeric derivation record contradicts its own declaration")
+
+    stem_text = _normalize_prose(open_ended["stem"])
+    claim_refs: set[str] = set()
+    for row in rows:
+        if not isinstance(row, dict):
+            raise ChapterStagedGenerationError("numeric derivation entry is invalid")
+        claim_ref = _nonempty(row.get("claim_ref"), "numeric derivation claim reference")
+        if claim_ref in claim_refs:
+            raise ChapterStagedGenerationError("numeric derivation repeats a claim reference")
+        claim_refs.add(claim_ref)
+        formula_id = _nonempty(row.get("formula_id"), "numeric derivation formula ID")
+        _nonempty(row.get("units"), "numeric derivation result units")
+        asserted_text = _nonempty(row.get("asserted_text"), "numeric derivation asserted text")
+        if row.get("asserted_in") not in NUMERIC_ASSERTION_SITES:
+            raise ChapterStagedGenerationError("numeric derivation assertion site is invalid")
+        if row["asserted_in"] == "STEM" and _normalize_prose(asserted_text) not in stem_text:
+            raise ChapterStagedGenerationError(
+                "numeric derivation claims a stem assertion the stem does not make"
+            )
+        try:
+            expected = Decimal(str(row.get("expected_result")))
+            tolerance = Decimal(str(row.get("tolerance")))
+        except (InvalidOperation, TypeError) as error:
+            raise ChapterStagedGenerationError("numeric derivation expectation is not a number") from error
+        if tolerance < 0:
+            raise ChapterStagedGenerationError("numeric derivation tolerance is invalid")
+
+        if formula_id in NUMERIC_FORMULA_IDS:
+            if row.get("recomputable") is not True:
+                raise ChapterStagedGenerationError(
+                    "a registered formula must be declared deterministically recomputable"
+                )
+            computed = compute_derived_value(formula_id, row.get("input_values"))
+            if abs(computed - expected) > tolerance:
+                raise ChapterStagedGenerationError(
+                    f"numeric derivation {claim_ref} recomputes to {computed}, not the asserted {expected}"
+                )
+            if row.get("computed_result") is None or Decimal(str(row["computed_result"])) != computed:
+                raise ChapterStagedGenerationError(
+                    "numeric derivation did not record its own deterministic recomputation"
+                )
+        else:
+            if row.get("recomputable") is not False:
+                raise ChapterStagedGenerationError(
+                    "an unregistered formula cannot be declared deterministically recomputable"
+                )
+            independent = row.get("independent_numeric_verification")
+            if not isinstance(independent, dict):
+                raise ChapterStagedGenerationError(
+                    "a value that cannot be recomputed requires independent numeric verification"
+                )
+            _nonempty(independent.get("verifier_id"), "independent numeric verifier ID")
+            _nonempty(independent.get("method"), "independent numeric verification method")
+            if independent.get("verdict") != "PASS":
+                raise ChapterStagedGenerationError("independent numeric verification did not pass")
+    if block.get("verdict") != "PASS":
+        raise ChapterStagedGenerationError("numeric derivation validation must pass")
+    return block
+
+
+def _validate_evidence_entailment(
+    item: dict[str, Any],
+    matrix: dict[str, Any],
+    key_row: dict[str, Any],
+    competitor_ids: list[str],
+    claims: dict[str, dict[str, Any]],
+) -> dict[str, dict[str, Any]]:
+    """Require evidence to entail the claim, not merely to be cited beside it.
+
+    Schema 1.3 accepted a claim once a claim ID existed. A citation proves
+    provenance and nothing about meaning, so a general concept page could be made
+    to stand behind a scenario-specific discriminator. Each substantive claim now
+    carries an adjudicated entailment status and a support scope, and a claim that
+    decides this scenario refuses evidence that only describes the concept.
+    """
+    block = item.get("evidence_entailment_adjudication")
+    if not isinstance(block, dict) or block.get("matrix_sha256") != canonical_sha256(matrix):
+        raise ChapterStagedGenerationError("evidence entailment lineage is invalid")
+    _nonempty(block.get("adjudicator_id"), "evidence entailment adjudicator ID")
+    rows = block.get("claims")
+    if not isinstance(rows, list) or not rows:
+        raise ChapterStagedGenerationError("evidence entailment must adjudicate at least one claim")
+
+    adjudicated: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            raise ChapterStagedGenerationError("evidence entailment entry is invalid")
+        claim_ref = _nonempty(row.get("claim_ref"), "entailment claim reference")
+        if claim_ref in adjudicated:
+            raise ChapterStagedGenerationError("evidence entailment repeats a claim reference")
+        _nonempty(row.get("claim_text"), "entailment claim text")
+        _nonempty(row.get("scope_justification"), "entailment scope justification")
+        claim_type = row.get("claim_type")
+        if claim_type not in ENTAILMENT_CLAIM_TYPES:
+            raise ChapterStagedGenerationError("entailment claim type is invalid")
+        if row.get("support_scope") not in EVIDENCE_SUPPORT_SCOPES:
+            raise ChapterStagedGenerationError("entailment support scope is invalid")
+        status = row.get("entailment_status")
+        if status not in ENTAILMENT_STATUSES:
+            raise ChapterStagedGenerationError("entailment status is invalid")
+        if status not in ACCEPTED_ENTAILMENT_STATUSES:
+            raise ChapterStagedGenerationError(
+                f"evidence does not entail claim {claim_ref}: {status}"
+            )
+        if claim_type in SCENARIO_SPECIFIC_CLAIM_TYPES and row["support_scope"] == "GENERAL_CONCEPT_CLAIM":
+            raise ChapterStagedGenerationError(
+                f"claim {claim_ref} decides this scenario but rests only on a general concept source"
+            )
+        if row["support_scope"] == "DERIVED_CLAIM" and status != "SUPPORTED_BY_VALID_DERIVATION":
+            raise ChapterStagedGenerationError("a derived claim must be accepted as a valid derivation")
+        _evidence_refs_exist(row.get("evidence_refs"), claims, f"entailment evidence for {claim_ref}")
+        if claim_type in {"COMPETITOR_PLAUSIBILITY", "COMPETITOR_DISCRIMINATOR"}:
+            if row.get("contrast_id") not in competitor_ids:
+                raise ChapterStagedGenerationError("competitor entailment claim does not name a retrieved competitor")
+        elif row.get("contrast_id") is not None:
+            raise ChapterStagedGenerationError("a non-competitor entailment claim cannot name a competitor")
+        adjudicated[claim_ref] = row
+
+    key_claims = [row for row in rows if row["claim_type"] == "KEY_DECISIVE"]
+    if len(key_claims) != 1 or sorted(key_claims[0]["evidence_refs"]) != sorted(key_row["anchor_evidence_refs"]):
+        raise ChapterStagedGenerationError("evidence entailment does not adjudicate the anchor key claim")
+    for contrast_id in competitor_ids:
+        for claim_type in ("COMPETITOR_PLAUSIBILITY", "COMPETITOR_DISCRIMINATOR"):
+            if not any(
+                row["claim_type"] == claim_type and row.get("contrast_id") == contrast_id for row in rows
+            ):
+                raise ChapterStagedGenerationError(
+                    f"evidence entailment leaves {contrast_id} {claim_type} unadjudicated"
+                )
+    if block.get("verdict") != "PASS":
+        raise ChapterStagedGenerationError("evidence entailment adjudication must pass")
+    return adjudicated
+
+
+def _validate_terminal_exclusion_review(
+    item: dict[str, Any],
+    open_ended: dict[str, Any],
+    competitor_proof: dict[str, Any],
+    features: dict[str, dict[str, Any]],
+    competitor_ids: list[str],
+) -> dict[str, Any]:
+    """Ask whether a stem clause exists for the item's sake or the patient's."""
+    block = item.get("terminal_exclusion_review")
+    if (
+        not isinstance(block, dict)
+        or block.get("contextual_competitor_proof_sha256") != canonical_sha256(competitor_proof)
+    ):
+        raise ChapterStagedGenerationError("terminal exclusion review lineage is invalid")
+    _nonempty(block.get("reviewer_id"), "terminal exclusion reviewer ID")
+    rows = block.get("assessments")
+    if not isinstance(rows, list) or [
+        row.get("contrast_id") for row in rows if isinstance(row, dict)
+    ] != competitor_ids:
+        raise ChapterStagedGenerationError("terminal exclusion review coverage is invalid")
+    proofs_by_id = {row["contrast_id"]: row for row in competitor_proof["proofs"]}
+    spans_by_competitor: dict[str, list[str]] = {}
+    for row in rows:
+        contrast_id = row["contrast_id"]
+        feature_ids = row.get("defeating_stem_feature_ids")
+        if (
+            not isinstance(feature_ids, list)
+            or not feature_ids
+            or feature_ids != proofs_by_id[contrast_id]["defeating_stem_feature_ids"]
+        ):
+            raise ChapterStagedGenerationError(
+                "terminal exclusion review does not assess the proven discriminator"
+            )
+        if row.get("exclusion_class") not in EXCLUSION_CLASSES:
+            raise ChapterStagedGenerationError("terminal exclusion class is invalid")
+        if row["exclusion_class"] not in ACCEPTED_EXCLUSION_CLASSES:
+            raise ChapterStagedGenerationError(
+                f"{contrast_id} is defeated by an artificial terminal exclusion"
+            )
+        if row.get("immediately_rejectable_by_single_negative_phrase") is not False:
+            raise ChapterStagedGenerationError(
+                f"{contrast_id} can be rejected by phrase matching rather than reasoning"
+            )
+        _nonempty(row.get("justification"), "terminal exclusion justification")
+        spans_by_competitor[contrast_id] = _feature_spans(features, feature_ids)
+
+    findings = find_terminal_exclusion_cues(open_ended["stem"], spans_by_competitor)
+    if block.get("deterministic_findings") != findings or findings:
+        raise ChapterStagedGenerationError(
+            f"stem contains a distractor-killing clause: {', '.join(findings) or 'unreported findings'}"
+        )
+    if block.get("verdict") != "PASS":
+        raise ChapterStagedGenerationError("terminal exclusion review must pass")
+    return block
+
+
+def _validate_option_category_parity(
+    item: dict[str, Any],
+    open_ended: dict[str, Any],
+    preflight: dict[str, Any],
+    distractors: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Require the option set to be one category of answer to one question."""
+    block = item.get("option_semantic_category_parity")
+    if (
+        not isinstance(block, dict)
+        or block.get("preflight_sha256") != canonical_sha256(preflight)
+    ):
+        raise ChapterStagedGenerationError("option category parity lineage is invalid")
+    reviewer_id = _nonempty(block.get("reviewer_id"), "option category parity reviewer ID")
+    options = block.get("options")
+    if not isinstance(options, list) or len(options) != len(distractors) + 1:
+        raise ChapterStagedGenerationError("option category parity coverage is invalid")
+    semantic_by_id = {row["contrast_id"]: row for row in distractors}
+    key_options = [row for row in options if isinstance(row, dict) and row.get("role") == "KEY"]
+    parity_distractors = [row for row in options if isinstance(row, dict) and row.get("role") == "DISTRACTOR"]
+    if len(key_options) != 1 or len(parity_distractors) != len(distractors):
+        raise ChapterStagedGenerationError("option category parity roles are invalid")
+    if key_options[0].get("semantic_option_text") != open_ended["intended_answer"]:
+        raise ChapterStagedGenerationError("option category parity key drifted from the approved answer")
+    if {row.get("contrast_id") for row in parity_distractors} != set(semantic_by_id):
+        raise ChapterStagedGenerationError("option category parity distractor coverage is invalid")
+    for row in parity_distractors:
+        if row.get("semantic_option_text") != semantic_by_id[row["contrast_id"]]["option_text"]:
+            raise ChapterStagedGenerationError(
+                "option category parity distractor drifted from approved semantics"
+            )
+    for row in options:
+        _nonempty(row.get("category_rationale"), "option category rationale")
+
+    findings = find_option_category_parity_defects(options)
+    exceptions = block.get("parity_exceptions")
+    if not isinstance(exceptions, list):
+        raise ChapterStagedGenerationError("option category parity exception record is invalid")
+    waived: set[str] = set()
+    for exception in exceptions:
+        if not isinstance(exception, dict):
+            raise ChapterStagedGenerationError("option category parity exception is invalid")
+        finding = _nonempty(exception.get("finding"), "parity exception finding")
+        if finding not in findings:
+            raise ChapterStagedGenerationError("option category parity exception waives nothing")
+        _nonempty(exception.get("justification"), "parity exception justification")
+        _nonempty(
+            exception.get("genuinely_comparable_response_reasoning"),
+            "parity exception comparability reasoning",
+        )
+        justifier = _nonempty(exception.get("independent_reviewer_id"), "parity exception reviewer ID")
+        if justifier == reviewer_id:
+            raise ChapterStagedGenerationError(
+                "a parity exception requires an independent reviewer, not the parity reviewer"
+            )
+        if exception.get("verdict") != "PASS":
+            raise ChapterStagedGenerationError("option category parity exception did not pass")
+        waived.add(finding)
+    if block.get("deterministic_findings") != findings:
+        raise ChapterStagedGenerationError("option category parity did not report its own findings")
+    unresolved = sorted(set(findings) - waived)
+    if unresolved:
+        raise ChapterStagedGenerationError(
+            f"option set exposes its key by category: {', '.join(unresolved)}"
+        )
+    if block.get("key_identifiable_from_option_structure") is not False or block.get("verdict") != "PASS":
+        raise ChapterStagedGenerationError(
+            "option category parity must pass without structural key identification"
+        )
+    return block
+
+
+def _validate_pre_assembly_semantic_set_review(
+    item: dict[str, Any],
+    parity: dict[str, Any],
+) -> dict[str, Any]:
+    """Review the whole semantic option set once, before any wording exists."""
+    block = item.get("pre_assembly_semantic_set_review")
+    if not isinstance(block, dict) or block.get("category_parity_sha256") != canonical_sha256(parity):
+        raise ChapterStagedGenerationError("pre-assembly semantic set review lineage is invalid")
+    _nonempty(block.get("reviewer_id"), "pre-assembly semantic set reviewer ID")
+    _pass_map(block.get("checks"), PREASSEMBLY_SET_CHECKS, "pre-assembly semantic set review")
+    if block.get("verdict") != "PASS":
+        raise ChapterStagedGenerationError("pre-assembly semantic set review must pass")
+    return block
+
+
+def _validate_grounded_feature_ids(
+    value: Any,
+    features: dict[str, dict[str, Any]] | None,
+    label: str,
+) -> list[str]:
+    """Resolve semantic stem features by ID against the candidate-visible feature map."""
+    if not isinstance(features, dict):
+        raise ChapterStagedGenerationError(f"{label} has no stem feature map to resolve against")
+    if not isinstance(value, list) or not value:
+        raise ChapterStagedGenerationError(f"{label} must cite at least one stem feature")
+    feature_ids: list[str] = []
+    for entry in value:
+        feature_id = _nonempty(entry, f"{label} stem feature ID")
+        if feature_id not in features:
+            raise ChapterStagedGenerationError(
+                f"{label} cites a feature the candidate cannot obtain from the stem"
+            )
+        feature_ids.append(feature_id)
+    if len(set(feature_ids)) != len(feature_ids):
+        raise ChapterStagedGenerationError(f"{label} repeats a stem feature")
+    return feature_ids
+
+
 def _validate_contextual_competitor_proofs(
     item: dict[str, Any],
     anchor: dict[str, Any],
@@ -954,6 +1762,10 @@ def _validate_contextual_competitor_proofs(
     key_row: dict[str, Any],
     competitor_ids: list[str],
     claims: dict[str, dict[str, Any]],
+    *,
+    schema_version: str = "1.3",
+    features: dict[str, dict[str, Any]] | None = None,
+    adjudicated: dict[str, dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Require each competitor to be proven plausible and defeated in THIS stem.
 
@@ -993,16 +1805,63 @@ def _validate_contextual_competitor_proofs(
         _nonempty(proof.get("why_plausible_in_this_specific_context"), "context-specific plausibility")
         _nonempty(proof.get("plausible_partial_reasoning"), "plausible partial reasoning")
         _nonempty(proof.get("decisive_discriminator"), "competitor decisive discriminator")
-        supporting = _validate_stem_features(
-            proof.get("supporting_stem_features"), open_ended["stem"], "competitor plausibility"
-        )
-        defeating = _validate_stem_features(
-            proof.get("defeating_stem_features"), open_ended["stem"], "competitor discriminator"
-        )
+        if schema_version == "1.4":
+            supporting = _validate_grounded_feature_ids(
+                proof.get("supporting_stem_feature_ids"), features, "competitor plausibility"
+            )
+            defeating = _validate_grounded_feature_ids(
+                proof.get("defeating_stem_feature_ids"), features, "competitor discriminator"
+            )
+        else:
+            supporting = _validate_stem_features(
+                proof.get("supporting_stem_features"), open_ended["stem"], "competitor plausibility"
+            )
+            defeating = _validate_stem_features(
+                proof.get("defeating_stem_features"), open_ended["stem"], "competitor discriminator"
+            )
         if set(supporting).intersection(defeating):
             raise ChapterStagedGenerationError(
                 "a stem feature cannot both establish and defeat the same competitor"
             )
+        if schema_version == "1.4":
+            if proof.get("discriminator_available_to_candidate") is not True:
+                raise ChapterStagedGenerationError(
+                    "a competitor discriminator must be available to the candidate from the stem"
+                )
+            if proof.get("post_stem_status") not in COMPETITOR_POST_STEM_STATUSES:
+                raise ChapterStagedGenerationError("competitor post-stem status is invalid")
+            if proof["post_stem_status"] not in ACCEPTED_COMPETITOR_STATUSES:
+                raise ChapterStagedGenerationError(
+                    f"{proof['contrast_id']} is not a competitive distractor after the full stem: "
+                    f"{proof['post_stem_status']}"
+                )
+            if proof.get("remains_plausible_after_full_stem") is not True:
+                raise ChapterStagedGenerationError(
+                    "a competitor must remain plausible after the candidate reads the whole stem"
+                )
+            if proof.get("option_text_self_defeats") is not False:
+                raise ChapterStagedGenerationError(
+                    "a competitor whose own option wording defeats it is not competitive"
+                )
+            entailment_refs = proof.get("entailment_claim_refs")
+            if not isinstance(entailment_refs, dict) or set(entailment_refs) != {
+                "plausibility",
+                "discriminator",
+            }:
+                raise ChapterStagedGenerationError("competitor entailment claim references are invalid")
+            for role, expected_type in (
+                ("plausibility", "COMPETITOR_PLAUSIBILITY"),
+                ("discriminator", "COMPETITOR_DISCRIMINATOR"),
+            ):
+                adjudication = (adjudicated or {}).get(entailment_refs[role])
+                if (
+                    adjudication is None
+                    or adjudication["claim_type"] != expected_type
+                    or adjudication.get("contrast_id") != proof["contrast_id"]
+                ):
+                    raise ChapterStagedGenerationError(
+                        f"competitor {role} is not backed by an adjudicated entailment claim"
+                    )
 
         plausibility_refs = _evidence_refs_exist(
             proof.get("evidence_refs_for_plausibility"), claims, "competitor plausibility evidence"
@@ -1132,10 +1991,11 @@ def validate_staged_item(
     _nonempty(item.get("item_type"), "staged item type")
     author_id = _nonempty(item.get("author_id"), "staged item author")
     schema_version = item.get("schema_version")
-    if schema_version not in {"1.0", "1.1", "1.2", "1.3"}:
+    if schema_version not in {"1.0", "1.1", "1.2", "1.3", "1.4"}:
         raise ChapterStagedGenerationError("staged item schema version is invalid")
     staged_sequence = (
-        STAGE_SEQUENCE_V4 if schema_version == "1.3"
+        STAGE_SEQUENCE_V5 if schema_version == "1.4"
+        else STAGE_SEQUENCE_V4 if schema_version == "1.3"
         else STAGE_SEQUENCE_V3 if schema_version == "1.2"
         else STAGE_SEQUENCE_V2 if schema_version == "1.1"
         else STAGE_SEQUENCE
@@ -1178,6 +2038,11 @@ def validate_staged_item(
         or not isinstance(necessity.get("explanation"), str)
     ):
         raise ChapterStagedGenerationError("context necessity is invalid")
+
+    features = None
+    if schema_version == "1.4":
+        features = _validate_stem_feature_map(item, open_ended)
+        _validate_numeric_derivations(item, open_ended, item["stem_feature_map"])
 
     blind = item.get("blind_solver")
     hidden = {"intended_answer", "contrast_candidates", "answer_options", "author_self_evaluation"}
@@ -1247,9 +2112,25 @@ def validate_staged_item(
         raise ChapterStagedGenerationError("contrastive evidence matrix must pass")
 
     competitor_proof = None
-    if schema_version == "1.3":
+    adjudicated = None
+    if schema_version == "1.4":
+        adjudicated = _validate_evidence_entailment(item, matrix, key_row, competitor_ids, claims)
+    if schema_version in {"1.3", "1.4"}:
         competitor_proof = _validate_contextual_competitor_proofs(
-            item, anchor, open_ended, matrix, key_row, competitor_ids, claims
+            item,
+            anchor,
+            open_ended,
+            matrix,
+            key_row,
+            competitor_ids,
+            claims,
+            schema_version=schema_version,
+            features=features,
+            adjudicated=adjudicated,
+        )
+    if schema_version == "1.4":
+        _validate_terminal_exclusion_review(
+            item, open_ended, competitor_proof, features, competitor_ids
         )
 
     construction = item.get("distractor_construction")
@@ -1272,7 +2153,7 @@ def validate_staged_item(
             "competing_concept": "contrast_concept",
             "shared_features": "shared_features",
         }
-        if schema_version == "1.3":
+        if schema_version in {"1.3", "1.4"}:
             # A schema-1.3 distractor carries the proven context-specific reasoning
             # rather than the generic concept-level edge wording.
             proof = proofs_by_id[row["contrast_id"]]
@@ -1319,15 +2200,22 @@ def validate_staged_item(
         raise ChapterStagedGenerationError("distractor adversarial review must pass")
 
     preflight = None
-    if schema_version == "1.3":
+    category_parity = None
+    set_review = None
+    if schema_version in {"1.3", "1.4"}:
         preflight = _validate_polarity_completeness_preflight(
             item, open_ended, distractors, adversarial
         )
+    if schema_version == "1.4":
+        category_parity = _validate_option_category_parity(
+            item, open_ended, preflight, distractors
+        )
+        set_review = _validate_pre_assembly_semantic_set_review(item, category_parity)
 
     realization = None
     parallel_review = None
     realized_options = None
-    if schema_version in {"1.1", "1.2", "1.3"}:
+    if schema_version in {"1.1", "1.2", "1.3", "1.4"}:
         realization, parallel_review, realized_options = _validate_option_realization(
             item,
             open_ended,
@@ -1336,13 +2224,29 @@ def validate_staged_item(
             adversarial,
             claims,
         )
-        if schema_version in {"1.2", "1.3"}:
+        if schema_version in {"1.2", "1.3", "1.4"}:
             _validate_decision_granularity_parity(realized_options)
+        if schema_version == "1.4":
+            if realization.get("pre_assembly_set_review_sha256") != canonical_sha256(set_review):
+                raise ChapterStagedGenerationError(
+                    "option realization did not follow the pre-assembly semantic set review"
+                )
+            echo_cues = find_negated_stem_echo_cues(
+                open_ended["stem"],
+                [
+                    {"role": row["role"], "text": row["surface_text"]}
+                    for row in realized_options
+                ],
+            )
+            if echo_cues:
+                raise ChapterStagedGenerationError(
+                    f"realized options echo a negated stem clause: {', '.join(echo_cues)}"
+                )
 
     assembly = item.get("assembly")
     if not isinstance(assembly, dict):
         raise ChapterStagedGenerationError("MCQ assembly fingerprint is invalid")
-    if schema_version in {"1.1", "1.2", "1.3"}:
+    if schema_version in {"1.1", "1.2", "1.3", "1.4"}:
         if assembly.get("parallel_option_set_review_sha256") != canonical_sha256(parallel_review):
             raise ChapterStagedGenerationError("MCQ assembly option-review fingerprint is invalid")
     elif assembly.get("adversarial_review_sha256") != canonical_sha256(adversarial):
@@ -1350,7 +2254,7 @@ def validate_staged_item(
     if assembly.get("stem") != open_ended["stem"] or assembly.get("lead_in") != open_ended["lead_in"]:
         raise ChapterStagedGenerationError("MCQ assembly did not preserve the approved stem")
     expected_rewrite_status = (
-        "SURFACE_REALIZATION_ONLY" if schema_version in {"1.1", "1.2", "1.3"} else "COMPONENTS_UNCHANGED"
+        "SURFACE_REALIZATION_ONLY" if schema_version in {"1.1", "1.2", "1.3", "1.4"} else "COMPONENTS_UNCHANGED"
     )
     if assembly.get("rewrite_status") != expected_rewrite_status:
         raise ChapterStagedGenerationError("MCQ assembly substantially rewrote approved components")
@@ -1361,7 +2265,7 @@ def validate_staged_item(
             "option_realization": canonical_sha256(realization),
             "parallel_option_set_review": canonical_sha256(parallel_review),
         }
-        if schema_version in {"1.1", "1.2", "1.3"}
+        if schema_version in {"1.1", "1.2", "1.3", "1.4"}
         else {
             "open_ended": canonical_sha256(open_ended),
             "key": canonical_sha256(key_row),
@@ -1379,13 +2283,13 @@ def validate_staged_item(
     key_options = [option for option in options if option.get("role") == "KEY"]
     expected_key_text = (
         next(row["surface_text"] for row in realized_options if row["role"] == "KEY")
-        if schema_version in {"1.1", "1.2", "1.3"}
+        if schema_version in {"1.1", "1.2", "1.3", "1.4"}
         else open_ended["intended_answer"]
     )
     if len(key_options) != 1 or assembly.get("correct_answer") != key_options[0]["key"] or key_options[0].get("text") != expected_key_text:
         raise ChapterStagedGenerationError("MCQ assembly key does not match the approved open-ended answer")
     actual_distractors = [option for option in options if option.get("role") == "DISTRACTOR"]
-    if schema_version in {"1.1", "1.2", "1.3"}:
+    if schema_version in {"1.1", "1.2", "1.3", "1.4"}:
         expected_assembly_options = [
             {
                 "key": row["position"],
@@ -1410,7 +2314,7 @@ def validate_staged_item(
                         for row in realized_options
                         if row["position"] == option["key"]
                     )
-                    if schema_version in {"1.1", "1.2", "1.3"}
+                    if schema_version in {"1.1", "1.2", "1.3", "1.4"}
                     else "LEGACY_UNSTRUCTURED"
                 ),
             }
@@ -1447,6 +2351,12 @@ def validate_staged_item(
         or correct.get("decisive_discriminants") != key_row.get("decisive_discriminants")
     ):
         raise ChapterStagedGenerationError("correct rationale lineage drifted from the approved key matrix")
+    if schema_version == "1.4":
+        register_defects = find_rationale_register_defects(correct["why_best"])
+        if register_defects:
+            raise ChapterStagedGenerationError(
+                f"key rationale explains nothing to the candidate: {', '.join(register_defects)}"
+            )
     rationale_rows = rationales.get("distractors")
     if not isinstance(rationale_rows, list) or [row.get("contrast_id") for row in rationale_rows if isinstance(row, dict)] != competitor_ids:
         raise ChapterStagedGenerationError("distractor rationales are incomplete")
@@ -1468,7 +2378,7 @@ def validate_staged_item(
         retrieval.get("semantic_ranker_id"),
         construction.get("constructor_id"),
         adversarial.get("reviewer_id"),
-        *( [realization.get("realizer_id"), parallel_review.get("reviewer_id")] if schema_version in {"1.1", "1.2", "1.3"} else [] ),
+        *( [realization.get("realizer_id"), parallel_review.get("reviewer_id")] if schema_version in {"1.1", "1.2", "1.3", "1.4"} else [] ),
         *(
             [
                 competitor_proof.get("reviewer_id"),
@@ -1478,7 +2388,19 @@ def validate_staged_item(
                     for proof in competitor_proof["proofs"]
                 }),
             ]
-            if schema_version == "1.3"
+            if schema_version in {"1.3", "1.4"}
+            else []
+        ),
+        *(
+            [
+                item["stem_feature_map"]["cartographer_id"],
+                item["numeric_derivation_validation"]["adjudicator_id"],
+                item["evidence_entailment_adjudication"]["adjudicator_id"],
+                item["terminal_exclusion_review"]["reviewer_id"],
+                category_parity["reviewer_id"],
+                set_review["reviewer_id"],
+            ]
+            if schema_version == "1.4"
             else []
         ),
         assembly.get("assembler_id"),
@@ -1489,6 +2411,41 @@ def validate_staged_item(
     if item.get("semantic_fingerprint") != _semantic_fingerprint(item):
         raise ChapterStagedGenerationError("staged item semantic fingerprint is invalid")
     return item
+
+
+def validate_calibrated_rationale_assessment(assessment: Any) -> str:
+    """Return the calibrated rationale_quality verdict for one reviewed item.
+
+    Reviewer calibration against previously accepted controls established a
+    stable definition of a rationale defect. A rationale passes when it states
+    the decisive reason for the key, names each distractor's discriminator,
+    introduces no unsupported teaching claim, and links evidence where a claim
+    requires it. Anything a reviewer would additionally like from a rationale is
+    recorded as an enhancement opportunity and never rejects the item.
+    """
+    if not isinstance(assessment, dict):
+        raise ChapterStagedGenerationError("calibrated rationale assessment is invalid")
+    criteria = assessment.get("fatal_criteria")
+    if (
+        not isinstance(criteria, dict)
+        or set(criteria) != RATIONALE_FATAL_CRITERIA
+        or any(result not in {"PASS", "FAIL"} for result in criteria.values())
+    ):
+        raise ChapterStagedGenerationError("rationale fatal criteria are invalid")
+    opportunities = assessment.get("enhancement_opportunities")
+    if not isinstance(opportunities, list):
+        raise ChapterStagedGenerationError("rationale enhancement opportunities are invalid")
+    for row in opportunities:
+        if not isinstance(row, dict) or row.get("class") not in RATIONALE_ENHANCEMENT_CLASSES:
+            raise ChapterStagedGenerationError("rationale enhancement class is invalid")
+        _nonempty(row.get("note"), "rationale enhancement note")
+    fatal = sorted(name for name, value in criteria.items() if value != "PASS")
+    verdict = "PASS" if not fatal else "FAIL"
+    if assessment.get("verdict") != verdict:
+        raise ChapterStagedGenerationError(
+            "calibrated rationale verdict does not reconcile with its fatal criteria"
+        )
+    return verdict
 
 
 def validate_micro_pilot(
@@ -1560,6 +2517,14 @@ def validate_micro_pilot(
             item["distractor_adversarial_review"]["reviewer_id"],
             item.get("option_realization", {}).get("realizer_id"),
             item.get("parallel_option_set_review", {}).get("reviewer_id"),
+            item.get("stem_feature_map", {}).get("cartographer_id"),
+            item.get("numeric_derivation_validation", {}).get("adjudicator_id"),
+            item.get("evidence_entailment_adjudication", {}).get("adjudicator_id"),
+            item.get("contextual_competitor_proof", {}).get("reviewer_id"),
+            item.get("terminal_exclusion_review", {}).get("reviewer_id"),
+            item.get("semantic_polarity_completeness_preflight", {}).get("reviewer_id"),
+            item.get("option_semantic_category_parity", {}).get("reviewer_id"),
+            item.get("pre_assembly_semantic_set_review", {}).get("reviewer_id"),
             item["assembly"]["assembler_id"],
             item["acceptance_review"]["reviewer_id"],
         )

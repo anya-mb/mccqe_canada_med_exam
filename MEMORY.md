@@ -21,7 +21,7 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `457e17f0daef6fd16b45afbc91e9525a4b609767`.
+- Audited coordinator input commit: `6f81c1a5b1240f088f583dff82e381e01d8e1ecb`.
 - Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
@@ -53,34 +53,46 @@
 This section is maintained by hand and sits outside the generated source-research resume block, which
 `scripts/qbank/source_research_checkpoint.py` rewrites from canonical artifacts on every suite run.
 
-- Cardiology ACS 10-item chapter-review pilot: SUCCESS (9/10). Positive control for the staged architecture.
-- Frozen-architecture cross-discipline generalization experiment (`c69fbae7`): 7/15 PASS. PED 2/3, OBGYN 1/3,
-  SURG 1/3, PSY 2/3, PHELO 1/3. `GENERALIZATION_ASSESSMENT = FAILED_GENERALIZATION`.
-- Diagnosis: COMPLETE. `PRIMARY_ROOT_CAUSE` = the contrast layer enforced only referential consistency between an
-  item competitor and its library edge. It required the competitor's evidence set to equal the edge's set, never
-  that the competitor's plausibility and disqualification be traceable to competitor-specific evidence, and never
-  that either be grounded in the stem the candidate reads. All 45 baseline competitors cited exactly one claim
-  each, always that item's anchor key claim; the successful Cardiology pilot by contrast carried competitor-specific
-  claims. Secondary causes: the distractor adversarial review was a boolean checkbox map with no required grounding,
-  and polarity/completeness were assessed only after surface realization by heuristics blind to option-set
-  architecture. `COMMON_LAYER_FAILURE_CONFIRMED = YES`.
-- Bounded general fix: IMPLEMENTED in `scripts/qbank/chapter_staged_generation.py` as staged schema 1.3
-  (`STAGE_SEQUENCE_V4`) adding two fail-closed gates, `CONTEXTUAL_COMPETITOR_PROOF` and
-  `SEMANTIC_POLARITY_COMPLETENESS_PREFLIGHT`. Schema 1.0 to 1.2 behaviour is unchanged. 22 new regression tests.
-- Controlled derivative retest (`cross_discipline_generalization_15_r2`): same 15 educational targets, anchors and
-  learner decisions reused, new evidence lineage. 14 items built and validated by the production validator;
-  `QGEN-GEN-SURG-T01` recorded `FAIL_CLOSED_NO_VALID_CONTRAST_SET` after two candidate contrast sets.
-- Fresh independent verification passed 1/14: PED 0/3, OBGYN 0/3, SURG 0/2, PSY 0/3, PHELO 1/3.
-  `EVIDENCE_TRACEABILITY` moved FAIL to PASS and the original unsupported-competitor-evidence mode did not recur.
-  The reviewer nonetheless found 4 factual errors, 14 weak distractors and 7 option-cue failures, and applied a
-  stricter bar than the baseline review, so 1/14 is not directly comparable with 7/15. `RETEST_ASSESSMENT = FAILURE`.
-- Two new general failure modes were identified. `EXCLUSION_BY_EXPLICIT_STEM_NEGATION` is induced by the new gate's
-  requirement that every defeating stem feature be a verbatim stem quote, which pushes stems into terminal clauses
-  that negate each competitor. `KEY_AS_CATEGORY_ODD_ONE_OUT` is not covered by the preflight's polarity,
-  completeness and scope dimensions. Both are general rather than discipline-specific.
-- `RECOMMENDED_ARCHITECTURE_ACTION = ONE_MORE_BOUNDED_GENERAL_FIX`. Discipline-specific generators remain
-  unjustified. Do not scale question generation, and do not repair the retest items to raise the score.
-- QGEN_NEXT_STEP = `IMPLEMENT_SECOND_BOUNDED_GENERAL_FIX`
+- Reviewer calibration (`reports/qgen_reviewer_calibration_v2.json`) is the first thing to read. Eleven previously
+  reviewed items were re-presented blind. `RUBRIC_DRIFT_FOUND = YES`, but not where the r2 report said: the standard
+  moved on distractor competitiveness and option-set category parity, not on rationale register. Six of eight
+  previously accepted controls now fail, including all four Cardiology positive controls, because their stems close
+  with a negative checklist mapping onto the distractor list or because the key is the only member of its option
+  category. **Raw pass rates of 9/10 (Cardiology), 7/15 (baseline), 1/14 (r2) and 8/13 (r3) are not comparable with
+  one another.** Compare defect counts, not pass rates.
+- That calibration corrects the recorded r2 diagnosis. `EXCLUSION_BY_EXPLICIT_STEM_NEGATION` and
+  `KEY_AS_CATEGORY_ODD_ONE_OUT` predate schema 1.3 and are present in the Cardiology pilot; the verbatim-quote
+  requirement amplified the first, it did not create it.
+- `RATIONALE_FATAL_STANDARD_DEFINED = YES`, in
+  `chapter_staged_generation.validate_calibrated_rationale_assessment`. Four fatal criteria; register and
+  expansiveness are enhancement classes that never reject an item. The generator holds the higher bar and refuses to
+  emit an imperative key rationale at schema 1.4.
+- Second bounded general repair: IMPLEMENTED as staged schema 1.4 (`STAGE_SEQUENCE_V5`), the
+  `SEMANTIC_ITEM_ACCEPTANCE_V2` layer. Five fail-closed gates: `CANDIDATE_VISIBLE_STEM_FEATURE_MAP` (semantic
+  features, integrated inferences, no verbatim-quote requirement), `NUMERIC_DERIVATION_VALIDATION` (Decimal
+  recomputation over a 16-formula registry, independent verification for anything unregistered),
+  `EVIDENCE_ENTAILMENT_ADJUDICATION` (entailment status and support scope; a general concept source cannot decide a
+  scenario-specific claim), `TERMINAL_EXCLUSION_REVIEW` (negative-checklist and closing-negation detectors),
+  `OPTION_SEMANTIC_CATEGORY_PARITY` plus `PRE_ASSEMBLY_SEMANTIC_SET_REVIEW`. Schema 1.0 to 1.3 unchanged. 48 new
+  regression tests; focused 115/0, full suite 847/0.
+- Controlled retest `cross_discipline_generalization_15_r3`: same 15 targets and anchors, new stems and option sets.
+  13 items built and validated; PED-T03 and SURG-T01 recorded `FAIL_CLOSED_NO_VALID_CONTRAST_SET`.
+- Fresh independent verification under the calibrated rubric passed 8/13: PED 1/2, OBGYN 3/3, SURG 0/2, PSY 2/3,
+  PHELO 2/3. The verifier independently reached the keyed answer on all 13. Defect counts against r2 under the same
+  bar: factual 4 to 0, unsupported 6 to 0, ambiguous 1 to 0, weak distractors 14 to 2, option cues 7 to 2, fatal
+  rationale defects 14 to 0; one numeric error remains. `RETEST_ASSESSMENT = MIXED` — the defect-rate target was met
+  almost everywhere, the yield target of 13/15 was not.
+- Four surviving modes, none a shared architectural layer. `LONE_KEY_OPTION_CATEGORY` (PED, PHELO): the detector only
+  fires when the distractors share one category, and the exception path was used too readily. `SEVERITY_OR_CATEGORY_
+  MISMATCHED_DISTRACTORS` (PSY, PHELO): the fixed contrast inventory holds no competitive same-category alternative.
+  `NUMERIC_COMPONENT_NOT_GROUNDED_IN_THE_STEM` (SURG): the gate recomputes the total from declared components but
+  never checks the components against the stem, so a declared Alvarado nausea of zero contradicted a stem recording
+  mild nausea. `AUTHORED_TERMINAL_CLAUSE_BELOW_THE_DETECTOR` (SURG): a positively worded closing clause carries no
+  negation marker yet enumerates a contraindication list.
+- `RECOMMENDED_ARCHITECTURE_ACTION = DO_NOT_SCALE`. The stop rule applies and no third universal patch was written.
+  The binding constraint has moved off the generator onto contrast-seed and evidence acquisition. Retest items are
+  recorded as reviewed, not repaired; do not repair them to raise the score.
+- QGEN_NEXT_STEP = `ACQUIRE_COMPETITIVE_CONTRAST_SEEDS`
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 
 ## Research-level policy
