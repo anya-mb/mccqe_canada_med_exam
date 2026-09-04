@@ -364,10 +364,10 @@ This section is maintained by hand and sits outside the generated source-researc
   deliberately not addressed: contrast-library coverage, learner-decision indexing in profile-aware retrieval,
   option realization, evidence-set scoping, and a read-only CORE coverage accounting join defect
   (`build_coverage_row` alarms on two decisions that are already covered).
-- **Bounded stem-anchor retrieval fix (2026-09-04), from diagnosis checkpoint `6fe4237`.** Scope held: one
-  bounded fix, no architecture redesign, no new validator family, no new contrast seeds, no stem or item
-  rewritten. Every seed pack, enrichment, wave plan, semantic-admissibility artifact, item file and the G2
-  execution report are byte-identical to `199696b`.
+- **Bounded stem-anchor retrieval fix (2026-09-04), from diagnosis checkpoint `6fe4237`, implemented at
+  `9ebee9f`.** Scope held: one bounded fix, no architecture redesign, no new validator family, no new
+  contrast seeds, no stem or item rewritten. Every seed pack, enrichment, wave plan, semantic-admissibility
+  artifact, item file and the G2 execution report are byte-identical to `199696b`.
 - **The invariant, and what it is not.** `STEM_PLAUSIBILITY_ANCHOR_PRESENT`: a retrieved competitor is
   admissible only if at least one of its stem-plausibility anchors is realized PRESENT. Measured first, before
   any code: the floor **cannot** be computed from `condition_predicates`. Every competitor of accepted
@@ -394,8 +394,11 @@ This section is maintained by hand and sits outside the generated source-researc
   `FAIL_CLOSED_REALIZED_COMPETITOR_LACKS_STEM_ANCHOR`, so an item resting on a floor-refused competitor fails
   closed instead of raising the freehand-distractor construction error. The ADM-3 ceiling is untouched.
 - Controls fixture `research/qgen/safe_yield/stem_anchor_invariant_controls.json`, written before the production
-  change. Tests: 31 in `tests/test_stem_anchor_floor.py`, 64 focused with the wave and retrieval modules, full
-  canonical suite **1024/0** at the final production-code state.
+  change. Tests: 31 in `tests/test_stem_anchor_floor.py`, 33 in `tests/test_profile_retrieval_wave.py` and 10
+  in `tests/test_profile_contrast_retrieval.py`, so **74 focused** across the three modules; full canonical
+  suite **1024/0** at the final production-code state. Re-verified at `9ebee9f` with a clean working tree:
+  the three focused modules run **74/0**, so no production code changed after the full-suite run and the
+  suite was not rerun.
 - **Frozen replay:** all four accepted G2 sets keep at least three anchored competitors and all four flagship
   anchorless sets collapse below three. Second-key ceiling preserved exactly:
   `CORRECTNESS_CONDITION_FULLY_SATISFIED` is 8 before and 8 after. Anchor signal, on the same 111-candidate
