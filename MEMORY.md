@@ -21,7 +21,7 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `c40605382bbec41abdace29b8d997cf68fa56221`.
+- Audited coordinator input commit: `ebceb0d435fabc5b2b67c35c8d14452aa1de020a`.
 - Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
@@ -189,7 +189,87 @@ This section is maintained by hand and sits outside the generated source-researc
   `independent_context` PASS. Low accepted yield is a safe-yield outcome, not a coverage failure: the three
   NO_SAFE_ITEM decisions are recorded as legitimately fail-closed rather than uncovered, so the genuinely
   uncovered CORE population is 2 learner decisions (`LD-C21-02`, `LD-P147-04`) plus MCC objective `27-3`.
-- QGEN_NEXT_STEP = `USER_REVIEW_G1_SAFE_YIELD`
+- G1 is superseded as the resume point by G2 below; the G1 accounting above stands unchanged.
+- **G2 profile-aware retrieval pilot: `G2_RESULT = MIXED`**, in `reports/qgen_g2_profile_aware_retrieval_execution.json`.
+  `PROFILE_AWARE_CONTRAST_RETRIEVAL_EXERCISED_END_TO_END = YES`: the component G1 left untested now runs
+  inside the wave, against the curated library, for every opportunity. The missing one-time enrichment over the
+  82-seed pack was performed (`competitive_contrast_seed_pack_r4.enrichment.json`, 62 approved seeds tagged; the
+  20 the R4 reviewer rejected are deliberately left unenriched and so unreachable), joined to a frozen canonical
+  stem-feature vocabulary (`g2_stem_feature_vocabulary.json`, 102 features) in which a seed states the conditions
+  under which it would be correct and a realized stem states which of them hold.
+- G2 accounting, one terminal state per opportunity, 30 attempted across six profiles: **4 ACCEPTED, 13 REJECTED,
+  12 NO_SAFE_ITEM, 1 REDUNDANT**. Accepted: `G2-MED-04`, `G2-MED-05`, `G2-SURG-02`, `G2-PHELO-01`. Accepted-item
+  invariants are all zero - factual 0, numeric 0, unsupported claims 0, ambiguous best answers 0, critical-fact
+  safety 0, material redundancy 0 - with `EVIDENCE_ENTAILMENT` PASS over accepted items and verdict variance PASS.
+  Twelve fail-closed outcomes carry four different reasons, none above 33%, and all five admissibility positive
+  controls fired. The deliberate redundancy control `G2-PSY-06` was refused before generation.
+- **`PROFILES_VALIDATED = 0/6`; all six are `INSUFFICIENT_YIELD`.** MEDICINE 5 attempted / 2 accepted, PEDIATRICS
+  5/0, OBGYN 5/0, SURGERY 4/1, PSYCHIATRY 6/0, PHELO 5/1. SURGERY carries four rather than five opportunities
+  because SU-GS-76's frozen curriculum density is five and one is already occupied by an accepted G1 item; that
+  bound is reported rather than worked around. The encoded `evaluate_gate("G2")` returns FAIL on
+  `CORE_DECISION_NEITHER_ACCEPTED_NOR_FAIL_CLOSED`, which is the coverage criterion and not a safety one.
+- Three verifiers, working blind before seeing any key, reached the keyed answer on every item they judged in the
+  MEDICINE and PEDIATRICS group (7 of 7), so no rejection in this wave is a keying error. Rejections are
+  realization defects, and they cluster.
+- **The four repeated realization defects are the G2 result that matters**, and none is a retrieval-supply problem:
+  - `COMPETITOR_WITHOUT_STEM_ANCHOR` (MED-01, PED-01, PED-02, PSY-01; three profiles). This is G1's surviving mode
+    and G2 supplies its cause. A seed's frozen correctness condition names the stem feature under which it would
+    be right, so the natural way to keep the key unique is to report that feature *absent* - which removes the
+    positive pull the competitor needed. ADM-3 cannot see it: it catches only a negation defeating exactly one
+    competitor while grounding nothing in the key, so a stem that negates *every* competitor passes ADM-3 and
+    still yields an anchorless set.
+  - `KEY_DISTRACTOR_REGISTER_ASYMMETRY` (MED-01, MED-03, PED-01, PED-02, PED-03). Created by the provenance rule
+    itself: distractor text is locked to the curated concept string so it cannot be authored freehand, while the
+    key is written fresh, so the key differs in grammatical form, hedging and length from every distractor. ADM-5
+    measures numerals and paired quantities only and does not see it.
+  - `RATIONALE_CLAIM_OUTSIDE_THE_ITEM_EVIDENCE_SET` (PED-02, PSY-01, PSY-03, PSY-04, OBGYN-02). A rationale
+    asserts something present in the packet but outside the claim set the item declared. The critical-fact layer
+    adjudicates declared claims; nothing checks that a rationale stays inside them.
+  - `OPTION_NESTING_BETWEEN_KEY_AND_A_RETRIEVED_COMPETITOR` (PSY-04). Retrieval returned a competitor that
+    properly contains the key. It excludes a competitor whose conditions are fully satisfied, which catches a
+    second key, and has no test for a competitor that subsumes the key.
+- One further defect reached a rejected item and was caught only by independent verification: `G2-SURG-03`
+  inverted a source figure, writing "53 per cent of patients avoided appendectomy" where `CLM-R2-SURG-NONOP`
+  says 53% *crossed over to surgery*. Numeric assertions are enumerated but nothing checks a quoted figure's
+  direction against the claim's meaning. Same family as R4's McBurney unit error.
+- Retrieval itself worked and its limits are now measured. The index keys on discipline x item archetype x
+  option-set archetype and **not on the learner decision**, so seeds curated for one decision are retrieved for
+  any other sharing that triple; 22 of 28 semantic-admissibility refusals are that one cause
+  (`SA_1_DECISION_GRANULARITY_MATCH`), in PED-04, OBGYN-04, PHELO-04, MED-03 and MED-05. Retrieval-failure
+  classification over the twelve fail-closed opportunities: `NO_RELEVANT_SEED` 4, `WRONG_DECISION_GRANULARITY` 3,
+  `OTHER` 3 (two nominal-parity, one realization-parity), `CONTEXTUALLY_IMPLAUSIBLE` 1, `INSUFFICIENT_EVIDENCE` 1.
+  `WRONG_OPTION_ARCHETYPE` never fired, which is expected: the index filters on it.
+- A separate, concrete consequence of provenance locking: `G2-PED-05` failed ADM-5 as
+  `SOLE_NUMERAL_BEARING_OPTION` because the curated concept string is "Nebulized 3% hypertonic saline" and the
+  provenance rule forbids rewording it at realization. Curated concept strings are not realization-parity safe.
+- Targeted enrichment was bounded and independently reviewed, and the reviewer pushed back. Twenty-three seeds
+  were authored only where retrieval actually returned fewer than three;
+  `reports/qgen_g2_targeted_seed_independent_review.json` records **19 approved, 4 rejected**, including one
+  where the author mis-cited `CLM-ACS-REPERFUSION-NO-DELAY-01` and one whose load-bearing discriminator appeared
+  in neither cited claim. Those rejections stand and cost items: `G2-SURG-01` and `G2-PSY-02` fail closed as a
+  direct result. Seeds live in `competitive_contrast_seed_pack_g2_targeted.json` (four MEDICINE targets, schema
+  valid) and `competitive_contrast_seed_pack_g2_extensions.json` (five one- or two-seed top-ups, deliberately not
+  forced into the pack schema, whose four-candidate minimum is real acquisition discipline and was not weakened).
+  The curated 82-seed pack is byte-identical.
+- Production code changed, under TDD, for two genuine defects and one integration. `safe_yield_wave` now takes an
+  optional `contrast_library`, builds one index across several packs, runs profile-aware retrieval **before**
+  realization, refuses an opportunity that cannot raise three admissible competitors, feeds retrieved
+  correctness predicates into ADM-3 so it can fire on a real item for the first time, and raises rather than
+  fails closed when an item carries a distractor retrieval never produced. The stem feature map moved to the
+  wave plan, because retrieval and adjudication must run against the same stem. Six new tests in
+  `tests/test_profile_retrieval_wave.py`; the G1 wave is unchanged and its recorded outcome still holds.
+- Coverage: `reports/qgen_g2_coverage_and_yield.json`. **`LD-C21-02` is now covered** - the CORE decision G1
+  rejected was accepted here as `G2-MED-04`. `LD-P147-04` was attempted again and is recorded as legitimately
+  fail-closed rather than uncovered. **MCC objective `27-3` still has no accepted item**, and the standing alarm
+  now names five CORE objectives with none: `116`, `27-3`, `3-1`, `59-1`, `74`.
+- `RECOMMENDED_ARCHITECTURE_ACTION` stays `DO_NOT_SCALE`. Accepted items are safe and retrieval demonstrably
+  works end to end, but no profile validated and four realization defects recur across profiles, three of them
+  invisible to every automated gate. **The MIXED/FAIL boundary is a user judgement**: G2_MIXED is met as written
+  (accepted questions safe; multiple profiles with insufficient yield), and the second G2_FAIL limb - "one
+  repeated architecture-wide retrieval/realization defect remains" - is arguably met by
+  `COMPETITOR_WITHOUT_STEM_ANCHOR`, which G1 flagged, which G2 reproduced in three profiles, and which no gate
+  covers. Do not start G3, cross-profile scale waves or bank production.
+- QGEN_NEXT_STEP = `USER_REVIEW_G2_PROFILE_AWARE_RETRIEVAL`
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 
 ## Research-level policy

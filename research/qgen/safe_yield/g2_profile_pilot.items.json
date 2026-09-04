@@ -1,0 +1,2540 @@
+{
+  "frozen": true,
+  "frozen_sha256": "9724280ddc4f542ecc4fef8ef275ec54de6735a6044aec19617b717c87497452",
+  "items": [
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-G2-AORTIC-DISSECTION",
+          "option_text": "Acute aortic dissection",
+          "seed_id": "SEED-G2-MED-T01-DISSECTION"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-G2-PE",
+          "option_text": "Pulmonary embolism",
+          "seed_id": "SEED-G2-MED-T01-PE"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-G2-PERICARDITIS",
+          "option_text": "Acute pericarditis",
+          "seed_id": "SEED-G2-MED-T01-PERICARDITIS"
+        }
+      ],
+      "decisive_discriminator": "Regional ST depression with T-wave inversion that deepens on a repeat tracing, together with a rising high-sensitivity troponin, places acute myocardial injury in an ischaemic context; every feature that would carry the presentation to a non-ischaemic cause is positively reported against.",
+      "discipline": "MED",
+      "discipline_profile_id": "MEDICINE",
+      "evidence_packet": "research/qgen/pilot/QGEN-MED-007.acs-chapter-review-pilot-10.evidence.json",
+      "evidence_refs": [
+        "CLM-ACS-DIAGNOSIS-01",
+        "CLM-PE-DIAGNOSIS-01",
+        "CLM-AORTIC-DISSECTION-01",
+        "CLM-PERICARDITIS-01",
+        "CLM-GERD-01"
+      ],
+      "item_archetype": "DIAGNOSIS",
+      "item_id": "G2-MED-01",
+      "key_grounding_feature_ids": [
+        "SF-C21-DYNAMIC-ST-T-CHANGES",
+        "SF-C21-TROPONIN-RISE-OR-FALL",
+        "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+        "SF-C21-ABRUPT-MAXIMAL-AT-ONSET-PAIN",
+        "SF-C21-PULSE-OR-BP-DIFFERENTIAL",
+        "SF-C21-PLEURITIC-POSITIONAL-PAIN",
+        "SF-C21-WIDESPREAD-ST-ELEVATION-PR-DEPRESSION",
+        "SF-C21-PE-PRETEST-PROBABILITY-RAISED",
+        "SF-C21-TYPICAL-REFLUX-SYMPTOMS"
+      ],
+      "lead_in": "Which diagnosis best explains his presentation?",
+      "learner_decision_id": "LD-C21-01",
+      "opportunity_label": "G2-MED-01",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Acute aortic dissection"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Pulmonary embolism"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Acute pericarditis"
+        },
+        {
+          "key": "D",
+          "role": "KEY",
+          "text": "Non-ST-elevation acute coronary syndrome"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "Dissection would be the answer if the pain had been abrupt and maximal at onset or if there were a pulse deficit or an inter-arm pressure difference. The stem reports pain that began during exertion and eased partly with rest, and blood pressure that is equal in both arms with no pulse deficit, so neither of the features that suggest an acute aortic syndrome is present.",
+          "B": "Embolism raises troponin and so is a real alternative whenever a troponin is abnormal. It is chosen on pretest probability, which sudden dyspnoea, pleuritic pain, haemoptysis, hypoxaemia or venous-thromboembolism risk factors raise. This patient has none of them: he is not dyspnoeic, his saturation is normal in room air, his calves are soft and he has had no immobility, surgery or travel.",
+          "C": "Pericarditis competes directly because it also produces chest pain with an abnormal tracing. It causes sharp, pleuritic and positional pain and widespread rather than territorial ST elevation or PR depression. Here the pain does not change with posture or deep inspiration and the tracing shows regional ST depression with T-wave inversion, which is the opposite pattern."
+        },
+        "key": "The discomfort is exertional, pressure-like and only partly relieved by rest, and the electrocardiogram shows regional ST depression with T-wave inversion that deepens on a repeat tracing while the high-sensitivity troponin rises. Acute myocardial injury in an ischaemic context is what defines the syndrome, and regional ST depression or T-wave inversion is what places it on the non-ST-elevation side of it. The three alternatives each have a defining feature that the stem reports and finds absent: the onset is not abrupt and maximal, the pulses and arm pressures are equal, the pain does not vary with posture or respiration, the tracing is regional rather than widespread, there is no reflux symptom, and there is no feature raising the pretest probability of venous thromboembolism."
+      },
+      "stem": "A 58-year-old man describes 90 minutes of heavy retrosternal pressure that began while he was climbing stairs and has eased only slightly with rest. He is diaphoretic. Blood pressure is 148/86 mmHg and equal in both arms, heart rate is 92 beats/min, respiratory rate is 16 breaths/min and oxygen saturation is 97% on room air. The discomfort is not sharp, does not change with posture or deep inspiration, and he has no heartburn or regurgitation. His chest is clear, his calves are soft and he has had no recent immobility, surgery or travel. There is no back pain and no pulse deficit. The electrocardiogram shows horizontal ST depression with T-wave inversion across the lateral precordial leads, and a tracing repeated twenty minutes later shows the depression has deepened. The initial high-sensitivity troponin is above the upper reference limit and the repeat value is higher.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-DYNAMIC-ST-T-CHANGES",
+          "inference_type": "IMAGING_PATTERN",
+          "polarity": "PRESENT",
+          "source_span": "horizontal ST depression with T-wave inversion ... the depression has deepened"
+        },
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-TROPONIN-RISE-OR-FALL",
+          "inference_type": "LABORATORY_RESULT",
+          "polarity": "PRESENT",
+          "source_span": "the initial high-sensitivity troponin is above the upper reference limit and the repeat value is higher"
+        },
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "ST depression rather than ST elevation"
+        },
+        {
+          "clinical_role": "SYMPTOM_QUALITY",
+          "feature_id": "SF-C21-ABRUPT-MAXIMAL-AT-ONSET-PAIN",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "began while he was climbing stairs and has eased only slightly with rest"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-C21-PULSE-OR-BP-DIFFERENTIAL",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "blood pressure ... equal in both arms ... no pulse deficit"
+        },
+        {
+          "clinical_role": "SYMPTOM_QUALITY",
+          "feature_id": "SF-C21-PLEURITIC-POSITIONAL-PAIN",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "not sharp, does not change with posture or deep inspiration"
+        },
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-WIDESPREAD-ST-ELEVATION-PR-DEPRESSION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "the electrocardiogram shows horizontal ST depression"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-C21-PE-PRETEST-PROBABILITY-RAISED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "calves are soft and he has had no recent immobility, surgery or travel"
+        },
+        {
+          "clinical_role": "SYMPTOM_QUALITY",
+          "feature_id": "SF-C21-TYPICAL-REFLUX-SYMPTOMS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no heartburn or regurgitation"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-G2-BETA-BLOCKER",
+          "option_text": "Give intravenous metoprolol to reduce myocardial oxygen demand",
+          "seed_id": "SEED-G2-MED-T02-BETA-BLOCKER"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-G2-DIURETIC",
+          "option_text": "Give intravenous furosemide for the raised jugular venous pressure",
+          "seed_id": "SEED-G2-MED-T02-DIURETIC"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-G2-NITRATE",
+          "option_text": "Give sublingual nitroglycerin for the ischaemic pain",
+          "seed_id": "SEED-G2-MED-T02-NITRATE"
+        }
+      ],
+      "decisive_discriminator": "Hypotension with a raised jugular venous pressure and clear lungs in an inferior infarct is right-ventricular physiology, which is preload dependent, so the hypotension is corrected by optimising preload rather than by any agent that reduces it.",
+      "discipline": "MED",
+      "discipline_profile_id": "MEDICINE",
+      "evidence_packet": "research/qgen/pilot/QGEN-MED-007.acs-chapter-review-pilot-10.evidence.json",
+      "evidence_refs": [
+        "CLM-ACS-RV-INFARCTION-STABILIZATION-01",
+        "CLM-ACS-AMI-CARDIOGENIC-SHOCK-01"
+      ],
+      "item_archetype": "RISK_STRATIFICATION",
+      "item_id": "G2-MED-03",
+      "key_grounding_feature_ids": [
+        "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+        "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS",
+        "SF-C21-PULMONARY-CONGESTION",
+        "SF-C21-END-ORGAN-HYPOPERFUSION"
+      ],
+      "lead_in": "What is the most appropriate next step in his management?",
+      "learner_decision_id": "LD-C21-04",
+      "opportunity_label": "G2-MED-03",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Give intravenous metoprolol to reduce myocardial oxygen demand"
+        },
+        {
+          "key": "B",
+          "role": "KEY",
+          "text": "Give a cautious intravenous fluid bolus and reassess fluid responsiveness"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Give intravenous furosemide for the raised jugular venous pressure"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Give sublingual nitroglycerin for the ischaemic pain"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "Beta blockade belongs to the early management of an infarct, which is why it is tempting, but it must not be started or escalated during a low-output state or where cardiogenic shock is a risk; it is reconsidered after stabilization. This patient is hypotensive at 84/56 mmHg with a heart rate already at 58 beats/min.",
+          "C": "A raised jugular venous pressure is read as fluid overload often enough that this is the reflex answer, but the guidance is explicit that diuretics are avoided in this physiology because they reduce the preload the right ventricle depends on. The lungs are clear with no crackles and no oxygen requirement, so there is no congestion to treat.",
+          "D": "Nitrate is the standard first move for ischaemic chest pain and is what a general infarct algorithm lists first. It is a preload reducer, and preload reduction is precisely what right-ventricular infarct physiology cannot tolerate; the guidance names nitrates among the agents to avoid here."
+        },
+        "key": "Hypotension with an elevated jugular venous pressure and clear lung fields in an inferior infarct, supported by ST elevation in V4R, identifies right-ventricular infarction. That ventricle is preload dependent, so the hypotension is corrected by cautiously optimising preload with intravenous fluid and then reassessing whether the patient responded, while agents that reduce preload are avoided."
+      },
+      "stem": "A 66-year-old man is brought in with an hour of crushing chest pain. The electrocardiogram shows ST elevation in leads II, III and aVF, and a right-sided tracing shows ST elevation in V4R. His blood pressure is 84/56 mmHg and his heart rate is 58 beats/min. His jugular venous pressure is elevated to the angle of the jaw and his lung fields are clear on auscultation, with no crackles and no oxygen requirement. His peripheries are warm, he is fully alert and his urine output has been maintained since arrival. He has received aspirin and the catheterisation laboratory has been activated.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+          "inference_type": "IMAGING_PATTERN",
+          "polarity": "PRESENT",
+          "source_span": "ST elevation in leads II, III and aVF"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "blood pressure is 84/56 mmHg ... jugular venous pressure is elevated ... lung fields are clear"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-C21-PULMONARY-CONGESTION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no crackles and no oxygen requirement"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-C21-END-ORGAN-HYPOPERFUSION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "peripheries are warm, he is fully alert and his urine output has been maintained"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-G2-LYSIS-DEFERRED-ANGIO",
+          "option_text": "Give fibrinolysis now and arrange angiography in three to five days if she remains stable",
+          "seed_id": "SEED-G2-MED-T03-DEFERRED-ANGIO"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-G2-PPCI-TRANSFER",
+          "option_text": "Transfer immediately for primary percutaneous coronary intervention without giving fibrinolysis",
+          "seed_id": "SEED-G2-MED-T03-PPCI-ONLY"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-G2-LYSIS-RESCUE-ONLY",
+          "option_text": "Give fibrinolysis now and transfer only if the electrocardiogram fails to show resolution",
+          "seed_id": "SEED-G2-MED-T03-RESCUE-ONLY"
+        }
+      ],
+      "decisive_discriminator": "The expected first-medical-contact-to-device time is far beyond the interval at which primary intervention keeps its advantage and nothing prohibits lysis, so lysis is given now and transfer for angiography follows as a routine part of the strategy rather than as a rescue.",
+      "discipline": "MED",
+      "discipline_profile_id": "MEDICINE",
+      "evidence_packet": "research/qgen/pilot/QGEN-MED-007.acs-chapter-review-pilot-10.evidence.json",
+      "evidence_refs": [
+        "CLM-ACS-PHARMACOINVASIVE-01",
+        "CLM-ACS-FIBRINOLYSIS-CONTRA-PPCI-01",
+        "CLM-ACS-REPERFUSION-NO-DELAY-01"
+      ],
+      "item_archetype": "PHARMACOTHERAPY",
+      "item_id": "G2-MED-04",
+      "key_grounding_feature_ids": [
+        "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+        "SF-C21-DEVICE-TIME-EXCEEDS-WINDOW",
+        "SF-C21-DEVICE-TIME-WITHIN-WINDOW",
+        "SF-C21-FIBRINOLYSIS-ABSOLUTE-CONTRAINDICATION"
+      ],
+      "lead_in": "What is the most appropriate next step in her management?",
+      "learner_decision_id": "LD-C21-02",
+      "opportunity_label": "G2-MED-04",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Give fibrinolysis now and arrange angiography in three to five days if she remains stable"
+        },
+        {
+          "key": "B",
+          "role": "KEY",
+          "text": "Give fibrinolysis now and arrange routine rapid transfer to a percutaneous coronary intervention centre"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Transfer immediately for primary percutaneous coronary intervention without giving fibrinolysis"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Give fibrinolysis now and transfer only if the electrocardiogram fails to show resolution"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "This chooses the right drug at the right moment and still ends in angiography, which is why it is tempting. The angiography that follows successful fibrinolysis is part of the acute strategy and belongs within twenty-four hours; deferring it for several days converts a pharmacoinvasive strategy into an elective investigation.",
+          "C": "Primary intervention is the preferred route wherever device therapy is reachable in time, and it is the answer when an absolute contraindication prohibits lysis. Neither condition holds: the expected device time is about four hours, and her history discloses no contraindication. Choosing transfer alone spends the advantage that giving lysis now would have preserved.",
+          "D": "Giving lysis now is correct; making the transfer conditional on failure is not. Transfer to a percutaneous centre after fibrinolysis is routine and rapid rather than reserved for failed reperfusion, so this option delivers half of the recommended pathway."
+        },
+        "key": "The tracing is diagnostic of an anterior ST-elevation infarct, so reperfusion is required and only the route is in question. The expected first-medical-contact-to-device time of about four hours is far beyond the interval at which primary intervention retains its advantage, and nothing in her history is an absolute contraindication to fibrinolysis. Fibrinolysis is therefore the reperfusion choice, and in an early presenter at low bleeding risk it is given as part of a pharmacoinvasive strategy in which rapid transfer to a percutaneous centre follows as a matter of routine, with angiography within twenty-four hours if reperfusion succeeds."
+      },
+      "stem": "A 49-year-old woman presents to a nursing station in a remote northern community 40 minutes after the sudden onset of central chest pain. She is alert and comfortable at rest, with a blood pressure of 128/78 mmHg and a heart rate of 84 beats/min. The electrocardiogram shows ST elevation in leads V2 to V4. The nearest hospital with a catheterisation laboratory is reached by fixed-wing air transfer, and the retrieval service estimates that the time from first medical contact to device would be about four hours. She has never had a stroke or intracranial bleeding, has had no recent surgery, trauma or bleeding, takes no anticoagulant, and her blood pressure is not raised.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+          "inference_type": "IMAGING_PATTERN",
+          "polarity": "PRESENT",
+          "source_span": "ST elevation in leads V2 to V4"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "SF-C21-DEVICE-TIME-EXCEEDS-WINDOW",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "the time from first medical contact to device would be about four hours"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "SF-C21-DEVICE-TIME-WITHIN-WINDOW",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "reached by fixed-wing air transfer"
+        },
+        {
+          "clinical_role": "HISTORY",
+          "feature_id": "SF-C21-FIBRINOLYSIS-ABSOLUTE-CONTRAINDICATION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "never had a stroke or intracranial bleeding, has had no recent surgery, trauma or bleeding"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-G2-ADMIT-STRESS-FIRST",
+          "option_text": "Admit her for inpatient stress testing before deciding on angiography",
+          "seed_id": "SEED-G2-MED-T04-ADMIT-NONINVASIVE"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-G2-OUTPATIENT-STRESS",
+          "option_text": "Discharge her with outpatient stress testing arranged within a week",
+          "seed_id": "SEED-G2-MED-T04-DISCHARGE-STRESS"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-G2-OBSERVE-NO-PLAN",
+          "option_text": "Observe her in the emergency department and reassess in the morning",
+          "seed_id": "SEED-G2-MED-T04-OBSERVE"
+        }
+      ],
+      "decisive_discriminator": "A troponin rise and fall with dynamic ST- or T-wave change is a high-risk criterion in its own right, and resolution of symptoms and of the tracing does not withdraw it.",
+      "discipline": "MED",
+      "discipline_profile_id": "MEDICINE",
+      "evidence_packet": "research/qgen/pilot/QGEN-MED-007.acs-chapter-review-pilot-10.evidence.json",
+      "evidence_refs": [
+        "CLM-ACS-NSTE-HIGH-RISK-DISPOSITION-01",
+        "CLM-ACS-NSTE-INITIAL-ANTITHROMBOTIC-01"
+      ],
+      "item_archetype": "RISK_STRATIFICATION",
+      "item_id": "G2-MED-05",
+      "key_grounding_feature_ids": [
+        "SF-C21-TROPONIN-RISE-OR-FALL",
+        "SF-C21-DYNAMIC-ST-T-CHANGES"
+      ],
+      "lead_in": "What is the most appropriate next step in her management?",
+      "learner_decision_id": "LD-C21-06",
+      "opportunity_label": "G2-MED-05",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Admit her for inpatient stress testing before deciding on angiography"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Discharge her with outpatient stress testing arranged within a week"
+        },
+        {
+          "key": "C",
+          "role": "KEY",
+          "text": "Admit her for an early inpatient invasive coronary strategy"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Observe her in the emergency department and reassess in the morning"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "This gets the admission right, which is why it is the commonest incomplete answer, and then substitutes non-invasive testing for the strategy the risk category calls for. Non-invasive testing is reserved for lower-risk or diagnostically uncertain presentations; here the syndrome is already confirmed and high risk.",
+          "B": "Her symptoms have gone, her tracing is back to baseline and she wants to go home, which is the situation in which outpatient testing is usually offered. Discharge with outpatient testing is explicitly reserved for lower-risk or diagnostically uncertain presentations, and resolution of symptoms does not withdraw a high-risk criterion that the troponin trajectory has already established.",
+          "D": "Observation is the cautious middle course and is genuinely used where the diagnosis is uncertain. It is reserved for exactly that situation; observation without an invasive plan is not an option once high-risk criteria are met."
+        },
+        "key": "A rise and fall in troponin compatible with infarction, together with dynamic ST- or T-wave change, is a high-risk criterion in a non-ST-elevation acute coronary syndrome, and it remains one even though her symptoms have resolved and her tracing has returned to baseline. Patients meeting it require admission and an early inpatient invasive coronary strategy."
+      },
+      "stem": "A 71-year-old woman attends the emergency department six hours after an episode of chest discomfort that has now completely resolved. She feels well and wants to go home to her grandchildren. Her examination is normal and her blood pressure is 138/80 mmHg. The tracing taken during the episode showed deep T-wave inversion in the lateral leads, and the current tracing has returned to her baseline. Serial high-sensitivity troponin values show a rise and then a fall in a pattern compatible with myocardial infarction. She is warm and well perfused and her renal function is normal. Aspirin and parenteral anticoagulation have already been given.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-TROPONIN-RISE-OR-FALL",
+          "inference_type": "LABORATORY_RESULT",
+          "polarity": "PRESENT",
+          "source_span": "a rise and then a fall in a pattern compatible with myocardial infarction"
+        },
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-DYNAMIC-ST-T-CHANGES",
+          "inference_type": "IMAGING_PATTERN",
+          "polarity": "PRESENT",
+          "source_span": "deep T-wave inversion in the lateral leads ... the current tracing has returned to her baseline"
+        },
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "T-wave inversion in the lateral leads"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-C21-END-ORGAN-HYPOPERFUSION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "She is warm and well perfused and her renal function is normal"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-MI-31-MAMMOGRAPHY",
+          "option_text": "Diagnostic mammography",
+          "seed_id": "SEED-OB-T02-MAMMOGRAPHY"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-MI-32-ASPIRATION",
+          "option_text": "Needle aspiration of the mass without imaging",
+          "seed_id": "SEED-OB-T02-ASPIRATION"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-OB-54-MILK-CULTURE",
+          "option_text": "Sterile milk culture and sensitivities",
+          "seed_id": "SEED-OB-T02-MILK-CULTURE"
+        }
+      ],
+      "decisive_discriminator": "The open question is what the residual area is made of, which is a structural question about a lactating breast, and it is answered before any test that would only restate that inflammation is present or that would belong to a malignancy work-up.",
+      "discipline": "OBGYN",
+      "discipline_profile_id": "OBGYN",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R4-OB-PHLEGMON",
+        "CLM-R2-OB-ABSCESS-US",
+        "CLM-R2-OB-INFLAMMATORY-MARKERS",
+        "CLM-R2-OB-MILK-CULTURE"
+      ],
+      "item_archetype": "INVESTIGATION_SELECTION",
+      "item_id": "G2-OBGYN-02",
+      "key_grounding_feature_ids": [
+        "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
+        "SF-OB54-SYSTEMIC-ILLNESS",
+        "SF-OB54-NO-IMPROVEMENT-AFTER-48H",
+        "SF-OB54-PERSISTENT-MASS-AFTER-INFLAMMATION-RESOLVED",
+        "SF-OB54-SKIN-THICKENING-PEAU-DORANGE",
+        "SF-OB54-FLUID-COLLECTION-ESTABLISHED"
+      ],
+      "lead_in": "What is the most appropriate next step in her investigation?",
+      "learner_decision_id": "LD-OB54-02",
+      "opportunity_label": "G2-OBGYN-02",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "KEY",
+          "text": "Targeted breast ultrasonography"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Diagnostic mammography"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Needle aspiration of the mass without imaging"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Sterile milk culture and sensitivities"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "B": "Mammography is cross-sectional imaging of the same persistent mass and answers a structural question, so it competes directly. It belongs where the skin findings of inflammatory breast cancer are present, or where a mass persists after the inflammation has completely resolved and needs a malignancy work-up. Neither holds: the skin is not thickened, the nipple is not retracted, and residual erythema shows the inflammation has not resolved.",
+          "C": "Aspiration would both establish whether the mass is a fluid collection and treat it, which is why it is tempting to go straight there. Aspiration is the first-line intervention once a collection is established; it is the drainage step that achieves source control rather than the step that determines whether there is anything to drain.",
+          "D": "A culture is considered where there is no symptomatic improvement after forty-eight hours of first-line therapy or where a resistant organism is suspected. She improved promptly, her fever settled within the first day and she completed her course, so the condition that triggers a culture was never met, and a culture would not characterise a mass."
+        },
+        "key": "The open question is what the residual firm area is made of, which is a structural question about a lactating breast. Phlegmon is suspected when a history of mastitis worsens into a firm, mass-like area without fluctuance and is confirmed on ultrasound, and ultrasound is also the study used to look for a collection. It is the test that distinguishes a solid inflammatory mass from a drainable one, which is the distinction that decides what happens next."
+      },
+      "stem": "A 33-year-old woman is six weeks postpartum and breastfeeding. Two weeks ago she was treated for mastitis of the left breast and she improved promptly on oral antibiotics, which she completed. Her fever settled within the first day and the erythema has largely faded, so there was no point at which she failed to respond to first-line therapy. A firm, tender, mass-like area without fluctuance remains at the affected site and has not receded over the past week. Residual erythema is still present over it, so the inflammation has not fully resolved. The skin is not thickened and the nipple is not retracted.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "A firm, tender, mass-like area without fluctuance remains at the affected site"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Her fever settled within the first day"
+        },
+        {
+          "clinical_role": "TIME_COURSE",
+          "feature_id": "SF-OB54-NO-IMPROVEMENT-AFTER-48H",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "she improved promptly on oral antibiotics ... there was no point at which she failed to respond to first-line therapy"
+        },
+        {
+          "clinical_role": "TIME_COURSE",
+          "feature_id": "SF-OB54-PERSISTENT-MASS-AFTER-INFLAMMATION-RESOLVED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Residual erythema is still present over it, so the inflammation has not fully resolved"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-SKIN-THICKENING-PEAU-DORANGE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "The skin is not thickened and the nipple is not retracted"
+        },
+        {
+          "clinical_role": "INVESTIGATION_RESULT",
+          "feature_id": "SF-OB54-FLUID-COLLECTION-ESTABLISHED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "A firm, tender, mass-like area without fluctuance"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-P-005-DANGLE",
+          "option_text": "Feed in a dangle position over the infant",
+          "seed_id": "SEED-OB-T03-DANGLE"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-OB-54-DISCARD",
+          "option_text": "Express milk from the affected breast and feed the infant formula",
+          "seed_id": "SEED-OB-T03-DISCARD"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-OB-54-EMPTY",
+          "option_text": "Pump to empty the affected breast after every feed",
+          "seed_id": "SEED-OB-T03-EMPTY"
+        }
+      ],
+      "decisive_discriminator": "Bacterial mastitis is not a contraindication to breastfeeding and milk removal follows the infant's demand, so the instruction neither withdraws the affected breast nor drives removal beyond what the infant takes.",
+      "discipline": "OBGYN",
+      "discipline_profile_id": "OBGYN",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R2-OB-CONTINUE-FEEDING",
+        "CLM-R2-OB-NO-EMPTY",
+        "CLM-R2-OB-FEEDBACK",
+        "CLM-R4-OB-DANGLE",
+        "CLM-R4-OB-NIPPLE-SHIELD",
+        "CLM-R2-OB-DEEP-MASSAGE"
+      ],
+      "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+      "item_id": "G2-OBGYN-03",
+      "key_grounding_feature_ids": [
+        "SF-OB54-SYSTEMIC-ILLNESS",
+        "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+      ],
+      "lead_in": "Which instruction about the affected breast should she be given?",
+      "learner_decision_id": "LD-OB54-03",
+      "opportunity_label": "G2-OBGYN-03",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "KEY",
+          "text": "Continue to feed the infant on demand from the affected breast"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Feed in a dangle position over the infant"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Express milk from the affected breast and feed the infant formula"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Pump to empty the affected breast after every feed"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "B": "This is an instruction about how the infant feeds from the affected breast, so it answers the question asked, and it circulates widely as a remedy for a blocked segment. No evidence supports dangle feeding and it places the infant in an unsafe position.",
+          "C": "Withdrawing the affected breast feels protective when the milk is coming from an infected segment, which is exactly the intuition being tested. It is safe for children to consume milk from a breast with bacterial mastitis, and women should not be instructed to express and discard their milk.",
+          "D": "Emptying the breast sounds like the way to clear an inflamed segment and is the commonest piece of advice given. Overfeeding from the affected breast or pumping to empty perpetuates a cycle of hyperlactation and is a major risk factor for worsening tissue oedema and inflammation."
+        },
+        "key": "It is safe for a child to consume milk from a breast with bacterial mastitis, and women should not be told to express and discard it, because bacterial mastitis is not a contraindication to breastfeeding. Milk removal should follow the infant's demand rather than be driven beyond it, since milk volume depends on a feedback mechanism in which increased removal increases production."
+      },
+      "stem": "A 27-year-old woman is two weeks postpartum. She has bacterial mastitis of the right breast, with a wedge of erythema and induration in the upper outer quadrant, a temperature of 38.2 degrees Celsius and chills. Oral antibiotics and simple analgesia have been started an hour ago at this visit. Her infant is thriving, is term and healthy, and there is nothing that would prevent him receiving milk from either breast. Her milk supply has been comfortable and matched to his demand. She has not yet changed anything about how she feeds and asks the physician what she should now do about the affected breast.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "a temperature of 38.2 degrees Celsius and chills"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "a wedge of erythema and induration in the upper outer quadrant"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-OB54-INFANT-FEEDING-CONTRAINDICATION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "there is nothing that would prevent him receiving milk from either breast"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-OB54-HYPERLACTATION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Her milk supply has been comfortable and matched to his demand"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-FLUCTUANT-COLLECTION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "a wedge of erythema and induration"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-P-146-ASTHMA",
+          "option_text": "First presentation of asthma",
+          "seed_id": "SEED-PED-T01-ASTHMA"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-OT-56-FOREIGN-BODY",
+          "option_text": "Foreign body aspiration",
+          "seed_id": "SEED-PED-T01-FOREIGN-BODY"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-P-149-PNEUMONIA",
+          "option_text": "Community-acquired pneumonia",
+          "seed_id": "SEED-PED-T01-PNEUMONIA"
+        }
+      ],
+      "decisive_discriminator": "A first wheezing illness under a year old, following a two-to-three day coryzal prodrome, with diffuse and symmetric findings rather than a focal abnormality, and running the expected course.",
+      "discipline": "PED",
+      "discipline_profile_id": "PEDIATRICS",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R2-PED-DX-ANCHOR",
+        "CLM-R2-PED-DDX-TABLE",
+        "CLM-R2-PED-CXR-INDICATION"
+      ],
+      "item_archetype": "AGE_BANDED_DIAGNOSIS",
+      "item_id": "G2-PED-01",
+      "key_grounding_feature_ids": [
+        "SF-P147-AGE-UNDER-12M",
+        "SF-P147-FIRST-WHEEZE",
+        "SF-P147-VIRAL-PRODROME",
+        "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+        "SF-P147-ATOPY-OR-RECURRENCE",
+        "SF-P147-ABRUPT-ONSET-NO-PRODROME",
+        "SF-P147-FAILING-TO-IMPROVE",
+        "SF-P147-SEVERE-OR-BACTERIAL-CONCERN"
+      ],
+      "lead_in": "What is the most likely diagnosis?",
+      "learner_decision_id": "LD-P147-01",
+      "opportunity_label": "G2-PED-01",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "KEY",
+          "text": "Acute viral bronchiolitis"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "First presentation of asthma"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Foreign body aspiration"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Community-acquired pneumonia"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "B": "Asthma is on the guideline's own list of conditions to distinguish from bronchiolitis and shares the expiratory wheeze and the increased work of breathing. It becomes the answer in an older infant or child with recurrent episodes or atopy, or with wheeze that is not preceded by a viral upper respiratory prodrome. This is a first episode at seven months following a three-day coryzal prodrome, with no eczema, atopy or family history.",
+          "C": "Aspiration is also on that list and produces acute wheeze and respiratory distress in an infant. It is suggested by abrupt onset without a viral prodrome, or by focal or asymmetric findings. Here the onset followed three days of coryzal symptoms, there was no choking episode, and air entry is equal throughout with no focal area of altered air entry.",
+          "D": "Pneumonia shares the febrile lower respiratory illness and the tachypnoea with crackles, and the guideline itself names the conditions under which it becomes the live alternative: an unclear diagnosis, a rate of improvement that is not as expected, or severity raising other diagnostic possibilities. None applies; the illness is following the expected course and the findings are diffuse rather than focal."
+        },
+        "key": "A first episode of wheezing before twelve months of age, beginning with a two-to-three day prodrome of fever, cough and rhinorrhoea and progressing to tachypnoea, wheeze and crackles with a variable degree of respiratory distress, is the described phenotype of acute viral bronchiolitis. The findings are diffuse and symmetric with equal air entry, the illness is running its expected course, and there is no atopy, no previous wheeze and no choking event, so each of the conditions that would move the diagnosis elsewhere is reported and found absent."
+      },
+      "stem": "A 7-month-old boy is brought to the clinic in the third day of an illness that began with fever, cough and a runny nose and has since progressed to noisy, faster breathing. This is the first time he has ever wheezed. He was born at term, has no eczema or other atopy and there is no family history of asthma. There was no choking episode and nothing was seen in his mouth. His temperature is 38.1 degrees Celsius, his respiratory rate is 52 breaths/min and his oxygen saturation is 94% in room air. On auscultation there is widespread symmetric expiratory wheeze with fine crackles in both lung fields and air entry is equal throughout, with no focal area of reduced or altered air entry. He is feeding at about three quarters of his usual volume and his illness has followed the course his parents were told to expect.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "DEMOGRAPHIC",
+          "feature_id": "SF-P147-AGE-UNDER-12M",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "A 7-month-old boy"
+        },
+        {
+          "clinical_role": "HISTORY",
+          "feature_id": "SF-P147-FIRST-WHEEZE",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "the first time he has ever wheezed"
+        },
+        {
+          "clinical_role": "TIME_COURSE",
+          "feature_id": "SF-P147-VIRAL-PRODROME",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "began with fever, cough and a runny nose"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "air entry is equal throughout, with no focal area of reduced or altered air entry"
+        },
+        {
+          "clinical_role": "HISTORY",
+          "feature_id": "SF-P147-ATOPY-OR-RECURRENCE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no eczema or other atopy and there is no family history of asthma"
+        },
+        {
+          "clinical_role": "TIME_COURSE",
+          "feature_id": "SF-P147-ABRUPT-ONSET-NO-PRODROME",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "There was no choking episode"
+        },
+        {
+          "clinical_role": "TIME_COURSE",
+          "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "his illness has followed the course his parents were told to expect"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "oxygen saturation is 94% in room air"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-P-147-CONTINUOUS-MONITORING",
+          "option_text": "Continuous pulse oximetry and cardiorespiratory monitoring",
+          "seed_id": "SEED-PED-T02-CONTINUOUS"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-P-147-CBC",
+          "option_text": "Complete blood count and blood culture",
+          "seed_id": "SEED-PED-T02-CBC"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-R-05-CXR",
+          "option_text": "Chest radiograph",
+          "seed_id": "SEED-PED-T02-CXR"
+        }
+      ],
+      "decisive_discriminator": "An improving, feeding, lower-risk infant who has weaned from oxygen is the patient for whom repeated clinical assessment with intermittent saturation checks is appropriate, and for whom continuous electronic monitoring risks prolonging the stay.",
+      "discipline": "PED",
+      "discipline_profile_id": "PEDIATRICS",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R4-PED-MONITORING",
+        "CLM-R4-PED-CONTINUOUS",
+        "CLM-R2-PED-INV-ANCHOR"
+      ],
+      "item_archetype": "INVESTIGATION_SELECTION",
+      "item_id": "G2-PED-02",
+      "key_grounding_feature_ids": [
+        "SF-P147-AGE-UNDER-12M",
+        "SF-P147-HIGH-RISK-EARLY-COURSE",
+        "SF-P147-FAILING-TO-IMPROVE",
+        "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+        "SF-P147-INFECTION-CONTROL-NEED",
+        "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+        "SF-P147-HYPOXEMIA"
+      ],
+      "lead_in": "Which assessment is most appropriate for this infant on the ward?",
+      "learner_decision_id": "LD-P147-02",
+      "opportunity_label": "G2-PED-02",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Continuous pulse oximetry and cardiorespiratory monitoring"
+        },
+        {
+          "key": "B",
+          "role": "KEY",
+          "text": "Regular structured clinical assessment with intermittent oxygen saturation measurement"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Complete blood count and blood culture"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Chest radiograph"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "Continuous monitoring is the right choice for a high-risk patient early in the course of disease, so it is a genuine alternative rather than an obviously wrong one. This infant is neither: she was born at term, has no chronic lung or cardiac disease, is not immunocompromised and is in the fourth day of her illness, improving and off oxygen. Continuous monitoring may prolong length of stay, particularly where staff react to transient dips in saturation, and electronic monitoring is not a substitute for clinical assessment.",
+          "C": "Sending blood is the reflex response to an admitted febrile infant and would be reasonable if clinical judgement raised a specific concern for serious bacterial infection. A complete blood count has not been found useful for predicting serious bacterial infection in this illness, and diagnostic studies are not indicated for most children with it because they are often unhelpful and can lead to unnecessary admissions.",
+          "D": "A radiograph is considered when the diagnosis is unclear, when the rate of improvement is not as expected, or when severity raises other diagnostic possibilities such as bacterial pneumonia. None of those conditions is present: the diagnosis has not been in doubt and her course has been as expected. Radiographs in this illness often show non-specific patchy change that invites treatment the infant does not need."
+        },
+        "key": "The most important component of monitoring an infant admitted with bronchiolitis is regular and repeated clinical assessment by staff experienced in the respiratory assessment of young children. Intermittent saturation measurement is what suits a lower-risk infant who is feeding well, weaning from supplemental oxygen and improving in work of breathing, which describes this infant on the fourth day of her illness."
+      },
+      "stem": "A 9-month-old girl was admitted three days ago with bronchiolitis. She was born at term, has no chronic lung or cardiac disease and is not immunocompromised. She is now in the fourth day of her illness. Her work of breathing has clearly improved, she has been weaned off supplemental oxygen this morning and is maintaining saturations above 90% in room air, and she is breastfeeding to her usual volume. The diagnosis has not been in doubt at any point and her course has been as expected. She is in a single room and no cohorting decision is outstanding.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "DEMOGRAPHIC",
+          "feature_id": "SF-P147-AGE-UNDER-12M",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "A 9-month-old girl"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-P147-HIGH-RISK-EARLY-COURSE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no chronic lung or cardiac disease and is not immunocompromised ... in the fourth day of her illness"
+        },
+        {
+          "clinical_role": "TIME_COURSE",
+          "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Her work of breathing has clearly improved ... her course has been as expected"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "The diagnosis has not been in doubt at any point"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "SF-P147-INFECTION-CONTROL-NEED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "She is in a single room and no cohorting decision is outstanding"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "her course has been as expected"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "SF-P147-HYPOXEMIA",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "maintaining saturations above 90% in room air"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-A-12-HFNC",
+          "option_text": "High-flow nasal cannula oxygen",
+          "seed_id": "SEED-PED-T03-HFNC"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-P-147-EPINEPHRINE",
+          "option_text": "Nebulized epinephrine",
+          "seed_id": "SEED-PED-T03-EPINEPHRINE"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-P-055-NG-FLUIDS",
+          "option_text": "Nasogastric maintenance fluids",
+          "seed_id": "SEED-PED-T03-FLUIDS"
+        }
+      ],
+      "decisive_discriminator": "The saturation has fallen below the level at which oxygen is given while the work of breathing is stable, so the deficit that needs correcting is oxygenation and the correction is the least support that achieves it.",
+      "discipline": "PED",
+      "discipline_profile_id": "PEDIATRICS",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R2-PED-OXYGEN",
+        "CLM-R4-PED-HFNC",
+        "CLM-R4-PED-EPINEPHRINE",
+        "CLM-R2-PED-SALBUTAMOL",
+        "CLM-R4-PED-HYPERTONIC"
+      ],
+      "item_archetype": "SUPPORTIVE_CARE_CEILING",
+      "item_id": "G2-PED-03",
+      "key_grounding_feature_ids": [
+        "SF-P147-AGE-UNDER-12M",
+        "SF-P147-HYPOXEMIA",
+        "SF-P147-MODERATE-SEVERE-DISTRESS",
+        "SF-P147-NASAL-OBSTRUCTION-LIMITING-FEEDS",
+        "SF-P147-UNSAFE-ORAL-INTAKE",
+        "SF-P147-ED-SETTING"
+      ],
+      "lead_in": "What is the most appropriate next step in her management?",
+      "learner_decision_id": "LD-P147-03",
+      "opportunity_label": "G2-PED-03",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "High-flow nasal cannula oxygen"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Nebulized epinephrine"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Nasogastric maintenance fluids"
+        },
+        {
+          "key": "D",
+          "role": "KEY",
+          "text": "Begin low-flow supplemental oxygen by nasal prongs"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "High-flow is also oxygen delivered through the nose and is also aimed at the saturation, which is what makes it competitive. There is increasing evidence that it is safe and may reduce the need for continuous positive airway pressure and mechanical ventilation in moderate and severe disease, but there is insufficient evidence to support its routine use. This infant's work of breathing has been stable for six hours and non-invasive support is not under consideration.",
+          "B": "Nebulised epinephrine is aimed at the same respiratory distress and some studies have shown it may reduce hospital admissions, so it is a real consideration. The evidence does not support its routine use in the emergency department, and a systematic review of nineteen studies showed no effect on length of stay in admitted patients. She is an admitted ward patient, and the problem to be corrected is the saturation rather than the airway calibre.",
+          "C": "Supplemental fluids are the answer where the respiratory rate makes oral feeding unsafe or the infant is dehydrated, and at a respiratory rate of fifty-eight she is close to that territory. She is taking about two thirds of her usual feeds without coughing or spluttering, so intake is not the problem; treating hydration would leave the hypoxaemia uncorrected."
+        },
+        "key": "Oxygen is given when saturations fall below ninety per cent and is used to maintain them at or above that level. Her saturation is eighty-eight per cent in room air on two separate measurements, so the deficit that must be corrected is oxygenation, and low-flow supplemental oxygen is the least support that corrects it in an infant whose work of breathing has been stable."
+      },
+      "stem": "A 5-month-old girl admitted to the paediatric ward in the third day of bronchiolitis has an oxygen saturation of 88% in room air on two separate measurements twenty minutes apart. She has moderate subcostal recession and a respiratory rate of 58 breaths/min. She is alert, settles with her mother and is taking about two thirds of her usual feeds without coughing or spluttering. Her nose is clear. Her work of breathing has been stable over the past six hours and no member of the team has raised the question of non-invasive support or intensive care.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "DEMOGRAPHIC",
+          "feature_id": "SF-P147-AGE-UNDER-12M",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "A 5-month-old girl"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "SF-P147-HYPOXEMIA",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "oxygen saturation of 88% in room air on two separate measurements"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "work of breathing has been stable over the past six hours and no member of the team has raised the question of non-invasive support or intensive care"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-P147-NASAL-OBSTRUCTION-LIMITING-FEEDS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Her nose is clear"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-P147-UNSAFE-ORAL-INTAKE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "taking about two thirds of her usual feeds without coughing or spluttering"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "SF-P147-ED-SETTING",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "admitted to the paediatric ward"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-A-12-HFNC",
+          "option_text": "High-flow nasal cannula oxygen",
+          "seed_id": "SEED-PED-T03-HFNC"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-P-147-EPINEPHRINE",
+          "option_text": "Nebulized epinephrine",
+          "seed_id": "SEED-PED-T03-EPINEPHRINE"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-P-147-HYPERTONIC",
+          "option_text": "Nebulized 3% hypertonic saline",
+          "seed_id": "SEED-PED-T03-HYPERTONIC"
+        }
+      ],
+      "decisive_discriminator": "A respiratory rate above sixty with coughing and spluttering at the breast makes oral feeding unsafe, and the deficit that must be corrected is hydration rather than the work of breathing.",
+      "discipline": "PED",
+      "discipline_profile_id": "PEDIATRICS",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R4-PED-FEEDING",
+        "CLM-R4-PED-FLUIDS"
+      ],
+      "item_archetype": "SUPPORTIVE_CARE_CEILING",
+      "item_id": "G2-PED-05",
+      "key_grounding_feature_ids": [
+        "SF-P147-AGE-UNDER-12M",
+        "SF-P147-UNSAFE-ORAL-INTAKE",
+        "SF-P147-HYPOXEMIA",
+        "SF-P147-MODERATE-SEVERE-DISTRESS",
+        "SF-P147-NASAL-OBSTRUCTION-LIMITING-FEEDS",
+        "SF-P147-ED-SETTING"
+      ],
+      "lead_in": "What is the most appropriate next step in her management?",
+      "learner_decision_id": "LD-P147-05",
+      "opportunity_label": "G2-PED-05",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "High-flow nasal cannula oxygen"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Nebulized epinephrine"
+        },
+        {
+          "key": "C",
+          "role": "KEY",
+          "text": "Start nasogastric maintenance fluids"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Nebulized 3% hypertonic saline"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "She is hypoxaemic enough to need oxygen, so an option that escalates that oxygen is a live one. High-flow is for moderate to severe disease where non-invasive support is needed to avert continuous positive airway pressure or intubation, and evidence does not support routine use. Her work of breathing has not changed over twelve hours and she is not being considered for non-invasive support; escalating oxygen would not address the intake deficit.",
+          "B": "A respiratory rate of sixty-eight invites a treatment aimed at the airway. The evidence is insufficient to support routine use of nebulised epinephrine in admitted patients, with no effect on length of stay, and it would not address the reason she cannot feed safely.",
+          "D": "Hypertonic saline was hypothesised to increase mucociliary clearance and rehydrate airway secretions, which makes it sound like a treatment for exactly this problem. It has no impact on length of stay in a typical North American population, and the difficulty here is oral intake rather than secretion clearance."
+        },
+        "key": "Frequent feeds and breastfeeding are encouraged and can be helped by supplemental oxygen, but an infant with a respiratory rate above sixty breaths per minute may be at increased risk of aspiration and may not be safe to feed orally. She is at sixty-eight, coughs and splutters at the breast, has taken about a third of her usual intake and has dry mucous membranes, so supplemental fluids are required. Nasogastric and intravenous routes were equally effective in a randomised trial with no difference in length of stay, and the nasogastric route is the less invasive of the two."
+      },
+      "stem": "A 4-month-old girl admitted with bronchiolitis is in the third day of her illness. She is receiving low-flow oxygen by nasal prongs and her saturation is 93%. Her respiratory rate is 68 breaths/min and she coughs and splutters at the breast, breaking off after a few sucks. Over the past twelve hours she has taken about a third of her usual intake, her mucous membranes are dry and she has had one wet nappy. Her nose is clear. Her work of breathing has not changed over those twelve hours and she is not being considered for non-invasive support or intensive care. She is on the paediatric ward.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "DEMOGRAPHIC",
+          "feature_id": "SF-P147-AGE-UNDER-12M",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "A 4-month-old girl"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-P147-UNSAFE-ORAL-INTAKE",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "coughs and splutters at the breast ... taken about a third of her usual intake, her mucous membranes are dry"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "SF-P147-HYPOXEMIA",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "receiving low-flow oxygen by nasal prongs and her saturation is 93%"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "work of breathing has not changed over those twelve hours and she is not being considered for non-invasive support or intensive care"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-P147-NASAL-OBSTRUCTION-LIMITING-FEEDS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Her nose is clear"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "SF-P147-ED-SETTING",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "She is on the paediatric ward"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PH-12-HEALTHY-SCREENEE",
+          "option_text": "Healthy screenee (selection) bias",
+          "seed_id": "SEED-PHELO-T01-HEALTHY-SCREENEE"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PH-07-LENGTH",
+          "option_text": "Length-time bias",
+          "seed_id": "SEED-PHELO-T01-LENGTH"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PH-07-OVERDIAGNOSIS",
+          "option_text": "Overdiagnosis",
+          "seed_id": "SEED-PHELO-T01-OVERDIAGNOSIS"
+        }
+      ],
+      "decisive_discriminator": "Survival measured from diagnosis is longer while incidence, mortality and the distribution of tumour biology are all identical, so the difference is in when the clock starts rather than in who was counted or in what was found.",
+      "discipline": "PHELO",
+      "discipline_profile_id": "PHELO",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R2-PHELO-LEAD-TIME",
+        "CLM-R2-PHELO-LENGTH",
+        "CLM-R2-PHELO-OVERDIAGNOSIS",
+        "CLM-R2-PHELO-HEALTHY-VOLUNTEER"
+      ],
+      "item_archetype": "EPIDEMIOLOGY_INTERPRETATION",
+      "item_id": "G2-PHELO-01",
+      "key_grounding_feature_ids": [
+        "SF-PH07-SURVIVAL-LONGER-IN-SCREENED",
+        "SF-PH07-MORTALITY-UNCHANGED",
+        "SF-PH07-RANDOMISED-EQUAL-GROUPS",
+        "SF-PH07-INCIDENCE-EQUAL-BETWEEN-GROUPS",
+        "SF-PH07-MORE-CASES-DIAGNOSED-IN-SCREENED",
+        "SF-PH07-SELF-SELECTED-GROUPS",
+        "SF-PH07-INDOLENT-VARIANT-OVERREPRESENTED"
+      ],
+      "lead_in": "Which explanation best accounts for this pattern of results?",
+      "learner_decision_id": "LD-PH07-01",
+      "opportunity_label": "G2-PHELO-01",
+      "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Healthy screenee (selection) bias"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Length-time bias"
+        },
+        {
+          "key": "C",
+          "role": "KEY",
+          "text": "Lead-time bias"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Overdiagnosis"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "Comparisons between people who chose screening and people who did not tend to favour the screened group because it contains a greater proportion of healthier people, and this is the standard explanation whenever a screened group appears to do better. Participants here were randomly allocated to be invited or not invited and the two groups were comparable at baseline, so neither group selected itself.",
+          "B": "Slowly progressing variants stay in the pre-symptomatic screen-detectable stage longer than rapidly progressing ones, so intermittent screening detects a disproportionate number of them, and that would lengthen measured survival without any treatment effect. The pathology review found the same distribution of tumour grades and growth rates in both groups, so no such over-representation occurred.",
+          "D": "Screening can diagnose early cancers that would never otherwise have become apparent; in breast screening up to thirty per cent more cancers are diagnosed in the screened than in the unscreened group. That mechanism requires more cases in the screened group, and here the cumulative number diagnosed is the same in both."
+        },
+        "key": "Lead-time bias arises from the delay between the point at which disease becomes detectable by screening and the point at which it would have been diagnosed from symptoms, so evaluating a programme by survival measured from diagnosis gives a falsely positive impression of success. Here survival from diagnosis is four years longer in the invited group while cumulative incidence, deaths from the cancer and the distribution of tumour grades and growth rates are all identical, and allocation was random. Only the moment the clock starts has moved."
+      },
+      "stem": "A province evaluates a cancer screening programme. Participants were randomly allocated to be invited or not invited, and the two groups were comparable at baseline. After twelve years the cumulative number of people diagnosed with the cancer is the same in both groups, and the number of deaths from the cancer is also the same in both groups. Among those diagnosed, however, mean survival measured from the date of diagnosis is four years longer in the invited group than in the group that was not invited. The pathology review found the same distribution of tumour grades and growth rates in the two groups. The programme cites the survival figure as evidence of its success.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-SURVIVAL-LONGER-IN-SCREENED",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "mean survival measured from the date of diagnosis is four years longer in the invited group"
+        },
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-MORTALITY-UNCHANGED",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "the number of deaths from the cancer is also the same in both groups"
+        },
+        {
+          "clinical_role": "STUDY_DESIGN",
+          "feature_id": "SF-PH07-RANDOMISED-EQUAL-GROUPS",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "randomly allocated to be invited or not invited, and the two groups were comparable at baseline"
+        },
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-INCIDENCE-EQUAL-BETWEEN-GROUPS",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "the cumulative number of people diagnosed with the cancer is the same in both groups"
+        },
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-MORE-CASES-DIAGNOSED-IN-SCREENED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "the cumulative number of people diagnosed with the cancer is the same in both groups"
+        },
+        {
+          "clinical_role": "STUDY_DESIGN",
+          "feature_id": "SF-PH07-SELF-SELECTED-GROUPS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Participants were randomly allocated"
+        },
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-INDOLENT-VARIANT-OVERREPRESENTED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "the same distribution of tumour grades and growth rates in the two groups"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-G2-VOLUNTARY-STATEMENT",
+          "option_text": "Add a statement that participation is voluntary and that declining will not affect any other care",
+          "seed_id": "SEED-G2-PHELO-T02-VOLUNTARY"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PH-07-DETECTION-COUNT",
+          "option_text": "Add the number of cancers the programme detected last year",
+          "seed_id": "SEED-PHELO-T02-DETECTION-COUNT"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PH-07-TEST-PERFORMANCE",
+          "option_text": "Add the sensitivity and specificity of the screening test",
+          "seed_id": "SEED-PHELO-T02-SENSITIVITY"
+        }
+      ],
+      "decisive_discriminator": "A relative figure without a denominator or a statement of harms cannot support an informed choice, so the revision that protects autonomy is the one that replaces it with the absolute chance of benefit alongside the commonest harm.",
+      "discipline": "PHELO",
+      "discipline_profile_id": "PHELO",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R4-PHELO-ABSOLUTE",
+        "CLM-R4-PHELO-FALSEPOS",
+        "CLM-R2-PHELO-ACCEPTABILITY",
+        "CLM-R4-PHELO-CONSENT-CRITERION",
+        "CLM-R2-PHELO-REMINDERS"
+      ],
+      "item_archetype": "ETHICAL_ACTION",
+      "item_id": "G2-PHELO-02",
+      "key_grounding_feature_ids": [
+        "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
+        "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
+        "SF-PH07-UPTAKE-IS-THE-STATED-OBJECTIVE",
+        "SF-PH07-DENOMINATOR-AND-HARMS-PRESENT",
+        "SF-PH07-AUDIENCE-CAN-INTERPRET-TEST-METRICS"
+      ],
+      "lead_in": "Which revision to the letter would best protect the autonomy of the people invited?",
+      "learner_decision_id": "LD-PH07-02",
+      "opportunity_label": "G2-PHELO-02",
+      "option_set_archetype": "ETHICAL_ACTION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Add a statement that participation is voluntary and that declining will not affect any other care"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Add the number of cancers the programme detected last year"
+        },
+        {
+          "key": "C",
+          "role": "KEY",
+          "text": "Replace the relative benefit figure with the absolute chance of benefit and the chance of a false positive result"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Add the sensitivity and specificity of the screening test"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "Voluntariness is a real component of informed choice and the programme's own criterion requires informed consent and protection of autonomy, so this edit serves the stated objective. The letter's actual defect is that its only statement of benefit is a relative figure with no denominator and no harms; telling a reader the choice is free does not make the information on which they choose interpretable.",
+          "B": "Adding a real figure reads as transparency and looks like exactly the sort of disclosure autonomy requires. A count of cancers detected can be interpreted only alongside the denominator and the harms, and the letter supplies neither; on its own it makes the programme look effective rather than helping anyone decide.",
+          "D": "Test performance is factual, disclosive and would be appropriate as programme documentation for an audience able to interpret it. The programme's own testing found the numeracy of this audience to be limited, so these figures are not reliably interpreted by the readers and would not support an informed choice."
+        },
+        "key": "Autonomy is protected by information a reader can act on. Relative statements such as a thirty per cent reduction in the risk of death sound impressive but may not help an individual, who is better served by an absolute figure. Replacing the relative figure with the absolute chance of benefit and adding the chance of a false positive result gives both sides of the decision, and roughly ten per cent of women screened for the first time undergo further testing only to find the result was falsely positive."
+      },
+      "stem": "A provincial screening programme is revising the letter that invites eligible residents to attend. The programme has stated that the objective of this revision is to protect the autonomy of the people invited, and that raising uptake is explicitly not the objective of this revision. The present letter states only that screening reduces the risk of dying from the disease by thirty per cent. It gives no absolute figures, no denominator, and no description of the harms of screening. The audience is the general adult population of the province, whose numeracy the programme's own testing found to be limited, so figures expressing test performance are not reliably interpreted by the readers.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "states only that screening reduces the risk of dying from the disease by thirty per cent"
+        },
+        {
+          "clinical_role": "PROGRAMME_OBJECTIVE",
+          "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "the objective of this revision is to protect the autonomy of the people invited"
+        },
+        {
+          "clinical_role": "PROGRAMME_OBJECTIVE",
+          "feature_id": "SF-PH07-UPTAKE-IS-THE-STATED-OBJECTIVE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "raising uptake is explicitly not the objective of this revision"
+        },
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "feature_id": "SF-PH07-DENOMINATOR-AND-HARMS-PRESENT",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "It gives no absolute figures, no denominator, and no description of the harms of screening"
+        },
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "feature_id": "SF-PH07-AUDIENCE-CAN-INTERPRET-TEST-METRICS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "figures expressing test performance are not reliably interpreted by the readers"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PH-07-EVALUATE",
+          "option_text": "Launch as planned with continuing evaluation against programme goals",
+          "seed_id": "SEED-PHELO-T03-EVALUATE"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PH-07-PILOT",
+          "option_text": "Launch in a single district as a pilot and expand later",
+          "seed_id": "SEED-PHELO-T03-PILOT"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PH-25-ECONOMIC",
+          "option_text": "Commission an economic evaluation before deciding",
+          "seed_id": "SEED-PHELO-T03-ECONOMIC"
+        }
+      ],
+      "decisive_discriminator": "The shortfall is an absolute absence of the confirmatory and treatment pathway, not cost, not logistics and not the cut-off, and screening people who cannot then be investigated or treated is itself the harm the criterion exists to prevent.",
+      "discipline": "PHELO",
+      "discipline_profile_id": "PHELO",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R2-PHELO-FACILITIES",
+        "CLM-R4-PHELO-HARM-LABEL",
+        "CLM-R2-PHELO-ACCEPTED-TREATMENT",
+        "CLM-R4-PHELO-EVALUATION",
+        "CLM-R4-PHELO-ECONOMIC",
+        "CLM-R2-PHELO-CUTOFF"
+      ],
+      "item_archetype": "SCREENING_DECISION",
+      "item_id": "G2-PHELO-03",
+      "key_grounding_feature_ids": [
+        "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+        "SF-PH07-GOALS-AND-EVALUATION-DEFINED",
+        "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS",
+        "SF-PH07-THRESHOLD-TOO-FAR-TOWARD-LOW-RISK",
+        "SF-PH07-VALUE-FOR-MONEY-IS-THE-OPEN-QUESTION"
+      ],
+      "lead_in": "What should the programme do about the planned launch?",
+      "learner_decision_id": "LD-PH07-03",
+      "opportunity_label": "G2-PHELO-03",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Launch as planned with continuing evaluation against programme goals"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Launch in a single district as a pilot and expand later"
+        },
+        {
+          "key": "C",
+          "role": "KEY",
+          "text": "Defer the launch until diagnostic and treatment capacity is in place"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Commission an economic evaluation before deciding"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "Clear goals and continuing evaluation are a standing requirement of any programme that launches, and this programme has both, so the option is grounded in a criterion the programme genuinely meets. Evaluation is a condition of launching rather than a substitute for the confirmatory and treatment capacity that is absent.",
+          "B": "Piloting takes a capacity constraint seriously and is the right answer where the constraint is cost or logistics rather than an absolute shortfall in the confirmatory pathway. The authority has costed the capacity and has the money; what is missing is the staff and the clinic itself, so a smaller launch still screens people who cannot be investigated or treated.",
+          "D": "Holding the launch pending further work is grounded in a named programme criterion, and an economic evaluation is required to assess a programme's full costs. It has already been done and shows the programme to be good value for money, so it is not the open question."
+        },
+        "key": "Where waiting lists are long, or where facilities for follow-up and treatment are not conveniently accessible, the programme should be reconsidered, and there should be an accepted treatment for patients with recognised disease. Screening people who then cannot be investigated or treated is itself a harm: harm occurs when asymptomatic people are labelled as possibly having a disease and further investigation cannot be carried out, and again when they are diagnosed and no treatment is offered. One clinic with a fourteen-month wait and no funded treatment pathway is that situation, so the launch waits until the capacity exists."
+      },
+      "stem": "A regional health authority plans to launch a population screening programme next month. The test is accurate and its cut-off has been validated in this population, and modelling shows it sits appropriately between the low-risk and high-risk ends of the scale. The programme has written goals and an evaluation plan, and a completed economic evaluation shows it to be good value for money. However, the region has one diagnostic clinic for confirmatory testing, its current waiting time is fourteen months, and there is no funded pathway to treatment for those confirmed. The authority has costed the additional capacity and has the money, but the staff have not yet been recruited and the clinic space is not yet built.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "PROGRAMME_CAPACITY",
+          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "one diagnostic clinic for confirmatory testing, its current waiting time is fourteen months, and there is no funded pathway to treatment"
+        },
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "feature_id": "SF-PH07-GOALS-AND-EVALUATION-DEFINED",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "The programme has written goals and an evaluation plan"
+        },
+        {
+          "clinical_role": "PROGRAMME_CAPACITY",
+          "feature_id": "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "The authority has costed the additional capacity and has the money"
+        },
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "feature_id": "SF-PH07-THRESHOLD-TOO-FAR-TOWARD-LOW-RISK",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "modelling shows it sits appropriately between the low-risk and high-risk ends of the scale"
+        },
+        {
+          "clinical_role": "PROGRAMME_OBJECTIVE",
+          "feature_id": "SF-PH07-VALUE-FOR-MONEY-IS-THE-OPEN-QUESTION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "a completed economic evaluation shows it to be good value for money"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-G2-LEAD-TIME",
+          "option_text": "Lead-time bias",
+          "seed_id": "SEED-G2-PHELO-T01-LEAD-TIME"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PH-07-LENGTH",
+          "option_text": "Length-time bias",
+          "seed_id": "SEED-PHELO-T01-LENGTH"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PH-07-OVERDIAGNOSIS",
+          "option_text": "Overdiagnosis",
+          "seed_id": "SEED-PHELO-T01-OVERDIAGNOSIS"
+        }
+      ],
+      "decisive_discriminator": "Lower mortality from causes screening cannot touch shows that the groups differed before screening began, and the measurement artefacts are each positively excluded by an unchanged incidence, an unchanged tumour distribution and an unchanged survival from diagnosis.",
+      "discipline": "PHELO",
+      "discipline_profile_id": "PHELO",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R2-PHELO-HEALTHY-VOLUNTEER",
+        "CLM-R2-PHELO-LEAD-TIME",
+        "CLM-R2-PHELO-LENGTH",
+        "CLM-R2-PHELO-OVERDIAGNOSIS"
+      ],
+      "item_archetype": "EPIDEMIOLOGY_INTERPRETATION",
+      "item_id": "G2-PHELO-05",
+      "key_grounding_feature_ids": [
+        "SF-PH07-SELF-SELECTED-GROUPS",
+        "SF-PH07-INCIDENCE-EQUAL-BETWEEN-GROUPS",
+        "SF-PH07-RANDOMISED-EQUAL-GROUPS",
+        "SF-PH07-SURVIVAL-LONGER-IN-SCREENED",
+        "SF-PH07-MORE-CASES-DIAGNOSED-IN-SCREENED",
+        "SF-PH07-INDOLENT-VARIANT-OVERREPRESENTED",
+        "SF-PH07-MORTALITY-UNCHANGED"
+      ],
+      "lead_in": "Which explanation best accounts for this pattern of results?",
+      "learner_decision_id": "LD-PH07-05",
+      "opportunity_label": "G2-PHELO-05",
+      "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Lead-time bias"
+        },
+        {
+          "key": "B",
+          "role": "KEY",
+          "text": "Healthy screenee (selection) bias"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Length-time bias"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Overdiagnosis"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "Lead-time is the explanation most often reached for whenever a screened group appears to do better, and it belongs to the same family of screening artefacts. It acts on survival measured from the date of diagnosis, which screening advances without changing the date of death. Survival measured from diagnosis does not differ between these groups; what differs is mortality, including mortality from causes screening cannot touch.",
+          "C": "Screening preferentially detects slowly progressing variants because they stay screen-detectable for longer, which would make the screened group look better without any treatment effect. The distribution of tumour grades and growth rates is the same in both groups, so no such over-representation occurred.",
+          "D": "Screening detects early cancers that would never have become apparent, which inflates the screened group with cases that were never going to cause harm. That requires more cases in the screened group, and the cumulative number diagnosed is the same in both."
+        },
+        "key": "Observational studies that compare people who chose to be screened with people who did not generally contain a greater proportion of healthier people in the screened group and therefore tend to show better outcomes for those who opted in. Attendance here was entirely voluntary with no allocation, the attenders smoked less and exercised more at baseline, and their mortality is lower even from causes screening cannot affect, which is the signature of a difference that existed before screening began."
+      },
+      "stem": "A published evaluation compares people who chose to attend a screening programme with people in the same region who were eligible but did not attend. Attendance was entirely voluntary and no one was allocated to a group. After ten years the attenders have lower mortality from the screened disease and also lower mortality from causes the programme cannot affect, including road traffic collisions. The attenders were less likely to smoke and more likely to exercise at baseline. The cumulative number of people diagnosed with the disease is the same in both groups, the distribution of tumour grades and growth rates is the same, and survival measured from diagnosis does not differ between the groups.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "STUDY_DESIGN",
+          "feature_id": "SF-PH07-SELF-SELECTED-GROUPS",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "Attendance was entirely voluntary and no one was allocated to a group"
+        },
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-INCIDENCE-EQUAL-BETWEEN-GROUPS",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "The cumulative number of people diagnosed with the disease is the same in both groups"
+        },
+        {
+          "clinical_role": "STUDY_DESIGN",
+          "feature_id": "SF-PH07-RANDOMISED-EQUAL-GROUPS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no one was allocated to a group ... less likely to smoke and more likely to exercise at baseline"
+        },
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-SURVIVAL-LONGER-IN-SCREENED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "survival measured from diagnosis does not differ between the groups"
+        },
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-MORE-CASES-DIAGNOSED-IN-SCREENED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "The cumulative number of people diagnosed with the disease is the same in both groups"
+        },
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-INDOLENT-VARIANT-OVERREPRESENTED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "the distribution of tumour grades and growth rates is the same"
+        },
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-MORTALITY-UNCHANGED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "the attenders have lower mortality from the screened disease"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PS-14-BD2",
+          "option_text": "Bipolar II disorder",
+          "seed_id": "SEED-PSY-T01-BD2"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-E-30-HYPOTHYROID",
+          "option_text": "Depressive syndrome due to hypothyroidism",
+          "seed_id": "SEED-PSY-T01-MEDICAL"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PS-12-PDD",
+          "option_text": "Persistent depressive disorder",
+          "seed_id": "SEED-PSY-T01-PDD"
+        }
+      ],
+      "decisive_discriminator": "Discrete episodes with full interepisode recovery, an observer who has never seen a hypomanic period, and normal thyroid and haematological results together exclude the chronic, bipolar and medical alternatives that the same cross-sectional picture would otherwise admit.",
+      "discipline": "PSY",
+      "discipline_profile_id": "PSYCHIATRY",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R2-PSY-DX-ANCHOR",
+        "CLM-R2-PSY-PDD",
+        "CLM-R2-PSY-BD-II",
+        "CLM-R2-PSY-BD-MISDX",
+        "CLM-R2-PSY-DDX-MEDICAL"
+      ],
+      "item_archetype": "LONGITUDINAL_DIFFERENTIAL",
+      "item_id": "G2-PSY-01",
+      "key_grounding_feature_ids": [
+        "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+        "SF-PS12-INTEREPISODE-RECOVERY",
+        "SF-PS12-COLLATERAL-AVAILABLE",
+        "SF-PS12-CHRONIC-2YR-COURSE",
+        "SF-PS12-PAST-HYPOMANIC-PERIOD",
+        "SF-PS12-ABNORMAL-TSH",
+        "SF-PS12-ABNORMAL-CBC"
+      ],
+      "lead_in": "Which diagnosis best accounts for this longitudinal presentation?",
+      "learner_decision_id": "LD-PS12-01",
+      "opportunity_label": "G2-PSY-01",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Bipolar II disorder"
+        },
+        {
+          "key": "B",
+          "role": "KEY",
+          "text": "Major depressive disorder"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Depressive syndrome due to hypothyroidism"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Persistent depressive disorder"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "Major depressive disorder is the most frequent misdiagnosis in bipolar illness, because patients present for depressive symptoms and may not recall or may not recognise periods of hypomania, so this is the alternative any recurrent depressive presentation must exclude. Bipolar II requires a hypomanic episode that is distinct and observable. His wife, interviewed separately, has never observed elevated or expansive mood, reduced need for sleep or uncharacteristically increased activity.",
+          "C": "The differential should include non-psychiatric medical conditions that present with depressive symptoms, and low mood with fatigue, weight change and slowing is exactly the overlap. Thyroid stimulating hormone taken this week is within normal limits.",
+          "D": "Between twenty and thirty per cent of major depressive episodes run a chronic course lasting more than two years, so a chronic picture is a common alternative. Persistent depressive disorder is characterised by two or more depressive symptoms present for more than two years. His symptoms have not been continuously present between episodes and there has never been a two-year stretch of low-grade symptoms."
+        },
+        "key": "Two discrete episodes with full recovery of function between them, no observed period of elevated mood from a collateral informant, and normal thyroid and haematological results together give a recurrent major depressive disorder. A comprehensive diagnostic assessment that covers the longitudinal course and the medical differential is what separates it from the alternatives."
+      },
+      "stem": "A 34-year-old teacher is seen with six weeks of low mood, loss of interest, early morning waking, poor concentration and a five-kilogram weight loss. He had a similar episode four years ago that resolved over several months, and between the two episodes he worked full time, socialised normally and described himself as well; his symptoms have not been continuously present between episodes and there has never been a two-year stretch of low-grade symptoms. His wife, seen separately, has never observed a period of elevated or expansive mood, reduced need for sleep or uncharacteristically increased activity. Thyroid stimulating hormone, complete blood count, electrolytes and renal function taken this week are all within normal limits. He drinks little alcohol and takes no medication.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "six weeks of low mood, loss of interest, early morning waking, poor concentration and a five-kilogram weight loss"
+        },
+        {
+          "clinical_role": "LONGITUDINAL_COURSE",
+          "feature_id": "SF-PS12-INTEREPISODE-RECOVERY",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "between the two episodes he worked full time, socialised normally and described himself as well"
+        },
+        {
+          "clinical_role": "COLLATERAL_SOURCE",
+          "feature_id": "SF-PS12-COLLATERAL-AVAILABLE",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "His wife, seen separately"
+        },
+        {
+          "clinical_role": "LONGITUDINAL_COURSE",
+          "feature_id": "SF-PS12-CHRONIC-2YR-COURSE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "there has never been a two-year stretch of low-grade symptoms"
+        },
+        {
+          "clinical_role": "LONGITUDINAL_COURSE",
+          "feature_id": "SF-PS12-PAST-HYPOMANIC-PERIOD",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "has never observed a period of elevated or expansive mood, reduced need for sleep or uncharacteristically increased activity"
+        },
+        {
+          "clinical_role": "INVESTIGATION_RESULT",
+          "feature_id": "SF-PS12-ABNORMAL-TSH",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Thyroid stimulating hormone ... within normal limits"
+        },
+        {
+          "clinical_role": "INVESTIGATION_RESULT",
+          "feature_id": "SF-PS12-ABNORMAL-CBC",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "complete blood count ... within normal limits"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PS-67-EXERCISE",
+          "option_text": "A supervised exercise programme as sole initial treatment",
+          "seed_id": "SEED-PSY-T03-EXERCISE"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PS-03-CBT",
+          "option_text": "Structured psychotherapy such as cognitive behavioural therapy",
+          "seed_id": "SEED-PSY-T03-PSYCHOTHERAPY"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PS-03-DIGITAL",
+          "option_text": "Digitally delivered cognitive behavioural therapy",
+          "seed_id": "SEED-PSY-T03-DIGITAL"
+        }
+      ],
+      "decisive_discriminator": "At moderate severity the two modalities are equally supported, so the choice turns on patient preference, and access is positively reported as unconstrained so it cannot be doing the work.",
+      "discipline": "PSY",
+      "discipline_profile_id": "PSYCHIATRY",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R2-PSY-MODERATE-CHOICE",
+        "CLM-R4-PSY-PSYCHOTHERAPY",
+        "CLM-R4-PSY-COMBINED",
+        "CLM-R2-PSY-FIRST-LINE",
+        "CLM-R4-PSY-DIGITAL"
+      ],
+      "item_archetype": "PHARMACOTHERAPY",
+      "item_id": "G2-PSY-03",
+      "key_grounding_feature_ids": [
+        "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+        "SF-PS12-MODERATE-SEVERITY",
+        "SF-PS12-MILD-SEVERITY",
+        "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+        "SF-PS12-PSYCHOTIC-FEATURES",
+        "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY",
+        "SF-PS12-PSYCHOTHERAPY-INACCESSIBLE-IN-PERSON",
+        "SF-PS12-HIGH-IMMINENT-SUICIDE-RISK"
+      ],
+      "lead_in": "Which initial treatment should be offered?",
+      "learner_decision_id": "LD-PS12-03",
+      "opportunity_label": "G2-PSY-03",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "KEY",
+          "text": "A first-line antidepressant"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "A supervised exercise programme as sole initial treatment"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Structured psychotherapy such as cognitive behavioural therapy"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Digitally delivered cognitive behavioural therapy"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "B": "Exercise appears in the same guideline as a treatment with real evidence, and it is an acceptable-sounding offer to a patient who does not want therapy sessions, which is precisely this patient. It is not one of the two modalities the guideline names as the initial choice at moderate severity.",
+          "C": "Psychotherapy is the other of the two equally supported first-line options, and cognitive behavioural therapy, interpersonal therapy and behavioural activation are all first-line recommended psychological treatments, so on evidence alone it is as defensible as the key. The choice between the two depends on patient preference, and she has considered a talking therapy and declined it.",
+          "D": "Cognitive behavioural therapy is efficacious across formats including digital delivery, so this is a genuine way to deliver the psychological option and would answer an access problem. There is no access problem: structured psychotherapy is readily available to her in person and digitally, and she has declined the modality rather than a format of it."
+        },
+        "key": "At moderate severity the initial choice lies between structured psychotherapy and antidepressant medication, the two modalities with the most robust and consistent evidence for safety and efficacy, and they are equally effective in the short term. Where the two are equally supported the choice depends on context, availability and patient preference. Access is positively reported as unconstrained, so preference decides, and she has declined a talking therapy and asked for something she can start now."
+      },
+      "stem": "A 38-year-old accountant has a first major depressive episode of moderate severity that has lasted two months and is affecting her work. She has no suicidal ideation and no psychotic features, and her safety risk has been assessed as low. Thyroid function and a complete blood count are normal. She says she has thought about talking therapy and does not want it: she does not wish to attend regular sessions and asks for something she can start now. Structured psychotherapy is in fact readily available in her city, in person and digitally, and she has been told so. She has no contraindication to antidepressant medication and no previous psychiatric treatment.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "a first major depressive episode of moderate severity that has lasted two months"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-MODERATE-SEVERITY",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "of moderate severity"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-MILD-SEVERITY",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "affecting her work"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "her safety risk has been assessed as low"
+        },
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-PS12-PSYCHOTIC-FEATURES",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no psychotic features"
+        },
+        {
+          "clinical_role": "PATIENT_PREFERENCE",
+          "feature_id": "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "she has thought about talking therapy and does not want it"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "SF-PS12-PSYCHOTHERAPY-INACCESSIBLE-IN-PERSON",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Structured psychotherapy is in fact readily available in her city, in person and digitally"
+        },
+        {
+          "clinical_role": "EXPLICIT_RISK_INVENTORY",
+          "feature_id": "SF-PS12-HIGH-IMMINENT-SUICIDE-RISK",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "She has no suicidal ideation"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PS-03-CBT",
+          "option_text": "Structured psychotherapy such as cognitive behavioural therapy",
+          "seed_id": "SEED-PSY-T03-PSYCHOTHERAPY"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PS-67-EXERCISE",
+          "option_text": "A supervised exercise programme as sole initial treatment",
+          "seed_id": "SEED-PSY-T03-EXERCISE"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PS-12-COMBINED",
+          "option_text": "Combined antidepressant and psychotherapy from the outset",
+          "seed_id": "SEED-PSY-T03-COMBINED"
+        }
+      ],
+      "decisive_discriminator": "The patient's preference selects the psychological modality and the access constraint selects its delivery format, because the evidence supports the therapy across individual, group and digital delivery.",
+      "discipline": "PSY",
+      "discipline_profile_id": "PSYCHIATRY",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R4-PSY-DIGITAL",
+        "CLM-R4-PSY-PSYCHOTHERAPY",
+        "CLM-R2-PSY-MODERATE-CHOICE"
+      ],
+      "item_archetype": "PHARMACOTHERAPY",
+      "item_id": "G2-PSY-04",
+      "key_grounding_feature_ids": [
+        "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+        "SF-PS12-MODERATE-SEVERITY",
+        "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY",
+        "SF-PS12-PSYCHOTHERAPY-INACCESSIBLE-IN-PERSON",
+        "SF-PS12-MILD-SEVERITY",
+        "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+        "SF-PS12-PSYCHOTIC-FEATURES"
+      ],
+      "lead_in": "Which initial treatment should be offered?",
+      "learner_decision_id": "LD-PS12-05",
+      "opportunity_label": "G2-PSY-04",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Structured psychotherapy such as cognitive behavioural therapy"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "A supervised exercise programme as sole initial treatment"
+        },
+        {
+          "key": "C",
+          "role": "KEY",
+          "text": "Digitally delivered cognitive behavioural therapy"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Combined antidepressant and psychotherapy from the outset"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "This is the modality he asked for and the first-line recommended psychological treatment, so it is the option most candidates will reach for. Delivered in person it is not available to him: the nearest service is a four-hour drive away with a waiting list of many months and no local therapist is taking referrals, so choosing it in that form leaves him untreated.",
+          "B": "Exercise is named in the same guideline and needs no therapist, which makes it an attractive answer to a rural access problem. It is not one of the two modalities the guideline names as the initial choice at moderate severity, and the access constraint here is answered by changing the format of the psychological treatment rather than by abandoning it.",
+          "D": "Combining psychological treatment with pharmacotherapy is more effective than either alone for acute treatment and reduces the risk of recurrence, so on efficacy grounds it is the strongest-sounding option. The combination is what the guideline recommends in severe episodes with high safety risk and without psychotic features. His episode is moderate with low safety risk, and the combination contains the medication he has declined."
+        },
+        "key": "He has declined medication and asked for a talking therapy, and at moderate severity the choice between medication and structured psychotherapy depends on context, availability and patient preference. Preference selects the psychological modality; the access constraint then selects its format, and cognitive behavioural therapy is efficacious across formats including telephone and digital delivery."
+      },
+      "stem": "A 26-year-old man in a rural community has a major depressive episode of moderate severity. He has no suicidal ideation and no psychotic features and his safety risk is low. He tells the physician that he has read about antidepressants and does not want to take medication, and that he would like a talking therapy. The nearest in-person structured psychotherapy service is a four-hour drive away and has a waiting list of many months, and no local therapist is taking referrals. He has reliable broadband at home and is comfortable using it. Thyroid function and a complete blood count are normal.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "a major depressive episode of moderate severity"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-MODERATE-SEVERITY",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "of moderate severity"
+        },
+        {
+          "clinical_role": "PATIENT_PREFERENCE",
+          "feature_id": "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "does not want to take medication, and that he would like a talking therapy"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "SF-PS12-PSYCHOTHERAPY-INACCESSIBLE-IN-PERSON",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "The nearest in-person structured psychotherapy service is a four-hour drive away and has a waiting list of many months"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-MILD-SEVERITY",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "of moderate severity"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "his safety risk is low"
+        },
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-PS12-PSYCHOTIC-FEATURES",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no psychotic features"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-G2-ANTIDEPRESSANT-ALONE",
+          "option_text": "A first-line antidepressant alone",
+          "seed_id": "SEED-G2-PSY-T03-AD-ALONE"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-G2-ECT",
+          "option_text": "Electroconvulsive therapy as the first-choice treatment",
+          "seed_id": "SEED-G2-PSY-T03-ECT"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-PS-12-COMBINED",
+          "option_text": "Combined antidepressant and psychotherapy from the outset",
+          "seed_id": "SEED-PSY-T03-COMBINED"
+        }
+      ],
+      "decisive_discriminator": "Psychotic features move the recommendation from the severe-without-psychosis pairing to an antidepressant with an atypical antipsychotic, and nothing in the presentation is life-threatening enough to move it further.",
+      "discipline": "PSY",
+      "discipline_profile_id": "PSYCHIATRY",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R2-PSY-ANTIPSYCHOTIC",
+        "CLM-R2-PSY-ECT",
+        "CLM-R4-PSY-COMBINED",
+        "CLM-R2-PSY-MODERATE-CHOICE"
+      ],
+      "item_archetype": "PHARMACOTHERAPY",
+      "item_id": "G2-PSY-05",
+      "key_grounding_feature_ids": [
+        "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+        "SF-PS12-PSYCHOTIC-FEATURES",
+        "SF-PS12-SAFETY-SECURED",
+        "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+        "SF-PS12-MILD-SEVERITY",
+        "SF-PS12-MODERATE-SEVERITY",
+        "SF-PS12-HIGH-IMMINENT-SUICIDE-RISK",
+        "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY"
+      ],
+      "lead_in": "Which initial treatment should be offered?",
+      "learner_decision_id": "LD-PS12-06",
+      "opportunity_label": "G2-PSY-05",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "A first-line antidepressant alone"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Electroconvulsive therapy as the first-choice treatment"
+        },
+        {
+          "key": "C",
+          "role": "KEY",
+          "text": "An antidepressant combined with an atypical antipsychotic"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Combined antidepressant and psychotherapy from the outset"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "An antidepressant is the default initial treatment for a depressive episode and contains half of what is recommended here, which makes it the commonest incomplete answer. Once psychotic symptoms are present the recommendation is the combination with an atypical antipsychotic rather than an antidepressant by itself.",
+          "B": "Electroconvulsive therapy is the first-choice option in the most severe episodes and in life-threatening situations, and the guideline's examples of that are severe suicide risk and physical deterioration. Neither is present: he is eating and drinking, is not physically deteriorating, and has no suicidal intent.",
+          "D": "This combination is more effective than either component alone and is what the guideline recommends in severe cases with high safety risk, so it is a genuinely strong answer at this severity. That recommendation is explicitly for severe episodes without psychotic features, and this episode has them."
+        },
+        "key": "For severe major depressive episodes with psychotic symptoms the recommended treatment is the combination of an antidepressant and an atypical antipsychotic. The psychotic features are what move the recommendation away from the pairing used for severe episodes without them."
+      },
+      "stem": "A 59-year-old man is admitted with a severe major depressive episode. He is convinced, against all evidence, that his internal organs have rotted away and that he is being punished, and he cannot be reasoned out of this belief. He is eating and drinking, is not physically deteriorating and has no suicidal intent, and admission has already secured his safety. He has had no previous psychiatric treatment and has no contraindication to any of the agents under consideration. Physical examination, thyroid function and a complete blood count are normal.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "a severe major depressive episode"
+        },
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-PS12-PSYCHOTIC-FEATURES",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "convinced, against all evidence, that his internal organs have rotted away"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-SAFETY-SECURED",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "admission has already secured his safety"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "he is being punished, and he cannot be reasoned out of this belief"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-MILD-SEVERITY",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "a severe major depressive episode"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-MODERATE-SEVERITY",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "a severe major depressive episode"
+        },
+        {
+          "clinical_role": "EXPLICIT_RISK_INVENTORY",
+          "feature_id": "SF-PS12-HIGH-IMMINENT-SUICIDE-RISK",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "has no suicidal intent"
+        },
+        {
+          "clinical_role": "PATIENT_PREFERENCE",
+          "feature_id": "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "He has had no previous psychiatric treatment"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-GY-19-PID",
+          "option_text": "Pelvic inflammatory disease",
+          "seed_id": "SEED-SURG-T01-PID"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-ER-09-TORSION",
+          "option_text": "Ovarian torsion",
+          "seed_id": "SEED-SURG-T01-TORSION"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-GY-19-TOA",
+          "option_text": "Tubo-ovarian abscess",
+          "seed_id": "SEED-SURG-T01-TOA"
+        }
+      ],
+      "decisive_discriminator": "Migration of pain to the right lower quadrant with anorexia, fever, rebound tenderness and leukocytosis, while the pelvic examination is free of the findings that define the gynaecologic alternatives, and there is nothing to point to the urinary tract.",
+      "discipline": "SURG",
+      "discipline_profile_id": "SURGERY",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R4-SURG-ALVARADO-COMPONENTS",
+        "CLM-R2-SURG-ALVARADO",
+        "CLM-R4-SURG-FEMALE-DDX",
+        "CLM-R4-SURG-PID-CRITERIA",
+        "CLM-R4-SURG-TOA-ONSET"
+      ],
+      "item_archetype": "RECOGNITION",
+      "item_id": "G2-SURG-01",
+      "key_grounding_feature_ids": [
+        "SF-GS76-MIGRATORY-RLQ-PAIN",
+        "SF-GS76-FEMALE-REPRODUCTIVE-AGE",
+        "SF-GS76-CERVICAL-MOTION-OR-ADNEXAL-TENDERNESS",
+        "SF-GS76-ADNEXAL-MASS-5CM-OR-MORE",
+        "SF-GS76-GRADUAL-ONSET-PELVIC-INFECTION",
+        "SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS",
+        "SF-GS76-PREGNANT"
+      ],
+      "lead_in": "What is the most likely diagnosis?",
+      "learner_decision_id": "LD-GS76-01",
+      "opportunity_label": "G2-SURG-01",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Pelvic inflammatory disease"
+        },
+        {
+          "key": "B",
+          "role": "KEY",
+          "text": "Acute appendicitis"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Ovarian torsion"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Tubo-ovarian abscess"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "The clinical diagnostic criteria are adnexal tenderness, cervical motion tenderness and lower abdominal tenderness, and fever above 38.3 degrees Celsius is among its signs, so a febrile woman with lower abdominal tenderness meets part of the picture. Pelvic examination shows no cervical motion tenderness, no adnexal tenderness and no abnormal discharge, so two of the three diagnostic criteria are absent.",
+          "C": "Torsion is one of the gynaecologic causes of right lower quadrant pain in women and presents with acute unilateral pain with nausea and vomiting, which this patient has. Its main risk factor is an ovarian mass, and she has no known adnexal mass and no previous pelvic imaging, while the migratory pattern and the inflammatory findings point elsewhere.",
+          "D": "A tubo-ovarian abscess causes fever with unilateral lower abdominal pain in a woman of reproductive age and must be excluded before a surgical cause is accepted. Its pain is usually more gradual in onset, and it accompanies the pelvic findings of upper genital tract infection; here the onset was over eighteen hours with migration, and the pelvic examination is unremarkable."
+        },
+        "key": "Pain that began around the umbilicus and migrated to the right lower quadrant, with anorexia, nausea and vomiting, a temperature of 38.0 degrees Celsius, right lower quadrant tenderness with rebound and a leukocytosis with a left shift, assembles the components the Alvarado score is built from and places the clinical suspicion high. The differential in a woman of reproductive age is broader than in a man, and each gynaecologic alternative is defined by pelvic findings that this examination positively lacks."
+      },
+      "stem": "A 24-year-old woman presents with eighteen hours of abdominal pain that began around the umbilicus and has since settled in the right lower quadrant. She has been off her food and has vomited twice. Her temperature is 38.0 degrees Celsius and her white cell count is 14.2 x 10^9/L with a left shift. On examination she has right lower quadrant tenderness with rebound. Pelvic examination is unremarkable: there is no cervical motion tenderness, no adnexal tenderness and no abnormal discharge. A urine pregnancy test is negative and urinalysis shows no blood. She has no flank or groin pain. She has never had pelvic pain before and her last menstrual period was two weeks ago; there is no known adnexal mass and no previous pelvic imaging.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "began around the umbilicus and has since settled in the right lower quadrant"
+        },
+        {
+          "clinical_role": "DEMOGRAPHIC",
+          "feature_id": "SF-GS76-FEMALE-REPRODUCTIVE-AGE",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "A 24-year-old woman"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-GS76-CERVICAL-MOTION-OR-ADNEXAL-TENDERNESS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no cervical motion tenderness, no adnexal tenderness"
+        },
+        {
+          "clinical_role": "INVESTIGATION_RESULT",
+          "feature_id": "SF-GS76-ADNEXAL-MASS-5CM-OR-MORE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "there is no known adnexal mass and no previous pelvic imaging"
+        },
+        {
+          "clinical_role": "TIME_COURSE",
+          "feature_id": "SF-GS76-GRADUAL-ONSET-PELVIC-INFECTION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "eighteen hours of abdominal pain that began around the umbilicus"
+        },
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "urinalysis shows no blood. She has no flank or groin pain"
+        },
+        {
+          "clinical_role": "DEMOGRAPHIC",
+          "feature_id": "SF-GS76-PREGNANT",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "A urine pregnancy test is negative"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-MI-13-MRI",
+          "option_text": "Magnetic resonance imaging of the abdomen",
+          "seed_id": "SEED-SURG-T02-MRI"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-GS-76-LAPAROSCOPY",
+          "option_text": "Proceed directly to diagnostic laparoscopy",
+          "seed_id": "SEED-SURG-T02-LAPAROSCOPY"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-GS-02-OBSERVE",
+          "option_text": "Admit for serial abdominal examination without imaging",
+          "seed_id": "SEED-SURG-T02-OBSERVE"
+        }
+      ],
+      "decisive_discriminator": "Intermediate probability calls for imaging rather than for the operating room or for watchful waiting, and the choice of modality follows the patient's body habitus in a man who is neither pregnant nor of low body mass index.",
+      "discipline": "SURG",
+      "discipline_profile_id": "SURGERY",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R2-SURG-CT",
+        "CLM-R2-SURG-US",
+        "CLM-R2-SURG-MRI",
+        "CLM-R4-SURG-NONDIAGNOSTIC",
+        "CLM-R2-SURG-YOUNG-MALE-OR"
+      ],
+      "item_archetype": "IMAGING_SELECTION",
+      "item_id": "G2-SURG-02",
+      "key_grounding_feature_ids": [
+        "SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION",
+        "SF-GS76-IMAGING-AVAILABLE-NOW",
+        "SF-GS76-LOW-BMI",
+        "SF-GS76-PREGNANT",
+        "SF-GS76-HIGH-CLINICAL-SUSPICION-YOUNG-MALE",
+        "SF-GS76-NONDIAGNOSTIC-IMAGING-ALREADY",
+        "SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS"
+      ],
+      "lead_in": "What is the most appropriate next step in diagnosis?",
+      "learner_decision_id": "LD-GS76-02",
+      "opportunity_label": "G2-SURG-02",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Magnetic resonance imaging of the abdomen"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Proceed directly to diagnostic laparoscopy"
+        },
+        {
+          "key": "C",
+          "role": "KEY",
+          "text": "Contrast-enhanced computed tomography of the abdomen and pelvis"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Admit for serial abdominal examination without imaging"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "Magnetic resonance imaging is cross-sectional, involves no radiation and is accurate for this diagnosis, which makes it a genuine alternative. Its stated role is in pregnancy when ultrasound is non-definitive. This patient is a man and no imaging has yet been performed.",
+          "B": "Going straight to the operating room settles the diagnosis definitively and is accepted where clinical suspicion is high, particularly in a young male. The team has recorded the probability as intermediate rather than high, which is the condition that separates operating from imaging.",
+          "D": "Serial examination is a real strategy for resolving diagnostic uncertainty and avoids radiation. It is what follows non-diagnostic imaging when suspicion on reassessment is intermediate or low. No imaging has been performed yet, so this would skip the step that the intermediate probability calls for."
+        },
+        "key": "Clinical probability is recorded as intermediate, which is the band in which imaging rather than the operating room or watchful waiting settles the diagnosis. Computed tomography is widely available, easily interpreted and performs better in higher body mass index patients, with a reported sensitivity of 90.4 to 100 per cent and a specificity of 94 per cent. At a body mass index of 34 kg/m2 in a man who is not pregnant, it is the modality that will answer the question."
+      },
+      "stem": "A 47-year-old man with a body mass index of 34 kg/m2 has had twelve hours of right lower quadrant pain with anorexia and one episode of vomiting. His temperature is 37.6 degrees Celsius and his white cell count is 11.8 x 10^9/L. He has right lower quadrant tenderness without guarding or rebound, and the surgical team records the clinical probability of appendicitis as intermediate rather than high. No imaging has been performed. He is haemodynamically stable and computed tomography, ultrasonography and magnetic resonance imaging are all available immediately.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "the surgical team records the clinical probability of appendicitis as intermediate rather than high"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "SF-GS76-IMAGING-AVAILABLE-NOW",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "computed tomography, ultrasonography and magnetic resonance imaging are all available immediately"
+        },
+        {
+          "clinical_role": "DEMOGRAPHIC",
+          "feature_id": "SF-GS76-LOW-BMI",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "a body mass index of 34 kg/m2"
+        },
+        {
+          "clinical_role": "DEMOGRAPHIC",
+          "feature_id": "SF-GS76-PREGNANT",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "A 47-year-old man"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-GS76-HIGH-CLINICAL-SUSPICION-YOUNG-MALE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "intermediate rather than high"
+        },
+        {
+          "clinical_role": "INVESTIGATION_RESULT",
+          "feature_id": "SF-GS76-NONDIAGNOSTIC-IMAGING-ALREADY",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "No imaging has been performed"
+        },
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "right lower quadrant pain with anorexia"
+        }
+      ]
+    },
+    {
+      "competitor_provenance": [
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-GS-76-NONOP",
+          "option_text": "Intravenous antibiotics alone with planned reassessment",
+          "seed_id": "SEED-SURG-T03-NONOP"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-MI-13-DRAINAGE",
+          "option_text": "Image-guided percutaneous drainage with antibiotics",
+          "seed_id": "SEED-SURG-T03-DRAINAGE"
+        },
+        {
+          "competitor_concept_id": "CONCEPT-R4-SU-GS-76-INTERVAL",
+          "option_text": "Antibiotics now with interval appendectomy in six to eight weeks",
+          "seed_id": "SEED-SURG-T03-INTERVAL"
+        }
+      ],
+      "decisive_discriminator": "Uncomplicated appendicitis in an adult fit for operation is treated by appendectomy as the standard of care, and the imaging positively excludes the complicated anatomy that would make drainage or a delayed operative plan the right answer.",
+      "discipline": "SURG",
+      "discipline_profile_id": "SURGERY",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R2-SURG-STANDARD",
+        "CLM-R2-SURG-NONOP",
+        "CLM-R2-SURG-DRAINAGE",
+        "CLM-R2-SURG-LAP-CONTRA"
+      ],
+      "item_archetype": "OPERATIVE_VS_NONOPERATIVE",
+      "item_id": "G2-SURG-03",
+      "key_grounding_feature_ids": [
+        "SF-GS76-MIGRATORY-RLQ-PAIN",
+        "SF-GS76-PERFORATION-WITH-PERITONITIS",
+        "SF-GS76-WALLED-OFF-PHLEGMON-OR-ABSCESS",
+        "SF-GS76-UNCOMPLICATED-AND-ACCEPTS-RECURRENCE-RISK",
+        "SF-GS76-OPERATIVE-CONTRAINDICATION",
+        "SF-GS76-PHYSIOLOGIC-INSTABILITY"
+      ],
+      "lead_in": "Which management strategy is most appropriate?",
+      "learner_decision_id": "LD-GS76-03",
+      "opportunity_label": "G2-SURG-03",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "KEY",
+          "text": "Laparoscopic appendectomy on this admission"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Intravenous antibiotics alone with planned reassessment"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Image-guided percutaneous drainage with antibiotics"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Antibiotics now with interval appendectomy in six to eight weeks"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "B": "Antibiotics first is a real strategy in selected adults with uncomplicated appendicitis, and the imaging confirms the disease is uncomplicated, so half of the condition for choosing it is met. In the European trials that support it, 53 per cent of patients avoided appendectomy, which means it is offered to a patient who accepts a cross-over and recurrence risk. He has expressed no preference and has not been asked to accept any such risk.",
+          "C": "Percutaneous drainage is explicitly recommended in complicated appendicitis and reduces length of stay and complication rates in patients with a walled-off abscess at presentation, so it is the right answer to a different picture. The imaging states there is no abscess and no phlegmon, so there is nothing to drain.",
+          "D": "This is a complete plan that still ends in appendectomy, which is why it reads as a safe compromise. It belongs where the disease is walled off and settles on antibiotics, or where operative management is contraindicated. Neither applies: the appendix is uncomplicated on imaging and he has no contraindication to a general anaesthetic or to laparoscopy."
+        },
+        "key": "The imaging shows a thickened appendix with periappendiceal fat stranding and states explicitly that there is no perforation, no free fluid, no abscess and no phlegmon, so this is uncomplicated appendicitis in an adult who is fit for operation. Appendectomy in adult non-complicated appendicitis is the standard of care."
+      },
+      "stem": "A 34-year-old man has had eighteen hours of migratory right lower quadrant pain. His temperature is 37.9 degrees Celsius, his heart rate is 88 beats/min and his blood pressure is 126/78 mmHg. Computed tomography reports a thickened appendix with periappendiceal fat stranding, and states explicitly that there is no perforation, no free fluid, no abscess and no phlegmon. He is physiologically stable, has no cardiorespiratory disease and no contraindication to a general anaesthetic or to laparoscopy. He has been counselled about the options and has expressed no preference and has not been asked to accept any risk of recurrence.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "eighteen hours of migratory right lower quadrant pain"
+        },
+        {
+          "clinical_role": "INVESTIGATION_RESULT",
+          "feature_id": "SF-GS76-PERFORATION-WITH-PERITONITIS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no perforation, no free fluid"
+        },
+        {
+          "clinical_role": "INVESTIGATION_RESULT",
+          "feature_id": "SF-GS76-WALLED-OFF-PHLEGMON-OR-ABSCESS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no abscess and no phlegmon"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-GS76-UNCOMPLICATED-AND-ACCEPTS-RECURRENCE-RISK",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "has expressed no preference and has not been asked to accept any risk of recurrence"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-GS76-OPERATIVE-CONTRAINDICATION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no contraindication to a general anaesthetic or to laparoscopy"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "SF-GS76-PHYSIOLOGIC-INSTABILITY",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "He is physiologically stable"
+        }
+      ]
+    }
+  ],
+  "realization_contract": "Every distractor is the competitor concept string of a seed that profile-aware retrieval produced for this opportunity and that the semantic-admissibility stage admitted, reproduced verbatim. Option text is therefore not rewritten at realization, which is what makes the provenance check in the wave a real constraint rather than a formality. The key position is derived from the item id.",
+  "schema_version": "1.0",
+  "scope": "QGEN_SAFE_YIELD_WAVE_ITEMS",
+  "wave_id": "g2_profile_aware_retrieval_pilot"
+}

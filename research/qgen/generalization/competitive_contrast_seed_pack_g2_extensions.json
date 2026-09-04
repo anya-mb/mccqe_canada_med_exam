@@ -1,0 +1,403 @@
+{
+  "acquisition_policy": "Targeted and incremental. A target was opened only for a G2 opportunity that returned fewer than three admissible competitors from the curated library after profile-aware retrieval had actually run, and the shortfall is recorded per opportunity before any seed was written. Every candidate was drawn from the differential or the alternatives that the opportunity's own already-admitted evidence packet names; no new research was performed, no source outside those packets was consulted, and the curated 82-seed pack is unchanged. Seeds enter the retrieval index only after they pass the same independent seed-review contract the curated pack passed.",
+  "baseline_commit": "ebceb0d435fabc5b2b67c35c8d14452aa1de020a",
+  "extends_pack_id": "competitive_contrast_seed_pack_r4",
+  "extension_id": "competitive_contrast_seed_pack_g2_extensions",
+  "frozen": true,
+  "frozen_sha256": "b0a0588ab3bba40277210c688f857ee853fcf29a77cb9fefeaf9fffec5c83955",
+  "independent_review_report": "reports/qgen_g2_targeted_seed_independent_review.json",
+  "schema_version": "1.0",
+  "scope": "COMPETITIVE_CONTRAST_SEED_PACK_EXTENSION",
+  "targets": [
+    {
+      "acquisition_note": "Acquired for G2 opportunity G2-PHELO-05. The curated target seeded three competitors against a lead-time key. When lead-time bias is itself the key of another opportunity it is excluded as a second key, leaving two. This adds lead-time bias as a competitor so that the same pool serves a different key.",
+      "anchor_study_unit_id": "SU-PH-07",
+      "anchor_topic": "Screening Principles and Screening Biases",
+      "candidates_considered": 1,
+      "decision_context": "An evaluation of a screening programme whose result must be attributed to a mechanism.",
+      "decision_granularity": "SINGLE_NAMED_BIAS",
+      "discipline": "PHELO",
+      "intended_key": "Healthy screenee (selection) bias",
+      "key_evidence_refs": [
+        "CLM-R2-PHELO-HEALTHY-VOLUNTEER"
+      ],
+      "lead_in_dimension": "Which methodological explanation best accounts for the pattern in these results?",
+      "learner_decision": "Identify which methodological explanation accounts for an observed screening result.",
+      "learner_decision_type": "EVIDENCE_INTERPRETATION",
+      "option_semantic_category": "NAMED_METHODOLOGICAL_EXPLANATION_FOR_AN_APPARENT_SCREENING_BENEFIT",
+      "seeds": [
+        {
+          "candidate_visible_discriminators": [
+            "survival measured from diagnosis does not differ between the groups here",
+            "the outcome that differs is mortality from causes screening cannot affect"
+          ],
+          "competitor_concept": "Lead-time bias",
+          "competitor_concept_id": "CONCEPT-G2-LEAD-TIME",
+          "competitor_decision_granularity": "SINGLE_NAMED_BIAS",
+          "competitor_semantic_category": "NAMED_METHODOLOGICAL_EXPLANATION_FOR_AN_APPARENT_SCREENING_BENEFIT",
+          "competitor_study_unit_id": "SU-PH-07",
+          "conditions_under_which_competitor_would_be_correct": "Correct where the apparent benefit is measured as survival time from diagnosis, which screening advances without changing the date of death.",
+          "evidence_refs_for_discrimination": [
+            "CLM-R2-PHELO-LEAD-TIME",
+            "CLM-R2-PHELO-HEALTHY-VOLUNTEER"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-R2-PHELO-LEAD-TIME"
+          ],
+          "independent_seed_review": {
+            "comment": "CLM-R2-PHELO-LEAD-TIME ties the bias specifically to evaluating a programme by survival time AFTER DIAGNOSIS, so a result in which survival from diagnosis does not differ positively defeats it, and CLM-R2-PHELO-HEALTHY-VOLUNTEER entails that self-selected screenees are healthier and therefore do better on outcomes generally, which is what a difference in mortality from causes screening cannot affect would show. Named bias for named bias, same closed family, same grain. It is the reflex answer to any favourable screening result, so it is maximally competitive against a healthy-screenee key.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "STRONG",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-PHELO-T01-LEAD-TIME",
+          "shared_features_with_key": [
+            "an explanation that makes screening look more effective than it is",
+            "a named artefact of screening evaluation"
+          ],
+          "strength": "STRONG",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate who has learned lead-time bias as the standard screening trap will apply it to any favourable screening result without checking whether survival from diagnosis is the measure that differs.",
+          "why_plausible_for_this_decision": "It is the explanation most often reached for whenever a screened group appears to do better, and it belongs to the same closed family of screening artefacts as the key."
+        }
+      ],
+      "target_id": "QGEN-G2-PHELO-T01X"
+    },
+    {
+      "acquisition_note": "Acquired for G2 opportunity G2-PHELO-02. Two of the four curated competitors serve uptake rather than autonomy and are correctly refused when the lead-in names autonomy as the value to be served, leaving two. This adds a third edit that genuinely serves autonomy and is still not the best one.",
+      "anchor_study_unit_id": "SU-PH-07",
+      "anchor_topic": "Screening Principles and Screening Biases",
+      "candidates_considered": 1,
+      "decision_context": "A screening programme revising its invitation letter with autonomy as the stated objective.",
+      "decision_granularity": "SINGLE_EDIT_TO_ONE_DOCUMENT",
+      "discipline": "PHELO",
+      "intended_key": "Replace the relative benefit figure with the absolute chance of benefit and the chance of a false positive result",
+      "key_evidence_refs": [
+        "CLM-R4-PHELO-ABSOLUTE",
+        "CLM-R4-PHELO-FALSEPOS"
+      ],
+      "lead_in_dimension": "Which revision to the wording of the invitation letter would best protect the autonomy of the people invited?",
+      "learner_decision": "Choose the revision to an invitation letter that best protects autonomy.",
+      "learner_decision_type": "ETHICAL_DECISION",
+      "option_semantic_category": "REVISION_TO_THE_CONTENT_OF_THE_INVITATION_LETTER",
+      "seeds": [
+        {
+          "candidate_visible_discriminators": [
+            "the stated defect is a relative benefit figure with no denominator and no harms, which voluntariness does not repair",
+            "informed choice requires the information itself to be interpretable, not only that the choice be free"
+          ],
+          "competitor_concept": "Add a statement that participation is voluntary and that declining will not affect any other care",
+          "competitor_concept_id": "CONCEPT-G2-VOLUNTARY-STATEMENT",
+          "competitor_decision_granularity": "SINGLE_EDIT_TO_ONE_DOCUMENT",
+          "competitor_semantic_category": "REVISION_TO_THE_CONTENT_OF_THE_INVITATION_LETTER",
+          "competitor_study_unit_id": "SU-PH-07",
+          "conditions_under_which_competitor_would_be_correct": "Correct where the letter's defect is that readers feel obliged to attend, rather than that the benefit is stated in a form they cannot interpret.",
+          "evidence_refs_for_discrimination": [
+            "CLM-R4-PHELO-ABSOLUTE",
+            "CLM-R2-PHELO-ACCEPTABILITY"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-R4-PHELO-CONSENT-CRITERION",
+            "CLM-R2-PHELO-ACCEPTABILITY"
+          ],
+          "independent_seed_review": {
+            "comment": "Edit for edit on the same document at the same grain. CLM-R4-PHELO-CONSENT-CRITERION grounds voluntariness and consent as genuine autonomy content, so the temptation is evidence-backed, while CLM-R2-PHELO-ACCEPTABILITY states that autonomy may be compromised BY THE WAY INFORMATION IS GIVEN, which is what makes an information-quality edit beat a voluntariness statement, and CLM-R4-PHELO-ABSOLUTE identifies the uninterpretable relative figure as the specific defect. The defeat therefore comes from the letter's stated defect rather than an exclusion clause. One drafting condition: the item must state that defect explicitly, or the two edits become co-defensible.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "STRONG",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-PHELO-T02-VOLUNTARY",
+          "shared_features_with_key": [
+            "an edit to the same invitation letter",
+            "an edit whose declared purpose is to protect the autonomy of the reader",
+            "an edit grounded in the programme's own acceptability and consent criterion"
+          ],
+          "strength": "STRONG",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate who equates autonomy with voluntariness, rather than with the quality of the information on which a choice is made, will select the edit that names consent explicitly.",
+          "why_plausible_for_this_decision": "It is an edit to the same letter that serves autonomy directly, and voluntariness is a real component of informed choice."
+        }
+      ],
+      "target_id": "QGEN-G2-PHELO-T02X"
+    },
+    {
+      "acquisition_note": "Acquired for G2 opportunity G2-PSY-02. Two of the three curated competitors do not secure immediate safety and are correctly refused when the stem establishes imminent risk, leaving one. This adds two dispositions that do secure safety and are therefore genuine competitors on the demanded class.",
+      "anchor_study_unit_id": "SU-PS-12",
+      "anchor_topic": "Depressive Disorders",
+      "candidates_considered": 2,
+      "decision_context": "An emergency assessment of a patient with a severe depressive episode and acute suicide risk.",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "discipline": "PSYCHIATRY",
+      "intended_key": "Arrange admission to an inpatient psychiatric unit",
+      "key_evidence_refs": [
+        "CLM-R2-PSY-INPATIENT"
+      ],
+      "lead_in_dimension": "What is the most appropriate disposition for this patient now?",
+      "learner_decision": "Decide the disposition for a patient presenting with acute suicide risk.",
+      "learner_decision_type": "SAFETY_DISPOSITION",
+      "option_semantic_category": "IMMEDIATE_DISPOSITION_THAT_SECURES_SAFETY",
+      "seeds": [
+        {
+          "candidate_visible_discriminators": [
+            "the stem records that she cannot agree to stay safe but does not record that she refuses admission",
+            "the legal route is engaged only when a needed admission is declined"
+          ],
+          "competitor_concept": "Complete the certificate for involuntary admission under provincial mental health legislation",
+          "competitor_concept_id": "CONCEPT-G2-INVOLUNTARY-ADMISSION",
+          "competitor_decision_granularity": "SINGLE_NEXT_ACTION",
+          "competitor_semantic_category": "IMMEDIATE_DISPOSITION_THAT_SECURES_SAFETY",
+          "competitor_study_unit_id": "SU-PS-01",
+          "conditions_under_which_competitor_would_be_correct": "Correct where the patient who requires admission refuses it, so that the legal mechanism is what makes admission possible.",
+          "evidence_refs_for_discrimination": [
+            "CLM-R2-PSY-INPATIENT",
+            "CLM-R2-PSY-SAFETY-PLAN"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-R2-PSY-INPATIENT"
+          ],
+          "independent_seed_review": {
+            "comment": "Check 6 fails. The load-bearing discriminator is a legal proposition, that certification is engaged only when a needed admission is declined, and neither cited claim contains it: CLM-R2-PSY-INPATIENT says only that inpatient treatment is often warranted for high-risk patients, and CLM-R2-PSY-SAFETY-PLAN is about individualized care, therapeutic risk management, means removal and professional contacts. Nothing in the packet mentions involuntary admission, capacity, refusal, or provincial mental health legislation, so the entire discrimination rests on uncited general knowledge, and a jurisdictional legal threshold is exactly the kind of assertion that must be evidenced before an item is written. The competitor is otherwise well formed and could be re-submitted once a certification-criteria claim is admitted.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "FAIL",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "REJECT",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "FAIL"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-PSY-T02-INVOLUNTARY",
+          "shared_features_with_key": [
+            "a disposition that places the patient in an inpatient setting tonight",
+            "a response to an inability to agree to a safety plan"
+          ],
+          "strength": "REJECT",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate who reads an inability to contract for safety as a refusal of care will reach for the legal instrument before offering admission.",
+          "why_plausible_for_this_decision": "It secures the same inpatient setting and is the route candidates associate with a patient who cannot agree to stay safe."
+        },
+        {
+          "candidate_visible_discriminators": [
+            "nobody is available to supervise her between visits",
+            "she states that she intends to act tonight, which the interval between daily visits does not cover"
+          ],
+          "competitor_concept": "Arrange daily home visits by the crisis team with removal of the stockpiled medication",
+          "competitor_concept_id": "CONCEPT-G2-CRISIS-TEAM",
+          "competitor_decision_granularity": "SINGLE_NEXT_ACTION",
+          "competitor_semantic_category": "IMMEDIATE_DISPOSITION_THAT_SECURES_SAFETY",
+          "competitor_study_unit_id": "SU-PS-03",
+          "conditions_under_which_competitor_would_be_correct": "Correct for a patient whose risk is not imminent and who has both a workable safety plan and someone able to supervise between visits.",
+          "evidence_refs_for_discrimination": [
+            "CLM-R2-PSY-INPATIENT",
+            "CLM-R2-PSY-SAFETY-PLAN"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-R2-PSY-SAFETY-PLAN"
+          ],
+          "independent_seed_review": {
+            "comment": "CLM-R2-PSY-SAFETY-PLAN explicitly includes removing lethal means and identifying professional contacts, which is precisely what makes the community package tempting, and CLM-R2-PSY-INPATIENT names suicidal ideation WITH INTENT TO ACT as the high-risk state for which inpatient treatment is warranted, which defeats it. The decisive discriminator, stated intent to act tonight, is a positive clinical feature of the presentation rather than a clause written to switch the option off. Disposition for disposition at the same grain, and least-restrictive-option reasoning makes it strongly selectable.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "STRONG",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-PSY-T02-CRISIS-TEAM",
+          "shared_features_with_key": [
+            "an intensive intervention chosen to keep the patient safe",
+            "an action that includes removing lethal means"
+          ],
+          "strength": "STRONG",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate who knows that means restriction and intensive follow-up are evidence-based will assemble them into a community plan without asking whether they cover tonight.",
+          "why_plausible_for_this_decision": "It combines intensive community follow-up with means restriction, which are both real components of safety management, and it avoids admission that some patients decline."
+        }
+      ],
+      "target_id": "QGEN-G2-PSY-T02X"
+    },
+    {
+      "acquisition_note": "Acquired for G2 opportunity G2-SURG-01. Profile-aware retrieval returned exactly three admissible competitors, so the count rule was met, but all three are gynaecologic. Against a gastrointestinal key that makes the key the only holder of its organ system, which the nominal-parity arithmetic refuses and which the SURGERY profile names as the prohibited shortcut LONE_NON_GYNECOLOGIC_KEY. One non-gynaecologic competitor is acquired so that a valid set exists at all.",
+      "anchor_study_unit_id": "SU-GS-76",
+      "anchor_topic": "Appendicitis",
+      "candidates_considered": 1,
+      "decision_context": "An adult woman of reproductive age with acute right lower quadrant pain in an emergency department.",
+      "decision_granularity": "SINGLE_DIAGNOSIS",
+      "discipline": "SURGERY",
+      "intended_key": "Acute appendicitis",
+      "key_evidence_refs": [
+        "CLM-R4-SURG-ALVARADO-COMPONENTS"
+      ],
+      "lead_in_dimension": "Which single diagnosis best explains this patient's right lower quadrant pain?",
+      "learner_decision": "Recognise the diagnosis in an adult presenting with right lower quadrant pain.",
+      "learner_decision_type": "DIAGNOSIS",
+      "option_semantic_category": "NAMED_CAUSE_OF_ACUTE_RIGHT_LOWER_QUADRANT_PAIN",
+      "seeds": [
+        {
+          "candidate_visible_discriminators": [
+            "the pain migrated from the umbilicus rather than radiating from flank to groin",
+            "urinalysis shows no blood and there is no flank or groin pain",
+            "there is fever, rebound tenderness and leukocytosis, which are not features of uncomplicated colic"
+          ],
+          "competitor_concept": "Right ureteral colic",
+          "competitor_concept_id": "CONCEPT-G2-URETERAL-STONE",
+          "competitor_decision_granularity": "SINGLE_DIAGNOSIS",
+          "competitor_semantic_category": "NAMED_CAUSE_OF_ACUTE_RIGHT_LOWER_QUADRANT_PAIN",
+          "competitor_study_unit_id": "SU-U-24",
+          "conditions_under_which_competitor_would_be_correct": "Correct where the pain is colicky and radiates from flank to groin, where urinalysis shows blood, or where imaging demonstrates a ureteral stone.",
+          "evidence_refs_for_discrimination": [
+            "CLM-R4-SURG-STONE-IMAGING",
+            "CLM-R4-SURG-ALVARADO-COMPONENTS"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-R4-SURG-STONE-IMAGING",
+            "CLM-R4-SURG-STONE-CONSERVATIVE"
+          ],
+          "independent_seed_review": {
+            "comment": "Check 6 fails on both halves. I read the two stone claims: CLM-R4-SURG-STONE-IMAGING is only about ultrasound with KUB versus low-dose CT as the imaging pathway, and CLM-R4-SURG-STONE-CONSERVATIVE is only about spontaneous passage of stones under 5 mm; neither states a single clinical feature of ureteral colic, so 'radiating from flank to groin', 'urinalysis shows no blood' and 'fever, rebound and leukocytosis are not features of uncomplicated colic' are all uncited general knowledge. Neither claim even places a ureteral stone in the right-lower-quadrant differential, and the packet's own differential claims (CLM-R4-SURG-FEMALE-DDX, CLM-R4-SURG-NORMAL-APPENDIX) do not list it, so the plausibility side is unsupported too. CLM-R4-SURG-ALVARADO-COMPONENTS supplies only the appendicitis-side score components and discriminates nothing about the stone; this is the same defect for which this competitor concept was rejected in the R4 review, and adding the Alvarado citation does not repair it.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "FAIL",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "REJECT",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "FAIL"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-SURG-T01-STONE",
+          "shared_features_with_key": [
+            "acute right lower abdominal pain of recent onset in an adult",
+            "a cause of right-sided abdominal pain that is investigated by imaging in the emergency department"
+          ],
+          "strength": "REJECT",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate who has learned that right-sided abdominal pain in an adult is either appendicitis or a stone, and who does not weigh the migration pattern or the inflammatory findings, will choose the urinary cause.",
+          "why_plausible_for_this_decision": "A right ureteral stone is a standing non-gynaecologic cause of acute right-sided lower abdominal pain in an adult and is worked up in the same emergency setting."
+        }
+      ],
+      "target_id": "QGEN-G2-SURG-T01X"
+    },
+    {
+      "acquisition_note": "Acquired for G2 opportunity G2-PSY-05. The curated psychiatry treatment target was written for a moderate episode. Retrieved against a severe episode with psychotic features, its lifestyle and digital-delivery competitors are not realistically selectable, so the semantically admissible pool falls below three. Two competitors that are genuinely live at this severity are acquired from the same admitted packet.",
+      "anchor_study_unit_id": "SU-PS-12",
+      "anchor_topic": "Depressive Disorders",
+      "candidates_considered": 2,
+      "decision_context": "An admitted adult with a severe major depressive episode whose safety is already secured.",
+      "decision_granularity": "INITIAL_TREATMENT_PLAN",
+      "discipline": "PSYCHIATRY",
+      "intended_key": "An antidepressant combined with an atypical antipsychotic",
+      "key_evidence_refs": [
+        "CLM-R2-PSY-ANTIPSYCHOTIC"
+      ],
+      "lead_in_dimension": "Which initial treatment should be offered to this patient?",
+      "learner_decision": "Choose the initial treatment for a severe depressive episode with psychotic features.",
+      "learner_decision_type": "TREATMENT_SELECTION",
+      "option_semantic_category": "INITIAL_ACUTE_TREATMENT_OFFERED_FOR_A_SEVERE_DEPRESSIVE_EPISODE",
+      "seeds": [
+        {
+          "candidate_visible_discriminators": [
+            "he is eating and drinking and is not physically deteriorating",
+            "he has no suicidal intent, so the life-threatening qualifier is not met"
+          ],
+          "competitor_concept": "Electroconvulsive therapy as the first-choice treatment",
+          "competitor_concept_id": "CONCEPT-G2-ECT",
+          "competitor_decision_granularity": "INITIAL_TREATMENT_PLAN",
+          "competitor_semantic_category": "INITIAL_ACUTE_TREATMENT_OFFERED_FOR_A_SEVERE_DEPRESSIVE_EPISODE",
+          "competitor_study_unit_id": "SU-PS-62",
+          "conditions_under_which_competitor_would_be_correct": "Correct in the most severe episodes or in life-threatening situations, for example severe suicide risk or physical deterioration.",
+          "evidence_refs_for_discrimination": [
+            "CLM-R2-PSY-ECT"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-R2-PSY-ECT"
+          ],
+          "independent_seed_review": {
+            "comment": "CLM-R2-PSY-ECT names severe suicide risk and physical deterioration as its qualifying examples, and the seed's two discriminators negate exactly those two named examples, so the defeat is carried by the claim's own wording and by findings (eating and drinking, no suicidal intent) that any depression assessment reports anyway. Treatment plan for treatment plan at the same grain, and it is highly selectable by a candidate who maps severity onto one escalating ladder. I withhold STRONG because the claim reads 'in the most severe episodes AND/OR in life-threatening situations': the defeat holds only if the 'for example' list is taken to operationalize the severity limb as well, and a severe episode with psychotic features sits at that end. The item must therefore print the eating/drinking and no-suicidal-intent findings so the qualifier is visibly unmet, or ECT becomes a second defensible answer.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "ACCEPTABLE",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-PSY-T03-ECT",
+          "shared_features_with_key": [
+            "a first-choice acute treatment named in the same guideline for severe illness",
+            "an initial treatment plan for the same admitted patient"
+          ],
+          "strength": "ACCEPTABLE",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate who maps severity onto a single escalating ladder will jump to the top of it as soon as psychosis is mentioned, without checking the qualifier the guideline attaches.",
+          "why_plausible_for_this_decision": "It is the recommended first choice at the most severe end of the spectrum, and psychotic features sit at that end, so it is exactly the option a candidate reaches for once the word severe appears."
+        },
+        {
+          "candidate_visible_discriminators": [
+            "psychotic symptoms are present, and the recommendation at that point is the combination of an antidepressant with an atypical antipsychotic rather than an antidepressant alone"
+          ],
+          "competitor_concept": "A first-line antidepressant alone",
+          "competitor_concept_id": "CONCEPT-G2-ANTIDEPRESSANT-ALONE",
+          "competitor_decision_granularity": "INITIAL_TREATMENT_PLAN",
+          "competitor_semantic_category": "INITIAL_ACUTE_TREATMENT_OFFERED_FOR_A_SEVERE_DEPRESSIVE_EPISODE",
+          "competitor_study_unit_id": "SU-PS-61",
+          "conditions_under_which_competitor_would_be_correct": "Correct for a depressive episode without psychotic features where medication is the chosen modality.",
+          "evidence_refs_for_discrimination": [
+            "CLM-R2-PSY-ANTIPSYCHOTIC"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-R2-PSY-FIRST-LINE"
+          ],
+          "independent_seed_review": {
+            "comment": "CLM-R2-PSY-FIRST-LINE establishes that a first-line antidepressant is an evidence-supported initial agent, which is exactly the temptation, and CLM-R2-PSY-ANTIPSYCHOTIC states verbatim that for severe major depressive episodes WITH PSYCHOTIC SYMPTOMS the combination of an antidepressant and an atypical antipsychotic is recommended, which is exactly the defeat. The discrimination therefore turns on the psychotic features the stem must already report, a positive finding rather than a clause written to switch the option off. Same treatment-plan category and grain as the key, containing half of it, so it is the commonest incomplete answer and a genuinely competitive near miss.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "STRONG",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-PSY-T03-AD-ALONE",
+          "shared_features_with_key": [
+            "an initial acute treatment plan containing an antidepressant",
+            "a first-line pharmacological treatment for the same episode"
+          ],
+          "strength": "STRONG",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate who recognises a severe depressive episode but does not register that psychosis changes the recommendation will prescribe the antidepressant and stop.",
+          "why_plausible_for_this_decision": "It is the default initial treatment for a depressive episode and contains half of the recommended combination, so it is the commonest incomplete answer."
+        }
+      ],
+      "target_id": "QGEN-G2-PSY-T03X"
+    }
+  ],
+  "why_this_is_not_a_pack": "Each entry tops up a curated target that already exists, by the one or two competitors the target lacked for a particular G2 opportunity. A seed pack target must have considered at least four candidates and must carry at least three seeds, which is deliberate acquisition discipline against thin acquisition. A top-up cannot meet that minimum and must not be allowed to weaken it, so it is recorded here instead of being forced into the pack schema. Retrieval reads this file exactly as it reads a pack, and every seed in it passed the same independent seed-review contract."
+}

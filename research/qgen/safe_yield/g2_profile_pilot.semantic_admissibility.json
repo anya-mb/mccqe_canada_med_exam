@@ -1,0 +1,1402 @@
+{
+  "criteria": {
+    "SA_1_DECISION_GRANULARITY_MATCH": "The competitor answers the same question the realized lead-in asks, at the same grain as the key.",
+    "SA_2_STEM_ANCHOR_PRESENT": "At least one of the seed's frozen shared_features_with_key is instantiated by the realized stem. This is the G1 finding COMPETITOR_WITHOUT_STEM_ANCHOR turned into a check.",
+    "SA_3_CONTEXTUALLY_PLAUSIBLE": "The competitor is realistically selectable for this patient, this severity and this setting, and does not instantiate a shortcut the bound discipline profile prohibits."
+  },
+  "frozen": true,
+  "frozen_sha256": "099363e82f390aab4ae46eb922cb4b00d8e79cde64bcd9539a7a927aab9577ec",
+  "note": "The stage exists because the retrieval index keys on discipline, item archetype and option-set archetype and not on the learner decision, so a seed curated for one decision is retrieved for any other decision sharing that triple. Every SA_1 refusal below is an instance of that.",
+  "opportunities": [
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Acute aortic dissection",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-MED-T01-DISSECTION",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Pulmonary embolism",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-MED-T01-PE",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Acute pericarditis",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-MED-T01-PERICARDITIS",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-MED-01",
+      "retrieval_admissible_count": 3,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 3,
+      "selected_concepts": [
+        "Acute aortic dissection",
+        "Pulmonary embolism",
+        "Acute pericarditis"
+      ],
+      "selected_seed_ids": [
+        "SEED-G2-MED-T01-DISSECTION",
+        "SEED-G2-MED-T01-PE",
+        "SEED-G2-MED-T01-PERICARDITIS"
+      ],
+      "semantically_admissible_count": 3
+    },
+    {
+      "judged_competitors": [],
+      "opportunity_label": "G2-MED-02",
+      "retrieval_admissible_count": 0,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "retrieval_indexed_count": 0,
+      "selected_concepts": [],
+      "selected_seed_ids": [],
+      "semantically_admissible_count": 0
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Give intravenous metoprolol to reduce myocardial oxygen demand",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-MED-T02-BETA-BLOCKER",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Give intravenous furosemide for the raised jugular venous pressure",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-MED-T02-DIURETIC",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Give sublingual nitroglycerin for the ischaemic pain",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-MED-T02-NITRATE",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Start a norepinephrine infusion",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-MED-T02-VASOPRESSOR",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Admit her for inpatient stress testing before deciding on angiography",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "A level-of-care competitor curated for a confirmed non-ST-elevation syndrome. This opportunity asks for an immediate bedside haemodynamic action, so it does not answer the question the lead-in asks.",
+          "seed_id": "SEED-G2-MED-T04-ADMIT-NONINVASIVE",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Discharge her with outpatient stress testing arranged within a week",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "A level-of-care competitor curated for a confirmed non-ST-elevation syndrome. This opportunity asks for an immediate bedside haemodynamic action, so it does not answer the question the lead-in asks.",
+          "seed_id": "SEED-G2-MED-T04-DISCHARGE-STRESS",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Observe her in the emergency department and reassess in the morning",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "A level-of-care competitor curated for a confirmed non-ST-elevation syndrome. This opportunity asks for an immediate bedside haemodynamic action, so it does not answer the question the lead-in asks.",
+          "seed_id": "SEED-G2-MED-T04-OBSERVE",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Refer her to a rapid-access chest pain clinic and let her go home tonight",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "A level-of-care competitor curated for a confirmed non-ST-elevation syndrome. This opportunity asks for an immediate bedside haemodynamic action, so it does not answer the question the lead-in asks.",
+          "seed_id": "SEED-G2-MED-T04-CLINIC",
+          "verdict": "REFUSED"
+        }
+      ],
+      "opportunity_label": "G2-MED-03",
+      "retrieval_admissible_count": 8,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 8,
+      "selected_concepts": [
+        "Give intravenous metoprolol to reduce myocardial oxygen demand",
+        "Give intravenous furosemide for the raised jugular venous pressure",
+        "Give sublingual nitroglycerin for the ischaemic pain"
+      ],
+      "selected_seed_ids": [
+        "SEED-G2-MED-T02-BETA-BLOCKER",
+        "SEED-G2-MED-T02-DIURETIC",
+        "SEED-G2-MED-T02-NITRATE"
+      ],
+      "semantically_admissible_count": 4
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Give fibrinolysis now and arrange angiography in three to five days if she remains stable",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-MED-T03-DEFERRED-ANGIO",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Transfer immediately for primary percutaneous coronary intervention without giving fibrinolysis",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-MED-T03-PPCI-ONLY",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Give fibrinolysis now and transfer only if the electrocardiogram fails to show resolution",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-MED-T03-RESCUE-ONLY",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-MED-04",
+      "retrieval_admissible_count": 3,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 3,
+      "selected_concepts": [
+        "Give fibrinolysis now and arrange angiography in three to five days if she remains stable",
+        "Transfer immediately for primary percutaneous coronary intervention without giving fibrinolysis",
+        "Give fibrinolysis now and transfer only if the electrocardiogram fails to show resolution"
+      ],
+      "selected_seed_ids": [
+        "SEED-G2-MED-T03-DEFERRED-ANGIO",
+        "SEED-G2-MED-T03-PPCI-ONLY",
+        "SEED-G2-MED-T03-RESCUE-ONLY"
+      ],
+      "semantically_admissible_count": 3
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Give intravenous metoprolol to reduce myocardial oxygen demand",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "An immediate bedside haemodynamic action curated for a hypotensive patient in an evolving infarct. This opportunity asks what level of care a haemodynamically well patient with a confirmed high-risk syndrome should receive, which is a different decision.",
+          "seed_id": "SEED-G2-MED-T02-BETA-BLOCKER",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Give intravenous furosemide for the raised jugular venous pressure",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "An immediate bedside haemodynamic action curated for a hypotensive patient in an evolving infarct. This opportunity asks what level of care a haemodynamically well patient with a confirmed high-risk syndrome should receive, which is a different decision.",
+          "seed_id": "SEED-G2-MED-T02-DIURETIC",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Give sublingual nitroglycerin for the ischaemic pain",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "An immediate bedside haemodynamic action curated for a hypotensive patient in an evolving infarct. This opportunity asks what level of care a haemodynamically well patient with a confirmed high-risk syndrome should receive, which is a different decision.",
+          "seed_id": "SEED-G2-MED-T02-NITRATE",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Start a norepinephrine infusion",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "An immediate bedside haemodynamic action curated for a hypotensive patient in an evolving infarct. This opportunity asks what level of care a haemodynamically well patient with a confirmed high-risk syndrome should receive, which is a different decision.",
+          "seed_id": "SEED-G2-MED-T02-VASOPRESSOR",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Admit her for inpatient stress testing before deciding on angiography",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-MED-T04-ADMIT-NONINVASIVE",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Discharge her with outpatient stress testing arranged within a week",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-MED-T04-DISCHARGE-STRESS",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Observe her in the emergency department and reassess in the morning",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-MED-T04-OBSERVE",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Refer her to a rapid-access chest pain clinic and let her go home tonight",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-MED-T04-CLINIC",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-MED-05",
+      "retrieval_admissible_count": 8,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 8,
+      "selected_concepts": [
+        "Admit her for inpatient stress testing before deciding on angiography",
+        "Discharge her with outpatient stress testing arranged within a week",
+        "Observe her in the emergency department and reassess in the morning"
+      ],
+      "selected_seed_ids": [
+        "SEED-G2-MED-T04-ADMIT-NONINVASIVE",
+        "SEED-G2-MED-T04-DISCHARGE-STRESS",
+        "SEED-G2-MED-T04-OBSERVE"
+      ],
+      "semantically_admissible_count": 4
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Lactational phlegmon",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-OB-T01-PHLEGMON",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Galactocele",
+          "failed_criterion": "SA_3_CONTEXTUALLY_PLAUSIBLE",
+          "note": "A non-inflammatory entity offered against a febrile presentation with rigors, which the OBGYN profile names as the prohibited shortcut NON_INFLAMMATORY_ENTITY_AGAINST_FEBRILE_PRESENTATION.",
+          "seed_id": "SEED-OB-T01-GALACTOCELE",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Inflammatory breast cancer",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-OB-T01-IBC",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-OBGYN-01",
+      "retrieval_admissible_count": 3,
+      "retrieval_excluded": [
+        {
+          "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+          "rule": "ADM_1",
+          "seed_id": "SEED-OB-T01-DUCTAL"
+        },
+        {
+          "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+          "rule": "ADM_1",
+          "seed_id": "SEED-OB-T01-ENGORGEMENT"
+        },
+        {
+          "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+          "rule": "ADM_1",
+          "seed_id": "SEED-OB-T01-SUBACUTE"
+        },
+        {
+          "reason": "CORRECTNESS_CONDITION_FULLY_SATISFIED",
+          "rule": "ADM_3",
+          "seed_id": "SEED-OB-T01-ABSCESS"
+        }
+      ],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 7,
+      "selected_concepts": [
+        "Lactational phlegmon",
+        "Inflammatory breast cancer"
+      ],
+      "selected_seed_ids": [
+        "SEED-OB-T01-PHLEGMON",
+        "SEED-OB-T01-IBC"
+      ],
+      "semantically_admissible_count": 2
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Diagnostic mammography",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-OB-T02-MAMMOGRAPHY",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Needle aspiration of the mass without imaging",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-OB-T02-ASPIRATION",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Sterile milk culture and sensitivities",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-OB-T02-MILK-CULTURE",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Serum C-reactive protein and white blood cell count",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-OB-T02-CRP",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-OBGYN-02",
+      "retrieval_admissible_count": 4,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 4,
+      "selected_concepts": [
+        "Diagnostic mammography",
+        "Needle aspiration of the mass without imaging",
+        "Sterile milk culture and sensitivities"
+      ],
+      "selected_seed_ids": [
+        "SEED-OB-T02-MAMMOGRAPHY",
+        "SEED-OB-T02-ASPIRATION",
+        "SEED-OB-T02-MILK-CULTURE"
+      ],
+      "semantically_admissible_count": 4
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Feed in a dangle position over the infant",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-OB-T03-DANGLE",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Express milk from the affected breast and feed the infant formula",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-OB-T03-DISCARD",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Pump to empty the affected breast after every feed",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-OB-T03-EMPTY",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Apply firm deep massage over the tender area",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-OB-T03-MASSAGE",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Use a nipple shield for feeds from the affected breast",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-OB-T03-SHIELD",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-OBGYN-03",
+      "retrieval_admissible_count": 5,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 5,
+      "selected_concepts": [
+        "Feed in a dangle position over the infant",
+        "Express milk from the affected breast and feed the infant formula",
+        "Pump to empty the affected breast after every feed"
+      ],
+      "selected_seed_ids": [
+        "SEED-OB-T03-DANGLE",
+        "SEED-OB-T03-DISCARD",
+        "SEED-OB-T03-EMPTY"
+      ],
+      "semantically_admissible_count": 5
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Feed in a dangle position over the infant",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "The retrieved pool is the feeding and breast-care instruction pool. This opportunity asks a level-of-care question, so none of these instructions answers it.",
+          "seed_id": "SEED-OB-T03-DANGLE",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Express milk from the affected breast and feed the infant formula",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "The retrieved pool is the feeding and breast-care instruction pool. This opportunity asks a level-of-care question, so none of these instructions answers it.",
+          "seed_id": "SEED-OB-T03-DISCARD",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Pump to empty the affected breast after every feed",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "The retrieved pool is the feeding and breast-care instruction pool. This opportunity asks a level-of-care question, so none of these instructions answers it.",
+          "seed_id": "SEED-OB-T03-EMPTY",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Apply firm deep massage over the tender area",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "The retrieved pool is the feeding and breast-care instruction pool. This opportunity asks a level-of-care question, so none of these instructions answers it.",
+          "seed_id": "SEED-OB-T03-MASSAGE",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Use a nipple shield for feeds from the affected breast",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "The retrieved pool is the feeding and breast-care instruction pool. This opportunity asks a level-of-care question, so none of these instructions answers it.",
+          "seed_id": "SEED-OB-T03-SHIELD",
+          "verdict": "REFUSED"
+        }
+      ],
+      "opportunity_label": "G2-OBGYN-04",
+      "retrieval_admissible_count": 5,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 5,
+      "selected_concepts": [],
+      "selected_seed_ids": [],
+      "semantically_admissible_count": 0
+    },
+    {
+      "judged_competitors": [],
+      "opportunity_label": "G2-OBGYN-05",
+      "retrieval_admissible_count": 0,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "retrieval_indexed_count": 0,
+      "selected_concepts": [],
+      "selected_seed_ids": [],
+      "semantically_admissible_count": 0
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "First presentation of asthma",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PED-T01-ASTHMA",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Foreign body aspiration",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PED-T01-FOREIGN-BODY",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Community-acquired pneumonia",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PED-T01-PNEUMONIA",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-PED-01",
+      "retrieval_admissible_count": 3,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 3,
+      "selected_concepts": [
+        "First presentation of asthma",
+        "Foreign body aspiration",
+        "Community-acquired pneumonia"
+      ],
+      "selected_seed_ids": [
+        "SEED-PED-T01-ASTHMA",
+        "SEED-PED-T01-FOREIGN-BODY",
+        "SEED-PED-T01-PNEUMONIA"
+      ],
+      "semantically_admissible_count": 3
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Continuous pulse oximetry and cardiorespiratory monitoring",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PED-T02-CONTINUOUS",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Complete blood count and blood culture",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PED-T02-CBC",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Chest radiograph",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PED-T02-CXR",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Nasopharyngeal swab for respiratory viruses",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PED-T02-VIRAL",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-PED-02",
+      "retrieval_admissible_count": 4,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 4,
+      "selected_concepts": [
+        "Continuous pulse oximetry and cardiorespiratory monitoring",
+        "Complete blood count and blood culture",
+        "Chest radiograph"
+      ],
+      "selected_seed_ids": [
+        "SEED-PED-T02-CONTINUOUS",
+        "SEED-PED-T02-CBC",
+        "SEED-PED-T02-CXR"
+      ],
+      "semantically_admissible_count": 4
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "High-flow nasal cannula oxygen",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PED-T03-HFNC",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Nebulized epinephrine",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PED-T03-EPINEPHRINE",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Nasogastric maintenance fluids",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PED-T03-FLUIDS",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Nebulized 3% hypertonic saline",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PED-T03-HYPERTONIC",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Nebulized salbutamol",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PED-T03-SALBUTAMOL",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Superficial nasal suctioning",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PED-T03-SUCTION",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-PED-03",
+      "retrieval_admissible_count": 6,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 6,
+      "selected_concepts": [
+        "High-flow nasal cannula oxygen",
+        "Nebulized epinephrine",
+        "Nasogastric maintenance fluids"
+      ],
+      "selected_seed_ids": [
+        "SEED-PED-T03-HFNC",
+        "SEED-PED-T03-EPINEPHRINE",
+        "SEED-PED-T03-FLUIDS"
+      ],
+      "semantically_admissible_count": 6
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "High-flow nasal cannula oxygen",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "The retrieved pool is the supportive-care pool curated for a hypoxaemia decision. This opportunity asks a disposition question about an infant who has met every discharge criterion, so no member of the pool answers the question the lead-in asks.",
+          "seed_id": "SEED-PED-T03-HFNC",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Nebulized epinephrine",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "The retrieved pool is the supportive-care pool curated for a hypoxaemia decision. This opportunity asks a disposition question about an infant who has met every discharge criterion, so no member of the pool answers the question the lead-in asks.",
+          "seed_id": "SEED-PED-T03-EPINEPHRINE",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Nasogastric maintenance fluids",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "The retrieved pool is the supportive-care pool curated for a hypoxaemia decision. This opportunity asks a disposition question about an infant who has met every discharge criterion, so no member of the pool answers the question the lead-in asks.",
+          "seed_id": "SEED-PED-T03-FLUIDS",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Nebulized 3% hypertonic saline",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "The retrieved pool is the supportive-care pool curated for a hypoxaemia decision. This opportunity asks a disposition question about an infant who has met every discharge criterion, so no member of the pool answers the question the lead-in asks.",
+          "seed_id": "SEED-PED-T03-HYPERTONIC",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Nebulized salbutamol",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "The retrieved pool is the supportive-care pool curated for a hypoxaemia decision. This opportunity asks a disposition question about an infant who has met every discharge criterion, so no member of the pool answers the question the lead-in asks.",
+          "seed_id": "SEED-PED-T03-SALBUTAMOL",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Superficial nasal suctioning",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "The retrieved pool is the supportive-care pool curated for a hypoxaemia decision. This opportunity asks a disposition question about an infant who has met every discharge criterion, so no member of the pool answers the question the lead-in asks.",
+          "seed_id": "SEED-PED-T03-SUCTION",
+          "verdict": "REFUSED"
+        }
+      ],
+      "opportunity_label": "G2-PED-04",
+      "retrieval_admissible_count": 6,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 6,
+      "selected_concepts": [],
+      "selected_seed_ids": [],
+      "semantically_admissible_count": 0
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "High-flow nasal cannula oxygen",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PED-T03-HFNC",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Nebulized epinephrine",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PED-T03-EPINEPHRINE",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Nebulized 3% hypertonic saline",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PED-T03-HYPERTONIC",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Nebulized salbutamol",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PED-T03-SALBUTAMOL",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Superficial nasal suctioning",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PED-T03-SUCTION",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-PED-05",
+      "retrieval_admissible_count": 5,
+      "retrieval_excluded": [
+        {
+          "reason": "CORRECTNESS_CONDITION_FULLY_SATISFIED",
+          "rule": "ADM_3",
+          "seed_id": "SEED-PED-T03-FLUIDS"
+        }
+      ],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 6,
+      "selected_concepts": [
+        "High-flow nasal cannula oxygen",
+        "Nebulized epinephrine",
+        "Nebulized 3% hypertonic saline"
+      ],
+      "selected_seed_ids": [
+        "SEED-PED-T03-HFNC",
+        "SEED-PED-T03-EPINEPHRINE",
+        "SEED-PED-T03-HYPERTONIC"
+      ],
+      "semantically_admissible_count": 5
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Healthy screenee (selection) bias",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PHELO-T01-HEALTHY-SCREENEE",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Length-time bias",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PHELO-T01-LENGTH",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Overdiagnosis",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PHELO-T01-OVERDIAGNOSIS",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-PHELO-01",
+      "retrieval_admissible_count": 3,
+      "retrieval_excluded": [
+        {
+          "reason": "CORRECTNESS_CONDITION_FULLY_SATISFIED",
+          "rule": "ADM_3",
+          "seed_id": "SEED-G2-PHELO-T01-LEAD-TIME"
+        }
+      ],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 4,
+      "selected_concepts": [
+        "Healthy screenee (selection) bias",
+        "Length-time bias",
+        "Overdiagnosis"
+      ],
+      "selected_seed_ids": [
+        "SEED-PHELO-T01-HEALTHY-SCREENEE",
+        "SEED-PHELO-T01-LENGTH",
+        "SEED-PHELO-T01-OVERDIAGNOSIS"
+      ],
+      "semantically_admissible_count": 3
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Add a statement that participation is voluntary and that declining will not affect any other care",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-PHELO-T02-VOLUNTARY",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Add the number of cancers the programme detected last year",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PHELO-T02-DETECTION-COUNT",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Add the sensitivity and specificity of the screening test",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PHELO-T02-SENSITIVITY",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-PHELO-02",
+      "retrieval_admissible_count": 3,
+      "retrieval_excluded": [
+        {
+          "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+          "rule": "ADM_1",
+          "seed_id": "SEED-PHELO-T02-AUTHORITY"
+        },
+        {
+          "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+          "rule": "ADM_1",
+          "seed_id": "SEED-PHELO-T02-REMINDER"
+        }
+      ],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 5,
+      "selected_concepts": [
+        "Add a statement that participation is voluntary and that declining will not affect any other care",
+        "Add the number of cancers the programme detected last year",
+        "Add the sensitivity and specificity of the screening test"
+      ],
+      "selected_seed_ids": [
+        "SEED-G2-PHELO-T02-VOLUNTARY",
+        "SEED-PHELO-T02-DETECTION-COUNT",
+        "SEED-PHELO-T02-SENSITIVITY"
+      ],
+      "semantically_admissible_count": 3
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Launch as planned with continuing evaluation against programme goals",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PHELO-T03-EVALUATE",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Launch in a single district as a pilot and expand later",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PHELO-T03-PILOT",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Commission an economic evaluation before deciding",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PHELO-T03-ECONOMIC",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Raise the threshold so that fewer results are called positive",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PHELO-T03-RAISE-CUTOFF",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-PHELO-03",
+      "retrieval_admissible_count": 4,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 4,
+      "selected_concepts": [
+        "Launch as planned with continuing evaluation against programme goals",
+        "Launch in a single district as a pilot and expand later",
+        "Commission an economic evaluation before deciding"
+      ],
+      "selected_seed_ids": [
+        "SEED-PHELO-T03-EVALUATE",
+        "SEED-PHELO-T03-PILOT",
+        "SEED-PHELO-T03-ECONOMIC"
+      ],
+      "semantically_admissible_count": 4
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Launch in a single district as a pilot and expand later",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "The retrieved pool is the launch-decision pool. This opportunity asks what a screening interval should be based on, which is a different programme decision.",
+          "seed_id": "SEED-PHELO-T03-PILOT",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Commission an economic evaluation before deciding",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "The retrieved pool is the launch-decision pool. This opportunity asks what a screening interval should be based on, which is a different programme decision.",
+          "seed_id": "SEED-PHELO-T03-ECONOMIC",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Raise the threshold so that fewer results are called positive",
+          "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+          "note": "The retrieved pool is the launch-decision pool. This opportunity asks what a screening interval should be based on, which is a different programme decision.",
+          "seed_id": "SEED-PHELO-T03-RAISE-CUTOFF",
+          "verdict": "REFUSED"
+        }
+      ],
+      "opportunity_label": "G2-PHELO-04",
+      "retrieval_admissible_count": 3,
+      "retrieval_excluded": [
+        {
+          "reason": "CORRECTNESS_CONDITION_FULLY_SATISFIED",
+          "rule": "ADM_3",
+          "seed_id": "SEED-PHELO-T03-EVALUATE"
+        }
+      ],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 4,
+      "selected_concepts": [],
+      "selected_seed_ids": [],
+      "semantically_admissible_count": 0
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Lead-time bias",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-PHELO-T01-LEAD-TIME",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Length-time bias",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PHELO-T01-LENGTH",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Overdiagnosis",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PHELO-T01-OVERDIAGNOSIS",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-PHELO-05",
+      "retrieval_admissible_count": 3,
+      "retrieval_excluded": [
+        {
+          "reason": "CORRECTNESS_CONDITION_FULLY_SATISFIED",
+          "rule": "ADM_3",
+          "seed_id": "SEED-PHELO-T01-HEALTHY-SCREENEE"
+        }
+      ],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 4,
+      "selected_concepts": [
+        "Lead-time bias",
+        "Length-time bias",
+        "Overdiagnosis"
+      ],
+      "selected_seed_ids": [
+        "SEED-G2-PHELO-T01-LEAD-TIME",
+        "SEED-PHELO-T01-LENGTH",
+        "SEED-PHELO-T01-OVERDIAGNOSIS"
+      ],
+      "semantically_admissible_count": 3
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Bipolar II disorder",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PSY-T01-BD2",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Depressive syndrome due to hypothyroidism",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PSY-T01-MEDICAL",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Persistent depressive disorder",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PSY-T01-PDD",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Depressive syndrome due to anaemia",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PSY-T01-ANEMIA",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-PSY-01",
+      "retrieval_admissible_count": 4,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 4,
+      "selected_concepts": [
+        "Bipolar II disorder",
+        "Depressive syndrome due to hypothyroidism",
+        "Persistent depressive disorder"
+      ],
+      "selected_seed_ids": [
+        "SEED-PSY-T01-BD2",
+        "SEED-PSY-T01-MEDICAL",
+        "SEED-PSY-T01-PDD"
+      ],
+      "semantically_admissible_count": 4
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Arrange daily home visits by the crisis team with removal of the stockpiled medication",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-PSY-T02-CRISIS-TEAM",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Complete a collaborative safety plan and discharge with same-day follow-up",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PSY-T02-SAFETY-PLAN",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-PSY-02",
+      "retrieval_admissible_count": 2,
+      "retrieval_excluded": [
+        {
+          "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+          "rule": "ADM_1",
+          "seed_id": "SEED-PSY-T02-RISK-SCALE"
+        },
+        {
+          "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+          "rule": "ADM_1",
+          "seed_id": "SEED-PSY-T02-START-MED"
+        }
+      ],
+      "retrieval_fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "retrieval_indexed_count": 4,
+      "selected_concepts": [
+        "Arrange daily home visits by the crisis team with removal of the stockpiled medication",
+        "Complete a collaborative safety plan and discharge with same-day follow-up"
+      ],
+      "selected_seed_ids": [
+        "SEED-G2-PSY-T02-CRISIS-TEAM",
+        "SEED-PSY-T02-SAFETY-PLAN"
+      ],
+      "semantically_admissible_count": 2
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "A supervised exercise programme as sole initial treatment",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PSY-T03-EXERCISE",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Structured psychotherapy such as cognitive behavioural therapy",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PSY-T03-PSYCHOTHERAPY",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Electroconvulsive therapy as the first-choice treatment",
+          "failed_criterion": "SA_3_CONTEXTUALLY_PLAUSIBLE",
+          "note": "Electroconvulsive therapy is not realistically selectable as the initial treatment of a first episode of moderate severity with low safety risk in an outpatient who is not physically unwell.",
+          "seed_id": "SEED-G2-PSY-T03-ECT",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Digitally delivered cognitive behavioural therapy",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PSY-T03-DIGITAL",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Combined antidepressant and psychotherapy from the outset",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PSY-T03-COMBINED",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-PSY-03",
+      "retrieval_admissible_count": 5,
+      "retrieval_excluded": [
+        {
+          "reason": "CORRECTNESS_CONDITION_FULLY_SATISFIED",
+          "rule": "ADM_3",
+          "seed_id": "SEED-G2-PSY-T03-AD-ALONE"
+        }
+      ],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 6,
+      "selected_concepts": [
+        "A supervised exercise programme as sole initial treatment",
+        "Structured psychotherapy such as cognitive behavioural therapy",
+        "Digitally delivered cognitive behavioural therapy"
+      ],
+      "selected_seed_ids": [
+        "SEED-PSY-T03-EXERCISE",
+        "SEED-PSY-T03-PSYCHOTHERAPY",
+        "SEED-PSY-T03-DIGITAL"
+      ],
+      "semantically_admissible_count": 4
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Structured psychotherapy such as cognitive behavioural therapy",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PSY-T03-PSYCHOTHERAPY",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "A supervised exercise programme as sole initial treatment",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PSY-T03-EXERCISE",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Electroconvulsive therapy as the first-choice treatment",
+          "failed_criterion": "SA_3_CONTEXTUALLY_PLAUSIBLE",
+          "note": "Electroconvulsive therapy is not realistically selectable as the initial treatment of a moderate episode with low safety risk in a rural outpatient asking for a talking therapy.",
+          "seed_id": "SEED-G2-PSY-T03-ECT",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Combined antidepressant and psychotherapy from the outset",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PSY-T03-COMBINED",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-PSY-04",
+      "retrieval_admissible_count": 4,
+      "retrieval_excluded": [
+        {
+          "reason": "CORRECTNESS_CONDITION_FULLY_SATISFIED",
+          "rule": "ADM_3",
+          "seed_id": "SEED-G2-PSY-T03-AD-ALONE"
+        },
+        {
+          "reason": "CORRECTNESS_CONDITION_FULLY_SATISFIED",
+          "rule": "ADM_3",
+          "seed_id": "SEED-PSY-T03-DIGITAL"
+        }
+      ],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 6,
+      "selected_concepts": [
+        "Structured psychotherapy such as cognitive behavioural therapy",
+        "A supervised exercise programme as sole initial treatment",
+        "Combined antidepressant and psychotherapy from the outset"
+      ],
+      "selected_seed_ids": [
+        "SEED-PSY-T03-PSYCHOTHERAPY",
+        "SEED-PSY-T03-EXERCISE",
+        "SEED-PSY-T03-COMBINED"
+      ],
+      "semantically_admissible_count": 3
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "A first-line antidepressant alone",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-PSY-T03-AD-ALONE",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "A supervised exercise programme as sole initial treatment",
+          "failed_criterion": "SA_3_CONTEXTUALLY_PLAUSIBLE",
+          "note": "A supervised exercise programme as the sole initial treatment of an admitted severe depressive episode with psychotic features is not realistically selectable.",
+          "seed_id": "SEED-PSY-T03-EXERCISE",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Structured psychotherapy such as cognitive behavioural therapy",
+          "failed_criterion": "SA_3_CONTEXTUALLY_PLAUSIBLE",
+          "note": "Structured psychotherapy as the sole initial treatment of a severe episode with psychotic features is not realistically selectable; the curated target was written for a moderate episode.",
+          "seed_id": "SEED-PSY-T03-PSYCHOTHERAPY",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Electroconvulsive therapy as the first-choice treatment",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-G2-PSY-T03-ECT",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Digitally delivered cognitive behavioural therapy",
+          "failed_criterion": "SA_3_CONTEXTUALLY_PLAUSIBLE",
+          "note": "Digitally delivered psychotherapy as the sole initial treatment of a severe episode with psychotic features is not realistically selectable.",
+          "seed_id": "SEED-PSY-T03-DIGITAL",
+          "verdict": "REFUSED"
+        },
+        {
+          "competitor_concept": "Combined antidepressant and psychotherapy from the outset",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-PSY-T03-COMBINED",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-PSY-05",
+      "retrieval_admissible_count": 6,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 6,
+      "selected_concepts": [
+        "A first-line antidepressant alone",
+        "Electroconvulsive therapy as the first-choice treatment",
+        "Combined antidepressant and psychotherapy from the outset"
+      ],
+      "selected_seed_ids": [
+        "SEED-G2-PSY-T03-AD-ALONE",
+        "SEED-G2-PSY-T03-ECT",
+        "SEED-PSY-T03-COMBINED"
+      ],
+      "semantically_admissible_count": 3
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Pelvic inflammatory disease",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-SURG-T01-PID",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Ovarian torsion",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-SURG-T01-TORSION",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Tubo-ovarian abscess",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-SURG-T01-TOA",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-SURG-01",
+      "retrieval_admissible_count": 3,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 3,
+      "selected_concepts": [
+        "Pelvic inflammatory disease",
+        "Ovarian torsion",
+        "Tubo-ovarian abscess"
+      ],
+      "selected_seed_ids": [
+        "SEED-SURG-T01-PID",
+        "SEED-SURG-T01-TORSION",
+        "SEED-SURG-T01-TOA"
+      ],
+      "semantically_admissible_count": 3
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Magnetic resonance imaging of the abdomen",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-SURG-T02-MRI",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Proceed directly to diagnostic laparoscopy",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-SURG-T02-LAPAROSCOPY",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Admit for serial abdominal examination without imaging",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-SURG-T02-OBSERVE",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Abdominal ultrasonography",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-SURG-T02-US",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Ultrasonography with a plain kidney-ureter-bladder film",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-SURG-T02-KUB",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-SURG-02",
+      "retrieval_admissible_count": 5,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 5,
+      "selected_concepts": [
+        "Magnetic resonance imaging of the abdomen",
+        "Proceed directly to diagnostic laparoscopy",
+        "Admit for serial abdominal examination without imaging"
+      ],
+      "selected_seed_ids": [
+        "SEED-SURG-T02-MRI",
+        "SEED-SURG-T02-LAPAROSCOPY",
+        "SEED-SURG-T02-OBSERVE"
+      ],
+      "semantically_admissible_count": 5
+    },
+    {
+      "judged_competitors": [
+        {
+          "competitor_concept": "Intravenous antibiotics alone with planned reassessment",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-SURG-T03-NONOP",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Image-guided percutaneous drainage with antibiotics",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-SURG-T03-DRAINAGE",
+          "verdict": "ADMITTED"
+        },
+        {
+          "competitor_concept": "Antibiotics now with interval appendectomy in six to eight weeks",
+          "failed_criterion": null,
+          "note": null,
+          "seed_id": "SEED-SURG-T03-INTERVAL",
+          "verdict": "ADMITTED"
+        }
+      ],
+      "opportunity_label": "G2-SURG-03",
+      "retrieval_admissible_count": 3,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": null,
+      "retrieval_indexed_count": 3,
+      "selected_concepts": [
+        "Intravenous antibiotics alone with planned reassessment",
+        "Image-guided percutaneous drainage with antibiotics",
+        "Antibiotics now with interval appendectomy in six to eight weeks"
+      ],
+      "selected_seed_ids": [
+        "SEED-SURG-T03-NONOP",
+        "SEED-SURG-T03-DRAINAGE",
+        "SEED-SURG-T03-INTERVAL"
+      ],
+      "semantically_admissible_count": 3
+    },
+    {
+      "judged_competitors": [],
+      "opportunity_label": "G2-SURG-04",
+      "retrieval_admissible_count": 0,
+      "retrieval_excluded": [],
+      "retrieval_fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "retrieval_indexed_count": 0,
+      "selected_concepts": [],
+      "selected_seed_ids": [],
+      "semantically_admissible_count": 0
+    }
+  ],
+  "schema_version": "1.0",
+  "scope": "QGEN_SEMANTIC_CONTRAST_ADMISSIBILITY",
+  "selection_rule": "The first three ranked retrieved competitors that pass all three criteria. Nothing re-ranks to improve an option set and no competitor is authored.",
+  "wave_id": "g2_profile_aware_retrieval_pilot"
+}

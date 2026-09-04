@@ -1,0 +1,734 @@
+{
+  "acquisition_policy": "Targeted and incremental. A target was opened only for a G2 opportunity that returned fewer than three admissible competitors from the curated library after profile-aware retrieval had actually run, and the shortfall is recorded per opportunity before any seed was written. Every candidate was drawn from the differential or the alternatives that the opportunity's own already-admitted evidence packet names; no new research was performed, no source outside those packets was consulted, and the curated 82-seed pack is unchanged. Seeds enter the retrieval index only after they pass the same independent seed-review contract the curated pack passed.",
+  "baseline_commit": "ebceb0d435fabc5b2b67c35c8d14452aa1de020a",
+  "derived_from": "G2 profile-aware retrieval shortfalls against competitive_contrast_seed_pack_r4",
+  "frozen": true,
+  "frozen_sha256": "a042c4815b4470188a05009f94133453ccbb50617c60b558098f647ce41ea993",
+  "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+  "schema_version": "1.0",
+  "scope": "COMPETITIVE_CONTRAST_SEED_PACK",
+  "targets": [
+    {
+      "acquisition_note": "Acquired for G2 opportunity G2-MED-01. The curated library carries no MEDICINE target, so profile-aware retrieval returned an empty index for all five MEDICINE opportunities. Candidates were taken from the differential the admitted ACS evidence packet itself carries; no new research was performed and no source outside that packet was consulted.",
+      "anchor_study_unit_id": "SU-C-21",
+      "anchor_topic": "Acute Coronary Syndrome",
+      "candidates_considered": 4,
+      "decision_context": "An adult presenting to an emergency department with acute chest pain, assessed with an electrocardiogram and high-sensitivity troponin.",
+      "decision_granularity": "SINGLE_DIAGNOSIS",
+      "discipline": "MEDICINE",
+      "intended_key": "Non-ST-elevation acute coronary syndrome",
+      "key_evidence_refs": [
+        "CLM-ACS-DIAGNOSIS-01"
+      ],
+      "lead_in_dimension": "Which single diagnosis best explains this adult's acute chest pain?",
+      "learner_decision": "Classify a suspected acute coronary syndrome from the ischemic presentation, the electrocardiogram and troponin.",
+      "learner_decision_type": "DIAGNOSIS",
+      "option_semantic_category": "NAMED_CAUSE_OF_ACUTE_CHEST_PAIN_IN_AN_ADULT",
+      "seeds": [
+        {
+          "candidate_visible_discriminators": [
+            "the pain is exertional and pressure-like rather than pleuritic",
+            "oxygen saturation is normal on room air",
+            "no venous-thromboembolism risk factor is present"
+          ],
+          "competitor_concept": "Pulmonary embolism",
+          "competitor_concept_id": "CONCEPT-G2-PE",
+          "competitor_decision_granularity": "SINGLE_DIAGNOSIS",
+          "competitor_semantic_category": "NAMED_CAUSE_OF_ACUTE_CHEST_PAIN_IN_AN_ADULT",
+          "competitor_study_unit_id": "SU-R-13",
+          "conditions_under_which_competitor_would_be_correct": "Correct where pretest probability is raised by sudden dyspnea, pleuritic pain, haemoptysis, hypoxemia or venous-thromboembolism risk factors, and the D-dimer or imaging pathway confirms it.",
+          "evidence_refs_for_discrimination": [
+            "CLM-PE-DIAGNOSIS-01",
+            "CLM-ACS-DIAGNOSIS-01"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-PE-DIAGNOSIS-01"
+          ],
+          "independent_seed_review": {
+            "comment": "Diagnosis for diagnosis at the same grain. CLM-PE-DIAGNOSIS-01 names sudden dyspnea, pleuritic pain, haemoptysis, hypoxemia and VTE risk factors as the features that raise pretest probability, so all three stated discriminators are the direct negation of claim-listed features, and CLM-ACS-DIAGNOSIS-01 supplies the positive counterpart (regional ST depression or T-wave inversion). The seed's 'troponin also rises in PE' framing is not itself in the packet, but it carries only the temptation, not the defeat, and the defeat is fully cited. Defeated by positive exertional/ECG features, not by a written-in exclusion.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "STRONG",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-MED-T01-PE",
+          "shared_features_with_key": [
+            "acute chest pain in an adult",
+            "a presentation that can raise cardiac troponin"
+          ],
+          "strength": "STRONG",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate who has learned that troponin rises in pulmonary embolism may treat any troponin elevation as non-specific and reach for the alternative that also raises it.",
+          "why_plausible_for_this_decision": "The packet lists it among the causes of acute chest pain that must be separated from an ischaemic cause, and it can produce troponin elevation."
+        },
+        {
+          "candidate_visible_discriminators": [
+            "the pain built up during exertion rather than being maximal at onset",
+            "blood pressure is equal in both arms and there is no pulse deficit"
+          ],
+          "competitor_concept": "Acute aortic dissection",
+          "competitor_concept_id": "CONCEPT-G2-AORTIC-DISSECTION",
+          "competitor_decision_granularity": "SINGLE_DIAGNOSIS",
+          "competitor_semantic_category": "NAMED_CAUSE_OF_ACUTE_CHEST_PAIN_IN_AN_ADULT",
+          "competitor_study_unit_id": "SU-C-33",
+          "conditions_under_which_competitor_would_be_correct": "Correct where the pain is abrupt and maximal at onset, or where a pulse deficit, an inter-arm blood pressure difference or malperfusion findings are present.",
+          "evidence_refs_for_discrimination": [
+            "CLM-AORTIC-DISSECTION-01"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-AORTIC-DISSECTION-01"
+          ],
+          "independent_seed_review": {
+            "comment": "CLM-AORTIC-DISSECTION-01 states abrupt severe pain maximal at onset with possible pulse or blood-pressure differences, which is exactly the onset-profile discriminator the seed relies on, so the load-bearing defeat is cited and is a positive history feature (crescendo exertional onset) rather than an exclusion clause. The seed's added assertion that dissection must be settled 'before antithrombotic treatment' is not in the cited claim, but it only decorates the plausibility rationale and nothing in the discrimination rests on it. A genuinely competitive near miss in any severe acute chest pain stem.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "STRONG",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-MED-T01-DISSECTION",
+          "shared_features_with_key": [
+            "severe acute chest pain in an adult",
+            "a diagnosis that must be settled before antithrombotic treatment"
+          ],
+          "strength": "STRONG",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate taught to exclude dissection before anticoagulating may select it whenever the pain is described as severe, without checking whether the onset profile or the pulse findings are present.",
+          "why_plausible_for_this_decision": "The packet names it as an acute aortic syndrome that presents with severe chest pain and must be separated before antithrombotic therapy is given."
+        },
+        {
+          "candidate_visible_discriminators": [
+            "the pain is unchanged by posture and by deep inspiration",
+            "the tracing shows regional ST depression with T-wave inversion rather than widespread ST elevation or PR depression"
+          ],
+          "competitor_concept": "Acute pericarditis",
+          "competitor_concept_id": "CONCEPT-G2-PERICARDITIS",
+          "competitor_decision_granularity": "SINGLE_DIAGNOSIS",
+          "competitor_semantic_category": "NAMED_CAUSE_OF_ACUTE_CHEST_PAIN_IN_AN_ADULT",
+          "competitor_study_unit_id": "SU-C-30",
+          "conditions_under_which_competitor_would_be_correct": "Correct where the pain is sharp, pleuritic and positional and the tracing shows widespread rather than territorial ST elevation or PR depression.",
+          "evidence_refs_for_discrimination": [
+            "CLM-PERICARDITIS-01",
+            "CLM-ACS-DIAGNOSIS-01"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-PERICARDITIS-01"
+          ],
+          "independent_seed_review": {
+            "comment": "This is the cleanest seed in the target: CLM-PERICARDITIS-01 states the sharp, pleuritic, positional pain and the widespread-rather-than-territorial ST elevation or PR depression pattern, and CLM-ACS-DIAGNOSIS-01 states that new regional ST depression or T-wave inversion supports NSTE-ACS, so both discriminators are literally in the cited text. The ECG discriminator is a positive finding on the tracing the stem must show anyway. Strongly competitive for any candidate who reads the tracing as merely abnormal.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "STRONG",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-MED-T01-PERICARDITIS",
+          "shared_features_with_key": [
+            "acute chest pain with an abnormal electrocardiogram",
+            "a cardiac cause of chest pain"
+          ],
+          "strength": "STRONG",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate who reads the electrocardiogram as simply abnormal, without attending to whether the change is territorial or widespread, may take any ST-segment abnormality as pericardial.",
+          "why_plausible_for_this_decision": "The packet records that it produces chest pain with electrocardiographic ST-segment change and so competes directly for an ischaemic-looking tracing."
+        },
+        {
+          "candidate_visible_discriminators": [
+            "there is no heartburn or regurgitation",
+            "the troponin is rising and the tracing is changing"
+          ],
+          "competitor_concept": "Gastroesophageal reflux disease",
+          "competitor_concept_id": "CONCEPT-G2-GERD",
+          "competitor_decision_granularity": "SINGLE_DIAGNOSIS",
+          "competitor_semantic_category": "NAMED_CAUSE_OF_ACUTE_CHEST_PAIN_IN_AN_ADULT",
+          "competitor_study_unit_id": "SU-G-18",
+          "conditions_under_which_competitor_would_be_correct": "Correct where typical heartburn or regurgitation accompanies the pain and cardiac evaluation has been adequate and negative.",
+          "evidence_refs_for_discrimination": [
+            "CLM-GERD-01",
+            "CLM-ACS-DIAGNOSIS-01"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-GERD-01"
+          ],
+          "independent_seed_review": {
+            "comment": "CLM-GERD-01 does support the discrimination (heartburn/regurgitation as the typical presentation, cardiac evaluation before GERD testing), so check 6 is not the problem. The problem is check 4: this target's key is NSTE-ACS, which by CLM-ACS-DIAGNOSIS-01 requires an ischemic context with acute myocardial injury, so the stem will necessarily carry a rising troponin and a dynamic or ischaemic tracing. Against those printed findings reflux is discardable on sight and attracts no partially knowledgeable candidate; the seed's own discriminator ('the troponin is rising and the tracing is changing') concedes this. It is a filler option, not a competitive near miss.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "FAIL",
+            "reviewed_strength": "REJECT",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "FAIL"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-MED-T01-GERD",
+          "shared_features_with_key": [
+            "retrosternal discomfort in an adult",
+            "a common cause of chest pain seen in ambulatory practice"
+          ],
+          "strength": "REJECT",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate anchored on how common reflux is may select it whenever the discomfort is retrosternal and the patient is not visibly unwell.",
+          "why_plausible_for_this_decision": "The packet records that it commonly presents with chest pain and is a standing alternative in any adult chest-pain presentation."
+        }
+      ],
+      "target_id": "QGEN-G2-MED-T01"
+    },
+    {
+      "acquisition_note": "Acquired for G2 opportunity G2-MED-03. Drawn from the actions the same admitted claim names and warns against, so each competitor is defeated by the claim rather than by a stem clause written for it.",
+      "anchor_study_unit_id": "SU-C-21",
+      "anchor_topic": "Acute Coronary Syndrome",
+      "candidates_considered": 4,
+      "decision_context": "An adult with an acute inferior infarct who is hypotensive while awaiting reperfusion.",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "discipline": "MEDICINE",
+      "intended_key": "Give a cautious intravenous fluid bolus and reassess fluid responsiveness",
+      "key_evidence_refs": [
+        "CLM-ACS-RV-INFARCTION-STABILIZATION-01"
+      ],
+      "lead_in_dimension": "Which single action should be taken next for this hypotensive patient?",
+      "learner_decision": "Stabilise hypotension arising from right-ventricular infarct physiology.",
+      "learner_decision_type": "MANAGEMENT",
+      "option_semantic_category": "IMMEDIATE_HAEMODYNAMIC_ACTION_AT_THE_BEDSIDE",
+      "seeds": [
+        {
+          "candidate_visible_discriminators": [
+            "the blood pressure is already low",
+            "the jugular venous pressure is elevated with clear lungs, which marks a preload-dependent state"
+          ],
+          "competitor_concept": "Give sublingual nitroglycerin for the ischaemic pain",
+          "competitor_concept_id": "CONCEPT-G2-NITRATE",
+          "competitor_decision_granularity": "SINGLE_NEXT_ACTION",
+          "competitor_semantic_category": "IMMEDIATE_HAEMODYNAMIC_ACTION_AT_THE_BEDSIDE",
+          "competitor_study_unit_id": "SU-C-21",
+          "conditions_under_which_competitor_would_be_correct": "Correct for ischaemic pain in a patient whose physiology is not preload dependent and who is not hypotensive.",
+          "evidence_refs_for_discrimination": [
+            "CLM-ACS-RV-INFARCTION-STABILIZATION-01"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-ACS-RV-INFARCTION-STABILIZATION-01"
+          ],
+          "independent_seed_review": {
+            "comment": "CLM-ACS-RV-INFARCTION-STABILIZATION-01 names hypotension with elevated JVP and clear lungs as the right-ventricular signature and explicitly says to avoid preload-reducing nitrates, with the ACC/AHA locator adding avoidance in suspected RV infarction or SBP under 90. Both the temptation (nitrate as the reflex ischaemic action) and the defeat are carried by the same cited claim, and the defeat rests on findings the vignette must already report. Action for action at the same grain, and a classic candidate error.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "STRONG",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-MED-T02-NITRATE",
+          "shared_features_with_key": [
+            "an immediate bedside action in an acute infarct",
+            "an action aimed at the ischaemic process itself"
+          ],
+          "strength": "STRONG",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate applying the general infarct algorithm rather than reading the right-ventricular physiology will give the nitrate that the algorithm lists first.",
+          "why_plausible_for_this_decision": "Nitrate is the reflex first action for ischaemic chest pain and is what most candidates reach for in an infarct."
+        },
+        {
+          "candidate_visible_discriminators": [
+            "the lung fields are clear with no crackles and no oxygen requirement",
+            "the patient is hypotensive"
+          ],
+          "competitor_concept": "Give intravenous furosemide for the raised jugular venous pressure",
+          "competitor_concept_id": "CONCEPT-G2-DIURETIC",
+          "competitor_decision_granularity": "SINGLE_NEXT_ACTION",
+          "competitor_semantic_category": "IMMEDIATE_HAEMODYNAMIC_ACTION_AT_THE_BEDSIDE",
+          "competitor_study_unit_id": "SU-C-21",
+          "conditions_under_which_competitor_would_be_correct": "Correct where the raised filling pressure is accompanied by pulmonary congestion in a patient who is not preload dependent.",
+          "evidence_refs_for_discrimination": [
+            "CLM-ACS-RV-INFARCTION-STABILIZATION-01"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-ACS-RV-INFARCTION-STABILIZATION-01"
+          ],
+          "independent_seed_review": {
+            "comment": "The same claim explicitly instructs avoidance of diuretics in this physiology and pairs the raised JVP with clear lung fields, so the very finding that tempts the candidate is the one the claim uses to defeat the diuretic. Clear lungs and hypotension are natural elements of the right-ventricular triad rather than a clause inserted to switch this option off. Genuinely selectable by a candidate who reads a raised JVP as congestion.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "STRONG",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-MED-T02-DIURETIC",
+          "shared_features_with_key": [
+            "an action taken in response to the elevated jugular venous pressure",
+            "a drug given intravenously at the bedside"
+          ],
+          "strength": "STRONG",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate who treats a raised jugular venous pressure as fluid overload without checking the lungs will remove the preload the right ventricle depends on.",
+          "why_plausible_for_this_decision": "A raised jugular venous pressure is the finding that most often triggers a diuretic, and it is present here."
+        },
+        {
+          "candidate_visible_discriminators": [
+            "the patient is in a low-output state with a blood pressure of 84/56 mmHg",
+            "the heart rate is already 58 beats/min"
+          ],
+          "competitor_concept": "Give intravenous metoprolol to reduce myocardial oxygen demand",
+          "competitor_concept_id": "CONCEPT-G2-BETA-BLOCKER",
+          "competitor_decision_granularity": "SINGLE_NEXT_ACTION",
+          "competitor_semantic_category": "IMMEDIATE_HAEMODYNAMIC_ACTION_AT_THE_BEDSIDE",
+          "competitor_study_unit_id": "SU-C-21",
+          "conditions_under_which_competitor_would_be_correct": "Correct after stabilization, once the patient is out of a low-output state and is not at risk of cardiogenic shock.",
+          "evidence_refs_for_discrimination": [
+            "CLM-ACS-RV-INFARCTION-STABILIZATION-01"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-ACS-RV-INFARCTION-STABILIZATION-01"
+          ],
+          "independent_seed_review": {
+            "comment": "CLM-ACS-RV-INFARCTION-STABILIZATION-01 states directly that beta blockade must not be initiated or escalated during a low-output state or cardiogenic-shock risk and should be reassessed after stabilization, which supports both the recall-the-bundle temptation and the defeat. The specific numbers the seed quotes (84/56 mmHg, 58 beats/min) are stem detail, not claimed thresholds, and the claim's 'low-output state' covers them. Downgraded to ACCEPTABLE rather than STRONG because a printed hypotension plus bradycardia makes intravenous metoprolol eliminable by a wider band of candidates than the nitrate or diuretic options.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "ACCEPTABLE",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-MED-T02-BETA-BLOCKER",
+          "shared_features_with_key": [
+            "an early pharmacological step in the management of an acute infarct"
+          ],
+          "strength": "ACCEPTABLE",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate reciting the early infarct bundle may add beta blockade without asking whether the output state permits it.",
+          "why_plausible_for_this_decision": "Beta blockade is a standard early infarct measure and candidates learn it as part of the initial bundle."
+        },
+        {
+          "candidate_visible_discriminators": [
+            "the peripheries are warm, the patient is alert and urine output is maintained, so there is no end-organ hypoperfusion",
+            "preload has not yet been optimised"
+          ],
+          "competitor_concept": "Start a norepinephrine infusion",
+          "competitor_concept_id": "CONCEPT-G2-VASOPRESSOR",
+          "competitor_decision_granularity": "SINGLE_NEXT_ACTION",
+          "competitor_semantic_category": "IMMEDIATE_HAEMODYNAMIC_ACTION_AT_THE_BEDSIDE",
+          "competitor_study_unit_id": "SU-C-21",
+          "conditions_under_which_competitor_would_be_correct": "Correct where acute-myocardial-infarction cardiogenic shock is present, that is persistent hypotension or a vasopressor requirement with end-organ hypoperfusion, alongside emergency revascularization.",
+          "evidence_refs_for_discrimination": [
+            "CLM-ACS-AMI-CARDIOGENIC-SHOCK-01",
+            "CLM-ACS-RV-INFARCTION-STABILIZATION-01"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-ACS-AMI-CARDIOGENIC-SHOCK-01"
+          ],
+          "independent_seed_review": {
+            "comment": "CLM-ACS-AMI-CARDIOGENIC-SHOCK-01 defines AMI cardiogenic shock as persistent hypotension or vasopressor requirement WITH end-organ hypoperfusion, so the seed's discriminator (warm peripheries, alert, maintained urine output) is the claim's own missing definitional element, and CLM-ACS-RV-INFARCTION-STABILIZATION-01 supplies the preload-first sequence. Perfusion status is a natural part of assessing any hypotensive infarct patient, so no exclusion clause is required. Strongly competitive for anyone who equates a low blood pressure with shock.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "STRONG",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-MED-T02-VASOPRESSOR",
+          "shared_features_with_key": [
+            "an intervention that raises the blood pressure in an acute infarct",
+            "an action indicated for shock physiology"
+          ],
+          "strength": "STRONG",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate who equates a low blood pressure with cardiogenic shock will escalate to a vasopressor before trying the preload correction the physiology calls for.",
+          "why_plausible_for_this_decision": "Vasoactive support is the recognised answer to hypotension in an infarct once shock is established, and the blood pressure here is low."
+        }
+      ],
+      "target_id": "QGEN-G2-MED-T02"
+    },
+    {
+      "acquisition_note": "Acquired for G2 opportunity G2-MED-04. Each competitor is a reperfusion action the same claim addresses, so every one of them carries a positive anchor in a transfer-constrained infarct rather than being an action nothing in the stem invites.",
+      "anchor_study_unit_id": "SU-C-21",
+      "anchor_topic": "Acute Coronary Syndrome",
+      "candidates_considered": 4,
+      "decision_context": "A diagnostic ST-elevation infarct at a centre without percutaneous capability, where transfer time is the operative constraint.",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "discipline": "MEDICINE",
+      "intended_key": "Give fibrinolysis now and arrange routine rapid transfer to a percutaneous coronary intervention centre",
+      "key_evidence_refs": [
+        "CLM-ACS-PHARMACOINVASIVE-01"
+      ],
+      "lead_in_dimension": "Which reperfusion action should be taken next for this patient?",
+      "learner_decision": "Choose the reperfusion strategy for a diagnostic ST-elevation infarct presenting to a centre without percutaneous capability.",
+      "learner_decision_type": "MANAGEMENT",
+      "option_semantic_category": "REPERFUSION_ACTION_ORDERED_NOW_FOR_THIS_PATIENT",
+      "seeds": [
+        {
+          "candidate_visible_discriminators": [
+            "the estimated first-medical-contact-to-device time is about four hours",
+            "nothing in the history prohibits fibrinolysis"
+          ],
+          "competitor_concept": "Transfer immediately for primary percutaneous coronary intervention without giving fibrinolysis",
+          "competitor_concept_id": "CONCEPT-G2-PPCI-TRANSFER",
+          "competitor_decision_granularity": "SINGLE_NEXT_ACTION",
+          "competitor_semantic_category": "REPERFUSION_ACTION_ORDERED_NOW_FOR_THIS_PATIENT",
+          "competitor_study_unit_id": "SU-C-21",
+          "conditions_under_which_competitor_would_be_correct": "Correct where device therapy is reachable inside the accepted interval, or where an absolute contraindication prohibits fibrinolysis.",
+          "evidence_refs_for_discrimination": [
+            "CLM-ACS-PHARMACOINVASIVE-01"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-ACS-PHARMACOINVASIVE-01",
+            "CLM-ACS-FIBRINOLYSIS-CONTRA-PPCI-01"
+          ],
+          "independent_seed_review": {
+            "comment": "I checked the number: CLM-ACS-PHARMACOINVASIVE-01 carries the 120-minute first-medical-contact-to-device threshold explicitly, so the seed's four-hour estimate sits unambiguously on the fibrinolysis side of a cited threshold. CLM-ACS-FIBRINOLYSIS-CONTRA-PPCI-01 independently supports the stated condition under which transfer for primary PCI would instead be correct. The strongest competitor in this target, since preference for primary PCI is exactly what candidates over-generalize.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "STRONG",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-MED-T03-PPCI-ONLY",
+          "shared_features_with_key": [
+            "a reperfusion strategy that ends in angiography",
+            "an action that treats the infarct now"
+          ],
+          "strength": "STRONG",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate who has learned that primary intervention is superior may apply that preference without checking whether the time constraint has already removed the advantage.",
+          "why_plausible_for_this_decision": "Primary intervention is the preferred reperfusion route wherever it is reachable in time, and a transfer is already being arranged."
+        },
+        {
+          "candidate_visible_discriminators": [
+            "routine rapid transfer follows lysis rather than waiting on failure",
+            "angiography is planned within twenty-four hours when reperfusion succeeds"
+          ],
+          "competitor_concept": "Give fibrinolysis now and transfer only if the electrocardiogram fails to show resolution",
+          "competitor_concept_id": "CONCEPT-G2-LYSIS-RESCUE-ONLY",
+          "competitor_decision_granularity": "SINGLE_NEXT_ACTION",
+          "competitor_semantic_category": "REPERFUSION_ACTION_ORDERED_NOW_FOR_THIS_PATIENT",
+          "competitor_study_unit_id": "SU-C-21",
+          "conditions_under_which_competitor_would_be_correct": "Correct as a description of rescue intervention, which is what happens when reperfusion fails; it is not the whole strategy when reperfusion succeeds.",
+          "evidence_refs_for_discrimination": [
+            "CLM-ACS-PHARMACOINVASIVE-01"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-ACS-PHARMACOINVASIVE-01"
+          ],
+          "independent_seed_review": {
+            "comment": "CLM-ACS-PHARMACOINVASIVE-01 states routine rapid transfer AFTER fibrinolysis with angiography within 24 hours if reperfusion succeeds, which is precisely what makes failure-contingent transfer wrong, so the claim itself carries the discrimination rather than a stem clause. It matches the key on drug and timing and differs only on transfer policy, which is the single most commonly omitted element of the pharmacoinvasive strategy. Same reperfusion-action category and grain as the compound key.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "STRONG",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-MED-T03-RESCUE-ONLY",
+          "shared_features_with_key": [
+            "fibrinolysis given now at the referring centre",
+            "a plan that includes eventual transfer"
+          ],
+          "strength": "STRONG",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate who remembers rescue intervention but not the routine transfer that follows successful lysis will make transfer conditional on failure.",
+          "why_plausible_for_this_decision": "It selects the correct drug and the correct timing and differs only in the transfer policy, which is the part of the strategy candidates most often omit."
+        },
+        {
+          "candidate_visible_discriminators": [
+            "angiography follows successful fibrinolysis within twenty-four hours rather than several days later"
+          ],
+          "competitor_concept": "Give fibrinolysis now and arrange angiography in three to five days if she remains stable",
+          "competitor_concept_id": "CONCEPT-G2-LYSIS-DEFERRED-ANGIO",
+          "competitor_decision_granularity": "SINGLE_NEXT_ACTION",
+          "competitor_semantic_category": "REPERFUSION_ACTION_ORDERED_NOW_FOR_THIS_PATIENT",
+          "competitor_study_unit_id": "SU-C-21",
+          "conditions_under_which_competitor_would_be_correct": "Correct for an elective investigation of stable coronary disease, not for the angiography that follows successful fibrinolysis in an acute infarct.",
+          "evidence_refs_for_discrimination": [
+            "CLM-ACS-PHARMACOINVASIVE-01"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-ACS-PHARMACOINVASIVE-01"
+          ],
+          "independent_seed_review": {
+            "comment": "The 24-hour window the discriminator depends on is stated verbatim in CLM-ACS-PHARMACOINVASIVE-01 ('angiography within 24 hours if reperfusion succeeds'), so the three-to-five-day alternative is defeated by the cited interval and not by anything written into the stem. It shares the drug, the timing of lysis and the eventual angiography with the key and differs only on the interval, which is a real point of candidate confusion. Same action category and grain.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "STRONG",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-MED-T03-DEFERRED-ANGIO",
+          "shared_features_with_key": [
+            "fibrinolysis given now",
+            "a plan that ends in angiography at a percutaneous centre"
+          ],
+          "strength": "STRONG",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate who knows angiography follows lysis but not the interval will choose a comfortable-sounding delay.",
+          "why_plausible_for_this_decision": "It also gives lysis now and also ends in angiography, differing only in when, which is a genuine point of confusion."
+        },
+        {
+          "candidate_visible_discriminators": [
+            "the device time is already estimated at about four hours, so the decision is not uncertain",
+            "reperfusion is not deferred once the indication is established"
+          ],
+          "competitor_concept": "Arrange air transfer and give fibrinolysis en route if the flight is delayed",
+          "competitor_concept_id": "CONCEPT-G2-LYSIS-AFTER-RETRIEVAL",
+          "competitor_decision_granularity": "SINGLE_NEXT_ACTION",
+          "competitor_semantic_category": "REPERFUSION_ACTION_ORDERED_NOW_FOR_THIS_PATIENT",
+          "competitor_study_unit_id": "SU-C-21",
+          "conditions_under_which_competitor_would_be_correct": "Correct where the expected device time is genuinely uncertain and might yet fall inside the accepted interval.",
+          "evidence_refs_for_discrimination": [
+            "CLM-ACS-REPERFUSION-NO-DELAY-01",
+            "CLM-ACS-PHARMACOINVASIVE-01"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-ACS-PHARMACOINVASIVE-01",
+            "CLM-ACS-REPERFUSION-NO-DELAY-01"
+          ],
+          "independent_seed_review": {
+            "comment": "Check 4 fails. A doubly conditional option ('transfer, and lyse en route if the flight is delayed') is dominated in both directions: a candidate who favours primary PCI picks the clean transfer option, and a candidate who knows the 120-minute rule picks the key, so almost nobody selects the hedge, and hedged compound options read as constructed. I also note a citation defect the author should fix even though it did not decide the verdict: CLM-ACS-REPERFUSION-NO-DELAY-01 is about not delaying reperfusion for biomarkers or additional diagnostic testing, not about contingent transfer logistics, so it does not say what the seed uses it to say; only CLM-ACS-PHARMACOINVASIVE-01 actually carries the defeat. The stated 'conditions under which the competitor would be correct' also describes no recognised strategy.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "FAIL",
+            "reviewed_strength": "REJECT",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "FAIL"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-MED-T03-STABILISE-FIRST",
+          "shared_features_with_key": [
+            "a plan containing both fibrinolysis and transfer",
+            "a plan that responds to the transfer constraint"
+          ],
+          "strength": "REJECT",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate who avoids committing to a route will pick the contingent plan that appears to keep both open.",
+          "why_plausible_for_this_decision": "It keeps both options alive and appeals to a candidate who wants to avoid committing, and the transfer really is being arranged."
+        }
+      ],
+      "target_id": "QGEN-G2-MED-T03"
+    },
+    {
+      "acquisition_note": "Acquired for G2 opportunity G2-MED-05. Each competitor is an alternative the same claim explicitly reserves for lower-risk or diagnostically uncertain presentations, so the claim itself supplies the discrimination.",
+      "anchor_study_unit_id": "SU-C-21",
+      "anchor_topic": "Acute Coronary Syndrome",
+      "candidates_considered": 4,
+      "decision_context": "A patient with a confirmed non-ST-elevation acute coronary syndrome whose symptoms have resolved.",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "discipline": "MEDICINE",
+      "intended_key": "Admit her for an early inpatient invasive coronary strategy",
+      "key_evidence_refs": [
+        "CLM-ACS-NSTE-HIGH-RISK-DISPOSITION-01"
+      ],
+      "lead_in_dimension": "Which single next step in care should this patient receive?",
+      "learner_decision": "Decide the level of care for a patient whose troponin trajectory and electrocardiogram meet the high-risk criteria of a non-ST-elevation acute coronary syndrome.",
+      "learner_decision_type": "MANAGEMENT",
+      "option_semantic_category": "LEVEL_OF_CARE_ACTION_ORDERED_FOR_THIS_PATIENT",
+      "seeds": [
+        {
+          "candidate_visible_discriminators": [
+            "a rise and fall in troponin with dynamic ST- or T-wave change is a high-risk criterion even when symptoms resolve"
+          ],
+          "competitor_concept": "Discharge her with outpatient stress testing arranged within a week",
+          "competitor_concept_id": "CONCEPT-G2-OUTPATIENT-STRESS",
+          "competitor_decision_granularity": "SINGLE_NEXT_ACTION",
+          "competitor_semantic_category": "LEVEL_OF_CARE_ACTION_ORDERED_FOR_THIS_PATIENT",
+          "competitor_study_unit_id": "SU-C-21",
+          "conditions_under_which_competitor_would_be_correct": "Correct for a lower-risk or diagnostically uncertain presentation without a troponin rise and fall or dynamic tracing change.",
+          "evidence_refs_for_discrimination": [
+            "CLM-ACS-NSTE-HIGH-RISK-DISPOSITION-01"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-ACS-NSTE-HIGH-RISK-DISPOSITION-01"
+          ],
+          "independent_seed_review": {
+            "comment": "CLM-ACS-NSTE-HIGH-RISK-DISPOSITION-01 names outpatient stress testing by name as reserved for lower-risk or diagnostically uncertain presentations, and states that a troponin rise or fall with dynamic ST or T changes is high risk EVEN IF symptoms resolve, which is exactly the trap this seed sets. The defeat therefore rests on positive test findings the stem must report, not on an exclusion clause. Disposition for disposition at the same grain.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "STRONG",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-MED-T04-DISCHARGE-STRESS",
+          "shared_features_with_key": [
+            "a plan for further cardiac assessment",
+            "a disposition offered at the end of the emergency assessment"
+          ],
+          "strength": "STRONG",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate who weighs how the patient looks now rather than what the tests recorded will discharge a comfortable patient.",
+          "why_plausible_for_this_decision": "Her symptoms and her tracing have both returned to normal and she wants to go home, which is the situation in which outpatient testing is ordinarily offered."
+        },
+        {
+          "candidate_visible_discriminators": [
+            "the syndrome is already confirmed and high risk, so observation without an invasive plan is not the reserved option"
+          ],
+          "competitor_concept": "Observe her in the emergency department and reassess in the morning",
+          "competitor_concept_id": "CONCEPT-G2-OBSERVE-NO-PLAN",
+          "competitor_decision_granularity": "SINGLE_NEXT_ACTION",
+          "competitor_semantic_category": "LEVEL_OF_CARE_ACTION_ORDERED_FOR_THIS_PATIENT",
+          "competitor_study_unit_id": "SU-C-21",
+          "conditions_under_which_competitor_would_be_correct": "Correct where the presentation is diagnostically uncertain rather than a confirmed high-risk syndrome.",
+          "evidence_refs_for_discrimination": [
+            "CLM-ACS-NSTE-HIGH-RISK-DISPOSITION-01"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-ACS-NSTE-HIGH-RISK-DISPOSITION-01"
+          ],
+          "independent_seed_review": {
+            "comment": "The cited claim explicitly reserves 'observation without an invasive plan' for lower-risk or diagnostically uncertain presentations, so the wording of the competitor maps onto a phrase in the claim text and the discrimination is carried by evidence rather than by inference. It is the cautious middle course that a candidate unwilling to discharge but unaware of the early-invasive requirement will pick, so it is genuinely competitive. Defeated by the confirmed high-risk criteria already in the stem.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "STRONG",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-MED-T04-OBSERVE",
+          "shared_features_with_key": [
+            "keeping the patient in hospital rather than sending her home",
+            "a plan that defers the decision"
+          ],
+          "strength": "STRONG",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate uncomfortable with discharge but unaware that an invasive plan is required will choose the intermediate option.",
+          "why_plausible_for_this_decision": "Observation is the cautious middle course and is genuinely used where the diagnosis is uncertain."
+        },
+        {
+          "candidate_visible_discriminators": [
+            "confirmed high-risk non-ST-elevation syndrome requires admission rather than outpatient follow-up"
+          ],
+          "competitor_concept": "Refer her to a rapid-access chest pain clinic and let her go home tonight",
+          "competitor_concept_id": "CONCEPT-G2-RAPID-CLINIC",
+          "competitor_decision_granularity": "SINGLE_NEXT_ACTION",
+          "competitor_semantic_category": "LEVEL_OF_CARE_ACTION_ORDERED_FOR_THIS_PATIENT",
+          "competitor_study_unit_id": "SU-C-21",
+          "conditions_under_which_competitor_would_be_correct": "Correct for a lower-risk presentation being worked up as an outpatient.",
+          "evidence_refs_for_discrimination": [
+            "CLM-ACS-NSTE-HIGH-RISK-DISPOSITION-01"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-ACS-NSTE-HIGH-RISK-DISPOSITION-01"
+          ],
+          "independent_seed_review": {
+            "comment": "Discharge with outpatient follow-up is named in CLM-ACS-NSTE-HIGH-RISK-DISPOSITION-01 as reserved for lower-risk presentations, so the defeat is cited, and rapid-access chest pain clinics are a real Canadian ambulatory pathway, so the context check holds. Marked ACCEPTABLE rather than STRONG because it is defeated by exactly the same reasoning as SEED-G2-MED-T04-DISCHARGE-STRESS and adds only a different follow-up label; it is the weaker of the two go-home options and the two should not appear in the same item.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "ACCEPTABLE",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-MED-T04-CLINIC",
+          "shared_features_with_key": [
+            "arranging specialist cardiac assessment",
+            "a disposition that sends the patient home"
+          ],
+          "strength": "ACCEPTABLE",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate who treats rapid follow-up as equivalent to admission will accept the delay it introduces.",
+          "why_plausible_for_this_decision": "It offers specialist follow-up quickly and looks like a responsible compromise for a patient who feels well."
+        },
+        {
+          "candidate_visible_discriminators": [
+            "the required inpatient strategy is an early invasive one, not non-invasive testing, once high-risk criteria are met"
+          ],
+          "competitor_concept": "Admit her for inpatient stress testing before deciding on angiography",
+          "competitor_concept_id": "CONCEPT-G2-ADMIT-STRESS-FIRST",
+          "competitor_decision_granularity": "SINGLE_NEXT_ACTION",
+          "competitor_semantic_category": "LEVEL_OF_CARE_ACTION_ORDERED_FOR_THIS_PATIENT",
+          "competitor_study_unit_id": "SU-C-21",
+          "conditions_under_which_competitor_would_be_correct": "Correct where the presentation is diagnostically uncertain and non-invasive testing would settle it.",
+          "evidence_refs_for_discrimination": [
+            "CLM-ACS-NSTE-HIGH-RISK-DISPOSITION-01"
+          ],
+          "evidence_refs_for_plausibility": [
+            "CLM-ACS-NSTE-HIGH-RISK-DISPOSITION-01"
+          ],
+          "independent_seed_review": {
+            "comment": "The cited claim requires admission plus an EARLY INPATIENT INVASIVE strategy for confirmed high-risk NSTE-ACS, and its ACC/AHA locator states that noninvasive testing is for lower-risk patients, so the seed's discriminator is supported at the exact point of difference. This is the best competitor in the target because it concedes the admission half of the key and fails only on strategy, which is where partial knowledge actually stops. No exclusion clause needed.",
+            "comparable_decision_granularity": "PASS",
+            "discriminator_evidence_supported": "PASS",
+            "free_of_terminal_exclusion_requirement": "PASS",
+            "plausible_in_planned_context": "PASS",
+            "realistically_selectable": "PASS",
+            "reviewed_strength": "STRONG",
+            "reviewer_id": "independent-seed-reviewer-g2",
+            "same_lead_in_dimension": "PASS",
+            "same_semantic_category": "PASS",
+            "verdict": "PASS"
+          },
+          "requires_terminal_exclusion_clue": false,
+          "seed_id": "SEED-G2-MED-T04-ADMIT-NONINVASIVE",
+          "shared_features_with_key": [
+            "admission to hospital",
+            "a plan for further cardiac investigation as an inpatient"
+          ],
+          "strength": "STRONG",
+          "why_a_partially_knowledgeable_candidate_might_choose_it": "A candidate who separates the decision to admit from the decision about strategy will admit and then default to non-invasive testing.",
+          "why_plausible_for_this_decision": "It admits the patient, which is half the answer, and candidates who know admission is needed often stop there."
+        }
+      ],
+      "target_id": "QGEN-G2-MED-T04"
+    }
+  ]
+}

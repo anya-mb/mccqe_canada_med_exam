@@ -20,10 +20,18 @@ from .critical_fact_adjudication import adjudicate_evidence_packet
 from .errors import QbankError
 from .marginal_educational_value import assess_marginal_value
 from .option_set_admissibility import (
+    RESPONSE_CLASS_AXES,
+    ARCHETYPE_RESPONSE_AXIS,
     adjudicate_option_set_admissibility,
+    normalize_option_text,
     validate_role_blind_label_pool,
 )
 from .paths import resolve_root_path
+from .profile_contrast_retrieval import (
+    build_retrieval_index,
+    load_seed_enrichment,
+    retrieve_profile_aware_contrasts,
+)
 from .qgen_profiles import (
     DisciplineProfileError,
     load_discipline_profiles,
@@ -51,6 +59,68 @@ def _read(root: Path, relative: str) -> dict[str, Any]:
     return json.loads(path.read_text())
 
 
+def build_contrast_index(root: Path, library: dict[str, Any]) -> list[dict[str, Any]]:
+    """Build one retrieval index over every declared curated pack.
+
+    Packs are read side by side rather than merged on disk, so the curated
+    82-seed pack stays byte-identical and a targeted incremental pack is additive.
+    A pack without its own frozen enrichment is refused: unenriched seeds carry no
+    correctness conditions, so admitting them would return retrieval to the
+    generic similarity matching the design rules out.
+    """
+    root = Path(root).resolve()
+    packs = list(library.get("seed_packs") or [])
+    enrichments = list(library.get("enrichments") or [])
+    if not packs:
+        raise SafeYieldWaveError("a contrast library must declare at least one seed pack")
+    if len(packs) != len(enrichments):
+        raise SafeYieldWaveError(
+            "every declared seed pack needs exactly one enrichment, in the same order"
+        )
+    index: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for pack_relative, enrichment_relative in zip(packs, enrichments):
+        pack = _read(root, pack_relative)
+        enrichment = load_seed_enrichment(root, enrichment_relative)
+        for row in build_retrieval_index(pack, enrichment):
+            if row["seed_id"] in seen:
+                raise SafeYieldWaveError(f"seed appears in two packs: {row['seed_id']}")
+            seen.add(row["seed_id"])
+            index.append(dict(row, source_pack=pack_relative))
+    return sorted(index, key=lambda row: row["seed_id"])
+
+
+def unretrieved_distractors(
+    options: list[dict[str, Any]], ranked_competitors: list[dict[str, Any]]
+) -> list[str]:
+    """Return distractor texts that profile-aware retrieval did not produce.
+
+    The key is exempt by construction: a key that retrieval returned would be a
+    second answer, and the retrieval stage already refuses such a seed.
+    """
+    retrieved = {row["normalized_competitor_text"] for row in ranked_competitors}
+    return [
+        str(option.get("text"))
+        for option in options
+        if option.get("role") == "DISTRACTOR"
+        and normalize_option_text(option.get("text")) not in retrieved
+    ]
+
+
+def competitor_predicates_from_retrieval(
+    ranked_competitors: list[dict[str, Any]],
+) -> dict[str, list[dict[str, Any]]]:
+    """Key each retrieved competitor's frozen correctness conditions by option text.
+
+    This is what lets ADM-3 run over realised items. In G1 it could fire only on
+    the positive controls, because no stage supplied predicates for a real one.
+    """
+    return {
+        row["normalized_competitor_text"]: list(row.get("condition_predicates") or [])
+        for row in ranked_competitors
+    }
+
+
 def run_safe_yield_wave(
     root: Path,
     *,
@@ -59,8 +129,15 @@ def run_safe_yield_wave(
     items_relative_path: str,
     labels_relative_path: str,
     assignments_relative_path: str,
+    contrast_library: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Drive every opportunity in a wave and return its result record."""
+    """Drive every opportunity in a wave and return its result record.
+
+    When ``contrast_library`` is supplied the wave runs profile-aware retrieval
+    over the curated library between evidence and contrast readiness, refuses any
+    opportunity that cannot raise three admissible competitors, and refuses any
+    item carrying a distractor retrieval did not produce.
+    """
     root = Path(root).resolve()
     opportunities = _read(root, opportunities_relative_path)["opportunities"]
     plan = {row["opportunity_label"]: row for row in _read(root, plan_relative_path)["plan"]}
@@ -72,6 +149,7 @@ def run_safe_yield_wave(
     }
     probes = _read(root, plan_relative_path).get("admissibility_probes", [])
     profiles = load_discipline_profiles(root)
+    contrast_index = build_contrast_index(root, contrast_library) if contrast_library else None
 
     fact_cache: dict[tuple[str, str], dict[str, dict[str, Any]]] = {}
 
@@ -201,6 +279,72 @@ def run_safe_yield_wave(
             decisive_discriminator=entry["novelty_tuple"]["decisive_discriminator"],
         )
 
+        assignment = assignments[label]
+        competitor_predicates = None
+        # The stem and its feature map are realised before any option exists, so the plan
+        # carries them and retrieval runs against them. A wave without a contrast library
+        # predates this stage and still reads the map from the item.
+        plan_features = entry.get("stem_feature_map")
+        if contrast_index is not None and plan_features is None:
+            raise SafeYieldWaveError(
+                f"{label}: a wave with a contrast library needs the plan's stem feature map"
+            )
+
+        # Profile-aware contrast retrieval. The stage runs against the realised
+        # stem's feature map, so it answers whether an approved seed is a
+        # competitor *for this stem* rather than for the abstract target it was
+        # curated against.
+        if contrast_index is not None:
+            axis = ARCHETYPE_RESPONSE_AXIS[opportunity["option_set_archetype"]]
+            retrieval = retrieve_profile_aware_contrasts(
+                index=contrast_index,
+                discipline_profile_id=opportunity["discipline_profile_id"],
+                item_archetype=opportunity["item_archetype"],
+                option_set_archetype=opportunity["option_set_archetype"],
+                demanded_response_class=assignment["demanded_response_class"],
+                token_implications=contract.get("token_implications", {}),
+                generic_token=RESPONSE_CLASS_AXES[axis]["generic_token"],
+                stem_feature_map={"features": plan_features},
+                ranking_preference=profile["competitor_ranking_preference"],
+            )
+            gate_verdicts.setdefault("PROFILE_AWARE_CONTRAST_RETRIEVAL", []).append(
+                "FAIL_CLOSED" if retrieval["fail_closed_reason"] else "SUFFICIENT"
+            )
+            record["retrieval"] = {
+                "indexed_count": retrieval["indexed_count"],
+                "admissible_count": retrieval["admissible_count"],
+                "ranked_seed_ids": [row["seed_id"] for row in retrieval["ranked_competitors"]],
+                "ranked_competitors": [
+                    {
+                        "seed_id": row["seed_id"],
+                        "source_pack": row.get("source_pack"),
+                        "competitor_concept": row["competitor_concept"],
+                        "competitor_concept_id": row["competitor_concept_id"],
+                        "satisfied_conditions": row["satisfied_conditions"],
+                        "total_conditions": row["total_conditions"],
+                        "reviewed_strength": row["reviewed_strength"],
+                    }
+                    for row in retrieval["ranked_competitors"]
+                ],
+                "excluded": retrieval["excluded"],
+                "fail_closed_reason": retrieval["fail_closed_reason"],
+            }
+            if retrieval["fail_closed_reason"]:
+                transition_opportunity(
+                    opportunity, "NO_SAFE_ITEM",
+                    reason="FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+                )
+                record.update({
+                    "state": opportunity["state"],
+                    "fail_closed_reason": opportunity["fail_closed_reason"],
+                    "reopens_on": opportunity["reopens_on"],
+                })
+                results.append(record)
+                continue
+            competitor_predicates = competitor_predicates_from_retrieval(
+                retrieval["ranked_competitors"]
+            )
+
         item = items.get(label)
         if item is None:
             transition_opportunity(
@@ -213,18 +357,39 @@ def run_safe_yield_wave(
             })
             results.append(record)
             continue
+        if plan_features is not None and item["stem_feature_map"] != plan_features:
+            raise SafeYieldWaveError(
+                f"{label}: the item's stem feature map disagrees with the plan's, so retrieval "
+                "and adjudication would not have run against the same stem"
+            )
+        stem_feature_map = {
+            "features": plan_features if plan_features is not None else item["stem_feature_map"]
+        }
+
+        if contrast_index is not None:
+            # An option the retrieval stage never produced was authored freehand,
+            # which is the practice this stage exists to remove. It is a
+            # construction error rather than a clinical outcome, so it is loud.
+            unretrieved = unretrieved_distractors(
+                item["options"], retrieval["ranked_competitors"]
+            )
+            if unretrieved:
+                raise SafeYieldWaveError(
+                    f"{label}: distractors were not produced by retrieval: {unretrieved}"
+                )
 
         transition_opportunity(opportunity, "CONTRAST_READY")
         transition_opportunity(opportunity, "GENERATABLE")
 
-        assignment = assignments[label]
         admissibility = adjudicate_option_set_admissibility(
             option_set_archetype=opportunity["option_set_archetype"],
             contract=contract,
             demanded_response_class=assignment["demanded_response_class"],
             options=item["options"],
             label_pool=label_pool,
-            stem_feature_map={"features": item["stem_feature_map"]},
+            stem_feature_map=stem_feature_map,
+            competitor_condition_predicates=competitor_predicates,
+            key_grounding_feature_ids=item.get("key_grounding_feature_ids"),
             enacted_action_signatures=entry.get("enacted_action_signatures", []),
         )
         for rule, verdict in admissibility["rule_verdicts"].items():

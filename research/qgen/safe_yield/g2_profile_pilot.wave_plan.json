@@ -1,0 +1,2268 @@
+{
+  "admissibility_probes": [
+    {
+      "demanded_response_class": "PROVIDES_SOURCE_CONTROL",
+      "discipline_profile_id": "SURGERY",
+      "expectation": "One strategy supplies no source control where the presentation demands it.",
+      "item_archetype": "OPERATIVE_VS_NONOPERATIVE",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Intravenous antibiotics alone with planned reassessment"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Image-guided percutaneous drainage with antibiotics"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Antibiotics now with interval appendectomy in six to eight weeks"
+        },
+        {
+          "key": "D",
+          "role": "KEY",
+          "text": "Urgent laparoscopic appendectomy"
+        }
+      ],
+      "probe_id": "PROBE-ADM1-SOURCE-CONTROL",
+      "targets_rule": "ADM_1"
+    },
+    {
+      "demanded_response_class": "ACUTE_ABDOMINAL_OR_PELVIC_PAIN",
+      "discipline_profile_id": "SURGERY",
+      "expectation": "The key is the sole holder of its organ system while every distractor shares one.",
+      "item_archetype": "RECOGNITION",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Pelvic inflammatory disease"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Ovarian torsion"
+        },
+        {
+          "key": "C",
+          "role": "KEY",
+          "text": "Acute appendicitis"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Tubo-ovarian abscess"
+        }
+      ],
+      "probe_id": "PROBE-ADM2-LONE-ORGAN-SYSTEM",
+      "targets_rule": "ADM_2"
+    },
+    {
+      "competitor_condition_predicates": {
+        "inflammatory breast cancer": [
+          {
+            "defeated": true,
+            "stem_feature_id": "F-PROBE-REAL"
+          }
+        ],
+        "lactational breast abscess": [
+          {
+            "defeated": true,
+            "stem_feature_id": "F-PROBE-REAL"
+          }
+        ],
+        "subacute mastitis": [
+          {
+            "defeated": true,
+            "stem_feature_id": "F-PROBE-PLANTED"
+          }
+        ]
+      },
+      "demanded_response_class": "PALPABLE_MASS_OR_FLUID_COLLECTION",
+      "discipline_profile_id": "OBGYN",
+      "expectation": "One competitor is defeated only by an absent finding that grounds nothing else.",
+      "item_archetype": "PREGNANCY_DATED_DIAGNOSIS",
+      "key_grounding_feature_ids": [
+        "F-PROBE-REAL"
+      ],
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Lactational breast abscess"
+        },
+        {
+          "key": "B",
+          "role": "KEY",
+          "text": "Breast phlegmon"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Subacute mastitis"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Inflammatory breast cancer"
+        }
+      ],
+      "probe_id": "PROBE-ADM3-PLANTED-NEGATION",
+      "stem_feature_map": [
+        {
+          "feature_id": "F-PROBE-PLANTED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT"
+        },
+        {
+          "feature_id": "F-PROBE-REAL",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT"
+        }
+      ],
+      "targets_rule": "ADM_3"
+    },
+    {
+      "demanded_response_class": "PATIENT_INSTRUCTION",
+      "discipline_profile_id": "OBGYN",
+      "enacted_action_signatures": [
+        {
+          "enactor": "PATIENT_PERFORMED",
+          "heads": [
+            "express"
+          ],
+          "objects": [
+            "affected_breast"
+          ]
+        }
+      ],
+      "expectation": "One option restates a practice the stem records the patient already performing.",
+      "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Continue expressing the affected breast after every feed"
+        },
+        {
+          "key": "B",
+          "role": "KEY",
+          "text": "Feed the infant on demand from the affected breast"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Apply a cold compress to the affected quadrant after feeds"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Shorten the interval between feeds on the affected side"
+        }
+      ],
+      "probe_id": "PROBE-ADM4-STEM-ENACTED",
+      "targets_rule": "ADM_4"
+    },
+    {
+      "demanded_response_class": "AUTONOMY",
+      "discipline_profile_id": "PHELO",
+      "expectation": "One option carries two figures where the others carry none.",
+      "item_archetype": "ETHICAL_ACTION",
+      "option_set_archetype": "ETHICAL_ACTION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "KEY",
+          "text": "State that 5 in 1000 invited people avoid a death and 100 in 1000 are recalled needlessly"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "State the chance of benefit in absolute rather than relative terms"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Describe what a positive result will lead to"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Say that participation is a choice and that declining changes nothing else"
+        }
+      ],
+      "probe_id": "PROBE-ADM5-FORMAT-PARITY",
+      "targets_rule": "ADM_5"
+    }
+  ],
+  "frozen": true,
+  "frozen_sha256": "0e1e7f3193336cedf8ef588fad4bcd91c49632d6aed26b4c86b245cb1e6caa78",
+  "plan": [
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/pilot/QGEN-MED-007.acs-chapter-review-pilot-10.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-G2-AORTIC-DISSECTION",
+          "CONCEPT-G2-PE",
+          "CONCEPT-G2-PERICARDITIS"
+        ],
+        "decisive_discriminator": "DISC-C21-DYNAMIC-ISCHAEMIC-TRACING-WITH-RISING-TROPONIN",
+        "learner_decision_id": "LD-C21-01",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "physician_activity": "Assessment/Diagnosis"
+      },
+      "opportunity_label": "G2-MED-01",
+      "planned_evidence_refs": [
+        "CLM-ACS-DIAGNOSIS-01",
+        "CLM-PE-DIAGNOSIS-01",
+        "CLM-AORTIC-DISSECTION-01",
+        "CLM-PERICARDITIS-01",
+        "CLM-GERD-01"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-DYNAMIC-ST-T-CHANGES",
+          "inference_type": "IMAGING_PATTERN",
+          "polarity": "PRESENT",
+          "source_span": "horizontal ST depression with T-wave inversion ... the depression has deepened"
+        },
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-TROPONIN-RISE-OR-FALL",
+          "inference_type": "LABORATORY_RESULT",
+          "polarity": "PRESENT",
+          "source_span": "the initial high-sensitivity troponin is above the upper reference limit and the repeat value is higher"
+        },
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "ST depression rather than ST elevation"
+        },
+        {
+          "clinical_role": "SYMPTOM_QUALITY",
+          "feature_id": "SF-C21-ABRUPT-MAXIMAL-AT-ONSET-PAIN",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "began while he was climbing stairs and has eased only slightly with rest"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-C21-PULSE-OR-BP-DIFFERENTIAL",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "blood pressure ... equal in both arms ... no pulse deficit"
+        },
+        {
+          "clinical_role": "SYMPTOM_QUALITY",
+          "feature_id": "SF-C21-PLEURITIC-POSITIONAL-PAIN",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "not sharp, does not change with posture or deep inspiration"
+        },
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-WIDESPREAD-ST-ELEVATION-PR-DEPRESSION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "the electrocardiogram shows horizontal ST depression"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-C21-PE-PRETEST-PROBABILITY-RAISED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "calves are soft and he has had no recent immobility, surgery or travel"
+        },
+        {
+          "clinical_role": "SYMPTOM_QUALITY",
+          "feature_id": "SF-C21-TYPICAL-REFLUX-SYMPTOMS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no heartburn or regurgitation"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/pilot/QGEN-MED-007.acs-chapter-review-pilot-10.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [],
+        "decisive_discriminator": "DISC-G2-MED-02-NOT-REALIZED",
+        "learner_decision_id": "LD-C21-05",
+        "option_set_archetype": "INVESTIGATION_SET",
+        "physician_activity": "Assessment/Diagnosis"
+      },
+      "opportunity_label": "G2-MED-02",
+      "planned_evidence_refs": [
+        "CLM-ACS-INVESTIGATION-01",
+        "CLM-ACS-DIAGNOSIS-01"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-NONDIAGNOSTIC-ECG",
+          "inference_type": "IMAGING_PATTERN",
+          "polarity": "PRESENT",
+          "source_span": "the electrocardiogram shows no ST-segment or T-wave change"
+        },
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-INITIAL-TROPONIN-NOT-ELEVATED",
+          "inference_type": "LABORATORY_RESULT",
+          "polarity": "PRESENT",
+          "source_span": "the initial high-sensitivity troponin is not elevated"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "SF-C21-SERIAL-TESTING-NOT-YET-DONE",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "presents two hours after an episode"
+        },
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no ST-segment or T-wave change"
+        },
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-TROPONIN-RISE-OR-FALL",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "the initial high-sensitivity troponin is not elevated"
+        },
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-DYNAMIC-ST-T-CHANGES",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no ST-segment or T-wave change"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-C21-PE-PRETEST-PROBABILITY-RAISED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no risk factors for venous thromboembolism"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/pilot/QGEN-MED-007.acs-chapter-review-pilot-10.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-G2-BETA-BLOCKER",
+          "CONCEPT-G2-DIURETIC",
+          "CONCEPT-G2-NITRATE"
+        ],
+        "decisive_discriminator": "DISC-C21-PRELOAD-DEPENDENT-HYPOTENSION",
+        "learner_decision_id": "LD-C21-04",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G2-MED-03",
+      "planned_evidence_refs": [
+        "CLM-ACS-RV-INFARCTION-STABILIZATION-01",
+        "CLM-ACS-AMI-CARDIOGENIC-SHOCK-01"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+          "inference_type": "IMAGING_PATTERN",
+          "polarity": "PRESENT",
+          "source_span": "ST elevation in leads II, III and aVF"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "blood pressure is 84/56 mmHg ... jugular venous pressure is elevated ... lung fields are clear"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-C21-PULMONARY-CONGESTION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no crackles and no oxygen requirement"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-C21-END-ORGAN-HYPOPERFUSION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "peripheries are warm, he is fully alert and his urine output has been maintained"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/pilot/QGEN-MED-007.acs-chapter-review-pilot-10.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-G2-LYSIS-DEFERRED-ANGIO",
+          "CONCEPT-G2-LYSIS-RESCUE-ONLY",
+          "CONCEPT-G2-PPCI-TRANSFER"
+        ],
+        "decisive_discriminator": "DISC-C21-TRANSFER-TIME-EXCEEDS-DEVICE-WINDOW",
+        "learner_decision_id": "LD-C21-02",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G2-MED-04",
+      "planned_evidence_refs": [
+        "CLM-ACS-PHARMACOINVASIVE-01",
+        "CLM-ACS-FIBRINOLYSIS-CONTRA-PPCI-01",
+        "CLM-ACS-REPERFUSION-NO-DELAY-01"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+          "inference_type": "IMAGING_PATTERN",
+          "polarity": "PRESENT",
+          "source_span": "ST elevation in leads V2 to V4"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "SF-C21-DEVICE-TIME-EXCEEDS-WINDOW",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "the time from first medical contact to device would be about four hours"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "SF-C21-DEVICE-TIME-WITHIN-WINDOW",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "reached by fixed-wing air transfer"
+        },
+        {
+          "clinical_role": "HISTORY",
+          "feature_id": "SF-C21-FIBRINOLYSIS-ABSOLUTE-CONTRAINDICATION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "never had a stroke or intracranial bleeding, has had no recent surgery, trauma or bleeding"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [
+        {
+          "heads": [
+            "GIVE",
+            "START",
+            "ADMINISTER"
+          ],
+          "objects": [
+            "ASPIRIN",
+            "PARENTERAL_ANTICOAGULATION"
+          ]
+        }
+      ],
+      "evidence_packet": "research/qgen/pilot/QGEN-MED-007.acs-chapter-review-pilot-10.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-G2-ADMIT-STRESS-FIRST",
+          "CONCEPT-G2-OBSERVE-NO-PLAN",
+          "CONCEPT-G2-OUTPATIENT-STRESS"
+        ],
+        "decisive_discriminator": "DISC-C21-HIGH-RISK-CRITERION-SURVIVES-SYMPTOM-RESOLUTION",
+        "learner_decision_id": "LD-C21-06",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G2-MED-05",
+      "planned_evidence_refs": [
+        "CLM-ACS-NSTE-HIGH-RISK-DISPOSITION-01",
+        "CLM-ACS-NSTE-INITIAL-ANTITHROMBOTIC-01"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-TROPONIN-RISE-OR-FALL",
+          "inference_type": "LABORATORY_RESULT",
+          "polarity": "PRESENT",
+          "source_span": "a rise and then a fall in a pattern compatible with myocardial infarction"
+        },
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-DYNAMIC-ST-T-CHANGES",
+          "inference_type": "IMAGING_PATTERN",
+          "polarity": "PRESENT",
+          "source_span": "deep T-wave inversion in the lateral leads ... the current tracing has returned to her baseline"
+        },
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "T-wave inversion in the lateral leads"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-C21-END-ORGAN-HYPOPERFUSION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "She is warm and well perfused and her renal function is normal"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [],
+        "decisive_discriminator": "DISC-G2-OBGYN-01-NOT-REALIZED",
+        "learner_decision_id": "LD-OB54-01",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "physician_activity": "Assessment/Diagnosis"
+      },
+      "opportunity_label": "G2-OBGYN-01",
+      "planned_evidence_refs": [
+        "CLM-R2-OB-ABSCESS",
+        "CLM-R4-OB-PHLEGMON",
+        "CLM-R2-OB-MASTITIS-ANCHOR",
+        "CLM-R4-OB-GALACTOCELE",
+        "CLM-R2-OB-IBC"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-FLUCTUANT-COLLECTION",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "a well-defined tender area in the lower outer quadrant that is fluctuant on palpation"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "Her temperature is 38.4 degrees Celsius and she has had rigors"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "overlying erythema and oedema"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "fluctuant on palpation"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-MASS-DECREASES-AFTER-FEED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "The area does not change in size after a feed"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-SKIN-THICKENING-PEAU-DORANGE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "The skin over the breast is not thickened or dimpled and the nipple is not retracted"
+        },
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-OB54-NEEDLE-LIKE-BURNING-PAIN-BLEBS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no burning needle-like pain and no nipple blebs"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-BILATERAL-DAY-3-TO-5",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "the left breast is soft and comfortable"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-MILD-FOCAL-INDURATION-NO-SYSTEMIC",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "she has had rigors"
+        },
+        {
+          "clinical_role": "HISTORY",
+          "feature_id": "SF-OB54-RECURRENCE-SAME-LOCATION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "this is the first time this part of the breast has been affected"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-R4-SU-MI-31-MAMMOGRAPHY",
+          "CONCEPT-R4-SU-MI-32-ASPIRATION",
+          "CONCEPT-R4-SU-OB-54-MILK-CULTURE"
+        ],
+        "decisive_discriminator": "DISC-OB54-RESIDUAL-MASS-NEEDS-A-STRUCTURAL-ANSWER",
+        "learner_decision_id": "LD-OB54-02",
+        "option_set_archetype": "INVESTIGATION_SET",
+        "physician_activity": "Assessment/Diagnosis"
+      },
+      "opportunity_label": "G2-OBGYN-02",
+      "planned_evidence_refs": [
+        "CLM-R4-OB-PHLEGMON",
+        "CLM-R2-OB-ABSCESS-US",
+        "CLM-R2-OB-INFLAMMATORY-MARKERS",
+        "CLM-R2-OB-MILK-CULTURE"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "A firm, tender, mass-like area without fluctuance remains at the affected site"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Her fever settled within the first day"
+        },
+        {
+          "clinical_role": "TIME_COURSE",
+          "feature_id": "SF-OB54-NO-IMPROVEMENT-AFTER-48H",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "she improved promptly on oral antibiotics ... there was no point at which she failed to respond to first-line therapy"
+        },
+        {
+          "clinical_role": "TIME_COURSE",
+          "feature_id": "SF-OB54-PERSISTENT-MASS-AFTER-INFLAMMATION-RESOLVED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Residual erythema is still present over it, so the inflammation has not fully resolved"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-SKIN-THICKENING-PEAU-DORANGE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "The skin is not thickened and the nipple is not retracted"
+        },
+        {
+          "clinical_role": "INVESTIGATION_RESULT",
+          "feature_id": "SF-OB54-FLUID-COLLECTION-ESTABLISHED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "A firm, tender, mass-like area without fluctuance"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [
+        {
+          "heads": [
+            "START",
+            "GIVE",
+            "PRESCRIBE"
+          ],
+          "objects": [
+            "ORAL_ANTIBIOTICS",
+            "ANALGESIA"
+          ]
+        }
+      ],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-R4-SU-OB-54-DISCARD",
+          "CONCEPT-R4-SU-OB-54-EMPTY",
+          "CONCEPT-R4-SU-P-005-DANGLE"
+        ],
+        "decisive_discriminator": "DISC-OB54-MASTITIS-IS-NOT-A-CONTRAINDICATION-TO-FEEDING",
+        "learner_decision_id": "LD-OB54-03",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Communication"
+      },
+      "opportunity_label": "G2-OBGYN-03",
+      "planned_evidence_refs": [
+        "CLM-R2-OB-CONTINUE-FEEDING",
+        "CLM-R2-OB-NO-EMPTY",
+        "CLM-R2-OB-FEEDBACK",
+        "CLM-R4-OB-DANGLE",
+        "CLM-R4-OB-NIPPLE-SHIELD",
+        "CLM-R2-OB-DEEP-MASSAGE"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "a temperature of 38.2 degrees Celsius and chills"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "a wedge of erythema and induration in the upper outer quadrant"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-OB54-INFANT-FEEDING-CONTRAINDICATION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "there is nothing that would prevent him receiving milk from either breast"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-OB54-HYPERLACTATION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Her milk supply has been comfortable and matched to his demand"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-FLUCTUANT-COLLECTION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "a wedge of erythema and induration"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [],
+        "decisive_discriminator": "DISC-G2-OBGYN-04-NOT-REALIZED",
+        "learner_decision_id": "LD-OB54-05",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G2-OBGYN-04",
+      "planned_evidence_refs": [
+        "CLM-R4-OB-NO-ADMIT",
+        "CLM-R2-OB-MASTITIS-ANCHOR",
+        "CLM-R4-OB-ICE-NSAID"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "Her temperature is 38.3 degrees Celsius"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "bacterial mastitis of the left breast"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-FLUCTUANT-COLLECTION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "bacterial mastitis of the left breast"
+        },
+        {
+          "clinical_role": "TIME_COURSE",
+          "feature_id": "SF-OB54-NO-IMPROVEMENT-AFTER-48H",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "three weeks postpartum with bacterial mastitis"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-OB54-INFANT-FEEDING-CONTRAINDICATION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "No resistant organism has ever been isolated from her"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [],
+        "decisive_discriminator": "DISC-G2-OBGYN-05-NOT-REALIZED",
+        "learner_decision_id": "LD-OB54-06",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G2-OBGYN-05",
+      "planned_evidence_refs": [
+        "CLM-R4-OB-ABSCESS-DRAIN",
+        "CLM-R2-OB-ABSCESS-US",
+        "CLM-R2-OB-ABSCESS"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "INVESTIGATION_RESULT",
+          "feature_id": "SF-OB54-FLUID-COLLECTION-ESTABLISHED",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "ultrasonography ... demonstrates a well-defined fluid collection"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-FLUCTUANT-COLLECTION",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "a well-defined fluid collection"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "Her temperature is 38.5 degrees Celsius"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "a well-defined fluid collection"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-OB54-INFANT-FEEDING-CONTRAINDICATION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "She wishes to continue breastfeeding"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-R4-SU-OT-56-FOREIGN-BODY",
+          "CONCEPT-R4-SU-P-146-ASTHMA",
+          "CONCEPT-R4-SU-P-149-PNEUMONIA"
+        ],
+        "decisive_discriminator": "DISC-P147-FIRST-WHEEZE-AFTER-PRODROME-WITH-DIFFUSE-FINDINGS",
+        "learner_decision_id": "LD-P147-01",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "physician_activity": "Assessment/Diagnosis"
+      },
+      "opportunity_label": "G2-PED-01",
+      "planned_evidence_refs": [
+        "CLM-R2-PED-DX-ANCHOR",
+        "CLM-R2-PED-DDX-TABLE",
+        "CLM-R2-PED-CXR-INDICATION"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "DEMOGRAPHIC",
+          "feature_id": "SF-P147-AGE-UNDER-12M",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "A 7-month-old boy"
+        },
+        {
+          "clinical_role": "HISTORY",
+          "feature_id": "SF-P147-FIRST-WHEEZE",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "the first time he has ever wheezed"
+        },
+        {
+          "clinical_role": "TIME_COURSE",
+          "feature_id": "SF-P147-VIRAL-PRODROME",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "began with fever, cough and a runny nose"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "air entry is equal throughout, with no focal area of reduced or altered air entry"
+        },
+        {
+          "clinical_role": "HISTORY",
+          "feature_id": "SF-P147-ATOPY-OR-RECURRENCE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no eczema or other atopy and there is no family history of asthma"
+        },
+        {
+          "clinical_role": "TIME_COURSE",
+          "feature_id": "SF-P147-ABRUPT-ONSET-NO-PRODROME",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "There was no choking episode"
+        },
+        {
+          "clinical_role": "TIME_COURSE",
+          "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "his illness has followed the course his parents were told to expect"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "oxygen saturation is 94% in room air"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-R4-SU-P-147-CBC",
+          "CONCEPT-R4-SU-P-147-CONTINUOUS-MONITORING",
+          "CONCEPT-R4-SU-R-05-CXR"
+        ],
+        "decisive_discriminator": "DISC-P147-LOWER-RISK-IMPROVING-INFANT",
+        "learner_decision_id": "LD-P147-02",
+        "option_set_archetype": "INVESTIGATION_SET",
+        "physician_activity": "Assessment/Diagnosis"
+      },
+      "opportunity_label": "G2-PED-02",
+      "planned_evidence_refs": [
+        "CLM-R4-PED-MONITORING",
+        "CLM-R4-PED-CONTINUOUS",
+        "CLM-R2-PED-INV-ANCHOR"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "DEMOGRAPHIC",
+          "feature_id": "SF-P147-AGE-UNDER-12M",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "A 9-month-old girl"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-P147-HIGH-RISK-EARLY-COURSE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no chronic lung or cardiac disease and is not immunocompromised ... in the fourth day of her illness"
+        },
+        {
+          "clinical_role": "TIME_COURSE",
+          "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Her work of breathing has clearly improved ... her course has been as expected"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "The diagnosis has not been in doubt at any point"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "SF-P147-INFECTION-CONTROL-NEED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "She is in a single room and no cohorting decision is outstanding"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "her course has been as expected"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "SF-P147-HYPOXEMIA",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "maintaining saturations above 90% in room air"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-R4-SU-A-12-HFNC",
+          "CONCEPT-R4-SU-P-055-NG-FLUIDS",
+          "CONCEPT-R4-SU-P-147-EPINEPHRINE"
+        ],
+        "decisive_discriminator": "DISC-P147-SATURATION-BELOW-TREATMENT-LEVEL-WITH-STABLE-WORK-OF-BREATHING",
+        "learner_decision_id": "LD-P147-03",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G2-PED-03",
+      "planned_evidence_refs": [
+        "CLM-R2-PED-OXYGEN",
+        "CLM-R4-PED-HFNC",
+        "CLM-R4-PED-EPINEPHRINE",
+        "CLM-R2-PED-SALBUTAMOL",
+        "CLM-R4-PED-HYPERTONIC"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "DEMOGRAPHIC",
+          "feature_id": "SF-P147-AGE-UNDER-12M",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "A 5-month-old girl"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "SF-P147-HYPOXEMIA",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "oxygen saturation of 88% in room air on two separate measurements"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "work of breathing has been stable over the past six hours and no member of the team has raised the question of non-invasive support or intensive care"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-P147-NASAL-OBSTRUCTION-LIMITING-FEEDS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Her nose is clear"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-P147-UNSAFE-ORAL-INTAKE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "taking about two thirds of her usual feeds without coughing or spluttering"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "SF-P147-ED-SETTING",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "admitted to the paediatric ward"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [],
+        "decisive_discriminator": "DISC-G2-PED-04-NOT-REALIZED",
+        "learner_decision_id": "LD-P147-04",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G2-PED-04",
+      "planned_evidence_refs": [
+        "CLM-R4-PED-DISCHARGE",
+        "CLM-R4-PED-ADMIT",
+        "CLM-R4-PED-CONTINUOUS"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "DEMOGRAPHIC",
+          "feature_id": "SF-P147-AGE-UNDER-12M",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "An 8-month-old boy"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-P147-DISCHARGE-CRITERIA-MET",
+          "inference_type": "DERIVED_JUDGEMENT",
+          "polarity": "PRESENT",
+          "source_span": "off supplemental oxygen for eighteen hours ... breastfeeding to his usual volume ... a clinic review has been arranged"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "SF-P147-HYPOXEMIA",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "maintained saturations above 90% throughout that period"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "only mild intercostal recession"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-P147-UNSAFE-ORAL-INTAKE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "breastfeeding to his usual volume without coughing or spluttering"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-P147-NASAL-OBSTRUCTION-LIMITING-FEEDS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "His nose is clear"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-P147-HIGH-RISK-EARLY-COURSE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "born at term and has no chronic lung or cardiac disease"
+        },
+        {
+          "clinical_role": "TIME_COURSE",
+          "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "respiratory rate has fallen from 62 to 40 breaths/min"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "SF-P147-ED-SETTING",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "He remains on the ward"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [
+        {
+          "heads": [
+            "GIVE",
+            "START",
+            "BEGIN"
+          ],
+          "objects": [
+            "LOW_FLOW_OXYGEN"
+          ]
+        }
+      ],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-R4-SU-A-12-HFNC",
+          "CONCEPT-R4-SU-P-147-EPINEPHRINE",
+          "CONCEPT-R4-SU-P-147-HYPERTONIC"
+        ],
+        "decisive_discriminator": "DISC-P147-ORAL-INTAKE-UNSAFE-AT-HIGH-RESPIRATORY-RATE",
+        "learner_decision_id": "LD-P147-05",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G2-PED-05",
+      "planned_evidence_refs": [
+        "CLM-R4-PED-FEEDING",
+        "CLM-R4-PED-FLUIDS"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "DEMOGRAPHIC",
+          "feature_id": "SF-P147-AGE-UNDER-12M",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "A 4-month-old girl"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-P147-UNSAFE-ORAL-INTAKE",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "coughs and splutters at the breast ... taken about a third of her usual intake, her mucous membranes are dry"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "SF-P147-HYPOXEMIA",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "receiving low-flow oxygen by nasal prongs and her saturation is 93%"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "work of breathing has not changed over those twelve hours and she is not being considered for non-invasive support or intensive care"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-P147-NASAL-OBSTRUCTION-LIMITING-FEEDS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Her nose is clear"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "SF-P147-ED-SETTING",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "She is on the paediatric ward"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-R4-SU-PH-07-LENGTH",
+          "CONCEPT-R4-SU-PH-07-OVERDIAGNOSIS",
+          "CONCEPT-R4-SU-PH-12-HEALTHY-SCREENEE"
+        ],
+        "decisive_discriminator": "DISC-PH07-SURVIVAL-FROM-DIAGNOSIS-MOVES-ALONE",
+        "learner_decision_id": "LD-PH07-01",
+        "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+        "physician_activity": "Professional Behaviours"
+      },
+      "opportunity_label": "G2-PHELO-01",
+      "planned_evidence_refs": [
+        "CLM-R2-PHELO-LEAD-TIME",
+        "CLM-R2-PHELO-LENGTH",
+        "CLM-R2-PHELO-OVERDIAGNOSIS",
+        "CLM-R2-PHELO-HEALTHY-VOLUNTEER"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-SURVIVAL-LONGER-IN-SCREENED",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "mean survival measured from the date of diagnosis is four years longer in the invited group"
+        },
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-MORTALITY-UNCHANGED",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "the number of deaths from the cancer is also the same in both groups"
+        },
+        {
+          "clinical_role": "STUDY_DESIGN",
+          "feature_id": "SF-PH07-RANDOMISED-EQUAL-GROUPS",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "randomly allocated to be invited or not invited, and the two groups were comparable at baseline"
+        },
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-INCIDENCE-EQUAL-BETWEEN-GROUPS",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "the cumulative number of people diagnosed with the cancer is the same in both groups"
+        },
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-MORE-CASES-DIAGNOSED-IN-SCREENED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "the cumulative number of people diagnosed with the cancer is the same in both groups"
+        },
+        {
+          "clinical_role": "STUDY_DESIGN",
+          "feature_id": "SF-PH07-SELF-SELECTED-GROUPS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Participants were randomly allocated"
+        },
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-INDOLENT-VARIANT-OVERREPRESENTED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "the same distribution of tumour grades and growth rates in the two groups"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-G2-VOLUNTARY-STATEMENT",
+          "CONCEPT-R4-SU-PH-07-DETECTION-COUNT",
+          "CONCEPT-R4-SU-PH-07-TEST-PERFORMANCE"
+        ],
+        "decisive_discriminator": "DISC-PH07-RELATIVE-FIGURE-CANNOT-SUPPORT-AN-INFORMED-CHOICE",
+        "learner_decision_id": "LD-PH07-02",
+        "option_set_archetype": "ETHICAL_ACTION_SET",
+        "physician_activity": "Communication"
+      },
+      "opportunity_label": "G2-PHELO-02",
+      "planned_evidence_refs": [
+        "CLM-R4-PHELO-ABSOLUTE",
+        "CLM-R4-PHELO-FALSEPOS",
+        "CLM-R2-PHELO-ACCEPTABILITY",
+        "CLM-R4-PHELO-CONSENT-CRITERION",
+        "CLM-R2-PHELO-REMINDERS"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "states only that screening reduces the risk of dying from the disease by thirty per cent"
+        },
+        {
+          "clinical_role": "PROGRAMME_OBJECTIVE",
+          "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "the objective of this revision is to protect the autonomy of the people invited"
+        },
+        {
+          "clinical_role": "PROGRAMME_OBJECTIVE",
+          "feature_id": "SF-PH07-UPTAKE-IS-THE-STATED-OBJECTIVE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "raising uptake is explicitly not the objective of this revision"
+        },
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "feature_id": "SF-PH07-DENOMINATOR-AND-HARMS-PRESENT",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "It gives no absolute figures, no denominator, and no description of the harms of screening"
+        },
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "feature_id": "SF-PH07-AUDIENCE-CAN-INTERPRET-TEST-METRICS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "figures expressing test performance are not reliably interpreted by the readers"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-R4-SU-PH-07-EVALUATE",
+          "CONCEPT-R4-SU-PH-07-PILOT",
+          "CONCEPT-R4-SU-PH-25-ECONOMIC"
+        ],
+        "decisive_discriminator": "DISC-PH07-ABSOLUTE-SHORTFALL-IN-THE-CONFIRMATORY-PATHWAY",
+        "learner_decision_id": "LD-PH07-03",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G2-PHELO-03",
+      "planned_evidence_refs": [
+        "CLM-R2-PHELO-FACILITIES",
+        "CLM-R4-PHELO-HARM-LABEL",
+        "CLM-R2-PHELO-ACCEPTED-TREATMENT",
+        "CLM-R4-PHELO-EVALUATION",
+        "CLM-R4-PHELO-ECONOMIC",
+        "CLM-R2-PHELO-CUTOFF"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "PROGRAMME_CAPACITY",
+          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "one diagnostic clinic for confirmatory testing, its current waiting time is fourteen months, and there is no funded pathway to treatment"
+        },
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "feature_id": "SF-PH07-GOALS-AND-EVALUATION-DEFINED",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "The programme has written goals and an evaluation plan"
+        },
+        {
+          "clinical_role": "PROGRAMME_CAPACITY",
+          "feature_id": "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "The authority has costed the additional capacity and has the money"
+        },
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "feature_id": "SF-PH07-THRESHOLD-TOO-FAR-TOWARD-LOW-RISK",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "modelling shows it sits appropriately between the low-risk and high-risk ends of the scale"
+        },
+        {
+          "clinical_role": "PROGRAMME_OBJECTIVE",
+          "feature_id": "SF-PH07-VALUE-FOR-MONEY-IS-THE-OPEN-QUESTION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "a completed economic evaluation shows it to be good value for money"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [],
+        "decisive_discriminator": "DISC-G2-PHELO-04-NOT-REALIZED",
+        "learner_decision_id": "LD-PH07-04",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G2-PHELO-04",
+      "planned_evidence_refs": [
+        "CLM-R4-PHELO-INTERVAL",
+        "CLM-R2-PHELO-COST-CONTINUITY",
+        "CLM-R4-PHELO-EVALUATION"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "feature_id": "SF-PH07-GOALS-AND-EVALUATION-DEFINED",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "designing a new national screening programme"
+        },
+        {
+          "clinical_role": "PROGRAMME_CAPACITY",
+          "feature_id": "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "It also has data on the annual budget"
+        },
+        {
+          "clinical_role": "PROGRAMME_CAPACITY",
+          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "designing a new national screening programme"
+        },
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "feature_id": "SF-PH07-THRESHOLD-TOO-FAR-TOWARD-LOW-RISK",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "the sensitivity of the test in the target population"
+        },
+        {
+          "clinical_role": "PROGRAMME_OBJECTIVE",
+          "feature_id": "SF-PH07-VALUE-FOR-MONEY-IS-THE-OPEN-QUESTION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "must set the interval between screens"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-G2-LEAD-TIME",
+          "CONCEPT-R4-SU-PH-07-LENGTH",
+          "CONCEPT-R4-SU-PH-07-OVERDIAGNOSIS"
+        ],
+        "decisive_discriminator": "DISC-PH07-LOWER-MORTALITY-FROM-UNRELATED-CAUSES",
+        "learner_decision_id": "LD-PH07-05",
+        "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+        "physician_activity": "Professional Behaviours"
+      },
+      "opportunity_label": "G2-PHELO-05",
+      "planned_evidence_refs": [
+        "CLM-R2-PHELO-HEALTHY-VOLUNTEER",
+        "CLM-R2-PHELO-LEAD-TIME",
+        "CLM-R2-PHELO-LENGTH",
+        "CLM-R2-PHELO-OVERDIAGNOSIS"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "STUDY_DESIGN",
+          "feature_id": "SF-PH07-SELF-SELECTED-GROUPS",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "Attendance was entirely voluntary and no one was allocated to a group"
+        },
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-INCIDENCE-EQUAL-BETWEEN-GROUPS",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "The cumulative number of people diagnosed with the disease is the same in both groups"
+        },
+        {
+          "clinical_role": "STUDY_DESIGN",
+          "feature_id": "SF-PH07-RANDOMISED-EQUAL-GROUPS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no one was allocated to a group ... less likely to smoke and more likely to exercise at baseline"
+        },
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-SURVIVAL-LONGER-IN-SCREENED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "survival measured from diagnosis does not differ between the groups"
+        },
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-MORE-CASES-DIAGNOSED-IN-SCREENED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "The cumulative number of people diagnosed with the disease is the same in both groups"
+        },
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-INDOLENT-VARIANT-OVERREPRESENTED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "the distribution of tumour grades and growth rates is the same"
+        },
+        {
+          "clinical_role": "STUDY_RESULT",
+          "feature_id": "SF-PH07-MORTALITY-UNCHANGED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "the attenders have lower mortality from the screened disease"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-R4-SU-E-30-HYPOTHYROID",
+          "CONCEPT-R4-SU-PS-12-PDD",
+          "CONCEPT-R4-SU-PS-14-BD2"
+        ],
+        "decisive_discriminator": "DISC-PS12-DISCRETE-EPISODES-WITH-INTEREPISODE-RECOVERY",
+        "learner_decision_id": "LD-PS12-01",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "physician_activity": "Assessment/Diagnosis"
+      },
+      "opportunity_label": "G2-PSY-01",
+      "planned_evidence_refs": [
+        "CLM-R2-PSY-DX-ANCHOR",
+        "CLM-R2-PSY-PDD",
+        "CLM-R2-PSY-BD-II",
+        "CLM-R2-PSY-BD-MISDX",
+        "CLM-R2-PSY-DDX-MEDICAL"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "six weeks of low mood, loss of interest, early morning waking, poor concentration and a five-kilogram weight loss"
+        },
+        {
+          "clinical_role": "LONGITUDINAL_COURSE",
+          "feature_id": "SF-PS12-INTEREPISODE-RECOVERY",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "between the two episodes he worked full time, socialised normally and described himself as well"
+        },
+        {
+          "clinical_role": "COLLATERAL_SOURCE",
+          "feature_id": "SF-PS12-COLLATERAL-AVAILABLE",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "His wife, seen separately"
+        },
+        {
+          "clinical_role": "LONGITUDINAL_COURSE",
+          "feature_id": "SF-PS12-CHRONIC-2YR-COURSE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "there has never been a two-year stretch of low-grade symptoms"
+        },
+        {
+          "clinical_role": "LONGITUDINAL_COURSE",
+          "feature_id": "SF-PS12-PAST-HYPOMANIC-PERIOD",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "has never observed a period of elevated or expansive mood, reduced need for sleep or uncharacteristically increased activity"
+        },
+        {
+          "clinical_role": "INVESTIGATION_RESULT",
+          "feature_id": "SF-PS12-ABNORMAL-TSH",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Thyroid stimulating hormone ... within normal limits"
+        },
+        {
+          "clinical_role": "INVESTIGATION_RESULT",
+          "feature_id": "SF-PS12-ABNORMAL-CBC",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "complete blood count ... within normal limits"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [],
+        "decisive_discriminator": "DISC-G2-PSY-02-NOT-REALIZED",
+        "learner_decision_id": "LD-PS12-02",
+        "option_set_archetype": "DISPOSITION_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G2-PSY-02",
+      "planned_evidence_refs": [
+        "CLM-R2-PSY-INPATIENT",
+        "CLM-R2-PSY-SAFETY-PLAN",
+        "CLM-R2-PSY-RISK-SCALE"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "EXPLICIT_RISK_INVENTORY",
+          "feature_id": "SF-PS12-HIGH-IMMINENT-SUICIDE-RISK",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "says she intends to act on it and states that she cannot agree to stay safe"
+        },
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "a severe depressive episode with three weeks of worsening symptoms"
+        },
+        {
+          "clinical_role": "COLLATERAL_SOURCE",
+          "feature_id": "SF-PS12-COLLATERAL-AVAILABLE",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "her sister says she cannot supervise her"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-SAFETY-SECURED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "her safety has not been secured"
+        },
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-PS12-PSYCHOTIC-FEATURES",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "has no psychotic symptoms"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-R4-SU-PS-03-CBT",
+          "CONCEPT-R4-SU-PS-03-DIGITAL",
+          "CONCEPT-R4-SU-PS-67-EXERCISE"
+        ],
+        "decisive_discriminator": "DISC-PS12-PREFERENCE-DECIDES-WHEN-ACCESS-IS-UNCONSTRAINED",
+        "learner_decision_id": "LD-PS12-03",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G2-PSY-03",
+      "planned_evidence_refs": [
+        "CLM-R2-PSY-MODERATE-CHOICE",
+        "CLM-R4-PSY-PSYCHOTHERAPY",
+        "CLM-R4-PSY-COMBINED",
+        "CLM-R2-PSY-FIRST-LINE",
+        "CLM-R4-PSY-DIGITAL"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "a first major depressive episode of moderate severity that has lasted two months"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-MODERATE-SEVERITY",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "of moderate severity"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-MILD-SEVERITY",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "affecting her work"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "her safety risk has been assessed as low"
+        },
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-PS12-PSYCHOTIC-FEATURES",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no psychotic features"
+        },
+        {
+          "clinical_role": "PATIENT_PREFERENCE",
+          "feature_id": "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "she has thought about talking therapy and does not want it"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "SF-PS12-PSYCHOTHERAPY-INACCESSIBLE-IN-PERSON",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Structured psychotherapy is in fact readily available in her city, in person and digitally"
+        },
+        {
+          "clinical_role": "EXPLICIT_RISK_INVENTORY",
+          "feature_id": "SF-PS12-HIGH-IMMINENT-SUICIDE-RISK",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "She has no suicidal ideation"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-R4-SU-PS-03-CBT",
+          "CONCEPT-R4-SU-PS-12-COMBINED",
+          "CONCEPT-R4-SU-PS-67-EXERCISE"
+        ],
+        "decisive_discriminator": "DISC-PS12-ACCESS-SELECTS-THE-FORMAT-NOT-THE-MODALITY",
+        "learner_decision_id": "LD-PS12-05",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G2-PSY-04",
+      "planned_evidence_refs": [
+        "CLM-R4-PSY-DIGITAL",
+        "CLM-R4-PSY-PSYCHOTHERAPY",
+        "CLM-R2-PSY-MODERATE-CHOICE"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "a major depressive episode of moderate severity"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-MODERATE-SEVERITY",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "of moderate severity"
+        },
+        {
+          "clinical_role": "PATIENT_PREFERENCE",
+          "feature_id": "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "does not want to take medication, and that he would like a talking therapy"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "SF-PS12-PSYCHOTHERAPY-INACCESSIBLE-IN-PERSON",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "The nearest in-person structured psychotherapy service is a four-hour drive away and has a waiting list of many months"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-MILD-SEVERITY",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "of moderate severity"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "his safety risk is low"
+        },
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-PS12-PSYCHOTIC-FEATURES",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no psychotic features"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-G2-ANTIDEPRESSANT-ALONE",
+          "CONCEPT-G2-ECT",
+          "CONCEPT-R4-SU-PS-12-COMBINED"
+        ],
+        "decisive_discriminator": "DISC-PS12-PSYCHOTIC-FEATURES-CHANGE-THE-RECOMMENDATION",
+        "learner_decision_id": "LD-PS12-06",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G2-PSY-05",
+      "planned_evidence_refs": [
+        "CLM-R2-PSY-ANTIPSYCHOTIC",
+        "CLM-R2-PSY-ECT",
+        "CLM-R4-PSY-COMBINED",
+        "CLM-R2-PSY-MODERATE-CHOICE"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "a severe major depressive episode"
+        },
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-PS12-PSYCHOTIC-FEATURES",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "convinced, against all evidence, that his internal organs have rotted away"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-SAFETY-SECURED",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "admission has already secured his safety"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "he is being punished, and he cannot be reasoned out of this belief"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-MILD-SEVERITY",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "a severe major depressive episode"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-PS12-MODERATE-SEVERITY",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "a severe major depressive episode"
+        },
+        {
+          "clinical_role": "EXPLICIT_RISK_INVENTORY",
+          "feature_id": "SF-PS12-HIGH-IMMINENT-SUICIDE-RISK",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "has no suicidal intent"
+        },
+        {
+          "clinical_role": "PATIENT_PREFERENCE",
+          "feature_id": "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "He has had no previous psychiatric treatment"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-R4-SU-E-30-HYPOTHYROID",
+          "CONCEPT-R4-SU-PS-12-PDD",
+          "CONCEPT-R4-SU-PS-14-BD2"
+        ],
+        "decisive_discriminator": "DISC-PS12-DISCRETE-EPISODES-WITH-INTEREPISODE-RECOVERY",
+        "learner_decision_id": "LD-PS12-01",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "physician_activity": "Assessment/Diagnosis"
+      },
+      "opportunity_label": "G2-PSY-06",
+      "planned_evidence_refs": [
+        "CLM-R2-PSY-DX-ANCHOR",
+        "CLM-R2-PSY-PDD",
+        "CLM-R2-PSY-BD-II",
+        "CLM-R2-PSY-BD-MISDX",
+        "CLM-R2-PSY-DDX-MEDICAL"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "six weeks of low mood, loss of interest, early morning waking, poor concentration and a five-kilogram weight loss"
+        },
+        {
+          "clinical_role": "LONGITUDINAL_COURSE",
+          "feature_id": "SF-PS12-INTEREPISODE-RECOVERY",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "between the two episodes he worked full time, socialised normally and described himself as well"
+        },
+        {
+          "clinical_role": "COLLATERAL_SOURCE",
+          "feature_id": "SF-PS12-COLLATERAL-AVAILABLE",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "His wife, seen separately"
+        },
+        {
+          "clinical_role": "LONGITUDINAL_COURSE",
+          "feature_id": "SF-PS12-CHRONIC-2YR-COURSE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "there has never been a two-year stretch of low-grade symptoms"
+        },
+        {
+          "clinical_role": "LONGITUDINAL_COURSE",
+          "feature_id": "SF-PS12-PAST-HYPOMANIC-PERIOD",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "has never observed a period of elevated or expansive mood, reduced need for sleep or uncharacteristically increased activity"
+        },
+        {
+          "clinical_role": "INVESTIGATION_RESULT",
+          "feature_id": "SF-PS12-ABNORMAL-TSH",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "Thyroid stimulating hormone ... within normal limits"
+        },
+        {
+          "clinical_role": "INVESTIGATION_RESULT",
+          "feature_id": "SF-PS12-ABNORMAL-CBC",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "complete blood count ... within normal limits"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-R4-SU-ER-09-TORSION",
+          "CONCEPT-R4-SU-GY-19-PID",
+          "CONCEPT-R4-SU-GY-19-TOA"
+        ],
+        "decisive_discriminator": "DISC-GS76-MIGRATION-WITH-INFLAMMATORY-FINDINGS-AND-CLEAR-PELVIS",
+        "learner_decision_id": "LD-GS76-01",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "physician_activity": "Assessment/Diagnosis"
+      },
+      "opportunity_label": "G2-SURG-01",
+      "planned_evidence_refs": [
+        "CLM-R4-SURG-ALVARADO-COMPONENTS",
+        "CLM-R2-SURG-ALVARADO",
+        "CLM-R4-SURG-FEMALE-DDX",
+        "CLM-R4-SURG-PID-CRITERIA",
+        "CLM-R4-SURG-TOA-ONSET"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "began around the umbilicus and has since settled in the right lower quadrant"
+        },
+        {
+          "clinical_role": "DEMOGRAPHIC",
+          "feature_id": "SF-GS76-FEMALE-REPRODUCTIVE-AGE",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "A 24-year-old woman"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-GS76-CERVICAL-MOTION-OR-ADNEXAL-TENDERNESS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no cervical motion tenderness, no adnexal tenderness"
+        },
+        {
+          "clinical_role": "INVESTIGATION_RESULT",
+          "feature_id": "SF-GS76-ADNEXAL-MASS-5CM-OR-MORE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "there is no known adnexal mass and no previous pelvic imaging"
+        },
+        {
+          "clinical_role": "TIME_COURSE",
+          "feature_id": "SF-GS76-GRADUAL-ONSET-PELVIC-INFECTION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "eighteen hours of abdominal pain that began around the umbilicus"
+        },
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "urinalysis shows no blood. She has no flank or groin pain"
+        },
+        {
+          "clinical_role": "DEMOGRAPHIC",
+          "feature_id": "SF-GS76-PREGNANT",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "A urine pregnancy test is negative"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-R4-SU-GS-02-OBSERVE",
+          "CONCEPT-R4-SU-GS-76-LAPAROSCOPY",
+          "CONCEPT-R4-SU-MI-13-MRI"
+        ],
+        "decisive_discriminator": "DISC-GS76-INTERMEDIATE-PROBABILITY-SELECTS-IMAGING-BY-HABITUS",
+        "learner_decision_id": "LD-GS76-02",
+        "option_set_archetype": "INVESTIGATION_SET",
+        "physician_activity": "Assessment/Diagnosis"
+      },
+      "opportunity_label": "G2-SURG-02",
+      "planned_evidence_refs": [
+        "CLM-R2-SURG-CT",
+        "CLM-R2-SURG-US",
+        "CLM-R2-SURG-MRI",
+        "CLM-R4-SURG-NONDIAGNOSTIC",
+        "CLM-R2-SURG-YOUNG-MALE-OR"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "the surgical team records the clinical probability of appendicitis as intermediate rather than high"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "SF-GS76-IMAGING-AVAILABLE-NOW",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "computed tomography, ultrasonography and magnetic resonance imaging are all available immediately"
+        },
+        {
+          "clinical_role": "DEMOGRAPHIC",
+          "feature_id": "SF-GS76-LOW-BMI",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "a body mass index of 34 kg/m2"
+        },
+        {
+          "clinical_role": "DEMOGRAPHIC",
+          "feature_id": "SF-GS76-PREGNANT",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "A 47-year-old man"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-GS76-HIGH-CLINICAL-SUSPICION-YOUNG-MALE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "intermediate rather than high"
+        },
+        {
+          "clinical_role": "INVESTIGATION_RESULT",
+          "feature_id": "SF-GS76-NONDIAGNOSTIC-IMAGING-ALREADY",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "No imaging has been performed"
+        },
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "right lower quadrant pain with anorexia"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CONCEPT-R4-SU-GS-76-INTERVAL",
+          "CONCEPT-R4-SU-GS-76-NONOP",
+          "CONCEPT-R4-SU-MI-13-DRAINAGE"
+        ],
+        "decisive_discriminator": "DISC-GS76-IMAGING-EXCLUDES-COMPLICATED-ANATOMY",
+        "learner_decision_id": "LD-GS76-03",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G2-SURG-03",
+      "planned_evidence_refs": [
+        "CLM-R2-SURG-STANDARD",
+        "CLM-R2-SURG-NONOP",
+        "CLM-R2-SURG-DRAINAGE",
+        "CLM-R2-SURG-LAP-CONTRA"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "SYMPTOM",
+          "feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "eighteen hours of migratory right lower quadrant pain"
+        },
+        {
+          "clinical_role": "INVESTIGATION_RESULT",
+          "feature_id": "SF-GS76-PERFORATION-WITH-PERITONITIS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no perforation, no free fluid"
+        },
+        {
+          "clinical_role": "INVESTIGATION_RESULT",
+          "feature_id": "SF-GS76-WALLED-OFF-PHLEGMON-OR-ABSCESS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no abscess and no phlegmon"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-GS76-UNCOMPLICATED-AND-ACCEPTS-RECURRENCE-RISK",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "has expressed no preference and has not been asked to accept any risk of recurrence"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-GS76-OPERATIVE-CONTRAINDICATION",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "no contraindication to a general anaesthetic or to laparoscopy"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "SF-GS76-PHYSIOLOGIC-INSTABILITY",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "He is physiologically stable"
+        }
+      ]
+    },
+    {
+      "enacted_action_signatures": [],
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [],
+        "decisive_discriminator": "DISC-G2-SURG-04-NOT-REALIZED",
+        "learner_decision_id": "LD-GS76-04",
+        "option_set_archetype": "DISPOSITION_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G2-SURG-04",
+      "planned_evidence_refs": [
+        "CLM-R4-SURG-NONDIAGNOSTIC",
+        "CLM-R2-SURG-YOUNG-MALE-OR"
+      ],
+      "stem_feature_map": [
+        {
+          "clinical_role": "INVESTIGATION_RESULT",
+          "feature_id": "SF-GS76-NONDIAGNOSTIC-IMAGING-ALREADY",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "Ultrasonography was non-diagnostic and a subsequent computed tomography scan of the abdomen was also non-diagnostic"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT",
+          "source_span": "clinical suspicion on reassessment is intermediate rather than high"
+        },
+        {
+          "clinical_role": "CLINICAL_JUDGEMENT",
+          "feature_id": "SF-GS76-HIGH-CLINICAL-SUSPICION-YOUNG-MALE",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "intermediate rather than high"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "SF-GS76-PHYSIOLOGIC-INSTABILITY",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "She is haemodynamically stable"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "SF-GS76-PERFORATION-WITH-PERITONITIS",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT",
+          "source_span": "without guarding or rebound"
+        }
+      ]
+    }
+  ],
+  "plan_note": "Each entry declares, before generation, which claims the intended reasoning rests on and the structured tuple the novelty screen compares. The screen never sees vignette prose.",
+  "probe_note": "The five positive controls are carried forward unchanged from G1. Each is an option set built to violate exactly one admissibility rule, so a wave in which every real item passes a rule family can still show that the family is live rather than inert. Probes never enter the opportunity pool and never count toward yield.",
+  "schema_version": "1.0",
+  "scope": "QGEN_SAFE_YIELD_WAVE_PLAN",
+  "wave_id": "g2_profile_aware_retrieval_pilot"
+}
