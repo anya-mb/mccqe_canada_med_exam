@@ -21,7 +21,7 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `80ddd5da8724821032c76b59a1eec73d2d02f1ed`.
+- Audited coordinator input commit: `bf3a545a205be546a6556570639180298461d691`.
 - Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
@@ -317,6 +317,31 @@ This section is maintained by hand and sits outside the generated source-researc
   `OPTION_NESTING_BETWEEN_KEY_AND_A_RETRIEVED_COMPETITOR`. Note that SA-2 encodes
   `COMPETITOR_WITHOUT_STEM_ANCHOR` as a criterion but the verdicts are authored, so it is enforced consistently
   rather than detected automatically.
+- **G2 finalization pass (2026-09-04), verified at `bf3a545`.** Nothing was regenerated: the 29 frozen
+  scenarios, the curated 82-seed library, the targeted seed packs, the independent seed review, the 21 authored
+  items and the three independent question verifications were all reused as committed. Re-verified fresh at this
+  HEAD: focused **43/0** (`tests/test_profile_retrieval_wave.py` 33, `tests/test_profile_contrast_retrieval.py`
+  10) and the full canonical suite **993/0**. The curated pack's declared `frozen_sha256` recomputes exactly over
+  its `targets`, so the 82-seed library is provably untouched, and every seed pack, scenario, item, semantic-
+  admissibility and independent-verification artifact is byte-identical to `80ddd5d`.
+- **The report reconciliation is settled; do not "fix" it.** A fresh recomputation of the execution report
+  disagrees with the authored per-profile tallies in exactly one metric, and the authored tallies are right.
+  Per-profile `candidate_seeds_approved_after_contextual_filter` sums to **83**, while
+  `retrieval_provenance.candidates_semantically_admitted` is **81**. The gap is the **2 candidates in the single
+  short-at-retrieval set (`QOPP-f475191976ced2f3a0e912d5`, 2 ranked) that were never semantically judged**: the
+  per-profile field counts contextual approval across all 28 retrievals, the provenance field counts admissions
+  across the 25 sets that reached semantic judgement. Ranked totals agree exactly (111 = 22+17+24+16+21+11, and
+  81 ADMITTED + 28 REFUSED + 2 unjudged), as do retrievals (28) and candidates retrieved/indexed (126). Both
+  numbers are correct under their own definitions; the provenance block's own note already says its field
+  definitions are local to it. Narrowed diff confirmed against `80ddd5d`: 558 added provenance/rank/verdict
+  fields, 8 changed values (the 4 fail-closed reason renames and their `reopens_on`) and 1 deleted roll-up key.
+  `safe_yield`, `by_profile` counts, `defect_counts_in_accepted`, `coverage_rows`, `terminal_state_by_opportunity`,
+  `scope`, `reported` and `admissibility_positive_controls` are unchanged. **No historical metric semantics were
+  redefined.**
+- Item accounting confirmed from canonical artifacts, not transcript: **21 authored** items in
+  `g2_profile_pilot.items.json`, **21** result rows carrying an `admissibility` block, **17** rows carrying a
+  realized `item_id` - so 4 failed admissibility after realization. The stale test expectation of 21 realized
+  items was corrected to match production rather than production being bent to the test.
 - Remaining CORE coverage gaps: 5 CORE MCC objectives with no accepted item (`116`, `27-3`, `3-1`, `59-1`, `74`)
   and 19 uncovered CORE learner decisions. The targeted-enrichment bound is spent: one pass, already used, and no
   further seed round is authorised.
