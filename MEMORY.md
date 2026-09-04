@@ -124,7 +124,7 @@ This section is maintained by hand and sits outside the generated source-researc
   `research/scope/final_question_allocation.json`) are preserved byte-identical and reread as a curriculum-density
   plan. `AGENTS.md` still states 6,086 as a production commitment and has not been amended, so the repository
   holds two readings of that number; amending it is a separate authorisation (spec §28 item 8).
-- Safe-yield implementation: COMPLETE, in the commit this section describes. Eleven modules and data layers:
+- Safe-yield implementation: COMPLETE, at commit `2475b1125649b75340f8b788174d48b67ec9348d`. Eleven modules and data layers:
   `option_set_admissibility` (eight archetypes, closed response-class and nominal-parity vocabularies, role-blind
   labels, ADM-1..ADM-5 as arithmetic), `qgen_profiles` (six validated profiles as data, anti-hard-coding invariant
   checked against the canonical study-unit titles, quota-shaped-field validator), `critical_fact_adjudication`
@@ -132,7 +132,9 @@ This section is maintained by hand and sits outside the generated source-researc
   enumeration), `coverage_priority`, `question_opportunity`, `marginal_educational_value`,
   `profile_contrast_retrieval`, `coverage_gap_report`, `safe_yield_gates`, `safe_yield_wave`, `g0_replay`. One
   common-core enum extension only: four PHELO values added to `DECISION_GRANULARITIES`, forced by two observed
-  `OTHER`s. Focused 107/0; full suite 954/0.
+  `OTHER`s. Focused 107/0; full suite 954/0. Re-verified at that commit with a clean working tree on 2026-09-04:
+  the six safe-yield test modules, including `tests/test_profile_contrast_retrieval.py`, run 104/0, so no production
+  code changed after the full-suite run and the suite was not rerun.
 - Priority model reproduces the spec's arithmetic exactly from the frozen allocation: CORE 488, IMPORTANT 424,
   SUPPORTING 263, NOT_IN_SCOPE 332; 16 MCC objectives have no CORE address and 3 are reachable only through
   SUPPORTING; the reachability promotion promotes 15 addresses and raises CORE to 503, after which every mapped
@@ -177,6 +179,16 @@ This section is maintained by hand and sits outside the generated source-researc
 - `RECOMMENDED_ARCHITECTURE_ACTION` is upgraded from `DO_NOT_SCALE` to `DO_NOT_SCALE_PENDING_USER_REVIEW_OF_G1`.
   G1 passed and the factual-safety invariant held in accepted items, but G2 has not run and the design has one
   known uncovered failure mode. Do not start 10-item pilots or production waves without explicit authorisation.
+- G1 final safe-yield accounting, one terminal state per opportunity, from
+  `reports/qgen_g1_safe_yield_micro_pilot_execution.json`: 11 attempted, 7 generated and independently reviewed,
+  **5 ACCEPTED, 2 REJECTED, 3 NO_SAFE_ITEM, 1 REDUNDANT**. Both rejections carry the single reason
+  `WEAK_DISTRACTOR` (`COMPETITOR_WITHOUT_STEM_ANCHOR`) and neither is retryable, because an option-set selection
+  failure is out of scope for the one-retry rule; they stay REJECTED and are not regenerated. Rejected-item
+  defects are not aggregated into the accepted-item safety counters, which are all zero: factual 0, numeric 0,
+  unsupported claims 0, ambiguous best answers 0, material redundancy 0, with `EVIDENCE_ENTAILMENT` PASS and
+  `independent_context` PASS. Low accepted yield is a safe-yield outcome, not a coverage failure: the three
+  NO_SAFE_ITEM decisions are recorded as legitimately fail-closed rather than uncovered, so the genuinely
+  uncovered CORE population is 2 learner decisions (`LD-C21-02`, `LD-P147-04`) plus MCC objective `27-3`.
 - QGEN_NEXT_STEP = `USER_REVIEW_G1_SAFE_YIELD`
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 
