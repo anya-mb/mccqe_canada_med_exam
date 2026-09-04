@@ -21,7 +21,7 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `ebceb0d435fabc5b2b67c35c8d14452aa1de020a`.
+- Audited coordinator input commit: `80ddd5da8724821032c76b59a1eec73d2d02f1ed`.
 - Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
@@ -269,6 +269,57 @@ This section is maintained by hand and sits outside the generated source-researc
   repeated architecture-wide retrieval/realization defect remains" - is arguably met by
   `COMPETITOR_WITHOUT_STEM_ANCHOR`, which G1 flagged, which G2 reproduced in three profiles, and which no gate
   covers. Do not start G3, cross-profile scale waves or bank production.
+- **G2 completion pass (2026-09-04), resuming from `80ddd5d`.** The G2 wave, its 29 frozen scenarios, the
+  targeted seed pack and its independent review, and the four accepted items were already complete at that
+  commit and were not redone. One gate was genuinely incomplete and is now closed: **semantic contrast
+  admissibility ran outside the production path**. The frozen judgements in
+  `g2_profile_pilot.semantic_admissibility.json` (SA-1 decision-granularity match, SA-2 stem anchor, SA-3
+  contextual plausibility) were applied by the wave author when picking distractors, so the production wave
+  checked only that a realized distractor had been *retrieved*, never that it had survived judgement. A
+  retrieved-but-refused competitor could therefore have been realized, and four opportunities reported
+  `FAIL_CLOSED_UNINSTANTIABLE_REASONING` - the absence of an authored item - when the real cause was a semantic
+  shortfall.
+- Production change, under TDD, in `safe_yield_wave` and `question_opportunity`. `run_safe_yield_wave` now takes
+  `semantic_admissibility_relative_path` and **refuses to run at all with a contrast library and without it**,
+  because retrieval keys on discipline x item archetype x option-set archetype and not on the learner decision.
+  The stage requires every retrieved competitor to be judged in rank order, refuses a judgement over a competitor
+  retrieval never returned, **recomputes the selection rule** (the first three ranked competitors passing all
+  three criteria) rather than trusting the artifact's declared selection, fails closed as
+  `FAIL_CLOSED_INSUFFICIENT_SEMANTICALLY_ADMISSIBLE_COMPETITORS` when fewer than three survive, and binds the
+  freehand-distractor guard to the *selected* set rather than the retrieved set. One common-core enum extension:
+  that reason, reopening on `NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY`.
+- Retrieval provenance is now persisted per opportunity and is sufficient to prove a realized distractor came
+  through the path: query dimensions (profile, item archetype, option-set archetype, demanded response class,
+  learner decision, ranking preference, stem feature ids), every candidate with its **rank**, source pack and
+  `ORIGINAL_CURATED`/`TARGETED_NEW` provenance, each filter verdict (ADM-1, ADM-3, SA-1..SA-3), and the selected
+  competitor seed ids. Provenance classes are **declared by the caller**, not inferred from a pack id. The
+  execution report's `results` and `retrieval_provenance` block are now the wave's own output and a test
+  reproduces them from a fresh run.
+- **No terminal state moved.** G2 accounting is unchanged: 30 attempted, **4 ACCEPTED, 13 REJECTED, 12
+  NO_SAFE_ITEM, 1 REDUNDANT**; accepted-item invariants all zero; all six profiles `INSUFFICIENT_YIELD`;
+  `G2_RESULT = MIXED`. What changed is naming and enforcement: `FAIL_CLOSED_UNINSTANTIABLE_REASONING` 4 -> 0 and
+  `FAIL_CLOSED_INSUFFICIENT_SEMANTICALLY_ADMISSIBLE_COMPETITORS` 0 -> 4 (`G2-OBGYN-01`, `G2-OBGYN-04`,
+  `G2-PED-04`, `G2-PHELO-04`), and a ninth gate family `SEMANTIC_CONTRAST_ADMISSIBILITY` returns both verdicts.
+  The four accepted items are byte-identical, so their fresh independent verification stands and was not rerun.
+- Retrieval provenance totals from the production run: 28 retrievals, 126 candidates indexed, 111 ranked after
+  admissibility, 25 candidate sets semantically judged, 81 competitors admitted, 3 sets short at retrieval and 4
+  short after semantic admissibility. Distinct selected competitor seeds split 42 `ORIGINAL_CURATED` / 16 `TARGETED_NEW`.
+  Targeted seeds: 23 authored, **19 approved (16 STRONG, 3 ACCEPTABLE), 4 rejected**; the 4 rejected reach no
+  stage of the wave, which is now asserted rather than assumed.
+- Tests: 43 focused in `tests/test_profile_retrieval_wave.py` and `tests/test_profile_contrast_retrieval.py`,
+  covering all twelve required proofs including the two bypass paths (a freehand distractor and a
+  retrieved-but-refused competitor), each run against a **copy of the repository with one artifact mutated**, so
+  the guard is proven at the production entry point rather than on a helper. Full canonical suite **993/0** at
+  the final production-code state.
+- The four repeated realization defects are unchanged and remain the G2 finding. The new stage addresses none of
+  them: it fixes where semantic judgement is enforced, not `COMPETITOR_WITHOUT_STEM_ANCHOR`,
+  `KEY_DISTRACTOR_REGISTER_ASYMMETRY`, `RATIONALE_CLAIM_OUTSIDE_THE_ITEM_EVIDENCE_SET` or
+  `OPTION_NESTING_BETWEEN_KEY_AND_A_RETRIEVED_COMPETITOR`. Note that SA-2 encodes
+  `COMPETITOR_WITHOUT_STEM_ANCHOR` as a criterion but the verdicts are authored, so it is enforced consistently
+  rather than detected automatically.
+- Remaining CORE coverage gaps: 5 CORE MCC objectives with no accepted item (`116`, `27-3`, `3-1`, `59-1`, `74`)
+  and 19 uncovered CORE learner decisions. The targeted-enrichment bound is spent: one pass, already used, and no
+  further seed round is authorised.
 - QGEN_NEXT_STEP = `USER_REVIEW_G2_PROFILE_AWARE_RETRIEVAL`
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 

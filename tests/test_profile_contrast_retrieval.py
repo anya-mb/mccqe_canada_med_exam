@@ -167,3 +167,36 @@ def test_the_curated_seed_pack_itself_is_not_rebuilt():
         for target in document["targets"]
         for seed in target["seeds"]
     )
+
+
+def test_a_seed_tagged_for_another_discipline_is_not_indexed(tmp_path):
+    """The profile binding is a retrieval key, not a preference."""
+    index = build(tmp_path, {"SEED-A": {"applicable_disciplines": ["SURGERY"]}})
+    result = retrieve(index)
+    assert result["indexed_count"] == 4
+    assert "SEED-A" not in {row["seed_id"] for row in result["ranked_competitors"]}
+    # An index miss is not an admissibility refusal and must not be reported as one.
+    assert "SEED-A" not in {row["seed_id"] for row in result["excluded"]}
+
+
+def test_a_seed_tagged_for_another_option_set_archetype_is_not_indexed(tmp_path):
+    """A management competitor cannot be retrieved into a diagnosis set."""
+    index = build(tmp_path, {"SEED-B": {"option_set_archetypes": ["MANAGEMENT_SET"]}})
+    result = retrieve(index)
+    assert result["indexed_count"] == 4
+    assert "SEED-B" not in {row["seed_id"] for row in result["ranked_competitors"]}
+
+
+def test_the_index_does_not_key_on_the_learner_decision(tmp_path):
+    """The measured limit of this stage, pinned so it cannot be forgotten.
+
+    A seed curated for one learner decision is retrieved for any other sharing
+    the same discipline, item archetype and option-set archetype. Nothing here
+    filters it, which is why the semantic-admissibility stage downstream carries
+    SA_1 and why the wave refuses to run without it.
+    """
+    index = build(tmp_path)
+    assert all(row["decision_granularity"] == "SINGLE_DIAGNOSIS" for row in index)
+    result = retrieve(index)
+    assert result["indexed_count"] == 5
+    assert result["admissible_count"] == 5
