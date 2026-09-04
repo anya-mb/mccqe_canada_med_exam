@@ -86,12 +86,25 @@ This section is maintained by hand and sits outside the generated source-researc
   `LONE_KEY_OPTION_CATEGORY` recurred in SURG, PSY and PHELO even though every seed passed a seed-stage
   semantic-category review, because that review judges one competitor against the target's abstract lead-in
   dimension before the other two options and the stem exist. `SEVERITY_OR_CATEGORY_MISMATCHED_DISTRACTOR` survived
-  once per failing item in OBGYN, SURG and PSY, in each case a seed approved as ACCEPTABLE rather than STRONG.
+  once per failing item in OBGYN, SURG and PSY. **Corrected 2026-09-03 against
+  `research/qgen/generalization/competitive_contrast_seed_pack_r4.json`:** these were *not* in each case seeds
+  approved as ACCEPTABLE rather than STRONG. Of the six defective distractors, five were independently reviewed
+  STRONG (`SEED-OB-T02-MILK-CULTURE`, `SEED-SURG-T03-NONOP`, `SEED-PSY-T02-RISK-SCALE`, `SEED-PSY-T02-START-MED`,
+  `SEED-PHELO-T02-AUTHORITY`); only `SEED-OB-T01-GALACTOCELE` was ACCEPTABLE. Seed strength does not predict
+  realized failure, and restricting retrieval to STRONG seeds would have prevented one of eight failures. The
+  defect is created at assembly against a realized stem, where no seed reviewer can see it.
   `STEM_ENACTED_DISTRACTORS` (OBGYN-I03): every wrong practice was named in the stem as something the patient is
-  already doing, leaving the key as the only option not pre-enacted. `PROPAGATED_SOURCE_ERROR` (SURG-I01):
+  already doing, leaving the key as the only option not pre-enacted. `PROPAGATED_SOURCE_ERROR` (SURG-I01 **and PSY-I03**):
   McBurney's point was written as 1.5 to 2 cm, faithfully quoting a unit error in the Canadian source, where the
   accepted figure is 1.5 to 2 inches. Faithful citation is not factual correctness, and no gate checks a quoted
-  figure against the anatomy or units it describes.
+  figure against the anatomy or units it describes. **Corrected 2026-09-03 against
+  `research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json`:** PSY-I03's
+  `UNSUPPORTED_CLAIM` did not originate in rationale writing. The disputed severity band originates in the
+  evidence-packet claim `CLM-R4-PSY-EXERCISE`, whose statement reads "a first-line monotherapy for mild depression
+  and a second-line adjunctive treatment for moderate severity illness"; the rebuttal quoted the packet
+  accurately. Like `CLM-R4-SURG-PRESENTATION`, that claim carries `verification_status: VERIFIED_COMPLETE`. Both
+  defects share the same factual/evidence-source failure class: `VERIFIED_COMPLETE` asserts fidelity of
+  transcription and is being read as truth.
 - `RECOMMENDED_ARCHITECTURE_ACTION = DO_NOT_SCALE`. A factual error reached a candidate-facing stem, an unsupported
   discriminator narrowed a guideline severity band and evidence entailment failed, against success criteria that
   required zero of each. No scaling is warranted while the factual-safety invariant is broken. The secondary
@@ -99,7 +112,20 @@ This section is maintained by hand and sits outside the generated source-researc
   makes discipline-specific generation profiles the next candidate to test, but it was not implemented here and no
   third universal distractor patch was written. Retest items are recorded as reviewed, not repaired; do not repair
   them to raise the score.
-- QGEN_NEXT_STEP = `EVALUATE_DISCIPLINE_SPECIFIC_GENERATION_PROFILES`
+- Discipline-profile and fact-safety design: AUTHORED, design-only, in
+  `docs/superpowers/specs/2026-09-03-discipline-profile-qgen-and-fact-safety-design.md`. Recommended architecture
+  `COMMON_CORE_PLUS_DISCIPLINE_PROFILES`, with global critical-fact adjudication, risk-based fact escalation,
+  required option-set archetypes and profile-aware contrast retrieval. No production code was written and no
+  questions were generated.
+- Part II of that spec (coverage-first safe-yield amendment, 2026-09-03) proposes retiring the fixed
+  6,086-question output as a mandatory production goal and restates scale gates G1-G4 on quality, safety,
+  coverage, yield and redundancy; G0 is unchanged and remains the falsification test. The 6,086 allocation
+  artifacts (`research/scope/question_bank_targets.json`, `research/scope/final_question_allocation.json`) are
+  preserved unchanged and reread as a curriculum-density plan. This is a **design proposal pending user review**:
+  the canonical allocation artifacts and the `AGENTS.md` allocation rules are unchanged and still govern.
+- `RECOMMENDED_ARCHITECTURE_ACTION = DO_NOT_SCALE` still holds. Part II changes what a production wave is measured
+  on; it does not authorise a wave.
+- QGEN_NEXT_STEP = `USER_REVIEW_SAFE_YIELD_DESIGN`
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 
 ## Research-level policy
