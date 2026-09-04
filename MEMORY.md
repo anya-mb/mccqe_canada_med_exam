@@ -21,7 +21,7 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `bf3a545a205be546a6556570639180298461d691`.
+- Audited coordinator input commit: `199696b9eb20cf5207a2bad8913ed5c30c97ddf3`.
 - Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
@@ -345,7 +345,26 @@ This section is maintained by hand and sits outside the generated source-researc
 - Remaining CORE coverage gaps: 5 CORE MCC objectives with no accepted item (`116`, `27-3`, `3-1`, `59-1`, `74`)
   and 19 uncovered CORE learner decisions. The targeted-enrichment bound is spent: one pass, already used, and no
   further seed round is authorised.
-- QGEN_NEXT_STEP = `USER_REVIEW_G2_PROFILE_AWARE_RETRIEVAL`
+- **G2 safe-yield root-cause diagnosis (2026-09-04), diagnosed at `199696b`.** Diagnosis-only: no production code,
+  validator, seed, question, gate or verdict changed. `reports/qgen_g2_safe_yield_root_cause_diagnosis.json`.
+  `PRIMARY_BOTTLENECK = STEM_CONTEXT_ALIGNMENT`; the decisive finding is
+  `ANCHORING_HAS_A_CEILING_AND_NO_FLOOR` - ADM-3 rejects a competitor whose correctness conditions are *fully*
+  satisfied (second-key risk) but nothing requires the stem to give a learner any positive reason to consider the
+  competitor at all. Measured: 104 of 111 ranked competitors scored zero on the only machine-readable anchoring
+  signal, which was therefore constant in 20 of 26 candidate sets, and `SA_2_STEM_ANCHOR_PRESENT` refused nothing
+  in the whole wave because its verdicts are authored rather than computed.
+- The diagnosis's control finding, which any fix must respect: the accepted/rejected distinction is **not** seed
+  strength, satisfied-condition count or present-to-absent feature ratio, but *how* the stem defeats the
+  competitor. Accepted controls: 7 of 12 selected competitors defeated by a positively stated datum requiring an
+  inference, only 2 of 12 absent features written as explicit verbal denials. Anchorless rejections: 13 of 18
+  defeated by the stem stating the competitor's own precondition absent, 17 of 30 absent features explicit
+  denials. `GOOD_DISTRACTOR = LIVE_BUT_INFERIOR`; `BAD_ANCHORLESS_DISTRACTOR = CATEGORICALLY_IMPOSSIBLE`. A
+  simplistic "negative finding = bad" rule is therefore wrong and is ruled out.
+- Recommended next intervention: `ONE_BOUNDED_STEM_ANCHOR_RETRIEVAL_FIX`. Secondary bottlenecks recorded and
+  deliberately not addressed: contrast-library coverage, learner-decision indexing in profile-aware retrieval,
+  option realization, evidence-set scoping, and a read-only CORE coverage accounting join defect
+  (`build_coverage_row` alarms on two decisions that are already covered).
+- QGEN_NEXT_STEP = `IMPLEMENT_BOUNDED_STEM_ANCHOR_RETRIEVAL_FIX`
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 
 ## Research-level policy

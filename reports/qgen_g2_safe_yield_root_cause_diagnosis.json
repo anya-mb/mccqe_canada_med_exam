@@ -1,0 +1,2534 @@
+{
+  "scope": "QGEN_G2_SAFE_YIELD_ROOT_CAUSE_DIAGNOSIS",
+  "schema_version": "1.0",
+  "wave_id": "g2_profile_aware_retrieval_pilot",
+  "diagnosis_id": "g2_safe_yield_root_cause_diagnosis",
+  "diagnosed_at_commit": "199696b9eb20cf5207a2bad8913ed5c30c97ddf3",
+  "task_class": "DIAGNOSIS_ONLY",
+  "production_code_changed": false,
+  "questions_generated": 0,
+  "historical_artifacts_changed": 0,
+  "frozen_artifacts_changed": 0,
+  "sources": [
+    "reports/qgen_g2_profile_aware_retrieval_execution.json",
+    "reports/qgen_g2_coverage_and_yield.json",
+    "reports/qgen_g2_independent_verification_a.json",
+    "reports/qgen_g2_independent_verification_b.json",
+    "reports/qgen_g2_independent_verification_c.json",
+    "reports/qgen_g2_targeted_seed_independent_review.json",
+    "research/qgen/safe_yield/g2_profile_pilot.opportunities.json",
+    "research/qgen/safe_yield/g2_profile_pilot.scenarios.json",
+    "research/qgen/safe_yield/g2_profile_pilot.items.json",
+    "research/qgen/safe_yield/g2_profile_pilot.semantic_admissibility.json",
+    "research/qgen/safe_yield/g2_profile_pilot.wave_plan.json",
+    "research/qgen/safe_yield/g2_declared_learner_decisions.json",
+    "research/qgen/safe_yield/g2_stem_feature_vocabulary.json",
+    "research/qgen/generalization/competitive_contrast_seed_pack_r4.enrichment.json",
+    "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.enrichment.json",
+    "research/qgen/generalization/competitive_contrast_seed_pack_g2_extensions.enrichment.json",
+    "scripts/qbank/profile_contrast_retrieval.py",
+    "scripts/qbank/coverage_gap_report.py",
+    "scripts/qbank/safe_yield_gates.py"
+  ],
+  "phase_1_failure_matrix": {
+    "opportunities": 30,
+    "reconciles_with_canonical_checkpoint": true,
+    "authoring_accounting": {
+      "authored_items": 21,
+      "result_rows_with_an_admissibility_block": 21,
+      "result_rows_with_a_realized_item_id": 17,
+      "authored_then_failed_production_admissibility": [
+        "G2-OBGYN-03",
+        "G2-PED-05",
+        "G2-PSY-05",
+        "G2-SURG-01"
+      ],
+      "note": "'authored' is true for all 21. Four of them failed production admissibility after realization and so carry no realized item id and never reached independent review."
+    },
+    "terminal_state_counts": {
+      "ACCEPTED": 4,
+      "NO_SAFE_ITEM": 12,
+      "REDUNDANT": 1,
+      "REJECTED": 13
+    },
+    "rows": [
+      {
+        "opportunity_label": "G2-MED-01",
+        "opportunity_id": "QOPP-b9406f2ccad14a0d82adc830",
+        "discipline": "MED",
+        "discipline_profile_id": "MEDICINE",
+        "priority_class": "CORE",
+        "mcc_objective_id": "14",
+        "study_unit_id": "SU-C-21",
+        "learner_decision_id": "LD-C21-01",
+        "item_archetype": "DIAGNOSIS",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "physician_activity": "Assessment/Diagnosis",
+        "final_state": "REJECTED",
+        "retrieval_attempted": true,
+        "candidates_indexed": 3,
+        "candidates_ranked": 3,
+        "candidates_admitted_after_admissibility": 3,
+        "candidates_contextually_eligible": 3,
+        "selected_competitor_seed_ids": [
+          "SEED-G2-MED-T01-DISSECTION",
+          "SEED-G2-MED-T01-PE",
+          "SEED-G2-MED-T01-PERICARDITIS"
+        ],
+        "targeted_seeds_used": [
+          "SEED-G2-MED-T01-DISSECTION",
+          "SEED-G2-MED-T01-PE",
+          "SEED-G2-MED-T01-PERICARDITIS"
+        ],
+        "authored": true,
+        "realized_item_id": "G2-MED-01",
+        "passed_production_admissibility": true,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": null,
+        "reached_independent_review": true,
+        "independent_review_verdict": "FAIL",
+        "independent_review_failed_criteria": [
+          "distractor_competitiveness",
+          "cueing"
+        ],
+        "independent_review_finding_count": 6,
+        "blind_solve_matched_key": "PASS",
+        "primary_earliest_failure_cause": "E_COMPETITOR_WITHOUT_STEM_ANCHOR",
+        "primary_cause_note": "All three retrieved competitors have every correctness condition reported verbally absent in the stem. The cueing findings are downstream of the same option set.",
+        "rejected_root_locus": "STEM_KEY_REALIZATION",
+        "rejected_root_note": "The planned stem feature map reports every competitor correctness condition absent; retrieval has no anchor floor to refuse the resulting set."
+      },
+      {
+        "opportunity_label": "G2-MED-02",
+        "opportunity_id": "QOPP-9a933010b0138caf595565a4",
+        "discipline": "MED",
+        "discipline_profile_id": "MEDICINE",
+        "priority_class": "CORE",
+        "mcc_objective_id": "14",
+        "study_unit_id": "SU-C-21",
+        "learner_decision_id": "LD-C21-05",
+        "item_archetype": "INVESTIGATION_SELECTION",
+        "option_set_archetype": "INVESTIGATION_SET",
+        "physician_activity": "Assessment/Diagnosis",
+        "final_state": "NO_SAFE_ITEM",
+        "retrieval_attempted": false,
+        "candidates_indexed": null,
+        "candidates_ranked": 0,
+        "candidates_admitted_after_admissibility": null,
+        "candidates_contextually_eligible": null,
+        "selected_competitor_seed_ids": null,
+        "targeted_seeds_used": [],
+        "authored": false,
+        "realized_item_id": null,
+        "passed_production_admissibility": null,
+        "admissibility_rule_verdicts": null,
+        "fail_closed_reason": "FAIL_CLOSED_UNRESOLVED_CRITICAL_FACT",
+        "reached_independent_review": false,
+        "independent_review_verdict": null,
+        "independent_review_failed_criteria": null,
+        "independent_review_finding_count": 0,
+        "blind_solve_matched_key": null,
+        "primary_earliest_failure_cause": "I_EVIDENCE_OR_CRITICAL_FACT_BLOCK",
+        "primary_cause_note": "Refused before retrieval: CLM-ACS-INVESTIGATION-01 unresolved at critical-fact adjudication (NO_CORROBORATION_AND_NO_PRIMARY_AUTHORITY).",
+        "no_safe_item_because": "EVIDENCE_REJECTED",
+        "seed_or_mcqability_axis": "UNCLEAR",
+        "additional_contrast_acquisition_would_help": false,
+        "no_safe_item_note": "Neither a seed nor an MCQ-ability problem: the opportunity was refused before retrieval on an unresolved critical fact. Reopens on a completed Level 3 adjudication."
+      },
+      {
+        "opportunity_label": "G2-MED-03",
+        "opportunity_id": "QOPP-d076ee2fa81c13318cf59b45",
+        "discipline": "MED",
+        "discipline_profile_id": "MEDICINE",
+        "priority_class": "CORE",
+        "mcc_objective_id": "14",
+        "study_unit_id": "SU-C-21",
+        "learner_decision_id": "LD-C21-04",
+        "item_archetype": "RISK_STRATIFICATION",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Management",
+        "final_state": "REJECTED",
+        "retrieval_attempted": true,
+        "candidates_indexed": 8,
+        "candidates_ranked": 8,
+        "candidates_admitted_after_admissibility": 8,
+        "candidates_contextually_eligible": 4,
+        "selected_competitor_seed_ids": [
+          "SEED-G2-MED-T02-BETA-BLOCKER",
+          "SEED-G2-MED-T02-DIURETIC",
+          "SEED-G2-MED-T02-NITRATE"
+        ],
+        "targeted_seeds_used": [
+          "SEED-G2-MED-T02-BETA-BLOCKER",
+          "SEED-G2-MED-T02-DIURETIC",
+          "SEED-G2-MED-T02-NITRATE"
+        ],
+        "authored": true,
+        "realized_item_id": "G2-MED-03",
+        "passed_production_admissibility": true,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": null,
+        "reached_independent_review": true,
+        "independent_review_verdict": "FAIL",
+        "independent_review_failed_criteria": [
+          "cueing"
+        ],
+        "independent_review_finding_count": 5,
+        "blind_solve_matched_key": "PASS",
+        "primary_earliest_failure_cause": "G_COMPETITOR_VALID_BUT_OPTION_REALIZATION_WEAK",
+        "primary_cause_note": "Verifier confirms each distractor has a genuine positive stem anchor. The sole failure is key-side register asymmetry: only hedged option, only non-pharmacological option, only option without the shared action+justification frame.",
+        "rejected_root_locus": "OPTION_REALIZATION",
+        "rejected_root_note": "Distractors independently confirmed anchored; the key alone carries a hedge, a second action and a non-pharmacological category."
+      },
+      {
+        "opportunity_label": "G2-MED-04",
+        "opportunity_id": "QOPP-8c9d37789423093614afcc27",
+        "discipline": "MED",
+        "discipline_profile_id": "MEDICINE",
+        "priority_class": "CORE",
+        "mcc_objective_id": "14",
+        "study_unit_id": "SU-C-21",
+        "learner_decision_id": "LD-C21-02",
+        "item_archetype": "PHARMACOTHERAPY",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Management",
+        "final_state": "ACCEPTED",
+        "retrieval_attempted": true,
+        "candidates_indexed": 3,
+        "candidates_ranked": 3,
+        "candidates_admitted_after_admissibility": 3,
+        "candidates_contextually_eligible": 3,
+        "selected_competitor_seed_ids": [
+          "SEED-G2-MED-T03-DEFERRED-ANGIO",
+          "SEED-G2-MED-T03-PPCI-ONLY",
+          "SEED-G2-MED-T03-RESCUE-ONLY"
+        ],
+        "targeted_seeds_used": [
+          "SEED-G2-MED-T03-DEFERRED-ANGIO",
+          "SEED-G2-MED-T03-PPCI-ONLY",
+          "SEED-G2-MED-T03-RESCUE-ONLY"
+        ],
+        "authored": true,
+        "realized_item_id": "G2-MED-04",
+        "passed_production_admissibility": true,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": null,
+        "reached_independent_review": true,
+        "independent_review_verdict": "PASS",
+        "independent_review_failed_criteria": [],
+        "independent_review_finding_count": 4,
+        "blind_solve_matched_key": "PASS",
+        "primary_earliest_failure_cause": null,
+        "primary_cause_note": "ACCEPTED positive control."
+      },
+      {
+        "opportunity_label": "G2-MED-05",
+        "opportunity_id": "QOPP-7de8d66da37dbfcb1e7cec7b",
+        "discipline": "MED",
+        "discipline_profile_id": "MEDICINE",
+        "priority_class": "CORE",
+        "mcc_objective_id": "14",
+        "study_unit_id": "SU-C-21",
+        "learner_decision_id": "LD-C21-06",
+        "item_archetype": "RISK_STRATIFICATION",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Management",
+        "final_state": "ACCEPTED",
+        "retrieval_attempted": true,
+        "candidates_indexed": 8,
+        "candidates_ranked": 8,
+        "candidates_admitted_after_admissibility": 8,
+        "candidates_contextually_eligible": 4,
+        "selected_competitor_seed_ids": [
+          "SEED-G2-MED-T04-ADMIT-NONINVASIVE",
+          "SEED-G2-MED-T04-DISCHARGE-STRESS",
+          "SEED-G2-MED-T04-OBSERVE"
+        ],
+        "targeted_seeds_used": [
+          "SEED-G2-MED-T04-ADMIT-NONINVASIVE",
+          "SEED-G2-MED-T04-DISCHARGE-STRESS",
+          "SEED-G2-MED-T04-OBSERVE"
+        ],
+        "authored": true,
+        "realized_item_id": "G2-MED-05",
+        "passed_production_admissibility": true,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": null,
+        "reached_independent_review": true,
+        "independent_review_verdict": "PASS",
+        "independent_review_failed_criteria": [],
+        "independent_review_finding_count": 5,
+        "blind_solve_matched_key": "PASS",
+        "primary_earliest_failure_cause": null,
+        "primary_cause_note": "ACCEPTED positive control."
+      },
+      {
+        "opportunity_label": "G2-OBGYN-01",
+        "opportunity_id": "QOPP-72e99b169b7a7ca42a6faff6",
+        "discipline": "OBGYN",
+        "discipline_profile_id": "OBGYN",
+        "priority_class": "IMPORTANT",
+        "mcc_objective_id": "80-2",
+        "study_unit_id": "SU-OB-54",
+        "learner_decision_id": "LD-OB54-01",
+        "item_archetype": "PREGNANCY_DATED_DIAGNOSIS",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "physician_activity": "Assessment/Diagnosis",
+        "final_state": "NO_SAFE_ITEM",
+        "retrieval_attempted": true,
+        "candidates_indexed": 7,
+        "candidates_ranked": 3,
+        "candidates_admitted_after_admissibility": 3,
+        "candidates_contextually_eligible": 2,
+        "selected_competitor_seed_ids": [
+          "SEED-OB-T01-PHLEGMON",
+          "SEED-OB-T01-IBC"
+        ],
+        "targeted_seeds_used": [],
+        "authored": false,
+        "realized_item_id": null,
+        "passed_production_admissibility": null,
+        "admissibility_rule_verdicts": null,
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_SEMANTICALLY_ADMISSIBLE_COMPETITORS",
+        "reached_independent_review": false,
+        "independent_review_verdict": null,
+        "independent_review_failed_criteria": null,
+        "independent_review_finding_count": 0,
+        "blind_solve_matched_key": null,
+        "primary_earliest_failure_cause": "B_INSUFFICIENT_THREE_COMPETITORS",
+        "primary_cause_note": "7 indexed, 3 excluded on response class, 1 as a second key, 1 refused SA_3; 2 survive.",
+        "no_safe_item_because": "TOO_FEW_ARCHETYPE_MATCHES",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "The lactational inflammatory spectrum has more entities than the pack carries at this response class; three were excluded on response class alone."
+      },
+      {
+        "opportunity_label": "G2-OBGYN-02",
+        "opportunity_id": "QOPP-0f1e932afe903ea7a5c53f1b",
+        "discipline": "OBGYN",
+        "discipline_profile_id": "OBGYN",
+        "priority_class": "IMPORTANT",
+        "mcc_objective_id": "80-2",
+        "study_unit_id": "SU-OB-54",
+        "learner_decision_id": "LD-OB54-02",
+        "item_archetype": "INVESTIGATION_SELECTION",
+        "option_set_archetype": "INVESTIGATION_SET",
+        "physician_activity": "Assessment/Diagnosis",
+        "final_state": "REJECTED",
+        "retrieval_attempted": true,
+        "candidates_indexed": 4,
+        "candidates_ranked": 4,
+        "candidates_admitted_after_admissibility": 4,
+        "candidates_contextually_eligible": 4,
+        "selected_competitor_seed_ids": [
+          "SEED-OB-T02-MAMMOGRAPHY",
+          "SEED-OB-T02-ASPIRATION",
+          "SEED-OB-T02-MILK-CULTURE"
+        ],
+        "targeted_seeds_used": [],
+        "authored": true,
+        "realized_item_id": "G2-OBGYN-02",
+        "passed_production_admissibility": true,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": null,
+        "reached_independent_review": true,
+        "independent_review_verdict": "FAIL",
+        "independent_review_failed_criteria": [
+          "factual_correctness",
+          "evidence_support",
+          "rationale_fatal_defects"
+        ],
+        "independent_review_finding_count": 4,
+        "blind_solve_matched_key": "PASS",
+        "primary_earliest_failure_cause": "I_EVIDENCE_OR_CRITICAL_FACT_BLOCK",
+        "primary_cause_note": "The item's declared claim set contains nothing covering mammography, inflammatory breast cancer or the malignancy work-up, so every discrimination against the retrieved competitors had to be invented; the factual error and the stem-contradicting key rationale follow.",
+        "rejected_root_locus": "EVIDENCE",
+        "rejected_root_note": "The declared claim set covers none of the retrieved competitors, so every discrimination had to be authored outside the evidence."
+      },
+      {
+        "opportunity_label": "G2-OBGYN-03",
+        "opportunity_id": "QOPP-3e5c530d7801407e1ad19347",
+        "discipline": "OBGYN",
+        "discipline_profile_id": "OBGYN",
+        "priority_class": "IMPORTANT",
+        "mcc_objective_id": "80-2",
+        "study_unit_id": "SU-OB-54",
+        "learner_decision_id": "LD-OB54-03",
+        "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Communication",
+        "final_state": "NO_SAFE_ITEM",
+        "retrieval_attempted": true,
+        "candidates_indexed": 5,
+        "candidates_ranked": 5,
+        "candidates_admitted_after_admissibility": 5,
+        "candidates_contextually_eligible": 5,
+        "selected_competitor_seed_ids": [
+          "SEED-OB-T03-DANGLE",
+          "SEED-OB-T03-DISCARD",
+          "SEED-OB-T03-EMPTY"
+        ],
+        "targeted_seeds_used": [],
+        "authored": true,
+        "realized_item_id": null,
+        "passed_production_admissibility": false,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "FAIL",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "reached_independent_review": false,
+        "independent_review_verdict": null,
+        "independent_review_failed_criteria": null,
+        "independent_review_finding_count": 0,
+        "blind_solve_matched_key": null,
+        "primary_earliest_failure_cause": "L_OTHER_DECISION_ADMITS_NO_EVER_CORRECT_COMPETITOR",
+        "primary_cause_note": "4 of the 5 seeds in the ranked pool carry zero condition predicates, i.e. the library records them as never correct under any stem. ADM_3 then fired on the one planted negation the author needed to defeat the fifth.",
+        "no_safe_item_because": "OTHER",
+        "seed_or_mcqability_axis": "QUESTION_OPPORTUNITY_NOT_NATURALLY_MCQABLE",
+        "additional_contrast_acquisition_would_help": false,
+        "no_safe_item_note": "Four of the five ranked seeds carry zero condition predicates, i.e. the library itself records them as correct under no stem. A decision whose wrong answers are never right under any circumstance is a true/false recall point, not a single-best-answer discrimination."
+      },
+      {
+        "opportunity_label": "G2-OBGYN-04",
+        "opportunity_id": "QOPP-cfcf1083cc57f011c77741de",
+        "discipline": "OBGYN",
+        "discipline_profile_id": "OBGYN",
+        "priority_class": "IMPORTANT",
+        "mcc_objective_id": "80-2",
+        "study_unit_id": "SU-OB-54",
+        "learner_decision_id": "LD-OB54-05",
+        "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Management",
+        "final_state": "NO_SAFE_ITEM",
+        "retrieval_attempted": true,
+        "candidates_indexed": 5,
+        "candidates_ranked": 5,
+        "candidates_admitted_after_admissibility": 5,
+        "candidates_contextually_eligible": 0,
+        "selected_competitor_seed_ids": [],
+        "targeted_seeds_used": [],
+        "authored": false,
+        "realized_item_id": null,
+        "passed_production_admissibility": null,
+        "admissibility_rule_verdicts": null,
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_SEMANTICALLY_ADMISSIBLE_COMPETITORS",
+        "reached_independent_review": false,
+        "independent_review_verdict": null,
+        "independent_review_failed_criteria": null,
+        "independent_review_finding_count": 0,
+        "blind_solve_matched_key": null,
+        "primary_earliest_failure_cause": "D_WRONG_DECISION_GRANULARITY",
+        "primary_cause_note": "All five retrieved competitors refused SA_1. The index returned the milk-removal advice pool for an admission/IV-therapy decision.",
+        "no_safe_item_because": "TOO_FEW_GRANULARITY_MATCHES",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "All five returned seeds are milk-removal advice; the decision is admission and intravenous therapy."
+      },
+      {
+        "opportunity_label": "G2-OBGYN-05",
+        "opportunity_id": "QOPP-dd3210bfccb2bfc57627987b",
+        "discipline": "OBGYN",
+        "discipline_profile_id": "OBGYN",
+        "priority_class": "IMPORTANT",
+        "mcc_objective_id": "80-2",
+        "study_unit_id": "SU-OB-54",
+        "learner_decision_id": "LD-OB54-06",
+        "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "physician_activity": "Management",
+        "final_state": "NO_SAFE_ITEM",
+        "retrieval_attempted": true,
+        "candidates_indexed": 0,
+        "candidates_ranked": 0,
+        "candidates_admitted_after_admissibility": 0,
+        "candidates_contextually_eligible": null,
+        "selected_competitor_seed_ids": null,
+        "targeted_seeds_used": [],
+        "authored": false,
+        "realized_item_id": null,
+        "passed_production_admissibility": null,
+        "admissibility_rule_verdicts": null,
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "reached_independent_review": false,
+        "independent_review_verdict": null,
+        "independent_review_failed_criteria": null,
+        "independent_review_finding_count": 0,
+        "blind_solve_matched_key": null,
+        "primary_earliest_failure_cause": "A_NO_RELEVANT_CONTRAST_SEEDS",
+        "primary_cause_note": "Zero candidates indexed for OBGYN x POSTPARTUM_LACTATION_MANAGEMENT x MANAGEMENT_STRATEGY_SET.",
+        "no_safe_item_because": "NO_LIBRARY_SEEDS",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "Zero candidates indexed for this triple."
+      },
+      {
+        "opportunity_label": "G2-PED-01",
+        "opportunity_id": "QOPP-2ea8ff9d726e2805c09a67c8",
+        "discipline": "PED",
+        "discipline_profile_id": "PEDIATRICS",
+        "priority_class": "CORE",
+        "mcc_objective_id": "27-3",
+        "study_unit_id": "SU-P-147",
+        "learner_decision_id": "LD-P147-01",
+        "item_archetype": "AGE_BANDED_DIAGNOSIS",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "physician_activity": "Assessment/Diagnosis",
+        "final_state": "REJECTED",
+        "retrieval_attempted": true,
+        "candidates_indexed": 3,
+        "candidates_ranked": 3,
+        "candidates_admitted_after_admissibility": 3,
+        "candidates_contextually_eligible": 3,
+        "selected_competitor_seed_ids": [
+          "SEED-PED-T01-ASTHMA",
+          "SEED-PED-T01-FOREIGN-BODY",
+          "SEED-PED-T01-PNEUMONIA"
+        ],
+        "targeted_seeds_used": [],
+        "authored": true,
+        "realized_item_id": "G2-PED-01",
+        "passed_production_admissibility": true,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": null,
+        "reached_independent_review": true,
+        "independent_review_verdict": "FAIL",
+        "independent_review_failed_criteria": [
+          "distractor_competitiveness",
+          "cueing"
+        ],
+        "independent_review_finding_count": 5,
+        "blind_solve_matched_key": "PASS",
+        "primary_earliest_failure_cause": "E_COMPETITOR_WITHOUT_STEM_ANCHOR",
+        "primary_cause_note": "Asthma and foreign body both fully pre-excluded in words. Pneumonia retained a real anchor, so the defect is per-option, not whole-set.",
+        "rejected_root_locus": "STEM_KEY_REALIZATION",
+        "rejected_root_note": "Asthma and foreign body pre-excluded in words; pneumonia retained a real anchor."
+      },
+      {
+        "opportunity_label": "G2-PED-02",
+        "opportunity_id": "QOPP-846f7185201d4203ab1f30a9",
+        "discipline": "PED",
+        "discipline_profile_id": "PEDIATRICS",
+        "priority_class": "CORE",
+        "mcc_objective_id": "27-3",
+        "study_unit_id": "SU-P-147",
+        "learner_decision_id": "LD-P147-02",
+        "item_archetype": "INVESTIGATION_SELECTION",
+        "option_set_archetype": "INVESTIGATION_SET",
+        "physician_activity": "Assessment/Diagnosis",
+        "final_state": "REJECTED",
+        "retrieval_attempted": true,
+        "candidates_indexed": 4,
+        "candidates_ranked": 4,
+        "candidates_admitted_after_admissibility": 4,
+        "candidates_contextually_eligible": 4,
+        "selected_competitor_seed_ids": [
+          "SEED-PED-T02-CONTINUOUS",
+          "SEED-PED-T02-CBC",
+          "SEED-PED-T02-CXR"
+        ],
+        "targeted_seeds_used": [],
+        "authored": true,
+        "realized_item_id": "G2-PED-02",
+        "passed_production_admissibility": true,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": null,
+        "reached_independent_review": true,
+        "independent_review_verdict": "FAIL",
+        "independent_review_failed_criteria": [
+          "evidence_support",
+          "distractor_competitiveness",
+          "decision_granularity",
+          "cueing"
+        ],
+        "independent_review_finding_count": 9,
+        "blind_solve_matched_key": "PASS",
+        "primary_earliest_failure_cause": "D_WRONG_DECISION_GRANULARITY",
+        "primary_cause_note": "Earliest failure is opportunity/archetype declaration: the key is a continuing monitoring plan but the declared option_set_archetype is INVESTIGATION_SET, so retrieval returned one-off tests. The anchorless competitors and the granularity FAIL both follow from that.",
+        "rejected_root_locus": "RETRIEVAL",
+        "rejected_root_note": "The declared option_set_archetype INVESTIGATION_SET does not match a key that is a monitoring plan, so the pool returned was one-off tests at the wrong grain."
+      },
+      {
+        "opportunity_label": "G2-PED-03",
+        "opportunity_id": "QOPP-bd271fcf32333d4dd5756f52",
+        "discipline": "PED",
+        "discipline_profile_id": "PEDIATRICS",
+        "priority_class": "CORE",
+        "mcc_objective_id": "27-3",
+        "study_unit_id": "SU-P-147",
+        "learner_decision_id": "LD-P147-03",
+        "item_archetype": "SUPPORTIVE_CARE_CEILING",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Management",
+        "final_state": "REJECTED",
+        "retrieval_attempted": true,
+        "candidates_indexed": 6,
+        "candidates_ranked": 6,
+        "candidates_admitted_after_admissibility": 6,
+        "candidates_contextually_eligible": 6,
+        "selected_competitor_seed_ids": [
+          "SEED-PED-T03-HFNC",
+          "SEED-PED-T03-EPINEPHRINE",
+          "SEED-PED-T03-FLUIDS"
+        ],
+        "targeted_seeds_used": [],
+        "authored": true,
+        "realized_item_id": "G2-PED-03",
+        "passed_production_admissibility": true,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": null,
+        "reached_independent_review": true,
+        "independent_review_verdict": "FAIL",
+        "independent_review_failed_criteria": [
+          "cueing"
+        ],
+        "independent_review_finding_count": 5,
+        "blind_solve_matched_key": "PASS",
+        "primary_earliest_failure_cause": "G_COMPETITOR_VALID_BUT_OPTION_REALIZATION_WEAK",
+        "primary_cause_note": "Verifier confirms all three distractors anchored. Key is the only imperative clause and the longest option; one meta-clause removes option A.",
+        "rejected_root_locus": "OPTION_REALIZATION",
+        "rejected_root_note": "Key is the only imperative clause and the longest option; one stem meta-clause removes option A."
+      },
+      {
+        "opportunity_label": "G2-PED-04",
+        "opportunity_id": "QOPP-13ffc5a7bf3d219db5d37ea5",
+        "discipline": "PED",
+        "discipline_profile_id": "PEDIATRICS",
+        "priority_class": "CORE",
+        "mcc_objective_id": "27-3",
+        "study_unit_id": "SU-P-147",
+        "learner_decision_id": "LD-P147-04",
+        "item_archetype": "RED_FLAG_RECOGNITION",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Management",
+        "final_state": "NO_SAFE_ITEM",
+        "retrieval_attempted": true,
+        "candidates_indexed": 6,
+        "candidates_ranked": 6,
+        "candidates_admitted_after_admissibility": 6,
+        "candidates_contextually_eligible": 0,
+        "selected_competitor_seed_ids": [],
+        "targeted_seeds_used": [],
+        "authored": false,
+        "realized_item_id": null,
+        "passed_production_admissibility": null,
+        "admissibility_rule_verdicts": null,
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_SEMANTICALLY_ADMISSIBLE_COMPETITORS",
+        "reached_independent_review": false,
+        "independent_review_verdict": null,
+        "independent_review_failed_criteria": null,
+        "independent_review_finding_count": 0,
+        "blind_solve_matched_key": null,
+        "primary_earliest_failure_cause": "D_WRONG_DECISION_GRANULARITY",
+        "primary_cause_note": "All six retrieved competitors refused SA_1. The index returned the supportive-care escalation pool for a discharge-readiness decision.",
+        "no_safe_item_because": "TOO_FEW_GRANULARITY_MATCHES",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "No seed in the library is curated for a discharge-readiness decision; all six returned were supportive-care escalation seeds and all six were refused SA_1."
+      },
+      {
+        "opportunity_label": "G2-PED-05",
+        "opportunity_id": "QOPP-dadfb2a96c81514c5c5d7095",
+        "discipline": "PED",
+        "discipline_profile_id": "PEDIATRICS",
+        "priority_class": "CORE",
+        "mcc_objective_id": "27-3",
+        "study_unit_id": "SU-P-147",
+        "learner_decision_id": "LD-P147-05",
+        "item_archetype": "SUPPORTIVE_CARE_CEILING",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Management",
+        "final_state": "NO_SAFE_ITEM",
+        "retrieval_attempted": true,
+        "candidates_indexed": 6,
+        "candidates_ranked": 5,
+        "candidates_admitted_after_admissibility": 5,
+        "candidates_contextually_eligible": 5,
+        "selected_competitor_seed_ids": [
+          "SEED-PED-T03-HFNC",
+          "SEED-PED-T03-EPINEPHRINE",
+          "SEED-PED-T03-HYPERTONIC"
+        ],
+        "targeted_seeds_used": [],
+        "authored": true,
+        "realized_item_id": null,
+        "passed_production_admissibility": false,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "FAIL"
+        },
+        "fail_closed_reason": "FAIL_CLOSED_INCOHERENT_OPTION_SET_ARCHETYPE",
+        "reached_independent_review": false,
+        "independent_review_verdict": null,
+        "independent_review_failed_criteria": null,
+        "independent_review_finding_count": 0,
+        "blind_solve_matched_key": null,
+        "primary_earliest_failure_cause": "G_COMPETITOR_VALID_BUT_OPTION_REALIZATION_WEAK",
+        "primary_cause_note": "Retrieval sufficient; ADM_5 SOLE_NUMERAL_BEARING_OPTION because the curated concept string 'Nebulized 3% hypertonic saline' carries a numeral and the provenance rule forbids rewording at realization.",
+        "no_safe_item_because": "OTHER",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "Retrieval was sufficient. ADM_5 failed because the only remaining competitors included a numeral-bearing curated string. A fourth numeral-free competitor at the same grain would clear it."
+      },
+      {
+        "opportunity_label": "G2-PHELO-01",
+        "opportunity_id": "QOPP-a9e02807c858d26ac27d8d52",
+        "discipline": "PHELO",
+        "discipline_profile_id": "PHELO",
+        "priority_class": "CORE",
+        "mcc_objective_id": "78-3",
+        "study_unit_id": "SU-PH-07",
+        "learner_decision_id": "LD-PH07-01",
+        "item_archetype": "EPIDEMIOLOGY_INTERPRETATION",
+        "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+        "physician_activity": "Professional Behaviours",
+        "final_state": "ACCEPTED",
+        "retrieval_attempted": true,
+        "candidates_indexed": 4,
+        "candidates_ranked": 3,
+        "candidates_admitted_after_admissibility": 3,
+        "candidates_contextually_eligible": 3,
+        "selected_competitor_seed_ids": [
+          "SEED-PHELO-T01-HEALTHY-SCREENEE",
+          "SEED-PHELO-T01-LENGTH",
+          "SEED-PHELO-T01-OVERDIAGNOSIS"
+        ],
+        "targeted_seeds_used": [],
+        "authored": true,
+        "realized_item_id": "G2-PHELO-01",
+        "passed_production_admissibility": true,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": null,
+        "reached_independent_review": true,
+        "independent_review_verdict": "PASS",
+        "independent_review_failed_criteria": [],
+        "independent_review_finding_count": 6,
+        "blind_solve_matched_key": "PASS",
+        "primary_earliest_failure_cause": null,
+        "primary_cause_note": "ACCEPTED positive control."
+      },
+      {
+        "opportunity_label": "G2-PHELO-02",
+        "opportunity_id": "QOPP-658ba55682b1c0bd819fe324",
+        "discipline": "PHELO",
+        "discipline_profile_id": "PHELO",
+        "priority_class": "CORE",
+        "mcc_objective_id": "74",
+        "study_unit_id": "SU-PH-07",
+        "learner_decision_id": "LD-PH07-02",
+        "item_archetype": "ETHICAL_ACTION",
+        "option_set_archetype": "ETHICAL_ACTION_SET",
+        "physician_activity": "Communication",
+        "final_state": "REJECTED",
+        "retrieval_attempted": true,
+        "candidates_indexed": 5,
+        "candidates_ranked": 3,
+        "candidates_admitted_after_admissibility": 3,
+        "candidates_contextually_eligible": 3,
+        "selected_competitor_seed_ids": [
+          "SEED-G2-PHELO-T02-VOLUNTARY",
+          "SEED-PHELO-T02-DETECTION-COUNT",
+          "SEED-PHELO-T02-SENSITIVITY"
+        ],
+        "targeted_seeds_used": [
+          "SEED-G2-PHELO-T02-VOLUNTARY"
+        ],
+        "authored": true,
+        "realized_item_id": "G2-PHELO-02",
+        "passed_production_admissibility": true,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": null,
+        "reached_independent_review": true,
+        "independent_review_verdict": "FAIL",
+        "independent_review_failed_criteria": [
+          "one_best_answer"
+        ],
+        "independent_review_finding_count": 8,
+        "blind_solve_matched_key": "PASS",
+        "primary_earliest_failure_cause": "L_OTHER_SECOND_KEY_ADMITTED_VIA_LOSSY_CORRECTNESS_PREDICATE",
+        "primary_cause_note": "SEED-G2-PHELO-T02-VOLUNTARY's prose correctness condition has two limbs; the enrichment encoded only the negative limb as a predicate. The stem satisfies the positive limb, so the ADM_3 second-key guard could not see that the competitor was defensibly correct. The item's own admitted claim CLM-R2-PHELO-REMINDERS supports it.",
+        "rejected_root_locus": "CONTEXTUAL_FILTERING",
+        "rejected_root_note": "The competitor's prose correctness condition was flattened to one predicate, so the second-key guard could not see the limb the stem satisfies."
+      },
+      {
+        "opportunity_label": "G2-PHELO-03",
+        "opportunity_id": "QOPP-088bd5e66bf2a2b10fc8a6e3",
+        "discipline": "PHELO",
+        "discipline_profile_id": "PHELO",
+        "priority_class": "CORE",
+        "mcc_objective_id": "74",
+        "study_unit_id": "SU-PH-07",
+        "learner_decision_id": "LD-PH07-03",
+        "item_archetype": "SCREENING_DECISION",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "physician_activity": "Management",
+        "final_state": "REJECTED",
+        "retrieval_attempted": true,
+        "candidates_indexed": 4,
+        "candidates_ranked": 4,
+        "candidates_admitted_after_admissibility": 4,
+        "candidates_contextually_eligible": 4,
+        "selected_competitor_seed_ids": [
+          "SEED-PHELO-T03-EVALUATE",
+          "SEED-PHELO-T03-PILOT",
+          "SEED-PHELO-T03-ECONOMIC"
+        ],
+        "targeted_seeds_used": [],
+        "authored": true,
+        "realized_item_id": "G2-PHELO-03",
+        "passed_production_admissibility": true,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": null,
+        "reached_independent_review": true,
+        "independent_review_verdict": "FAIL",
+        "independent_review_failed_criteria": [
+          "distractor_competitiveness"
+        ],
+        "independent_review_finding_count": 7,
+        "blind_solve_matched_key": "PASS",
+        "primary_earliest_failure_cause": "F_COMPETITOR_TOO_EASILY_EXCLUDED_BY_STEM",
+        "primary_cause_note": "Verifier explicitly distinguishes this from the anchorless mode: option D's anchor exists ('a completed economic evaluation') but is purely refuting, so the option is anchored without being tempting.",
+        "rejected_root_locus": "STEM_KEY_REALIZATION",
+        "rejected_root_note": "The stem states the completed economic evaluation, which makes the option's only anchor purely refuting."
+      },
+      {
+        "opportunity_label": "G2-PHELO-04",
+        "opportunity_id": "QOPP-56668330ef3b338939c22250",
+        "discipline": "PHELO",
+        "discipline_profile_id": "PHELO",
+        "priority_class": "CORE",
+        "mcc_objective_id": "74",
+        "study_unit_id": "SU-PH-07",
+        "learner_decision_id": "LD-PH07-04",
+        "item_archetype": "SCREENING_DECISION",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "physician_activity": "Management",
+        "final_state": "NO_SAFE_ITEM",
+        "retrieval_attempted": true,
+        "candidates_indexed": 4,
+        "candidates_ranked": 3,
+        "candidates_admitted_after_admissibility": 3,
+        "candidates_contextually_eligible": 0,
+        "selected_competitor_seed_ids": [],
+        "targeted_seeds_used": [],
+        "authored": false,
+        "realized_item_id": null,
+        "passed_production_admissibility": null,
+        "admissibility_rule_verdicts": null,
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_SEMANTICALLY_ADMISSIBLE_COMPETITORS",
+        "reached_independent_review": false,
+        "independent_review_verdict": null,
+        "independent_review_failed_criteria": null,
+        "independent_review_finding_count": 0,
+        "blind_solve_matched_key": null,
+        "primary_earliest_failure_cause": "D_WRONG_DECISION_GRANULARITY",
+        "primary_cause_note": "All three retrieved competitors refused SA_1. The index returned the launch-decision pool for a screening-interval decision.",
+        "no_safe_item_because": "TOO_FEW_GRANULARITY_MATCHES",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "All three returned seeds are launch-decision competitors; the decision is a screening interval."
+      },
+      {
+        "opportunity_label": "G2-PHELO-05",
+        "opportunity_id": "QOPP-1b6ff631e1eef8517e9aa959",
+        "discipline": "PHELO",
+        "discipline_profile_id": "PHELO",
+        "priority_class": "CORE",
+        "mcc_objective_id": "78-3",
+        "study_unit_id": "SU-PH-07",
+        "learner_decision_id": "LD-PH07-05",
+        "item_archetype": "EPIDEMIOLOGY_INTERPRETATION",
+        "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+        "physician_activity": "Professional Behaviours",
+        "final_state": "REJECTED",
+        "retrieval_attempted": true,
+        "candidates_indexed": 4,
+        "candidates_ranked": 3,
+        "candidates_admitted_after_admissibility": 3,
+        "candidates_contextually_eligible": 3,
+        "selected_competitor_seed_ids": [
+          "SEED-G2-PHELO-T01-LEAD-TIME",
+          "SEED-PHELO-T01-LENGTH",
+          "SEED-PHELO-T01-OVERDIAGNOSIS"
+        ],
+        "targeted_seeds_used": [
+          "SEED-G2-PHELO-T01-LEAD-TIME"
+        ],
+        "authored": true,
+        "realized_item_id": "G2-PHELO-05",
+        "passed_production_admissibility": true,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": null,
+        "reached_independent_review": true,
+        "independent_review_verdict": "FAIL",
+        "independent_review_failed_criteria": [
+          "factual_correctness"
+        ],
+        "independent_review_finding_count": 8,
+        "blind_solve_matched_key": "PASS",
+        "primary_earliest_failure_cause": "J_ITEM_REASONING_OR_STEM_PROBLEM",
+        "primary_cause_note": "The stem stipulates equal cumulative incidence, equal survival from diagnosis and unequal disease-specific mortality, which cannot co-exist. Option set and evidence handling are otherwise sound.",
+        "rejected_root_locus": "STEM_KEY_REALIZATION",
+        "rejected_root_note": "The stem stipulates an arithmetically impossible combination of results."
+      },
+      {
+        "opportunity_label": "G2-PSY-01",
+        "opportunity_id": "QOPP-9aba75caf03d3e2acd64e57b",
+        "discipline": "PSY",
+        "discipline_profile_id": "PSYCHIATRY",
+        "priority_class": "CORE",
+        "mcc_objective_id": "59-1",
+        "study_unit_id": "SU-PS-12",
+        "learner_decision_id": "LD-PS12-01",
+        "item_archetype": "LONGITUDINAL_DIFFERENTIAL",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "physician_activity": "Assessment/Diagnosis",
+        "final_state": "REJECTED",
+        "retrieval_attempted": true,
+        "candidates_indexed": 4,
+        "candidates_ranked": 4,
+        "candidates_admitted_after_admissibility": 4,
+        "candidates_contextually_eligible": 4,
+        "selected_competitor_seed_ids": [
+          "SEED-PSY-T01-BD2",
+          "SEED-PSY-T01-MEDICAL",
+          "SEED-PSY-T01-PDD"
+        ],
+        "targeted_seeds_used": [],
+        "authored": true,
+        "realized_item_id": "G2-PSY-01",
+        "passed_production_admissibility": true,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": null,
+        "reached_independent_review": true,
+        "independent_review_verdict": "FAIL",
+        "independent_review_failed_criteria": [
+          "evidence_support",
+          "distractor_competitiveness",
+          "rationale_fatal_defects"
+        ],
+        "independent_review_finding_count": 4,
+        "blind_solve_matched_key": "PASS",
+        "primary_earliest_failure_cause": "E_COMPETITOR_WITHOUT_STEM_ANCHOR",
+        "primary_cause_note": "Hypothyroidism competitor: TSH reported normal and the weight change is in the wrong direction. The unsupported-claim finding is the rationale trying to supply the missing anchor.",
+        "rejected_root_locus": "STEM_KEY_REALIZATION",
+        "rejected_root_note": "Normal TSH stated and weight change in the wrong direction leave the hypothyroidism competitor with no pull."
+      },
+      {
+        "opportunity_label": "G2-PSY-02",
+        "opportunity_id": "QOPP-f475191976ced2f3a0e912d5",
+        "discipline": "PSY",
+        "discipline_profile_id": "PSYCHIATRY",
+        "priority_class": "CORE",
+        "mcc_objective_id": "59-1",
+        "study_unit_id": "SU-PS-12",
+        "learner_decision_id": "LD-PS12-02",
+        "item_archetype": "SAFETY_ASSESSMENT",
+        "option_set_archetype": "DISPOSITION_SET",
+        "physician_activity": "Management",
+        "final_state": "NO_SAFE_ITEM",
+        "retrieval_attempted": true,
+        "candidates_indexed": 4,
+        "candidates_ranked": 2,
+        "candidates_admitted_after_admissibility": 2,
+        "candidates_contextually_eligible": null,
+        "selected_competitor_seed_ids": null,
+        "targeted_seeds_used": [],
+        "authored": false,
+        "realized_item_id": null,
+        "passed_production_admissibility": null,
+        "admissibility_rule_verdicts": null,
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "reached_independent_review": false,
+        "independent_review_verdict": null,
+        "independent_review_failed_criteria": null,
+        "independent_review_finding_count": 0,
+        "blind_solve_matched_key": null,
+        "primary_earliest_failure_cause": "B_INSUFFICIENT_THREE_COMPETITORS",
+        "primary_cause_note": "4 indexed, 2 excluded on response class, 2 ranked. One targeted seed authored for this target was rejected by the independent seed reviewer and correctly never reached the wave.",
+        "no_safe_item_because": "TARGETED_ENRICHMENT_STILL_INSUFFICIENT",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "Two of four indexed seeds fell on response class; the targeted top-up authored for this target was rejected by the independent seed reviewer and correctly never reached the wave."
+      },
+      {
+        "opportunity_label": "G2-PSY-03",
+        "opportunity_id": "QOPP-7d879c81066b549b00107721",
+        "discipline": "PSY",
+        "discipline_profile_id": "PSYCHIATRY",
+        "priority_class": "CORE",
+        "mcc_objective_id": "59-1",
+        "study_unit_id": "SU-PS-12",
+        "learner_decision_id": "LD-PS12-03",
+        "item_archetype": "PHARMACOTHERAPY",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "physician_activity": "Management",
+        "final_state": "REJECTED",
+        "retrieval_attempted": true,
+        "candidates_indexed": 6,
+        "candidates_ranked": 5,
+        "candidates_admitted_after_admissibility": 5,
+        "candidates_contextually_eligible": 4,
+        "selected_competitor_seed_ids": [
+          "SEED-PSY-T03-EXERCISE",
+          "SEED-PSY-T03-PSYCHOTHERAPY",
+          "SEED-PSY-T03-DIGITAL"
+        ],
+        "targeted_seeds_used": [],
+        "authored": true,
+        "realized_item_id": "G2-PSY-03",
+        "passed_production_admissibility": true,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": null,
+        "reached_independent_review": true,
+        "independent_review_verdict": "FAIL",
+        "independent_review_failed_criteria": [
+          "evidence_support"
+        ],
+        "independent_review_finding_count": 4,
+        "blind_solve_matched_key": "PASS",
+        "primary_earliest_failure_cause": "I_EVIDENCE_OR_CRITICAL_FACT_BLOCK",
+        "primary_cause_note": "None of the five admitted claims mentions exercise, yet SEED-PSY-T03-EXERCISE was retrieved and its dismissal asserted as guideline fact.",
+        "rejected_root_locus": "EVIDENCE",
+        "rejected_root_note": "A retrieved competitor has no corresponding admitted claim, so its dismissal was asserted rather than entailed."
+      },
+      {
+        "opportunity_label": "G2-PSY-04",
+        "opportunity_id": "QOPP-a2f37c1b51d729f6a888d95b",
+        "discipline": "PSY",
+        "discipline_profile_id": "PSYCHIATRY",
+        "priority_class": "CORE",
+        "mcc_objective_id": "59-1",
+        "study_unit_id": "SU-PS-12",
+        "learner_decision_id": "LD-PS12-05",
+        "item_archetype": "PHARMACOTHERAPY",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "physician_activity": "Management",
+        "final_state": "REJECTED",
+        "retrieval_attempted": true,
+        "candidates_indexed": 6,
+        "candidates_ranked": 4,
+        "candidates_admitted_after_admissibility": 4,
+        "candidates_contextually_eligible": 3,
+        "selected_competitor_seed_ids": [
+          "SEED-PSY-T03-PSYCHOTHERAPY",
+          "SEED-PSY-T03-EXERCISE",
+          "SEED-PSY-T03-COMBINED"
+        ],
+        "targeted_seeds_used": [],
+        "authored": true,
+        "realized_item_id": "G2-PSY-04",
+        "passed_production_admissibility": true,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": null,
+        "reached_independent_review": true,
+        "independent_review_verdict": "FAIL",
+        "independent_review_failed_criteria": [
+          "evidence_support",
+          "one_best_answer",
+          "distractor_competitiveness",
+          "decision_granularity",
+          "rationale_fatal_defects"
+        ],
+        "independent_review_finding_count": 6,
+        "blind_solve_matched_key": "PASS",
+        "primary_earliest_failure_cause": "H_OPTION_SET_CATEGORY_OR_POLARITY_PROBLEM",
+        "primary_cause_note": "Option nesting: the key (digitally delivered CBT) is an instance of retrieved competitor SEED-PSY-T03-PSYCHOTHERAPY. Retrieval excludes a competitor whose conditions are fully satisfied but has no test for one that subsumes the key.",
+        "rejected_root_locus": "RETRIEVAL",
+        "rejected_root_note": "Retrieval returned a competitor that properly contains the key; the second-key guard tests full satisfaction, not subsumption."
+      },
+      {
+        "opportunity_label": "G2-PSY-05",
+        "opportunity_id": "QOPP-aceb7ffc515b990f436d375b",
+        "discipline": "PSY",
+        "discipline_profile_id": "PSYCHIATRY",
+        "priority_class": "CORE",
+        "mcc_objective_id": "59-1",
+        "study_unit_id": "SU-PS-12",
+        "learner_decision_id": "LD-PS12-06",
+        "item_archetype": "PHARMACOTHERAPY",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "physician_activity": "Management",
+        "final_state": "NO_SAFE_ITEM",
+        "retrieval_attempted": true,
+        "candidates_indexed": 6,
+        "candidates_ranked": 6,
+        "candidates_admitted_after_admissibility": 6,
+        "candidates_contextually_eligible": 3,
+        "selected_competitor_seed_ids": [
+          "SEED-G2-PSY-T03-AD-ALONE",
+          "SEED-G2-PSY-T03-ECT",
+          "SEED-PSY-T03-COMBINED"
+        ],
+        "targeted_seeds_used": [
+          "SEED-G2-PSY-T03-AD-ALONE",
+          "SEED-G2-PSY-T03-ECT"
+        ],
+        "authored": true,
+        "realized_item_id": null,
+        "passed_production_admissibility": false,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "FAIL",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": "FAIL_CLOSED_INCOHERENT_OPTION_SET_ARCHETYPE",
+        "reached_independent_review": false,
+        "independent_review_verdict": null,
+        "independent_review_failed_criteria": null,
+        "independent_review_finding_count": 0,
+        "blind_solve_matched_key": null,
+        "primary_earliest_failure_cause": "H_OPTION_SET_CATEGORY_OR_POLARITY_PROBLEM",
+        "primary_cause_note": "ADM_2 DISTRACTOR_OUTLIER_CARE_SETTING. The MDD treatment pool holds no same-setting competitor for psychotic depression, so ECT was the only remaining candidate.",
+        "no_safe_item_because": "TOO_FEW_ARCHETYPE_MATCHES",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "The depression treatment pool holds no same-care-setting competitor for a psychotic episode, so nominal parity could not be met."
+      },
+      {
+        "opportunity_label": "G2-PSY-06",
+        "opportunity_id": "QOPP-6cd6b909f5f07d36d6063329",
+        "discipline": "PSY",
+        "discipline_profile_id": "PSYCHIATRY",
+        "priority_class": "CORE",
+        "mcc_objective_id": "59-1",
+        "study_unit_id": "SU-PS-12",
+        "learner_decision_id": "LD-PS12-01",
+        "item_archetype": "DIAGNOSIS",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "physician_activity": "Assessment/Diagnosis",
+        "final_state": "REDUNDANT",
+        "retrieval_attempted": false,
+        "candidates_indexed": null,
+        "candidates_ranked": 0,
+        "candidates_admitted_after_admissibility": null,
+        "candidates_contextually_eligible": null,
+        "selected_competitor_seed_ids": null,
+        "targeted_seeds_used": [],
+        "authored": false,
+        "realized_item_id": null,
+        "passed_production_admissibility": null,
+        "admissibility_rule_verdicts": null,
+        "fail_closed_reason": null,
+        "reached_independent_review": false,
+        "independent_review_verdict": null,
+        "independent_review_failed_criteria": null,
+        "independent_review_finding_count": 0,
+        "blind_solve_matched_key": null,
+        "primary_earliest_failure_cause": "K_REDUNDANCY",
+        "primary_cause_note": "Deliberate redundancy control, refused before generation. Behaved as designed."
+      },
+      {
+        "opportunity_label": "G2-SURG-01",
+        "opportunity_id": "QOPP-0de5f917778b8e286e41542b",
+        "discipline": "SURG",
+        "discipline_profile_id": "SURGERY",
+        "priority_class": "CORE",
+        "mcc_objective_id": "3-2",
+        "study_unit_id": "SU-GS-76",
+        "learner_decision_id": "LD-GS76-01",
+        "item_archetype": "RECOGNITION",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "physician_activity": "Assessment/Diagnosis",
+        "final_state": "NO_SAFE_ITEM",
+        "retrieval_attempted": true,
+        "candidates_indexed": 3,
+        "candidates_ranked": 3,
+        "candidates_admitted_after_admissibility": 3,
+        "candidates_contextually_eligible": 3,
+        "selected_competitor_seed_ids": [
+          "SEED-SURG-T01-PID",
+          "SEED-SURG-T01-TORSION",
+          "SEED-SURG-T01-TOA"
+        ],
+        "targeted_seeds_used": [],
+        "authored": true,
+        "realized_item_id": null,
+        "passed_production_admissibility": false,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "FAIL",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": "FAIL_CLOSED_INCOHERENT_OPTION_SET_ARCHETYPE",
+        "reached_independent_review": false,
+        "independent_review_verdict": null,
+        "independent_review_failed_criteria": null,
+        "independent_review_finding_count": 0,
+        "blind_solve_matched_key": null,
+        "primary_earliest_failure_cause": "H_OPTION_SET_CATEGORY_OR_POLARITY_PROBLEM",
+        "primary_cause_note": "ADM_2 KEY_ONLY_ORGAN_SYSTEM. Every SURG-T01 seed is gynaecological while the key is gastrointestinal, so nominal parity cannot be met from this library.",
+        "no_safe_item_because": "TOO_FEW_ARCHETYPE_MATCHES",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "Every SURG-T01 seed is gynaecological while the key is gastrointestinal; the library cannot supply organ-system parity for this key."
+      },
+      {
+        "opportunity_label": "G2-SURG-02",
+        "opportunity_id": "QOPP-714fa249ef13476662a9c146",
+        "discipline": "SURG",
+        "discipline_profile_id": "SURGERY",
+        "priority_class": "CORE",
+        "mcc_objective_id": "3-2",
+        "study_unit_id": "SU-GS-76",
+        "learner_decision_id": "LD-GS76-02",
+        "item_archetype": "IMAGING_SELECTION",
+        "option_set_archetype": "INVESTIGATION_SET",
+        "physician_activity": "Assessment/Diagnosis",
+        "final_state": "ACCEPTED",
+        "retrieval_attempted": true,
+        "candidates_indexed": 5,
+        "candidates_ranked": 5,
+        "candidates_admitted_after_admissibility": 5,
+        "candidates_contextually_eligible": 5,
+        "selected_competitor_seed_ids": [
+          "SEED-SURG-T02-MRI",
+          "SEED-SURG-T02-LAPAROSCOPY",
+          "SEED-SURG-T02-OBSERVE"
+        ],
+        "targeted_seeds_used": [],
+        "authored": true,
+        "realized_item_id": "G2-SURG-02",
+        "passed_production_admissibility": true,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": null,
+        "reached_independent_review": true,
+        "independent_review_verdict": "PASS",
+        "independent_review_failed_criteria": [],
+        "independent_review_finding_count": 4,
+        "blind_solve_matched_key": "PASS",
+        "primary_earliest_failure_cause": null,
+        "primary_cause_note": "ACCEPTED positive control."
+      },
+      {
+        "opportunity_label": "G2-SURG-03",
+        "opportunity_id": "QOPP-262f8cee3718abf497781132",
+        "discipline": "SURG",
+        "discipline_profile_id": "SURGERY",
+        "priority_class": "CORE",
+        "mcc_objective_id": "3-1",
+        "study_unit_id": "SU-GS-76",
+        "learner_decision_id": "LD-GS76-03",
+        "item_archetype": "OPERATIVE_VS_NONOPERATIVE",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "physician_activity": "Management",
+        "final_state": "REJECTED",
+        "retrieval_attempted": true,
+        "candidates_indexed": 3,
+        "candidates_ranked": 3,
+        "candidates_admitted_after_admissibility": 3,
+        "candidates_contextually_eligible": 3,
+        "selected_competitor_seed_ids": [
+          "SEED-SURG-T03-NONOP",
+          "SEED-SURG-T03-DRAINAGE",
+          "SEED-SURG-T03-INTERVAL"
+        ],
+        "targeted_seeds_used": [],
+        "authored": true,
+        "realized_item_id": "G2-SURG-03",
+        "passed_production_admissibility": true,
+        "admissibility_rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "fail_closed_reason": null,
+        "reached_independent_review": true,
+        "independent_review_verdict": "FAIL",
+        "independent_review_failed_criteria": [
+          "factual_correctness",
+          "numeric_correctness",
+          "evidence_support",
+          "reasoning_demand",
+          "distractor_competitiveness",
+          "critical_fact_safety",
+          "cueing",
+          "rationale_fatal_defects"
+        ],
+        "independent_review_finding_count": 7,
+        "blind_solve_matched_key": "PASS",
+        "primary_earliest_failure_cause": "E_COMPETITOR_WITHOUT_STEM_ANCHOR",
+        "primary_cause_note": "The CT report explicitly negates perforation, free fluid, abscess and phlegmon, killing both the drainage and interval-appendectomy competitors before the options are read. Carries an INDEPENDENT second defect (numeric inversion of CLM-R2-SURG-NONOP) that is not downstream of this cause.",
+        "rejected_root_locus": "STEM_KEY_REALIZATION",
+        "rejected_root_note": "Explicit CT negations kill two of three competitors before the options are read. Carries an independent evidence/numeric defect that is not downstream of this cause."
+      },
+      {
+        "opportunity_label": "G2-SURG-04",
+        "opportunity_id": "QOPP-c71d90d64e2dba78f5d645dd",
+        "discipline": "SURG",
+        "discipline_profile_id": "SURGERY",
+        "priority_class": "CORE",
+        "mcc_objective_id": "116",
+        "study_unit_id": "SU-GS-76",
+        "learner_decision_id": "LD-GS76-04",
+        "item_archetype": "DISPOSITION",
+        "option_set_archetype": "DISPOSITION_SET",
+        "physician_activity": "Management",
+        "final_state": "NO_SAFE_ITEM",
+        "retrieval_attempted": true,
+        "candidates_indexed": 0,
+        "candidates_ranked": 0,
+        "candidates_admitted_after_admissibility": 0,
+        "candidates_contextually_eligible": null,
+        "selected_competitor_seed_ids": null,
+        "targeted_seeds_used": [],
+        "authored": false,
+        "realized_item_id": null,
+        "passed_production_admissibility": null,
+        "admissibility_rule_verdicts": null,
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "reached_independent_review": false,
+        "independent_review_verdict": null,
+        "independent_review_failed_criteria": null,
+        "independent_review_finding_count": 0,
+        "blind_solve_matched_key": null,
+        "primary_earliest_failure_cause": "A_NO_RELEVANT_CONTRAST_SEEDS",
+        "primary_cause_note": "Zero candidates indexed for SURGERY x DISPOSITION x DISPOSITION_SET.",
+        "no_safe_item_because": "NO_LIBRARY_SEEDS",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "Zero candidates indexed for this triple."
+      }
+    ]
+  },
+  "phase_2_primary_earliest_failure_cause": {
+    "rule": "One primary earliest cause per non-accepted opportunity. Downstream symptoms are not counted as separate primary causes.",
+    "counts": {
+      "A_NO_RELEVANT_CONTRAST_SEEDS": 2,
+      "B_INSUFFICIENT_THREE_COMPETITORS": 2,
+      "D_WRONG_DECISION_GRANULARITY": 4,
+      "E_COMPETITOR_WITHOUT_STEM_ANCHOR": 4,
+      "F_COMPETITOR_TOO_EASILY_EXCLUDED_BY_STEM": 1,
+      "G_COMPETITOR_VALID_BUT_OPTION_REALIZATION_WEAK": 3,
+      "H_OPTION_SET_CATEGORY_OR_POLARITY_PROBLEM": 3,
+      "I_EVIDENCE_OR_CRITICAL_FACT_BLOCK": 3,
+      "J_ITEM_REASONING_OR_STEM_PROBLEM": 1,
+      "K_REDUNDANCY": 1,
+      "L_OTHER_DECISION_ADMITS_NO_EVER_CORRECT_COMPETITOR": 1,
+      "L_OTHER_SECOND_KEY_ADMITTED_VIA_LOSSY_CORRECTNESS_PREDICATE": 1
+    },
+    "total_non_accepted": 26,
+    "independent_secondary_defects": [
+      {
+        "opportunity_label": "G2-SURG-03",
+        "class": "I_EVIDENCE_OR_CRITICAL_FACT_BLOCK",
+        "detail": "A distractor rationale inverted CLM-R2-SURG-NONOP, reporting a 53% crossover-to-surgery rate as a 53% appendectomy-avoidance rate. Not downstream of the primary cause; recorded separately so it is not lost to the one-primary rule. Same family as R4's McBurney unit error: nothing checks a quoted figure's direction against the claim's meaning."
+      }
+    ]
+  },
+  "phase_3_competitor_without_stem_anchor": {
+    "explicit_findings_in_independent_verification": {
+      "items": [
+        "G2-MED-01",
+        "G2-PED-01",
+        "G2-PED-02",
+        "G2-PSY-01",
+        "G2-SURG-03",
+        "G2-PSY-04"
+      ],
+      "item_count": 6,
+      "distractor_option_count": 11,
+      "profiles": [
+        "MEDICINE",
+        "PEDIATRICS",
+        "PSYCHIATRY",
+        "SURGERY"
+      ],
+      "excluded_from_count": {
+        "G2-PHELO-03": "The verifier names the mode only to rule it out: the anchor exists ('a completed economic evaluation') but is purely refuting. Classified F_COMPETITOR_TOO_EASILY_EXCLUDED_BY_STEM."
+      }
+    },
+    "execution_report_aggregate_lists": [
+      "G2-MED-01",
+      "G2-PED-01",
+      "G2-PED-02",
+      "G2-PSY-01"
+    ],
+    "accounting_observation": "The execution report's repeated-defect block names 4 items in 3 profiles. Its own source verifications carry explicit COMPETITOR_WITHOUT_STEM_ANCHOR findings for 6 items in 4 profiles. G2-SURG-03 and G2-PSY-04 are absent from the aggregate because each was headlined under a different defect (numeric inversion; option nesting). Reported, not changed.",
+    "mechanism": {
+      "1_realized_stem_features": "A seed's frozen correctness condition names the stem feature under which the competitor would be right. The wave plan authors the stem feature map before retrieval runs, and the way to keep the key unique is to report those features absent.",
+      "2_retrieval_query_dimensions": "The index filters on discipline_profile_id x item_archetype x option_set_archetype only. learner_decision_id is carried in the query record and is never used as a filter (scripts/qbank/profile_contrast_retrieval.py, retrieve_profile_aware_contrasts).",
+      "3_retrieved_seed_metadata": "Anchoring is measurable only through condition_predicates. shared_features_with_key is free prose that is never joined to the canonical stem-feature vocabulary.",
+      "4_why_ranked_and_admitted": "ADM_3 excludes a competitor whose correctness conditions are FULLY satisfied, because that is a second key. There is no corresponding floor: a competitor with 0 of N satisfied conditions is admitted unpenalised. The pipeline has a ceiling on anchoring and no floor.",
+      "5_candidate_visible_evidence": "Because the competitor's own condition is negated, the only remaining plausibility is generic topical similarity, which is what the distractor rationales then assert.",
+      "6_independent_review_reasoning": "Verifiers quote the stem's own negation clauses back and, in three items, quote the item's own distractor rationale conceding the exclusion."
+    },
+    "measurements": {
+      "ranked_competitors_total": 111,
+      "satisfied_condition_distribution": {
+        "0": 104,
+        "1": 7
+      },
+      "ranked_competitors_with_zero_satisfied_conditions": 104,
+      "retrieval_sets_with_at_least_one_ranked_candidate": 26,
+      "sets_in_which_every_candidate_scored_zero": 20,
+      "primary_ranking_signal": "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION, implemented as -satisfied_conditions",
+      "ranking_signal_degeneracy": "Constant in 20 of 26 sets, so ranking collapses to reviewed seed strength and then alphabetical seed_id.",
+      "SA_2_STEM_ANCHOR_PRESENT_refusals_in_the_whole_wave": 0,
+      "SA_2_note": "SA_2 encodes exactly this criterion but its verdicts are authored rather than computed, and it refused nothing in 111 ranked candidates.",
+      "seeds_with_zero_condition_predicates": {
+        "count": 10,
+        "of_retrievable_seeds": 81,
+        "seed_ids": [
+          "SEED-G2-MED-T03-DEFERRED-ANGIO",
+          "SEED-G2-MED-T03-RESCUE-ONLY",
+          "SEED-OB-T02-CRP",
+          "SEED-OB-T03-DANGLE",
+          "SEED-OB-T03-EMPTY",
+          "SEED-OB-T03-MASSAGE",
+          "SEED-OB-T03-SHIELD",
+          "SEED-PED-T03-HYPERTONIC",
+          "SEED-PED-T03-SALBUTAMOL",
+          "SEED-PSY-T02-RISK-SCALE"
+        ],
+        "note": "The pack's empty_predicate_convention: a seed whose curated condition text says it is never correct carries no predicate. Such a seed is structurally unanchorable to any stem."
+      }
+    },
+    "answers": {
+      "generally_confusable_with_the_key_but_not_in_this_scenario": true,
+      "semantically_similar_but_unsupported_by_the_stem": true,
+      "plausible_only_if_a_missing_finding_were_present": true,
+      "retrieved_because_profile_or_archetype_tags_were_too_broad": "PARTLY. True for the four D_WRONG_DECISION_GRANULARITY opportunities, where the index reused a pool curated for another decision. NOT true for the flagship anchorless cases: G2-MED-01 and G2-PED-01 used seeds purpose-built for that exact target and still produced a fully negated set.",
+      "admitted_because_contextual_filtering_relied_on_generator_authored_labels": "PARTLY. SA-1..SA-3 verdicts are authored, and the one criterion that names this defect (SA_2) fired zero times.",
+      "valid_before_stem_realization_but_invalid_afterwards": true,
+      "something_else": "The decisive finding. Anchoring is defined only negatively in the architecture. The single machine-readable link between a competitor and a stem is its correctness condition, and the only automated test over that link is an anti-second-key ceiling. Nothing requires a competitor to retain positive pull, so a stem that keeps the key unique by negating every competitor is admissible by construction."
+    }
+  },
+  "phase_4_accepted_controls": {
+    "accepted_item_ids": [
+      "G2-MED-04",
+      "G2-MED-05",
+      "G2-PHELO-01",
+      "G2-SURG-02"
+    ],
+    "accepted_group": {
+      "selected_competitor_defeat_modes": {
+        "DEFEATED_BY_POSITIVE_DATUM_REQUIRING_INFERENCE": 7,
+        "EXPLICIT_VERBAL_DENIAL": 3,
+        "NO_PREDICATE_NEVER_CORRECT_SEED": 2
+      },
+      "stem_features_present": 10,
+      "stem_features_absent": 12,
+      "absent_features_written_as_explicit_verbal_denial": 2,
+      "explicit_denial_share_of_absent_features": 0.167
+    },
+    "anchorless_rejected_group": {
+      "selected_competitor_defeat_modes": {
+        "CONDITION_SATISFIED": 2,
+        "DEFEATED_BY_POSITIVE_DATUM_REQUIRING_INFERENCE": 3,
+        "EXPLICIT_VERBAL_DENIAL": 13
+      },
+      "stem_features_present": 14,
+      "stem_features_absent": 30,
+      "absent_features_written_as_explicit_verbal_denial": 17,
+      "explicit_denial_share_of_absent_features": 0.567
+    },
+    "per_item_defeat_modes": {
+      "G2-MED-01": [
+        {
+          "seed_id": "SEED-G2-MED-T01-DISSECTION",
+          "option_text": "Acute aortic dissection",
+          "predicates": 2,
+          "defeat_mode": "EXPLICIT_VERBAL_DENIAL"
+        },
+        {
+          "seed_id": "SEED-G2-MED-T01-PE",
+          "option_text": "Pulmonary embolism",
+          "predicates": 1,
+          "defeat_mode": "EXPLICIT_VERBAL_DENIAL"
+        },
+        {
+          "seed_id": "SEED-G2-MED-T01-PERICARDITIS",
+          "option_text": "Acute pericarditis",
+          "predicates": 2,
+          "defeat_mode": "EXPLICIT_VERBAL_DENIAL"
+        }
+      ],
+      "G2-MED-04": [
+        {
+          "seed_id": "SEED-G2-MED-T03-DEFERRED-ANGIO",
+          "option_text": "Give fibrinolysis now and arrange angiography in three to five days if she remains stable",
+          "predicates": 0,
+          "defeat_mode": "NO_PREDICATE_NEVER_CORRECT_SEED"
+        },
+        {
+          "seed_id": "SEED-G2-MED-T03-PPCI-ONLY",
+          "option_text": "Transfer immediately for primary percutaneous coronary intervention without giving fibrinolysis",
+          "predicates": 2,
+          "defeat_mode": "EXPLICIT_VERBAL_DENIAL"
+        },
+        {
+          "seed_id": "SEED-G2-MED-T03-RESCUE-ONLY",
+          "option_text": "Give fibrinolysis now and transfer only if the electrocardiogram fails to show resolution",
+          "predicates": 0,
+          "defeat_mode": "NO_PREDICATE_NEVER_CORRECT_SEED"
+        }
+      ],
+      "G2-MED-05": [
+        {
+          "seed_id": "SEED-G2-MED-T04-ADMIT-NONINVASIVE",
+          "option_text": "Admit her for inpatient stress testing before deciding on angiography",
+          "predicates": 1,
+          "defeat_mode": "DEFEATED_BY_POSITIVE_DATUM_REQUIRING_INFERENCE"
+        },
+        {
+          "seed_id": "SEED-G2-MED-T04-DISCHARGE-STRESS",
+          "option_text": "Discharge her with outpatient stress testing arranged within a week",
+          "predicates": 2,
+          "defeat_mode": "DEFEATED_BY_POSITIVE_DATUM_REQUIRING_INFERENCE"
+        },
+        {
+          "seed_id": "SEED-G2-MED-T04-OBSERVE",
+          "option_text": "Observe her in the emergency department and reassess in the morning",
+          "predicates": 1,
+          "defeat_mode": "DEFEATED_BY_POSITIVE_DATUM_REQUIRING_INFERENCE"
+        }
+      ],
+      "G2-PED-01": [
+        {
+          "seed_id": "SEED-PED-T01-ASTHMA",
+          "option_text": "First presentation of asthma",
+          "predicates": 2,
+          "defeat_mode": "EXPLICIT_VERBAL_DENIAL"
+        },
+        {
+          "seed_id": "SEED-PED-T01-FOREIGN-BODY",
+          "option_text": "Foreign body aspiration",
+          "predicates": 2,
+          "defeat_mode": "EXPLICIT_VERBAL_DENIAL"
+        },
+        {
+          "seed_id": "SEED-PED-T01-PNEUMONIA",
+          "option_text": "Community-acquired pneumonia",
+          "predicates": 3,
+          "defeat_mode": "EXPLICIT_VERBAL_DENIAL"
+        }
+      ],
+      "G2-PED-02": [
+        {
+          "seed_id": "SEED-PED-T02-CONTINUOUS",
+          "option_text": "Continuous pulse oximetry and cardiorespiratory monitoring",
+          "predicates": 1,
+          "defeat_mode": "EXPLICIT_VERBAL_DENIAL"
+        },
+        {
+          "seed_id": "SEED-PED-T02-CBC",
+          "option_text": "Complete blood count and blood culture",
+          "predicates": 1,
+          "defeat_mode": "EXPLICIT_VERBAL_DENIAL"
+        },
+        {
+          "seed_id": "SEED-PED-T02-CXR",
+          "option_text": "Chest radiograph",
+          "predicates": 2,
+          "defeat_mode": "EXPLICIT_VERBAL_DENIAL"
+        }
+      ],
+      "G2-PHELO-01": [
+        {
+          "seed_id": "SEED-PHELO-T01-HEALTHY-SCREENEE",
+          "option_text": "Healthy screenee (selection) bias",
+          "predicates": 1,
+          "defeat_mode": "DEFEATED_BY_POSITIVE_DATUM_REQUIRING_INFERENCE"
+        },
+        {
+          "seed_id": "SEED-PHELO-T01-LENGTH",
+          "option_text": "Length-time bias",
+          "predicates": 1,
+          "defeat_mode": "DEFEATED_BY_POSITIVE_DATUM_REQUIRING_INFERENCE"
+        },
+        {
+          "seed_id": "SEED-PHELO-T01-OVERDIAGNOSIS",
+          "option_text": "Overdiagnosis",
+          "predicates": 1,
+          "defeat_mode": "DEFEATED_BY_POSITIVE_DATUM_REQUIRING_INFERENCE"
+        }
+      ],
+      "G2-PSY-01": [
+        {
+          "seed_id": "SEED-PSY-T01-BD2",
+          "option_text": "Bipolar II disorder",
+          "predicates": 1,
+          "defeat_mode": "EXPLICIT_VERBAL_DENIAL"
+        },
+        {
+          "seed_id": "SEED-PSY-T01-MEDICAL",
+          "option_text": "Depressive syndrome due to hypothyroidism",
+          "predicates": 1,
+          "defeat_mode": "DEFEATED_BY_POSITIVE_DATUM_REQUIRING_INFERENCE"
+        },
+        {
+          "seed_id": "SEED-PSY-T01-PDD",
+          "option_text": "Persistent depressive disorder",
+          "predicates": 2,
+          "defeat_mode": "EXPLICIT_VERBAL_DENIAL"
+        }
+      ],
+      "G2-PSY-04": [
+        {
+          "seed_id": "SEED-PSY-T03-PSYCHOTHERAPY",
+          "option_text": "Structured psychotherapy such as cognitive behavioural therapy",
+          "predicates": 2,
+          "defeat_mode": "CONDITION_SATISFIED"
+        },
+        {
+          "seed_id": "SEED-PSY-T03-EXERCISE",
+          "option_text": "A supervised exercise programme as sole initial treatment",
+          "predicates": 1,
+          "defeat_mode": "DEFEATED_BY_POSITIVE_DATUM_REQUIRING_INFERENCE"
+        },
+        {
+          "seed_id": "SEED-PSY-T03-COMBINED",
+          "option_text": "Combined antidepressant and psychotherapy from the outset",
+          "predicates": 1,
+          "defeat_mode": "DEFEATED_BY_POSITIVE_DATUM_REQUIRING_INFERENCE"
+        }
+      ],
+      "G2-SURG-02": [
+        {
+          "seed_id": "SEED-SURG-T02-MRI",
+          "option_text": "Magnetic resonance imaging of the abdomen",
+          "predicates": 2,
+          "defeat_mode": "EXPLICIT_VERBAL_DENIAL"
+        },
+        {
+          "seed_id": "SEED-SURG-T02-LAPAROSCOPY",
+          "option_text": "Proceed directly to diagnostic laparoscopy",
+          "predicates": 1,
+          "defeat_mode": "DEFEATED_BY_POSITIVE_DATUM_REQUIRING_INFERENCE"
+        },
+        {
+          "seed_id": "SEED-SURG-T02-OBSERVE",
+          "option_text": "Admit for serial abdominal examination without imaging",
+          "predicates": 1,
+          "defeat_mode": "EXPLICIT_VERBAL_DENIAL"
+        }
+      ],
+      "G2-SURG-03": [
+        {
+          "seed_id": "SEED-SURG-T03-NONOP",
+          "option_text": "Intravenous antibiotics alone with planned reassessment",
+          "predicates": 2,
+          "defeat_mode": "CONDITION_SATISFIED"
+        },
+        {
+          "seed_id": "SEED-SURG-T03-DRAINAGE",
+          "option_text": "Image-guided percutaneous drainage with antibiotics",
+          "predicates": 1,
+          "defeat_mode": "EXPLICIT_VERBAL_DENIAL"
+        },
+        {
+          "seed_id": "SEED-SURG-T03-INTERVAL",
+          "option_text": "Antibiotics now with interval appendectomy in six to eight weeks",
+          "predicates": 2,
+          "defeat_mode": "EXPLICIT_VERBAL_DENIAL"
+        }
+      ]
+    },
+    "empirical_distinction": "Not seed strength, not the number of satisfied correctness conditions (104 of 111 ranked candidates scored zero in both groups alike), and not the present-to-absent feature ratio (accepted G2-SURG-02 runs 2 present to 5 absent, rejected G2-PSY-04 runs 4 to 3). The distinction is HOW the stem defeats the competitor. In the accepted controls 7 of 12 selected competitors are defeated by a positively stated datum the candidate must convert into an exclusion - a threshold ('about four hours' against an undisclosed 120-minute rule), a comparison (equal incidence and equal deaths against longer survival from diagnosis), a availability or preference fact - and only 2 of 12 absent stem features are written as an explicit verbal denial. In the anchorless rejections 13 of 18 selected competitors are defeated by the stem stating the competitor's own precondition absent in words ('no back pain and no pulse deficit', 'There was no choking episode', 'no imaging was requested'), and 17 of 30 absent features are explicit verbal denials.",
+    "discriminating_property": "An accepted distractor remains a LIVE BUT INFERIOR course of action for this patient, defeated by a comparative or threshold judgement. A rejected anchorless distractor is a CATEGORICALLY IMPOSSIBLE course of action, defeated by a stated absence that requires no clinical knowledge to apply.",
+    "corroborating_case": "G2-MED-04 was accepted with 2 of its 3 competitors carrying zero condition predicates. Zero-predicate seeds are not fatal in themselves. Its never-correct options ('angiography in three to five days', 'transfer only if the electrocardiogram fails to show resolution') are never OPTIMAL yet remain selectable reperfusion routes invited by the geography written into the stem. G2-OBGYN-03's zero-predicate options ('apply firm deep massage', 'use a nipple shield') are never APPROPRIATE. The library does not distinguish the two.",
+    "no_rule_proposed": "Per the task, the empirical distinction is recorded and no new rule is designed here."
+  },
+  "phase_5_no_safe_item_analysis": {
+    "count": 12,
+    "rows": [
+      {
+        "opportunity_label": "G2-MED-02",
+        "discipline": "MED",
+        "learner_decision_id": "LD-C21-05",
+        "item_archetype": "INVESTIGATION_SELECTION",
+        "option_set_archetype": "INVESTIGATION_SET",
+        "candidates_indexed": null,
+        "candidates_ranked": 0,
+        "candidates_contextually_eligible": null,
+        "fail_closed_reason": "FAIL_CLOSED_UNRESOLVED_CRITICAL_FACT",
+        "no_safe_item_because": "EVIDENCE_REJECTED",
+        "seed_or_mcqability_axis": "UNCLEAR",
+        "additional_contrast_acquisition_would_help": false,
+        "no_safe_item_note": "Neither a seed nor an MCQ-ability problem: the opportunity was refused before retrieval on an unresolved critical fact. Reopens on a completed Level 3 adjudication."
+      },
+      {
+        "opportunity_label": "G2-OBGYN-01",
+        "discipline": "OBGYN",
+        "learner_decision_id": "LD-OB54-01",
+        "item_archetype": "PREGNANCY_DATED_DIAGNOSIS",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "candidates_indexed": 7,
+        "candidates_ranked": 3,
+        "candidates_contextually_eligible": 2,
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_SEMANTICALLY_ADMISSIBLE_COMPETITORS",
+        "no_safe_item_because": "TOO_FEW_ARCHETYPE_MATCHES",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "The lactational inflammatory spectrum has more entities than the pack carries at this response class; three were excluded on response class alone."
+      },
+      {
+        "opportunity_label": "G2-OBGYN-03",
+        "discipline": "OBGYN",
+        "learner_decision_id": "LD-OB54-03",
+        "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "candidates_indexed": 5,
+        "candidates_ranked": 5,
+        "candidates_contextually_eligible": 5,
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "no_safe_item_because": "OTHER",
+        "seed_or_mcqability_axis": "QUESTION_OPPORTUNITY_NOT_NATURALLY_MCQABLE",
+        "additional_contrast_acquisition_would_help": false,
+        "no_safe_item_note": "Four of the five ranked seeds carry zero condition predicates, i.e. the library itself records them as correct under no stem. A decision whose wrong answers are never right under any circumstance is a true/false recall point, not a single-best-answer discrimination."
+      },
+      {
+        "opportunity_label": "G2-OBGYN-04",
+        "discipline": "OBGYN",
+        "learner_decision_id": "LD-OB54-05",
+        "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "candidates_indexed": 5,
+        "candidates_ranked": 5,
+        "candidates_contextually_eligible": 0,
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_SEMANTICALLY_ADMISSIBLE_COMPETITORS",
+        "no_safe_item_because": "TOO_FEW_GRANULARITY_MATCHES",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "All five returned seeds are milk-removal advice; the decision is admission and intravenous therapy."
+      },
+      {
+        "opportunity_label": "G2-OBGYN-05",
+        "discipline": "OBGYN",
+        "learner_decision_id": "LD-OB54-06",
+        "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "candidates_indexed": 0,
+        "candidates_ranked": 0,
+        "candidates_contextually_eligible": null,
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "no_safe_item_because": "NO_LIBRARY_SEEDS",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "Zero candidates indexed for this triple."
+      },
+      {
+        "opportunity_label": "G2-PED-04",
+        "discipline": "PED",
+        "learner_decision_id": "LD-P147-04",
+        "item_archetype": "RED_FLAG_RECOGNITION",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "candidates_indexed": 6,
+        "candidates_ranked": 6,
+        "candidates_contextually_eligible": 0,
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_SEMANTICALLY_ADMISSIBLE_COMPETITORS",
+        "no_safe_item_because": "TOO_FEW_GRANULARITY_MATCHES",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "No seed in the library is curated for a discharge-readiness decision; all six returned were supportive-care escalation seeds and all six were refused SA_1."
+      },
+      {
+        "opportunity_label": "G2-PED-05",
+        "discipline": "PED",
+        "learner_decision_id": "LD-P147-05",
+        "item_archetype": "SUPPORTIVE_CARE_CEILING",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "candidates_indexed": 6,
+        "candidates_ranked": 5,
+        "candidates_contextually_eligible": 5,
+        "fail_closed_reason": "FAIL_CLOSED_INCOHERENT_OPTION_SET_ARCHETYPE",
+        "no_safe_item_because": "OTHER",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "Retrieval was sufficient. ADM_5 failed because the only remaining competitors included a numeral-bearing curated string. A fourth numeral-free competitor at the same grain would clear it."
+      },
+      {
+        "opportunity_label": "G2-PHELO-04",
+        "discipline": "PHELO",
+        "learner_decision_id": "LD-PH07-04",
+        "item_archetype": "SCREENING_DECISION",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "candidates_indexed": 4,
+        "candidates_ranked": 3,
+        "candidates_contextually_eligible": 0,
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_SEMANTICALLY_ADMISSIBLE_COMPETITORS",
+        "no_safe_item_because": "TOO_FEW_GRANULARITY_MATCHES",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "All three returned seeds are launch-decision competitors; the decision is a screening interval."
+      },
+      {
+        "opportunity_label": "G2-PSY-02",
+        "discipline": "PSY",
+        "learner_decision_id": "LD-PS12-02",
+        "item_archetype": "SAFETY_ASSESSMENT",
+        "option_set_archetype": "DISPOSITION_SET",
+        "candidates_indexed": 4,
+        "candidates_ranked": 2,
+        "candidates_contextually_eligible": null,
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "no_safe_item_because": "TARGETED_ENRICHMENT_STILL_INSUFFICIENT",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "Two of four indexed seeds fell on response class; the targeted top-up authored for this target was rejected by the independent seed reviewer and correctly never reached the wave."
+      },
+      {
+        "opportunity_label": "G2-PSY-05",
+        "discipline": "PSY",
+        "learner_decision_id": "LD-PS12-06",
+        "item_archetype": "PHARMACOTHERAPY",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "candidates_indexed": 6,
+        "candidates_ranked": 6,
+        "candidates_contextually_eligible": 3,
+        "fail_closed_reason": "FAIL_CLOSED_INCOHERENT_OPTION_SET_ARCHETYPE",
+        "no_safe_item_because": "TOO_FEW_ARCHETYPE_MATCHES",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "The depression treatment pool holds no same-care-setting competitor for a psychotic episode, so nominal parity could not be met."
+      },
+      {
+        "opportunity_label": "G2-SURG-01",
+        "discipline": "SURG",
+        "learner_decision_id": "LD-GS76-01",
+        "item_archetype": "RECOGNITION",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "candidates_indexed": 3,
+        "candidates_ranked": 3,
+        "candidates_contextually_eligible": 3,
+        "fail_closed_reason": "FAIL_CLOSED_INCOHERENT_OPTION_SET_ARCHETYPE",
+        "no_safe_item_because": "TOO_FEW_ARCHETYPE_MATCHES",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "Every SURG-T01 seed is gynaecological while the key is gastrointestinal; the library cannot supply organ-system parity for this key."
+      },
+      {
+        "opportunity_label": "G2-SURG-04",
+        "discipline": "SURG",
+        "learner_decision_id": "LD-GS76-04",
+        "item_archetype": "DISPOSITION",
+        "option_set_archetype": "DISPOSITION_SET",
+        "candidates_indexed": 0,
+        "candidates_ranked": 0,
+        "candidates_contextually_eligible": null,
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "no_safe_item_because": "NO_LIBRARY_SEEDS",
+        "seed_or_mcqability_axis": "SEED_COVERAGE_PROBLEM",
+        "additional_contrast_acquisition_would_help": true,
+        "no_safe_item_note": "Zero candidates indexed for this triple."
+      }
+    ],
+    "because_counts": {
+      "EVIDENCE_REJECTED": 1,
+      "NO_LIBRARY_SEEDS": 2,
+      "OTHER": 2,
+      "TARGETED_ENRICHMENT_STILL_INSUFFICIENT": 1,
+      "TOO_FEW_ARCHETYPE_MATCHES": 3,
+      "TOO_FEW_GRANULARITY_MATCHES": 3
+    },
+    "axis_counts": {
+      "QUESTION_OPPORTUNITY_NOT_NATURALLY_MCQABLE": 1,
+      "SEED_COVERAGE_PROBLEM": 10,
+      "UNCLEAR": 1
+    },
+    "additional_contrast_acquisition_would_help": 10,
+    "finding": "Ten of twelve are supply or indexing shortfalls that more or better-keyed seeds would plausibly clear. One (G2-OBGYN-03) is a learner decision that does not naturally support a single-best-answer set, evidenced by the library's own zero-predicate convention over four of its five candidates. One (G2-MED-02) is an evidence gate that no amount of contrast acquisition touches. All twelve are safe outcomes, not coverage failures."
+  },
+  "phase_6_rejected_root_cause": {
+    "count": 13,
+    "distribution": {
+      "CONTEXTUAL_FILTERING": 1,
+      "EVIDENCE": 2,
+      "OPTION_REALIZATION": 2,
+      "RETRIEVAL": 2,
+      "STEM_KEY_REALIZATION": 6
+    },
+    "rows": [
+      {
+        "opportunity_label": "G2-MED-01",
+        "root": "STEM_KEY_REALIZATION",
+        "note": "The planned stem feature map reports every competitor correctness condition absent; retrieval has no anchor floor to refuse the resulting set.",
+        "independent_review_failed_criteria": [
+          "distractor_competitiveness",
+          "cueing"
+        ]
+      },
+      {
+        "opportunity_label": "G2-MED-03",
+        "root": "OPTION_REALIZATION",
+        "note": "Distractors independently confirmed anchored; the key alone carries a hedge, a second action and a non-pharmacological category.",
+        "independent_review_failed_criteria": [
+          "cueing"
+        ]
+      },
+      {
+        "opportunity_label": "G2-OBGYN-02",
+        "root": "EVIDENCE",
+        "note": "The declared claim set covers none of the retrieved competitors, so every discrimination had to be authored outside the evidence.",
+        "independent_review_failed_criteria": [
+          "factual_correctness",
+          "evidence_support",
+          "rationale_fatal_defects"
+        ]
+      },
+      {
+        "opportunity_label": "G2-PED-01",
+        "root": "STEM_KEY_REALIZATION",
+        "note": "Asthma and foreign body pre-excluded in words; pneumonia retained a real anchor.",
+        "independent_review_failed_criteria": [
+          "distractor_competitiveness",
+          "cueing"
+        ]
+      },
+      {
+        "opportunity_label": "G2-PED-02",
+        "root": "RETRIEVAL",
+        "note": "The declared option_set_archetype INVESTIGATION_SET does not match a key that is a monitoring plan, so the pool returned was one-off tests at the wrong grain.",
+        "independent_review_failed_criteria": [
+          "evidence_support",
+          "distractor_competitiveness",
+          "decision_granularity",
+          "cueing"
+        ]
+      },
+      {
+        "opportunity_label": "G2-PED-03",
+        "root": "OPTION_REALIZATION",
+        "note": "Key is the only imperative clause and the longest option; one stem meta-clause removes option A.",
+        "independent_review_failed_criteria": [
+          "cueing"
+        ]
+      },
+      {
+        "opportunity_label": "G2-PHELO-02",
+        "root": "CONTEXTUAL_FILTERING",
+        "note": "The competitor's prose correctness condition was flattened to one predicate, so the second-key guard could not see the limb the stem satisfies.",
+        "independent_review_failed_criteria": [
+          "one_best_answer"
+        ]
+      },
+      {
+        "opportunity_label": "G2-PHELO-03",
+        "root": "STEM_KEY_REALIZATION",
+        "note": "The stem states the completed economic evaluation, which makes the option's only anchor purely refuting.",
+        "independent_review_failed_criteria": [
+          "distractor_competitiveness"
+        ]
+      },
+      {
+        "opportunity_label": "G2-PHELO-05",
+        "root": "STEM_KEY_REALIZATION",
+        "note": "The stem stipulates an arithmetically impossible combination of results.",
+        "independent_review_failed_criteria": [
+          "factual_correctness"
+        ]
+      },
+      {
+        "opportunity_label": "G2-PSY-01",
+        "root": "STEM_KEY_REALIZATION",
+        "note": "Normal TSH stated and weight change in the wrong direction leave the hypothyroidism competitor with no pull.",
+        "independent_review_failed_criteria": [
+          "evidence_support",
+          "distractor_competitiveness",
+          "rationale_fatal_defects"
+        ]
+      },
+      {
+        "opportunity_label": "G2-PSY-03",
+        "root": "EVIDENCE",
+        "note": "A retrieved competitor has no corresponding admitted claim, so its dismissal was asserted rather than entailed.",
+        "independent_review_failed_criteria": [
+          "evidence_support"
+        ]
+      },
+      {
+        "opportunity_label": "G2-PSY-04",
+        "root": "RETRIEVAL",
+        "note": "Retrieval returned a competitor that properly contains the key; the second-key guard tests full satisfaction, not subsumption.",
+        "independent_review_failed_criteria": [
+          "evidence_support",
+          "one_best_answer",
+          "distractor_competitiveness",
+          "decision_granularity",
+          "rationale_fatal_defects"
+        ]
+      },
+      {
+        "opportunity_label": "G2-SURG-03",
+        "root": "STEM_KEY_REALIZATION",
+        "note": "Explicit CT negations kill two of three competitors before the options are read. Carries an independent evidence/numeric defect that is not downstream of this cause.",
+        "independent_review_failed_criteria": [
+          "factual_correctness",
+          "numeric_correctness",
+          "evidence_support",
+          "reasoning_demand",
+          "distractor_competitiveness",
+          "critical_fact_safety",
+          "cueing",
+          "rationale_fatal_defects"
+        ]
+      }
+    ],
+    "note": "INDEPENDENT_QUALITY_ONLY is zero: every rejection traces to a locus inside the pipeline, not to reviewer taste. Three blind verifiers reached the keyed answer on 17 of 17 items before seeing any key, so no rejection is a keying error."
+  },
+  "phase_7_core_coverage": {
+    "core_objectives_uncovered": {
+      "count": 5,
+      "ids": [
+        "116",
+        "27-3",
+        "3-1",
+        "59-1",
+        "74"
+      ],
+      "classification_counts": {
+        "B_ATTEMPTED_NO_SAFE_ITEM": 1,
+        "C_ATTEMPTED_REJECTED": 4
+      },
+      "rows": [
+        {
+          "mcc_objective_id": "116",
+          "classification": "B_ATTEMPTED_NO_SAFE_ITEM",
+          "attempts": [
+            {
+              "opportunity_label": "G2-SURG-04",
+              "state": "NO_SAFE_ITEM"
+            }
+          ]
+        },
+        {
+          "mcc_objective_id": "27-3",
+          "classification": "C_ATTEMPTED_REJECTED",
+          "attempts": [
+            {
+              "opportunity_label": "G2-PED-01",
+              "state": "REJECTED"
+            },
+            {
+              "opportunity_label": "G2-PED-02",
+              "state": "REJECTED"
+            },
+            {
+              "opportunity_label": "G2-PED-03",
+              "state": "REJECTED"
+            },
+            {
+              "opportunity_label": "G2-PED-04",
+              "state": "NO_SAFE_ITEM"
+            },
+            {
+              "opportunity_label": "G2-PED-05",
+              "state": "NO_SAFE_ITEM"
+            }
+          ]
+        },
+        {
+          "mcc_objective_id": "3-1",
+          "classification": "C_ATTEMPTED_REJECTED",
+          "attempts": [
+            {
+              "opportunity_label": "G2-SURG-03",
+              "state": "REJECTED"
+            }
+          ]
+        },
+        {
+          "mcc_objective_id": "59-1",
+          "classification": "C_ATTEMPTED_REJECTED",
+          "attempts": [
+            {
+              "opportunity_label": "G2-PSY-01",
+              "state": "REJECTED"
+            },
+            {
+              "opportunity_label": "G2-PSY-02",
+              "state": "NO_SAFE_ITEM"
+            },
+            {
+              "opportunity_label": "G2-PSY-03",
+              "state": "REJECTED"
+            },
+            {
+              "opportunity_label": "G2-PSY-04",
+              "state": "REJECTED"
+            },
+            {
+              "opportunity_label": "G2-PSY-05",
+              "state": "NO_SAFE_ITEM"
+            },
+            {
+              "opportunity_label": "G2-PSY-06",
+              "state": "REDUNDANT"
+            }
+          ]
+        },
+        {
+          "mcc_objective_id": "74",
+          "classification": "C_ATTEMPTED_REJECTED",
+          "attempts": [
+            {
+              "opportunity_label": "G2-PHELO-02",
+              "state": "REJECTED"
+            },
+            {
+              "opportunity_label": "G2-PHELO-03",
+              "state": "REJECTED"
+            },
+            {
+              "opportunity_label": "G2-PHELO-04",
+              "state": "NO_SAFE_ITEM"
+            }
+          ]
+        }
+      ]
+    },
+    "core_learner_decisions_uncovered": {
+      "count": 19,
+      "classification_counts": {
+        "A_NO_OPPORTUNITY_ATTEMPTED": 2,
+        "B_ATTEMPTED_NO_SAFE_ITEM": 3,
+        "C_ATTEMPTED_REJECTED": 12,
+        "E_ACCEPTED_ELSEWHERE_COVERAGE_ACCOUNTING_DOES_NOT_RECOGNISE_IT": 2
+      },
+      "rows": [
+        {
+          "learner_decision_id": "LD-C21-01",
+          "classification": "C_ATTEMPTED_REJECTED",
+          "attempts": [
+            {
+              "opportunity_label": "G2-MED-01",
+              "state": "REJECTED",
+              "mcc_objective_id": "14"
+            }
+          ]
+        },
+        {
+          "learner_decision_id": "LD-C21-03",
+          "classification": "A_NO_OPPORTUNITY_ATTEMPTED",
+          "attempts": []
+        },
+        {
+          "learner_decision_id": "LD-C21-04",
+          "classification": "C_ATTEMPTED_REJECTED",
+          "attempts": [
+            {
+              "opportunity_label": "G2-MED-03",
+              "state": "REJECTED",
+              "mcc_objective_id": "14"
+            }
+          ]
+        },
+        {
+          "learner_decision_id": "LD-GS76-01",
+          "classification": "B_ATTEMPTED_NO_SAFE_ITEM",
+          "attempts": [
+            {
+              "opportunity_label": "G2-SURG-01",
+              "state": "NO_SAFE_ITEM",
+              "mcc_objective_id": "3-2"
+            }
+          ]
+        },
+        {
+          "learner_decision_id": "LD-GS76-02",
+          "classification": "E_ACCEPTED_ELSEWHERE_COVERAGE_ACCOUNTING_DOES_NOT_RECOGNISE_IT",
+          "attempts": [
+            {
+              "opportunity_label": "G2-SURG-02",
+              "state": "ACCEPTED",
+              "mcc_objective_id": "3-2"
+            }
+          ]
+        },
+        {
+          "learner_decision_id": "LD-GS76-03",
+          "classification": "C_ATTEMPTED_REJECTED",
+          "attempts": [
+            {
+              "opportunity_label": "G2-SURG-03",
+              "state": "REJECTED",
+              "mcc_objective_id": "3-1"
+            }
+          ]
+        },
+        {
+          "learner_decision_id": "LD-GS76-04",
+          "classification": "B_ATTEMPTED_NO_SAFE_ITEM",
+          "attempts": [
+            {
+              "opportunity_label": "G2-SURG-04",
+              "state": "NO_SAFE_ITEM",
+              "mcc_objective_id": "116"
+            }
+          ]
+        },
+        {
+          "learner_decision_id": "LD-P147-01",
+          "classification": "C_ATTEMPTED_REJECTED",
+          "attempts": [
+            {
+              "opportunity_label": "G2-PED-01",
+              "state": "REJECTED",
+              "mcc_objective_id": "27-3"
+            }
+          ]
+        },
+        {
+          "learner_decision_id": "LD-P147-02",
+          "classification": "C_ATTEMPTED_REJECTED",
+          "attempts": [
+            {
+              "opportunity_label": "G2-PED-02",
+              "state": "REJECTED",
+              "mcc_objective_id": "27-3"
+            }
+          ]
+        },
+        {
+          "learner_decision_id": "LD-P147-03",
+          "classification": "C_ATTEMPTED_REJECTED",
+          "attempts": [
+            {
+              "opportunity_label": "G2-PED-03",
+              "state": "REJECTED",
+              "mcc_objective_id": "27-3"
+            }
+          ]
+        },
+        {
+          "learner_decision_id": "LD-PH07-01",
+          "classification": "E_ACCEPTED_ELSEWHERE_COVERAGE_ACCOUNTING_DOES_NOT_RECOGNISE_IT",
+          "attempts": [
+            {
+              "opportunity_label": "G2-PHELO-01",
+              "state": "ACCEPTED",
+              "mcc_objective_id": "78-3"
+            }
+          ]
+        },
+        {
+          "learner_decision_id": "LD-PH07-02",
+          "classification": "C_ATTEMPTED_REJECTED",
+          "attempts": [
+            {
+              "opportunity_label": "G2-PHELO-02",
+              "state": "REJECTED",
+              "mcc_objective_id": "74"
+            }
+          ]
+        },
+        {
+          "learner_decision_id": "LD-PH07-03",
+          "classification": "C_ATTEMPTED_REJECTED",
+          "attempts": [
+            {
+              "opportunity_label": "G2-PHELO-03",
+              "state": "REJECTED",
+              "mcc_objective_id": "74"
+            }
+          ]
+        },
+        {
+          "learner_decision_id": "LD-PH07-04",
+          "classification": "B_ATTEMPTED_NO_SAFE_ITEM",
+          "attempts": [
+            {
+              "opportunity_label": "G2-PHELO-04",
+              "state": "NO_SAFE_ITEM",
+              "mcc_objective_id": "74"
+            }
+          ]
+        },
+        {
+          "learner_decision_id": "LD-PH07-05",
+          "classification": "C_ATTEMPTED_REJECTED",
+          "attempts": [
+            {
+              "opportunity_label": "G2-PHELO-05",
+              "state": "REJECTED",
+              "mcc_objective_id": "78-3"
+            }
+          ]
+        },
+        {
+          "learner_decision_id": "LD-PS12-01",
+          "classification": "C_ATTEMPTED_REJECTED",
+          "attempts": [
+            {
+              "opportunity_label": "G2-PSY-01",
+              "state": "REJECTED",
+              "mcc_objective_id": "59-1"
+            },
+            {
+              "opportunity_label": "G2-PSY-06",
+              "state": "REDUNDANT",
+              "mcc_objective_id": "59-1"
+            }
+          ]
+        },
+        {
+          "learner_decision_id": "LD-PS12-03",
+          "classification": "C_ATTEMPTED_REJECTED",
+          "attempts": [
+            {
+              "opportunity_label": "G2-PSY-03",
+              "state": "REJECTED",
+              "mcc_objective_id": "59-1"
+            }
+          ]
+        },
+        {
+          "learner_decision_id": "LD-PS12-04",
+          "classification": "A_NO_OPPORTUNITY_ATTEMPTED",
+          "attempts": []
+        },
+        {
+          "learner_decision_id": "LD-PS12-05",
+          "classification": "C_ATTEMPTED_REJECTED",
+          "attempts": [
+            {
+              "opportunity_label": "G2-PSY-04",
+              "state": "REJECTED",
+              "mcc_objective_id": "59-1"
+            }
+          ]
+        }
+      ]
+    },
+    "accounting_defect": {
+      "finding": "Two of the nineteen alarmed decisions are already covered. LD-GS76-02 carries accepted item G2-SURG-02 and LD-PH07-01 carries accepted item G2-PHELO-01, yet both appear in UNCOVERED_HIGH_PRIORITY_DECISION_AT_CORE.",
+      "mechanism": "build_coverage_row scopes 'relevant' opportunities to (allocation_address x mcc_objective) but subtracts them from declared_learner_decisions, which is the whole study unit's decision list. A study unit spanning k objective rows therefore reports each decision as uncovered in the k-1 rows where it was not attempted. evaluate_standing_alarms then unions those lists with no subtraction, while its sibling alarm CORE_OBJECTIVE_WITH_NO_ACCEPTED_ITEM does subtract objectives accepted elsewhere ('truly_absent'). The two alarms are asymmetric.",
+      "affected_study_units": {
+        "SU-GS-76": "4 declared decisions across 3 objective rows",
+        "SU-PH-07": "5 declared decisions across 2 objective rows"
+      },
+      "recomputation_read_only": {
+        "alarm_as_reported": 19,
+        "study_unit_scoped_recomputation": 14,
+        "over_counted_ids": [
+          "LD-GS76-01",
+          "LD-GS76-02",
+          "LD-GS76-04",
+          "LD-PH07-01",
+          "LD-PH07-04"
+        ],
+        "over_counted_breakdown": {
+          "accepted_elsewhere": [
+            "LD-GS76-02",
+            "LD-PH07-01"
+          ],
+          "fail_closed_elsewhere": [
+            "LD-GS76-01",
+            "LD-GS76-04",
+            "LD-PH07-04"
+          ]
+        },
+        "genuinely_unresolved": [
+          "LD-C21-01",
+          "LD-C21-03",
+          "LD-C21-04",
+          "LD-GS76-03",
+          "LD-P147-01",
+          "LD-P147-02",
+          "LD-P147-03",
+          "LD-PH07-02",
+          "LD-PH07-03",
+          "LD-PH07-05",
+          "LD-PS12-01",
+          "LD-PS12-03",
+          "LD-PS12-04",
+          "LD-PS12-05"
+        ],
+        "gate_verdict_under_corrected_join": "FAIL"
+      },
+      "action": "Reported only. No artifact, alarm or verdict changed."
+    },
+    "actionable_generation_gaps": {
+      "count": 14,
+      "basis": "12 attempted and rejected on realization defects that a repaired pipeline could clear, plus 2 never attempted (LD-C21-03, LD-PS12-04)."
+    },
+    "legitimate_no_safe_item_gaps": {
+      "count": 3,
+      "ids": [
+        "LD-GS76-01",
+        "LD-GS76-04",
+        "LD-PH07-04"
+      ]
+    },
+    "accounting_gaps": {
+      "count": 2,
+      "ids": [
+        "LD-GS76-02",
+        "LD-PH07-01"
+      ]
+    }
+  },
+  "phase_8_internal_gate_assessment": {
+    "narrative_status": "MIXED",
+    "encoded_gate_result": "FAIL",
+    "encoded_failure": "CORE_DECISION_NEITHER_ACCEPTED_NOR_FAIL_CLOSED",
+    "assessment": "IMPLEMENTATION_SEMANTIC_MISMATCH",
+    "reasoning": [
+      "The rule's INTENT is correct and is not in tension with safe-yield policy. It demands that every CORE learner decision reach a terminal state, and it accepts NO_SAFE_ITEM as terminal, so it never demands a quota and never penalises fail-closed refusal. It is not TOO_STRICT_FOR_SAFE_YIELD.",
+      "The rule's IMPLEMENTATION joins a study-unit-scoped decision list to an objective-scoped outcome set, so for a study unit mapped to k MCC objectives it demands k terminal outcomes per decision. SU-GS-76 would need 12 terminal outcomes for 4 decisions to clear its three rows. That is unsatisfiable by construction, not strict.",
+      "The mismatch inflates the reason set but does not flip the verdict. Recomputed with study-unit scoping, 14 CORE decisions remain genuinely neither accepted nor fail-closed, so evaluate_gate('G2') = FAIL is the right verdict reached through an over-counting join."
+    ],
+    "recommended_status_going_forward": "QUALITY_MIXED_SCALE_BLOCKED",
+    "status_justification": "Accepted-item quality is established and not in doubt: factual, numeric, unsupported-claim, ambiguous-best-answer, critical-fact-safety and material-redundancy counts are all zero in accepted items, evidence entailment passes over them, and three blind verifiers reached the keyed answer on 17 of 17. Scale is blocked on two independent grounds: 0 of 6 profiles validated, and 14 CORE decisions unresolved. 'MIXED' understates the second; 'FAIL' understates the first.",
+    "not_changed": "The encoded gate was read, not modified."
+  },
+  "phase_9_root_cause_decision": {
+    "primary_bottleneck": "STEM_CONTEXT_ALIGNMENT",
+    "evidence": [
+      "It is the largest single primary cause among rejections (4 of 13) and it is the mode that recurs across waves: G1 named it, G2 reproduced it in 4 profiles, and no automated gate covers it.",
+      "It is architectural, not incidental: 104 of 111 ranked candidates scored zero satisfied correctness conditions, the primary ranking signal was constant in 20 of 26 retrieval sets, and SA_2, the one criterion that encodes the defect, refused nothing.",
+      "It is not a supply problem. G2-MED-01 and G2-PED-01, the two clearest cases, used seeds curated for exactly that target. Purpose-built seeds produced fully negated sets.",
+      "The accepted controls separate cleanly on it and on nothing else, which makes it the property that distinguishes an item that passes from one that does not."
+    ],
+    "secondary_bottlenecks": [
+      {
+        "bottleneck": "CONTRAST_LIBRARY_COVERAGE",
+        "evidence": "10 of 12 fail-closed outcomes are supply or nominal-parity shortfalls. Real, but demoted: G2 already spent its one targeted enrichment pass (23 authored, 19 approved) and no terminal state moved to ACCEPTED. In R4 the same intervention removed every fail-closed outcome without raising the score. Adding seeds converts NO_SAFE_ITEM into REJECTED; it has not yet converted either into ACCEPTED."
+      },
+      {
+        "bottleneck": "PROFILE_AWARE_RETRIEVAL",
+        "evidence": "The index does not key on the learner decision, which produced 22 of 28 semantic refusals and 4 fail-closed outcomes. Bounded and well characterised."
+      },
+      {
+        "bottleneck": "OPTION_REALIZATION",
+        "evidence": "3 primary causes under G plus 5 items carrying KEY_DISTRACTOR_REGISTER_ASYMMETRY. Created by the provenance rule itself: distractor text is locked to the curated concept string while the key is written fresh, so the key differs in form, hedging and length. ADM_5 measures numerals only."
+      },
+      {
+        "bottleneck": "EVIDENCE_SET_SCOPING",
+        "evidence": "3 primary causes under I plus 5 items carrying RATIONALE_CLAIM_OUTSIDE_THE_ITEM_EVIDENCE_SET. Nothing checks that a rationale stays inside the claims the item declared."
+      }
+    ],
+    "not_the_bottleneck": {
+      "OPPORTUNITY_SELECTION": "Opportunities were drawn from the frozen priority model and the redundancy control fired correctly. Only 2 of 19 uncovered CORE decisions were never attempted.",
+      "MULTIPLE_INDEPENDENT_BOTTLENECKS": "Considered and rejected as the headline. Four loci are active, but they are not co-equal: one of them alone explains the accepted-versus-rejected split and recurs across two waves and four profiles."
+    }
+  },
+  "phase_10_next_intervention": {
+    "recommended": "ONE_BOUNDED_STEM_ANCHOR_RETRIEVAL_FIX",
+    "implemented": false,
+    "why_it_follows_from_the_matrix": [
+      "It targets the primary bottleneck and the only defect class the accepted controls separate on.",
+      "It is bounded and computable from artifacts that already exist and are frozen: condition_predicates on each seed, the canonical stem feature vocabulary, and the realized stem feature map. No new acquisition, no new schema, no new judgement.",
+      "The measurement it needs is already proven to discriminate: defeat mode per selected competitor, 7 of 12 by positive datum in accepted items against 13 of 18 by explicit verbal denial in the anchorless rejections.",
+      "It closes the ceiling-without-floor asymmetry directly: retrieval already refuses a fully satisfied competitor as a second key and would gain the symmetric refusal of a wholly unanchored one."
+    ],
+    "alternatives_considered_and_why_not": {
+      "TARGETED_CONTRAST_LIBRARY_EXPANSION": "Ruled out by evidence, not preference. Tried twice (R4 seed packs, G2 targeted enrichment) and neither raised accepted yield. The enrichment bound is also spent and no further seed round is authorised.",
+      "DISCIPLINE_SPECIFIC_RETRIEVAL_RULES": "The dominant defect spans MEDICINE, PEDIATRICS, PSYCHIATRY and SURGERY. A per-discipline rule cannot catch a cross-profile architectural gap.",
+      "OPPORTUNITY_SELECTION_REDESIGN": "Would address the granularity refusals, but those end in safe fail-closed states. It does not touch the 13 rejections.",
+      "HUMAN_CURATED_OPTION_SETS_FOR_LOW_YIELD_AREAS": "Abandons the automated path before its single largest known defect has been tested once.",
+      "NO_ARCHITECTURE_CHANGE_RUN_LARGER_SAFE_YIELD_SAMPLE": "0 of 6 profiles validated and the same four modes recurred at 30 opportunities that recurred at 11. A larger sample of the same architecture measures the same defect more precisely; it does not move yield."
+    },
+    "stop_rule_observed": "Recommended only. No production code, validator, seed, question, gate or verdict was changed by this task."
+  }
+}
