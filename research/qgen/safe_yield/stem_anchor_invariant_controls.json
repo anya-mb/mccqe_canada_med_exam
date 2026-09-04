@@ -1,0 +1,160 @@
+{
+  "scope": "QGEN_STEM_ANCHOR_INVARIANT_CONTROLS",
+  "schema_version": "1.0",
+  "frozen": true,
+  "derived_from": "reports/qgen_g2_safe_yield_root_cause_diagnosis.json",
+  "purpose": "The frozen semantic controls the stem-anchor floor has to separate. Written before the production change so the invariant is judged against fixed examples rather than tuned to a wave outcome.",
+  "invariant": {
+    "name": "STEM_PLAUSIBILITY_ANCHOR_PRESENT",
+    "statement": "A retrieved competitor is admissible only if at least one of its stem-plausibility anchors is realized PRESENT in the stem. An anchor is a stem datum whose presence gives a medically trained but imperfect candidate a positive reason to consider this competitor. The competitor's correctness conditions requiring a feature PRESENT are anchors; a condition requiring a feature ABSENT is not.",
+    "ceiling_unchanged": "ADM_3 still excludes a competitor whose correctness conditions are all satisfied, because that is a second key. The floor is the symmetric lower bound and does not touch the ceiling.",
+    "not_the_invariant": [
+      "The number of satisfied correctness conditions. 104 of 111 ranked G2 competitors scored zero, in accepted and rejected sets alike.",
+      "Whether the stem contradicts the competitor's correctness conditions. Every competitor of accepted G2-SURG-02, G2-MED-05 and G2-PHELO-01 is fully contradicted, exactly like every competitor of the flagship anchorless rejection G2-MED-01, so a rule over contradiction rejects all four accepted controls.",
+      "Whether the defeating stem feature is a negative finding. A legitimate negative discriminator is not a defect: three of twelve accepted-control competitors are defeated by an explicit verbal denial.",
+      "The present-to-absent stem feature ratio. Accepted G2-SURG-02 runs 2 present to 5 absent; rejected G2-PSY-04 runs 4 to 3."
+    ]
+  },
+  "controls": [
+    {
+      "control_id": "CTRL-ANCHORLESS-EXPLICIT-DENIAL",
+      "expectation": "REJECT",
+      "case": "zero contextual support with the competitor's own precondition explicitly stated absent",
+      "frozen_example": {
+        "opportunity_label": "G2-MED-01",
+        "seed_id": "SEED-G2-MED-T01-DISSECTION",
+        "competitor_concept": "Acute aortic dissection",
+        "stem_present_features": ["SF-C21-DYNAMIC-ST-T-CHANGES", "SF-C21-TROPONIN-RISE-OR-FALL"],
+        "anchors": ["SF-C21-ABRUPT-MAXIMAL-AT-ONSET-PAIN", "SF-C21-PULSE-OR-BP-DIFFERENTIAL"],
+        "why": "Both anchors are realized ABSENT as verbal denials. Nothing PRESENT in the stem pulls toward dissection."
+      }
+    },
+    {
+      "control_id": "CTRL-ANCHORLESS-TOPIC-ONLY",
+      "expectation": "REJECT",
+      "case": "zero contextual support with only shared topic membership",
+      "frozen_example": {
+        "opportunity_label": "G2-MED-01",
+        "seed_id": "SEED-G2-MED-T01-PERICARDITIS",
+        "competitor_concept": "Acute pericarditis",
+        "why": "Its frozen prose offers 'acute chest pain with an abnormal electrocardiogram' and 'a cardiac cause of chest pain'. Both are presenting-complaint and category membership, which designate no stem datum, so R3 contributes nothing and its two correctness anchors are absent."
+      }
+    },
+    {
+      "control_id": "CTRL-LIVE-INFERENTIAL-DEFEAT",
+      "expectation": "PASS",
+      "case": "one genuine positive plausibility anchor with an inferential defeating feature",
+      "frozen_example": {
+        "opportunity_label": "G2-PHELO-01",
+        "seed_id": "SEED-PHELO-T01-LENGTH",
+        "competitor_concept": "Length-time bias",
+        "anchors_present": ["SF-PH07-SURVIVAL-LONGER-IN-SCREENED", "SF-PH07-MORTALITY-UNCHANGED"],
+        "why": "The stem positively states longer measured survival with unchanged mortality, which is exactly the pattern length bias explains. It is defeated only by an equal grade and growth-rate distribution, a comparison the candidate must make."
+      }
+    },
+    {
+      "control_id": "CTRL-MULTIPLE-PARTIAL-ONE-DISCRIMINATOR",
+      "expectation": "PASS",
+      "case": "several partially supportive features with one decisive discriminator",
+      "frozen_example": {
+        "opportunity_label": "G2-SURG-02",
+        "seed_id": "SEED-SURG-T02-MRI",
+        "competitor_concept": "Magnetic resonance imaging of the abdomen",
+        "anchors_present": ["SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION", "SF-GS76-IMAGING-AVAILABLE-NOW"],
+        "why": "An intermediate suspicion opens the imaging decision and every modality is stated to be available, so the modality is selectable. It is inferior because the patient is neither pregnant nor already imaged, which is the discriminator."
+      }
+    },
+    {
+      "control_id": "CTRL-SECOND-KEY-CEILING",
+      "expectation": "REJECT_SECOND_KEY_RISK",
+      "case": "all correctness conditions satisfied",
+      "rule": "ADM_3 / CORRECTNESS_CONDITION_FULLY_SATISFIED",
+      "why": "Unchanged by this fix. The floor must not weaken it and must not subsume it: a competitor may clear the anchor floor and still be refused as a second key."
+    },
+    {
+      "control_id": "CTRL-LEGITIMATE-NEGATIVE-DISCRIMINATOR",
+      "expectation": "PASS",
+      "case": "an explicit negative finding that naturally differentiates two genuinely plausible diagnoses",
+      "frozen_example": {
+        "opportunity_label": "G2-SURG-02",
+        "seed_id": "SEED-SURG-T02-OBSERVE",
+        "competitor_concept": "Admit for serial abdominal examination without imaging",
+        "anchors_present": ["SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION"],
+        "defeated_by": "SF-GS76-NONDIAGNOSTIC-IMAGING-ALREADY realized ABSENT, an explicit denial",
+        "why": "The competitor is defeated by a stated absence and is still admissible, because an intermediate suspicion is a genuine positive reason to consider watchful serial examination. A negative-finding rule would wrongly reject it."
+      }
+    },
+    {
+      "control_id": "CTRL-TERMINAL-NEGATION",
+      "expectation": "REJECT",
+      "case": "an artificial terminal negation that simply kills the competitor",
+      "frozen_example": {
+        "opportunity_label": "G2-PED-01",
+        "seed_id": "SEED-PED-T01-FOREIGN-BODY",
+        "competitor_concept": "Foreign body aspiration",
+        "why": "Its only anchors are abrupt onset without a prodrome and focal asymmetric findings, and the stem states a two-to-three-day coryzal prodrome and symmetric findings. Nothing PRESENT invites it; the stem's negations are the whole relationship."
+      }
+    },
+    {
+      "control_id": "CTRL-MANAGEMENT-INFERIOR-ON-SEVERITY",
+      "expectation": "PASS",
+      "case": "a management competitor plausible at the same decision point but inferior on severity or timing",
+      "frozen_example": {
+        "opportunity_label": "G2-MED-04",
+        "seed_id": "SEED-G2-MED-T03-DEFERRED-ANGIO",
+        "competitor_concept": "Give fibrinolysis now and arrange angiography in three to five days if she remains stable",
+        "anchors_present": ["SF-C21-DIAGNOSTIC-ST-ELEVATION", "SF-C21-DEVICE-TIME-EXCEEDS-WINDOW"],
+        "why": "A zero-predicate never-optimal seed that still clears the floor: the infarct and the geography positively invite giving lysis now, and only the angiography interval is wrong. Zero correctness predicates is not by itself anchorlessness."
+      }
+    },
+    {
+      "control_id": "CTRL-PSY-LONGITUDINAL-PARTIAL-SUPPORT",
+      "expectation": "PASS",
+      "case": "a psychiatry longitudinal competitor with partial support defeated by time course",
+      "frozen_example": {
+        "opportunity_label": "G2-PSY-01",
+        "seed_id": "SEED-PSY-T01-BD2",
+        "competitor_concept": "Bipolar II disorder",
+        "anchors_present": ["SF-PS12-INTEREPISODE-RECOVERY"],
+        "why": "Full interepisode recovery across recurrent episodes is a real longitudinal reason to hold bipolar II, and defeating it needs the candidate to know a hypomanic period must be documented and that collateral makes its absence reliable."
+      }
+    },
+    {
+      "control_id": "CTRL-PHELO-CONTEXTUAL",
+      "expectation": "PASS",
+      "case": "a PHELO conceptual competitor genuinely plausible under the study or policy context",
+      "frozen_example": {
+        "opportunity_label": "G2-PHELO-02",
+        "seed_id": "SEED-G2-PHELO-T02-VOLUNTARY",
+        "competitor_concept": "Add a statement that participation is voluntary and that declining will not affect any other care",
+        "anchors_present": ["SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"],
+        "why": "A policy circumstance, not a clinical finding, is the anchor: the revision's stated objective is autonomy, which is a genuine reason to consider a voluntariness statement."
+      }
+    },
+    {
+      "control_id": "CTRL-GENERIC-CONCEPT-SIMILARITY",
+      "expectation": "REJECT",
+      "case": "generic concept similarity without stem support",
+      "frozen_example": {
+        "opportunity_label": "G2-PED-02",
+        "seed_id": "SEED-PED-T02-CXR",
+        "competitor_concept": "Chest radiograph",
+        "why": "Its only shared feature is 'an investigation aimed at the same lower respiratory illness', which is category membership. Its anchors - failure to improve, a bacterial concern, focal findings - are all absent."
+      }
+    },
+    {
+      "control_id": "CTRL-ACCEPTED-SETS-PRESERVED",
+      "expectation": "PASS",
+      "case": "accepted frozen G2 competitor sets keep at least three anchored competitors",
+      "opportunity_labels": ["G2-MED-04", "G2-MED-05", "G2-PHELO-01", "G2-SURG-02"],
+      "note": "Measured over the frozen ranked sets, each of the four keeps at least three competitors clearing the floor. Whether an opportunity survives the whole pipeline additionally depends on the unchanged semantic-admissibility stage, which is reported separately rather than folded into this control."
+    },
+    {
+      "control_id": "CTRL-ANCHORLESS-SETS-REJECTED-UPSTREAM",
+      "expectation": "REJECT",
+      "case": "the known COMPETITOR_WITHOUT_STEM_ANCHOR sets fail before item realization",
+      "opportunity_labels": ["G2-MED-01", "G2-PED-01", "G2-PED-02", "G2-PSY-01"],
+      "note": "The four opportunities the independent verifiers named for this defect. Each must fall below three admissible competitors at retrieval, so no item is realized from them."
+    }
+  ]
+}

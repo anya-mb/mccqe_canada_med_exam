@@ -59,6 +59,14 @@ FAIL_CLOSED_REASONS: dict[str, str] = {
     "FAIL_CLOSED_INSUFFICIENT_SEMANTICALLY_ADMISSIBLE_COMPETITORS": (
         "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY"
     ),
+    # An authored item rests on a competitor the stem-anchor floor refuses. The
+    # option was retrieved and is real, but nothing the realised stem states gives
+    # a candidate a reason to consider it, so the item cannot be realised as
+    # written. It is a stem-alignment outcome, not a supply shortfall and not the
+    # freehand-distractor construction error, so it carries its own reason.
+    "FAIL_CLOSED_REALIZED_COMPETITOR_LACKS_STEM_ANCHOR": (
+        "A_STEM_THAT_ANCHORS_THE_COMPETITOR_OR_A_DIFFERENT_COMPETITOR"
+    ),
     "FAIL_CLOSED_INCOHERENT_OPTION_SET_ARCHETYPE": "AN_AUTHORISED_PROFILE_EXTENSION",
     "FAIL_CLOSED_ANSWER_AMBIGUITY": "NEVER_BY_RETRY",
     "FAIL_CLOSED_REDUNDANT": "A_DIFFERENT_OPPORTUNITY",

@@ -30,6 +30,7 @@ from .paths import resolve_root_path
 from .profile_contrast_retrieval import (
     build_retrieval_index,
     load_seed_enrichment,
+    load_seed_stem_anchors,
     retrieve_profile_aware_contrasts,
 )
 from .qgen_profiles import (
@@ -85,11 +86,20 @@ def build_contrast_index(root: Path, library: dict[str, Any]) -> list[dict[str, 
     root = Path(root).resolve()
     packs = list(library.get("seed_packs") or [])
     enrichments = list(library.get("enrichments") or [])
+    anchor_layers = list(library.get("stem_anchors") or [])
     if not packs:
         raise SafeYieldWaveError("a contrast library must declare at least one seed pack")
     if len(packs) != len(enrichments):
         raise SafeYieldWaveError(
             "every declared seed pack needs exactly one enrichment, in the same order"
+        )
+    # Required rather than optional. A library without its anchor layer would run
+    # retrieval with the anti-second-key ceiling and no floor, which is the state
+    # that produced COMPETITOR_WITHOUT_STEM_ANCHOR in G1 and again in G2.
+    if len(packs) != len(anchor_layers):
+        raise SafeYieldWaveError(
+            "every declared seed pack needs exactly one stem-anchor layer, in the same "
+            "order: without it retrieval has a ceiling on anchoring and no floor"
         )
     # Which pack a competitor came from is a reported result, so the classes are
     # declared by the caller rather than inferred from a pack id or a filename.
@@ -103,10 +113,13 @@ def build_contrast_index(root: Path, library: dict[str, Any]) -> list[dict[str, 
         raise SafeYieldWaveError(f"unknown seed provenance class: {', '.join(unknown)}")
     index: list[dict[str, Any]] = []
     seen: set[str] = set()
-    for pack_relative, enrichment_relative, provenance in zip(packs, enrichments, classes):
+    for pack_relative, enrichment_relative, anchors_relative, provenance in zip(
+        packs, enrichments, anchor_layers, classes
+    ):
         pack = _read(root, pack_relative)
         enrichment = load_seed_enrichment(root, enrichment_relative)
-        for row in build_retrieval_index(pack, enrichment):
+        anchors = load_seed_stem_anchors(root, anchors_relative)
+        for row in build_retrieval_index(pack, enrichment, anchors):
             if row["seed_id"] in seen:
                 raise SafeYieldWaveError(f"seed appears in two packs: {row['seed_id']}")
             seen.add(row["seed_id"])
@@ -161,6 +174,7 @@ def select_semantically_admissible(
     judgement: dict[str, Any],
     *,
     minimum: int = MINIMUM_SEMANTICALLY_ADMISSIBLE_COMPETITORS,
+    anchor_floor_refusals: set[str] | None = None,
 ) -> dict[str, Any]:
     """Apply the frozen verdicts to ranked retrieval output and select the set.
 
@@ -169,17 +183,27 @@ def select_semantically_admissible(
     selection rule - the first three ranked competitors that pass all three
     criteria - is recomputed here and the declared selection is checked against
     it rather than trusted.
+
+    ``anchor_floor_refusals`` names the competitors the stem-anchor floor removed
+    upstream. A frozen judgement over one of those is not a bypass and is not an
+    error: it is a judgement of a competitor retrieval used to return and no
+    longer does. Anything else judged but not retrieved is still refused, and a
+    declared selection that named a refused competitor is reported as superseded
+    rather than trusted or treated as a contradiction.
     """
     ranked_ids = [row["seed_id"] for row in ranked_competitors]
     judged = judgement.get("judged_competitors")
     if not isinstance(judged, list):
         raise SafeYieldWaveError("a semantic-admissibility record needs judged competitors")
+    refused_upstream = set(anchor_floor_refusals or ())
     judged_ids = [row.get("seed_id") for row in judged]
-    if judged_ids != ranked_ids:
+    retained_ids = [seed_id for seed_id in judged_ids if seed_id not in refused_upstream]
+    if retained_ids != ranked_ids:
         raise SafeYieldWaveError(
             "the judged competitors are not the retrieved competitors in rank order: "
             f"judged {judged_ids}, retrieved {ranked_ids}"
         )
+    judged = [row for row in judged if row.get("seed_id") not in refused_upstream]
     verdicts: dict[str, dict[str, Any]] = {}
     refused: dict[str, str] = {}
     for row in judged:
@@ -203,7 +227,12 @@ def select_semantically_admissible(
     ]
     selected = survivors[:minimum]
     declared = judgement.get("selected_seed_ids")
-    if declared is not None and list(declared) != [row["seed_id"] for row in selected]:
+    superseded = bool(declared is not None and refused_upstream & set(declared))
+    if (
+        declared is not None
+        and not superseded
+        and list(declared) != [row["seed_id"] for row in selected]
+    ):
         raise SafeYieldWaveError(
             f"the declared selection is not the first {minimum} admitted competitors in rank "
             f"order: declared {list(declared)}"
@@ -214,6 +243,7 @@ def select_semantically_admissible(
         "survivors": survivors,
         "selected": selected,
         "sufficient": len(survivors) >= minimum,
+        "declared_selection_superseded_by_anchor_floor": superseded,
     }
 
 
@@ -410,6 +440,7 @@ def run_safe_yield_wave(
 
         assignment = assignments[label]
         competitor_predicates = None
+        anchor_refused_texts: set[str] = set()
         # The stem and its feature map are realised before any option exists, so the plan
         # carries them and retrieval runs against them. A wave without a contrast library
         # predates this stage and still reads the map from the item.
@@ -436,6 +467,7 @@ def run_safe_yield_wave(
                 stem_feature_map={"features": plan_features},
                 ranking_preference=profile["competitor_ranking_preference"],
             )
+            anchor_refused_texts = set(retrieval["anchor_floor_refused_texts"])
             gate_verdicts.setdefault("PROFILE_AWARE_CONTRAST_RETRIEVAL", []).append(
                 "FAIL_CLOSED" if retrieval["fail_closed_reason"] else "SUFFICIENT"
             )
@@ -468,11 +500,16 @@ def run_safe_yield_wave(
                         "competitor_concept_id": row["competitor_concept_id"],
                         "satisfied_conditions": row["satisfied_conditions"],
                         "total_conditions": row["total_conditions"],
+                        "anchors_present": row["anchors_present"],
+                        "total_anchors": row["total_anchors"],
                         "reviewed_strength": row["reviewed_strength"],
                     }
                     for rank, row in enumerate(retrieval["ranked_competitors"], start=1)
                 ],
                 "excluded": retrieval["excluded"],
+                "anchor_signal": retrieval["anchor_signal"],
+                "anchor_floor_refusals": retrieval["anchor_floor_refusals"],
+                "anchor_floor_refused_texts": retrieval["anchor_floor_refused_texts"],
                 "fail_closed_reason": retrieval["fail_closed_reason"],
             }
             if retrieval["fail_closed_reason"]:
@@ -499,7 +536,9 @@ def run_safe_yield_wave(
                     f"{label}: no semantic-admissibility judgement for a retrieved competitor set"
                 )
             semantic = select_semantically_admissible(
-                retrieval["ranked_competitors"], judgement
+                retrieval["ranked_competitors"],
+                judgement,
+                anchor_floor_refusals=set(retrieval["anchor_floor_refusals"]),
             )
             selected_rows = semantic["selected"]
             selected_ids = [row["seed_id"] for row in selected_rows]
@@ -514,6 +553,9 @@ def run_safe_yield_wave(
                     for seed_id, criterion in sorted(semantic["refused"].items())
                 ],
                 "selected_competitor_seed_ids": selected_ids,
+                "declared_selection_superseded_by_anchor_floor": semantic[
+                    "declared_selection_superseded_by_anchor_floor"
+                ],
             })
             gate_verdicts.setdefault("SEMANTIC_CONTRAST_ADMISSIBILITY", []).append(
                 "SUFFICIENT" if semantic["sufficient"] else "FAIL_CLOSED"
@@ -559,7 +601,31 @@ def run_safe_yield_wave(
             # An option the retrieval stage never produced was authored freehand,
             # which is the practice this stage exists to remove. It is a
             # construction error rather than a clinical outcome, so it is loud.
+            #
+            # A distractor the *stem-anchor floor* refused is a different thing.
+            # Retrieval did produce it, and the floor then found that nothing the
+            # realised stem states gives a candidate a reason to consider it. The
+            # item cannot be realised as written, but that is a clinical outcome,
+            # so it fails closed under its own reason instead of raising.
             unretrieved = unretrieved_distractors(item["options"], selected_rows)
+            anchorless = [
+                text
+                for text in unretrieved
+                if normalize_option_text(text) in anchor_refused_texts
+            ]
+            if anchorless:
+                record["retrieval"]["anchorless_realized_distractors"] = anchorless
+                transition_opportunity(
+                    opportunity, "NO_SAFE_ITEM",
+                    reason="FAIL_CLOSED_REALIZED_COMPETITOR_LACKS_STEM_ANCHOR",
+                )
+                record.update({
+                    "state": opportunity["state"],
+                    "fail_closed_reason": opportunity["fail_closed_reason"],
+                    "reopens_on": opportunity["reopens_on"],
+                })
+                results.append(record)
+                continue
             if unretrieved:
                 raise SafeYieldWaveError(
                     f"{label}: distractors were not produced by retrieval: {unretrieved}"

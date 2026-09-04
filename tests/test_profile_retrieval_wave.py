@@ -36,6 +36,9 @@ G1_INPUTS = {
 CURATED = {
     "seed_packs": ["research/qgen/generalization/competitive_contrast_seed_pack_r4.json"],
     "enrichments": ["research/qgen/generalization/competitive_contrast_seed_pack_r4.enrichment.json"],
+    "stem_anchors": [
+        "research/qgen/generalization/competitive_contrast_seed_pack_r4.stem_anchors.json"
+    ],
 }
 
 
@@ -130,6 +133,13 @@ G2_INPUTS = {
             "research/qgen/generalization/competitive_contrast_seed_pack_r4.enrichment.json",
             "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.enrichment.json",
             "research/qgen/generalization/competitive_contrast_seed_pack_g2_extensions.enrichment.json",
+        ],
+        "stem_anchors": [
+            "research/qgen/generalization/competitive_contrast_seed_pack_r4.stem_anchors.json",
+            "research/qgen/generalization/"
+            "competitive_contrast_seed_pack_g2_targeted.stem_anchors.json",
+            "research/qgen/generalization/"
+            "competitive_contrast_seed_pack_g2_extensions.stem_anchors.json",
         ],
         "provenance_classes": ["ORIGINAL_CURATED", "TARGETED_NEW", "TARGETED_NEW"],
     },
@@ -573,8 +583,15 @@ def test_a_freehand_distractor_cannot_bypass_retrieval(repo_copy, tmp_path_facto
     root = tmp_path_factory.mktemp("freehand") / "mccqe"
     shutil.copytree(repo_copy, root, ignore=IGNORED_FROM_THE_COPY, symlinks=False)
 
+    # Mutate an item whose opportunity actually reaches realization, so the guard
+    # under test is the one that fires rather than an earlier fail-closed stage.
+    realized = {row["wave_label"] for row in g2()["results"] if row.get("item_id")}
+    assert realized
+
     def mutate(items):
         for item in items:
+            if item["opportunity_label"] not in realized:
+                continue
             for option in item["options"]:
                 if option["role"] == "DISTRACTOR":
                     option["text"] = "A competitor nobody retrieved"
@@ -586,25 +603,24 @@ def test_a_freehand_distractor_cannot_bypass_retrieval(repo_copy, tmp_path_facto
         run_safe_yield_wave(root, **G2_INPUTS)
 
 
-def test_a_retrieved_but_semantically_refused_competitor_cannot_be_realised(
+def test_a_retrieved_competitor_the_selection_did_not_select_cannot_be_realised(
     repo_copy, tmp_path_factory
 ):
-    """Retrieval is necessary and not sufficient: the judgement binds too."""
-    root = tmp_path_factory.mktemp("refused") / "mccqe"
+    """Retrieval is necessary and not sufficient: the selection binds too.
+
+    Since the stem-anchor floor landed, no opportunity that still realizes an
+    item carries a semantically refused competitor - the floor removes them
+    earlier - so the guard is proven here against a competitor retrieval ranked
+    and the recomputed selection passed over.
+    """
+    root = tmp_path_factory.mktemp("unselected") / "mccqe"
     shutil.copytree(repo_copy, root, ignore=IGNORED_FROM_THE_COPY, symlinks=False)
-    judgements = {
-        row["opportunity_label"]: row
-        for row in json.loads((root / SEMANTIC).read_text())["opportunities"]
-    }
-    target = next(
-        (label, row)
-        for label, row in judgements.items()
-        if any(entry["verdict"] == "REFUSED" for entry in row["judged_competitors"])
-        and row.get("selected_seed_ids")
-    )
-    label, judged = target
-    refused = next(
-        entry for entry in judged["judged_competitors"] if entry["verdict"] == "REFUSED"
+    label, unselected = next(
+        (row["wave_label"], candidate["competitor_concept"])
+        for row in g2()["results"]
+        if row.get("item_id") and row.get("retrieval")
+        for candidate in row["retrieval"]["ranked_competitors"]
+        if candidate["seed_id"] not in row["retrieval"]["selected_competitor_seed_ids"]
     )
 
     def mutate(items):
@@ -613,7 +629,7 @@ def test_a_retrieved_but_semantically_refused_competitor_cannot_be_realised(
                 continue
             for option in item["options"]:
                 if option["role"] == "DISTRACTOR":
-                    option["text"] = refused["competitor_concept"]
+                    option["text"] = unselected
                     return
         raise AssertionError(f"no realised item for {label}")
 
@@ -629,7 +645,7 @@ def test_the_committed_execution_report_is_the_production_runs_own_output():
     provenance, must be reproducible by running the wave again.
     """
     execution = json.loads(
-        (ROOT / "reports/qgen_g2_profile_aware_retrieval_execution.json").read_text()
+        (ROOT / "reports/qgen_g2_stem_anchor_retest_execution.json").read_text()
     )
     fresh = {row["wave_label"]: row for row in g2()["results"]}
     committed = {row["wave_label"]: row for row in execution["results"]}

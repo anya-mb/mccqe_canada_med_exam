@@ -21,7 +21,7 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `199696b9eb20cf5207a2bad8913ed5c30c97ddf3`.
+- Audited coordinator input commit: `6fe423735e9d30247f6bee09327bf7c2fe2956c6`.
 - Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
@@ -364,7 +364,76 @@ This section is maintained by hand and sits outside the generated source-researc
   deliberately not addressed: contrast-library coverage, learner-decision indexing in profile-aware retrieval,
   option realization, evidence-set scoping, and a read-only CORE coverage accounting join defect
   (`build_coverage_row` alarms on two decisions that are already covered).
-- QGEN_NEXT_STEP = `IMPLEMENT_BOUNDED_STEM_ANCHOR_RETRIEVAL_FIX`
+- **Bounded stem-anchor retrieval fix (2026-09-04), from diagnosis checkpoint `6fe4237`.** Scope held: one
+  bounded fix, no architecture redesign, no new validator family, no new contrast seeds, no stem or item
+  rewritten. Every seed pack, enrichment, wave plan, semantic-admissibility artifact, item file and the G2
+  execution report are byte-identical to `199696b`.
+- **The invariant, and what it is not.** `STEM_PLAUSIBILITY_ANCHOR_PRESENT`: a retrieved competitor is
+  admissible only if at least one of its stem-plausibility anchors is realized PRESENT. Measured first, before
+  any code: the floor **cannot** be computed from `condition_predicates`. Every competitor of accepted
+  G2-SURG-02, G2-MED-05 and G2-PHELO-01 carries the same correctness signature as every competitor of the
+  flagship anchorless rejection G2-MED-01 - zero conditions satisfied, the rest contradicted - so a rule over
+  contradiction rejects all four accepted controls. Nor is it the negative-finding rule the diagnosis warned
+  against: three of twelve accepted-control competitors are defeated by an explicit verbal denial and stay
+  admissible. The missing datum is a second relation - which stem features, PRESENT, give a learner a reason to
+  *consider* a competitor, as against the conditions under which it would be *correct*.
+- Data layer: `research/qgen/generalization/*.stem_anchors.json`, three additive frozen artifacts over the 81
+  already-approved retrievable seeds. Derived by `scripts/qbank/build_stem_anchor_layer.py` under four recorded
+  rules - R1 every correctness condition requiring PRESENT is an anchor; R2 a phrase in the seed's own frozen
+  prose contributes the vocabulary features it designates; R3 a phrase naming only the option category, the
+  decision point or the presenting complaint designates nothing; R4 a seed resting entirely on category
+  membership carries an empty anchor set and is admissible against no stem (one seed, `SEED-PED-T03-HYPERTONIC`).
+  Every anchor carries its rule and its derivation sentence. Anchors are stem-independent: no opportunity,
+  scenario, stem, key, option or G2 verdict is referenced by any derivation.
+- Production change, under TDD, in three layers only. `profile_contrast_retrieval` gains `load_seed_stem_anchors`,
+  requires the anchor layer to build an index, applies `SAF_1` / `STEM_PLAUSIBILITY_ANCHOR_ABSENT` after ADM-1 and
+  ADM-3, adds the `STEM_ANCHOR_STRENGTH` ranking signal and reports the anchor-signal counts. `safe_yield_wave`
+  **refuses to run with a contrast library and without the anchor layer**, tolerates a frozen semantic judgement
+  over a competitor the floor removed upstream while still refusing one retrieval never returned, and reports a
+  declared selection superseded by the floor. `question_opportunity` gains one reason,
+  `FAIL_CLOSED_REALIZED_COMPETITOR_LACKS_STEM_ANCHOR`, so an item resting on a floor-refused competitor fails
+  closed instead of raising the freehand-distractor construction error. The ADM-3 ceiling is untouched.
+- Controls fixture `research/qgen/safe_yield/stem_anchor_invariant_controls.json`, written before the production
+  change. Tests: 31 in `tests/test_stem_anchor_floor.py`, 64 focused with the wave and retrieval modules, full
+  canonical suite **1024/0** at the final production-code state.
+- **Frozen replay:** all four accepted G2 sets keep at least three anchored competitors and all four flagship
+  anchorless sets collapse below three. Second-key ceiling preserved exactly:
+  `CORRECTNESS_CONDITION_FULLY_SATISFIED` is 8 before and 8 after. Anchor signal, on the same 111-candidate
+  population as the baseline: zero **104 -> 64**, positive **7 -> 47**; constant across **20 of 26 sets -> 9 of
+  27**. The signal now has real variance and it was not tuned to a target.
+- **Controlled G2 retest** (`reports/qgen_g2_stem_anchor_retest_execution.json`), same 30 frozen opportunities,
+  same seed library, same semantic judgements, same items: **2 ACCEPTED, 2 REJECTED, 26 NO_SAFE_ITEM, 0
+  REDUNDANT**, against a baseline of 4 / 13 / 12 / 1. `COMPETITOR_WITHOUT_STEM_ANCHOR` reaching an authored or
+  final item: **6 items and 11 distractors -> 0**; all six named items now end NO_SAFE_ITEM before realization.
+  Accepted-item safety unchanged and all zero - factual, numeric, unsupported claims, ambiguous best answers,
+  critical-fact safety, material redundancy - reused rather than rerun, because both accepted items are
+  byte-identical and no newly realized candidate would become ACCEPTED.
+- **Safe yield fell, 4/30 to 2/30, and both losses are analysed rather than explained away.** `G2-SURG-02` is
+  *not* a retrieval failure: the corrected path still raises four anchored competitors and selects three, and the
+  opportunity fails only because the frozen item was authored on `SEED-SURG-T02-LAPAROSCOPY`, whose own frozen
+  rationale says the guideline sends *high*-suspicion patients to laparoscopy while this stem states intermediate
+  suspicion. Under the retest rule that no item may be re-authored that is NO_SAFE_ITEM; a fresh authoring pass
+  over the same retrieved set would build an item. `G2-MED-05` is a genuine stricter-semantics shortfall: only
+  one competitor survives both the floor and SA-1, because discharge home and overnight observation are refused
+  against a documented troponin rise and dynamic ST-T changes.
+- One control-coverage regression, reported and not worked around: the deliberate redundancy probe `G2-PSY-06`
+  was redundant against an item this run no longer accepts, so it is genuinely novel now and fails closed at
+  retrieval. `MARGINAL_EDUCATIONAL_VALUE` returns a constant verdict in the retest. The redundancy gate itself is
+  unchanged and its G2 result stands.
+- **Stated residual risk.** The anchor derivations are authored, by a party that had read the G2 verdicts. Three
+  bounds apply and are asserted by tests: every anchor is drawn from the frozen canonical vocabulary of its
+  target's anchor study unit, every anchor carries its rule and a derivation sentence quoting the seed's own
+  frozen prose, and no anchor row names an opportunity, item, key or option. One independent corroboration
+  exists and predates the fix: the G2-MED-04 verifier wrote "Each distractor has a positive stem anchor" and then
+  named the PRESENT stem features supplying it, agreeing with the floor on that item.
+- `DECISION = STEM_ANCHOR_FIX_VALIDATED_NEXT_CONTRAST_COVERAGE`. The next dominant bottleneck is
+  `CONTRAST_LIBRARY_COVERAGE`: 17 of the 19 `FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS` are the library
+  holding no anchored competitor for the realized stem (2 with no seed indexed at all, 6 with every candidate
+  floor-refused, 11 with one or two anchored and short of three). Learner-decision indexing has receded:
+  `SA_1_DECISION_GRANULARITY_MATCH` refusals fall from 22 to 5. Option realization, evidence-set scoping and the
+  CORE coverage accounting join are unchanged and were deliberately not touched.
+- `RECOMMENDED_ARCHITECTURE_ACTION` stays `DO_NOT_SCALE`. No profile validated and safe yield fell.
+- QGEN_NEXT_STEP = `USER_REVIEW_STEM_ANCHOR_RETEST_THEN_CONTRAST_LIBRARY_COVERAGE`
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 
 ## Research-level policy

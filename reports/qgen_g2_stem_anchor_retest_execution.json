@@ -1,0 +1,3459 @@
+{
+  "accepted_controls_lost": {
+    "G2-MED-05": {
+      "analysis": "A genuine supply shortfall under stricter semantics. Only SEED-G2-MED-T04-ADMIT-NONINVASIVE survives both the floor and SA-1. Discharge with outpatient stress testing and overnight emergency-department observation are floor-refused because the stem states a documented troponin rise and dynamic ST-T changes, and both seeds' own frozen rationales rest on a normal tracing and diagnostic uncertainty.",
+      "cause": "FAIL_CLOSED_INSUFFICIENT_SEMANTICALLY_ADMISSIBLE_COMPETITORS",
+      "legitimate": true
+    },
+    "G2-SURG-02": {
+      "analysis": "Not a retrieval failure. Retrieval and the floor still raise four anchored competitors and the recomputed selection takes three (MRI, serial examination, ultrasonography). The frozen item, authored before the floor existed, used SEED-SURG-T02-LAPAROSCOPY, whose own frozen rationale says the guideline sends high-suspicion patients to laparoscopy while this stem states intermediate suspicion. Under the retest rule that no item may be re-authored, that is NO_SAFE_ITEM; a fresh authoring pass over the same retrieved set would build an item.",
+      "cause": "FAIL_CLOSED_REALIZED_COMPETITOR_LACKS_STEM_ANCHOR",
+      "legitimate": true
+    }
+  },
+  "accepted_item_safety": {
+    "AMBIGUOUS_BEST_ANSWERS": 0,
+    "COMPETITOR_WITHOUT_STEM_ANCHOR_IN_ACCEPTED": 0,
+    "COMPETITOR_WITHOUT_STEM_ANCHOR_IN_REJECTED": 0,
+    "CRITICAL_FACT_SAFETY_FAILURES": 0,
+    "FACTUAL_ERRORS": 0,
+    "MATERIAL_REDUNDANCY": 0,
+    "NUMERIC_ERRORS": 0,
+    "UNSUPPORTED_CLAIMS": 0,
+    "accepted_items": [
+      "G2-MED-04",
+      "G2-PHELO-01"
+    ],
+    "independent_corroboration_of_the_invariant": "The G2-MED-04 verifier, working before this fix existed, wrote 'Each distractor has a positive stem anchor' and then named the PRESENT stem features that supply it. The floor agrees with that judgement on the same item.",
+    "no_new_independent_verification_was_required": "No newly realized candidate would become ACCEPTED. The two accepted items are the frozen G2-MED-04 and G2-PHELO-01, unchanged in stem, key, options and rationale, so their fresh independent verification is reused rather than rerun.",
+    "rejected_items": [
+      "G2-MED-03",
+      "G2-PHELO-02"
+    ],
+    "rejected_note": "Both realize byte-identical items and keep their frozen independent verdicts. Neither is among the six items the verifiers named for COMPETITOR_WITHOUT_STEM_ANCHOR: G2-MED-03 was rejected for KEY_DISTRACTOR_REGISTER_ASYMMETRY, which this fix does not address.",
+    "source": "the frozen G2 independent verifications, which stand because both items are byte-identical to the artifacts at 199696b"
+  },
+  "anchor_floor_refusals": {
+    "by_seed": {
+      "SEED-G2-MED-T01-DISSECTION": 1,
+      "SEED-G2-MED-T01-PERICARDITIS": 1,
+      "SEED-G2-MED-T02-DIURETIC": 1,
+      "SEED-G2-MED-T02-VASOPRESSOR": 1,
+      "SEED-G2-MED-T04-ADMIT-NONINVASIVE": 1,
+      "SEED-G2-MED-T04-CLINIC": 2,
+      "SEED-G2-MED-T04-DISCHARGE-STRESS": 2,
+      "SEED-G2-MED-T04-OBSERVE": 2,
+      "SEED-G2-PHELO-T01-LEAD-TIME": 1,
+      "SEED-G2-PSY-T03-AD-ALONE": 1,
+      "SEED-G2-PSY-T03-ECT": 2,
+      "SEED-OB-T01-GALACTOCELE": 1,
+      "SEED-OB-T02-CRP": 1,
+      "SEED-OB-T02-MILK-CULTURE": 1,
+      "SEED-OB-T03-DISCARD": 2,
+      "SEED-OB-T03-SHIELD": 2,
+      "SEED-PED-T01-ASTHMA": 1,
+      "SEED-PED-T01-FOREIGN-BODY": 1,
+      "SEED-PED-T01-PNEUMONIA": 1,
+      "SEED-PED-T02-CBC": 1,
+      "SEED-PED-T02-CONTINUOUS": 1,
+      "SEED-PED-T02-CXR": 1,
+      "SEED-PED-T02-VIRAL": 1,
+      "SEED-PED-T03-EPINEPHRINE": 3,
+      "SEED-PED-T03-FLUIDS": 2,
+      "SEED-PED-T03-HFNC": 1,
+      "SEED-PED-T03-HYPERTONIC": 3,
+      "SEED-PED-T03-SALBUTAMOL": 3,
+      "SEED-PED-T03-SUCTION": 3,
+      "SEED-PHELO-T01-LENGTH": 1,
+      "SEED-PHELO-T01-OVERDIAGNOSIS": 1,
+      "SEED-PHELO-T03-ECONOMIC": 2,
+      "SEED-PHELO-T03-PILOT": 1,
+      "SEED-PHELO-T03-RAISE-CUTOFF": 1,
+      "SEED-PSY-T01-ANEMIA": 2,
+      "SEED-PSY-T01-MEDICAL": 2,
+      "SEED-PSY-T01-PDD": 2,
+      "SEED-PSY-T03-COMBINED": 3,
+      "SEED-PSY-T03-DIGITAL": 2,
+      "SEED-PSY-T03-EXERCISE": 1,
+      "SEED-PSY-T03-PSYCHOTHERAPY": 1,
+      "SEED-SURG-T02-LAPAROSCOPY": 1,
+      "SEED-SURG-T03-DRAINAGE": 1,
+      "SEED-SURG-T03-INTERVAL": 1,
+      "SEED-SURG-T03-NONOP": 1
+    },
+    "distinct_seeds_refused_in_at_least_one_stem": 45,
+    "total_candidate_refusals": 67
+  },
+  "anchor_signal": {
+    "baseline": {
+      "sets_in_which_every_candidate_scored_zero": "20/26",
+      "signal": "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+      "zero_of_ranked": "104/111"
+    },
+    "candidate_sets_with_at_least_one_candidate": 27,
+    "candidates_entering_the_floor": 115,
+    "comparable_subset_note": "G2-PSY-06 reached retrieval in the retest and did not in the baseline, because the redundancy it was built to probe is redundancy against an item this run no longer accepts. Excluding its 4 candidates the retest floors 111 candidates, exactly the baseline population, of which 64 score zero and 47 score positive.",
+    "fully_satisfied": 10,
+    "positive": 48,
+    "sets_in_which_the_signal_is_constant": 9,
+    "zero": 67
+  },
+  "anchorless_realized_distractors": {
+    "G2-OBGYN-03": [
+      "Express milk from the affected breast and feed the infant formula"
+    ],
+    "G2-PHELO-03": [
+      "Commission an economic evaluation before deciding"
+    ],
+    "G2-SURG-02": [
+      "Proceed directly to diagnostic laparoscopy"
+    ]
+  },
+  "baseline_commit": "199696b9eb20cf5207a2bad8913ed5c30c97ddf3",
+  "baseline_execution_report": "reports/qgen_g2_profile_aware_retrieval_execution.json",
+  "competitor_without_stem_anchor": {
+    "after_distractor_count": 0,
+    "after_item_count": 0,
+    "after_note": "None of the six realizes an item under the corrected path: all six end NO_SAFE_ITEM at retrieval or at semantic admissibility, so no anchorless competitor reaches an authored or final item.",
+    "baseline_distractor_count": 11,
+    "baseline_item_count": 6,
+    "baseline_items": [
+      "G2-MED-01",
+      "G2-PED-01",
+      "G2-PED-02",
+      "G2-PSY-01",
+      "G2-SURG-03",
+      "G2-PSY-04"
+    ],
+    "baseline_profiles": 4
+  },
+  "control_coverage_regression": {
+    "finding": "The deliberate redundancy probe G2-PSY-06 no longer reaches the redundancy gate. It was redundant against an item this run no longer accepts, so it is now genuinely novel and fails closed at retrieval instead. MARGINAL_EDUCATIONAL_VALUE therefore returns a constant verdict in the retest. The redundancy gate itself is unchanged and its G2 result stands; what is lost is this cohort's positive control for it.",
+    "reported_not_worked_around": true
+  },
+  "controls_fixture": "research/qgen/safe_yield/stem_anchor_invariant_controls.json",
+  "decision": "STEM_ANCHOR_FIX_VALIDATED_NEXT_CONTRAST_COVERAGE",
+  "diagnosis_report": "reports/qgen_g2_safe_yield_root_cause_diagnosis.json",
+  "filter_verdict_counts": {
+    "CORRECTNESS_CONDITION_FULLY_SATISFIED": 8,
+    "RESPONSE_CLASS_NOT_DEMANDED": 7,
+    "STEM_PLAUSIBILITY_ANCHOR_ABSENT": 67
+  },
+  "gate_verdicts": {
+    "ADM_1": [
+      "FAIL",
+      "PASS"
+    ],
+    "ADM_2": [
+      "FAIL",
+      "PASS"
+    ],
+    "ADM_3": [
+      "FAIL",
+      "PASS"
+    ],
+    "ADM_4": [
+      "FAIL",
+      "PASS"
+    ],
+    "ADM_5": [
+      "FAIL",
+      "PASS"
+    ],
+    "CRITICAL_FACT_ADJUDICATION": [
+      "FAIL",
+      "PASS"
+    ],
+    "MARGINAL_EDUCATIONAL_VALUE": [
+      "NOVEL"
+    ],
+    "PROFILE_AWARE_CONTRAST_RETRIEVAL": [
+      "FAIL_CLOSED",
+      "SUFFICIENT"
+    ],
+    "SEMANTIC_CONTRAST_ADMISSIBILITY": [
+      "FAIL_CLOSED",
+      "SUFFICIENT"
+    ]
+  },
+  "intervention": "ONE_BOUNDED_STEM_ANCHOR_RETRIEVAL_FIX",
+  "next_dominant_bottleneck": {
+    "evidence": {
+      "SA_1_DECISION_GRANULARITY_MATCH_refusals": {
+        "baseline": 22,
+        "retest": 5
+      },
+      "every_candidate_refused_by_the_floor": [
+        "G2-PED-01",
+        "G2-PED-02",
+        "G2-PED-04",
+        "G2-PHELO-04",
+        "G2-PHELO-05",
+        "G2-SURG-03"
+      ],
+      "insufficient_admissible_competitors": 19,
+      "no_seed_indexed_for_the_archetype": [
+        "G2-SURG-04",
+        "G2-OBGYN-05"
+      ],
+      "one_or_two_anchored_and_short_of_three": [
+        "G2-MED-01",
+        "G2-PED-03",
+        "G2-PED-05",
+        "G2-PSY-01",
+        "G2-PSY-02",
+        "G2-PSY-03",
+        "G2-PSY-04",
+        "G2-PSY-05",
+        "G2-PSY-06",
+        "G2-OBGYN-01",
+        "G2-OBGYN-02"
+      ]
+    },
+    "reasoning": "Seventeen of the nineteen shortfalls are the library holding no anchored competitor for the realized stem, not an indexing or granularity problem. Learner-decision indexing was the baseline's largest semantic refusal cause at 22 and is now 5, because the floor removes most of those candidates earlier. Not implemented here.",
+    "verdict": "CONTRAST_LIBRARY_COVERAGE"
+  },
+  "no_new_contrast_seeds_authored": true,
+  "no_stem_or_item_rewritten": true,
+  "pre_verification_summary": {
+    "accepted": 0,
+    "attempted_opportunities": 30,
+    "fail_closed_by_reason": {
+      "FAIL_CLOSED_INCOHERENT_OPTION_SET_ARCHETYPE": 1,
+      "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS": 19,
+      "FAIL_CLOSED_INSUFFICIENT_SEMANTICALLY_ADMISSIBLE_COMPETITORS": 2,
+      "FAIL_CLOSED_REALIZED_COMPETITOR_LACKS_STEM_ANCHOR": 3,
+      "FAIL_CLOSED_UNRESOLVED_CRITICAL_FACT": 1
+    },
+    "in_flight": 4,
+    "no_safe_item": 26,
+    "opportunity_state_counts": {
+      "ACCEPTED": 0,
+      "CANDIDATE": 0,
+      "CONTRAST_READY": 0,
+      "EVIDENCE_READY": 0,
+      "GENERATABLE": 4,
+      "NO_SAFE_ITEM": 26,
+      "REDUNDANT": 0,
+      "REJECTED": 0
+    },
+    "redundant": 0,
+    "rejected": 0
+  },
+  "results": [
+    {
+      "discipline": "MED",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "DIAGNOSIS",
+      "learner_decision_id": "LD-C21-01",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-b9406f2ccad14a0d82adc830",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "priority_class": "CORE",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 1,
+        "anchor_floor_refusals": [
+          "SEED-G2-MED-T01-DISSECTION",
+          "SEED-G2-MED-T01-PERICARDITIS"
+        ],
+        "anchor_floor_refused_texts": [
+          "acute aortic dissection",
+          "acute pericarditis"
+        ],
+        "anchor_signal": {
+          "distinct_values": 1,
+          "fully_satisfied": 0,
+          "positive": 1,
+          "zero": 2
+        },
+        "excluded": [
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-G2-MED-T01-DISSECTION"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-G2-MED-T01-PERICARDITIS"
+          }
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 3,
+        "query": {
+          "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+          "discipline_profile_id": "MEDICINE",
+          "item_archetype": "DIAGNOSIS",
+          "learner_decision_id": "LD-C21-01",
+          "option_set_archetype": "DIAGNOSIS_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-C21-DYNAMIC-ST-T-CHANGES",
+            "SF-C21-TROPONIN-RISE-OR-FALL",
+            "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+            "SF-C21-ABRUPT-MAXIMAL-AT-ONSET-PAIN",
+            "SF-C21-PULSE-OR-BP-DIFFERENTIAL",
+            "SF-C21-PLEURITIC-POSITIONAL-PAIN",
+            "SF-C21-WIDESPREAD-ST-ELEVATION-PR-DEPRESSION",
+            "SF-C21-PE-PRETEST-PROBABILITY-RAISED",
+            "SF-C21-TYPICAL-REFLUX-SYMPTOMS"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Pulmonary embolism",
+            "competitor_concept_id": "CONCEPT-G2-PE",
+            "provenance": "TARGETED_NEW",
+            "rank": 1,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-G2-MED-T01-PE",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json",
+            "total_anchors": 2,
+            "total_conditions": 1
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-G2-MED-T01-PE"
+        ]
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-MED-01"
+    },
+    {
+      "critical_fact_failures": [
+        {
+          "basis": "NO_CORROBORATION_AND_NO_PRIMARY_AUTHORITY",
+          "claim_id": "CLM-ACS-INVESTIGATION-01",
+          "fact_classes": [
+            "EPIDEMIOLOGIC_VALUE",
+            "NUMERIC_VALUE"
+          ],
+          "sanity_checks": []
+        }
+      ],
+      "discipline": "MED",
+      "fail_closed_reason": "FAIL_CLOSED_UNRESOLVED_CRITICAL_FACT",
+      "item_archetype": "INVESTIGATION_SELECTION",
+      "learner_decision_id": "LD-C21-05",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-9a933010b0138caf595565a4",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "priority_class": "CORE",
+      "reopens_on": "A_COMPLETED_LEVEL_3_ADJUDICATION",
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-MED-02"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [
+          "organ_system"
+        ],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "next_action_class",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "awaiting": "FRESH_INDEPENDENT_VERIFICATION",
+      "discipline": "MED",
+      "item_archetype": "RISK_STRATIFICATION",
+      "item_id": "G2-MED-03",
+      "learner_decision_id": "LD-C21-04",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-d076ee2fa81c13318cf59b45",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "priority_class": "CORE",
+      "retrieval": {
+        "admissible_count": 4,
+        "anchor_floor_refusals": [
+          "SEED-G2-MED-T04-ADMIT-NONINVASIVE",
+          "SEED-G2-MED-T04-CLINIC",
+          "SEED-G2-MED-T04-DISCHARGE-STRESS",
+          "SEED-G2-MED-T04-OBSERVE"
+        ],
+        "anchor_floor_refused_texts": [
+          "admit her for inpatient stress testing before deciding on angiography",
+          "discharge her with outpatient stress testing arranged within a week",
+          "observe her in the emergency department and reassess in the morning",
+          "refer her to a rapid-access chest pain clinic and let her go home tonight"
+        ],
+        "anchor_signal": {
+          "distinct_values": 1,
+          "fully_satisfied": 0,
+          "positive": 4,
+          "zero": 4
+        },
+        "declared_selection_superseded_by_anchor_floor": false,
+        "excluded": [
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-G2-MED-T04-ADMIT-NONINVASIVE"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-G2-MED-T04-CLINIC"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-G2-MED-T04-DISCHARGE-STRESS"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-G2-MED-T04-OBSERVE"
+          }
+        ],
+        "fail_closed_reason": null,
+        "indexed_count": 8,
+        "query": {
+          "demanded_response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+          "discipline_profile_id": "MEDICINE",
+          "item_archetype": "RISK_STRATIFICATION",
+          "learner_decision_id": "LD-C21-04",
+          "option_set_archetype": "NEXT_ACTION_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+            "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS",
+            "SF-C21-PULMONARY-CONGESTION",
+            "SF-C21-END-ORGAN-HYPOPERFUSION"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Give intravenous metoprolol to reduce myocardial oxygen demand",
+            "competitor_concept_id": "CONCEPT-G2-BETA-BLOCKER",
+            "provenance": "TARGETED_NEW",
+            "rank": 1,
+            "reviewed_strength": "ACCEPTABLE",
+            "satisfied_conditions": 1,
+            "seed_id": "SEED-G2-MED-T02-BETA-BLOCKER",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json",
+            "total_anchors": 2,
+            "total_conditions": 2
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Give intravenous furosemide for the raised jugular venous pressure",
+            "competitor_concept_id": "CONCEPT-G2-DIURETIC",
+            "provenance": "TARGETED_NEW",
+            "rank": 2,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-G2-MED-T02-DIURETIC",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json",
+            "total_anchors": 2,
+            "total_conditions": 1
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Give sublingual nitroglycerin for the ischaemic pain",
+            "competitor_concept_id": "CONCEPT-G2-NITRATE",
+            "provenance": "TARGETED_NEW",
+            "rank": 3,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-G2-MED-T02-NITRATE",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json",
+            "total_anchors": 2,
+            "total_conditions": 1
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Start a norepinephrine infusion",
+            "competitor_concept_id": "CONCEPT-G2-VASOPRESSOR",
+            "provenance": "TARGETED_NEW",
+            "rank": 4,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-G2-MED-T02-VASOPRESSOR",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json",
+            "total_anchors": 2,
+            "total_conditions": 1
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-G2-MED-T02-BETA-BLOCKER",
+          "SEED-G2-MED-T02-DIURETIC",
+          "SEED-G2-MED-T02-NITRATE",
+          "SEED-G2-MED-T02-VASOPRESSOR"
+        ],
+        "selected_competitor_seed_ids": [
+          "SEED-G2-MED-T02-BETA-BLOCKER",
+          "SEED-G2-MED-T02-DIURETIC",
+          "SEED-G2-MED-T02-NITRATE"
+        ],
+        "semantic_refusals": [],
+        "semantically_admissible_count": 4
+      },
+      "state": "GENERATABLE",
+      "wave_label": "G2-MED-03"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [
+          "organ_system"
+        ],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "next_action_class",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "awaiting": "FRESH_INDEPENDENT_VERIFICATION",
+      "discipline": "MED",
+      "item_archetype": "PHARMACOTHERAPY",
+      "item_id": "G2-MED-04",
+      "learner_decision_id": "LD-C21-02",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-8c9d37789423093614afcc27",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "priority_class": "CORE",
+      "retrieval": {
+        "admissible_count": 3,
+        "anchor_floor_refusals": [],
+        "anchor_floor_refused_texts": [],
+        "anchor_signal": {
+          "distinct_values": 2,
+          "fully_satisfied": 2,
+          "positive": 3,
+          "zero": 0
+        },
+        "declared_selection_superseded_by_anchor_floor": false,
+        "excluded": [],
+        "fail_closed_reason": null,
+        "indexed_count": 3,
+        "query": {
+          "demanded_response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+          "discipline_profile_id": "MEDICINE",
+          "item_archetype": "PHARMACOTHERAPY",
+          "learner_decision_id": "LD-C21-02",
+          "option_set_archetype": "NEXT_ACTION_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+            "SF-C21-DEVICE-TIME-EXCEEDS-WINDOW",
+            "SF-C21-DEVICE-TIME-WITHIN-WINDOW",
+            "SF-C21-FIBRINOLYSIS-ABSOLUTE-CONTRAINDICATION"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 2,
+            "competitor_concept": "Give fibrinolysis now and arrange angiography in three to five days if she remains stable",
+            "competitor_concept_id": "CONCEPT-G2-LYSIS-DEFERRED-ANGIO",
+            "provenance": "TARGETED_NEW",
+            "rank": 1,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-G2-MED-T03-DEFERRED-ANGIO",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json",
+            "total_anchors": 2,
+            "total_conditions": 0
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Transfer immediately for primary percutaneous coronary intervention without giving fibrinolysis",
+            "competitor_concept_id": "CONCEPT-G2-PPCI-TRANSFER",
+            "provenance": "TARGETED_NEW",
+            "rank": 2,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-G2-MED-T03-PPCI-ONLY",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json",
+            "total_anchors": 3,
+            "total_conditions": 2
+          },
+          {
+            "anchors_present": 2,
+            "competitor_concept": "Give fibrinolysis now and transfer only if the electrocardiogram fails to show resolution",
+            "competitor_concept_id": "CONCEPT-G2-LYSIS-RESCUE-ONLY",
+            "provenance": "TARGETED_NEW",
+            "rank": 3,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-G2-MED-T03-RESCUE-ONLY",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json",
+            "total_anchors": 2,
+            "total_conditions": 0
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-G2-MED-T03-DEFERRED-ANGIO",
+          "SEED-G2-MED-T03-PPCI-ONLY",
+          "SEED-G2-MED-T03-RESCUE-ONLY"
+        ],
+        "selected_competitor_seed_ids": [
+          "SEED-G2-MED-T03-DEFERRED-ANGIO",
+          "SEED-G2-MED-T03-PPCI-ONLY",
+          "SEED-G2-MED-T03-RESCUE-ONLY"
+        ],
+        "semantic_refusals": [],
+        "semantically_admissible_count": 3
+      },
+      "state": "GENERATABLE",
+      "wave_label": "G2-MED-04"
+    },
+    {
+      "discipline": "MED",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_SEMANTICALLY_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "RISK_STRATIFICATION",
+      "learner_decision_id": "LD-C21-06",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-7de8d66da37dbfcb1e7cec7b",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "priority_class": "CORE",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 3,
+        "anchor_floor_refusals": [
+          "SEED-G2-MED-T02-DIURETIC",
+          "SEED-G2-MED-T02-VASOPRESSOR",
+          "SEED-G2-MED-T04-CLINIC",
+          "SEED-G2-MED-T04-DISCHARGE-STRESS",
+          "SEED-G2-MED-T04-OBSERVE"
+        ],
+        "anchor_floor_refused_texts": [
+          "discharge her with outpatient stress testing arranged within a week",
+          "give intravenous furosemide for the raised jugular venous pressure",
+          "observe her in the emergency department and reassess in the morning",
+          "refer her to a rapid-access chest pain clinic and let her go home tonight",
+          "start a norepinephrine infusion"
+        ],
+        "anchor_signal": {
+          "distinct_values": 2,
+          "fully_satisfied": 0,
+          "positive": 3,
+          "zero": 5
+        },
+        "declared_selection_superseded_by_anchor_floor": true,
+        "excluded": [
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-G2-MED-T02-DIURETIC"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-G2-MED-T02-VASOPRESSOR"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-G2-MED-T04-CLINIC"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-G2-MED-T04-DISCHARGE-STRESS"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-G2-MED-T04-OBSERVE"
+          }
+        ],
+        "fail_closed_reason": null,
+        "indexed_count": 8,
+        "query": {
+          "demanded_response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+          "discipline_profile_id": "MEDICINE",
+          "item_archetype": "RISK_STRATIFICATION",
+          "learner_decision_id": "LD-C21-06",
+          "option_set_archetype": "NEXT_ACTION_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-C21-TROPONIN-RISE-OR-FALL",
+            "SF-C21-DYNAMIC-ST-T-CHANGES",
+            "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+            "SF-C21-END-ORGAN-HYPOPERFUSION"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Give intravenous metoprolol to reduce myocardial oxygen demand",
+            "competitor_concept_id": "CONCEPT-G2-BETA-BLOCKER",
+            "provenance": "TARGETED_NEW",
+            "rank": 1,
+            "reviewed_strength": "ACCEPTABLE",
+            "satisfied_conditions": 1,
+            "seed_id": "SEED-G2-MED-T02-BETA-BLOCKER",
+            "semantic_failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+            "semantic_verdict": "REFUSED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json",
+            "total_anchors": 2,
+            "total_conditions": 2
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Give sublingual nitroglycerin for the ischaemic pain",
+            "competitor_concept_id": "CONCEPT-G2-NITRATE",
+            "provenance": "TARGETED_NEW",
+            "rank": 2,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-G2-MED-T02-NITRATE",
+            "semantic_failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+            "semantic_verdict": "REFUSED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json",
+            "total_anchors": 2,
+            "total_conditions": 1
+          },
+          {
+            "anchors_present": 2,
+            "competitor_concept": "Admit her for inpatient stress testing before deciding on angiography",
+            "competitor_concept_id": "CONCEPT-G2-ADMIT-STRESS-FIRST",
+            "provenance": "TARGETED_NEW",
+            "rank": 3,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-G2-MED-T04-ADMIT-NONINVASIVE",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json",
+            "total_anchors": 3,
+            "total_conditions": 1
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-G2-MED-T02-BETA-BLOCKER",
+          "SEED-G2-MED-T02-NITRATE",
+          "SEED-G2-MED-T04-ADMIT-NONINVASIVE"
+        ],
+        "selected_competitor_seed_ids": [
+          "SEED-G2-MED-T04-ADMIT-NONINVASIVE"
+        ],
+        "semantic_refusals": [
+          {
+            "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+            "seed_id": "SEED-G2-MED-T02-BETA-BLOCKER"
+          },
+          {
+            "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+            "seed_id": "SEED-G2-MED-T02-NITRATE"
+          }
+        ],
+        "semantically_admissible_count": 1
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-MED-05"
+    },
+    {
+      "discipline": "PED",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "AGE_BANDED_DIAGNOSIS",
+      "learner_decision_id": "LD-P147-01",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-2ea8ff9d726e2805c09a67c8",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "priority_class": "CORE",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 0,
+        "anchor_floor_refusals": [
+          "SEED-PED-T01-ASTHMA",
+          "SEED-PED-T01-FOREIGN-BODY",
+          "SEED-PED-T01-PNEUMONIA"
+        ],
+        "anchor_floor_refused_texts": [
+          "community-acquired pneumonia",
+          "first presentation of asthma",
+          "foreign body aspiration"
+        ],
+        "anchor_signal": {
+          "distinct_values": 0,
+          "fully_satisfied": 0,
+          "positive": 0,
+          "zero": 3
+        },
+        "excluded": [
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T01-ASTHMA"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T01-FOREIGN-BODY"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T01-PNEUMONIA"
+          }
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 3,
+        "query": {
+          "demanded_response_class": "ACUTE_RESPIRATORY_DISTRESS",
+          "discipline_profile_id": "PEDIATRICS",
+          "item_archetype": "AGE_BANDED_DIAGNOSIS",
+          "learner_decision_id": "LD-P147-01",
+          "option_set_archetype": "DIAGNOSIS_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-P147-AGE-UNDER-12M",
+            "SF-P147-FIRST-WHEEZE",
+            "SF-P147-VIRAL-PRODROME",
+            "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+            "SF-P147-ATOPY-OR-RECURRENCE",
+            "SF-P147-ABRUPT-ONSET-NO-PRODROME",
+            "SF-P147-FAILING-TO-IMPROVE",
+            "SF-P147-SEVERE-OR-BACTERIAL-CONCERN"
+          ]
+        },
+        "ranked_competitors": [],
+        "ranked_seed_ids": []
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-PED-01"
+    },
+    {
+      "discipline": "PED",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "INVESTIGATION_SELECTION",
+      "learner_decision_id": "LD-P147-02",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-846f7185201d4203ab1f30a9",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "priority_class": "CORE",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 0,
+        "anchor_floor_refusals": [
+          "SEED-PED-T02-CBC",
+          "SEED-PED-T02-CONTINUOUS",
+          "SEED-PED-T02-CXR",
+          "SEED-PED-T02-VIRAL"
+        ],
+        "anchor_floor_refused_texts": [
+          "chest radiograph",
+          "complete blood count and blood culture",
+          "continuous pulse oximetry and cardiorespiratory monitoring",
+          "nasopharyngeal swab for respiratory viruses"
+        ],
+        "anchor_signal": {
+          "distinct_values": 0,
+          "fully_satisfied": 0,
+          "positive": 0,
+          "zero": 4
+        },
+        "excluded": [
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T02-CBC"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T02-CONTINUOUS"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T02-CXR"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T02-VIRAL"
+          }
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "query": {
+          "demanded_response_class": "DIAGNOSTIC_ADVANCEMENT",
+          "discipline_profile_id": "PEDIATRICS",
+          "item_archetype": "INVESTIGATION_SELECTION",
+          "learner_decision_id": "LD-P147-02",
+          "option_set_archetype": "INVESTIGATION_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-P147-AGE-UNDER-12M",
+            "SF-P147-HIGH-RISK-EARLY-COURSE",
+            "SF-P147-FAILING-TO-IMPROVE",
+            "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+            "SF-P147-INFECTION-CONTROL-NEED",
+            "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+            "SF-P147-HYPOXEMIA"
+          ]
+        },
+        "ranked_competitors": [],
+        "ranked_seed_ids": []
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-PED-02"
+    },
+    {
+      "discipline": "PED",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "SUPPORTIVE_CARE_CEILING",
+      "learner_decision_id": "LD-P147-03",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-bd271fcf32333d4dd5756f52",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "priority_class": "CORE",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 1,
+        "anchor_floor_refusals": [
+          "SEED-PED-T03-EPINEPHRINE",
+          "SEED-PED-T03-FLUIDS",
+          "SEED-PED-T03-HYPERTONIC",
+          "SEED-PED-T03-SALBUTAMOL",
+          "SEED-PED-T03-SUCTION"
+        ],
+        "anchor_floor_refused_texts": [
+          "nasogastric maintenance fluids",
+          "nebulized 3 hypertonic saline",
+          "nebulized epinephrine",
+          "nebulized salbutamol",
+          "superficial nasal suctioning"
+        ],
+        "anchor_signal": {
+          "distinct_values": 1,
+          "fully_satisfied": 0,
+          "positive": 1,
+          "zero": 5
+        },
+        "excluded": [
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T03-EPINEPHRINE"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T03-FLUIDS"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T03-HYPERTONIC"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T03-SALBUTAMOL"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T03-SUCTION"
+          }
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "query": {
+          "demanded_response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+          "discipline_profile_id": "PEDIATRICS",
+          "item_archetype": "SUPPORTIVE_CARE_CEILING",
+          "learner_decision_id": "LD-P147-03",
+          "option_set_archetype": "NEXT_ACTION_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-P147-AGE-UNDER-12M",
+            "SF-P147-HYPOXEMIA",
+            "SF-P147-MODERATE-SEVERE-DISTRESS",
+            "SF-P147-NASAL-OBSTRUCTION-LIMITING-FEEDS",
+            "SF-P147-UNSAFE-ORAL-INTAKE",
+            "SF-P147-ED-SETTING"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 1,
+            "competitor_concept": "High-flow nasal cannula oxygen",
+            "competitor_concept_id": "CONCEPT-R4-SU-A-12-HFNC",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 1,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-PED-T03-HFNC",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 2,
+            "total_conditions": 1
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-PED-T03-HFNC"
+        ]
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-PED-03"
+    },
+    {
+      "discipline": "PED",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "RED_FLAG_RECOGNITION",
+      "learner_decision_id": "LD-P147-04",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-13ffc5a7bf3d219db5d37ea5",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "priority_class": "CORE",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 0,
+        "anchor_floor_refusals": [
+          "SEED-PED-T03-EPINEPHRINE",
+          "SEED-PED-T03-FLUIDS",
+          "SEED-PED-T03-HFNC",
+          "SEED-PED-T03-HYPERTONIC",
+          "SEED-PED-T03-SALBUTAMOL",
+          "SEED-PED-T03-SUCTION"
+        ],
+        "anchor_floor_refused_texts": [
+          "high-flow nasal cannula oxygen",
+          "nasogastric maintenance fluids",
+          "nebulized 3 hypertonic saline",
+          "nebulized epinephrine",
+          "nebulized salbutamol",
+          "superficial nasal suctioning"
+        ],
+        "anchor_signal": {
+          "distinct_values": 0,
+          "fully_satisfied": 0,
+          "positive": 0,
+          "zero": 6
+        },
+        "excluded": [
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T03-EPINEPHRINE"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T03-FLUIDS"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T03-HFNC"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T03-HYPERTONIC"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T03-SALBUTAMOL"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T03-SUCTION"
+          }
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "query": {
+          "demanded_response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+          "discipline_profile_id": "PEDIATRICS",
+          "item_archetype": "RED_FLAG_RECOGNITION",
+          "learner_decision_id": "LD-P147-04",
+          "option_set_archetype": "NEXT_ACTION_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-P147-AGE-UNDER-12M",
+            "SF-P147-DISCHARGE-CRITERIA-MET",
+            "SF-P147-HYPOXEMIA",
+            "SF-P147-MODERATE-SEVERE-DISTRESS",
+            "SF-P147-UNSAFE-ORAL-INTAKE",
+            "SF-P147-NASAL-OBSTRUCTION-LIMITING-FEEDS",
+            "SF-P147-HIGH-RISK-EARLY-COURSE",
+            "SF-P147-FAILING-TO-IMPROVE",
+            "SF-P147-ED-SETTING"
+          ]
+        },
+        "ranked_competitors": [],
+        "ranked_seed_ids": []
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-PED-04"
+    },
+    {
+      "discipline": "PED",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "SUPPORTIVE_CARE_CEILING",
+      "learner_decision_id": "LD-P147-05",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-dadfb2a96c81514c5c5d7095",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "priority_class": "CORE",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 1,
+        "anchor_floor_refusals": [
+          "SEED-PED-T03-EPINEPHRINE",
+          "SEED-PED-T03-HYPERTONIC",
+          "SEED-PED-T03-SALBUTAMOL",
+          "SEED-PED-T03-SUCTION"
+        ],
+        "anchor_floor_refused_texts": [
+          "nebulized 3 hypertonic saline",
+          "nebulized epinephrine",
+          "nebulized salbutamol",
+          "superficial nasal suctioning"
+        ],
+        "anchor_signal": {
+          "distinct_values": 1,
+          "fully_satisfied": 0,
+          "positive": 1,
+          "zero": 4
+        },
+        "excluded": [
+          {
+            "reason": "CORRECTNESS_CONDITION_FULLY_SATISFIED",
+            "rule": "ADM_3",
+            "seed_id": "SEED-PED-T03-FLUIDS"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T03-EPINEPHRINE"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T03-HYPERTONIC"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T03-SALBUTAMOL"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PED-T03-SUCTION"
+          }
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "query": {
+          "demanded_response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+          "discipline_profile_id": "PEDIATRICS",
+          "item_archetype": "SUPPORTIVE_CARE_CEILING",
+          "learner_decision_id": "LD-P147-05",
+          "option_set_archetype": "NEXT_ACTION_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-P147-AGE-UNDER-12M",
+            "SF-P147-UNSAFE-ORAL-INTAKE",
+            "SF-P147-HYPOXEMIA",
+            "SF-P147-MODERATE-SEVERE-DISTRESS",
+            "SF-P147-NASAL-OBSTRUCTION-LIMITING-FEEDS",
+            "SF-P147-ED-SETTING"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 1,
+            "competitor_concept": "High-flow nasal cannula oxygen",
+            "competitor_concept_id": "CONCEPT-R4-SU-A-12-HFNC",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 1,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-PED-T03-HFNC",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 2,
+            "total_conditions": 1
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-PED-T03-HFNC"
+        ]
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-PED-05"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "EXPLANATION_OF_OBSERVED_PHENOMENON",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "explained_phenomenon_class",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "awaiting": "FRESH_INDEPENDENT_VERIFICATION",
+      "discipline": "PHELO",
+      "item_archetype": "EPIDEMIOLOGY_INTERPRETATION",
+      "item_id": "G2-PHELO-01",
+      "learner_decision_id": "LD-PH07-01",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-a9e02807c858d26ac27d8d52",
+      "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+      "priority_class": "CORE",
+      "retrieval": {
+        "admissible_count": 3,
+        "anchor_floor_refusals": [],
+        "anchor_floor_refused_texts": [],
+        "anchor_signal": {
+          "distinct_values": 2,
+          "fully_satisfied": 0,
+          "positive": 3,
+          "zero": 0
+        },
+        "declared_selection_superseded_by_anchor_floor": false,
+        "excluded": [
+          {
+            "reason": "CORRECTNESS_CONDITION_FULLY_SATISFIED",
+            "rule": "ADM_3",
+            "seed_id": "SEED-G2-PHELO-T01-LEAD-TIME"
+          }
+        ],
+        "fail_closed_reason": null,
+        "indexed_count": 4,
+        "query": {
+          "demanded_response_class": "EXPLANATION_OF_OBSERVED_PHENOMENON",
+          "discipline_profile_id": "PHELO",
+          "item_archetype": "EPIDEMIOLOGY_INTERPRETATION",
+          "learner_decision_id": "LD-PH07-01",
+          "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-PH07-SURVIVAL-LONGER-IN-SCREENED",
+            "SF-PH07-MORTALITY-UNCHANGED",
+            "SF-PH07-RANDOMISED-EQUAL-GROUPS",
+            "SF-PH07-INCIDENCE-EQUAL-BETWEEN-GROUPS",
+            "SF-PH07-MORE-CASES-DIAGNOSED-IN-SCREENED",
+            "SF-PH07-SELF-SELECTED-GROUPS",
+            "SF-PH07-INDOLENT-VARIANT-OVERREPRESENTED"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Healthy screenee (selection) bias",
+            "competitor_concept_id": "CONCEPT-R4-SU-PH-12-HEALTHY-SCREENEE",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 1,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-PHELO-T01-HEALTHY-SCREENEE",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 2,
+            "total_conditions": 1
+          },
+          {
+            "anchors_present": 2,
+            "competitor_concept": "Length-time bias",
+            "competitor_concept_id": "CONCEPT-R4-SU-PH-07-LENGTH",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 2,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-PHELO-T01-LENGTH",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 3,
+            "total_conditions": 1
+          },
+          {
+            "anchors_present": 2,
+            "competitor_concept": "Overdiagnosis",
+            "competitor_concept_id": "CONCEPT-R4-SU-PH-07-OVERDIAGNOSIS",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 3,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-PHELO-T01-OVERDIAGNOSIS",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 3,
+            "total_conditions": 1
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-PHELO-T01-HEALTHY-SCREENEE",
+          "SEED-PHELO-T01-LENGTH",
+          "SEED-PHELO-T01-OVERDIAGNOSIS"
+        ],
+        "selected_competitor_seed_ids": [
+          "SEED-PHELO-T01-HEALTHY-SCREENEE",
+          "SEED-PHELO-T01-LENGTH",
+          "SEED-PHELO-T01-OVERDIAGNOSIS"
+        ],
+        "semantic_refusals": [],
+        "semantically_admissible_count": 3
+      },
+      "state": "GENERATABLE",
+      "wave_label": "G2-PHELO-01"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "AUTONOMY",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "ETHICAL_ACTION_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "value_served",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "awaiting": "FRESH_INDEPENDENT_VERIFICATION",
+      "discipline": "PHELO",
+      "item_archetype": "ETHICAL_ACTION",
+      "item_id": "G2-PHELO-02",
+      "learner_decision_id": "LD-PH07-02",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-658ba55682b1c0bd819fe324",
+      "option_set_archetype": "ETHICAL_ACTION_SET",
+      "priority_class": "CORE",
+      "retrieval": {
+        "admissible_count": 3,
+        "anchor_floor_refusals": [],
+        "anchor_floor_refused_texts": [],
+        "anchor_signal": {
+          "distinct_values": 1,
+          "fully_satisfied": 1,
+          "positive": 3,
+          "zero": 0
+        },
+        "declared_selection_superseded_by_anchor_floor": false,
+        "excluded": [
+          {
+            "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+            "rule": "ADM_1",
+            "seed_id": "SEED-PHELO-T02-AUTHORITY"
+          },
+          {
+            "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+            "rule": "ADM_1",
+            "seed_id": "SEED-PHELO-T02-REMINDER"
+          }
+        ],
+        "fail_closed_reason": null,
+        "indexed_count": 5,
+        "query": {
+          "demanded_response_class": "AUTONOMY",
+          "discipline_profile_id": "PHELO",
+          "item_archetype": "ETHICAL_ACTION",
+          "learner_decision_id": "LD-PH07-02",
+          "option_set_archetype": "ETHICAL_ACTION_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
+            "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
+            "SF-PH07-UPTAKE-IS-THE-STATED-OBJECTIVE",
+            "SF-PH07-DENOMINATOR-AND-HARMS-PRESENT",
+            "SF-PH07-AUDIENCE-CAN-INTERPRET-TEST-METRICS"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Add a statement that participation is voluntary and that declining will not affect any other care",
+            "competitor_concept_id": "CONCEPT-G2-VOLUNTARY-STATEMENT",
+            "provenance": "TARGETED_NEW",
+            "rank": 1,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-G2-PHELO-T02-VOLUNTARY",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_g2_extensions.json",
+            "total_anchors": 1,
+            "total_conditions": 1
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Add the number of cancers the programme detected last year",
+            "competitor_concept_id": "CONCEPT-R4-SU-PH-07-DETECTION-COUNT",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 2,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-PHELO-T02-DETECTION-COUNT",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 2,
+            "total_conditions": 1
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Add the sensitivity and specificity of the screening test",
+            "competitor_concept_id": "CONCEPT-R4-SU-PH-07-TEST-PERFORMANCE",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 3,
+            "reviewed_strength": "ACCEPTABLE",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-PHELO-T02-SENSITIVITY",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 2,
+            "total_conditions": 1
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-G2-PHELO-T02-VOLUNTARY",
+          "SEED-PHELO-T02-DETECTION-COUNT",
+          "SEED-PHELO-T02-SENSITIVITY"
+        ],
+        "selected_competitor_seed_ids": [
+          "SEED-G2-PHELO-T02-VOLUNTARY",
+          "SEED-PHELO-T02-DETECTION-COUNT",
+          "SEED-PHELO-T02-SENSITIVITY"
+        ],
+        "semantic_refusals": [],
+        "semantically_admissible_count": 3
+      },
+      "state": "GENERATABLE",
+      "wave_label": "G2-PHELO-02"
+    },
+    {
+      "discipline": "PHELO",
+      "fail_closed_reason": "FAIL_CLOSED_REALIZED_COMPETITOR_LACKS_STEM_ANCHOR",
+      "item_archetype": "SCREENING_DECISION",
+      "learner_decision_id": "LD-PH07-03",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-088bd5e66bf2a2b10fc8a6e3",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "priority_class": "CORE",
+      "reopens_on": "A_STEM_THAT_ANCHORS_THE_COMPETITOR_OR_A_DIFFERENT_COMPETITOR",
+      "retrieval": {
+        "admissible_count": 3,
+        "anchor_floor_refusals": [
+          "SEED-PHELO-T03-ECONOMIC"
+        ],
+        "anchor_floor_refused_texts": [
+          "commission an economic evaluation before deciding"
+        ],
+        "anchor_signal": {
+          "distinct_values": 1,
+          "fully_satisfied": 1,
+          "positive": 3,
+          "zero": 1
+        },
+        "anchorless_realized_distractors": [
+          "Commission an economic evaluation before deciding"
+        ],
+        "declared_selection_superseded_by_anchor_floor": true,
+        "excluded": [
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PHELO-T03-ECONOMIC"
+          }
+        ],
+        "fail_closed_reason": null,
+        "indexed_count": 4,
+        "query": {
+          "demanded_response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+          "discipline_profile_id": "PHELO",
+          "item_archetype": "SCREENING_DECISION",
+          "learner_decision_id": "LD-PH07-03",
+          "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+            "SF-PH07-GOALS-AND-EVALUATION-DEFINED",
+            "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS",
+            "SF-PH07-THRESHOLD-TOO-FAR-TOWARD-LOW-RISK",
+            "SF-PH07-VALUE-FOR-MONEY-IS-THE-OPEN-QUESTION"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Launch as planned with continuing evaluation against programme goals",
+            "competitor_concept_id": "CONCEPT-R4-SU-PH-07-EVALUATE",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 1,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 1,
+            "seed_id": "SEED-PHELO-T03-EVALUATE",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 1,
+            "total_conditions": 2
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Launch in a single district as a pilot and expand later",
+            "competitor_concept_id": "CONCEPT-R4-SU-PH-07-PILOT",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 2,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-PHELO-T03-PILOT",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 2,
+            "total_conditions": 1
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Raise the threshold so that fewer results are called positive",
+            "competitor_concept_id": "CONCEPT-R4-SU-PH-07-RAISE-CUTOFF",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 3,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-PHELO-T03-RAISE-CUTOFF",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 2,
+            "total_conditions": 1
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-PHELO-T03-EVALUATE",
+          "SEED-PHELO-T03-PILOT",
+          "SEED-PHELO-T03-RAISE-CUTOFF"
+        ],
+        "selected_competitor_seed_ids": [
+          "SEED-PHELO-T03-EVALUATE",
+          "SEED-PHELO-T03-PILOT",
+          "SEED-PHELO-T03-RAISE-CUTOFF"
+        ],
+        "semantic_refusals": [],
+        "semantically_admissible_count": 3
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-PHELO-03"
+    },
+    {
+      "discipline": "PHELO",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "SCREENING_DECISION",
+      "learner_decision_id": "LD-PH07-04",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-56668330ef3b338939c22250",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "priority_class": "CORE",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 0,
+        "anchor_floor_refusals": [
+          "SEED-PHELO-T03-ECONOMIC",
+          "SEED-PHELO-T03-PILOT",
+          "SEED-PHELO-T03-RAISE-CUTOFF"
+        ],
+        "anchor_floor_refused_texts": [
+          "commission an economic evaluation before deciding",
+          "launch in a single district as a pilot and expand later",
+          "raise the threshold so that fewer results are called positive"
+        ],
+        "anchor_signal": {
+          "distinct_values": 0,
+          "fully_satisfied": 0,
+          "positive": 0,
+          "zero": 3
+        },
+        "excluded": [
+          {
+            "reason": "CORRECTNESS_CONDITION_FULLY_SATISFIED",
+            "rule": "ADM_3",
+            "seed_id": "SEED-PHELO-T03-EVALUATE"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PHELO-T03-ECONOMIC"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PHELO-T03-PILOT"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PHELO-T03-RAISE-CUTOFF"
+          }
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "query": {
+          "demanded_response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+          "discipline_profile_id": "PHELO",
+          "item_archetype": "SCREENING_DECISION",
+          "learner_decision_id": "LD-PH07-04",
+          "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-PH07-GOALS-AND-EVALUATION-DEFINED",
+            "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS",
+            "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+            "SF-PH07-THRESHOLD-TOO-FAR-TOWARD-LOW-RISK",
+            "SF-PH07-VALUE-FOR-MONEY-IS-THE-OPEN-QUESTION"
+          ]
+        },
+        "ranked_competitors": [],
+        "ranked_seed_ids": []
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-PHELO-04"
+    },
+    {
+      "discipline": "PHELO",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "EPIDEMIOLOGY_INTERPRETATION",
+      "learner_decision_id": "LD-PH07-05",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-1b6ff631e1eef8517e9aa959",
+      "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+      "priority_class": "CORE",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 0,
+        "anchor_floor_refusals": [
+          "SEED-G2-PHELO-T01-LEAD-TIME",
+          "SEED-PHELO-T01-LENGTH",
+          "SEED-PHELO-T01-OVERDIAGNOSIS"
+        ],
+        "anchor_floor_refused_texts": [
+          "lead-time bias",
+          "length-time bias",
+          "overdiagnosis"
+        ],
+        "anchor_signal": {
+          "distinct_values": 0,
+          "fully_satisfied": 0,
+          "positive": 0,
+          "zero": 3
+        },
+        "excluded": [
+          {
+            "reason": "CORRECTNESS_CONDITION_FULLY_SATISFIED",
+            "rule": "ADM_3",
+            "seed_id": "SEED-PHELO-T01-HEALTHY-SCREENEE"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-G2-PHELO-T01-LEAD-TIME"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PHELO-T01-LENGTH"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PHELO-T01-OVERDIAGNOSIS"
+          }
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "query": {
+          "demanded_response_class": "EXPLANATION_OF_OBSERVED_PHENOMENON",
+          "discipline_profile_id": "PHELO",
+          "item_archetype": "EPIDEMIOLOGY_INTERPRETATION",
+          "learner_decision_id": "LD-PH07-05",
+          "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-PH07-SELF-SELECTED-GROUPS",
+            "SF-PH07-INCIDENCE-EQUAL-BETWEEN-GROUPS",
+            "SF-PH07-RANDOMISED-EQUAL-GROUPS",
+            "SF-PH07-SURVIVAL-LONGER-IN-SCREENED",
+            "SF-PH07-MORE-CASES-DIAGNOSED-IN-SCREENED",
+            "SF-PH07-INDOLENT-VARIANT-OVERREPRESENTED",
+            "SF-PH07-MORTALITY-UNCHANGED"
+          ]
+        },
+        "ranked_competitors": [],
+        "ranked_seed_ids": []
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-PHELO-05"
+    },
+    {
+      "discipline": "PSY",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "LONGITUDINAL_DIFFERENTIAL",
+      "learner_decision_id": "LD-PS12-01",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-9aba75caf03d3e2acd64e57b",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "priority_class": "CORE",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 1,
+        "anchor_floor_refusals": [
+          "SEED-PSY-T01-ANEMIA",
+          "SEED-PSY-T01-MEDICAL",
+          "SEED-PSY-T01-PDD"
+        ],
+        "anchor_floor_refused_texts": [
+          "depressive syndrome due to anaemia",
+          "depressive syndrome due to hypothyroidism",
+          "persistent depressive disorder"
+        ],
+        "anchor_signal": {
+          "distinct_values": 1,
+          "fully_satisfied": 0,
+          "positive": 1,
+          "zero": 3
+        },
+        "excluded": [
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PSY-T01-ANEMIA"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PSY-T01-MEDICAL"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PSY-T01-PDD"
+          }
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "query": {
+          "demanded_response_class": "PERSISTENT_MOOD_DISTURBANCE",
+          "discipline_profile_id": "PSYCHIATRY",
+          "item_archetype": "LONGITUDINAL_DIFFERENTIAL",
+          "learner_decision_id": "LD-PS12-01",
+          "option_set_archetype": "DIAGNOSIS_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+            "SF-PS12-INTEREPISODE-RECOVERY",
+            "SF-PS12-COLLATERAL-AVAILABLE",
+            "SF-PS12-CHRONIC-2YR-COURSE",
+            "SF-PS12-PAST-HYPOMANIC-PERIOD",
+            "SF-PS12-ABNORMAL-TSH",
+            "SF-PS12-ABNORMAL-CBC"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Bipolar II disorder",
+            "competitor_concept_id": "CONCEPT-R4-SU-PS-14-BD2",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 1,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-PSY-T01-BD2",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 2,
+            "total_conditions": 1
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-PSY-T01-BD2"
+        ]
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-PSY-01"
+    },
+    {
+      "discipline": "PSY",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "SAFETY_ASSESSMENT",
+      "learner_decision_id": "LD-PS12-02",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-f475191976ced2f3a0e912d5",
+      "option_set_archetype": "DISPOSITION_SET",
+      "priority_class": "CORE",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 2,
+        "anchor_floor_refusals": [],
+        "anchor_floor_refused_texts": [],
+        "anchor_signal": {
+          "distinct_values": 1,
+          "fully_satisfied": 2,
+          "positive": 2,
+          "zero": 0
+        },
+        "excluded": [
+          {
+            "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+            "rule": "ADM_1",
+            "seed_id": "SEED-PSY-T02-RISK-SCALE"
+          },
+          {
+            "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+            "rule": "ADM_1",
+            "seed_id": "SEED-PSY-T02-START-MED"
+          }
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "query": {
+          "demanded_response_class": "SECURES_IMMEDIATE_SAFETY",
+          "discipline_profile_id": "PSYCHIATRY",
+          "item_archetype": "SAFETY_ASSESSMENT",
+          "learner_decision_id": "LD-PS12-02",
+          "option_set_archetype": "DISPOSITION_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-PS12-HIGH-IMMINENT-SUICIDE-RISK",
+            "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+            "SF-PS12-COLLATERAL-AVAILABLE",
+            "SF-PS12-SAFETY-SECURED",
+            "SF-PS12-PSYCHOTIC-FEATURES"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Arrange daily home visits by the crisis team with removal of the stockpiled medication",
+            "competitor_concept_id": "CONCEPT-G2-CRISIS-TEAM",
+            "provenance": "TARGETED_NEW",
+            "rank": 1,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-G2-PSY-T02-CRISIS-TEAM",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_g2_extensions.json",
+            "total_anchors": 1,
+            "total_conditions": 1
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Complete a collaborative safety plan and discharge with same-day follow-up",
+            "competitor_concept_id": "CONCEPT-R4-SU-PS-03-SAFETY-PLAN",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 2,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-PSY-T02-SAFETY-PLAN",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 1,
+            "total_conditions": 1
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-G2-PSY-T02-CRISIS-TEAM",
+          "SEED-PSY-T02-SAFETY-PLAN"
+        ]
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-PSY-02"
+    },
+    {
+      "discipline": "PSY",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "PHARMACOTHERAPY",
+      "learner_decision_id": "LD-PS12-03",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-7d879c81066b549b00107721",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "priority_class": "CORE",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 2,
+        "anchor_floor_refusals": [
+          "SEED-G2-PSY-T03-ECT",
+          "SEED-PSY-T03-COMBINED",
+          "SEED-PSY-T03-DIGITAL"
+        ],
+        "anchor_floor_refused_texts": [
+          "combined antidepressant and psychotherapy from the outset",
+          "digitally delivered cognitive behavioural therapy",
+          "electroconvulsive therapy as the first-choice treatment"
+        ],
+        "anchor_signal": {
+          "distinct_values": 1,
+          "fully_satisfied": 0,
+          "positive": 2,
+          "zero": 3
+        },
+        "excluded": [
+          {
+            "reason": "CORRECTNESS_CONDITION_FULLY_SATISFIED",
+            "rule": "ADM_3",
+            "seed_id": "SEED-G2-PSY-T03-AD-ALONE"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-G2-PSY-T03-ECT"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PSY-T03-COMBINED"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PSY-T03-DIGITAL"
+          }
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "query": {
+          "demanded_response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+          "discipline_profile_id": "PSYCHIATRY",
+          "item_archetype": "PHARMACOTHERAPY",
+          "learner_decision_id": "LD-PS12-03",
+          "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+            "SF-PS12-MODERATE-SEVERITY",
+            "SF-PS12-MILD-SEVERITY",
+            "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+            "SF-PS12-PSYCHOTIC-FEATURES",
+            "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY",
+            "SF-PS12-PSYCHOTHERAPY-INACCESSIBLE-IN-PERSON",
+            "SF-PS12-HIGH-IMMINENT-SUICIDE-RISK"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 1,
+            "competitor_concept": "A supervised exercise programme as sole initial treatment",
+            "competitor_concept_id": "CONCEPT-R4-SU-PS-67-EXERCISE",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 1,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-PSY-T03-EXERCISE",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 2,
+            "total_conditions": 1
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Structured psychotherapy such as cognitive behavioural therapy",
+            "competitor_concept_id": "CONCEPT-R4-SU-PS-03-CBT",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 2,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-PSY-T03-PSYCHOTHERAPY",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 3,
+            "total_conditions": 2
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-PSY-T03-EXERCISE",
+          "SEED-PSY-T03-PSYCHOTHERAPY"
+        ]
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-PSY-03"
+    },
+    {
+      "discipline": "PSY",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "PHARMACOTHERAPY",
+      "learner_decision_id": "LD-PS12-05",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-a2f37c1b51d729f6a888d95b",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "priority_class": "CORE",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 2,
+        "anchor_floor_refusals": [
+          "SEED-G2-PSY-T03-ECT",
+          "SEED-PSY-T03-COMBINED"
+        ],
+        "anchor_floor_refused_texts": [
+          "combined antidepressant and psychotherapy from the outset",
+          "electroconvulsive therapy as the first-choice treatment"
+        ],
+        "anchor_signal": {
+          "distinct_values": 2,
+          "fully_satisfied": 0,
+          "positive": 2,
+          "zero": 2
+        },
+        "excluded": [
+          {
+            "reason": "CORRECTNESS_CONDITION_FULLY_SATISFIED",
+            "rule": "ADM_3",
+            "seed_id": "SEED-G2-PSY-T03-AD-ALONE"
+          },
+          {
+            "reason": "CORRECTNESS_CONDITION_FULLY_SATISFIED",
+            "rule": "ADM_3",
+            "seed_id": "SEED-PSY-T03-DIGITAL"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-G2-PSY-T03-ECT"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PSY-T03-COMBINED"
+          }
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "query": {
+          "demanded_response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+          "discipline_profile_id": "PSYCHIATRY",
+          "item_archetype": "PHARMACOTHERAPY",
+          "learner_decision_id": "LD-PS12-05",
+          "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+            "SF-PS12-MODERATE-SEVERITY",
+            "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY",
+            "SF-PS12-PSYCHOTHERAPY-INACCESSIBLE-IN-PERSON",
+            "SF-PS12-MILD-SEVERITY",
+            "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+            "SF-PS12-PSYCHOTIC-FEATURES"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 2,
+            "competitor_concept": "Structured psychotherapy such as cognitive behavioural therapy",
+            "competitor_concept_id": "CONCEPT-R4-SU-PS-03-CBT",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 1,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 1,
+            "seed_id": "SEED-PSY-T03-PSYCHOTHERAPY",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 3,
+            "total_conditions": 2
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "A supervised exercise programme as sole initial treatment",
+            "competitor_concept_id": "CONCEPT-R4-SU-PS-67-EXERCISE",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 2,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-PSY-T03-EXERCISE",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 2,
+            "total_conditions": 1
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-PSY-T03-PSYCHOTHERAPY",
+          "SEED-PSY-T03-EXERCISE"
+        ]
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-PSY-04"
+    },
+    {
+      "discipline": "PSY",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "PHARMACOTHERAPY",
+      "learner_decision_id": "LD-PS12-06",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-aceb7ffc515b990f436d375b",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "priority_class": "CORE",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 1,
+        "anchor_floor_refusals": [
+          "SEED-G2-PSY-T03-AD-ALONE",
+          "SEED-PSY-T03-COMBINED",
+          "SEED-PSY-T03-DIGITAL",
+          "SEED-PSY-T03-EXERCISE",
+          "SEED-PSY-T03-PSYCHOTHERAPY"
+        ],
+        "anchor_floor_refused_texts": [
+          "a first-line antidepressant alone",
+          "a supervised exercise programme as sole initial treatment",
+          "combined antidepressant and psychotherapy from the outset",
+          "digitally delivered cognitive behavioural therapy",
+          "structured psychotherapy such as cognitive behavioural therapy"
+        ],
+        "anchor_signal": {
+          "distinct_values": 1,
+          "fully_satisfied": 0,
+          "positive": 1,
+          "zero": 5
+        },
+        "excluded": [
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-G2-PSY-T03-AD-ALONE"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PSY-T03-COMBINED"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PSY-T03-DIGITAL"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PSY-T03-EXERCISE"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PSY-T03-PSYCHOTHERAPY"
+          }
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "query": {
+          "demanded_response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+          "discipline_profile_id": "PSYCHIATRY",
+          "item_archetype": "PHARMACOTHERAPY",
+          "learner_decision_id": "LD-PS12-06",
+          "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+            "SF-PS12-PSYCHOTIC-FEATURES",
+            "SF-PS12-SAFETY-SECURED",
+            "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+            "SF-PS12-MILD-SEVERITY",
+            "SF-PS12-MODERATE-SEVERITY",
+            "SF-PS12-HIGH-IMMINENT-SUICIDE-RISK",
+            "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Electroconvulsive therapy as the first-choice treatment",
+            "competitor_concept_id": "CONCEPT-G2-ECT",
+            "provenance": "TARGETED_NEW",
+            "rank": 1,
+            "reviewed_strength": "ACCEPTABLE",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-G2-PSY-T03-ECT",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_g2_extensions.json",
+            "total_anchors": 3,
+            "total_conditions": 1
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-G2-PSY-T03-ECT"
+        ]
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-PSY-05"
+    },
+    {
+      "discipline": "PSY",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "DIAGNOSIS",
+      "learner_decision_id": "LD-PS12-01",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-6cd6b909f5f07d36d6063329",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "priority_class": "CORE",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 1,
+        "anchor_floor_refusals": [
+          "SEED-PSY-T01-ANEMIA",
+          "SEED-PSY-T01-MEDICAL",
+          "SEED-PSY-T01-PDD"
+        ],
+        "anchor_floor_refused_texts": [
+          "depressive syndrome due to anaemia",
+          "depressive syndrome due to hypothyroidism",
+          "persistent depressive disorder"
+        ],
+        "anchor_signal": {
+          "distinct_values": 1,
+          "fully_satisfied": 0,
+          "positive": 1,
+          "zero": 3
+        },
+        "excluded": [
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PSY-T01-ANEMIA"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PSY-T01-MEDICAL"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-PSY-T01-PDD"
+          }
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "query": {
+          "demanded_response_class": "PERSISTENT_MOOD_DISTURBANCE",
+          "discipline_profile_id": "PSYCHIATRY",
+          "item_archetype": "DIAGNOSIS",
+          "learner_decision_id": "LD-PS12-01",
+          "option_set_archetype": "DIAGNOSIS_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+            "SF-PS12-INTEREPISODE-RECOVERY",
+            "SF-PS12-COLLATERAL-AVAILABLE",
+            "SF-PS12-CHRONIC-2YR-COURSE",
+            "SF-PS12-PAST-HYPOMANIC-PERIOD",
+            "SF-PS12-ABNORMAL-TSH",
+            "SF-PS12-ABNORMAL-CBC"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Bipolar II disorder",
+            "competitor_concept_id": "CONCEPT-R4-SU-PS-14-BD2",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 1,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-PSY-T01-BD2",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 2,
+            "total_conditions": 1
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-PSY-T01-BD2"
+        ]
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-PSY-06"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "ACUTE_ABDOMINAL_OR_PELVIC_PAIN",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [
+          "organ_system"
+        ],
+        "nominal_parity_defects": [
+          "KEY_ONLY_ORGAN_SYSTEM"
+        ],
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "cardinal_syndrome_capability",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "FAIL",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "INADMISSIBLE"
+      },
+      "discipline": "SURG",
+      "fail_closed_reason": "FAIL_CLOSED_INCOHERENT_OPTION_SET_ARCHETYPE",
+      "item_archetype": "RECOGNITION",
+      "learner_decision_id": "LD-GS76-01",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-0de5f917778b8e286e41542b",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "priority_class": "CORE",
+      "reopens_on": "AN_AUTHORISED_PROFILE_EXTENSION",
+      "retrieval": {
+        "admissible_count": 3,
+        "anchor_floor_refusals": [],
+        "anchor_floor_refused_texts": [],
+        "anchor_signal": {
+          "distinct_values": 1,
+          "fully_satisfied": 0,
+          "positive": 3,
+          "zero": 0
+        },
+        "declared_selection_superseded_by_anchor_floor": false,
+        "excluded": [],
+        "fail_closed_reason": null,
+        "indexed_count": 3,
+        "query": {
+          "demanded_response_class": "ACUTE_ABDOMINAL_OR_PELVIC_PAIN",
+          "discipline_profile_id": "SURGERY",
+          "item_archetype": "RECOGNITION",
+          "learner_decision_id": "LD-GS76-01",
+          "option_set_archetype": "DIAGNOSIS_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-GS76-MIGRATORY-RLQ-PAIN",
+            "SF-GS76-FEMALE-REPRODUCTIVE-AGE",
+            "SF-GS76-CERVICAL-MOTION-OR-ADNEXAL-TENDERNESS",
+            "SF-GS76-ADNEXAL-MASS-5CM-OR-MORE",
+            "SF-GS76-GRADUAL-ONSET-PELVIC-INFECTION",
+            "SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS",
+            "SF-GS76-PREGNANT"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Pelvic inflammatory disease",
+            "competitor_concept_id": "CONCEPT-R4-SU-GY-19-PID",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 1,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 1,
+            "seed_id": "SEED-SURG-T01-PID",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 2,
+            "total_conditions": 2
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Ovarian torsion",
+            "competitor_concept_id": "CONCEPT-R4-SU-ER-09-TORSION",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 2,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 1,
+            "seed_id": "SEED-SURG-T01-TORSION",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 2,
+            "total_conditions": 2
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Tubo-ovarian abscess",
+            "competitor_concept_id": "CONCEPT-R4-SU-GY-19-TOA",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 3,
+            "reviewed_strength": "ACCEPTABLE",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-SURG-T01-TOA",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 3,
+            "total_conditions": 2
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-SURG-T01-PID",
+          "SEED-SURG-T01-TORSION",
+          "SEED-SURG-T01-TOA"
+        ],
+        "selected_competitor_seed_ids": [
+          "SEED-SURG-T01-PID",
+          "SEED-SURG-T01-TORSION",
+          "SEED-SURG-T01-TOA"
+        ],
+        "semantic_refusals": [],
+        "semantically_admissible_count": 3
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-SURG-01"
+    },
+    {
+      "discipline": "SURG",
+      "fail_closed_reason": "FAIL_CLOSED_REALIZED_COMPETITOR_LACKS_STEM_ANCHOR",
+      "item_archetype": "IMAGING_SELECTION",
+      "learner_decision_id": "LD-GS76-02",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-714fa249ef13476662a9c146",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "priority_class": "CORE",
+      "reopens_on": "A_STEM_THAT_ANCHORS_THE_COMPETITOR_OR_A_DIFFERENT_COMPETITOR",
+      "retrieval": {
+        "admissible_count": 4,
+        "anchor_floor_refusals": [
+          "SEED-SURG-T02-LAPAROSCOPY"
+        ],
+        "anchor_floor_refused_texts": [
+          "proceed directly to diagnostic laparoscopy"
+        ],
+        "anchor_signal": {
+          "distinct_values": 2,
+          "fully_satisfied": 0,
+          "positive": 4,
+          "zero": 1
+        },
+        "anchorless_realized_distractors": [
+          "Proceed directly to diagnostic laparoscopy"
+        ],
+        "declared_selection_superseded_by_anchor_floor": true,
+        "excluded": [
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-SURG-T02-LAPAROSCOPY"
+          }
+        ],
+        "fail_closed_reason": null,
+        "indexed_count": 5,
+        "query": {
+          "demanded_response_class": "DIAGNOSTIC_ADVANCEMENT",
+          "discipline_profile_id": "SURGERY",
+          "item_archetype": "IMAGING_SELECTION",
+          "learner_decision_id": "LD-GS76-02",
+          "option_set_archetype": "INVESTIGATION_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION",
+            "SF-GS76-IMAGING-AVAILABLE-NOW",
+            "SF-GS76-LOW-BMI",
+            "SF-GS76-PREGNANT",
+            "SF-GS76-HIGH-CLINICAL-SUSPICION-YOUNG-MALE",
+            "SF-GS76-NONDIAGNOSTIC-IMAGING-ALREADY",
+            "SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 2,
+            "competitor_concept": "Magnetic resonance imaging of the abdomen",
+            "competitor_concept_id": "CONCEPT-R4-SU-MI-13-MRI",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 1,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-SURG-T02-MRI",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 4,
+            "total_conditions": 2
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Admit for serial abdominal examination without imaging",
+            "competitor_concept_id": "CONCEPT-R4-SU-GS-02-OBSERVE",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 2,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-SURG-T02-OBSERVE",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 2,
+            "total_conditions": 1
+          },
+          {
+            "anchors_present": 2,
+            "competitor_concept": "Abdominal ultrasonography",
+            "competitor_concept_id": "CONCEPT-R4-SU-MI-13-US",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 3,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-SURG-T02-US",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 4,
+            "total_conditions": 2
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Ultrasonography with a plain kidney-ureter-bladder film",
+            "competitor_concept_id": "CONCEPT-R4-SU-MI-15-KUB",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 4,
+            "reviewed_strength": "ACCEPTABLE",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-SURG-T02-KUB",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 2,
+            "total_conditions": 1
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-SURG-T02-MRI",
+          "SEED-SURG-T02-OBSERVE",
+          "SEED-SURG-T02-US",
+          "SEED-SURG-T02-KUB"
+        ],
+        "selected_competitor_seed_ids": [
+          "SEED-SURG-T02-MRI",
+          "SEED-SURG-T02-OBSERVE",
+          "SEED-SURG-T02-US"
+        ],
+        "semantic_refusals": [],
+        "semantically_admissible_count": 4
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-SURG-02"
+    },
+    {
+      "discipline": "SURG",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "OPERATIVE_VS_NONOPERATIVE",
+      "learner_decision_id": "LD-GS76-03",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-262f8cee3718abf497781132",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "priority_class": "CORE",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 0,
+        "anchor_floor_refusals": [
+          "SEED-SURG-T03-DRAINAGE",
+          "SEED-SURG-T03-INTERVAL",
+          "SEED-SURG-T03-NONOP"
+        ],
+        "anchor_floor_refused_texts": [
+          "antibiotics now with interval appendectomy in six to eight weeks",
+          "image-guided percutaneous drainage with antibiotics",
+          "intravenous antibiotics alone with planned reassessment"
+        ],
+        "anchor_signal": {
+          "distinct_values": 0,
+          "fully_satisfied": 0,
+          "positive": 0,
+          "zero": 3
+        },
+        "excluded": [
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-SURG-T03-DRAINAGE"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-SURG-T03-INTERVAL"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-SURG-T03-NONOP"
+          }
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 3,
+        "query": {
+          "demanded_response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+          "discipline_profile_id": "SURGERY",
+          "item_archetype": "OPERATIVE_VS_NONOPERATIVE",
+          "learner_decision_id": "LD-GS76-03",
+          "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-GS76-MIGRATORY-RLQ-PAIN",
+            "SF-GS76-PERFORATION-WITH-PERITONITIS",
+            "SF-GS76-WALLED-OFF-PHLEGMON-OR-ABSCESS",
+            "SF-GS76-UNCOMPLICATED-AND-ACCEPTS-RECURRENCE-RISK",
+            "SF-GS76-OPERATIVE-CONTRAINDICATION",
+            "SF-GS76-PHYSIOLOGIC-INSTABILITY"
+          ]
+        },
+        "ranked_competitors": [],
+        "ranked_seed_ids": []
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-SURG-03"
+    },
+    {
+      "discipline": "SURG",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "DISPOSITION",
+      "learner_decision_id": "LD-GS76-04",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-c71d90d64e2dba78f5d645dd",
+      "option_set_archetype": "DISPOSITION_SET",
+      "priority_class": "CORE",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 0,
+        "anchor_floor_refusals": [],
+        "anchor_floor_refused_texts": [],
+        "anchor_signal": {
+          "distinct_values": 0,
+          "fully_satisfied": 0,
+          "positive": 0,
+          "zero": 0
+        },
+        "excluded": [],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "query": {
+          "demanded_response_class": "DISPOSITION_DECISION",
+          "discipline_profile_id": "SURGERY",
+          "item_archetype": "DISPOSITION",
+          "learner_decision_id": "LD-GS76-04",
+          "option_set_archetype": "DISPOSITION_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-GS76-NONDIAGNOSTIC-IMAGING-ALREADY",
+            "SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION",
+            "SF-GS76-HIGH-CLINICAL-SUSPICION-YOUNG-MALE",
+            "SF-GS76-PHYSIOLOGIC-INSTABILITY",
+            "SF-GS76-PERFORATION-WITH-PERITONITIS"
+          ]
+        },
+        "ranked_competitors": [],
+        "ranked_seed_ids": []
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-SURG-04"
+    },
+    {
+      "discipline": "OBGYN",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "PREGNANCY_DATED_DIAGNOSIS",
+      "learner_decision_id": "LD-OB54-01",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-72e99b169b7a7ca42a6faff6",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "priority_class": "IMPORTANT",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 2,
+        "anchor_floor_refusals": [
+          "SEED-OB-T01-GALACTOCELE"
+        ],
+        "anchor_floor_refused_texts": [
+          "galactocele"
+        ],
+        "anchor_signal": {
+          "distinct_values": 1,
+          "fully_satisfied": 0,
+          "positive": 2,
+          "zero": 1
+        },
+        "excluded": [
+          {
+            "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+            "rule": "ADM_1",
+            "seed_id": "SEED-OB-T01-DUCTAL"
+          },
+          {
+            "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+            "rule": "ADM_1",
+            "seed_id": "SEED-OB-T01-ENGORGEMENT"
+          },
+          {
+            "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+            "rule": "ADM_1",
+            "seed_id": "SEED-OB-T01-SUBACUTE"
+          },
+          {
+            "reason": "CORRECTNESS_CONDITION_FULLY_SATISFIED",
+            "rule": "ADM_3",
+            "seed_id": "SEED-OB-T01-ABSCESS"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-OB-T01-GALACTOCELE"
+          }
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 7,
+        "query": {
+          "demanded_response_class": "PALPABLE_MASS_OR_FLUID_COLLECTION",
+          "discipline_profile_id": "OBGYN",
+          "item_archetype": "PREGNANCY_DATED_DIAGNOSIS",
+          "learner_decision_id": "LD-OB54-01",
+          "option_set_archetype": "DIAGNOSIS_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-OB54-FLUCTUANT-COLLECTION",
+            "SF-OB54-SYSTEMIC-ILLNESS",
+            "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+            "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
+            "SF-OB54-MASS-DECREASES-AFTER-FEED",
+            "SF-OB54-SKIN-THICKENING-PEAU-DORANGE",
+            "SF-OB54-NEEDLE-LIKE-BURNING-PAIN-BLEBS",
+            "SF-OB54-BILATERAL-DAY-3-TO-5",
+            "SF-OB54-MILD-FOCAL-INDURATION-NO-SYSTEMIC",
+            "SF-OB54-RECURRENCE-SAME-LOCATION"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Lactational phlegmon",
+            "competitor_concept_id": "CONCEPT-R4-SU-OB-54-PHLEGMON",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 1,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-OB-T01-PHLEGMON",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 2,
+            "total_conditions": 2
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Inflammatory breast cancer",
+            "competitor_concept_id": "CONCEPT-R4-SU-MI-31-IBC",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 2,
+            "reviewed_strength": "ACCEPTABLE",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-OB-T01-IBC",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 3,
+            "total_conditions": 2
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-OB-T01-PHLEGMON",
+          "SEED-OB-T01-IBC"
+        ]
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-OBGYN-01"
+    },
+    {
+      "discipline": "OBGYN",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "INVESTIGATION_SELECTION",
+      "learner_decision_id": "LD-OB54-02",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-0f1e932afe903ea7a5c53f1b",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "priority_class": "IMPORTANT",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 2,
+        "anchor_floor_refusals": [
+          "SEED-OB-T02-CRP",
+          "SEED-OB-T02-MILK-CULTURE"
+        ],
+        "anchor_floor_refused_texts": [
+          "serum c-reactive protein and white blood cell count",
+          "sterile milk culture and sensitivities"
+        ],
+        "anchor_signal": {
+          "distinct_values": 1,
+          "fully_satisfied": 0,
+          "positive": 2,
+          "zero": 2
+        },
+        "excluded": [
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-OB-T02-CRP"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-OB-T02-MILK-CULTURE"
+          }
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "query": {
+          "demanded_response_class": "DIAGNOSTIC_ADVANCEMENT",
+          "discipline_profile_id": "OBGYN",
+          "item_archetype": "INVESTIGATION_SELECTION",
+          "learner_decision_id": "LD-OB54-02",
+          "option_set_archetype": "INVESTIGATION_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
+            "SF-OB54-SYSTEMIC-ILLNESS",
+            "SF-OB54-NO-IMPROVEMENT-AFTER-48H",
+            "SF-OB54-PERSISTENT-MASS-AFTER-INFLAMMATION-RESOLVED",
+            "SF-OB54-SKIN-THICKENING-PEAU-DORANGE",
+            "SF-OB54-FLUID-COLLECTION-ESTABLISHED"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Diagnostic mammography",
+            "competitor_concept_id": "CONCEPT-R4-SU-MI-31-MAMMOGRAPHY",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 1,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-OB-T02-MAMMOGRAPHY",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 3,
+            "total_conditions": 2
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Needle aspiration of the mass without imaging",
+            "competitor_concept_id": "CONCEPT-R4-SU-MI-32-ASPIRATION",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 2,
+            "reviewed_strength": "ACCEPTABLE",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-OB-T02-ASPIRATION",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 3,
+            "total_conditions": 1
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-OB-T02-MAMMOGRAPHY",
+          "SEED-OB-T02-ASPIRATION"
+        ]
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-OBGYN-02"
+    },
+    {
+      "discipline": "OBGYN",
+      "fail_closed_reason": "FAIL_CLOSED_REALIZED_COMPETITOR_LACKS_STEM_ANCHOR",
+      "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+      "learner_decision_id": "LD-OB54-03",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-3e5c530d7801407e1ad19347",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "priority_class": "IMPORTANT",
+      "reopens_on": "A_STEM_THAT_ANCHORS_THE_COMPETITOR_OR_A_DIFFERENT_COMPETITOR",
+      "retrieval": {
+        "admissible_count": 3,
+        "anchor_floor_refusals": [
+          "SEED-OB-T03-DISCARD",
+          "SEED-OB-T03-SHIELD"
+        ],
+        "anchor_floor_refused_texts": [
+          "express milk from the affected breast and feed the infant formula",
+          "use a nipple shield for feeds from the affected breast"
+        ],
+        "anchor_signal": {
+          "distinct_values": 1,
+          "fully_satisfied": 2,
+          "positive": 3,
+          "zero": 2
+        },
+        "anchorless_realized_distractors": [
+          "Express milk from the affected breast and feed the infant formula"
+        ],
+        "declared_selection_superseded_by_anchor_floor": true,
+        "excluded": [
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-OB-T03-DISCARD"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-OB-T03-SHIELD"
+          }
+        ],
+        "fail_closed_reason": null,
+        "indexed_count": 5,
+        "query": {
+          "demanded_response_class": "PATIENT_INSTRUCTION",
+          "discipline_profile_id": "OBGYN",
+          "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+          "learner_decision_id": "LD-OB54-03",
+          "option_set_archetype": "NEXT_ACTION_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-OB54-SYSTEMIC-ILLNESS",
+            "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+            "SF-OB54-INFANT-FEEDING-CONTRAINDICATION",
+            "SF-OB54-HYPERLACTATION",
+            "SF-OB54-FLUCTUANT-COLLECTION"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Feed in a dangle position over the infant",
+            "competitor_concept_id": "CONCEPT-R4-SU-P-005-DANGLE",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 1,
+            "reviewed_strength": "ACCEPTABLE",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-OB-T03-DANGLE",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 1,
+            "total_conditions": 0
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Pump to empty the affected breast after every feed",
+            "competitor_concept_id": "CONCEPT-R4-SU-OB-54-EMPTY",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 2,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-OB-T03-EMPTY",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 2,
+            "total_conditions": 0
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Apply firm deep massage over the tender area",
+            "competitor_concept_id": "CONCEPT-R4-SU-OB-54-MASSAGE",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 3,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-OB-T03-MASSAGE",
+            "semantic_failed_criterion": null,
+            "semantic_verdict": "ADMITTED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 1,
+            "total_conditions": 0
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-OB-T03-DANGLE",
+          "SEED-OB-T03-EMPTY",
+          "SEED-OB-T03-MASSAGE"
+        ],
+        "selected_competitor_seed_ids": [
+          "SEED-OB-T03-DANGLE",
+          "SEED-OB-T03-EMPTY",
+          "SEED-OB-T03-MASSAGE"
+        ],
+        "semantic_refusals": [],
+        "semantically_admissible_count": 3
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-OBGYN-03"
+    },
+    {
+      "discipline": "OBGYN",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_SEMANTICALLY_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+      "learner_decision_id": "LD-OB54-05",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-cfcf1083cc57f011c77741de",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "priority_class": "IMPORTANT",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 3,
+        "anchor_floor_refusals": [
+          "SEED-OB-T03-DISCARD",
+          "SEED-OB-T03-SHIELD"
+        ],
+        "anchor_floor_refused_texts": [
+          "express milk from the affected breast and feed the infant formula",
+          "use a nipple shield for feeds from the affected breast"
+        ],
+        "anchor_signal": {
+          "distinct_values": 1,
+          "fully_satisfied": 2,
+          "positive": 3,
+          "zero": 2
+        },
+        "declared_selection_superseded_by_anchor_floor": false,
+        "excluded": [
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-OB-T03-DISCARD"
+          },
+          {
+            "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            "rule": "SAF_1",
+            "seed_id": "SEED-OB-T03-SHIELD"
+          }
+        ],
+        "fail_closed_reason": null,
+        "indexed_count": 5,
+        "query": {
+          "demanded_response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+          "discipline_profile_id": "OBGYN",
+          "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+          "learner_decision_id": "LD-OB54-05",
+          "option_set_archetype": "NEXT_ACTION_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-OB54-SYSTEMIC-ILLNESS",
+            "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+            "SF-OB54-FLUCTUANT-COLLECTION",
+            "SF-OB54-NO-IMPROVEMENT-AFTER-48H",
+            "SF-OB54-INFANT-FEEDING-CONTRAINDICATION"
+          ]
+        },
+        "ranked_competitors": [
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Feed in a dangle position over the infant",
+            "competitor_concept_id": "CONCEPT-R4-SU-P-005-DANGLE",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 1,
+            "reviewed_strength": "ACCEPTABLE",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-OB-T03-DANGLE",
+            "semantic_failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+            "semantic_verdict": "REFUSED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 1,
+            "total_conditions": 0
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Pump to empty the affected breast after every feed",
+            "competitor_concept_id": "CONCEPT-R4-SU-OB-54-EMPTY",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 2,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-OB-T03-EMPTY",
+            "semantic_failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+            "semantic_verdict": "REFUSED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 2,
+            "total_conditions": 0
+          },
+          {
+            "anchors_present": 1,
+            "competitor_concept": "Apply firm deep massage over the tender area",
+            "competitor_concept_id": "CONCEPT-R4-SU-OB-54-MASSAGE",
+            "provenance": "ORIGINAL_CURATED",
+            "rank": 3,
+            "reviewed_strength": "STRONG",
+            "satisfied_conditions": 0,
+            "seed_id": "SEED-OB-T03-MASSAGE",
+            "semantic_failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+            "semantic_verdict": "REFUSED",
+            "source_pack": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+            "total_anchors": 1,
+            "total_conditions": 0
+          }
+        ],
+        "ranked_seed_ids": [
+          "SEED-OB-T03-DANGLE",
+          "SEED-OB-T03-EMPTY",
+          "SEED-OB-T03-MASSAGE"
+        ],
+        "selected_competitor_seed_ids": [],
+        "semantic_refusals": [
+          {
+            "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+            "seed_id": "SEED-OB-T03-DANGLE"
+          },
+          {
+            "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+            "seed_id": "SEED-OB-T03-EMPTY"
+          },
+          {
+            "failed_criterion": "SA_1_DECISION_GRANULARITY_MATCH",
+            "seed_id": "SEED-OB-T03-MASSAGE"
+          }
+        ],
+        "semantically_admissible_count": 0
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-OBGYN-04"
+    },
+    {
+      "discipline": "OBGYN",
+      "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+      "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+      "learner_decision_id": "LD-OB54-06",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-dd3210bfccb2bfc57627987b",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "priority_class": "IMPORTANT",
+      "reopens_on": "NEW_SEEDS_OR_A_PROFILE_VOCABULARY_ENTRY",
+      "retrieval": {
+        "admissible_count": 0,
+        "anchor_floor_refusals": [],
+        "anchor_floor_refused_texts": [],
+        "anchor_signal": {
+          "distinct_values": 0,
+          "fully_satisfied": 0,
+          "positive": 0,
+          "zero": 0
+        },
+        "excluded": [],
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "query": {
+          "demanded_response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+          "discipline_profile_id": "OBGYN",
+          "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+          "learner_decision_id": "LD-OB54-06",
+          "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+          "ranking_preference": [
+            "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+            "SHARED_FEATURE_COUNT",
+            "REVIEWED_SEED_STRENGTH"
+          ],
+          "stem_feature_ids": [
+            "SF-OB54-FLUID-COLLECTION-ESTABLISHED",
+            "SF-OB54-FLUCTUANT-COLLECTION",
+            "SF-OB54-SYSTEMIC-ILLNESS",
+            "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
+            "SF-OB54-INFANT-FEEDING-CONTRAINDICATION"
+          ]
+        },
+        "ranked_competitors": [],
+        "ranked_seed_ids": []
+      },
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G2-OBGYN-05"
+    }
+  ],
+  "retest_id": "g2_stem_anchor_retest",
+  "retrieval_provenance": {
+    "candidate_sets_short_after_semantic_admissibility": 2,
+    "candidate_sets_short_at_retrieval": 19,
+    "candidates_entering_the_stem_anchor_floor": 115,
+    "candidates_indexed": 130,
+    "candidates_ranked_after_admissibility_and_the_floor": 48,
+    "candidates_semantically_admitted": 27,
+    "note": "Recomputed from the production wave. 'candidates_ranked_after_admissibility_and_the_floor' is the new field: the baseline's 'candidates_ranked_after_admissibility' had no floor to survive. Field definitions here are local to this block.",
+    "retrievals_run": 29,
+    "selected_seed_counts_by_provenance": {
+      "ORIGINAL_CURATED": 17,
+      "TARGETED_NEW": 8
+    },
+    "selected_seeds_by_provenance": {
+      "ORIGINAL_CURATED": [
+        "SEED-OB-T03-DANGLE",
+        "SEED-OB-T03-EMPTY",
+        "SEED-OB-T03-MASSAGE",
+        "SEED-PHELO-T01-HEALTHY-SCREENEE",
+        "SEED-PHELO-T01-LENGTH",
+        "SEED-PHELO-T01-OVERDIAGNOSIS",
+        "SEED-PHELO-T02-DETECTION-COUNT",
+        "SEED-PHELO-T02-SENSITIVITY",
+        "SEED-PHELO-T03-EVALUATE",
+        "SEED-PHELO-T03-PILOT",
+        "SEED-PHELO-T03-RAISE-CUTOFF",
+        "SEED-SURG-T01-PID",
+        "SEED-SURG-T01-TOA",
+        "SEED-SURG-T01-TORSION",
+        "SEED-SURG-T02-MRI",
+        "SEED-SURG-T02-OBSERVE",
+        "SEED-SURG-T02-US"
+      ],
+      "TARGETED_NEW": [
+        "SEED-G2-MED-T02-BETA-BLOCKER",
+        "SEED-G2-MED-T02-DIURETIC",
+        "SEED-G2-MED-T02-NITRATE",
+        "SEED-G2-MED-T03-DEFERRED-ANGIO",
+        "SEED-G2-MED-T03-PPCI-ONLY",
+        "SEED-G2-MED-T03-RESCUE-ONLY",
+        "SEED-G2-MED-T04-ADMIT-NONINVASIVE",
+        "SEED-G2-PHELO-T02-VOLUNTARY"
+      ]
+    }
+  },
+  "reused_without_change": [
+    "the 30 frozen opportunities and their wave plan, scenarios and stem feature maps",
+    "the curated 82-seed contrast pack and both targeted packs, byte-identical",
+    "the frozen seed enrichments, byte-identical",
+    "the frozen semantic-admissibility judgements, byte-identical",
+    "the 21 authored items, byte-identical",
+    "the three frozen independent question verifications"
+  ],
+  "safe_yield": {
+    "ACCEPTED": 2,
+    "NO_SAFE_ITEM": 26,
+    "REDUNDANT": 0,
+    "REJECTED": 2,
+    "attempted": 30,
+    "baseline": {
+      "ACCEPTED": 4,
+      "NO_SAFE_ITEM": 12,
+      "REDUNDANT": 1,
+      "REJECTED": 13
+    }
+  },
+  "schema_version": "1.0",
+  "scope": "QGEN_G2_STEM_ANCHOR_RETEST_EXECUTION",
+  "terminal_state_by_opportunity": {
+    "G2-MED-01": "NO_SAFE_ITEM",
+    "G2-MED-02": "NO_SAFE_ITEM",
+    "G2-MED-03": "REJECTED",
+    "G2-MED-04": "ACCEPTED",
+    "G2-MED-05": "NO_SAFE_ITEM",
+    "G2-OBGYN-01": "NO_SAFE_ITEM",
+    "G2-OBGYN-02": "NO_SAFE_ITEM",
+    "G2-OBGYN-03": "NO_SAFE_ITEM",
+    "G2-OBGYN-04": "NO_SAFE_ITEM",
+    "G2-OBGYN-05": "NO_SAFE_ITEM",
+    "G2-PED-01": "NO_SAFE_ITEM",
+    "G2-PED-02": "NO_SAFE_ITEM",
+    "G2-PED-03": "NO_SAFE_ITEM",
+    "G2-PED-04": "NO_SAFE_ITEM",
+    "G2-PED-05": "NO_SAFE_ITEM",
+    "G2-PHELO-01": "ACCEPTED",
+    "G2-PHELO-02": "REJECTED",
+    "G2-PHELO-03": "NO_SAFE_ITEM",
+    "G2-PHELO-04": "NO_SAFE_ITEM",
+    "G2-PHELO-05": "NO_SAFE_ITEM",
+    "G2-PSY-01": "NO_SAFE_ITEM",
+    "G2-PSY-02": "NO_SAFE_ITEM",
+    "G2-PSY-03": "NO_SAFE_ITEM",
+    "G2-PSY-04": "NO_SAFE_ITEM",
+    "G2-PSY-05": "NO_SAFE_ITEM",
+    "G2-PSY-06": "NO_SAFE_ITEM",
+    "G2-SURG-01": "NO_SAFE_ITEM",
+    "G2-SURG-02": "NO_SAFE_ITEM",
+    "G2-SURG-03": "NO_SAFE_ITEM",
+    "G2-SURG-04": "NO_SAFE_ITEM"
+  },
+  "terminal_state_moves": {
+    "G2-MED-01": {
+      "after": "NO_SAFE_ITEM",
+      "before": "REJECTED"
+    },
+    "G2-MED-05": {
+      "after": "NO_SAFE_ITEM",
+      "before": "ACCEPTED"
+    },
+    "G2-OBGYN-02": {
+      "after": "NO_SAFE_ITEM",
+      "before": "REJECTED"
+    },
+    "G2-PED-01": {
+      "after": "NO_SAFE_ITEM",
+      "before": "REJECTED"
+    },
+    "G2-PED-02": {
+      "after": "NO_SAFE_ITEM",
+      "before": "REJECTED"
+    },
+    "G2-PED-03": {
+      "after": "NO_SAFE_ITEM",
+      "before": "REJECTED"
+    },
+    "G2-PHELO-03": {
+      "after": "NO_SAFE_ITEM",
+      "before": "REJECTED"
+    },
+    "G2-PHELO-05": {
+      "after": "NO_SAFE_ITEM",
+      "before": "REJECTED"
+    },
+    "G2-PSY-01": {
+      "after": "NO_SAFE_ITEM",
+      "before": "REJECTED"
+    },
+    "G2-PSY-03": {
+      "after": "NO_SAFE_ITEM",
+      "before": "REJECTED"
+    },
+    "G2-PSY-04": {
+      "after": "NO_SAFE_ITEM",
+      "before": "REJECTED"
+    },
+    "G2-PSY-06": {
+      "after": "NO_SAFE_ITEM",
+      "before": "REDUNDANT"
+    },
+    "G2-SURG-02": {
+      "after": "NO_SAFE_ITEM",
+      "before": "ACCEPTED"
+    },
+    "G2-SURG-03": {
+      "after": "NO_SAFE_ITEM",
+      "before": "REJECTED"
+    }
+  },
+  "wave_id": "g2_profile_aware_retrieval_pilot"
+}

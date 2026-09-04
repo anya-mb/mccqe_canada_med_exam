@@ -69,10 +69,17 @@ def enrichment(tmp_path, overrides=None):
     return document, path
 
 
-def build(tmp_path, overrides=None):
+def build(tmp_path, overrides=None, anchors=None):
     document, _ = enrichment(tmp_path, overrides)
     resolved = {"enrichment_id": "test", "seeds": {row["seed_id"]: row for row in document["seeds"]}}
-    return build_retrieval_index(pack(), resolved)
+    # Every synthetic seed is anchored on the one feature the synthetic stem states
+    # PRESENT, so these cases exercise the filters they were written for rather
+    # than the stem-anchor floor, which has its own module.
+    stem_anchors = {
+        "anchors_pack_id": "test",
+        "seeds": {row["seed_id"]: list(anchors or ["F-1"]) for row in document["seeds"]},
+    }
+    return build_retrieval_index(pack(), resolved, stem_anchors)
 
 
 STEM = {"features": [{"feature_id": "F-1", "polarity": "PRESENT", "inference_type": "EXPLICIT_FINDING"}]}

@@ -38,6 +38,47 @@ RETRIEVAL_INDEX_FIELDS = (
 MINIMUM_ADMISSIBLE_COMPETITORS = 3
 
 
+def load_seed_stem_anchors(root: Path, anchors_relative_path: str) -> dict[str, Any]:
+    """Load the frozen, additive stem-plausibility anchors for a curated seed pack.
+
+    An anchor is a stem datum whose presence gives a candidate a positive reason
+    to *consider* this competitor, which is a different relation from the
+    conditions under which it would be *correct*. Keeping the two apart is the
+    whole point: the correctness conditions carry the anti-second-key ceiling and
+    cannot also carry the floor, because in the frozen G2 cohort every competitor
+    of every accepted item has the same correctness signature as every competitor
+    of the anchorless rejections.
+    """
+    path = resolve_root_path(Path(root).resolve(), anchors_relative_path)
+    if not path.is_file():
+        raise ContrastRetrievalError(f"seed stem anchors are unavailable: {anchors_relative_path}")
+    document = json.loads(path.read_text())
+    if not document.get("frozen"):
+        raise ContrastRetrievalError("seed stem anchors must be frozen before use")
+    seeds = document.get("seeds")
+    if not isinstance(seeds, list):
+        raise ContrastRetrievalError("seed stem anchors carry no seeds")
+    resolved: dict[str, list[str]] = {}
+    for seed in seeds:
+        seed_id = seed.get("seed_id")
+        if not isinstance(seed_id, str) or not seed_id:
+            raise ContrastRetrievalError("stem-anchor entry needs a seed id")
+        if seed_id in resolved:
+            raise ContrastRetrievalError(f"duplicate stem-anchor entry: {seed_id}")
+        anchors = seed.get("plausibility_anchors")
+        if not isinstance(anchors, list):
+            raise ContrastRetrievalError(f"seed {seed_id} needs a plausibility anchor list")
+        feature_ids: list[str] = []
+        for anchor in anchors:
+            if not isinstance(anchor, dict) or not isinstance(
+                anchor.get("stem_feature_id"), str
+            ):
+                raise ContrastRetrievalError(f"seed {seed_id} carries a malformed anchor")
+            feature_ids.append(anchor["stem_feature_id"])
+        resolved[seed_id] = sorted(set(feature_ids))
+    return {"anchors_pack_id": document.get("anchors_pack_id"), "seeds": resolved}
+
+
 def load_seed_enrichment(root: Path, enrichment_relative_path: str) -> dict[str, Any]:
     """Load the frozen, additive enrichment tags for a curated seed pack."""
     path = resolve_root_path(Path(root).resolve(), enrichment_relative_path)
@@ -71,7 +112,9 @@ def load_seed_enrichment(root: Path, enrichment_relative_path: str) -> dict[str,
 
 
 def build_retrieval_index(
-    seed_pack: dict[str, Any], enrichment: dict[str, Any]
+    seed_pack: dict[str, Any],
+    enrichment: dict[str, Any],
+    stem_anchors: dict[str, Any],
 ) -> list[dict[str, Any]]:
     """Build the deterministic retrieval index over curated seeds.
 
@@ -86,6 +129,11 @@ def build_retrieval_index(
             tags = enrichment["seeds"].get(seed_id)
             if tags is None:
                 continue
+            if seed_id not in stem_anchors["seeds"]:
+                raise ContrastRetrievalError(
+                    f"seed {seed_id} is retrievable but carries no stem-plausibility "
+                    "anchor row, so the anchor floor could not be applied to it"
+                )
             rows.append({
                 "seed_id": seed_id,
                 "target_id": target.get("target_id"),
@@ -99,6 +147,7 @@ def build_retrieval_index(
                     "conditions_under_which_competitor_would_be_correct"
                 ),
                 "condition_predicates": tags["condition_predicates"],
+                "plausibility_anchor_feature_ids": stem_anchors["seeds"][seed_id],
                 "response_class_tokens": tags.get("response_class_tokens", []),
                 "nominal_axis_values": tags.get("nominal_axis_values", {}),
                 "applicable_disciplines": tags.get("applicable_disciplines", []),
@@ -156,7 +205,16 @@ def retrieve_profile_aware_contrasts(
     ]
     admissible: list[dict[str, Any]] = []
     excluded: list[dict[str, Any]] = []
+    anchor_refused_texts: list[str] = []
+    anchor_zero = 0
+    anchor_positive = 0
+    anchor_fully_satisfied = 0
     for row in indexed:
+        if "plausibility_anchor_feature_ids" not in row:
+            raise ContrastRetrievalError(
+                f"seed {row['seed_id']} carries no stem-plausibility anchors, so the "
+                "anchor floor cannot be applied; rebuild the index with the anchor layer"
+            )
         closure = expand_response_tokens(
             row["response_class_tokens"], token_implications, generic_token
         )
@@ -177,10 +235,37 @@ def retrieve_profile_aware_contrasts(
                 "reason": "CORRECTNESS_CONDITION_FULLY_SATISFIED",
             })
             continue
+        anchors = row["plausibility_anchor_feature_ids"]
+        anchors_present = sum(
+            1
+            for feature_id in anchors
+            if (features.get(feature_id) or {}).get("polarity") == "PRESENT"
+        )
+        if anchors_present:
+            anchor_positive += 1
+        else:
+            anchor_zero += 1
+        if anchors and anchors_present == len(anchors):
+            anchor_fully_satisfied += 1
+        if not anchors_present:
+            # The symmetric floor. Nothing the stem states gives a candidate a
+            # reason to consider this competitor, so whatever else is true of it
+            # it is not a live alternative in this scenario. The ceiling above
+            # stays exactly as it was: a competitor can clear the floor and still
+            # be refused as a second key.
+            excluded.append({
+                "seed_id": row["seed_id"],
+                "rule": "SAF_1",
+                "reason": "STEM_PLAUSIBILITY_ANCHOR_ABSENT",
+            })
+            anchor_refused_texts.append(row["normalized_competitor_text"])
+            continue
         admissible.append({
             **row,
             "satisfied_conditions": satisfied,
             "total_conditions": total,
+            "anchors_present": anchors_present,
+            "total_anchors": len(anchors),
         })
 
     signals = list(ranking_preference)
@@ -190,6 +275,8 @@ def retrieve_profile_aware_contrasts(
         for signal in signals:
             if signal == "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION":
                 parts.append(-row["satisfied_conditions"])
+            elif signal == "STEM_ANCHOR_STRENGTH":
+                parts.append(-row["anchors_present"])
             elif signal == "SHARED_FEATURE_COUNT":
                 parts.append(-len(row["shared_features_with_key"]))
             elif signal == "REVIEWED_SEED_STRENGTH":
@@ -209,4 +296,16 @@ def retrieve_profile_aware_contrasts(
         "ranked_competitors": ranked,
         "excluded": sorted(excluded, key=lambda row: (row["rule"], row["seed_id"])),
         "fail_closed_reason": fail_closed,
+        # Reported whatever the outcome. A constant signal is what let the old
+        # ranking collapse to seed strength and then to alphabetical seed id.
+        "anchor_signal": {
+            "zero": anchor_zero,
+            "positive": anchor_positive,
+            "fully_satisfied": anchor_fully_satisfied,
+            "distinct_values": len({row["anchors_present"] for row in ranked}),
+        },
+        "anchor_floor_refusals": sorted(
+            row["seed_id"] for row in excluded if row["rule"] == "SAF_1"
+        ),
+        "anchor_floor_refused_texts": sorted(set(anchor_refused_texts)),
     }
