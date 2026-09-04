@@ -1,0 +1,694 @@
+{
+  "cohort": "cross_discipline_generalization_15_r4",
+  "failed_items_rejected": 8,
+  "failed_items_total": 8,
+  "false_acceptances": [],
+  "false_rejections": [],
+  "generality_evidence": {
+    "adm_3_inertness": "ADM-3 returns PASS on all fifteen items. That is the expected result rather than a suppressed one: no R4 failure is attributed to exclusion by explicit stem negation as its earliest causal layer, and no competitor in the cohort is defeated solely by an absent finding that grounds nothing else. The rule is shown to fire on a constructed input in the unit tests and again as a positive control in the G1 wave.",
+    "authorship_disclosure": "The role-blind option labels and the demanded response classes were authored in the same session that ran this replay, by a party that had read the R4 independent verdicts. That is the residual risk of this gate and it is stated rather than hidden. Three structural constraints bound it: every label is a choice among a closed enumeration rather than free text, no artifact can express which option is a key or which item an option belongs to, and the rules that consume the labels contain no item identity and no clinical content. The rules are additionally exercised against synthetic inputs in the unit tests, where they separate cases the R4 cohort does not contain.",
+    "demanded_class_artifact_carries_no_option_text": "ASSERTED_BY_TEST",
+    "label_pool_is_role_blind": "The pool is flat, keyed by normalized option text, and carries no role, key marker, item id or option position. Identical option text resolves to one label everywhere.",
+    "no_item_id_or_replayed_option_text_in_production_code": "ASSERTED_BY_TEST: tests/test_qgen_profiles_and_g0.py::test_no_production_module_names_a_replayed_item_or_its_clinical_content"
+  },
+  "items": [
+    {
+      "admissibility": {
+        "admissible_competitor_count": 2,
+        "demanded_response_class": "SYSTEMIC_INFLAMMATORY_ILLNESS",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "inadmissible_options": [
+          {
+            "detail": "option response class ['PALPABLE_MASS_OR_FLUID_COLLECTION', 'PLAUSIBLE_DIAGNOSTIC_ENTITY'] does not contain the demanded class SYSTEMIC_INFLAMMATORY_ILLNESS",
+            "option_text": "Galactocele",
+            "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+            "rule": "ADM_1"
+          }
+        ],
+        "nominal_parity_axes": [
+          "inflammatory_state",
+          "gestational_applicability"
+        ],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "cardinal_syndrome_capability",
+        "rule_verdicts": {
+          "ADM_1": "FAIL",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "INADMISSIBLE"
+      },
+      "agreement": "AGREE",
+      "critical_fact_failures": [],
+      "demanded_response_class": "SYSTEMIC_INFLAMMATORY_ILLNESS",
+      "discipline_profile_id": "OBGYN",
+      "independent_verdict": "FAIL",
+      "item_archetype": "PREGNANCY_DATED_DIAGNOSIS",
+      "item_id": "QGEN-GEN4-OBGYN-I01",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "rejected_by": [
+        "ADM_1",
+        "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS"
+      ],
+      "replay_verdict": "REJECTED"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 2,
+        "demanded_response_class": "STRUCTURAL",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "inadmissible_options": [
+          {
+            "detail": "option response class ['DIAGNOSTIC_ADVANCEMENT', 'MICROBIOLOGIC'] does not contain the demanded class STRUCTURAL",
+            "option_text": "Sterile milk culture and sensitivities",
+            "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+            "rule": "ADM_1"
+          }
+        ],
+        "nominal_parity_axes": [
+          "gestational_applicability"
+        ],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "INVESTIGATION_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "investigation_purpose",
+        "rule_verdicts": {
+          "ADM_1": "FAIL",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "INADMISSIBLE"
+      },
+      "agreement": "AGREE",
+      "critical_fact_failures": [],
+      "demanded_response_class": "STRUCTURAL",
+      "discipline_profile_id": "OBGYN",
+      "independent_verdict": "FAIL",
+      "item_archetype": "INVESTIGATION_SELECTION",
+      "item_id": "QGEN-GEN4-OBGYN-I02",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "rejected_by": [
+        "ADM_1",
+        "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS"
+      ],
+      "replay_verdict": "REJECTED"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 0,
+        "demanded_response_class": "PATIENT_INSTRUCTION",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "inadmissible_options": [
+          {
+            "detail": "the stem records the patient already performing pump on ['affected_breast']",
+            "option_text": "Continue pumping the affected breast empty after every feed",
+            "reason": "STEM_ENACTED_ACTION",
+            "rule": "ADM_4"
+          },
+          {
+            "detail": "the stem records the patient already performing feed on ['dangle_position']",
+            "option_text": "Feed in a dangle position over the infant",
+            "reason": "STEM_ENACTED_ACTION",
+            "rule": "ADM_4"
+          },
+          {
+            "detail": "the stem records the patient already performing use on ['silicone_shield']",
+            "option_text": "Use the silicone shield for feeds on the affected side",
+            "reason": "STEM_ENACTED_ACTION",
+            "rule": "ADM_4"
+          }
+        ],
+        "nominal_parity_axes": [
+          "gestational_applicability"
+        ],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "next_action_class",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "FAIL",
+          "ADM_5": "PASS"
+        },
+        "verdict": "INADMISSIBLE"
+      },
+      "agreement": "AGREE",
+      "critical_fact_failures": [],
+      "demanded_response_class": "PATIENT_INSTRUCTION",
+      "discipline_profile_id": "OBGYN",
+      "independent_verdict": "FAIL",
+      "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+      "item_id": "QGEN-GEN4-OBGYN-I03",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "rejected_by": [
+        "ADM_4",
+        "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS"
+      ],
+      "replay_verdict": "REJECTED"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "ACUTE_RESPIRATORY_DISTRESS",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [
+          "age_appropriateness"
+        ],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "cardinal_syndrome_capability",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "agreement": "AGREE",
+      "critical_fact_failures": [],
+      "demanded_response_class": "ACUTE_RESPIRATORY_DISTRESS",
+      "discipline_profile_id": "PEDIATRICS",
+      "independent_verdict": "PASS",
+      "item_archetype": "AGE_BANDED_DIAGNOSIS",
+      "item_id": "QGEN-GEN4-PED-I01",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "rejected_by": [],
+      "replay_verdict": "ACCEPTED"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [
+          "age_appropriateness"
+        ],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "next_action_class",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "agreement": "AGREE",
+      "critical_fact_failures": [],
+      "demanded_response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+      "discipline_profile_id": "PEDIATRICS",
+      "independent_verdict": "PASS",
+      "item_archetype": "INVESTIGATION_SELECTION",
+      "item_id": "QGEN-GEN4-PED-I02",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "rejected_by": [],
+      "replay_verdict": "ACCEPTED"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [
+          "age_appropriateness"
+        ],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "next_action_class",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "agreement": "AGREE",
+      "critical_fact_failures": [],
+      "demanded_response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+      "discipline_profile_id": "PEDIATRICS",
+      "independent_verdict": "PASS",
+      "item_archetype": "SUPPORTIVE_CARE_CEILING",
+      "item_id": "QGEN-GEN4-PED-I03",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "rejected_by": [],
+      "replay_verdict": "ACCEPTED"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "EXPLANATION_OF_OBSERVED_PHENOMENON",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "explained_phenomenon_class",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "agreement": "AGREE",
+      "critical_fact_failures": [],
+      "demanded_response_class": "EXPLANATION_OF_OBSERVED_PHENOMENON",
+      "discipline_profile_id": "PHELO",
+      "independent_verdict": "PASS",
+      "item_archetype": "EPIDEMIOLOGY_INTERPRETATION",
+      "item_id": "QGEN-GEN4-PHELO-I01",
+      "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+      "rejected_by": [],
+      "replay_verdict": "ACCEPTED"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 1,
+        "demanded_response_class": "AUTONOMY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "inadmissible_options": [
+          {
+            "detail": "option response class ['ETHICAL_ACTION', 'PROGRAMME_UPTAKE'] does not contain the demanded class AUTONOMY",
+            "option_text": "Add that a reminder will follow if the appointment is missed",
+            "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+            "rule": "ADM_1"
+          },
+          {
+            "detail": "option response class ['ETHICAL_ACTION', 'PROGRAMME_UPTAKE'] does not contain the demanded class AUTONOMY",
+            "option_text": "Add that the medical officer of health recommends attending",
+            "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+            "rule": "ADM_1"
+          }
+        ],
+        "nominal_parity_axes": [],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "ETHICAL_ACTION_SET",
+        "realization_parity_defects": [
+          "SOLE_PAIRED_QUANTITY_OPTION"
+        ],
+        "response_class_axis": "value_served",
+        "rule_verdicts": {
+          "ADM_1": "FAIL",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "FAIL"
+        },
+        "verdict": "INADMISSIBLE"
+      },
+      "agreement": "AGREE",
+      "critical_fact_failures": [],
+      "demanded_response_class": "AUTONOMY",
+      "discipline_profile_id": "PHELO",
+      "independent_verdict": "FAIL",
+      "item_archetype": "ETHICAL_ACTION",
+      "item_id": "QGEN-GEN4-PHELO-I02",
+      "option_set_archetype": "ETHICAL_ACTION_SET",
+      "rejected_by": [
+        "ADM_1",
+        "ADM_5",
+        "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS"
+      ],
+      "replay_verdict": "REJECTED"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "management_capability",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "agreement": "AGREE",
+      "critical_fact_failures": [],
+      "demanded_response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+      "discipline_profile_id": "PHELO",
+      "independent_verdict": "PASS",
+      "item_archetype": "SCREENING_DECISION",
+      "item_id": "QGEN-GEN4-PHELO-I03",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "rejected_by": [],
+      "replay_verdict": "ACCEPTED"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "PERSISTENT_MOOD_DISTURBANCE",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "cardinal_syndrome_capability",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "agreement": "AGREE",
+      "critical_fact_failures": [],
+      "demanded_response_class": "PERSISTENT_MOOD_DISTURBANCE",
+      "discipline_profile_id": "PSYCHIATRY",
+      "independent_verdict": "PASS",
+      "item_archetype": "LONGITUDINAL_DIFFERENTIAL",
+      "item_id": "QGEN-GEN4-PSY-I01",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "rejected_by": [],
+      "replay_verdict": "ACCEPTED"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 1,
+        "demanded_response_class": "SECURES_IMMEDIATE_SAFETY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "inadmissible_options": [
+          {
+            "detail": "option response class ['DISPOSITION_DECISION', 'NONE'] does not contain the demanded class SECURES_IMMEDIATE_SAFETY",
+            "option_text": "A first-line antidepressant with review in 48 hours",
+            "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+            "rule": "ADM_1"
+          },
+          {
+            "detail": "option response class ['ASSESSMENT_ONLY', 'DISPOSITION_DECISION'] does not contain the demanded class SECURES_IMMEDIATE_SAFETY",
+            "option_text": "A validated suicide risk rating scale to set the disposition",
+            "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+            "rule": "ADM_1"
+          }
+        ],
+        "nominal_parity_axes": [
+          "care_setting"
+        ],
+        "nominal_parity_defects": [
+          "KEY_ONLY_CARE_SETTING"
+        ],
+        "option_set_archetype": "DISPOSITION_SET",
+        "realization_parity_defects": [
+          "SOLE_NUMERAL_BEARING_OPTION"
+        ],
+        "response_class_axis": "safety_securing_class",
+        "rule_verdicts": {
+          "ADM_1": "FAIL",
+          "ADM_2": "FAIL",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "FAIL"
+        },
+        "verdict": "INADMISSIBLE"
+      },
+      "agreement": "AGREE",
+      "critical_fact_failures": [],
+      "demanded_response_class": "SECURES_IMMEDIATE_SAFETY",
+      "discipline_profile_id": "PSYCHIATRY",
+      "independent_verdict": "FAIL",
+      "item_archetype": "SAFETY_ASSESSMENT",
+      "item_id": "QGEN-GEN4-PSY-I02",
+      "option_set_archetype": "DISPOSITION_SET",
+      "rejected_by": [
+        "ADM_1",
+        "ADM_2",
+        "ADM_5",
+        "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS"
+      ],
+      "replay_verdict": "REJECTED"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [
+          "care_setting"
+        ],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "management_capability",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "agreement": "AGREE",
+      "critical_fact_failures": [
+        {
+          "basis": "PROFILE_REQUIRES_INDEPENDENT_CORROBORATION: GUIDELINE_SEVERITY_BAND",
+          "claim_id": "CLM-R4-PSY-EXERCISE",
+          "fact_classes": [
+            "GUIDELINE_SEVERITY_BAND",
+            "NUMERIC_VALUE",
+            "TIME_WINDOW",
+            "UNIT"
+          ],
+          "fail_closed_reason": "FAIL_CLOSED_UNRESOLVED_CRITICAL_FACT",
+          "sanity_checks": []
+        },
+        {
+          "basis": "PROFILE_REQUIRES_INDEPENDENT_CORROBORATION: GUIDELINE_SEVERITY_BAND",
+          "claim_id": "CLM-R4-PSY-MILD",
+          "fact_classes": [
+            "GUIDELINE_SEVERITY_BAND"
+          ],
+          "fail_closed_reason": "FAIL_CLOSED_UNRESOLVED_CRITICAL_FACT",
+          "sanity_checks": []
+        }
+      ],
+      "demanded_response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+      "discipline_profile_id": "PSYCHIATRY",
+      "independent_verdict": "FAIL",
+      "item_archetype": "PHARMACOTHERAPY",
+      "item_id": "QGEN-GEN4-PSY-I03",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "rejected_by": [
+        "CRITICAL_FACT_ADJUDICATION"
+      ],
+      "replay_verdict": "REJECTED"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "ACUTE_ABDOMINAL_OR_PELVIC_PAIN",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [
+          "organ_system"
+        ],
+        "nominal_parity_defects": [
+          "KEY_ONLY_ORGAN_SYSTEM"
+        ],
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "cardinal_syndrome_capability",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "FAIL",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "INADMISSIBLE"
+      },
+      "agreement": "AGREE",
+      "critical_fact_failures": [
+        {
+          "basis": "SOURCE_SANITY_CHECK_TRIPPED",
+          "claim_id": "CLM-R4-SURG-PRESENTATION",
+          "fact_classes": [
+            "ANATOMICAL_MEASUREMENT",
+            "EPIDEMIOLOGIC_VALUE",
+            "NUMERIC_VALUE",
+            "UNIT"
+          ],
+          "fail_closed_reason": "FAIL_CLOSED_ERRONEOUS_SOURCE_FACT",
+          "sanity_checks": [
+            "IMPLAUSIBLE_MAGNITUDE",
+            "STRUCTURED_REFERENCE_CONTRADICTION",
+            "UNIT_TRANSPOSITION_SUSPICION"
+          ]
+        },
+        {
+          "basis": "NO_CORROBORATION_AND_NO_PRIMARY_AUTHORITY",
+          "claim_id": "CLM-R4-SURG-TORSION-PRESENT",
+          "fact_classes": [
+            "NUMERIC_VALUE"
+          ],
+          "fail_closed_reason": "FAIL_CLOSED_UNRESOLVED_CRITICAL_FACT",
+          "sanity_checks": []
+        },
+        {
+          "basis": "PROFILE_REQUIRES_INDEPENDENT_CORROBORATION: ANATOMICAL_MEASUREMENT",
+          "claim_id": "CLM-R4-SURG-TORSION-RISK",
+          "fact_classes": [
+            "ANATOMICAL_MEASUREMENT",
+            "NUMERIC_VALUE",
+            "UNIT"
+          ],
+          "fail_closed_reason": "FAIL_CLOSED_UNRESOLVED_CRITICAL_FACT",
+          "sanity_checks": []
+        }
+      ],
+      "demanded_response_class": "ACUTE_ABDOMINAL_OR_PELVIC_PAIN",
+      "discipline_profile_id": "SURGERY",
+      "independent_verdict": "FAIL",
+      "item_archetype": "RECOGNITION",
+      "item_id": "QGEN-GEN4-SURG-I01",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "rejected_by": [
+        "ADM_2",
+        "CRITICAL_FACT_ADJUDICATION"
+      ],
+      "replay_verdict": "REJECTED"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "DIAGNOSTIC_ADVANCEMENT",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [
+          "organ_system"
+        ],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "INVESTIGATION_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "investigation_purpose",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "agreement": "AGREE",
+      "critical_fact_failures": [],
+      "demanded_response_class": "DIAGNOSTIC_ADVANCEMENT",
+      "discipline_profile_id": "SURGERY",
+      "independent_verdict": "PASS",
+      "item_archetype": "IMAGING_SELECTION",
+      "item_id": "QGEN-GEN4-SURG-I02",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "rejected_by": [],
+      "replay_verdict": "ACCEPTED"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 2,
+        "demanded_response_class": "PROVIDES_SOURCE_CONTROL",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "inadmissible_options": [
+          {
+            "detail": "option response class ['MANAGEMENT_STRATEGY_FOR_PRESENTATION', 'PHARMACOLOGIC_ONLY'] does not contain the demanded class PROVIDES_SOURCE_CONTROL",
+            "option_text": "Intravenous antibiotics alone with planned reassessment",
+            "reason": "RESPONSE_CLASS_NOT_DEMANDED",
+            "rule": "ADM_1"
+          }
+        ],
+        "nominal_parity_axes": [
+          "organ_system"
+        ],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "management_capability",
+        "rule_verdicts": {
+          "ADM_1": "FAIL",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "INADMISSIBLE"
+      },
+      "agreement": "AGREE",
+      "critical_fact_failures": [],
+      "demanded_response_class": "PROVIDES_SOURCE_CONTROL",
+      "discipline_profile_id": "SURGERY",
+      "independent_verdict": "FAIL",
+      "item_archetype": "OPERATIVE_VS_NONOPERATIVE",
+      "item_id": "QGEN-GEN4-SURG-I03",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "rejected_by": [
+        "ADM_1",
+        "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS"
+      ],
+      "replay_verdict": "REJECTED"
+    }
+  ],
+  "items_replayed": 15,
+  "passed_items_accepted": 7,
+  "passed_items_total": 7,
+  "result": "PASS",
+  "rule_verdict_values": {
+    "ADM_1": [
+      "FAIL",
+      "PASS"
+    ],
+    "ADM_2": [
+      "FAIL",
+      "PASS"
+    ],
+    "ADM_3": [
+      "PASS"
+    ],
+    "ADM_4": [
+      "FAIL",
+      "PASS"
+    ],
+    "ADM_5": [
+      "FAIL",
+      "PASS"
+    ],
+    "CRITICAL_FACT_ADJUDICATION": [
+      "FAIL",
+      "PASS"
+    ]
+  },
+  "schema_version": "1.0",
+  "scope": "QGEN_G0_FROZEN_REPLAY"
+}

@@ -1,0 +1,161 @@
+{
+  "competitor_ranking_preference": [
+    "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+    "SHARED_FEATURE_COUNT",
+    "REVIEWED_SEED_STRENGTH"
+  ],
+  "currentness_escalation_triggers": [
+    "THERAPY",
+    "THRESHOLD",
+    "IMMUNISATION"
+  ],
+  "discipline_codes": [
+    "PED"
+  ],
+  "evidence_source_preference": [
+    "NATIONAL_SPECIALTY_SOCIETY",
+    "NATIONAL_PUBLIC_HEALTH_AGENCY",
+    "PEER_REVIEWED_GUIDELINE"
+  ],
+  "item_archetypes": [
+    {
+      "item_archetype": "AGE_BANDED_DIAGNOSIS",
+      "permitted_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "permitted_option_set_archetypes": [
+        "DIAGNOSIS_SET"
+      ],
+      "scenario_requirements": [
+        "AGE",
+        "CAREGIVER_CONTEXT"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "RED_FLAG_RECOGNITION",
+      "permitted_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "permitted_option_set_archetypes": [
+        "NEXT_ACTION_SET"
+      ],
+      "scenario_requirements": [
+        "AGE",
+        "VITAL_SIGNS"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "SUPPORTIVE_CARE_CEILING",
+      "permitted_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "permitted_option_set_archetypes": [
+        "NEXT_ACTION_SET"
+      ],
+      "scenario_requirements": [
+        "AGE",
+        "VITAL_SIGNS"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "INVESTIGATION_SELECTION",
+      "permitted_decision_granularities": [
+        "DIAGNOSTIC_TEST",
+        "SINGLE_NEXT_ACTION"
+      ],
+      "permitted_option_set_archetypes": [
+        "INVESTIGATION_SET",
+        "NEXT_ACTION_SET"
+      ],
+      "scenario_requirements": [
+        "AGE"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "WEIGHT_BASED_THERAPY",
+      "permitted_decision_granularities": [
+        "MANAGEMENT_STRATEGY"
+      ],
+      "permitted_option_set_archetypes": [
+        "MANAGEMENT_STRATEGY_SET"
+      ],
+      "scenario_requirements": [
+        "AGE",
+        "WEIGHT"
+      ],
+      "weight": 1
+    }
+  ],
+  "numeric_risk_classes": [
+    {
+      "fact_class": "MEDICATION_DOSE",
+      "requires_independent_corroboration": false,
+      "validation_level": 2
+    },
+    {
+      "fact_class": "NUMERIC_VALUE",
+      "requires_independent_corroboration": false,
+      "validation_level": 2
+    },
+    {
+      "fact_class": "TIME_WINDOW",
+      "requires_independent_corroboration": false,
+      "validation_level": 2
+    }
+  ],
+  "option_set_contracts": [
+    {
+      "justification": "An option outside the age band is discardable without content knowledge.",
+      "nominal_parity_axes": [
+        "age_appropriateness"
+      ],
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "response_class_axis": "cardinal_syndrome_capability",
+      "token_implications": {}
+    },
+    {
+      "justification": "",
+      "nominal_parity_axes": [
+        "age_appropriateness"
+      ],
+      "option_set_archetype": "INVESTIGATION_SET",
+      "response_class_axis": "investigation_purpose",
+      "token_implications": {}
+    },
+    {
+      "justification": "",
+      "nominal_parity_axes": [
+        "age_appropriateness"
+      ],
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "response_class_axis": "next_action_class",
+      "token_implications": {}
+    },
+    {
+      "justification": "",
+      "nominal_parity_axes": [
+        "age_appropriateness"
+      ],
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "response_class_axis": "management_capability",
+      "token_implications": {}
+    }
+  ],
+  "permitted_archetype_exceptions": [],
+  "preferred_physician_activities": [
+    "Assessment/Diagnosis",
+    "Management"
+  ],
+  "profile_id": "PEDIATRICS",
+  "prohibited_shortcuts": [
+    "ADULT_THRESHOLDS_IMPORTED",
+    "OVER_INVESTIGATION_DISTRACTOR_NOT_TEMPTING"
+  ],
+  "r4_status": "TESTED_IN_R4",
+  "schema_version": "1.0",
+  "scope": "QGEN_DISCIPLINE_PROFILE"
+}

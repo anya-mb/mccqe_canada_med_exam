@@ -21,7 +21,7 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `9d6bb57ad682f12f9c36934b2eedf3a53df97987`.
+- Audited coordinator input commit: `c40605382bbec41abdace29b8d997cf68fa56221`.
 - Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
@@ -117,15 +117,67 @@ This section is maintained by hand and sits outside the generated source-researc
   `COMMON_CORE_PLUS_DISCIPLINE_PROFILES`, with global critical-fact adjudication, risk-based fact escalation,
   required option-set archetypes and profile-aware contrast retrieval. No production code was written and no
   questions were generated.
-- Part II of that spec (coverage-first safe-yield amendment, 2026-09-03) proposes retiring the fixed
-  6,086-question output as a mandatory production goal and restates scale gates G1-G4 on quality, safety,
-  coverage, yield and redundancy; G0 is unchanged and remains the falsification test. The 6,086 allocation
-  artifacts (`research/scope/question_bank_targets.json`, `research/scope/final_question_allocation.json`) are
-  preserved unchanged and reread as a curriculum-density plan. This is a **design proposal pending user review**:
-  the canonical allocation artifacts and the `AGENTS.md` allocation rules are unchanged and still govern.
-- `RECOMMENDED_ARCHITECTURE_ACTION = DO_NOT_SCALE` still holds. Part II changes what a production wave is measured
-  on; it does not authorise a wave.
-- QGEN_NEXT_STEP = `USER_REVIEW_SAFE_YIELD_DESIGN`
+- Part II of that spec (coverage-first safe-yield amendment, 2026-09-03) retires the fixed 6,086-question output
+  as a mandatory production goal and restates scale gates G1-G4 on quality, safety, coverage, yield and
+  redundancy; G0 is unchanged and remains the falsification test. **User-approved 2026-09-03 at commit
+  `c406053`.** The 6,086 allocation artifacts (`research/scope/question_bank_targets.json`,
+  `research/scope/final_question_allocation.json`) are preserved byte-identical and reread as a curriculum-density
+  plan. `AGENTS.md` still states 6,086 as a production commitment and has not been amended, so the repository
+  holds two readings of that number; amending it is a separate authorisation (spec §28 item 8).
+- Safe-yield implementation: COMPLETE, in the commit this section describes. Eleven modules and data layers:
+  `option_set_admissibility` (eight archetypes, closed response-class and nominal-parity vocabularies, role-blind
+  labels, ADM-1..ADM-5 as arithmetic), `qgen_profiles` (six validated profiles as data, anti-hard-coding invariant
+  checked against the canonical study-unit titles, quota-shaped-field validator), `critical_fact_adjudication`
+  (fourteen fact classes, Levels 0-3, the §4.3 sanity checks, transcription/fact status split, numeric assertion
+  enumeration), `coverage_priority`, `question_opportunity`, `marginal_educational_value`,
+  `profile_contrast_retrieval`, `coverage_gap_report`, `safe_yield_gates`, `safe_yield_wave`, `g0_replay`. One
+  common-core enum extension only: four PHELO values added to `DECISION_GRANULARITIES`, forced by two observed
+  `OTHER`s. Focused 107/0; full suite 954/0.
+- Priority model reproduces the spec's arithmetic exactly from the frozen allocation: CORE 488, IMPORTANT 424,
+  SUPPORTING 263, NOT_IN_SCOPE 332; 16 MCC objectives have no CORE address and 3 are reachable only through
+  SUPPORTING; the reachability promotion promotes 15 addresses and raises CORE to 503, after which every mapped
+  objective is reachable from CORE.
+- `G0_RESULT = PASS`, in `reports/qgen_g0_r4_admissibility_replay.json`. Replaying critical-fact adjudication plus
+  ADM-1..ADM-5 over the frozen R4 cohort rejects **8 of 8** independently failed items and accepts **7 of 7**
+  independently passed items, with zero false acceptances and zero false rejections. Attribution matches the
+  design's own predictions per item: OBGYN-I01 and I02 and SURG-I03 on ADM-1, OBGYN-I03 on ADM-4, SURG-I01 on
+  ADM-2 plus the fact layer, PSY-I02 on ADM-1 and ADM-2, PSY-I03 on the fact layer, PHELO-I02 on ADM-1 and ADM-5.
+  ADM-3 is constant PASS across the cohort, which is expected: no R4 failure is attributed to explicit stem
+  negation as its earliest layer. **Stated residual risk:** the role-blind labels and demanded response classes
+  were authored in the same session that ran the replay, by a party that had read the R4 verdicts. Three
+  structural bounds apply and are asserted by tests - labels are choices among closed enumerations, no artifact
+  can express a role, a key or an item identity, and no production module contains an R4 item id or any replayed
+  option text.
+- `G1_RESULT = PASS`, in `reports/qgen_g1_safe_yield_micro_pilot_execution.json`. Eleven opportunities across six
+  profiles: **5 ACCEPTED, 3 NO_SAFE_ITEM, 2 REJECTED, 1 REDUNDANT**. The three fail-closed outcomes carry three
+  different reasons (erroneous source fact, unresolved critical fact, incoherent option-set archetype), so no
+  reason class exceeds 60%. The deliberate redundancy probe was rejected pre-generation. All five ADM positive
+  controls fired, so no gate family returned a constant verdict. Fresh independent verification in an isolated
+  context reached the keyed answer on 7 of 7 and passed 5: `FACTUAL_ERRORS`, `NUMERIC_ERRORS`,
+  `UNSUPPORTED_CLAIMS`, `AMBIGUOUS_BEST_ANSWERS` all 0 in accepted items, `EVIDENCE_ENTAILMENT` PASS,
+  `LONE_KEY_OPTION_CATEGORY` 0.
+- **The G1 finding that matters more than the yield:** both rejections are the same mode, and it is one no rule in
+  the approved design covers - an option carrying no positive anchor in the stem. A biomarker wait against a
+  diagnostic ST-elevation tracing, and a restart of oxygen against a child who has held room-air saturations for a
+  day, both belong to the demanded response class, are not lone categories, are not defeated by a planted
+  negation, do not restate an enacted practice, and do not break format parity. Call it
+  `COMPETITOR_WITHOUT_STEM_ANCHOR`. It is the surviving `WEAK_DISTRACTOR` mode and it is the first thing a G2
+  design should address. Both items are recorded as reviewed, not repaired: a weak distractor is an option-set
+  selection failure, so the one-retry rule refused a retry.
+- Two G1 coverage alarms fired correctly and are open: MCC objective `27-3` has no accepted item, and CORE
+  learner decisions `LD-C21-02` and `LD-P147-04` were attempted and remain uncovered. `reports/qbank_coverage_and_yield.json`
+  diagnoses SU-OB-54 and SU-PH-07 `NARROW_TOPIC` and the other four `PIPELINE_GAP`, on the decisions the wave
+  attempted rather than on counts.
+- Not done, and not claimed: the one-time enrichment pass over the 82-seed curated contrast pack was **not**
+  performed. `profile_contrast_retrieval` is implemented and unit-tested against synthetic inputs, but it has not
+  been run over the curated library, and the G1 wave used directly authored option sets plus the frozen
+  `defeating_stem_feature_ids` field rather than parsed `condition_predicates`. The 21-stage
+  `STAGE_SEQUENCE_V5` successor is not implemented as a staged-item validator; `chapter_staged_generation` is
+  unchanged apart from the granularity enum.
+- `RECOMMENDED_ARCHITECTURE_ACTION` is upgraded from `DO_NOT_SCALE` to `DO_NOT_SCALE_PENDING_USER_REVIEW_OF_G1`.
+  G1 passed and the factual-safety invariant held in accepted items, but G2 has not run and the design has one
+  known uncovered failure mode. Do not start 10-item pilots or production waves without explicit authorisation.
+- QGEN_NEXT_STEP = `USER_REVIEW_G1_SAFE_YIELD`
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 
 ## Research-level policy

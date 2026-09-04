@@ -1,0 +1,157 @@
+{
+  "competitor_ranking_preference": [
+    "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+    "SHARED_FEATURE_COUNT",
+    "REVIEWED_SEED_STRENGTH"
+  ],
+  "currentness_escalation_triggers": [
+    "THERAPY",
+    "THRESHOLD"
+  ],
+  "discipline_codes": [
+    "MED"
+  ],
+  "evidence_source_preference": [
+    "NATIONAL_SPECIALTY_SOCIETY",
+    "NATIONAL_PUBLIC_HEALTH_AGENCY",
+    "PEER_REVIEWED_GUIDELINE"
+  ],
+  "item_archetypes": [
+    {
+      "item_archetype": "DIAGNOSIS",
+      "permitted_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "permitted_option_set_archetypes": [
+        "DIAGNOSIS_SET"
+      ],
+      "scenario_requirements": [
+        "SINGLE_ENCOUNTER"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "INVESTIGATION_SELECTION",
+      "permitted_decision_granularities": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "permitted_option_set_archetypes": [
+        "INVESTIGATION_SET"
+      ],
+      "scenario_requirements": [
+        "SINGLE_ENCOUNTER"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "PHARMACOTHERAPY",
+      "permitted_decision_granularities": [
+        "MANAGEMENT_STRATEGY",
+        "SINGLE_NEXT_ACTION"
+      ],
+      "permitted_option_set_archetypes": [
+        "MANAGEMENT_STRATEGY_SET",
+        "NEXT_ACTION_SET"
+      ],
+      "scenario_requirements": [
+        "SINGLE_ENCOUNTER"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "RISK_STRATIFICATION",
+      "permitted_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "permitted_option_set_archetypes": [
+        "NEXT_ACTION_SET"
+      ],
+      "scenario_requirements": [
+        "SINGLE_ENCOUNTER"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "INTERPRETATION",
+      "permitted_decision_granularities": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "permitted_option_set_archetypes": [
+        "INVESTIGATION_SET"
+      ],
+      "scenario_requirements": [
+        "SINGLE_ENCOUNTER"
+      ],
+      "weight": 1
+    }
+  ],
+  "numeric_risk_classes": [
+    {
+      "fact_class": "MEDICATION_DOSE",
+      "requires_independent_corroboration": false,
+      "validation_level": 2
+    },
+    {
+      "fact_class": "CLINICAL_SCORE_THRESHOLD",
+      "requires_independent_corroboration": false,
+      "validation_level": 2
+    },
+    {
+      "fact_class": "TREATMENT_THRESHOLD",
+      "requires_independent_corroboration": false,
+      "validation_level": 2
+    }
+  ],
+  "option_set_contracts": [
+    {
+      "justification": "A lone organ system exposes the key before any reasoning.",
+      "nominal_parity_axes": [
+        "organ_system"
+      ],
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "response_class_axis": "cardinal_syndrome_capability",
+      "token_implications": {}
+    },
+    {
+      "justification": "",
+      "nominal_parity_axes": [
+        "organ_system"
+      ],
+      "option_set_archetype": "INVESTIGATION_SET",
+      "response_class_axis": "investigation_purpose",
+      "token_implications": {}
+    },
+    {
+      "justification": "",
+      "nominal_parity_axes": [
+        "organ_system"
+      ],
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "response_class_axis": "next_action_class",
+      "token_implications": {}
+    },
+    {
+      "justification": "A key that is the only member of its agent class is a structural cue.",
+      "nominal_parity_axes": [
+        "drug_class"
+      ],
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "response_class_axis": "management_capability",
+      "token_implications": {}
+    }
+  ],
+  "permitted_archetype_exceptions": [],
+  "preferred_physician_activities": [
+    "Assessment/Diagnosis",
+    "Management"
+  ],
+  "profile_id": "MEDICINE",
+  "prohibited_shortcuts": [
+    "KEY_ONLY_QUALIFIER",
+    "LONE_KEY_DRUG_CLASS",
+    "OPTION_SET_MIXES_DIAGNOSIS_AND_TEST"
+  ],
+  "r4_status": "UNTESTED_IN_R4",
+  "schema_version": "1.0",
+  "scope": "QGEN_DISCIPLINE_PROFILE"
+}

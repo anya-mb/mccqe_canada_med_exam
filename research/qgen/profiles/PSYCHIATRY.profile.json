@@ -1,0 +1,174 @@
+{
+  "competitor_ranking_preference": [
+    "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+    "SHARED_FEATURE_COUNT",
+    "REVIEWED_SEED_STRENGTH"
+  ],
+  "currentness_escalation_triggers": [
+    "THERAPY",
+    "THRESHOLD",
+    "LEGAL_OR_JURISDICTIONAL"
+  ],
+  "discipline_codes": [
+    "PSY"
+  ],
+  "evidence_source_preference": [
+    "NATIONAL_SPECIALTY_SOCIETY",
+    "PEER_REVIEWED_GUIDELINE"
+  ],
+  "item_archetypes": [
+    {
+      "item_archetype": "DIAGNOSIS",
+      "permitted_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "permitted_option_set_archetypes": [
+        "DIAGNOSIS_SET"
+      ],
+      "scenario_requirements": [
+        "LONGITUDINAL_COURSE",
+        "COLLATERAL_SOURCE"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "SAFETY_ASSESSMENT",
+      "permitted_decision_granularities": [
+        "DISPOSITION"
+      ],
+      "permitted_option_set_archetypes": [
+        "DISPOSITION_SET"
+      ],
+      "scenario_requirements": [
+        "LONGITUDINAL_COURSE",
+        "COLLATERAL_SOURCE",
+        "EXPLICIT_RISK_INVENTORY"
+      ],
+      "scenario_rules": [
+        "PITCHED_AT_DISCRIMINATION_BAND"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "LONGITUDINAL_DIFFERENTIAL",
+      "permitted_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "permitted_option_set_archetypes": [
+        "DIAGNOSIS_SET"
+      ],
+      "scenario_requirements": [
+        "LONGITUDINAL_COURSE",
+        "COLLATERAL_SOURCE"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "PHARMACOTHERAPY",
+      "permitted_decision_granularities": [
+        "MANAGEMENT_STRATEGY"
+      ],
+      "permitted_option_set_archetypes": [
+        "MANAGEMENT_STRATEGY_SET"
+      ],
+      "scenario_requirements": [
+        "LONGITUDINAL_COURSE"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "COMMUNICATION_AND_CAPACITY",
+      "permitted_decision_granularities": [
+        "SINGLE_NEXT_ACTION",
+        "ETHICAL_ACTION"
+      ],
+      "permitted_option_set_archetypes": [
+        "NEXT_ACTION_SET",
+        "ETHICAL_ACTION_SET"
+      ],
+      "scenario_requirements": [
+        "LONGITUDINAL_COURSE"
+      ],
+      "weight": 1
+    }
+  ],
+  "numeric_risk_classes": [
+    {
+      "fact_class": "GUIDELINE_SEVERITY_BAND",
+      "requires_independent_corroboration": true,
+      "validation_level": 2
+    },
+    {
+      "fact_class": "MEDICATION_DOSE",
+      "requires_independent_corroboration": false,
+      "validation_level": 2
+    }
+  ],
+  "option_set_contracts": [
+    {
+      "justification": "",
+      "nominal_parity_axes": [],
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "response_class_axis": "cardinal_syndrome_capability",
+      "token_implications": {}
+    },
+    {
+      "justification": "Where the stem establishes imminent risk, an option that secures nothing is not a competitor.",
+      "nominal_parity_axes": [
+        "care_setting"
+      ],
+      "option_set_archetype": "DISPOSITION_SET",
+      "response_class_axis": "safety_securing_class",
+      "token_implications": {
+        "COMMUNITY_SAFETY_MEASURE": [
+          "SECURES_IMMEDIATE_SAFETY"
+        ],
+        "INTENSIVE_COMMUNITY": [
+          "SECURES_IMMEDIATE_SAFETY"
+        ],
+        "INVOLUNTARY_OR_INPATIENT": [
+          "SECURES_IMMEDIATE_SAFETY"
+        ]
+      }
+    },
+    {
+      "justification": "",
+      "nominal_parity_axes": [
+        "care_setting"
+      ],
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "response_class_axis": "management_capability",
+      "token_implications": {}
+    },
+    {
+      "justification": "",
+      "nominal_parity_axes": [
+        "care_setting"
+      ],
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "response_class_axis": "next_action_class",
+      "token_implications": {}
+    },
+    {
+      "justification": "",
+      "nominal_parity_axes": [],
+      "option_set_archetype": "ETHICAL_ACTION_SET",
+      "response_class_axis": "value_served",
+      "token_implications": {}
+    }
+  ],
+  "permitted_archetype_exceptions": [],
+  "preferred_physician_activities": [
+    "Assessment/Diagnosis",
+    "Management",
+    "Communication"
+  ],
+  "profile_id": "PSYCHIATRY",
+  "prohibited_shortcuts": [
+    "RATING_SCALE_AS_DISPOSITION_DETERMINANT",
+    "TREATMENT_OFFERED_BEFORE_SAFETY"
+  ],
+  "r4_status": "TESTED_IN_R4",
+  "schema_version": "1.0",
+  "scope": "QGEN_DISCIPLINE_PROFILE"
+}

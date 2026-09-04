@@ -1,0 +1,616 @@
+{
+  "accepted_item_ids": [
+    "G1-MED-02",
+    "G1-OBGYN-01",
+    "G1-PHELO-01",
+    "G1-PSY-01",
+    "G1-SURG-01"
+  ],
+  "admissibility_positive_controls": [
+    {
+      "fired": true,
+      "probe_id": "PROBE-ADM1-SOURCE-CONTROL",
+      "rule_verdicts": {
+        "ADM_1": "FAIL",
+        "ADM_2": "PASS",
+        "ADM_3": "PASS",
+        "ADM_4": "PASS",
+        "ADM_5": "PASS"
+      },
+      "targets_rule": "ADM_1",
+      "verdict": "INADMISSIBLE"
+    },
+    {
+      "fired": true,
+      "probe_id": "PROBE-ADM2-LONE-ORGAN-SYSTEM",
+      "rule_verdicts": {
+        "ADM_1": "PASS",
+        "ADM_2": "FAIL",
+        "ADM_3": "PASS",
+        "ADM_4": "PASS",
+        "ADM_5": "PASS"
+      },
+      "targets_rule": "ADM_2",
+      "verdict": "INADMISSIBLE"
+    },
+    {
+      "fired": true,
+      "probe_id": "PROBE-ADM3-PLANTED-NEGATION",
+      "rule_verdicts": {
+        "ADM_1": "PASS",
+        "ADM_2": "PASS",
+        "ADM_3": "FAIL",
+        "ADM_4": "PASS",
+        "ADM_5": "PASS"
+      },
+      "targets_rule": "ADM_3",
+      "verdict": "INADMISSIBLE"
+    },
+    {
+      "fired": true,
+      "probe_id": "PROBE-ADM4-STEM-ENACTED",
+      "rule_verdicts": {
+        "ADM_1": "PASS",
+        "ADM_2": "PASS",
+        "ADM_3": "PASS",
+        "ADM_4": "FAIL",
+        "ADM_5": "PASS"
+      },
+      "targets_rule": "ADM_4",
+      "verdict": "INADMISSIBLE"
+    },
+    {
+      "fired": true,
+      "probe_id": "PROBE-ADM5-FORMAT-PARITY",
+      "rule_verdicts": {
+        "ADM_1": "PASS",
+        "ADM_2": "PASS",
+        "ADM_3": "PASS",
+        "ADM_4": "PASS",
+        "ADM_5": "FAIL"
+      },
+      "targets_rule": "ADM_5",
+      "verdict": "INADMISSIBLE"
+    }
+  ],
+  "coverage_by_discipline": {
+    "MED": {
+      "ACCEPTED": 1,
+      "REJECTED": 1
+    },
+    "OBGYN": {
+      "ACCEPTED": 1
+    },
+    "PED": {
+      "REDUNDANT": 1,
+      "REJECTED": 1
+    },
+    "PHELO": {
+      "ACCEPTED": 1
+    },
+    "PSY": {
+      "ACCEPTED": 1,
+      "NO_SAFE_ITEM": 2
+    },
+    "SURG": {
+      "ACCEPTED": 1,
+      "NO_SAFE_ITEM": 1
+    }
+  },
+  "coverage_by_item_archetype": {
+    "DIAGNOSIS": {
+      "ACCEPTED": 1,
+      "NO_SAFE_ITEM": 1
+    },
+    "EPIDEMIOLOGY_INTERPRETATION": {
+      "ACCEPTED": 1
+    },
+    "IMAGING_SELECTION": {
+      "ACCEPTED": 1
+    },
+    "PHARMACOTHERAPY": {
+      "NO_SAFE_ITEM": 1,
+      "REJECTED": 1
+    },
+    "PREGNANCY_DATED_DIAGNOSIS": {
+      "ACCEPTED": 1
+    },
+    "RECOGNITION": {
+      "NO_SAFE_ITEM": 1
+    },
+    "RED_FLAG_RECOGNITION": {
+      "REDUNDANT": 1
+    },
+    "SAFETY_ASSESSMENT": {
+      "ACCEPTED": 1
+    },
+    "SUPPORTIVE_CARE_CEILING": {
+      "REJECTED": 1
+    }
+  },
+  "coverage_by_learner_decision": {
+    "LD-C21-02": "REJECTED",
+    "LD-C21-03": "ACCEPTED",
+    "LD-GS76-01": "NO_SAFE_ITEM",
+    "LD-GS76-02": "ACCEPTED",
+    "LD-OB54-04": "ACCEPTED",
+    "LD-P147-04": "REDUNDANT",
+    "LD-PH07-01": "ACCEPTED",
+    "LD-PS12-02": "ACCEPTED",
+    "LD-PS12-03": "NO_SAFE_ITEM",
+    "LD-PS12-04": "NO_SAFE_ITEM"
+  },
+  "coverage_by_priority_class": {
+    "CORE": {
+      "ACCEPTED": 4,
+      "NO_SAFE_ITEM": 3,
+      "REDUNDANT": 1,
+      "REJECTED": 2
+    },
+    "IMPORTANT": {
+      "ACCEPTED": 1
+    }
+  },
+  "gate_evaluation": {
+    "failures": [],
+    "gate": "G1",
+    "reported": {
+      "accepted": 5,
+      "attempted_opportunities": 11,
+      "fail_closed_by_reason": {
+        "FAIL_CLOSED_ERRONEOUS_SOURCE_FACT": 1,
+        "FAIL_CLOSED_INCOHERENT_OPTION_SET_ARCHETYPE": 1,
+        "FAIL_CLOSED_UNRESOLVED_CRITICAL_FACT": 1
+      },
+      "fail_closed_count": 3,
+      "redundant_count": 1,
+      "rejected_count": 2
+    },
+    "result": "PASS",
+    "verdict_variance": {
+      "gate_families": {
+        "ADM_1": [
+          "FAIL",
+          "PASS"
+        ],
+        "ADM_2": [
+          "FAIL",
+          "PASS"
+        ],
+        "ADM_3": [
+          "FAIL",
+          "PASS"
+        ],
+        "ADM_4": [
+          "FAIL",
+          "PASS"
+        ],
+        "ADM_5": [
+          "FAIL",
+          "PASS"
+        ],
+        "CRITICAL_FACT_ADJUDICATION": [
+          "FAIL",
+          "PASS"
+        ],
+        "MARGINAL_EDUCATIONAL_VALUE": [
+          "NOVEL",
+          "REDUNDANT"
+        ]
+      },
+      "uninformative_gate_families": [],
+      "verdict_variance": "PASS"
+    }
+  },
+  "reported": {
+    "accepted_safe_yield": 5,
+    "attempted_opportunities": 11,
+    "fail_closed_by_reason": {
+      "FAIL_CLOSED_ERRONEOUS_SOURCE_FACT": 1,
+      "FAIL_CLOSED_INCOHERENT_OPTION_SET_ARCHETYPE": 1,
+      "FAIL_CLOSED_UNRESOLVED_CRITICAL_FACT": 1
+    },
+    "no_safe_item": 3,
+    "redundant": 1,
+    "rejected": 2,
+    "safe_yield_rate_diagnostic_only": 0.4545
+  },
+  "results": [
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [
+          "organ_system"
+        ],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "next_action_class",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "awaiting": "FRESH_INDEPENDENT_VERIFICATION",
+      "discipline": "MED",
+      "independent_verification": "FAIL",
+      "item_archetype": "PHARMACOTHERAPY",
+      "item_id": "G1-MED-01",
+      "learner_decision_id": "LD-C21-02",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-8c9d37789423093614afcc27",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "priority_class": "CORE",
+      "reviewer_defects": [
+        {
+          "category": "WEAK_DISTRACTOR",
+          "detail": "Option D, awaiting the second high-sensitivity troponin, has no anchor in a stem that supplies an unambiguously diagnostic ST-elevation tracing, so it is not a live choice and the effective option set is three."
+        }
+      ],
+      "state": "REJECTED",
+      "wave_label": "G1-MED-01"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "HEMODYNAMIC_INSTABILITY",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [
+          "organ_system"
+        ],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "cardinal_syndrome_capability",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "awaiting": "FRESH_INDEPENDENT_VERIFICATION",
+      "discipline": "MED",
+      "independent_verification": "PASS",
+      "item_archetype": "DIAGNOSIS",
+      "item_id": "G1-MED-02",
+      "learner_decision_id": "LD-C21-03",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-e9fc6ec97c8d216ce896203b",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "priority_class": "CORE",
+      "state": "ACCEPTED",
+      "wave_label": "G1-MED-02"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [
+          "age_appropriateness"
+        ],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "next_action_class",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "awaiting": "FRESH_INDEPENDENT_VERIFICATION",
+      "discipline": "PED",
+      "independent_verification": "FAIL",
+      "item_archetype": "SUPPORTIVE_CARE_CEILING",
+      "item_id": "G1-PED-01",
+      "learner_decision_id": "LD-P147-04",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-c3ca2da3bb482af0d5d41f39",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "priority_class": "CORE",
+      "reviewer_defects": [
+        {
+          "category": "WEAK_DISTRACTOR",
+          "detail": "Option C, restarting supplemental oxygen, is foreclosed by a stem that states she has held room-air saturations of 93 to 95 percent for a day with settled work of breathing, so no partially knowledgeable candidate has a reason to select it."
+        }
+      ],
+      "state": "REJECTED",
+      "wave_label": "G1-PED-01"
+    },
+    {
+      "discipline": "PED",
+      "item_archetype": "RED_FLAG_RECOGNITION",
+      "learner_decision_id": "LD-P147-04",
+      "novelty_basis": "REPEATS_AN_ALREADY_ACCEPTED_ITEM",
+      "novelty_verdict": "REDUNDANT",
+      "opportunity_id": "QOPP-e013e0db6adf04e7681c2682",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "priority_class": "CORE",
+      "state": "REDUNDANT",
+      "wave_label": "G1-PED-02"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "EXPLANATION_OF_OBSERVED_PHENOMENON",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "explained_phenomenon_class",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "awaiting": "FRESH_INDEPENDENT_VERIFICATION",
+      "discipline": "PHELO",
+      "independent_verification": "PASS",
+      "item_archetype": "EPIDEMIOLOGY_INTERPRETATION",
+      "item_id": "G1-PHELO-01",
+      "learner_decision_id": "LD-PH07-01",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-4773ab26c417964c98894d6c",
+      "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+      "priority_class": "CORE",
+      "state": "ACCEPTED",
+      "wave_label": "G1-PHELO-01"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "DISPOSITION_DECISION",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [
+          "care_setting"
+        ],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "DISPOSITION_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "safety_securing_class",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "awaiting": "FRESH_INDEPENDENT_VERIFICATION",
+      "discipline": "PSY",
+      "independent_verification": "PASS",
+      "item_archetype": "SAFETY_ASSESSMENT",
+      "item_id": "G1-PSY-01",
+      "learner_decision_id": "LD-PS12-02",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-f475191976ced2f3a0e912d5",
+      "option_set_archetype": "DISPOSITION_SET",
+      "priority_class": "CORE",
+      "state": "ACCEPTED",
+      "wave_label": "G1-PSY-01"
+    },
+    {
+      "critical_fact_failures": [
+        {
+          "basis": "PROFILE_REQUIRES_INDEPENDENT_CORROBORATION: GUIDELINE_SEVERITY_BAND",
+          "claim_id": "CLM-R4-PSY-MILD",
+          "fact_classes": [
+            "GUIDELINE_SEVERITY_BAND"
+          ],
+          "sanity_checks": []
+        },
+        {
+          "basis": "PROFILE_REQUIRES_INDEPENDENT_CORROBORATION: GUIDELINE_SEVERITY_BAND",
+          "claim_id": "CLM-R4-PSY-EXERCISE",
+          "fact_classes": [
+            "GUIDELINE_SEVERITY_BAND",
+            "NUMERIC_VALUE",
+            "TIME_WINDOW",
+            "UNIT"
+          ],
+          "sanity_checks": []
+        }
+      ],
+      "discipline": "PSY",
+      "fail_closed_reason": "FAIL_CLOSED_UNRESOLVED_CRITICAL_FACT",
+      "item_archetype": "PHARMACOTHERAPY",
+      "learner_decision_id": "LD-PS12-03",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-7d879c81066b549b00107721",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "priority_class": "CORE",
+      "reopens_on": "A_COMPLETED_LEVEL_3_ADJUDICATION",
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G1-PSY-02"
+    },
+    {
+      "detail": "PSYCHIATRY: INVESTIGATION_SET is not permitted for DIAGNOSIS",
+      "discipline": "PSY",
+      "fail_closed_reason": "FAIL_CLOSED_INCOHERENT_OPTION_SET_ARCHETYPE",
+      "item_archetype": "DIAGNOSIS",
+      "learner_decision_id": "LD-PS12-04",
+      "opportunity_id": "QOPP-f7843aa2eef59c9b99a6e491",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "priority_class": "CORE",
+      "reopens_on": "AN_AUTHORISED_PROFILE_EXTENSION",
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G1-PSY-03"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "DIAGNOSTIC_ADVANCEMENT",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [
+          "organ_system"
+        ],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "INVESTIGATION_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "investigation_purpose",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "awaiting": "FRESH_INDEPENDENT_VERIFICATION",
+      "discipline": "SURG",
+      "independent_verification": "PASS",
+      "item_archetype": "IMAGING_SELECTION",
+      "item_id": "G1-SURG-01",
+      "learner_decision_id": "LD-GS76-02",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-714fa249ef13476662a9c146",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "priority_class": "CORE",
+      "state": "ACCEPTED",
+      "wave_label": "G1-SURG-01"
+    },
+    {
+      "critical_fact_failures": [
+        {
+          "basis": "SOURCE_SANITY_CHECK_TRIPPED",
+          "claim_id": "CLM-R4-SURG-PRESENTATION",
+          "fact_classes": [
+            "ANATOMICAL_MEASUREMENT",
+            "EPIDEMIOLOGIC_VALUE",
+            "NUMERIC_VALUE",
+            "UNIT"
+          ],
+          "sanity_checks": [
+            "IMPLAUSIBLE_MAGNITUDE",
+            "STRUCTURED_REFERENCE_CONTRADICTION",
+            "UNIT_TRANSPOSITION_SUSPICION"
+          ]
+        }
+      ],
+      "discipline": "SURG",
+      "fail_closed_reason": "FAIL_CLOSED_ERRONEOUS_SOURCE_FACT",
+      "item_archetype": "RECOGNITION",
+      "learner_decision_id": "LD-GS76-01",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-0de5f917778b8e286e41542b",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "priority_class": "CORE",
+      "reopens_on": "A_CORRECTED_OR_SUPERSEDING_SOURCE",
+      "state": "NO_SAFE_ITEM",
+      "wave_label": "G1-SURG-02"
+    },
+    {
+      "admissibility": {
+        "admissible_competitor_count": 3,
+        "demanded_response_class": "PALPABLE_MASS_OR_FLUID_COLLECTION",
+        "fail_closed_reason": null,
+        "inadmissible_options": [],
+        "nominal_parity_axes": [
+          "inflammatory_state",
+          "gestational_applicability"
+        ],
+        "nominal_parity_defects": [],
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "realization_parity_defects": [],
+        "response_class_axis": "cardinal_syndrome_capability",
+        "rule_verdicts": {
+          "ADM_1": "PASS",
+          "ADM_2": "PASS",
+          "ADM_3": "PASS",
+          "ADM_4": "PASS",
+          "ADM_5": "PASS"
+        },
+        "verdict": "ADMISSIBLE"
+      },
+      "awaiting": "FRESH_INDEPENDENT_VERIFICATION",
+      "discipline": "OBGYN",
+      "independent_verification": "PASS",
+      "item_archetype": "PREGNANCY_DATED_DIAGNOSIS",
+      "item_id": "G1-OBGYN-01",
+      "learner_decision_id": "LD-OB54-04",
+      "novelty_verdict": "NOVEL_DECISION",
+      "opportunity_id": "QOPP-b2c064306cd79267c92ae97b",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "priority_class": "IMPORTANT",
+      "state": "ACCEPTED",
+      "wave_label": "G1-OBGYN-01"
+    }
+  ],
+  "retry_decisions": [
+    {
+      "failure_level": "OPTION_SET_SELECTION",
+      "reason": "Only a realization-level failure is retryable.",
+      "retry_permitted": false,
+      "wave_label": "G1-MED-01"
+    },
+    {
+      "failure_level": "OPTION_SET_SELECTION",
+      "reason": "Only a realization-level failure is retryable.",
+      "retry_permitted": false,
+      "wave_label": "G1-PED-01"
+    }
+  ],
+  "schema_version": "1.0",
+  "scope": "QGEN_G1_SAFE_YIELD_MICRO_PILOT_EXECUTION",
+  "verdict_variance": {
+    "gate_families": {
+      "ADM_1": [
+        "FAIL",
+        "PASS"
+      ],
+      "ADM_2": [
+        "FAIL",
+        "PASS"
+      ],
+      "ADM_3": [
+        "FAIL",
+        "PASS"
+      ],
+      "ADM_4": [
+        "FAIL",
+        "PASS"
+      ],
+      "ADM_5": [
+        "FAIL",
+        "PASS"
+      ],
+      "CRITICAL_FACT_ADJUDICATION": [
+        "FAIL",
+        "PASS"
+      ],
+      "MARGINAL_EDUCATIONAL_VALUE": [
+        "NOVEL",
+        "REDUNDANT"
+      ]
+    },
+    "uninformative_gate_families": [],
+    "verdict_variance": "PASS"
+  },
+  "wave_id": "g1_safe_yield_micro_pilot"
+}

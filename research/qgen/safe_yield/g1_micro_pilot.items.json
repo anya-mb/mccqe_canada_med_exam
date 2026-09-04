@@ -1,0 +1,751 @@
+{
+  "items": [
+    {
+      "decisive_discriminator": "The expected first-medical-contact-to-device time exceeds the interval beyond which fibrinolysis becomes the reperfusion choice, and nothing prohibits fibrinolysis, so lysis is given now and transfer for angiography follows as a routine part of the strategy rather than as a response to failure.",
+      "discipline": "MED",
+      "discipline_profile_id": "MEDICINE",
+      "evidence_packet": "research/qgen/pilot/QGEN-MED-007.acs-chapter-review-pilot-10.evidence.json",
+      "evidence_refs": [
+        "CLM-ACS-PHARMACOINVASIVE-01",
+        "CLM-ACS-FIBRINOLYSIS-CONTRA-PPCI-01",
+        "CLM-ACS-REPERFUSION-NO-DELAY-01"
+      ],
+      "item_archetype": "PHARMACOTHERAPY",
+      "item_id": "G1-MED-01",
+      "lead_in": "What is the most appropriate next step in his management?",
+      "learner_decision_id": "LD-C21-02",
+      "opportunity_label": "G1-MED-01",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Transfer immediately for primary percutaneous coronary intervention without fibrinolysis"
+        },
+        {
+          "key": "B",
+          "role": "KEY",
+          "text": "Give fibrinolysis now and transfer routinely for angiography"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Give fibrinolysis now and keep him locally, arranging angiography only if ischaemia recurs"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Await the second high-sensitivity troponin before choosing a reperfusion strategy"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "Transferring for primary intervention would be right if device therapy were reachable inside the accepted interval, or if something prohibited lysis. Neither holds here: the estimate is about 150 minutes and his history is clear, so choosing transfer alone spends the advantage that lysis now would have preserved.",
+          "C": "Giving lysis is correct; keeping him locally afterwards is not. Routine rapid transfer with angiography after successful lysis is part of the strategy, not a rescue reserved for recurrent ischaemia, so this option delivers half of the recommended pathway.",
+          "D": "The second troponin cannot change what the electrocardiogram has already established, and reperfusion in a diagnostic ST-elevation infarct is not delayed for biomarkers or for further testing unless that testing would immediately change management."
+        },
+        "key": "The electrocardiogram is diagnostic of an inferior ST-elevation infarct, so reperfusion is required now. The decision is only about route. The receiving team estimates a first-medical-contact-to-device time of about 150 minutes, which is beyond the interval at which primary intervention retains its advantage, and his history discloses nothing that prohibits lysis. Fibrinolysis is therefore the reperfusion choice, and in an early presenter at low bleeding risk it is given as part of a pharmacoinvasive strategy in which transfer to a catheterisation centre and angiography follow as a matter of routine."
+      },
+      "stem": "A 62-year-old man arrives at a rural hospital 70 minutes after the onset of crushing central chest pain. He is alert, with a blood pressure of 134/82 mmHg and a heart rate of 88 beats/min, and his chest is clear. The electrocardiogram shows 3 mm of ST elevation in leads II, III and aVF with reciprocal depression in I and aVL. The nearest catheterisation laboratory is a 2-hour transfer away and the receiving team estimates that the time from first medical contact to device would be about 150 minutes. He takes no anticoagulant, has had no stroke, surgery, bleeding or head injury, and his blood pressure has never been high.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "DIAGNOSTIC_FINDING",
+          "feature_id": "F-STEMI",
+          "inference_type": "IMAGING_PATTERN",
+          "normalized_feature": "inferior ST elevation with reciprocal change on the electrocardiogram",
+          "polarity": "PRESENT",
+          "source_span": "3 mm of ST elevation in leads II, III and aVF with reciprocal depression in I and aVL"
+        },
+        {
+          "clinical_role": "TIME_COURSE",
+          "feature_id": "F-EARLY",
+          "inference_type": "TIME_COURSE",
+          "normalized_feature": "presentation within the first hours of symptom onset",
+          "polarity": "PRESENT",
+          "source_span": "70 minutes after the onset of crushing central chest pain"
+        },
+        {
+          "clinical_role": "SYSTEM_CONSTRAINT",
+          "feature_id": "F-DELAY",
+          "inference_type": "EXPLICIT_FINDING",
+          "normalized_feature": "an expected first-medical-contact-to-device time of about 150 minutes",
+          "polarity": "PRESENT",
+          "source_span": "the time from first medical contact to device would be about 150 minutes"
+        },
+        {
+          "clinical_role": "TREATMENT_ELIGIBILITY",
+          "feature_id": "F-NO-CONTRA",
+          "inference_type": "ABSENT_FINDING",
+          "normalized_feature": "no contraindication to fibrinolysis on history",
+          "polarity": "ABSENT",
+          "source_span": "has had no stroke, surgery, bleeding or head injury"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "F-STABLE",
+          "inference_type": "LABORATORY_PATTERN",
+          "normalized_feature": "a normal blood pressure and heart rate with clear lung fields",
+          "polarity": "PRESENT",
+          "source_span": "blood pressure of 134/82 mmHg and a heart rate of 88 beats/min, and his chest is clear"
+        },
+        {
+          "clinical_role": "INTEGRATED_CLINICAL_INFERENCE",
+          "derived_from": [
+            "F-STEMI",
+            "F-DELAY",
+            "F-NO-CONTRA"
+          ],
+          "feature_id": "F-LYSIS-INDICATED",
+          "inference_type": "INTEGRATED_INFERENCE",
+          "normalized_feature": "a diagnostic ST-elevation infarct at a centre where timely device therapy is not reachable and lysis is permitted",
+          "polarity": "PRESENT"
+        }
+      ]
+    },
+    {
+      "decisive_discriminator": "The new structural lesion on echocardiography is severe eccentric mitral regurgitation, which locates the lesion at the mitral apparatus rather than at the septum, the free wall, or in the coronary circulation.",
+      "discipline": "MED",
+      "discipline_profile_id": "MEDICINE",
+      "evidence_packet": "research/qgen/pilot/QGEN-MED-007.acs-chapter-review-pilot-10.evidence.json",
+      "evidence_refs": [
+        "CLM-ACS-PAPILLARY-RUPTURE-DIFFERENTIAL-01",
+        "CLM-ACS-AMI-CARDIOGENIC-SHOCK-01"
+      ],
+      "item_archetype": "DIAGNOSIS",
+      "item_id": "G1-MED-02",
+      "lead_in": "Which complication best explains her deterioration?",
+      "learner_decision_id": "LD-C21-03",
+      "opportunity_label": "G1-MED-02",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Ventricular septal rupture"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Left ventricular free-wall rupture"
+        },
+        {
+          "key": "C",
+          "role": "KEY",
+          "text": "Papillary muscle rupture"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Recurrent ischaemia with re-infarction"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "Septal rupture also causes abrupt post-infarct collapse and a new murmur, which is why it is the closest alternative, but its lesion is a left-to-right shunt across the septum. The regurgitant lesion seen here is at the mitral valve, not the septum.",
+          "B": "Free-wall rupture is a rupture of the same era and would also present with abrupt collapse, but it declares itself as pericardial fluid and tamponade, often with electromechanical dissociation, rather than as a severe regurgitant jet with a perfusing rhythm and a murmur.",
+          "D": "Recurrent ischaemia is the commonest cause of post-infarct deterioration and is a reasonable first thought, but it is supported by recurrent ischaemic pain with recurrent ST elevation and re-elevated biomarkers. It does not create a new severe regurgitant lesion with preserved ventricular function."
+        },
+        "key": "Abrupt pulmonary oedema and shock on the fourth day after a transmural inferior infarct, with a new apical systolic murmur and severe eccentric mitral regurgitation on echocardiography, place the new lesion at the mitral apparatus. Papillary muscle rupture characteristically appears three to five days after a transmural inferior or lateral infarct and produces exactly this picture of abrupt pulmonary oedema with severe, often eccentric regurgitation."
+      },
+      "stem": "A 71-year-old woman is on the fourth day of admission after an inferior ST-elevation myocardial infarction treated with primary percutaneous coronary intervention. She had been walking on the ward. Over twenty minutes she becomes acutely breathless and cannot lie flat. Blood pressure is 82/50 mmHg, heart rate is 118 beats/min and sinus, and she is cool peripherally. There are crackles to both mid-zones and a new apical systolic murmur radiating to the axilla. A focused bedside echocardiogram shows severe eccentric mitral regurgitation with preserved left ventricular systolic function.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "TIME_COURSE",
+          "feature_id": "F-DAY4",
+          "inference_type": "TIME_COURSE",
+          "normalized_feature": "deterioration on the fourth day after a transmural inferior infarct",
+          "polarity": "PRESENT",
+          "source_span": "the fourth day of admission after an inferior ST-elevation myocardial infarction"
+        },
+        {
+          "clinical_role": "SYMPTOM_ONSET",
+          "feature_id": "F-ABRUPT",
+          "inference_type": "EXPLICIT_FINDING",
+          "normalized_feature": "abrupt breathlessness with orthopnoea over twenty minutes",
+          "polarity": "PRESENT",
+          "source_span": "Over twenty minutes she becomes acutely breathless and cannot lie flat"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "F-SHOCK",
+          "inference_type": "LABORATORY_PATTERN",
+          "normalized_feature": "hypotension with tachycardia and cool peripheries",
+          "polarity": "PRESENT",
+          "source_span": "Blood pressure is 82/50 mmHg, heart rate is 118 beats/min and sinus, and she is cool peripherally"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "F-OEDEMA",
+          "inference_type": "EXPLICIT_FINDING",
+          "normalized_feature": "pulmonary crackles to both mid-zones",
+          "polarity": "PRESENT",
+          "source_span": "There are crackles to both mid-zones"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "F-MURMUR",
+          "inference_type": "EXPLICIT_FINDING",
+          "normalized_feature": "a new apical systolic murmur radiating to the axilla",
+          "polarity": "PRESENT",
+          "source_span": "a new apical systolic murmur radiating to the axilla"
+        },
+        {
+          "clinical_role": "IMAGING_FINDING",
+          "feature_id": "F-MR",
+          "inference_type": "IMAGING_PATTERN",
+          "normalized_feature": "severe eccentric mitral regurgitation with preserved left ventricular systolic function on echocardiography",
+          "polarity": "PRESENT",
+          "source_span": "severe eccentric mitral regurgitation with preserved left ventricular systolic function"
+        },
+        {
+          "clinical_role": "INTEGRATED_CLINICAL_INFERENCE",
+          "derived_from": [
+            "F-MR",
+            "F-MURMUR",
+            "F-SHOCK"
+          ],
+          "feature_id": "F-MITRAL-LESION",
+          "inference_type": "INTEGRATED_INFERENCE",
+          "normalized_feature": "an abrupt low-output state explained by a new structural lesion of the mitral apparatus",
+          "polarity": "PRESENT"
+        }
+      ]
+    },
+    {
+      "decisive_discriminator": "Every discharge criterion is met except adequate oral intake, and oral intake is one of the criteria rather than an optional extra, so the admission continues for that reason alone.",
+      "discipline": "PED",
+      "discipline_profile_id": "PEDIATRICS",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R4-PED-DISCHARGE",
+        "CLM-R2-PED-DX-ANCHOR"
+      ],
+      "item_archetype": "SUPPORTIVE_CARE_CEILING",
+      "item_id": "G1-PED-01",
+      "lead_in": "What is the most appropriate next step in her management?",
+      "learner_decision_id": "LD-P147-04",
+      "opportunity_label": "G1-PED-01",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Discharge her home today with the review already booked"
+        },
+        {
+          "key": "B",
+          "role": "KEY",
+          "text": "Continue the admission and reassess her oral intake"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Restart supplemental oxygen and reassess in the morning"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Obtain a chest radiograph before deciding on discharge"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "This is the option a candidate reaches by counting the respiratory criteria and the paperwork and stopping there. Adequate oral intake is a criterion in its own right, and a booked review does not substitute for it in a child who is drinking a third of her usual volumes.",
+          "C": "Oxygen is directed at the criterion she has already met. She has held 93 to 95 percent in room air since yesterday, so restarting oxygen treats a problem she no longer has and leaves the one she does have untouched.",
+          "D": "Radiography is not part of the discharge decision in this illness, and nothing in her course suggests a complication that would change management. It would delay the reassessment that actually decides the question."
+        },
+        "key": "Discharge in this illness turns on a set of criteria taken together: improved work of breathing and tachypnoea, saturations maintained off oxygen, adequate oral feeding, and education given with follow-up arranged. Three of those are satisfied. Oral intake is not: she is taking about a third of her usual volumes, vomiting after feeds and passing less urine. The admission continues for that reason, and for no other."
+      },
+      "stem": "A 9-month-old girl is on the third day of admission with bronchiolitis. Her work of breathing has settled, her respiratory rate has fallen from 68 to 44 breaths per minute, and she has maintained saturations of 93 to 95 percent in room air since supplemental oxygen was stopped yesterday morning. She is alert and interactive. Over the past 12 hours she has taken about a third of her usual bottle volumes and has vomited twice after feeds, and her nappies are drier than usual. Discharge teaching has been completed with her parents and a family physician review has been booked for tomorrow.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "F-WOB",
+          "inference_type": "TIME_COURSE",
+          "normalized_feature": "improved work of breathing with a falling respiratory rate",
+          "polarity": "PRESENT",
+          "source_span": "Her work of breathing has settled, her respiratory rate has fallen from 68 to 44"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "F-SATS",
+          "inference_type": "LABORATORY_PATTERN",
+          "normalized_feature": "saturations maintained in room air since supplemental oxygen was stopped",
+          "polarity": "PRESENT",
+          "source_span": "maintained saturations of 93 to 95 percent in room air since supplemental oxygen was stopped yesterday morning"
+        },
+        {
+          "clinical_role": "FEEDING_STATUS",
+          "feature_id": "F-INTAKE",
+          "inference_type": "EXPLICIT_FINDING",
+          "normalized_feature": "oral intake at about a third of usual volumes with vomiting after feeds and drier nappies",
+          "polarity": "PRESENT",
+          "source_span": "she has taken about a third of her usual bottle volumes and has vomited twice after feeds"
+        },
+        {
+          "clinical_role": "DISCHARGE_PLANNING",
+          "feature_id": "F-TEACHING",
+          "inference_type": "EXPLICIT_FINDING",
+          "normalized_feature": "discharge teaching completed and follow-up booked",
+          "polarity": "PRESENT",
+          "source_span": "Discharge teaching has been completed with her parents and a family physician review has been booked"
+        },
+        {
+          "clinical_role": "INTEGRATED_CLINICAL_INFERENCE",
+          "derived_from": [
+            "F-WOB",
+            "F-SATS",
+            "F-INTAKE",
+            "F-TEACHING"
+          ],
+          "feature_id": "F-ONE-CRITERION",
+          "inference_type": "INTEGRATED_INFERENCE",
+          "normalized_feature": "a child meeting every discharge criterion except adequate oral intake",
+          "polarity": "PRESENT"
+        }
+      ]
+    },
+    {
+      "decisive_discriminator": "The area is firm and mass-like without fluctuance and it followed a treated acute bacterial mastitis, which is the described trajectory of a phlegmon and not that of a drainable collection, of a milder indolent process, or of a neoplastic one.",
+      "discipline": "OBGYN",
+      "discipline_profile_id": "OBGYN",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R4-OB-PHLEGMON",
+        "CLM-R2-OB-ABSCESS",
+        "CLM-R4-OB-SUBACUTE",
+        "CLM-R2-OB-IBC"
+      ],
+      "item_archetype": "PREGNANCY_DATED_DIAGNOSIS",
+      "item_id": "G1-OBGYN-01",
+      "lead_in": "What is the most likely diagnosis?",
+      "learner_decision_id": "LD-OB54-04",
+      "opportunity_label": "G1-OBGYN-01",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Lactational breast abscess"
+        },
+        {
+          "key": "B",
+          "role": "KEY",
+          "text": "Breast phlegmon"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Subacute mastitis"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Inflammatory breast cancer"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "An abscess is the other collection that follows mastitis and is the closest alternative, developing in a minority of women with acute mastitis. It presents as an infected fluid collection in a well-defined area, usually with a palpable fluctuant swelling. This mass is firm throughout with no distinct border, which is the difference between organised inflammation and pus.",
+          "C": "Subacute mastitis is a real and under-recognised cause of a persistent breast complaint after antibiotics, which makes it tempting here. Its organisms do not produce the toxins of acute bacterial mastitis, so it runs with milder local symptoms, needle-like burning pain and nipple blebs, rather than following a florid acute episode with an enlarging firm mass.",
+          "D": "Inflammatory breast cancer must be considered whenever a breast inflammatory picture fails to resolve, and missing it is the serious error. The concern is raised by skin thickening, breast retraction and a peau d'orange appearance. Her skin is of normal texture and there is no retraction, and her acute illness did resolve on antibiotics."
+        },
+        "key": "A phlegmon is what a mastitis becomes when the inflammation organises rather than liquefies. It is suspected exactly here: a history of mastitis that worsens locally into a firm, mass-like area that is not fluctuant. Her systemic illness resolved on antibiotics while the local mass grew, which is the trajectory this entity follows, and ultrasound would confirm it."
+      },
+      "stem": "A 31-year-old woman is 6 weeks postpartum and breastfeeding. Twelve days ago she was treated with oral antibiotics for acute bacterial mastitis of the left breast, with fever and a spreading red area. The fever settled within two days and the redness faded, but the upper outer quadrant of that breast now contains a firm, tender, mass-like area that has enlarged over the last week. It has no distinct border and no fluctuance on palpation. The overlying skin is of normal texture and there is no nipple retraction. Her temperature is 37.1 degrees Celsius and she feels systemically well.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "TREATMENT_CONTEXT",
+          "feature_id": "F-PRIOR-MASTITIS",
+          "inference_type": "TIME_COURSE",
+          "normalized_feature": "an acute bacterial mastitis treated with oral antibiotics twelve days earlier",
+          "polarity": "PRESENT",
+          "source_span": "Twelve days ago she was treated with oral antibiotics for acute bacterial mastitis"
+        },
+        {
+          "clinical_role": "TREATMENT_RESPONSE",
+          "feature_id": "F-SETTLED",
+          "inference_type": "TREATMENT_RESPONSE",
+          "normalized_feature": "fever and erythema that settled on treatment",
+          "polarity": "PRESENT",
+          "source_span": "The fever settled within two days and the redness faded"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "F-FIRM-MASS",
+          "inference_type": "EXPLICIT_FINDING",
+          "normalized_feature": "a firm, tender, mass-like area that has enlarged over a week and has no distinct border",
+          "polarity": "PRESENT",
+          "source_span": "a firm, tender, mass-like area that has enlarged over the last week"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "F-NO-FLUCTUANCE",
+          "inference_type": "ABSENT_FINDING",
+          "normalized_feature": "no fluctuance on palpation",
+          "polarity": "ABSENT",
+          "source_span": "no fluctuance on palpation"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "F-SKIN-NORMAL",
+          "inference_type": "EXPLICIT_FINDING",
+          "normalized_feature": "overlying skin of normal texture without nipple retraction",
+          "polarity": "PRESENT",
+          "source_span": "The overlying skin is of normal texture and there is no nipple retraction"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "F-WELL",
+          "inference_type": "LABORATORY_PATTERN",
+          "normalized_feature": "a temperature of 37.1 degrees Celsius with systemic wellbeing",
+          "polarity": "PRESENT",
+          "source_span": "Her temperature is 37.1 degrees Celsius and she feels systemically well"
+        },
+        {
+          "clinical_role": "INTEGRATED_CLINICAL_INFERENCE",
+          "derived_from": [
+            "F-PRIOR-MASTITIS",
+            "F-FIRM-MASS",
+            "F-NO-FLUCTUANCE"
+          ],
+          "feature_id": "F-POST-MASTITIS-MASS",
+          "inference_type": "INTEGRATED_INFERENCE",
+          "normalized_feature": "a firm mass-like area without fluctuance arising as a treated mastitis worsened locally",
+          "polarity": "PRESENT"
+        }
+      ]
+    },
+    {
+      "decisive_discriminator": "Ultrasound has already been done and did not answer the question, and she is pregnant, which is the situation in which magnetic resonance imaging is the study that follows a non-definitive ultrasound.",
+      "discipline": "SURG",
+      "discipline_profile_id": "SURGERY",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R2-SURG-MRI",
+        "CLM-R2-SURG-US",
+        "CLM-R2-SURG-CT",
+        "CLM-R4-SURG-NONDIAGNOSTIC"
+      ],
+      "item_archetype": "IMAGING_SELECTION",
+      "item_id": "G1-SURG-01",
+      "lead_in": "What is the most appropriate next step in diagnosis?",
+      "learner_decision_id": "LD-GS76-02",
+      "opportunity_label": "G1-SURG-01",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Contrast-enhanced abdominal computed tomography"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Repeat graded-compression ultrasonography in six hours"
+        },
+        {
+          "key": "C",
+          "role": "KEY",
+          "text": "Magnetic resonance imaging of the abdomen and pelvis"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Diagnostic laparoscopy"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "Computed tomography is the study that follows a non-diagnostic ultrasound outside pregnancy, which is why it is the strongest alternative, and it is widely available and easily interpreted. Here it would deliver ionising radiation when an equally accurate study that does not is available.",
+          "B": "Repeating the study is attractive because ultrasound is technician dependent, but it has already been done by an experienced sonographer and the appendix was not seen. Repeating it re-runs the same limitation and spends hours in a condition where delay matters.",
+          "D": "Laparoscopy would answer the question definitively and remains the endpoint if imaging cannot resolve the picture. Going there now commits a pregnant patient to an operation and an anaesthetic on an intermediate probability, when a non-invasive study with high sensitivity and specificity has not yet been used."
+        },
+        "key": "The clinical picture is intermediate rather than definitive, so imaging still has work to do, and the first-line study has already been done and did not answer the question. Magnetic resonance imaging involves no radiation, is explicitly the study of use in pregnancy when ultrasound is non-definitive, and can identify other intra-abdominal pathology, so it both settles the diagnosis and keeps the fetus out of the radiation field."
+      },
+      "stem": "A 28-year-old woman at 18 weeks gestation has had 14 hours of pain that began around the umbilicus and has moved to the right lower quadrant. She has vomited twice and has not eaten since yesterday. Her temperature is 37.8 degrees Celsius, her heart rate is 96 beats/min and her blood pressure is 112/70 mmHg. She is tender in the right lower quadrant with voluntary guarding. The white cell count is 14.2 x 10^9/L. A graded-compression ultrasound has been performed by an experienced sonographer and reported as non-diagnostic, with the appendix not visualised and no adnexal abnormality seen.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "OBSTETRIC_CONTEXT",
+          "feature_id": "F-PREGNANT",
+          "inference_type": "DEMOGRAPHIC_CONTEXT",
+          "normalized_feature": "a pregnancy at eighteen weeks gestation",
+          "polarity": "PRESENT",
+          "source_span": "at 18 weeks gestation"
+        },
+        {
+          "clinical_role": "SYMPTOM_COURSE",
+          "feature_id": "F-MIGRATION",
+          "inference_type": "TIME_COURSE",
+          "normalized_feature": "periumbilical pain migrating to the right lower quadrant over fourteen hours",
+          "polarity": "PRESENT",
+          "source_span": "14 hours of pain that began around the umbilicus and has moved to the right lower quadrant"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "feature_id": "F-EXAM",
+          "inference_type": "EXPLICIT_FINDING",
+          "normalized_feature": "right lower quadrant tenderness with voluntary guarding",
+          "polarity": "PRESENT",
+          "source_span": "tender in the right lower quadrant with voluntary guarding"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "feature_id": "F-VITALS",
+          "inference_type": "LABORATORY_PATTERN",
+          "normalized_feature": "a low-grade temperature with a normal blood pressure",
+          "polarity": "PRESENT",
+          "source_span": "temperature is 37.8 degrees Celsius, her heart rate is 96 beats/min and her blood pressure is 112/70 mmHg"
+        },
+        {
+          "clinical_role": "LABORATORY_RESULT",
+          "feature_id": "F-WCC",
+          "inference_type": "LABORATORY_PATTERN",
+          "normalized_feature": "a raised white cell count",
+          "polarity": "PRESENT",
+          "source_span": "The white cell count is 14.2 x 10^9/L"
+        },
+        {
+          "clinical_role": "INVESTIGATION_ALREADY_PERFORMED",
+          "feature_id": "F-US-DONE",
+          "inference_type": "EXPLICIT_FINDING",
+          "normalized_feature": "a graded-compression ultrasound already performed and reported non-diagnostic",
+          "polarity": "PRESENT",
+          "source_span": "A graded-compression ultrasound has been performed by an experienced sonographer and reported as non-diagnostic"
+        },
+        {
+          "clinical_role": "INTEGRATED_CLINICAL_INFERENCE",
+          "derived_from": [
+            "F-MIGRATION",
+            "F-EXAM",
+            "F-WCC",
+            "F-US-DONE",
+            "F-PREGNANT"
+          ],
+          "feature_id": "F-INTERMEDIATE",
+          "inference_type": "INTEGRATED_INFERENCE",
+          "normalized_feature": "an intermediate clinical probability that ultrasound has failed to resolve in a pregnant patient",
+          "polarity": "PRESENT"
+        }
+      ]
+    },
+    {
+      "decisive_discriminator": "She has suicidal ideation without intent to act and without psychotic symptoms, which places her below the threshold at which inpatient treatment is warranted, while a lethal means is present in the home, which is what the disposition has to address.",
+      "discipline": "PSY",
+      "discipline_profile_id": "PSYCHIATRY",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R2-PSY-INPATIENT",
+        "CLM-R2-PSY-SAFETY-PLAN",
+        "CLM-R2-PSY-ECT"
+      ],
+      "item_archetype": "SAFETY_ASSESSMENT",
+      "item_id": "G1-PSY-01",
+      "lead_in": "What is the most appropriate next step in her management?",
+      "learner_decision_id": "LD-PS12-02",
+      "opportunity_label": "G1-PSY-01",
+      "option_set_archetype": "DISPOSITION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Arrange voluntary admission to a psychiatric inpatient unit"
+        },
+        {
+          "key": "B",
+          "role": "KEY",
+          "text": "Make a safety plan that removes the shotgun from the home and names professional contacts"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Refer her for daily attendance at an intensive outpatient programme"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Ask her sister to supervise her at home and review her in two weeks"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "Admission is what the ideation itself invites, and it is the right answer when there is intent to act or psychosis. Neither is present. Admitting her treats the presence of suicidal thoughts as the threshold, which it is not, and leaves the firearm at home for her return.",
+          "C": "An intensive outpatient programme is a real escalation short of admission and would give her more contact. It answers the intensity question but not the means question: nothing in daily programme attendance removes the shotgun from the cupboard.",
+          "D": "Family supervision and a review are the intuitive community plan and her sister's availability makes it feel sufficient. It omits both named components of safety planning, leaves the firearm in place, and sets the next professional contact a fortnight away."
+        },
+        "key": "Inpatient treatment is warranted for patients at high risk, meaning suicidal ideation with intent to act or psychotic symptoms. She has neither, so the question is what her community management must contain rather than whether she can stay in the community. Safety planning is the evidence-based answer and its two named components are removal of lethal means and identification of professional contacts. The shotgun is the lethal means, and it is the one thing in this presentation that would change the outcome of a deterioration."
+      },
+      "stem": "A 44-year-old woman is seen in a community clinic with a six-week major depressive episode. For the past two weeks she has had daily thoughts, lasting a few minutes at a time, that her family would be better off without her. Asked directly, she says she has no plan, does not intend to act, and would telephone her sister or the crisis line if the thoughts worsened. She has never harmed herself. There are no hallucinations, no delusions and no perceptual disturbance. Her late father's shotgun is stored in a cupboard at home. Her sister has come with her and can stay at the house for the next fortnight.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "RISK_INVENTORY",
+          "feature_id": "F-IDEATION",
+          "inference_type": "EXPLICIT_FINDING",
+          "normalized_feature": "daily passive suicidal ideation lasting minutes at a time",
+          "polarity": "PRESENT",
+          "source_span": "daily thoughts, lasting a few minutes at a time, that her family would be better off without her"
+        },
+        {
+          "clinical_role": "RISK_INVENTORY",
+          "feature_id": "F-NO-INTENT",
+          "inference_type": "ABSENT_FINDING",
+          "normalized_feature": "no plan and no intent to act on direct questioning",
+          "polarity": "ABSENT",
+          "source_span": "she has no plan, does not intend to act"
+        },
+        {
+          "clinical_role": "MENTAL_STATE",
+          "feature_id": "F-NO-PSYCHOSIS",
+          "inference_type": "ABSENT_FINDING",
+          "normalized_feature": "no hallucinations, delusions or perceptual disturbance",
+          "polarity": "ABSENT",
+          "source_span": "There are no hallucinations, no delusions and no perceptual disturbance"
+        },
+        {
+          "clinical_role": "RISK_INVENTORY",
+          "feature_id": "F-MEANS",
+          "inference_type": "RISK_FACTOR",
+          "normalized_feature": "a firearm stored in the home",
+          "polarity": "PRESENT",
+          "source_span": "Her late father's shotgun is stored in a cupboard at home"
+        },
+        {
+          "clinical_role": "COLLATERAL_SUPPORT",
+          "feature_id": "F-SUPPORT",
+          "inference_type": "EXPLICIT_FINDING",
+          "normalized_feature": "a sister able to stay at the house for a fortnight",
+          "polarity": "PRESENT",
+          "source_span": "Her sister has come with her and can stay at the house for the next fortnight"
+        },
+        {
+          "clinical_role": "LONGITUDINAL_COURSE",
+          "feature_id": "F-COURSE",
+          "inference_type": "TIME_COURSE",
+          "normalized_feature": "a six-week depressive episode with two weeks of ideation",
+          "polarity": "PRESENT",
+          "source_span": "a six-week major depressive episode"
+        },
+        {
+          "clinical_role": "INTEGRATED_CLINICAL_INFERENCE",
+          "derived_from": [
+            "F-IDEATION",
+            "F-NO-INTENT",
+            "F-NO-PSYCHOSIS",
+            "F-MEANS",
+            "F-SUPPORT"
+          ],
+          "feature_id": "F-BAND",
+          "inference_type": "INTEGRATED_INFERENCE",
+          "normalized_feature": "suicidal ideation below the threshold for inpatient care with a lethal means still in the home",
+          "polarity": "PRESENT"
+        }
+      ]
+    },
+    {
+      "decisive_discriminator": "The observation is a sustained rise in the number of people given the diagnosis with no change in deaths from the disease, which is a statement about counts of cases and deaths in the whole population rather than about how long the diagnosed appear to survive.",
+      "discipline": "PHELO",
+      "discipline_profile_id": "PHELO",
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "evidence_refs": [
+        "CLM-R2-PHELO-OVERDIAGNOSIS",
+        "CLM-R2-PHELO-LEAD-TIME",
+        "CLM-R2-PHELO-LENGTH",
+        "CLM-R2-PHELO-HEALTHY-VOLUNTEER"
+      ],
+      "item_archetype": "EPIDEMIOLOGY_INTERPRETATION",
+      "item_id": "G1-PHELO-01",
+      "lead_in": "Which explanation best accounts for the sustained rise in diagnoses without a fall in mortality?",
+      "learner_decision_id": "LD-PH07-01",
+      "opportunity_label": "G1-PHELO-01",
+      "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Lead-time bias"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Length-time bias"
+        },
+        {
+          "key": "C",
+          "role": "KEY",
+          "text": "Overdiagnosis"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Healthy screenee selection bias"
+        }
+      ],
+      "rationales": {
+        "distractors": {
+          "A": "Lead-time bias is the reason a screening programme can look successful when it is not, so it is the natural first answer to a question shaped like this one. It works on the interval between screen detection and the symptomatic diagnosis that would otherwise have occurred, and it inflates survival measured from diagnosis. It does not create a permanent excess of cases, and the observation here is not a survival figure.",
+          "B": "Length-time bias is also a distortion of apparent success, arising because slowly progressing variants sit in the screen-detectable phase for longer and are therefore over-represented among screen-detected cases. It changes which cancers are found and how well they appear to do, rather than producing a sustained rise in the total number diagnosed against unchanged mortality.",
+          "D": "Healthy screenee selection is the bias of comparing people who chose to be screened with people who did not, and it makes screened people look better than they are. It requires that comparison to exist. This observation is a before-and-after comparison of one whole province with high and stable coverage, and the mortality figure is population-wide."
+        },
+        "key": "The observation is about counts in the whole population: a permanent excess of people carrying the diagnosis, with the same number of deaths. That is what happens when screening finds early cancers that would never otherwise have become apparent, which is the pattern breast cancer screening studies describe, with up to thirty percent more cancers diagnosed in the screened group than in the unscreened group. Stable coverage and unchanged pathological criteria remove the two administrative explanations for a rise in counts."
+      },
+      "stem": "A province introduced organised screening for a cancer eight years ago. Since then the annual number of people diagnosed with that cancer has risen by about a quarter and has stayed at the higher level, and the proportion diagnosed at an early stage has increased. Over the same eight years the age-standardised mortality from the cancer in the province has not changed. Coverage of the invited population has been high and stable, and the diagnostic criteria used by pathologists have not been revised.",
+      "stem_feature_map": [
+        {
+          "clinical_role": "PROGRAMME_OBSERVATION",
+          "feature_id": "F-INCIDENCE",
+          "inference_type": "POLICY_DESIGN_FEATURE",
+          "normalized_feature": "a sustained rise of about a quarter in the annual number of people diagnosed",
+          "polarity": "PRESENT",
+          "source_span": "the annual number of people diagnosed with that cancer has risen by about a quarter and has stayed at the higher level"
+        },
+        {
+          "clinical_role": "PROGRAMME_OBSERVATION",
+          "feature_id": "F-STAGE-SHIFT",
+          "inference_type": "POLICY_DESIGN_FEATURE",
+          "normalized_feature": "a shift toward diagnosis at an early stage",
+          "polarity": "PRESENT",
+          "source_span": "the proportion diagnosed at an early stage has increased"
+        },
+        {
+          "clinical_role": "PROGRAMME_OBSERVATION",
+          "feature_id": "F-MORTALITY",
+          "inference_type": "POLICY_DESIGN_FEATURE",
+          "normalized_feature": "age-standardised mortality from the cancer unchanged over the same period",
+          "polarity": "PRESENT",
+          "source_span": "the age-standardised mortality from the cancer in the province has not changed"
+        },
+        {
+          "clinical_role": "PROGRAMME_DESIGN",
+          "feature_id": "F-COVERAGE",
+          "inference_type": "POLICY_DESIGN_FEATURE",
+          "normalized_feature": "high and stable coverage of the invited population",
+          "polarity": "PRESENT",
+          "source_span": "Coverage of the invited population has been high and stable"
+        },
+        {
+          "clinical_role": "PROGRAMME_DESIGN",
+          "feature_id": "F-CRITERIA",
+          "inference_type": "POLICY_DESIGN_FEATURE",
+          "normalized_feature": "unchanged pathological diagnostic criteria",
+          "polarity": "PRESENT",
+          "source_span": "the diagnostic criteria used by pathologists have not been revised"
+        },
+        {
+          "clinical_role": "INTEGRATED_CLINICAL_INFERENCE",
+          "derived_from": [
+            "F-INCIDENCE",
+            "F-MORTALITY",
+            "F-CRITERIA"
+          ],
+          "feature_id": "F-EXCESS-CASES",
+          "inference_type": "INTEGRATED_INFERENCE",
+          "normalized_feature": "a permanent excess of diagnosed cases in the whole population with no change in deaths",
+          "polarity": "PRESENT"
+        }
+      ]
+    }
+  ],
+  "schema_version": "1.0",
+  "scope": "QGEN_G1_SAFE_YIELD_MICRO_PILOT_ITEMS",
+  "wave_id": "g1_safe_yield_micro_pilot"
+}

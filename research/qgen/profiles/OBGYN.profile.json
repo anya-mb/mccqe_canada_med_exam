@@ -1,0 +1,156 @@
+{
+  "competitor_ranking_preference": [
+    "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+    "SHARED_FEATURE_COUNT",
+    "REVIEWED_SEED_STRENGTH"
+  ],
+  "currentness_escalation_triggers": [
+    "THERAPY",
+    "SCREENING_INTERVAL",
+    "PREGNANCY"
+  ],
+  "discipline_codes": [
+    "OBGYN"
+  ],
+  "evidence_source_preference": [
+    "NATIONAL_SPECIALTY_SOCIETY",
+    "PEER_REVIEWED_GUIDELINE",
+    "NATIONAL_PUBLIC_HEALTH_AGENCY"
+  ],
+  "item_archetypes": [
+    {
+      "item_archetype": "PREGNANCY_DATED_DIAGNOSIS",
+      "permitted_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "permitted_option_set_archetypes": [
+        "DIAGNOSIS_SET"
+      ],
+      "scenario_requirements": [
+        "GESTATIONAL_AGE_OR_POSTPARTUM_DAY",
+        "PARITY"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "MATERNAL_FETAL_ACTION",
+      "permitted_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "permitted_option_set_archetypes": [
+        "NEXT_ACTION_SET"
+      ],
+      "scenario_requirements": [
+        "GESTATIONAL_AGE_OR_POSTPARTUM_DAY",
+        "FETAL_STATUS"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "SCREENING_TIMING",
+      "permitted_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "permitted_option_set_archetypes": [
+        "NEXT_ACTION_SET"
+      ],
+      "scenario_requirements": [
+        "GESTATIONAL_AGE_OR_POSTPARTUM_DAY"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+      "permitted_decision_granularities": [
+        "SINGLE_NEXT_ACTION",
+        "MANAGEMENT_STRATEGY"
+      ],
+      "permitted_option_set_archetypes": [
+        "NEXT_ACTION_SET",
+        "MANAGEMENT_STRATEGY_SET"
+      ],
+      "scenario_requirements": [
+        "GESTATIONAL_AGE_OR_POSTPARTUM_DAY"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "INVESTIGATION_SELECTION",
+      "permitted_decision_granularities": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "permitted_option_set_archetypes": [
+        "INVESTIGATION_SET"
+      ],
+      "scenario_requirements": [
+        "GESTATIONAL_AGE_OR_POSTPARTUM_DAY"
+      ],
+      "weight": 1
+    }
+  ],
+  "numeric_risk_classes": [
+    {
+      "fact_class": "GESTATIONAL_AGE_THRESHOLD",
+      "requires_independent_corroboration": false,
+      "validation_level": 2
+    },
+    {
+      "fact_class": "SCREENING_INTERVAL",
+      "requires_independent_corroboration": false,
+      "validation_level": 2
+    }
+  ],
+  "option_set_contracts": [
+    {
+      "justification": "An entity that cannot produce the systemic picture the stem supplies is not a competitor.",
+      "nominal_parity_axes": [
+        "inflammatory_state",
+        "gestational_applicability"
+      ],
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "response_class_axis": "cardinal_syndrome_capability",
+      "token_implications": {}
+    },
+    {
+      "justification": "The purpose the lead-in demands, not general relevance, decides membership.",
+      "nominal_parity_axes": [
+        "gestational_applicability"
+      ],
+      "option_set_archetype": "INVESTIGATION_SET",
+      "response_class_axis": "investigation_purpose",
+      "token_implications": {}
+    },
+    {
+      "justification": "",
+      "nominal_parity_axes": [
+        "gestational_applicability"
+      ],
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "response_class_axis": "next_action_class",
+      "token_implications": {}
+    },
+    {
+      "justification": "",
+      "nominal_parity_axes": [
+        "gestational_applicability"
+      ],
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "response_class_axis": "management_capability",
+      "token_implications": {}
+    }
+  ],
+  "permitted_archetype_exceptions": [],
+  "preferred_physician_activities": [
+    "Assessment/Diagnosis",
+    "Management",
+    "Communication"
+  ],
+  "profile_id": "OBGYN",
+  "prohibited_shortcuts": [
+    "STEM_ENACTED_PRACTICE_AS_DISTRACTOR",
+    "NON_INFLAMMATORY_ENTITY_AGAINST_FEBRILE_PRESENTATION"
+  ],
+  "r4_status": "TESTED_IN_R4",
+  "schema_version": "1.0",
+  "scope": "QGEN_DISCIPLINE_PROFILE"
+}

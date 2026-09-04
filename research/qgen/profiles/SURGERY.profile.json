@@ -1,0 +1,186 @@
+{
+  "competitor_ranking_preference": [
+    "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+    "SHARED_FEATURE_COUNT",
+    "REVIEWED_SEED_STRENGTH"
+  ],
+  "currentness_escalation_triggers": [
+    "THERAPY",
+    "EMERGENCY_CARE"
+  ],
+  "discipline_codes": [
+    "SURG"
+  ],
+  "evidence_source_preference": [
+    "NATIONAL_SPECIALTY_SOCIETY",
+    "PEER_REVIEWED_GUIDELINE",
+    "TERTIARY_FALLBACK"
+  ],
+  "item_archetypes": [
+    {
+      "item_archetype": "RECOGNITION",
+      "permitted_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "permitted_option_set_archetypes": [
+        "DIAGNOSIS_SET"
+      ],
+      "scenario_requirements": [
+        "TIME_COURSE",
+        "VITAL_SIGNS"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "STABILIZATION",
+      "permitted_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "permitted_option_set_archetypes": [
+        "NEXT_ACTION_SET"
+      ],
+      "scenario_requirements": [
+        "VITAL_SIGNS",
+        "PHYSIOLOGIC_STABILITY"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "IMAGING_SELECTION",
+      "permitted_decision_granularities": [
+        "DIAGNOSTIC_TEST"
+      ],
+      "permitted_option_set_archetypes": [
+        "INVESTIGATION_SET"
+      ],
+      "scenario_requirements": [
+        "TIME_COURSE",
+        "IMAGING_AVAILABLE"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "OPERATIVE_VS_NONOPERATIVE",
+      "permitted_decision_granularities": [
+        "MANAGEMENT_STRATEGY"
+      ],
+      "permitted_option_set_archetypes": [
+        "MANAGEMENT_STRATEGY_SET"
+      ],
+      "scenario_requirements": [
+        "PHYSIOLOGIC_STABILITY"
+      ],
+      "weight": 1
+    },
+    {
+      "item_archetype": "DISPOSITION",
+      "permitted_decision_granularities": [
+        "DISPOSITION"
+      ],
+      "permitted_option_set_archetypes": [
+        "DISPOSITION_SET"
+      ],
+      "scenario_requirements": [
+        "PHYSIOLOGIC_STABILITY"
+      ],
+      "weight": 1
+    }
+  ],
+  "numeric_risk_classes": [
+    {
+      "fact_class": "ANATOMICAL_MEASUREMENT",
+      "requires_independent_corroboration": true,
+      "validation_level": 2
+    },
+    {
+      "fact_class": "CLINICAL_SCORE_THRESHOLD",
+      "requires_independent_corroboration": false,
+      "validation_level": 2
+    },
+    {
+      "fact_class": "CLINICAL_SCORE_COMPONENT",
+      "requires_independent_corroboration": false,
+      "validation_level": 1
+    }
+  ],
+  "option_set_contracts": [
+    {
+      "justification": "A key that is the only member of its organ system is identifiable by structure alone.",
+      "nominal_parity_axes": [
+        "organ_system"
+      ],
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "response_class_axis": "cardinal_syndrome_capability",
+      "token_implications": {}
+    },
+    {
+      "justification": "",
+      "nominal_parity_axes": [
+        "organ_system"
+      ],
+      "option_set_archetype": "INVESTIGATION_SET",
+      "response_class_axis": "investigation_purpose",
+      "token_implications": {}
+    },
+    {
+      "justification": "",
+      "nominal_parity_axes": [
+        "organ_system"
+      ],
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "response_class_axis": "next_action_class",
+      "token_implications": {}
+    },
+    {
+      "justification": "Where the presentation demands definitive control, a strategy that supplies none is not a competitor.",
+      "nominal_parity_axes": [
+        "organ_system"
+      ],
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "response_class_axis": "management_capability",
+      "token_implications": {
+        "DELAYED_OPERATIVE_SOURCE_CONTROL": [
+          "PROVIDES_SOURCE_CONTROL"
+        ],
+        "IMMEDIATE_OPERATIVE_SOURCE_CONTROL": [
+          "PROVIDES_SOURCE_CONTROL"
+        ],
+        "PERCUTANEOUS_SOURCE_CONTROL": [
+          "PROVIDES_SOURCE_CONTROL"
+        ]
+      }
+    },
+    {
+      "justification": "",
+      "nominal_parity_axes": [
+        "care_setting"
+      ],
+      "option_set_archetype": "DISPOSITION_SET",
+      "response_class_axis": "safety_securing_class",
+      "token_implications": {
+        "COMMUNITY_SAFETY_MEASURE": [
+          "SECURES_IMMEDIATE_SAFETY"
+        ],
+        "INTENSIVE_COMMUNITY": [
+          "SECURES_IMMEDIATE_SAFETY"
+        ],
+        "INVOLUNTARY_OR_INPATIENT": [
+          "SECURES_IMMEDIATE_SAFETY"
+        ]
+      }
+    }
+  ],
+  "permitted_archetype_exceptions": [],
+  "preferred_physician_activities": [
+    "Assessment/Diagnosis",
+    "Management"
+  ],
+  "profile_id": "SURGERY",
+  "prohibited_shortcuts": [
+    "LONE_NON_GYNECOLOGIC_KEY",
+    "OPERATIVE_OPTION_WITHOUT_PHYSIOLOGIC_INSTABILITY"
+  ],
+  "r4_status": "TESTED_IN_R4",
+  "schema_version": "1.0",
+  "scope": "QGEN_DISCIPLINE_PROFILE"
+}

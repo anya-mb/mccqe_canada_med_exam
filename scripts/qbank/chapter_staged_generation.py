@@ -164,6 +164,14 @@ DECISION_GRANULARITIES = {
     "DISPOSITION",
     "TREATMENT_BUNDLE",
     "DIAGNOSIS",
+    # Two of fifteen R4 items fell out of this vocabulary entirely and recorded
+    # OTHER, both in population health and ethics. These four values are the one
+    # common-core enum extension the discipline-profile design proposes, and they
+    # are forced by those observed OTHERs rather than chosen.
+    "EPIDEMIOLOGIC_EXPLANATION",
+    "ETHICAL_ACTION",
+    "LEGAL_DUTY",
+    "PROGRAMME_ACTION",
     "OTHER",
 }
 # --- SEMANTIC_ITEM_ACCEPTANCE_V2 vocabulary (schema 1.4) ---------------------

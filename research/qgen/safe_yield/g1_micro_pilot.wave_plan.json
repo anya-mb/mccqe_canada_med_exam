@@ -1,0 +1,435 @@
+{
+  "admissibility_probes": [
+    {
+      "demanded_response_class": "PROVIDES_SOURCE_CONTROL",
+      "discipline_profile_id": "SURGERY",
+      "expectation": "One strategy supplies no source control where the presentation demands it.",
+      "item_archetype": "OPERATIVE_VS_NONOPERATIVE",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Intravenous antibiotics alone with planned reassessment"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Image-guided percutaneous drainage with antibiotics"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Antibiotics now with interval appendectomy in six to eight weeks"
+        },
+        {
+          "key": "D",
+          "role": "KEY",
+          "text": "Urgent laparoscopic appendectomy"
+        }
+      ],
+      "probe_id": "PROBE-ADM1-SOURCE-CONTROL",
+      "targets_rule": "ADM_1"
+    },
+    {
+      "demanded_response_class": "ACUTE_ABDOMINAL_OR_PELVIC_PAIN",
+      "discipline_profile_id": "SURGERY",
+      "expectation": "The key is the sole holder of its organ system while every distractor shares one.",
+      "item_archetype": "RECOGNITION",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Pelvic inflammatory disease"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "Ovarian torsion"
+        },
+        {
+          "key": "C",
+          "role": "KEY",
+          "text": "Acute appendicitis"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Tubo-ovarian abscess"
+        }
+      ],
+      "probe_id": "PROBE-ADM2-LONE-ORGAN-SYSTEM",
+      "targets_rule": "ADM_2"
+    },
+    {
+      "competitor_condition_predicates": {
+        "inflammatory breast cancer": [
+          {
+            "defeated": true,
+            "stem_feature_id": "F-PROBE-REAL"
+          }
+        ],
+        "lactational breast abscess": [
+          {
+            "defeated": true,
+            "stem_feature_id": "F-PROBE-REAL"
+          }
+        ],
+        "subacute mastitis": [
+          {
+            "defeated": true,
+            "stem_feature_id": "F-PROBE-PLANTED"
+          }
+        ]
+      },
+      "demanded_response_class": "PALPABLE_MASS_OR_FLUID_COLLECTION",
+      "discipline_profile_id": "OBGYN",
+      "expectation": "One competitor is defeated only by an absent finding that grounds nothing else.",
+      "item_archetype": "PREGNANCY_DATED_DIAGNOSIS",
+      "key_grounding_feature_ids": [
+        "F-PROBE-REAL"
+      ],
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Lactational breast abscess"
+        },
+        {
+          "key": "B",
+          "role": "KEY",
+          "text": "Breast phlegmon"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Subacute mastitis"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Inflammatory breast cancer"
+        }
+      ],
+      "probe_id": "PROBE-ADM3-PLANTED-NEGATION",
+      "stem_feature_map": [
+        {
+          "feature_id": "F-PROBE-PLANTED",
+          "inference_type": "ABSENT_FINDING",
+          "polarity": "ABSENT"
+        },
+        {
+          "feature_id": "F-PROBE-REAL",
+          "inference_type": "EXPLICIT_FINDING",
+          "polarity": "PRESENT"
+        }
+      ],
+      "targets_rule": "ADM_3"
+    },
+    {
+      "demanded_response_class": "PATIENT_INSTRUCTION",
+      "discipline_profile_id": "OBGYN",
+      "enacted_action_signatures": [
+        {
+          "enactor": "PATIENT_PERFORMED",
+          "heads": [
+            "express"
+          ],
+          "objects": [
+            "affected_breast"
+          ]
+        }
+      ],
+      "expectation": "One option restates a practice the stem records the patient already performing.",
+      "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "DISTRACTOR",
+          "text": "Continue expressing the affected breast after every feed"
+        },
+        {
+          "key": "B",
+          "role": "KEY",
+          "text": "Feed the infant on demand from the affected breast"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Apply a cold compress to the affected quadrant after feeds"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Shorten the interval between feeds on the affected side"
+        }
+      ],
+      "probe_id": "PROBE-ADM4-STEM-ENACTED",
+      "targets_rule": "ADM_4"
+    },
+    {
+      "demanded_response_class": "AUTONOMY",
+      "discipline_profile_id": "PHELO",
+      "expectation": "One option carries two figures where the others carry none.",
+      "item_archetype": "ETHICAL_ACTION",
+      "option_set_archetype": "ETHICAL_ACTION_SET",
+      "options": [
+        {
+          "key": "A",
+          "role": "KEY",
+          "text": "State that 5 in 1000 invited people avoid a death and 100 in 1000 are recalled needlessly"
+        },
+        {
+          "key": "B",
+          "role": "DISTRACTOR",
+          "text": "State the chance of benefit in absolute rather than relative terms"
+        },
+        {
+          "key": "C",
+          "role": "DISTRACTOR",
+          "text": "Describe what a positive result will lead to"
+        },
+        {
+          "key": "D",
+          "role": "DISTRACTOR",
+          "text": "Say that participation is a choice and that declining changes nothing else"
+        }
+      ],
+      "probe_id": "PROBE-ADM5-FORMAT-PARITY",
+      "targets_rule": "ADM_5"
+    }
+  ],
+  "plan": [
+    {
+      "evidence_packet": "research/qgen/pilot/QGEN-MED-007.acs-chapter-review-pilot-10.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CN-PPCI-TRANSFER",
+          "CN-LYSIS-LOCAL-ISCHAEMIA-GUIDED",
+          "CN-AWAIT-TROPONIN"
+        ],
+        "decisive_discriminator": "DISC-C21-TRANSFER-TIME-EXCEEDS-DEVICE-WINDOW",
+        "learner_decision_id": "LD-C21-02",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G1-MED-01",
+      "planned_evidence_refs": [
+        "CLM-ACS-PHARMACOINVASIVE-01",
+        "CLM-ACS-FIBRINOLYSIS-CONTRA-PPCI-01",
+        "CLM-ACS-REPERFUSION-NO-DELAY-01"
+      ]
+    },
+    {
+      "evidence_packet": "research/qgen/pilot/QGEN-MED-007.acs-chapter-review-pilot-10.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CN-VSR",
+          "CN-FREE-WALL-RUPTURE",
+          "CN-RECURRENT-ISCHAEMIA"
+        ],
+        "decisive_discriminator": "DISC-C21-NEW-STRUCTURAL-LESION-AT-MITRAL-APPARATUS",
+        "learner_decision_id": "LD-C21-03",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "physician_activity": "Assessment/Diagnosis"
+      },
+      "opportunity_label": "G1-MED-02",
+      "planned_evidence_refs": [
+        "CLM-ACS-PAPILLARY-RUPTURE-DIFFERENTIAL-01",
+        "CLM-ACS-AMI-CARDIOGENIC-SHOCK-01"
+      ]
+    },
+    {
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CN-DISCHARGE-TODAY",
+          "CN-RESTART-OXYGEN",
+          "CN-CHEST-RADIOGRAPH"
+        ],
+        "decisive_discriminator": "DISC-P147-ORAL-INTAKE-IS-AN-INDEPENDENT-DISCHARGE-CRITERION",
+        "learner_decision_id": "LD-P147-04",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G1-PED-01",
+      "planned_evidence_refs": [
+        "CLM-R4-PED-DISCHARGE",
+        "CLM-R2-PED-DX-ANCHOR"
+      ]
+    },
+    {
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CN-DISCHARGE-TODAY",
+          "CN-RESTART-OXYGEN",
+          "CN-CHEST-RADIOGRAPH"
+        ],
+        "context_changes": [
+          "PATIENT_NAME",
+          "AGE_INSIDE_SAME_BAND",
+          "SEX_NOT_DECISION_RELEVANT",
+          "CITY_OR_SETTING"
+        ],
+        "decisive_discriminator": "DISC-P147-ORAL-INTAKE-IS-AN-INDEPENDENT-DISCHARGE-CRITERION",
+        "learner_decision_id": "LD-P147-04",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G1-PED-02",
+      "planned_evidence_refs": [
+        "CLM-R4-PED-DISCHARGE"
+      ],
+      "probe_note": "Deliberate redundancy positive control: same decision, same decisive discriminator, same competitor concepts, cosmetic vignette changes only."
+    },
+    {
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CN-LACTATIONAL-ABSCESS",
+          "CN-SUBACUTE-MASTITIS",
+          "CN-INFLAMMATORY-BREAST-CANCER"
+        ],
+        "decisive_discriminator": "DISC-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE-AFTER-TREATED-MASTITIS",
+        "learner_decision_id": "LD-OB54-04",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "physician_activity": "Assessment/Diagnosis"
+      },
+      "opportunity_label": "G1-OBGYN-01",
+      "planned_evidence_refs": [
+        "CLM-R4-OB-PHLEGMON",
+        "CLM-R2-OB-ABSCESS",
+        "CLM-R4-OB-SUBACUTE",
+        "CLM-R2-OB-IBC"
+      ]
+    },
+    {
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CN-CT-ABDOMEN",
+          "CN-REPEAT-ULTRASOUND",
+          "CN-DIAGNOSTIC-LAPAROSCOPY"
+        ],
+        "decisive_discriminator": "DISC-GS76-PREGNANCY-AFTER-NONDIAGNOSTIC-ULTRASOUND",
+        "learner_decision_id": "LD-GS76-02",
+        "option_set_archetype": "INVESTIGATION_SET",
+        "physician_activity": "Assessment/Diagnosis"
+      },
+      "opportunity_label": "G1-SURG-01",
+      "planned_evidence_refs": [
+        "CLM-R2-SURG-MRI",
+        "CLM-R2-SURG-US",
+        "CLM-R2-SURG-CT",
+        "CLM-R4-SURG-NONDIAGNOSTIC"
+      ]
+    },
+    {
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CN-PID",
+          "CN-OVARIAN-TORSION",
+          "CN-TUBO-OVARIAN-ABSCESS"
+        ],
+        "decisive_discriminator": "DISC-GS76-CLASSIC-MIGRATION-AND-POINT-TENDERNESS",
+        "learner_decision_id": "LD-GS76-01",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "physician_activity": "Assessment/Diagnosis"
+      },
+      "opportunity_label": "G1-SURG-02",
+      "planned_evidence_refs": [
+        "CLM-R4-SURG-PRESENTATION",
+        "CLM-R4-SURG-FEMALE-DDX"
+      ]
+    },
+    {
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CN-VOLUNTARY-ADMISSION",
+          "CN-INTENSIVE-OUTPATIENT",
+          "CN-FAMILY-SUPERVISION"
+        ],
+        "decisive_discriminator": "DISC-PS12-IDEATION-WITHOUT-INTENT-WITH-LETHAL-MEANS-AT-HOME",
+        "learner_decision_id": "LD-PS12-02",
+        "option_set_archetype": "DISPOSITION_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G1-PSY-01",
+      "planned_evidence_refs": [
+        "CLM-R2-PSY-INPATIENT",
+        "CLM-R2-PSY-SAFETY-PLAN",
+        "CLM-R2-PSY-ECT"
+      ]
+    },
+    {
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CN-PSYCHOTHERAPY",
+          "CN-COMBINED",
+          "CN-EXERCISE-MONOTHERAPY"
+        ],
+        "decisive_discriminator": "DISC-PS12-SEVERITY-BAND-SELECTS-INITIAL-MODALITY",
+        "learner_decision_id": "LD-PS12-03",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "physician_activity": "Management"
+      },
+      "opportunity_label": "G1-PSY-02",
+      "planned_evidence_refs": [
+        "CLM-R4-PSY-MILD",
+        "CLM-R2-PSY-MODERATE-CHOICE",
+        "CLM-R4-PSY-EXERCISE"
+      ]
+    },
+    {
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CN-ECG",
+          "CN-NEUROIMAGING",
+          "CN-EEG"
+        ],
+        "decisive_discriminator": "DISC-PS12-ONLY-TESTS-THAT-CHANGE-MANAGEMENT",
+        "learner_decision_id": "LD-PS12-04",
+        "option_set_archetype": "INVESTIGATION_SET",
+        "physician_activity": "Assessment/Diagnosis"
+      },
+      "opportunity_label": "G1-PSY-03",
+      "planned_evidence_refs": [
+        "CLM-R4-PSY-LABS"
+      ]
+    },
+    {
+      "evidence_packet": "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+      "novelty_tuple": {
+        "competitor_concept_ids": [
+          "CN-LEAD-TIME",
+          "CN-LENGTH-TIME",
+          "CN-HEALTHY-SCREENEE"
+        ],
+        "decisive_discriminator": "DISC-PH07-SUSTAINED-EXCESS-OF-CASES-WITH-UNCHANGED-MORTALITY",
+        "learner_decision_id": "LD-PH07-01",
+        "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+        "physician_activity": "Assessment/Diagnosis"
+      },
+      "opportunity_label": "G1-PHELO-01",
+      "planned_evidence_refs": [
+        "CLM-R2-PHELO-OVERDIAGNOSIS",
+        "CLM-R2-PHELO-LEAD-TIME",
+        "CLM-R2-PHELO-LENGTH",
+        "CLM-R2-PHELO-HEALTHY-VOLUNTEER"
+      ]
+    }
+  ],
+  "plan_note": "Each entry declares, before generation, which claims the intended reasoning would rest on and the structured tuple the novelty screen compares. The screen never sees vignette prose.",
+  "probe_note": "Positive controls. Each probe is an option set constructed to violate exactly one admissibility rule. Probes are not opportunities, never enter the pool, and never count toward yield. They exist so that a wave in which every real item passes can still show the rule family is live rather than inert.",
+  "schema_version": "1.0",
+  "scope": "QGEN_G1_SAFE_YIELD_WAVE_PLAN",
+  "wave_id": "g1_safe_yield_micro_pilot"
+}
