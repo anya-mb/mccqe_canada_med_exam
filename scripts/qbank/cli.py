@@ -882,6 +882,63 @@ def _add_root_argument(parser: argparse.ArgumentParser) -> None:
     )
 
 
+def _command_build_tn_index(arguments: argparse.Namespace) -> None:
+    """Rebuild the local Toronto Notes index and its tracked build manifest."""
+    from .tn_index import (
+        BUILD_MANIFEST_RELATIVE_PATH,
+        INDEX_RELATIVE_PATH,
+        build_tn_index,
+        write_index_build_manifest,
+    )
+
+    root = canonical_root(getattr(arguments, "root", Path.cwd()))
+    index_path = resolve_root_path(root, INDEX_RELATIVE_PATH)
+    manifest = build_tn_index(root, index_path)
+    document = write_index_build_manifest(root, index_path)
+    print(json.dumps({
+        "command": "build-tn-index",
+        "index_relative_path": INDEX_RELATIVE_PATH,
+        "build_manifest_relative_path": BUILD_MANIFEST_RELATIVE_PATH,
+        "pages_indexed": document["counts"]["pages_indexed"],
+        "chunks_indexed": document["counts"]["chunks_indexed"],
+        "build_seconds": float(manifest["build_seconds"]),
+    }, indent=2, sort_keys=True))
+
+
+def _command_build_clinical_graph(arguments: argparse.Namespace) -> None:
+    """Project the typed clinical contrast graph into the local index."""
+    from .clinical_graph import build_clinical_graph
+    from .tn_index import INDEX_RELATIVE_PATH
+
+    root = canonical_root(getattr(arguments, "root", Path.cwd()))
+    counts = build_clinical_graph(root, resolve_root_path(root, INDEX_RELATIVE_PATH))
+    print(json.dumps({"command": "build-clinical-graph", **counts}, indent=2, sort_keys=True))
+
+
+def _command_run_retrieval_benchmark(arguments: argparse.Namespace) -> None:
+    """Run the frozen-G2 four-arm retrieval benchmark."""
+    from .retrieval_benchmark import run_benchmark
+    from .tn_index import INDEX_RELATIVE_PATH
+
+    root = canonical_root(getattr(arguments, "root", Path.cwd()))
+    report = run_benchmark(root, resolve_root_path(root, INDEX_RELATIVE_PATH))
+    output = resolve_root_path(root, "reports/qgen_clinical_retrieval_benchmark.json")
+    existing = read_json(output) if output.is_file() else {}
+    for key in ("recall_miss_diagnosis", "local_embedding_trigger",
+                "discovered_but_untyped_character", "architecture_decision"):
+        if key in existing:
+            report[key] = existing[key]
+    write_json_atomic(output, report)
+    print(json.dumps({
+        "command": "run-retrieval-benchmark",
+        "HYBRID_BENCHMARK_PASS": report["hybrid_pass"]["HYBRID_BENCHMARK_PASS"],
+        "opportunities_with_three_viable": {
+            arm: report["summary_by_arm"][arm]["OPPORTUNITIES_WITH_3_VIABLE"]
+            for arm in report["arms"]
+        },
+    }, indent=2, sort_keys=True))
+
+
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="qbank", description="Deterministic MCCQE qbank pipeline"
@@ -969,6 +1026,9 @@ def _parser() -> argparse.ArgumentParser:
         ("checkpoint-source-research", "write a validated deterministic source-research checkpoint", _command_checkpoint_source_research),
         ("validate-foundational-evidence", "validate canonical foundational evidence claim cards", _command_validate_foundational_evidence),
         ("build-foundational-evidence-audit", "build canonical foundational evidence audit", _command_build_foundational_evidence_audit),
+        ("build-tn-index", "rebuild the local Toronto Notes index and its tracked build manifest", _command_build_tn_index),
+        ("build-clinical-graph", "project the typed clinical contrast graph into the local index", _command_build_clinical_graph),
+        ("run-retrieval-benchmark", "run the frozen-G2 four-arm retrieval benchmark", _command_run_retrieval_benchmark),
     )
     parsers = {}
     for name, help_text, handler in commands:

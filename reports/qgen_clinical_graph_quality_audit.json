@@ -1,0 +1,540 @@
+{
+  "alias_collisions": {
+    "assessment": "Every collision is between a curated clinical concept and a Toronto Notes discovery topic of the same name. None merges two clinically distinct entities; all resolve to MULTI_MATCH and fail closed.",
+    "collisions_involving_a_typed_clinical_concept": [
+      {
+        "surface_form": "acute pericarditi",
+        "types": [
+          "CONDITION",
+          "TOPIC"
+        ]
+      },
+      {
+        "surface_form": "acute pericarditis",
+        "types": [
+          "CONDITION",
+          "TOPIC"
+        ]
+      },
+      {
+        "surface_form": "pelvic inflammatory disease",
+        "types": [
+          "CONDITION",
+          "TOPIC"
+        ]
+      },
+      {
+        "surface_form": "pelvic inflammatory diseases",
+        "types": [
+          "CONDITION",
+          "TOPIC"
+        ]
+      },
+      {
+        "surface_form": "pulmonary embolism",
+        "types": [
+          "CONDITION",
+          "TOPIC"
+        ]
+      },
+      {
+        "surface_form": "pulmonary embolisms",
+        "types": [
+          "CONDITION",
+          "TOPIC"
+        ]
+      }
+    ],
+    "total_multi_match_surface_forms": 18
+  },
+  "context_field_note": "All zero, and that is the correct result rather than a gap. No frozen source artifact states a population, age, pregnancy, severity, temporal or jurisdiction context for these relations, so every such field is NULL. Inventing a default would make an unasked question look answered.",
+  "context_fields_populated": {
+    "age_range": 0,
+    "jurisdiction": 0,
+    "population": 0,
+    "pregnancy_context": 0,
+    "severity_context": 0,
+    "temporal_context": 0
+  },
+  "disciplines_sampled": [
+    "MEDICINE",
+    "OBSTETRICS & GYNECOLOGY",
+    "PEDIATRICS",
+    "PHELO",
+    "PSYCHIATRY",
+    "SURGERY"
+  ],
+  "medically_dubious_relations": {
+    "count": 0,
+    "policy": "No relation in this graph is authored by this task. Every typed clinical edge is a deterministic projection of an artifact that was already frozen and already independently reviewed, so there is no new medical assertion to adjudicate. The Toronto Notes discovery edges make no clinical assertion at all: co-membership of one printed list is a reason to consider two conditions together, and they carry TOPIC_DISCOVERY_SOURCE and can never justify a claim.",
+    "rejected_or_unverified": []
+  },
+  "method": "Sampled typed clinical relations across all six discipline profiles and checked each for provenance, polarity, context, derivation rule and relation correctness; then checked alias collisions and over-normalization across the whole vocabulary.",
+  "over_normalization_probes": {
+    "hyperkalemia_vs_hypokalemia_folded": false,
+    "hypertonic_vs_hypotonic_saline_folded": false,
+    "note": "Asserted by tests in tests/test_clinical_concepts.py; normalization folds case, punctuation and spacing only."
+  },
+  "polarity": {
+    "DEFEATED_BY_polarities": {
+      "ABSENT": 20,
+      "PRESENT": 80
+    },
+    "PLAUSIBILITY_ANCHOR_polarities": {
+      "PRESENT": 153
+    }
+  },
+  "provenance_completeness": {
+    "edges_missing_a_content_hash": 0,
+    "edges_missing_a_derivation_rule": 0,
+    "edges_with_a_source_node_absent_from_nodes": 0
+  },
+  "samples_by_discipline": {
+    "MEDICINE": [
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "ENRICHMENT_CONDITION_PREDICATE",
+        "edge_id": "EDG-053dab8add27b145a80d7541",
+        "polarity": "ABSENT",
+        "relation": "DEFEATED_BY",
+        "source_node": "CONCEPT-G2-NITRATE",
+        "source_type": "PEER_REVIEWED",
+        "target_node": "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "ENRICHMENT_CONDITION_PREDICATE",
+        "edge_id": "EDG-0bc1613bb00ab02f2b381d20",
+        "polarity": "ABSENT",
+        "relation": "DEFEATED_BY",
+        "source_node": "CONCEPT-G2-ADMIT-STRESS-FIRST",
+        "source_type": "PEER_REVIEWED",
+        "target_node": "SF-C21-DYNAMIC-ST-T-CHANGES",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R2",
+        "edge_id": "EDG-104a77afd974511a3f69434b",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-G2-OBSERVE-NO-PLAN",
+        "source_type": "PEER_REVIEWED",
+        "target_node": "SF-C21-NONDIAGNOSTIC-ECG",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "ENRICHMENT_CONDITION_PREDICATE",
+        "edge_id": "EDG-144cedd23563e101d42e2781",
+        "polarity": "PRESENT",
+        "relation": "DEFEATED_BY",
+        "source_node": "CONCEPT-G2-PE",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-C21-PE-PRETEST-PROBABILITY-RAISED",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R1",
+        "edge_id": "EDG-19b10a92e09d2691d1a82e86",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-G2-PERICARDITIS",
+        "source_type": "PEER_REVIEWED",
+        "target_node": "SF-C21-WIDESPREAD-ST-ELEVATION-PR-DEPRESSION",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R2",
+        "edge_id": "EDG-1c005689d3fc11420086af9a",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-G2-NITRATE",
+        "source_type": "PEER_REVIEWED",
+        "target_node": "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+        "verification_status": "REVIEWED"
+      }
+    ],
+    "OBSTETRICS & GYNECOLOGY": [
+      {
+        "authority_role": "TOPIC_DISCOVERY_SOURCE",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R1",
+        "edge_id": "EDG-095fccf70b852c1b4fca8c36",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-R4-SU-MI-31-MAMMOGRAPHY",
+        "source_type": "REPOSITORY_DERIVED",
+        "target_node": "SF-OB54-SKIN-THICKENING-PEAU-DORANGE",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "TOPIC_DISCOVERY_SOURCE",
+        "confidence": "MEDIUM",
+        "derivation_rule": "STEM_ANCHOR_R1",
+        "edge_id": "EDG-09cd709d32e711094ae9ed2d",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-R4-SU-MI-31-IBC",
+        "source_type": "REPOSITORY_DERIVED",
+        "target_node": "SF-OB54-RECURRENCE-SAME-LOCATION",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "TOPIC_DISCOVERY_SOURCE",
+        "confidence": "MEDIUM",
+        "derivation_rule": "STEM_ANCHOR_R1",
+        "edge_id": "EDG-11e987d7405e4b5214c5638c",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-R4-SU-MI-31-IBC",
+        "source_type": "REPOSITORY_DERIVED",
+        "target_node": "SF-OB54-SKIN-THICKENING-PEAU-DORANGE",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "TOPIC_DISCOVERY_SOURCE",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R2",
+        "edge_id": "EDG-1b1c3b1bf97c8f9e65698922",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-R4-SU-OB-54-ABSCESS",
+        "source_type": "REPOSITORY_DERIVED",
+        "target_node": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "TOPIC_DISCOVERY_SOURCE",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R1",
+        "edge_id": "EDG-1cfa4181cd2cda791af835a7",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-R4-SU-OB-54-ABSCESS",
+        "source_type": "REPOSITORY_DERIVED",
+        "target_node": "SF-OB54-FLUCTUANT-COLLECTION",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "TOPIC_DISCOVERY_SOURCE",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R2",
+        "edge_id": "EDG-22495615bc56f9eb43eb3a34",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-R4-SU-OB-54-EMPTY",
+        "source_type": "REPOSITORY_DERIVED",
+        "target_node": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+        "verification_status": "REVIEWED"
+      }
+    ],
+    "PEDIATRICS": [
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R1",
+        "edge_id": "EDG-0310da340d2a8e64dcd473de",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-R4-SU-OT-56-FOREIGN-BODY",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "ENRICHMENT_CONDITION_PREDICATE",
+        "edge_id": "EDG-13e590b69f3bed1ce675c9a8",
+        "polarity": "PRESENT",
+        "relation": "DEFEATED_BY",
+        "source_node": "CONCEPT-R4-SU-P-147-VIRAL-PANEL",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-P147-HIGH-RISK-EARLY-COURSE",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R1",
+        "edge_id": "EDG-19fa62fbacc5c400db84fbb1",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-R4-SU-P-149-PNEUMONIA",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R2",
+        "edge_id": "EDG-1fcd7b5ecc26416987b8d17a",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-R4-SU-R-05-CXR",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "TOPIC_DISCOVERY_SOURCE",
+        "confidence": "LOW",
+        "derivation_rule": "TN_DIFFERENTIAL_LIST_CO_MEMBERSHIP",
+        "edge_id": "EDG-21b30684f67dcb7994b9bed3",
+        "polarity": null,
+        "relation": "CONFUSED_WITH",
+        "source_node": "CONCEPT-R4-SU-OT-56-FOREIGN-BODY",
+        "source_type": "TORONTO_NOTES",
+        "target_node": "TOPIC-077f739a329fd4b8",
+        "verification_status": "DERIVED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R1",
+        "edge_id": "EDG-21cbf6a4a487ab2e94e99a25",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-R4-SU-P-149-PNEUMONIA",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+        "verification_status": "REVIEWED"
+      }
+    ],
+    "PHELO": [
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R2",
+        "edge_id": "EDG-0408a128020358a7624df5a2",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-R4-SU-PH-07-OVERDIAGNOSIS",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-PH07-SURVIVAL-LONGER-IN-SCREENED",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "MEDIUM",
+        "derivation_rule": "STEM_ANCHOR_R1",
+        "edge_id": "EDG-09247117c3586a67dcf57a6a",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-R4-SU-PH-25-ECONOMIC",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-PH07-VALUE-FOR-MONEY-IS-THE-OPEN-QUESTION",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R2",
+        "edge_id": "EDG-09c4ddf14723d36ad4eebc22",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-G2-VOLUNTARY-STATEMENT",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R1",
+        "edge_id": "EDG-0e8b3f2ed36bb400c987aa4b",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-G2-LEAD-TIME",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-PH07-SURVIVAL-LONGER-IN-SCREENED",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "ENRICHMENT_CONDITION_PREDICATE",
+        "edge_id": "EDG-1687488f0393309d41a23a5a",
+        "polarity": "PRESENT",
+        "relation": "DEFEATED_BY",
+        "source_node": "CONCEPT-R4-SU-PH-07-REMINDER",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-PH07-UPTAKE-IS-THE-STATED-OBJECTIVE",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "ENRICHMENT_CONDITION_PREDICATE",
+        "edge_id": "EDG-1752830897b4c53cccfbde77",
+        "polarity": "ABSENT",
+        "relation": "DEFEATED_BY",
+        "source_node": "CONCEPT-R4-SU-PH-07-EVALUATE",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+        "verification_status": "REVIEWED"
+      }
+    ],
+    "PSYCHIATRY": [
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R1",
+        "edge_id": "EDG-00bbfb852f78e30c68b82063",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-R4-SU-E-30-HYPOTHYROID",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-PS12-ABNORMAL-TSH",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "MEDIUM",
+        "derivation_rule": "ENRICHMENT_CONDITION_PREDICATE",
+        "edge_id": "EDG-01938445a31a35b776b0d820",
+        "polarity": "PRESENT",
+        "relation": "DEFEATED_BY",
+        "source_node": "CONCEPT-R4-SU-H-02-ANEMIA",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-PS12-ABNORMAL-CBC",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R2",
+        "edge_id": "EDG-034e3034a7a2a82eb800b0b6",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-G2-ANTIDEPRESSANT-ALONE",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R2",
+        "edge_id": "EDG-0377c4bc62ada745f4311a8c",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-G2-ANTIDEPRESSANT-ALONE",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-PS12-MODERATE-SEVERITY",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "ENRICHMENT_CONDITION_PREDICATE",
+        "edge_id": "EDG-05360b642969cb3dfb9cc310",
+        "polarity": "ABSENT",
+        "relation": "DEFEATED_BY",
+        "source_node": "CONCEPT-R4-SU-PS-12-PDD",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-PS12-INTEREPISODE-RECOVERY",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R2",
+        "edge_id": "EDG-0bd14e769e9ddcd8a1851fbb",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-G2-CRISIS-TEAM",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-PS12-HIGH-IMMINENT-SUICIDE-RISK",
+        "verification_status": "REVIEWED"
+      }
+    ],
+    "SURGERY": [
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R1",
+        "edge_id": "EDG-06e6801cbd7f34075030c9c8",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-R4-SU-ER-09-TORSION",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-GS76-ADNEXAL-MASS-5CM-OR-MORE",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "STEM_ANCHOR_R2",
+        "edge_id": "EDG-0aef3e039b154a34b3c60379",
+        "polarity": "PRESENT",
+        "relation": "PLAUSIBILITY_ANCHOR",
+        "source_node": "CONCEPT-R4-SU-MI-13-US",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "ENRICHMENT_CONDITION_PREDICATE",
+        "edge_id": "EDG-175a53c4a23a1f45df70fdd4",
+        "polarity": "PRESENT",
+        "relation": "DEFEATED_BY",
+        "source_node": "CONCEPT-R4-SU-ER-09-TORSION",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-GS76-ADNEXAL-MASS-5CM-OR-MORE",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "ENRICHMENT_CONDITION_PREDICATE",
+        "edge_id": "EDG-23855ffd803ff5a0c3ba293b",
+        "polarity": "PRESENT",
+        "relation": "DEFEATED_BY",
+        "source_node": "CONCEPT-R4-SU-MI-13-DRAINAGE",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-GS76-WALLED-OFF-PHLEGMON-OR-ABSCESS",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "MEDIUM",
+        "derivation_rule": "ENRICHMENT_CONDITION_PREDICATE",
+        "edge_id": "EDG-27320ce82df446cf57ffbe2c",
+        "polarity": "PRESENT",
+        "relation": "DEFEATED_BY",
+        "source_node": "CONCEPT-R4-SU-MI-15-KUB",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS",
+        "verification_status": "REVIEWED"
+      },
+      {
+        "authority_role": "CURRENT_CLINICAL_AUTHORITY",
+        "confidence": "HIGH",
+        "derivation_rule": "ENRICHMENT_CONDITION_PREDICATE",
+        "edge_id": "EDG-4539f86f09d9ce54c4328969",
+        "polarity": "PRESENT",
+        "relation": "DEFEATED_BY",
+        "source_node": "CONCEPT-R4-SU-MI-13-MRI",
+        "source_type": "CANADIAN_GUIDELINE",
+        "target_node": "SF-GS76-PREGNANT",
+        "verification_status": "REVIEWED"
+      }
+    ]
+  },
+  "schema_version": "1.0",
+  "scope": "QGEN_CLINICAL_GRAPH_QUALITY_AUDIT"
+}

@@ -21,7 +21,7 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `6fe423735e9d30247f6bee09327bf7c2fe2956c6`.
+- Audited coordinator input commit: `42a367455d268445f53ba4571ebffecc7c7cdce7`.
 - Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
@@ -436,7 +436,92 @@ This section is maintained by hand and sits outside the generated source-researc
   `SA_1_DECISION_GRANULARITY_MATCH` refusals fall from 22 to 5. Option realization, evidence-set scoping and the
   CORE coverage accounting join are unchanged and were deliberately not touched.
 - `RECOMMENDED_ARCHITECTURE_ACTION` stays `DO_NOT_SCALE`. No profile validated and safe yield fell.
-- QGEN_NEXT_STEP = `USER_REVIEW_STEM_ANCHOR_RETEST_THEN_CONTRAST_LIBRARY_COVERAGE`
+- **Clinical contrast retrieval milestone (2026-09-04), from design commit `777653a`.** The approved
+  design at `docs/superpowers/specs/2026-09-04-mccqe-clinical-contrast-graph-rag-and-difficulty-design.md`
+  is implemented as far as its own Phase 3 decision point and stops there, as the design requires.
+  Plan: `docs/superpowers/plans/2026-09-04-clinical-contrast-retrieval-implementation.md`. No question
+  was generated, no production generation module changed, no frozen artifact moved and
+  `LLM_API_CALLS = 0`.
+- **Full deterministic Toronto Notes index: IMPLEMENTED.** All 1,595 already-OCR'd pages into
+  **14,909 chunks** in 1.8 s, database 36.7 MB, SQLite FTS5 with `porter unicode61 remove_diacritics 2`.
+  Structure-aware rather than fixed-token: running header peeled off and its printed page label kept,
+  blocks classified HEADING/LIST/PARAGRAPH/NOISE, chunks bounded by page and heading, content-addressed
+  chunk ids reproducing exactly on rebuild. Median chunk 212 chars, p95 1,541, max 1,800. The only two
+  pages yielding no chunks are exactly the two OCR-quality-flagged cover pages. The database lives under
+  gitignored `derived/` and is **never tracked**; `research/tn2025/tn_index_build_manifest.json` carries
+  counts, hashes and the tokenizer rationale with no corpus prose.
+- **Concept normalization: IMPLEMENTED.** 2,561 concepts / 5,122 aliases / 0 unresolved typings.
+  81 curated competitors typed from the closed archetype vocabulary (20 CONDITION, 61 ACTION; all 81
+  type cleanly), 102 frozen stem features as FINDING, 2,378 TN discovery topics. Aliases from three
+  named rules only. **18 MULTI_MATCH** surface forms remain and all are a curated clinical concept
+  colliding with a same-named TN topic; none merges clinically distinct entities.
+- **Typed clinical contrast graph: IMPLEMENTED.** 4,275 nodes / 5,916 edges, every one a deterministic
+  projection of an already-frozen, already-reviewed artifact — nothing authored here. PLAUSIBILITY_ANCHOR
+  153, DEFEATED_BY 100, ANSWERS 81, BELONGS_TO 1,661, CONFUSED_WITH 635, PRESENTS_WITH 3,286.
+  All 3,909 Toronto Notes edges are TOPIC_DISCOVERY_SOURCE and none can justify a claim; only the 217
+  edges resolving to a dated non-textbook source may. Context fields are NULL throughout because no
+  source states them, asserted by test. Answers design open question §15.3: deterministic differential
+  parsing yields **623** CONFUSED_WITH edges from only 89 differential-headed chunks, against 628
+  clinical-features chunks.
+- **`RETRIEVAL_ARCHITECTURE_DECISION = RETRIEVAL_NOT_MAIN_PROBLEM`**, in
+  `reports/qgen_clinical_retrieval_benchmark.json` and `.md`. `HYBRID_BENCHMARK_PASS = False`.
+  Four arms over the same 30 frozen G2 opportunities, all routed through the *same*
+  `retrieve_profile_aware_contrasts`, so the floor and ceiling are one implementation and not four.
+  Opportunities reaching three viable competitors: **CURRENT_LIBRARY 10, BM25 0, GRAPH 10, HYBRID 10**.
+  Recall 0.4935 / 0.0 / 0.4935 / 0.4935; known-bad returned 0 in every arm; second-key refusals 8 in
+  all but BM25; source traceability 1.0. Six of seven pre-committed checks pass; the one that fails is
+  the supply criterion the rule was built around.
+- **The finding that decides it.** Mean recall of 0.49 is *not* a recall failure. Every frozen reference
+  positive missing from arm A was traced to the filter that removed it — **41 SAF_1, 2 ADM_1,
+  `NOT_RETRIEVED_AT_ALL = 0`**. Nothing is missed by retrieval in any arm; the gap is the validated
+  floor refusing competitors a reviewer had ADMITTED before the floor existed. `BINDING_CONSTRAINT =
+  TYPED_ANCHOR_AND_CONDITION_POPULATION`, as the Phase-0 measurement predicted: the 102 stem features
+  partition across exactly 6 study units with **zero** cross-unit collisions, so anchor-bearing supply
+  is structurally confined to 0.4 % of 1,487 study units, and every typed competitor concept already
+  sits in the curated index.
+- **The graph is not written off, and its win is named honestly.** Arm C reaches the same 10
+  opportunities with **zero** anchor-floor refusals against arm A's 67, because traversal starts at the
+  stem's PRESENT anchors and never presents an anchorless candidate to the floor. It also reaches arm
+  A's sets by an independent path (inverted PLAUSIBILITY_ANCHOR rather than an archetype lookup), which
+  independently corroborates the frozen anchor layer. Both are efficiency/provenance results, not supply.
+- `LOCAL_EMBEDDING_TRIGGER_MET = NO`; `LOCAL_EMBEDDINGS = NOT_NEEDED_YET`. The trigger's first limb
+  fails outright: nothing is missed, so a denser retriever hands the same competitors to the same floor.
+- **Pre-registration is real and committed ahead of results** at `20db2a6`:
+  `research/qgen/safe_yield/retrieval_benchmark_reference.json` (83 positives across 29 opportunities,
+  67 anchorless + 8 second-key controls) is *derived* from the frozen semantic-admissibility record and
+  the retest's own filter verdicts, not authored. A test reproduces it from those inputs, and another
+  asserts the pass rule can actually fail.
+- **Difficulty infrastructure: IMPLEMENTED**, generation untouched.
+  `DIFFICULTY_INTENT_SCHEMA = IMPLEMENTED`, `EMPIRICAL_PSYCHOMETRIC_SCHEMA = IMPLEMENTED`, in
+  `scripts/qbank/question_difficulty.py`. Intent and empirical difficulty are separate records that
+  cannot carry each other's fields; new items enter BETA with every empirical field null and no minimum
+  N is invented. Nine prohibited difficulty sources are refused in a rationale, named or euphemised.
+  20/55/25 carries `POLICY_STATUS = INITIAL_LEARNING_DESIGN_POLICY` and
+  `DERIVED_FROM_MCC_DISTRIBUTION = False` in the data itself. Validated against the two accepted G2
+  items, read not rewritten, with **no difficulty assigned to any item**; that surfaced a real signal —
+  G2-PHELO-01's three competitors are all defeated by explicit verbal denials, failing the denial check
+  at every level, which shows the checks discriminate.
+- **Audits.** `COPYRIGHT_AUDIT = PASS`: all 18 artifacts this milestone created have a longest verbatim
+  Toronto Notes run of **0**, and the index database is not tracked.
+  `TRACKED_COPYRIGHTED_CORPUS_CONTENT = NO` for this task. Reported and deliberately **not** modified:
+  24 pre-existing frozen artifacts carry 22–31 word verbatim runs in free-text rationale fields
+  (worst: `research/mcc/objectives_registry.json` 31, `master_scope_crosswalk.json` 25,
+  `toc_inventory.json` 22); the frozen-layer rule forbids editing them without authorization, so this is
+  raised for a separate decision. Graph quality audit sampled all six discipline profiles: 0 orphan
+  edges, 0 missing derivation rules, 0 medically dubious relations to adjudicate because none is
+  authored here.
+- Performance, all measured on this machine and no dollar figure stated: index build 1.8 s, graph build
+  1.2 s, total rebuild 3.0 s, 36.7 MB. Retrieval latency p50/p95 ms — CURRENT_LIBRARY 5.5/9.5,
+  BM25 9.9/43.3, GRAPH 5.5/7.2, HYBRID 8.3/12.0. Context packet median 1,770 characters / 102 words for
+  GRAPH and HYBRID, 1,737 for the current library. No token count is reported: there is no local
+  tokenizer, and characters are not equated with the design's ENGINEERING_ESTIMATE token budget.
+- Tests: **113 focused** across the six new modules; full canonical suite **1137/0** at the final
+  production state. `qbank build-tn-index`, `qbank build-clinical-graph` and
+  `qbank run-retrieval-benchmark` rebuild everything; docs in `docs/clinical-retrieval.md`.
+- `PRODUCTION_QUESTION_GENERATOR_CHANGED = NO`. `safe_yield_wave`, `question_opportunity` and
+  `profile_contrast_retrieval` are untouched, and `profile_contrast_retrieval` must stay untouched
+  because it *is* benchmark arm A. `RECOMMENDED_ARCHITECTURE_ACTION` stays `DO_NOT_SCALE`.
+- QGEN_NEXT_STEP = `USER_REVIEW_RETRIEVAL_BENCHMARK`
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 
 ## Research-level policy
