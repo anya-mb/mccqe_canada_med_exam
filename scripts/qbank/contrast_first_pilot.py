@@ -76,6 +76,11 @@ MAXIMUM_ABSENT_REQUIRED_FEATURES = {"EASY": 1, "MEDIUM": 1, "HARD": 0}
 
 COHERENCE_RULES = ("CO-1", "CO-2", "CO-3", "CO-4", "CO-5", "CO-6")
 
+#: Anchors PRESENT per competitor that each level targets. These are the minima
+#: the already-implemented difficulty checks apply, restated here so the solver
+#: can aim at a level rather than discover afterwards which level it hit.
+ANCHOR_DENSITY_TARGET = {"EASY": 1.0, "MEDIUM": 1.0, "HARD": 2.0}
+
 #: Absolute qualifiers an option may not carry unless the evidence states them.
 #: Kept as a closed list rather than a classifier: a guess here would itself be
 #: the cueing it is meant to catch.
@@ -119,7 +124,12 @@ def _review(candidate: dict[str, Any]) -> dict[str, Any]:
     return review if isinstance(review, dict) else {}
 
 
-def admit_pre_stem(candidate: dict[str, Any], *, key_context: dict[str, Any]) -> dict[str, Any]:
+def admit_pre_stem(
+    candidate: dict[str, Any],
+    *,
+    key_context: dict[str, Any],
+    token_implications: dict[str, list[str]] | None = None,
+) -> dict[str, Any]:
     """Apply the stem-independent admission predicate to one candidate.
 
     These are exactly the conditions the current pipeline already applies; the
@@ -147,7 +157,9 @@ def admit_pre_stem(candidate: dict[str, Any], *, key_context: dict[str, Any]) ->
         definition = RESPONSE_CLASS_AXES[axis]
         permitted = set(definition["tokens"]) | {definition["generic_token"]}
         tokens = candidate.get("response_class_tokens") or []
-        closure = expand_response_tokens(tokens, {}, definition["generic_token"])
+        closure = expand_response_tokens(
+            tokens, token_implications or {}, definition["generic_token"]
+        )
         if key_context["demanded_response_class"] not in closure or not set(
             tokens
         ) <= permitted:
@@ -212,7 +224,11 @@ def key_context(contrast_set: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def validate_contrast_set(contrast_set: dict[str, Any]) -> None:
+def validate_contrast_set(
+    contrast_set: dict[str, Any],
+    *,
+    token_implications: dict[str, list[str]] | None = None,
+) -> None:
     """Validate a contrast set built before any stem exists."""
     missing = [field for field in _CONTRAST_SET_FIELDS if field not in contrast_set]
     if missing:
@@ -257,7 +273,9 @@ def validate_contrast_set(contrast_set: dict[str, Any]) -> None:
             raise ContrastFirstError(
                 f"{seed_id} is the key concept; a key may not compete with itself"
             )
-        verdict = admit_pre_stem(candidate, key_context=context)
+        verdict = admit_pre_stem(
+            candidate, key_context=context, token_implications=token_implications
+        )
         if not verdict["admitted"]:
             raise ContrastFirstError(
                 f"{seed_id} is inadmissible before the stem: {', '.join(verdict['refusals'])}"
@@ -392,12 +410,25 @@ def _fully_satisfies_any(
     return None
 
 
+def _anchor_density(
+    rows: Sequence[dict[str, Any]], assignment: dict[str, str]
+) -> float:
+    """Mean anchors PRESENT per competitor under the current assignment."""
+    if not rows:
+        return 0.0
+    return sum(
+        sum(1 for feature in row["SUPPORTING_FEATURES"] if assignment.get(feature) == "PRESENT")
+        for row in rows
+    ) / len(rows)
+
+
 def solve_stem_blueprint(
     matrix: dict[str, Any],
     *,
     vocabulary: dict[str, dict[str, Any]],
     difficulty_intent: str | None = None,
     contradiction_pairs: Iterable[tuple[str, str]] = (),
+    context_features: Sequence[str] = (),
 ) -> dict[str, Any]:
     """Solve the feature set a stem must realize, before a word of it is written.
 
@@ -415,7 +446,7 @@ def solve_stem_blueprint(
     rows = sorted(matrix["rows"], key=lambda row: row["seed_id"])
     key_conditions = matrix["key"]["correctness_conditions"]
 
-    named = {condition["stem_feature_id"] for condition in key_conditions}
+    named = {condition["stem_feature_id"] for condition in key_conditions} | set(context_features)
     for row in rows:
         named |= set(row["SUPPORTING_FEATURES"])
         named |= {condition["stem_feature_id"] for condition in row["CORRECTNESS_CONDITIONS"]}
@@ -451,6 +482,26 @@ def solve_stem_blueprint(
         assignment[feature] = polarity
         provenance.setdefault(feature, []).append("KEY_CORRECTNESS_CONDITION")
 
+    # Author-declared contextual features. A stem needs clinical colour the
+    # constraint solve does not demand -- the erythematous segment in a mastitis
+    # case is not load-bearing but its absence would read as a gap. They enter
+    # under the same rules as everything else: inside the frozen vocabulary, no
+    # contradiction, and never completing a competitor's correctness signature.
+    for feature in sorted(set(context_features)):
+        if feature in assignment:
+            continue
+        trial = dict(assignment)
+        trial[feature] = "PRESENT"
+        if _fully_satisfies_any(rows, trial) is not None or contradicts(feature, assignment):
+            return _blueprint(
+                matrix, intent, assignment, provenance, rows,
+                "FAIL_CLOSED_BLUEPRINT_UNSATISFIABLE",
+                note=f"context feature {feature} would complete a competitor or contradict the stem",
+                vocabulary=vocabulary,
+            )
+        assignment[feature] = "PRESENT"
+        provenance.setdefault(feature, []).append("OPTIONAL_CONTEXT")
+
     # The floor pass. Competitors are visited in seed order and each anchor
     # choice maximises how many still-anchorless competitors it also serves, so
     # the solve is deterministic and adds as few findings as it can.
@@ -482,6 +533,34 @@ def solve_stem_blueprint(
         _, chosen = sorted(options)[0]
         assignment[chosen] = "PRESENT"
         provenance.setdefault(chosen, []).append("COMPETITOR_ANCHOR")
+
+    # Difficulty targeting. The floor pass adds the minimum that makes every
+    # competitor live; a harder contract wants each competitor live on more than
+    # one stated finding. That is a density change, not a length change, and it
+    # is bounded by the same required-feature cap the coherence gate applies, so
+    # difficulty can never be bought with a longer stem.
+    if fail_closed is None:
+        target = ANCHOR_DENSITY_TARGET[intent]
+        cap = REQUIRED_FEATURE_CAP[intent]
+        while _anchor_density(rows, assignment) < target and len(assignment) < cap:
+            options = []
+            for row in rows:
+                for feature in sorted(row["SUPPORTING_FEATURES"]):
+                    if feature in assignment or contradicts(feature, assignment):
+                        continue
+                    trial = dict(assignment)
+                    trial[feature] = "PRESENT"
+                    if _fully_satisfies_any(rows, trial) is not None:
+                        continue
+                    coverage = sum(
+                        1 for other in rows if feature in other["SUPPORTING_FEATURES"]
+                    )
+                    options.append((-coverage, feature))
+            if not options:
+                break
+            _, chosen = sorted(options)[0]
+            assignment[chosen] = "PRESENT"
+            provenance.setdefault(chosen, []).append("DIFFICULTY_TARGET_ANCHOR")
 
     if fail_closed is None:
         second_key = _fully_satisfies_any(rows, assignment)
@@ -522,9 +601,15 @@ def _blueprint(
             condition for condition in conditions
             if assignment.get(condition["stem_feature_id"]) != condition["required_polarity"]
         ]
+        # An explicit verbal denial is a stem that *states the absence* of
+        # something a competitor needs. A stem that positively asserts the
+        # opposite finding is not a denial -- it is the strongest legitimate
+        # discriminator there is -- so only PRESENT-required conditions the
+        # blueprint assigns ABSENT count here.
         denied = [
             condition for condition in unsatisfied
-            if condition["stem_feature_id"] in assignment
+            if condition["required_polarity"] == "PRESENT"
+            and assignment.get(condition["stem_feature_id"]) == "ABSENT"
         ]
         status[row["seed_id"]] = {
             "anchors_present": anchors_present,
@@ -941,3 +1026,367 @@ def audit_hard_item(evidence: dict[str, Any]) -> dict[str, Any]:
     if evidence.get("trick_wording"):
         violations.append("TRICK_WORDING")
     return {"accepted": not violations, "violations": sorted(set(violations))}
+
+
+# ---------------------------------------------------- frozen-artifact loaders
+
+
+SEED_PACKS = (
+    "research/qgen/generalization/competitive_contrast_seed_pack_r4",
+    "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted",
+    "research/qgen/generalization/competitive_contrast_seed_pack_g2_extensions",
+)
+
+STEM_FEATURE_VOCABULARY_PATH = "research/qgen/safe_yield/g2_stem_feature_vocabulary.json"
+
+PILOT_OPPORTUNITIES_PATH = "research/qgen/contrast_first_pilot_opportunities.json"
+
+
+def _read(root, relative: str) -> Any:
+    from pathlib import Path
+
+    from .paths import resolve_root_path
+
+    path = resolve_root_path(Path(root).resolve(), relative)
+    if not path.is_file():
+        raise ContrastFirstError(f"required frozen artifact is missing: {relative}")
+    return json.loads(path.read_text())
+
+
+def load_stem_feature_vocabulary(root) -> dict[str, dict[str, dict[str, Any]]]:
+    """Load the frozen per-study-unit stem-feature vocabulary, by unit."""
+    document = _read(root, STEM_FEATURE_VOCABULARY_PATH)
+    if not document.get("frozen"):
+        raise ContrastFirstError("the stem-feature vocabulary must be frozen before use")
+    vocabulary: dict[str, dict[str, dict[str, Any]]] = {}
+    for anchor in document["anchors"]:
+        vocabulary[anchor["anchor_study_unit_id"]] = {
+            feature["stem_feature_id"]: {
+                "clinical_role": feature["clinical_role"],
+                "normalized_feature": feature["normalized_feature"],
+            }
+            for feature in anchor["features"]
+        }
+    return vocabulary
+
+
+def load_curated_candidates(root) -> list[dict[str, Any]]:
+    """Project the frozen curated seed packs into contrast-first candidate rows.
+
+    Nothing is authored. Every field is read from a pack, its enrichment or its
+    stem-anchor layer, all three of which were frozen before this task.
+    """
+    candidates: list[dict[str, Any]] = []
+    for base in SEED_PACKS:
+        pack = _read(root, f"{base}.json")
+        enrichment = {
+            seed["seed_id"]: seed for seed in _read(root, f"{base}.enrichment.json")["seeds"]
+        }
+        anchors = {
+            seed["seed_id"]: seed for seed in _read(root, f"{base}.stem_anchors.json")["seeds"]
+        }
+        for target in pack["targets"]:
+            for seed in target["seeds"]:
+                seed_id = seed["seed_id"]
+                tags = enrichment.get(seed_id)
+                anchor_row = anchors.get(seed_id)
+                if tags is None or anchor_row is None:
+                    continue
+                review = dict(seed.get("independent_seed_review") or {})
+                candidates.append({
+                    "seed_id": seed_id,
+                    "source_pack": base.rsplit("/", 1)[-1],
+                    "curated_for_target_id": target["target_id"],
+                    "competitor_concept": seed.get("competitor_concept"),
+                    "competitor_concept_id": seed.get("competitor_concept_id"),
+                    "competitor_study_unit_id": seed.get("competitor_study_unit_id"),
+                    "competitor_decision_granularity": seed.get(
+                        "competitor_decision_granularity"
+                    ),
+                    "conditions_under_which_competitor_would_be_correct": seed.get(
+                        "conditions_under_which_competitor_would_be_correct"
+                    ),
+                    "condition_predicates": list(tags.get("condition_predicates") or []),
+                    "plausibility_anchor_feature_ids": sorted({
+                        anchor["stem_feature_id"]
+                        for anchor in (anchor_row.get("plausibility_anchors") or [])
+                    }),
+                    "anchor_study_unit_id": anchor_row.get("anchor_study_unit_id"),
+                    "response_class_tokens": list(tags.get("response_class_tokens") or []),
+                    "nominal_axis_values": dict(tags.get("nominal_axis_values") or {}),
+                    "applicable_disciplines": list(tags.get("applicable_disciplines") or []),
+                    "applicable_item_archetypes": list(
+                        tags.get("applicable_item_archetypes") or []
+                    ),
+                    "option_set_archetypes": list(tags.get("option_set_archetypes") or []),
+                    "shared_features_with_key": list(seed.get("shared_features_with_key") or []),
+                    "candidate_visible_discriminators": list(
+                        seed.get("candidate_visible_discriminators") or []
+                    ),
+                    "why_a_minimally_competent_candidate_would_consider_it": seed.get(
+                        "why_a_partially_knowledgeable_candidate_might_choose_it"
+                    ),
+                    "evidence_refs_for_plausibility": list(
+                        seed.get("evidence_refs_for_plausibility") or []
+                    ),
+                    "evidence_refs_for_discrimination": list(
+                        seed.get("evidence_refs_for_discrimination") or []
+                    ),
+                    "independent_seed_review": review,
+                    "requires_terminal_exclusion_clue": bool(
+                        seed.get("requires_terminal_exclusion_clue")
+                    ),
+                    "discovery_sources": ["CURATED_LIBRARY"],
+                })
+    return sorted(candidates, key=lambda row: row["seed_id"])
+
+
+def graph_contrast_discovery(connection, *, target_ids: Sequence[str]) -> dict[str, Any]:
+    """Upstream contrast discovery, seeded at the key decision rather than a stem.
+
+    Arm C of the benchmark seeds traversal at the realized stem's PRESENT
+    features, which is unusable here by construction: there is no stem yet. The
+    seed is the target node the key answers, so the traversal runs
+    ``target <- ANSWERS <- competitor -> CONFUSED_WITH -> further competitor``,
+    and ``PLAUSIBILITY_ANCHOR`` then supplies, for each candidate, the stem
+    features that would make it live. That last relation is the graph's real
+    contribution to this architecture: it is the input the blueprint solver needs
+    and the archetype-tagged library index cannot give without a stem.
+    """
+    if not target_ids:
+        return {"concepts": {}, "seeded_at": []}
+    marks = ",".join("?" for _ in target_ids)
+    reached: dict[str, dict[str, Any]] = {}
+    for concept, edge_id, target in connection.execute(
+        f"SELECT source_node, edge_id, target_node FROM edges WHERE relation = 'ANSWERS' "
+        f"AND target_node IN ({marks}) ORDER BY edge_id",
+        tuple(target_ids),
+    ):
+        reached.setdefault(concept, {
+            "depth": 1,
+            "paths": [[{"relation": "ANSWERS", "edge_id": edge_id, "from": concept, "to": target}]],
+        })
+    direct = sorted(reached)
+    if direct:
+        marks = ",".join("?" for _ in direct)
+        for left, edge_id, right in connection.execute(
+            f"SELECT source_node, edge_id, target_node FROM edges WHERE relation = "
+            f"'CONFUSED_WITH' AND source_node IN ({marks}) ORDER BY edge_id",
+            tuple(direct),
+        ):
+            if right in reached:
+                continue
+            reached[right] = {
+                "depth": 2,
+                "paths": [reached[left]["paths"][0] + [{
+                    "relation": "CONFUSED_WITH", "edge_id": edge_id,
+                    "from": left, "to": right,
+                }]],
+            }
+    for concept, entry in reached.items():
+        entry["plausibility_anchor_feature_ids"] = sorted({
+            row[0] for row in connection.execute(
+                "SELECT target_node FROM edges WHERE relation = 'PLAUSIBILITY_ANCHOR' "
+                "AND source_node = ? ORDER BY edge_id",
+                (concept,),
+            )
+        })
+    return {"concepts": reached, "seeded_at": sorted(target_ids)}
+
+
+PROFILE_PATH = "research/qgen/profiles/{profile}.profile.json"
+
+
+def load_profile_contract(root, *, discipline_profile_id: str, option_set_archetype: str):
+    """Return one profile's option-set contract and competitor ranking preference."""
+    profile = _read(root, PROFILE_PATH.format(profile=discipline_profile_id))
+    contract = next(
+        (
+            row for row in profile.get("option_set_contracts", [])
+            if row.get("option_set_archetype") == option_set_archetype
+        ),
+        None,
+    )
+    if contract is None:
+        raise ContrastFirstError(
+            f"{discipline_profile_id} declares no contract for {option_set_archetype}"
+        )
+    return {
+        "token_implications": dict(contract.get("token_implications") or {}),
+        "response_class_axis": contract.get("response_class_axis"),
+        "competitor_ranking_preference": list(
+            profile.get("competitor_ranking_preference") or []
+        ),
+    }
+
+
+# ------------------------------------------------------------ pilot stages
+
+
+PILOT_AUTHORING_PATH = "research/qgen/contrast_first_pilot_authoring.json"
+
+
+def build_pilot_contrast_sets(root) -> dict[str, Any]:
+    """Stage 1-3: contrast sets, matrices and stem blueprints for the frozen sample.
+
+    Everything up to and including the blueprint happens here, before any stem
+    exists. An opportunity that fails at this stage costs one deterministic solve
+    rather than an authored stem that a gate then refuses, which is the whole
+    point of moving the work upstream.
+    """
+    frozen = _read(root, PILOT_OPPORTUNITIES_PATH)
+    authoring = _read(root, PILOT_AUTHORING_PATH)
+    vocabulary = load_stem_feature_vocabulary(root)
+    pool = {row["seed_id"]: row for row in load_curated_candidates(root)}
+
+    results: list[dict[str, Any]] = []
+    for opportunity in frozen["opportunities"]:
+        label = opportunity["opportunity_label"]
+        unit = opportunity["anchor_study_unit_id"]
+        contract = load_profile_contract(
+            root,
+            discipline_profile_id=opportunity["discipline_profile_id"],
+            option_set_archetype=opportunity["option_set_archetype"],
+        )
+        context = {
+            "discipline_profile_id": opportunity["discipline_profile_id"],
+            "item_archetype": opportunity["item_archetype"],
+            "option_set_archetype": opportunity["option_set_archetype"],
+            "demanded_response_class": opportunity["demanded_response_class"],
+            "decision_granularity": opportunity["decision_granularity"],
+        }
+        admitted = []
+        refused = []
+        for candidate in sorted(pool.values(), key=lambda row: row["seed_id"]):
+            verdict = admit_pre_stem(
+                candidate, key_context=context,
+                token_implications=contract["token_implications"],
+            )
+            (admitted if verdict["admitted"] else refused).append(verdict)
+
+        record: dict[str, Any] = {
+            "opportunity_label": label,
+            "discipline": opportunity["discipline"],
+            "difficulty_intent": opportunity["difficulty_intent"],
+            "anchor_study_unit_id": unit,
+            "admissible_candidate_count": len(admitted),
+            "admissible_candidates": [row["seed_id"] for row in admitted],
+            "pre_stem_refusal_counts": _refusal_counts(refused),
+            "ranking_preference": contract["competitor_ranking_preference"],
+            "token_implications": contract["token_implications"],
+        }
+        spec = (authoring["opportunities"] or {}).get(label)
+        if spec is None or len(admitted) < CONTRAST_SET_MINIMUM:
+            record.update({
+                "stage": "PRE_STEM",
+                "terminal_state": "NO_SAFE_ITEM",
+                "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+                "pre_stem_valid_contrast_set": False,
+                "targeted_research_pass": "DECLINED",
+            })
+            results.append(record)
+            continue
+
+        selected = [pool[seed_id] for seed_id in spec["competitors"] if seed_id in pool]
+        contrast_set = {
+            "contrast_set_id": "",
+            "opportunity_label": label,
+            "discipline_profile_id": opportunity["discipline_profile_id"],
+            "learner_decision_id": opportunity["learner_decision_id"],
+            "item_archetype": opportunity["item_archetype"],
+            "option_set_archetype": opportunity["option_set_archetype"],
+            "demanded_response_class": opportunity["demanded_response_class"],
+            "decision_granularity": opportunity["decision_granularity"],
+            "difficulty_intent": opportunity["difficulty_intent"],
+            "anchor_study_unit_id": unit,
+            "priority_class": opportunity["priority_class"],
+            "key": {
+                "key_concept": spec["key_concept"],
+                "key_concept_id": spec["key_concept_id"],
+                "correctness_conditions": spec["correctness_conditions"],
+                "evidence_refs": spec["key_evidence_refs"],
+            },
+            "competitors": selected,
+            "excluded_candidates": spec.get("excluded", {}),
+            "context_features": spec.get("context_features", []),
+        }
+        contrast_set["contrast_set_id"] = artifact_id("CFS", contrast_set)
+        record["contrast_set"] = contrast_set
+
+        try:
+            validate_contrast_set(
+                contrast_set, token_implications=contract["token_implications"]
+            )
+            matrix = build_contrast_matrix(contrast_set)
+            validate_contrast_matrix(matrix)
+        except ContrastFirstError as error:
+            record.update({
+                "stage": "CONTRAST_SET",
+                "terminal_state": "NO_SAFE_ITEM",
+                "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE"
+                if "FAIL_CLOSED_CONTRAST_SET_SIZE" in str(error)
+                else "FAIL_CLOSED_COMPETITOR_NOT_CONSIDERABLE",
+                "fail_closed_detail": str(error),
+                "pre_stem_valid_contrast_set": False,
+                "targeted_research_pass": "DECLINED",
+            })
+            results.append(record)
+            continue
+
+        record["pre_stem_valid_contrast_set"] = True
+        record["contrast_matrix"] = matrix
+        pairs = [tuple(pair) for pair in (authoring["contradiction_pairs"].get(unit) or [])]
+        blueprint = solve_stem_blueprint(
+            matrix,
+            vocabulary=vocabulary[unit],
+            contradiction_pairs=pairs,
+            context_features=spec.get("context_features", []),
+        )
+        record["stem_blueprint"] = blueprint
+        if blueprint["fail_closed_reason"]:
+            record.update({
+                "stage": "BLUEPRINT",
+                "terminal_state": "NO_SAFE_ITEM",
+                "fail_closed_reason": blueprint["fail_closed_reason"],
+            })
+            results.append(record)
+            continue
+
+        coherence = evaluate_clinical_coherence(
+            blueprint, vocabulary=vocabulary[unit],
+            availability_reasons=(authoring["opportunities"][label].get(
+                "availability_reasons"
+            ) or {}),
+            contradiction_pairs=pairs,
+        )
+        record["clinical_coherence"] = coherence
+        if not coherence["coherent"]:
+            record.update({
+                "stage": "COHERENCE",
+                "terminal_state": "NO_SAFE_ITEM",
+                "fail_closed_reason": "FAIL_CLOSED_CLINICAL_COHERENCE",
+            })
+            results.append(record)
+            continue
+
+        record["difficulty_evidence"] = difficulty_evidence_from_blueprint(blueprint, matrix)
+        record["stage"] = "READY_FOR_STEM"
+        record["terminal_state"] = None
+        record["fail_closed_reason"] = None
+        results.append(record)
+
+    return {
+        "schema_version": "1.0",
+        "scope": "QGEN_CONTRAST_FIRST_PRE_STEM_STAGE",
+        "pilot_id": frozen["pilot_id"],
+        "opportunities_frozen_sha256": frozen["frozen_sha256"],
+        "results": results,
+    }
+
+
+def _refusal_counts(refused: Sequence[dict[str, Any]]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for verdict in refused:
+        for code in verdict["refusals"]:
+            counts[code] = counts.get(code, 0) + 1
+    return dict(sorted(counts.items()))

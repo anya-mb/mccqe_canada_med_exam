@@ -724,3 +724,176 @@ def test_artifact_ids_are_content_addressed_and_reproducible():
 
 def test_a_changed_payload_changes_the_artifact_id():
     assert artifact_id("CFS", {"a": 1}) != artifact_id("CFS", {"a": 2})
+
+
+# ------------------------------------------- difficulty-aware anchor targeting
+
+
+def _rich_contrast_set(intent):
+    """Three competitors that each carry two anchors, so HARD is reachable."""
+    return contrast_set(
+        difficulty_intent=intent,
+        key_conditions=[
+            {"stem_feature_id": "SF-KEY-A", "required_polarity": "PRESENT"},
+            {"stem_feature_id": "SF-KEY-B", "required_polarity": "PRESENT"},
+            {"stem_feature_id": "SF-KEY-C", "required_polarity": "PRESENT"},
+        ],
+        competitors=[
+            competitor("SEED-ONE", anchors=["SF-SHARED-1", "SF-SHARED-4"],
+                       conditions=[("SF-ONLY-1", "PRESENT"), ("SF-SHARED-1", "PRESENT")]),
+            competitor("SEED-TWO", anchors=["SF-SHARED-2", "SF-SHARED-4"],
+                       conditions=[("SF-ONLY-2", "PRESENT"), ("SF-SHARED-2", "PRESENT")]),
+            competitor("SEED-THREE", anchors=["SF-SHARED-3", "SF-SHARED-4"],
+                       conditions=[("SF-ONLY-3", "PRESENT"), ("SF-SHARED-3", "PRESENT")]),
+        ],
+    )
+
+
+def test_a_hard_target_raises_anchor_density_instead_of_stem_length():
+    matrix = build_contrast_matrix(_rich_contrast_set("HARD"))
+    blueprint = solve_stem_blueprint(matrix, vocabulary=VOCABULARY)
+    evidence = difficulty_evidence_from_blueprint(blueprint, matrix)
+    assert evidence["mean_anchors_present_per_competitor"] >= 2.0
+    assert evidence["key_discriminator_count"] == 3
+    assert len(blueprint["required_features"]) <= REQUIRED_FEATURE_CAP["HARD"]
+    assert blueprint["fail_closed_reason"] is None
+
+
+def test_an_easy_target_does_not_inflate_anchor_density():
+    easy = contrast_set(
+        difficulty_intent="EASY",
+        key_conditions=[{"stem_feature_id": "SF-KEY-A", "required_polarity": "PRESENT"}],
+    )
+    matrix = build_contrast_matrix(easy)
+    blueprint = solve_stem_blueprint(matrix, vocabulary=VOCABULARY)
+    evidence = difficulty_evidence_from_blueprint(blueprint, matrix)
+    assert evidence["mean_anchors_present_per_competitor"] == 1.0
+    assert evidence["key_discriminator_count"] == 1
+    review = structural_difficulty_review(evidence, declared_intent="EASY")
+    assert review["MATCH"] == "YES"
+
+
+def test_anchor_targeting_never_creates_a_second_key():
+    # SF-SHARED-4 is an anchor of every competitor and also the last outstanding
+    # correctness condition of SEED-TWO, so a HARD target may not state it.
+    risky = _rich_contrast_set("HARD")
+    risky["competitors"][1]["condition_predicates"] = [
+        {"stem_feature_id": "SF-SHARED-2", "required_polarity": "PRESENT"},
+        {"stem_feature_id": "SF-SHARED-4", "required_polarity": "PRESENT"},
+    ]
+    blueprint = solve_stem_blueprint(build_contrast_matrix(risky), vocabulary=VOCABULARY)
+    required = {row["stem_feature_id"] for row in blueprint["required_features"]}
+    if "SF-SHARED-2" in required:
+        assert "SF-SHARED-4" not in required
+    assert blueprint["no_second_key"] is True
+
+
+def test_anchor_targeting_respects_the_required_feature_cap():
+    matrix = build_contrast_matrix(_rich_contrast_set("EASY"))
+    blueprint = solve_stem_blueprint(matrix, vocabulary=VOCABULARY, difficulty_intent="EASY")
+    assert len(blueprint["required_features"]) <= REQUIRED_FEATURE_CAP["EASY"]
+
+
+# ------------------------------------- profile token implications in P2
+
+
+def test_a_declared_token_implication_admits_a_candidate_the_bare_token_would_refuse():
+    context = dict(KEY_CONTEXT, option_set_archetype="DISPOSITION_SET",
+                   demanded_response_class="SECURES_IMMEDIATE_SAFETY",
+                   item_archetype="SAFETY_ASSESSMENT",
+                   decision_granularity="SINGLE_NEXT_ACTION")
+    candidate = competitor(
+        "SEED-SAFETY", anchors=["SF-SHARED-1"], conditions=[("SF-ONLY-1", "PRESENT")],
+        tokens=("COMMUNITY_SAFETY_MEASURE",), item_archetypes=("SAFETY_ASSESSMENT",),
+        option_set_archetypes=("DISPOSITION_SET",), granularity="SINGLE_NEXT_ACTION",
+    )
+    bare = admit_pre_stem(candidate, key_context=context)
+    assert "PRE_STEM_RESPONSE_CLASS_MISMATCH" in bare["refusals"]
+    implied = admit_pre_stem(
+        candidate, key_context=context,
+        token_implications={"COMMUNITY_SAFETY_MEASURE": ["SECURES_IMMEDIATE_SAFETY"]},
+    )
+    assert implied["admitted"] is True
+
+
+def test_an_implication_cannot_admit_a_token_outside_the_axis():
+    context = dict(KEY_CONTEXT, option_set_archetype="DISPOSITION_SET",
+                   demanded_response_class="SECURES_IMMEDIATE_SAFETY",
+                   item_archetype="SAFETY_ASSESSMENT",
+                   decision_granularity="SINGLE_NEXT_ACTION")
+    candidate = competitor(
+        "SEED-STRAY", anchors=["SF-SHARED-1"], conditions=[("SF-ONLY-1", "PRESENT")],
+        tokens=("PLAUSIBLE_DIAGNOSTIC_ENTITY",), item_archetypes=("SAFETY_ASSESSMENT",),
+        option_set_archetypes=("DISPOSITION_SET",), granularity="SINGLE_NEXT_ACTION",
+    )
+    verdict = admit_pre_stem(
+        candidate, key_context=context,
+        token_implications={"PLAUSIBLE_DIAGNOSTIC_ENTITY": ["SECURES_IMMEDIATE_SAFETY"]},
+    )
+    assert "PRE_STEM_RESPONSE_CLASS_MISMATCH" in verdict["refusals"]
+
+
+# --------------------------------------------- author-declared context features
+
+
+def test_declared_context_features_enter_the_blueprint_and_are_checked():
+    matrix = build_contrast_matrix(contrast_set())
+    blueprint = solve_stem_blueprint(
+        matrix, vocabulary=VOCABULARY, context_features=["SF-KEY-C"]
+    )
+    required = {row["stem_feature_id"] for row in blueprint["required_features"]}
+    assert "SF-KEY-C" in required
+    assert blueprint["fail_closed_reason"] is None
+    row = next(r for r in blueprint["required_features"] if r["stem_feature_id"] == "SF-KEY-C")
+    assert row["roles"] == ["OPTIONAL_CONTEXT"]
+
+
+def test_a_context_feature_that_would_complete_a_competitor_is_refused():
+    matrix = build_contrast_matrix(contrast_set())
+    blueprint = solve_stem_blueprint(
+        matrix, vocabulary=VOCABULARY, context_features=["SF-ONLY-1"]
+    )
+    assert blueprint["fail_closed_reason"] == "FAIL_CLOSED_BLUEPRINT_UNSATISFIABLE"
+
+
+def test_a_context_feature_outside_the_vocabulary_is_refused():
+    matrix = build_contrast_matrix(contrast_set())
+    with pytest.raises(ContrastFirstError, match="vocabulary"):
+        solve_stem_blueprint(matrix, vocabulary=VOCABULARY, context_features=["SF-INVENTED"])
+
+
+# ------------------------------- what counts as an explicit verbal denial
+
+
+def test_a_competitor_defeated_by_a_positive_finding_is_not_defeated_by_a_denial():
+    # The competitor needs the finding ABSENT and the stem states it PRESENT.
+    # That is the strongest legitimate discriminator there is, and it must not be
+    # counted as the verbal denial CO-3 exists to refuse.
+    positive = contrast_set()
+    positive["competitors"][0]["condition_predicates"] = [
+        {"stem_feature_id": "SF-KEY-A", "required_polarity": "ABSENT"},
+    ]
+    blueprint = solve_stem_blueprint(
+        build_contrast_matrix(positive), vocabulary=VOCABULARY
+    )
+    status = blueprint["competitor_status"]["SEED-ONE"]
+    assert status["unsatisfied_conditions"] == ["SF-KEY-A"]
+    assert status["defeated_by_explicit_denial"] is False
+    verdict = evaluate_clinical_coherence(blueprint, vocabulary=VOCABULARY)
+    assert "CO-3" not in verdict["violations"]
+
+
+def test_a_competitor_defeated_only_by_a_stated_absence_is_flagged():
+    denied = contrast_set()
+    denied["key"]["correctness_conditions"] = [
+        {"stem_feature_id": "SF-KEY-A", "required_polarity": "PRESENT"},
+        {"stem_feature_id": "SF-ONLY-1", "required_polarity": "ABSENT"},
+    ]
+    blueprint = solve_stem_blueprint(
+        build_contrast_matrix(denied), vocabulary=VOCABULARY
+    )
+    status = blueprint["competitor_status"]["SEED-ONE"]
+    assert status["defeated_by_explicit_denial"] is True
+    assert "CO-3" in evaluate_clinical_coherence(
+        blueprint, vocabulary=VOCABULARY
+    )["violations"]
