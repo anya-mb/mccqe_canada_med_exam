@@ -297,3 +297,96 @@ def test_the_inventory_carries_no_toronto_notes_topic_prose():
     assert topics
     leaked = [title for title in topics if len(title) > 24 and title in serialized]
     assert leaked == []
+
+
+# -------------------------------------------- global normalization inventory
+
+
+@pytest.fixture(scope="module")
+def inventory():
+    from qbank.clinical_concepts import build_normalization_inventory
+
+    return build_normalization_inventory(ROOT)
+
+
+def test_the_inventory_reports_the_concept_type_and_source_unit_distributions(inventory):
+    """Aggregates a reader needs to size the vocabulary without parsing 183 rows."""
+    types = inventory["CONCEPT_TYPES"]
+    assert set(types) <= set(CONCEPT_TYPES)
+    assert sum(types.values()) == inventory["counts"]["LOCAL_TERMS_TOTAL"]
+
+    units = inventory["SOURCE_UNIT_COUNTS"]
+    assert sum(units.values()) == inventory["counts"]["LOCAL_TERMS_TOTAL"]
+    assert len(units) == inventory["counts"]["LOCAL_STUDY_UNITS"]
+    assert all(unit.startswith("SU-") for unit in units)
+
+
+def test_the_inventory_reports_how_far_canonical_concepts_are_reused_across_units(inventory):
+    """The downstream metric the design turns on: reuse, not lexical collision."""
+    reuse = inventory["global_reuse"]
+    resolved = [row for row in inventory["mappings"] if row["canonical_concept_id"]]
+    assert (
+        reuse["GLOBAL_CONCEPTS_USED_IN_1_UNIT"]
+        + reuse["GLOBAL_CONCEPTS_USED_IN_2_OR_MORE_UNITS"]
+        == len({row["canonical_concept_id"] for row in resolved})
+    )
+    assert (
+        reuse["GLOBAL_CONCEPTS_USED_IN_3_OR_MORE_UNITS"]
+        <= reuse["GLOBAL_CONCEPTS_USED_IN_2_OR_MORE_UNITS"]
+    )
+    assert reuse["MAX_SOURCE_UNITS_PER_GLOBAL_CONCEPT"] >= 1
+    assert (
+        reuse["CROSS_UNIT_CANONICAL_CONCEPTS"]
+        == inventory["counts"]["CROSS_UNIT_CANONICAL_CONCEPTS"]
+    )
+    # A concept reused across units contributes every one of its mappings.
+    assert reuse["CROSS_UNIT_CANONICAL_MAPPINGS"] >= 2 * reuse["CROSS_UNIT_CANONICAL_CONCEPTS"]
+
+
+def test_reuse_is_measured_and_a_planted_shared_concept_is_reported(inventory):
+    """Guards the zero: the measurement can report reuse when reuse exists."""
+    from qbank.clinical_concepts import summarize_global_reuse
+
+    planted = [
+        {"canonical_concept_id": "C1", "local_study_unit": "SU-A-01"},
+        {"canonical_concept_id": "C1", "local_study_unit": "SU-B-02"},
+        {"canonical_concept_id": "C1", "local_study_unit": "SU-C-03"},
+        {"canonical_concept_id": "C2", "local_study_unit": "SU-A-01"},
+        {"canonical_concept_id": None, "local_study_unit": "SU-A-01"},
+    ]
+    reuse = summarize_global_reuse(planted)
+    assert reuse["GLOBAL_CONCEPTS_USED_IN_1_UNIT"] == 1
+    assert reuse["GLOBAL_CONCEPTS_USED_IN_2_OR_MORE_UNITS"] == 1
+    assert reuse["GLOBAL_CONCEPTS_USED_IN_3_OR_MORE_UNITS"] == 1
+    assert reuse["MAX_SOURCE_UNITS_PER_GLOBAL_CONCEPT"] == 3
+    assert reuse["CROSS_UNIT_CANONICAL_CONCEPTS"] == 1
+    assert reuse["CROSS_UNIT_CANONICAL_MAPPINGS"] == 3
+
+
+def test_the_inventory_never_claims_a_semantic_adjudication_it_did_not_perform(inventory):
+    """This layer decides by stated rule only; adjudication is a person's act."""
+    adjudication = inventory["semantic_adjudication"]
+    assert adjudication["SEMANTIC_ADJUDICATION_COUNT"] == 0
+    assert adjudication["SEMANTIC_ADJUDICATION_PENDING"] == (
+        inventory["mapping_type_counts"]["RELATED_BUT_DISTINCT"]
+        + inventory["mapping_type_counts"]["AMBIGUOUS"]
+    )
+    assert adjudication["ADJUDICATED_MERGES_APPLIED"] == 0
+
+
+def test_the_inventory_carries_the_hashes_of_every_vocabulary_source_it_read(inventory):
+    """A count is only reproducible against the artifacts that produced it."""
+    sources = inventory["provenance"]["vocabulary_source_sha256"]
+    assert sources, "the inventory must name the artifacts it measured"
+    for relative, digest in sources.items():
+        assert (ROOT / relative).is_file(), relative
+        assert len(digest) == 64 and digest == digest.lower()
+    assert len(inventory["provenance"]["inventory_content_sha256"]) == 64
+
+
+def test_the_inventory_is_deterministic_across_two_independent_builds():
+    from qbank.clinical_concepts import build_normalization_inventory
+
+    first = build_normalization_inventory(ROOT)
+    second = build_normalization_inventory(ROOT)
+    assert first == second

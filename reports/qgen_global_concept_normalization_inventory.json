@@ -1,4 +1,45 @@
 {
+  "CONCEPT_TYPES": {
+    "ACTION": 61,
+    "CONDITION": 20,
+    "FINDING": 102
+  },
+  "SOURCE_UNIT_COUNTS": {
+    "SU-A-12": 1,
+    "SU-C-21": 31,
+    "SU-C-30": 1,
+    "SU-C-33": 1,
+    "SU-E-30": 1,
+    "SU-ER-09": 1,
+    "SU-GS-02": 1,
+    "SU-GS-76": 20,
+    "SU-GY-19": 2,
+    "SU-H-02": 1,
+    "SU-MI-13": 3,
+    "SU-MI-15": 1,
+    "SU-MI-31": 2,
+    "SU-MI-32": 1,
+    "SU-OB-54": 26,
+    "SU-OB-56": 1,
+    "SU-OT-56": 1,
+    "SU-P-005": 1,
+    "SU-P-055": 1,
+    "SU-P-146": 2,
+    "SU-P-147": 23,
+    "SU-P-149": 1,
+    "SU-PH-07": 28,
+    "SU-PH-12": 1,
+    "SU-PH-25": 1,
+    "SU-PS-01": 1,
+    "SU-PS-03": 4,
+    "SU-PS-12": 18,
+    "SU-PS-14": 1,
+    "SU-PS-61": 2,
+    "SU-PS-62": 1,
+    "SU-PS-67": 1,
+    "SU-R-05": 1,
+    "SU-R-13": 1
+  },
   "counts": {
     "CROSS_UNIT_CANONICAL_CONCEPTS": 0,
     "GLOBAL_CONCEPTS_TOTAL": 2561,
@@ -12,6 +53,14 @@
     "NORMALIZED_TEXT_MATCHES_ACROSS_UNITS": 0,
     "POSSIBLE_ALIAS_MATCHES": 0,
     "SEMANTICALLY_RELATED_BUT_DISTINCT_TERMS": 10
+  },
+  "global_reuse": {
+    "CROSS_UNIT_CANONICAL_CONCEPTS": 0,
+    "CROSS_UNIT_CANONICAL_MAPPINGS": 0,
+    "GLOBAL_CONCEPTS_USED_IN_1_UNIT": 180,
+    "GLOBAL_CONCEPTS_USED_IN_2_OR_MORE_UNITS": 0,
+    "GLOBAL_CONCEPTS_USED_IN_3_OR_MORE_UNITS": 0,
+    "MAX_SOURCE_UNITS_PER_GLOBAL_CONCEPT": 1
   },
   "mapping_type_counts": {
     "ALIAS": 0,
@@ -2777,6 +2826,20 @@
       }
     }
   ],
+  "provenance": {
+    "inventory_content_sha256": "3ecee2bccd2fbec2ed63ac88b684a32472c2442c431457eb29ef552f1fc45153",
+    "vocabulary_source_sha256": {
+      "research/qgen/generalization/competitive_contrast_seed_pack_g2_extensions.enrichment.json": "92cc8e3db059ab0698e7bf3cba6599f9eee2d9f7acb8f6973bd8d64f9dde6f73",
+      "research/qgen/generalization/competitive_contrast_seed_pack_g2_extensions.json": "62e21705d8001d9e2db2422c34b912c6683e9da50655963dae955ff5cdac9118",
+      "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.enrichment.json": "92488f5f4df09e47d679b54893b0fb1bd2c1a482a73f3d96132fb8d6faba0b91",
+      "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json": "d26e994e4246ef713b538a0609d5f473b260b91d43b54584934c889dded5b66c",
+      "research/qgen/generalization/competitive_contrast_seed_pack_r4.enrichment.json": "2449954a8aa28c35e06cfa21baedbe2c975bfbd95d9d4b1ca4b688fbefea2019",
+      "research/qgen/generalization/competitive_contrast_seed_pack_r4.json": "57522f6b2d0e2f9243f59a7a5a6052f27b00469b09ad21941ec642a2e7301157",
+      "research/qgen/safe_yield/g2_stem_feature_vocabulary.json": "2e35c8475d2fe015d7146d4ddc9dff8fc5baf59e93c2b3127419630a6c56abdb",
+      "research/scope/master_scope_crosswalk.json": "128ba5e3eb48d5dc2b4cf5a05d803609ce340752a9e7a2cf9a772788652a50f4",
+      "research/tn2025/toc_inventory.json": "f4002a9923246d399d83887c6e507eff93b79d2b7cad9357cf70c5e36addb522"
+    }
+  },
   "rebuild_command": "qbank build-normalization-inventory",
   "related_but_distinct_floor": 0.5,
   "related_but_distinct_pairs": [
@@ -2887,5 +2950,11 @@
     }
   ],
   "schema_version": "1.0",
-  "scope": "GLOBAL_CONCEPT_NORMALIZATION_INVENTORY"
+  "scope": "GLOBAL_CONCEPT_NORMALIZATION_INVENTORY",
+  "semantic_adjudication": {
+    "ADJUDICATED_MERGES_APPLIED": 0,
+    "SEMANTIC_ADJUDICATION_COUNT": 0,
+    "SEMANTIC_ADJUDICATION_PENDING": 13,
+    "policy": "Deterministic rules only. A term this layer cannot resolve stays AMBIGUOUS or UNRESOLVED and is surfaced for a person; it is never merged to raise reuse."
+  }
 }

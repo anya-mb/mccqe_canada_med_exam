@@ -447,6 +447,59 @@ def _refused_merges(terms: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return sorted(pairs, key=lambda row: (-row["token_jaccard"], row["local_feature_ids"]))
 
 
+def summarize_global_reuse(mappings: Iterable[dict[str, Any]]) -> dict[str, int]:
+    """Measure how many study units each canonical concept is actually named by.
+
+    This is the metric the graph design turns on. Raw lexical collision only says
+    whether two units happened to spell a term the same way; reuse says whether
+    the canonical layer produced an identifier that more than one unit reaches.
+    A mapping that failed closed carries no canonical concept and is excluded
+    rather than counted as a unit of one.
+    """
+    units_by_concept: dict[str, set[str]] = {}
+    for row in mappings:
+        concept_id = row.get("canonical_concept_id")
+        if not concept_id:
+            continue
+        units_by_concept.setdefault(concept_id, set()).add(row["local_study_unit"])
+    sizes = [len(units) for units in units_by_concept.values()]
+    shared = {
+        concept_id for concept_id, units in units_by_concept.items() if len(units) > 1
+    }
+    return {
+        "GLOBAL_CONCEPTS_USED_IN_1_UNIT": sum(1 for size in sizes if size == 1),
+        "GLOBAL_CONCEPTS_USED_IN_2_OR_MORE_UNITS": sum(1 for size in sizes if size >= 2),
+        "GLOBAL_CONCEPTS_USED_IN_3_OR_MORE_UNITS": sum(1 for size in sizes if size >= 3),
+        "MAX_SOURCE_UNITS_PER_GLOBAL_CONCEPT": max(sizes, default=0),
+        "CROSS_UNIT_CANONICAL_CONCEPTS": len(shared),
+        "CROSS_UNIT_CANONICAL_MAPPINGS": sum(
+            1 for row in mappings
+            if row.get("canonical_concept_id") in shared
+        ),
+    }
+
+
+def _vocabulary_source_hashes(root: Path) -> dict[str, str]:
+    """Hash every artifact the inventory read, so a count is reproducible."""
+    import hashlib
+
+    relatives = [
+        *SEED_PACK_RELATIVE_PATHS,
+        *(relative.replace(".json", ".enrichment.json")
+          for relative in SEED_PACK_RELATIVE_PATHS),
+        STEM_FEATURE_VOCABULARY_RELATIVE_PATH,
+        TOC_RELATIVE_PATH,
+        SCOPE_RELATIVE_PATH,
+    ]
+    digests: dict[str, str] = {}
+    for relative in sorted(relatives):
+        path = resolve_root_path(Path(root).resolve(), relative)
+        if not path.is_file():
+            raise ClinicalConceptError(f"vocabulary source is unavailable: {relative}")
+        digests[relative] = hashlib.sha256(path.read_bytes()).hexdigest()
+    return digests
+
+
 def build_normalization_inventory(root: Path) -> dict[str, Any]:
     """Measure how far local source terms already are from global concepts.
 
@@ -513,10 +566,42 @@ def build_normalization_inventory(root: Path) -> dict[str, Any]:
                & {term["local_feature_id"] for term in terms}) > 1
     )
 
-    return {
+    reuse = summarize_global_reuse(mappings)
+    concept_types = {concept_type: 0 for concept_type in CONCEPT_TYPES}
+    source_unit_counts: dict[str, int] = {}
+    for row in mappings:
+        concept_types[row["concept_type"]] += 1
+        source_unit_counts[row["local_study_unit"]] = (
+            source_unit_counts.get(row["local_study_unit"], 0) + 1
+        )
+
+    document = {
         "schema_version": "1.0",
         "scope": "GLOBAL_CONCEPT_NORMALIZATION_INVENTORY",
         "rebuild_command": "qbank build-normalization-inventory",
+        "CONCEPT_TYPES": {
+            concept_type: total
+            for concept_type, total in sorted(concept_types.items())
+            if total
+        },
+        "SOURCE_UNIT_COUNTS": dict(sorted(source_unit_counts.items())),
+        "global_reuse": reuse,
+        # Nothing in this module adjudicates meaning. Every mapping above follows a
+        # stated deterministic rule, so the count of semantic adjudications this
+        # report performed is zero and must stay zero; the refused merges and the
+        # MULTI_MATCH terms are what a person would adjudicate, and they are
+        # reported as pending rather than resolved.
+        "semantic_adjudication": {
+            "SEMANTIC_ADJUDICATION_COUNT": 0,
+            "SEMANTIC_ADJUDICATION_PENDING": counts["RELATED_BUT_DISTINCT"]
+            + counts["AMBIGUOUS"],
+            "ADJUDICATED_MERGES_APPLIED": 0,
+            "policy": (
+                "Deterministic rules only. A term this layer cannot resolve stays "
+                "AMBIGUOUS or UNRESOLVED and is surfaced for a person; it is never "
+                "merged to raise reuse."
+            ),
+        },
         "counts": {
             "LOCAL_TERMS_TOTAL": len(terms),
             "LOCAL_STUDY_UNITS": len({term["local_study_unit"] for term in terms}),
@@ -537,3 +622,12 @@ def build_normalization_inventory(root: Path) -> dict[str, Any]:
         "related_but_distinct_pairs": refused,
         "mappings": mappings,
     }
+    import hashlib
+
+    document["provenance"] = {
+        "vocabulary_source_sha256": _vocabulary_source_hashes(root),
+        "inventory_content_sha256": hashlib.sha256(
+            json.dumps(document, sort_keys=True).encode("utf-8")
+        ).hexdigest(),
+    }
+    return document

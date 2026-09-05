@@ -21,7 +21,7 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `4b5ffc31ca3f61e60f874a2181571a469c29d41c`.
+- Audited coordinator input commit: `1f9ef4633009595ba6b04bf303d7ddf5b3fb6c43`.
 - Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
@@ -557,6 +557,52 @@ This section is maintained by hand and sits outside the generated source-researc
 - Tests at this state: focused 24 (`test_clinical_concepts.py`) and 20 (`test_tn_index.py`); full canonical
   suite **1146/0**. `LLM_API_CALLS = 0`, `SEMANTIC_ADJUDICATIONS = 0`: nothing needed adjudication, because
   no cross-unit merge candidate survived the deterministic pass.
+- **Continuation 2026-09-05: inventory completeness, reuse and connectivity measured.** The Phase-B
+  inventory shipped without the aggregate and provenance blocks its own deliverable spec named, so
+  `build_normalization_inventory` now also emits `CONCEPT_TYPES` (ACTION 61, CONDITION 20, FINDING 102),
+  `SOURCE_UNIT_COUNTS` (34 units; largest SU-C-21 31, SU-PH-07 28, SU-OB-54 26, SU-P-147 23, SU-GS-76 20,
+  SU-PS-12 18), a `global_reuse` block, a `semantic_adjudication` block and a `provenance` block carrying
+  the SHA-256 of all **9** vocabulary source artifacts plus an `inventory_content_sha256`. Five new tests,
+  RED before GREEN; one plants a shared concept to prove the reuse measurement can report reuse.
+- **Cross-unit reuse, measured at three layers — the zero is layer-specific and must not be generalized.**
+  Local-term layer: `GLOBAL_CONCEPTS_USED_IN_1_UNIT = 180`, `_2_OR_MORE = 0`, `_3_OR_MORE = 0`,
+  `MAX_SOURCE_UNITS_PER_GLOBAL_CONCEPT = 1`, `CROSS_UNIT_CANONICAL_MAPPINGS = 0`. Graph layer: of 196
+  typed clinical concept nodes, 183 reach a study unit, **72 reach 2 or more, 10 reach 3 or more, max 6**.
+  TN mention layer: 460 concepts are mentioned, **428 in 2 or more study units, max 304**.
+  `DIAGNOSED_CAUSE_OF_LOCAL_LAYER_ZERO = PROPOSITIONAL_VOCABULARY_GRANULARITY`, not a normalization
+  failure: 137 of the 183 local labels are full clinical propositions of 6+ tokens ("an absolute
+  contraindication to aspirin is present"), all 183 normalized labels are distinct, and
+  `canonical_concept_id == local_feature_id` for all 180 resolved terms. Two units cannot collide on a
+  proposition authored inside one of them. The three terms that *are* reusable entity names — pulmonary
+  embolism, acute pericarditis, PID — are exactly the three that fail closed as AMBIGUOUS. **Cross-unit
+  reach is supplied by graph edges and TN mentions, never by label identity**, which is why the zero does
+  not contradict the graph result.
+- **`NORMALIZATION_AUDIT = PASS`.** Over-merging is structurally impossible at this layer: 0 canonical
+  concepts are claimed by more than one local term and `POSSIBLE_ALIAS_MATCHES = 0`. Thirteen dangerous
+  pairs probed live against the alias index all stay distinct or unresolved: syncope/presyncope,
+  dizziness/vertigo, depressed mood/major depressive disorder, chest pain/ACS, troponin/elevated troponin,
+  hyper-/hypokalemia, hyper-/hypotonic saline, pre-eclampsia/eclampsia, lead-/length-time bias,
+  sepsis/septic shock, asthma/status asthmaticus, screening/diagnosis, anaemia/anemia. All six discipline
+  profiles sampled per mapping category. One typing quirk noted, not a defect: `Lead-time bias` types as
+  ACTION because the closed archetype rule assigns everything outside DIAGNOSIS_SET to the action family.
+- **Graph connectivity measured (not previously recorded).** `GRAPH_NODES = 4,275`, `GRAPH_EDGES = 5,916`,
+  `CROSS_UNIT_GRAPH_EDGES = 59` of 185 edges carrying a study unit at both ends, `GRAPH_COMPONENT_COUNT =
+  2,265`, `LARGEST_COMPONENT_SIZE = 1,878`, `ISOLATED_NODE_COUNT = 2,223` (1,962 TN topics never mentioned,
+  247 study units, 13 findings, 1 learner decision — registered discovery vocabulary spanning the whole
+  textbook while the frozen anchor layer covers 6 units). Provenance: **5,916/5,916** edges carry a
+  derivation rule, content hash and derivation source; **265/265** claim-eligible edges carry source-claim
+  provenance. Every edge without a source claim carries `TOPIC_DISCOVERY_SOURCE`, and all 3,909
+  `TORONTO_NOTES` edges are discovery-only — **Toronto Notes is never current clinical authority**, as
+  required. 0 edges reference a node absent from `nodes`.
+- Nothing about the benchmark was rerun: `reports/qgen_clinical_retrieval_benchmark.json` was already
+  complete over all four arms on the frozen 30-opportunity G2 set, and its verdict stands —
+  `RETRIEVAL_ARCHITECTURE_DECISION = RETRIEVAL_NOT_MAIN_PROBLEM`, `HYBRID_BENCHMARK_PASS = false` on the
+  one pre-committed limb that matters (`raises_opportunities_with_three_viable`), A/C/D all at 10 of 30
+  and B at 0, `LOCAL_EMBEDDING_TRIGGER_MET = false` because no reference positive is ever *missed* — every
+  one is retrieved and then refused by the anchor floor. Graph's real result is efficiency and provenance:
+  0 anchor-floor refusals against arm A's 67, at equal recall and precision.
+- Copyright rescanned again after the inventory regeneration: longest verbatim run **0** in the report and
+  in both changed source files. `COPYRIGHT_AUDIT = PASS`. Index database still untracked.
 - QGEN_NEXT_STEP = `USER_REVIEW_RETRIEVAL_BENCHMARK`
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 
