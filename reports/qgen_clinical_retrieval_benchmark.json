@@ -1,0 +1,4651 @@
+{
+  "architecture_decision": {
+    "RETRIEVAL_ARCHITECTURE_DECISION": "RETRIEVAL_NOT_MAIN_PROBLEM",
+    "binding_constraint": "TYPED_ANCHOR_AND_CONDITION_POPULATION",
+    "corroboration": "Arm C derives the same competitor sets as arm A by an independent path -- inverted PLAUSIBILITY_ANCHOR edges rather than an archetype index lookup -- which is independent corroboration of the frozen anchor layer.",
+    "decision_rule_applied": "The design's pre-committed rule: expand graph coverage only if D beats A on opportunities reaching three admissible competitors. If no arm closes the gap, the bottleneck is not retrieval and the graph must not be built out.",
+    "graph_is_not_useless": "Arm C reaches the same 10 opportunities with zero stem-anchor floor refusals against arm A's 67, because traversal starts from the stem's PRESENT anchors and so never presents an anchorless candidate to the floor. That is an efficiency and provenance result, not a supply result, and it is reported as such.",
+    "outcome": "D does not beat A. A, C and D all reach 10 of 30 opportunities with three viable competitors and are identical on recall, decision precision, granularity precision, second-key refusal and source traceability. B reaches 0."
+  },
+  "arms": [
+    "CURRENT_LIBRARY",
+    "BM25",
+    "GRAPH",
+    "HYBRID"
+  ],
+  "benchmark_id": "frozen_g2_retrieval_benchmark",
+  "discovered_but_untyped_character": {
+    "finding": "BM25's discoveries over a textbook are overwhelmingly chapter and topic headings rather than competitor-grade clinical concepts, which is what a lexical index over a structured textbook should be expected to return.",
+    "sample_from_G2_MED_01": [
+      {
+        "concept_type": "TOPIC",
+        "label": "Growth",
+        "vocabulary_source": "TN_TOC_TOPIC"
+      },
+      {
+        "concept_type": "TOPIC",
+        "label": "Failure to Thrive",
+        "vocabulary_source": "TN_TOC_TOPIC"
+      },
+      {
+        "concept_type": "TOPIC",
+        "label": "Hematuria",
+        "vocabulary_source": "STUDY_UNIT_TITLE"
+      }
+    ]
+  },
+  "hybrid_pass": {
+    "HYBRID_BENCHMARK_PASS": false,
+    "checks": {
+      "context_size_bounded": true,
+      "does_not_reduce_granularity_precision": true,
+      "does_not_reduce_same_decision_precision": true,
+      "no_known_bad_returned": true,
+      "raises_opportunities_with_three_viable": false,
+      "second_key_ceiling_not_weakened": true,
+      "source_traceability_not_reduced": true
+    },
+    "rule": {
+      "all_of": [
+        "HYBRID preserves every accepted positive control that CURRENT_LIBRARY preserves",
+        "HYBRID returns zero known-bad (anchorless or second-key) controls",
+        "HYBRID raises OPPORTUNITIES_WITH_3_VIABLE above CURRENT_LIBRARY",
+        "HYBRID does not reduce SAME_DECISION_PRECISION or GRANULARITY_PRECISION below CURRENT_LIBRARY",
+        "HYBRID SECOND_KEY_REFUSAL is not below the frozen baseline of 8",
+        "HYBRID SOURCE_TRACEABILITY is not below CURRENT_LIBRARY",
+        "HYBRID CONTEXT_SIZE remains bounded and is measured, not estimated"
+      ],
+      "frozen_before_evaluation": true,
+      "rule_id": "HYBRID_BENCHMARK_PASS"
+    }
+  },
+  "llm_api_calls": 0,
+  "local_embedding_trigger": {
+    "LOCAL_EMBEDDING_TRIGGER_MET": false,
+    "reason": "The first limb fails outright. No reference positive is missed by any arm's retrieval; every one is retrieved and then refused. A denser retriever would return the same competitors to the same floor and change nothing.",
+    "trigger_as_designed": "a known-good candidate exists in indexed source material, lexical retrieval misses it, and graph traversal misses it for understandable reasons"
+  },
+  "population": {
+    "opportunities": 30,
+    "source": "research/qgen/safe_yield/g2_profile_pilot.opportunities.json",
+    "stems_keys_and_archetypes_held_constant": true
+  },
+  "recall_miss_diagnosis": {
+    "NOT_RETRIEVED_AT_ALL": 0,
+    "counts": {
+      "ADM_1": 2,
+      "SAF_1": 41
+    },
+    "finding": "Every apparent recall miss was retrieved and then refused by a safety filter. Mean CANDIDATE_RECALL of 0.49 is therefore not a recall failure: it is the stem-anchor floor refusing competitors a reviewer had ADMITTED before the floor existed.",
+    "method": "For every frozen reference positive absent from arm A's ranked set, look up which filter excluded it. NOT_RETRIEVED_AT_ALL means the index never contained it.",
+    "question": "Is an unretrieved reference positive a retrieval failure or a safety refusal?",
+    "rows": [
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-G2-MED-T01-DISSECTION",
+        "wave_label": "G2-MED-01"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-G2-MED-T01-PERICARDITIS",
+        "wave_label": "G2-MED-01"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-G2-MED-T04-CLINIC",
+        "wave_label": "G2-MED-05"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-G2-MED-T04-DISCHARGE-STRESS",
+        "wave_label": "G2-MED-05"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-G2-MED-T04-OBSERVE",
+        "wave_label": "G2-MED-05"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-OB-T02-CRP",
+        "wave_label": "G2-OBGYN-02"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-OB-T02-MILK-CULTURE",
+        "wave_label": "G2-OBGYN-02"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-OB-T03-DISCARD",
+        "wave_label": "G2-OBGYN-03"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-OB-T03-SHIELD",
+        "wave_label": "G2-OBGYN-03"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PED-T01-ASTHMA",
+        "wave_label": "G2-PED-01"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PED-T01-FOREIGN-BODY",
+        "wave_label": "G2-PED-01"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PED-T01-PNEUMONIA",
+        "wave_label": "G2-PED-01"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PED-T02-CBC",
+        "wave_label": "G2-PED-02"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PED-T02-CONTINUOUS",
+        "wave_label": "G2-PED-02"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PED-T02-CXR",
+        "wave_label": "G2-PED-02"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PED-T02-VIRAL",
+        "wave_label": "G2-PED-02"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PED-T03-EPINEPHRINE",
+        "wave_label": "G2-PED-03"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PED-T03-FLUIDS",
+        "wave_label": "G2-PED-03"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PED-T03-HYPERTONIC",
+        "wave_label": "G2-PED-03"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PED-T03-SALBUTAMOL",
+        "wave_label": "G2-PED-03"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PED-T03-SUCTION",
+        "wave_label": "G2-PED-03"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PED-T03-EPINEPHRINE",
+        "wave_label": "G2-PED-05"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PED-T03-HYPERTONIC",
+        "wave_label": "G2-PED-05"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PED-T03-SALBUTAMOL",
+        "wave_label": "G2-PED-05"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PED-T03-SUCTION",
+        "wave_label": "G2-PED-05"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PHELO-T03-ECONOMIC",
+        "wave_label": "G2-PHELO-03"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-G2-PHELO-T01-LEAD-TIME",
+        "wave_label": "G2-PHELO-05"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PHELO-T01-LENGTH",
+        "wave_label": "G2-PHELO-05"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PHELO-T01-OVERDIAGNOSIS",
+        "wave_label": "G2-PHELO-05"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PSY-T01-ANEMIA",
+        "wave_label": "G2-PSY-01"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PSY-T01-MEDICAL",
+        "wave_label": "G2-PSY-01"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PSY-T01-PDD",
+        "wave_label": "G2-PSY-01"
+      },
+      {
+        "refused_by": "ADM_1",
+        "seed_id": "SEED-G2-PSY-T02-CRISIS-TEAM",
+        "wave_label": "G2-PSY-02"
+      },
+      {
+        "refused_by": "ADM_1",
+        "seed_id": "SEED-PSY-T02-SAFETY-PLAN",
+        "wave_label": "G2-PSY-02"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PSY-T03-COMBINED",
+        "wave_label": "G2-PSY-03"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PSY-T03-DIGITAL",
+        "wave_label": "G2-PSY-03"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PSY-T03-COMBINED",
+        "wave_label": "G2-PSY-04"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-G2-PSY-T03-AD-ALONE",
+        "wave_label": "G2-PSY-05"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-PSY-T03-COMBINED",
+        "wave_label": "G2-PSY-05"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-SURG-T02-LAPAROSCOPY",
+        "wave_label": "G2-SURG-02"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-SURG-T03-DRAINAGE",
+        "wave_label": "G2-SURG-03"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-SURG-T03-INTERVAL",
+        "wave_label": "G2-SURG-03"
+      },
+      {
+        "refused_by": "SAF_1",
+        "seed_id": "SEED-SURG-T03-NONOP",
+        "wave_label": "G2-SURG-03"
+      }
+    ]
+  },
+  "reference": {
+    "authorship": "Derived deterministically from records frozen before this task: the G2 semantic-admissibility judgements and the validated stem-anchor retest's own filter verdicts. No competitor set was authored for this benchmark.",
+    "derived_from": {
+      "semantic_admissibility": "research/qgen/safe_yield/g2_profile_pilot.semantic_admissibility.json",
+      "semantic_admissibility_sha256": "099363e82f390aab4ae46eb922cb4b00d8e79cde64bcd9539a7a927aab9577ec",
+      "stem_anchor_retest": "reports/qgen_g2_stem_anchor_retest_execution.json"
+    },
+    "frozen_before_any_arm_ran": true,
+    "hybrid_pass_rule": {
+      "all_of": [
+        "HYBRID preserves every accepted positive control that CURRENT_LIBRARY preserves",
+        "HYBRID returns zero known-bad (anchorless or second-key) controls",
+        "HYBRID raises OPPORTUNITIES_WITH_3_VIABLE above CURRENT_LIBRARY",
+        "HYBRID does not reduce SAME_DECISION_PRECISION or GRANULARITY_PRECISION below CURRENT_LIBRARY",
+        "HYBRID SECOND_KEY_REFUSAL is not below the frozen baseline of 8",
+        "HYBRID SOURCE_TRACEABILITY is not below CURRENT_LIBRARY",
+        "HYBRID CONTEXT_SIZE remains bounded and is measured, not estimated"
+      ],
+      "frozen_before_evaluation": true,
+      "rule_id": "HYBRID_BENCHMARK_PASS"
+    },
+    "metric_definitions": {
+      "CANDIDATE_RECALL": "Share of the frozen reference competitor set for an opportunity that an arm returns among its ranked (floor- and ceiling-surviving) competitors.",
+      "CONTEXT_SIZE": "Measured serialized characters and words of the built context packet. No token figure is reported; there is no local tokenizer.",
+      "DISCOVERED_BUT_UNTYPED": "Concepts an arm genuinely retrieved that carry no typed anchor or condition rows and therefore cannot be scored against the floor. Separates a retrieval failure from a graph-population failure.",
+      "GRANULARITY_PRECISION": "Share of ranked competitors carrying a decision granularity equal to the opportunity's anchor-target granularity.",
+      "KNOWN_BAD_RETRIEVAL_RATE": "Share of an arm's ranked competitors that appear in the frozen negative controls for that opportunity (anchorless or second-key). Must be 0.",
+      "OPPORTUNITIES_WITH_3_VIABLE": "Count of opportunities for which an arm raises at least three ranked competitors. VIABLE means retrieved AND archetype/response-class admissible AND clearing SAF_1 AND clearing ADM_3 -- the same definition in every arm.",
+      "SAME_ARCHETYPE_PRECISION": "Share of ranked competitors whose enrichment tags include this opportunity's option-set archetype. Expected to be 1.0 in every arm because the shared index filter enforces it; reported as a constancy check, not a differentiator.",
+      "SAME_DECISION_PRECISION": "Among an arm's ranked competitors that the frozen semantic-admissibility record judged for this opportunity, the share judged ADMITTED. Competitors never judged are reported as UNJUDGED and counted as neither.",
+      "SECOND_KEY_REFUSAL": "Count of ADM_3 CORRECTNESS_CONDITION_FULLY_SATISFIED refusals. The ceiling must not weaken, so this is compared against the frozen baseline of 8.",
+      "SOURCE_TRACEABILITY": "Share of ranked competitors that resolve to at least one source reference: a cited evidence claim, a graph edge carrying a source id, or a chunk page.",
+      "STEM_ANCHOR_SURVIVAL": "ranked / (ranked + SAF_1 refusals). How much of what reached the floor cleared it."
+    },
+    "negative_control_totals": {
+      "KNOWN_ANCHORLESS": 67,
+      "KNOWN_SECOND_KEY": 8
+    }
+  },
+  "results_by_arm": {
+    "BM25": [
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 1141,
+          "words": 60
+        },
+        "DISCOVERED_BUT_UNTYPED": 3,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 3,
+        "discipline": "MED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 49.987,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-MED-T01-DISSECTION",
+          "SEED-G2-MED-T01-PE",
+          "SEED-G2-MED-T01-PERICARDITIS"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-01"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 998,
+          "words": 52
+        },
+        "DISCOVERED_BUT_UNTYPED": 11,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 12,
+        "discipline": "MED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 43.274,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 778,
+          "words": 40
+        },
+        "DISCOVERED_BUT_UNTYPED": 28,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 29,
+        "discipline": "MED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 18.928,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-MED-T02-BETA-BLOCKER",
+          "SEED-G2-MED-T02-DIURETIC",
+          "SEED-G2-MED-T02-NITRATE",
+          "SEED-G2-MED-T02-VASOPRESSOR"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-03"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 786,
+          "words": 40
+        },
+        "DISCOVERED_BUT_UNTYPED": 1,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 1,
+        "discipline": "MED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 11.15,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-MED-T03-DEFERRED-ANGIO",
+          "SEED-G2-MED-T03-PPCI-ONLY",
+          "SEED-G2-MED-T03-RESCUE-ONLY"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-04"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 765,
+          "words": 40
+        },
+        "DISCOVERED_BUT_UNTYPED": 3,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 3,
+        "discipline": "MED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 7.237,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-MED-T04-ADMIT-NONINVASIVE",
+          "SEED-G2-MED-T04-CLINIC",
+          "SEED-G2-MED-T04-DISCHARGE-STRESS",
+          "SEED-G2-MED-T04-OBSERVE"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-05"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 1244,
+          "words": 64
+        },
+        "DISCOVERED_BUT_UNTYPED": 19,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 19,
+        "discipline": "OBGYN",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 12.89,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-OB-T01-IBC",
+          "SEED-OB-T01-PHLEGMON"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-01"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 958,
+          "words": 48
+        },
+        "DISCOVERED_BUT_UNTYPED": 24,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 24,
+        "discipline": "OBGYN",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 9.905,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-OB-T02-ASPIRATION",
+          "SEED-OB-T02-CRP",
+          "SEED-OB-T02-MAMMOGRAPHY",
+          "SEED-OB-T02-MILK-CULTURE"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 858,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 23,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 23,
+        "discipline": "OBGYN",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 8.537,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-OB-T03-DANGLE",
+          "SEED-OB-T03-DISCARD",
+          "SEED-OB-T03-EMPTY",
+          "SEED-OB-T03-MASSAGE",
+          "SEED-OB-T03-SHIELD"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-03"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 868,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 23,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 23,
+        "discipline": "OBGYN",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 7.598,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-04"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 880,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 12,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 12,
+        "discipline": "OBGYN",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 9.15,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-05"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 1036,
+          "words": 56
+        },
+        "DISCOVERED_BUT_UNTYPED": 32,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 32,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 12.655,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PED-T01-ASTHMA",
+          "SEED-PED-T01-FOREIGN-BODY",
+          "SEED-PED-T01-PNEUMONIA"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-01"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 975,
+          "words": 52
+        },
+        "DISCOVERED_BUT_UNTYPED": 14,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 14,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 7.46,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PED-T02-CBC",
+          "SEED-PED-T02-CONTINUOUS",
+          "SEED-PED-T02-CXR",
+          "SEED-PED-T02-VIRAL"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 894,
+          "words": 48
+        },
+        "DISCOVERED_BUT_UNTYPED": 10,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 10,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 9.753,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PED-T03-EPINEPHRINE",
+          "SEED-PED-T03-FLUIDS",
+          "SEED-PED-T03-HFNC",
+          "SEED-PED-T03-HYPERTONIC",
+          "SEED-PED-T03-SALBUTAMOL",
+          "SEED-PED-T03-SUCTION"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-03"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 1103,
+          "words": 60
+        },
+        "DISCOVERED_BUT_UNTYPED": 13,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 13,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 9.122,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-04"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 895,
+          "words": 48
+        },
+        "DISCOVERED_BUT_UNTYPED": 9,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 9,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 23.465,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PED-T03-EPINEPHRINE",
+          "SEED-PED-T03-HFNC",
+          "SEED-PED-T03-HYPERTONIC",
+          "SEED-PED-T03-SALBUTAMOL",
+          "SEED-PED-T03-SUCTION"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-05"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 1044,
+          "words": 52
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 0,
+        "discipline": "PHELO",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 26.176,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PHELO-T01-HEALTHY-SCREENEE",
+          "SEED-PHELO-T01-LENGTH",
+          "SEED-PHELO-T01-OVERDIAGNOSIS"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-01"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 895,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 3,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 3,
+        "discipline": "PHELO",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 13.226,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-PHELO-T02-VOLUNTARY",
+          "SEED-PHELO-T02-DETECTION-COUNT",
+          "SEED-PHELO-T02-SENSITIVITY"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 899,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 0,
+        "discipline": "PHELO",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 19.468,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PHELO-T03-ECONOMIC",
+          "SEED-PHELO-T03-EVALUATE",
+          "SEED-PHELO-T03-PILOT",
+          "SEED-PHELO-T03-RAISE-CUTOFF"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-03"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 898,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 10,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 10,
+        "discipline": "PHELO",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 7.49,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-04"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 1042,
+          "words": 52
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 0,
+        "discipline": "PHELO",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 7.446,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-PHELO-T01-LEAD-TIME",
+          "SEED-PHELO-T01-LENGTH",
+          "SEED-PHELO-T01-OVERDIAGNOSIS"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-05"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 970,
+          "words": 52
+        },
+        "DISCOVERED_BUT_UNTYPED": 9,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 9,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 9.074,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PSY-T01-ANEMIA",
+          "SEED-PSY-T01-BD2",
+          "SEED-PSY-T01-MEDICAL",
+          "SEED-PSY-T01-PDD"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-01"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 838,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 5,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 5,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 10.036,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-PSY-T02-CRISIS-TEAM",
+          "SEED-PSY-T02-SAFETY-PLAN"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 1078,
+          "words": 56
+        },
+        "DISCOVERED_BUT_UNTYPED": 16,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 16,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 9.455,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PSY-T03-COMBINED",
+          "SEED-PSY-T03-DIGITAL",
+          "SEED-PSY-T03-EXERCISE",
+          "SEED-PSY-T03-PSYCHOTHERAPY"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-03"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 1004,
+          "words": 52
+        },
+        "DISCOVERED_BUT_UNTYPED": 13,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 13,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 11.406,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PSY-T03-COMBINED",
+          "SEED-PSY-T03-EXERCISE",
+          "SEED-PSY-T03-PSYCHOTHERAPY"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-04"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 1057,
+          "words": 56
+        },
+        "DISCOVERED_BUT_UNTYPED": 10,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 10,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 8.63,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-PSY-T03-AD-ALONE",
+          "SEED-G2-PSY-T03-ECT",
+          "SEED-PSY-T03-COMBINED"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-05"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 954,
+          "words": 52
+        },
+        "DISCOVERED_BUT_UNTYPED": 9,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 9,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 14.721,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-06"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 997,
+          "words": 52
+        },
+        "DISCOVERED_BUT_UNTYPED": 13,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 13,
+        "discipline": "SURG",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 10.529,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-SURG-T01-PID",
+          "SEED-SURG-T01-TOA",
+          "SEED-SURG-T01-TORSION"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-SURG-01"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 997,
+          "words": 52
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 0,
+        "discipline": "SURG",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 8.097,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-SURG-T02-KUB",
+          "SEED-SURG-T02-LAPAROSCOPY",
+          "SEED-SURG-T02-MRI",
+          "SEED-SURG-T02-OBSERVE",
+          "SEED-SURG-T02-US"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-SURG-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 964,
+          "words": 48
+        },
+        "DISCOVERED_BUT_UNTYPED": 28,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 28,
+        "discipline": "SURG",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 8.156,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-SURG-T03-DRAINAGE",
+          "SEED-SURG-T03-INTERVAL",
+          "SEED-SURG-T03-NONOP"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-SURG-03"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 872,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "BM25",
+        "candidates_entering_the_index": 0,
+        "discipline": "SURG",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 8.015,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-SURG-04"
+      }
+    ],
+    "CURRENT_LIBRARY": [
+      {
+        "CANDIDATE_RECALL": 0.3333333333333333,
+        "CONTEXT_SIZE": {
+          "characters": 1757,
+          "words": 102
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.3333333333333333,
+        "anchor_floor_refusals": 2,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "MED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 14.407,
+        "priority_class": "CORE",
+        "ranked_count": 1,
+        "ranked_seed_ids": [
+          "SEED-G2-MED-T01-PE"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-MED-T01-DISSECTION",
+          "SEED-G2-MED-T01-PE",
+          "SEED-G2-MED-T01-PERICARDITIS"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-01"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 998,
+          "words": 52
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "MED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 7.121,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-02"
+      },
+      {
+        "CANDIDATE_RECALL": 1.0,
+        "CONTEXT_SIZE": {
+          "characters": 3451,
+          "words": 231
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.5,
+        "anchor_floor_refusals": 4,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "MED",
+        "fail_closed_reason": null,
+        "indexed_count": 8,
+        "known_bad_returned": [],
+        "latency_ms": 6.261,
+        "priority_class": "CORE",
+        "ranked_count": 4,
+        "ranked_seed_ids": [
+          "SEED-G2-MED-T02-BETA-BLOCKER",
+          "SEED-G2-MED-T02-DIURETIC",
+          "SEED-G2-MED-T02-NITRATE",
+          "SEED-G2-MED-T02-VASOPRESSOR"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-G2-MED-T02-BETA-BLOCKER",
+          "SEED-G2-MED-T02-DIURETIC",
+          "SEED-G2-MED-T02-NITRATE",
+          "SEED-G2-MED-T02-VASOPRESSOR"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-03"
+      },
+      {
+        "CANDIDATE_RECALL": 1.0,
+        "CONTEXT_SIZE": {
+          "characters": 2929,
+          "words": 200
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "MED",
+        "fail_closed_reason": null,
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 8.5,
+        "priority_class": "CORE",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-G2-MED-T03-DEFERRED-ANGIO",
+          "SEED-G2-MED-T03-PPCI-ONLY",
+          "SEED-G2-MED-T03-RESCUE-ONLY"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-G2-MED-T03-DEFERRED-ANGIO",
+          "SEED-G2-MED-T03-PPCI-ONLY",
+          "SEED-G2-MED-T03-RESCUE-ONLY"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-04"
+      },
+      {
+        "CANDIDATE_RECALL": 0.25,
+        "CONTEXT_SIZE": {
+          "characters": 2811,
+          "words": 187
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 0.3333333333333333,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.375,
+        "anchor_floor_refusals": 5,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "MED",
+        "fail_closed_reason": null,
+        "indexed_count": 8,
+        "known_bad_returned": [],
+        "latency_ms": 9.469,
+        "priority_class": "CORE",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-G2-MED-T02-BETA-BLOCKER",
+          "SEED-G2-MED-T02-NITRATE",
+          "SEED-G2-MED-T04-ADMIT-NONINVASIVE"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-G2-MED-T04-ADMIT-NONINVASIVE",
+          "SEED-G2-MED-T04-CLINIC",
+          "SEED-G2-MED-T04-DISCHARGE-STRESS",
+          "SEED-G2-MED-T04-OBSERVE"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-05"
+      },
+      {
+        "CANDIDATE_RECALL": 1.0,
+        "CONTEXT_SIZE": {
+          "characters": 2498,
+          "words": 150
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 1,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.6666666666666666,
+        "anchor_floor_refusals": 1,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "OBGYN",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 7,
+        "known_bad_returned": [],
+        "latency_ms": 6.988,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 2,
+        "ranked_seed_ids": [
+          "SEED-OB-T01-PHLEGMON",
+          "SEED-OB-T01-IBC"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-OB-T01-IBC",
+          "SEED-OB-T01-PHLEGMON"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-01"
+      },
+      {
+        "CANDIDATE_RECALL": 0.5,
+        "CONTEXT_SIZE": {
+          "characters": 2253,
+          "words": 138
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.5,
+        "anchor_floor_refusals": 2,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "OBGYN",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 9.002,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 2,
+        "ranked_seed_ids": [
+          "SEED-OB-T02-MAMMOGRAPHY",
+          "SEED-OB-T02-ASPIRATION"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-OB-T02-ASPIRATION",
+          "SEED-OB-T02-CRP",
+          "SEED-OB-T02-MAMMOGRAPHY",
+          "SEED-OB-T02-MILK-CULTURE"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.6,
+        "CONTEXT_SIZE": {
+          "characters": 2807,
+          "words": 191
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.6,
+        "anchor_floor_refusals": 2,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "OBGYN",
+        "fail_closed_reason": null,
+        "indexed_count": 5,
+        "known_bad_returned": [],
+        "latency_ms": 5.502,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-OB-T03-DANGLE",
+          "SEED-OB-T03-EMPTY",
+          "SEED-OB-T03-MASSAGE"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-OB-T03-DANGLE",
+          "SEED-OB-T03-DISCARD",
+          "SEED-OB-T03-EMPTY",
+          "SEED-OB-T03-MASSAGE",
+          "SEED-OB-T03-SHIELD"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-03"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 2817,
+          "words": 191
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 0.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.6,
+        "anchor_floor_refusals": 2,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "OBGYN",
+        "fail_closed_reason": null,
+        "indexed_count": 5,
+        "known_bad_returned": [],
+        "latency_ms": 5.501,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-OB-T03-DANGLE",
+          "SEED-OB-T03-EMPTY",
+          "SEED-OB-T03-MASSAGE"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-04"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 880,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "OBGYN",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 5.414,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-05"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 1036,
+          "words": 56
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": 0.0,
+        "anchor_floor_refusals": 3,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 6.002,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PED-T01-ASTHMA",
+          "SEED-PED-T01-FOREIGN-BODY",
+          "SEED-PED-T01-PNEUMONIA"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-01"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 975,
+          "words": 52
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": 0.0,
+        "anchor_floor_refusals": 4,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 5.33,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PED-T02-CBC",
+          "SEED-PED-T02-CONTINUOUS",
+          "SEED-PED-T02-CXR",
+          "SEED-PED-T02-VIRAL"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.16666666666666666,
+        "CONTEXT_SIZE": {
+          "characters": 1522,
+          "words": 92
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.16666666666666666,
+        "anchor_floor_refusals": 5,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "known_bad_returned": [],
+        "latency_ms": 4.909,
+        "priority_class": "CORE",
+        "ranked_count": 1,
+        "ranked_seed_ids": [
+          "SEED-PED-T03-HFNC"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PED-T03-EPINEPHRINE",
+          "SEED-PED-T03-FLUIDS",
+          "SEED-PED-T03-HFNC",
+          "SEED-PED-T03-HYPERTONIC",
+          "SEED-PED-T03-SALBUTAMOL",
+          "SEED-PED-T03-SUCTION"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-03"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 1103,
+          "words": 60
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": 0.0,
+        "anchor_floor_refusals": 6,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "known_bad_returned": [],
+        "latency_ms": 5.011,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-04"
+      },
+      {
+        "CANDIDATE_RECALL": 0.2,
+        "CONTEXT_SIZE": {
+          "characters": 1523,
+          "words": 92
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 1,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.2,
+        "anchor_floor_refusals": 4,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "known_bad_returned": [],
+        "latency_ms": 4.903,
+        "priority_class": "CORE",
+        "ranked_count": 1,
+        "ranked_seed_ids": [
+          "SEED-PED-T03-HFNC"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PED-T03-EPINEPHRINE",
+          "SEED-PED-T03-HFNC",
+          "SEED-PED-T03-HYPERTONIC",
+          "SEED-PED-T03-SALBUTAMOL",
+          "SEED-PED-T03-SUCTION"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-05"
+      },
+      {
+        "CANDIDATE_RECALL": 1.0,
+        "CONTEXT_SIZE": {
+          "characters": 2959,
+          "words": 181
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 1,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "PHELO",
+        "fail_closed_reason": null,
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 6.511,
+        "priority_class": "CORE",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-PHELO-T01-HEALTHY-SCREENEE",
+          "SEED-PHELO-T01-LENGTH",
+          "SEED-PHELO-T01-OVERDIAGNOSIS"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-PHELO-T01-HEALTHY-SCREENEE",
+          "SEED-PHELO-T01-LENGTH",
+          "SEED-PHELO-T01-OVERDIAGNOSIS"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-01"
+      },
+      {
+        "CANDIDATE_RECALL": 1.0,
+        "CONTEXT_SIZE": {
+          "characters": 2984,
+          "words": 201
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "PHELO",
+        "fail_closed_reason": null,
+        "indexed_count": 5,
+        "known_bad_returned": [],
+        "latency_ms": 5.084,
+        "priority_class": "CORE",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-G2-PHELO-T02-VOLUNTARY",
+          "SEED-PHELO-T02-DETECTION-COUNT",
+          "SEED-PHELO-T02-SENSITIVITY"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-G2-PHELO-T02-VOLUNTARY",
+          "SEED-PHELO-T02-DETECTION-COUNT",
+          "SEED-PHELO-T02-SENSITIVITY"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.75,
+        "CONTEXT_SIZE": {
+          "characters": 2916,
+          "words": 196
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.75,
+        "anchor_floor_refusals": 1,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "PHELO",
+        "fail_closed_reason": null,
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 4.867,
+        "priority_class": "CORE",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-PHELO-T03-EVALUATE",
+          "SEED-PHELO-T03-PILOT",
+          "SEED-PHELO-T03-RAISE-CUTOFF"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-PHELO-T03-ECONOMIC",
+          "SEED-PHELO-T03-EVALUATE",
+          "SEED-PHELO-T03-PILOT",
+          "SEED-PHELO-T03-RAISE-CUTOFF"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-03"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 898,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 1,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": 0.0,
+        "anchor_floor_refusals": 3,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "PHELO",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 5.598,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-04"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 1042,
+          "words": 52
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 1,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": 0.0,
+        "anchor_floor_refusals": 3,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "PHELO",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 5.425,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-PHELO-T01-LEAD-TIME",
+          "SEED-PHELO-T01-LENGTH",
+          "SEED-PHELO-T01-OVERDIAGNOSIS"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-05"
+      },
+      {
+        "CANDIDATE_RECALL": 0.25,
+        "CONTEXT_SIZE": {
+          "characters": 1586,
+          "words": 95
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.25,
+        "anchor_floor_refusals": 3,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 5.444,
+        "priority_class": "CORE",
+        "ranked_count": 1,
+        "ranked_seed_ids": [
+          "SEED-PSY-T01-BD2"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PSY-T01-ANEMIA",
+          "SEED-PSY-T01-BD2",
+          "SEED-PSY-T01-MEDICAL",
+          "SEED-PSY-T01-PDD"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-01"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 838,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 4.94,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-PSY-T02-CRISIS-TEAM",
+          "SEED-PSY-T02-SAFETY-PLAN"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.5,
+        "CONTEXT_SIZE": {
+          "characters": 2413,
+          "words": 152
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 1,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.4,
+        "anchor_floor_refusals": 3,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "known_bad_returned": [],
+        "latency_ms": 5.301,
+        "priority_class": "CORE",
+        "ranked_count": 2,
+        "ranked_seed_ids": [
+          "SEED-PSY-T03-EXERCISE",
+          "SEED-PSY-T03-PSYCHOTHERAPY"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PSY-T03-COMBINED",
+          "SEED-PSY-T03-DIGITAL",
+          "SEED-PSY-T03-EXERCISE",
+          "SEED-PSY-T03-PSYCHOTHERAPY"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-03"
+      },
+      {
+        "CANDIDATE_RECALL": 0.6666666666666666,
+        "CONTEXT_SIZE": {
+          "characters": 2339,
+          "words": 148
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 2,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.5,
+        "anchor_floor_refusals": 2,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "known_bad_returned": [],
+        "latency_ms": 5.969,
+        "priority_class": "CORE",
+        "ranked_count": 2,
+        "ranked_seed_ids": [
+          "SEED-PSY-T03-PSYCHOTHERAPY",
+          "SEED-PSY-T03-EXERCISE"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PSY-T03-COMBINED",
+          "SEED-PSY-T03-EXERCISE",
+          "SEED-PSY-T03-PSYCHOTHERAPY"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-04"
+      },
+      {
+        "CANDIDATE_RECALL": 0.3333333333333333,
+        "CONTEXT_SIZE": {
+          "characters": 1718,
+          "words": 102
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.16666666666666666,
+        "anchor_floor_refusals": 5,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "known_bad_returned": [],
+        "latency_ms": 5.505,
+        "priority_class": "CORE",
+        "ranked_count": 1,
+        "ranked_seed_ids": [
+          "SEED-G2-PSY-T03-ECT"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-PSY-T03-AD-ALONE",
+          "SEED-G2-PSY-T03-ECT",
+          "SEED-PSY-T03-COMBINED"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-05"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 1570,
+          "words": 95
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.25,
+        "anchor_floor_refusals": 3,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 5.337,
+        "priority_class": "CORE",
+        "ranked_count": 1,
+        "ranked_seed_ids": [
+          "SEED-PSY-T01-BD2"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 1,
+        "wave_label": "G2-PSY-06"
+      },
+      {
+        "CANDIDATE_RECALL": 1.0,
+        "CONTEXT_SIZE": {
+          "characters": 2869,
+          "words": 181
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "SURG",
+        "fail_closed_reason": null,
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 5.9,
+        "priority_class": "CORE",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-SURG-T01-PID",
+          "SEED-SURG-T01-TORSION",
+          "SEED-SURG-T01-TOA"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-SURG-T01-PID",
+          "SEED-SURG-T01-TOA",
+          "SEED-SURG-T01-TORSION"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-SURG-01"
+      },
+      {
+        "CANDIDATE_RECALL": 0.8,
+        "CONTEXT_SIZE": {
+          "characters": 3580,
+          "words": 236
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.8,
+        "anchor_floor_refusals": 1,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "SURG",
+        "fail_closed_reason": null,
+        "indexed_count": 5,
+        "known_bad_returned": [],
+        "latency_ms": 5.3,
+        "priority_class": "CORE",
+        "ranked_count": 4,
+        "ranked_seed_ids": [
+          "SEED-SURG-T02-MRI",
+          "SEED-SURG-T02-OBSERVE",
+          "SEED-SURG-T02-US",
+          "SEED-SURG-T02-KUB"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-SURG-T02-KUB",
+          "SEED-SURG-T02-LAPAROSCOPY",
+          "SEED-SURG-T02-MRI",
+          "SEED-SURG-T02-OBSERVE",
+          "SEED-SURG-T02-US"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-SURG-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 964,
+          "words": 48
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": 0.0,
+        "anchor_floor_refusals": 3,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "SURG",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 4.832,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-SURG-T03-DRAINAGE",
+          "SEED-SURG-T03-INTERVAL",
+          "SEED-SURG-T03-NONOP"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-SURG-03"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 872,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "CURRENT_LIBRARY",
+        "candidates_entering_the_index": 81,
+        "discipline": "SURG",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 5.843,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-SURG-04"
+      }
+    ],
+    "GRAPH": [
+      {
+        "CANDIDATE_RECALL": 0.3333333333333333,
+        "CONTEXT_SIZE": {
+          "characters": 1790,
+          "words": 102
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 4,
+        "discipline": "MED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 1,
+        "known_bad_returned": [],
+        "latency_ms": 7.179,
+        "priority_class": "CORE",
+        "ranked_count": 1,
+        "ranked_seed_ids": [
+          "SEED-G2-MED-T01-PE"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-MED-T01-DISSECTION",
+          "SEED-G2-MED-T01-PE",
+          "SEED-G2-MED-T01-PERICARDITIS"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-01"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 998,
+          "words": 52
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 4,
+        "discipline": "MED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 5.445,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-02"
+      },
+      {
+        "CANDIDATE_RECALL": 1.0,
+        "CONTEXT_SIZE": {
+          "characters": 3583,
+          "words": 231
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 7,
+        "discipline": "MED",
+        "fail_closed_reason": null,
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 4.99,
+        "priority_class": "CORE",
+        "ranked_count": 4,
+        "ranked_seed_ids": [
+          "SEED-G2-MED-T02-BETA-BLOCKER",
+          "SEED-G2-MED-T02-DIURETIC",
+          "SEED-G2-MED-T02-NITRATE",
+          "SEED-G2-MED-T02-VASOPRESSOR"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-G2-MED-T02-BETA-BLOCKER",
+          "SEED-G2-MED-T02-DIURETIC",
+          "SEED-G2-MED-T02-NITRATE",
+          "SEED-G2-MED-T02-VASOPRESSOR"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-03"
+      },
+      {
+        "CANDIDATE_RECALL": 1.0,
+        "CONTEXT_SIZE": {
+          "characters": 3092,
+          "words": 202
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 5,
+        "discipline": "MED",
+        "fail_closed_reason": null,
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 5.161,
+        "priority_class": "CORE",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-G2-MED-T03-DEFERRED-ANGIO",
+          "SEED-G2-MED-T03-PPCI-ONLY",
+          "SEED-G2-MED-T03-RESCUE-ONLY"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-G2-MED-T03-DEFERRED-ANGIO",
+          "SEED-G2-MED-T03-PPCI-ONLY",
+          "SEED-G2-MED-T03-RESCUE-ONLY"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-04"
+      },
+      {
+        "CANDIDATE_RECALL": 0.25,
+        "CONTEXT_SIZE": {
+          "characters": 2942,
+          "words": 188
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 0.3333333333333333,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 4,
+        "discipline": "MED",
+        "fail_closed_reason": null,
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 5.257,
+        "priority_class": "CORE",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-G2-MED-T02-BETA-BLOCKER",
+          "SEED-G2-MED-T02-NITRATE",
+          "SEED-G2-MED-T04-ADMIT-NONINVASIVE"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-G2-MED-T04-ADMIT-NONINVASIVE",
+          "SEED-G2-MED-T04-CLINIC",
+          "SEED-G2-MED-T04-DISCHARGE-STRESS",
+          "SEED-G2-MED-T04-OBSERVE"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-05"
+      },
+      {
+        "CANDIDATE_RECALL": 1.0,
+        "CONTEXT_SIZE": {
+          "characters": 2564,
+          "words": 150
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 1,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 9,
+        "discipline": "OBGYN",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "known_bad_returned": [],
+        "latency_ms": 5.93,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 2,
+        "ranked_seed_ids": [
+          "SEED-OB-T01-PHLEGMON",
+          "SEED-OB-T01-IBC"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-OB-T01-IBC",
+          "SEED-OB-T01-PHLEGMON"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-01"
+      },
+      {
+        "CANDIDATE_RECALL": 0.5,
+        "CONTEXT_SIZE": {
+          "characters": 2319,
+          "words": 138
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 4,
+        "discipline": "OBGYN",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 2,
+        "known_bad_returned": [],
+        "latency_ms": 5.531,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 2,
+        "ranked_seed_ids": [
+          "SEED-OB-T02-MAMMOGRAPHY",
+          "SEED-OB-T02-ASPIRATION"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-OB-T02-ASPIRATION",
+          "SEED-OB-T02-CRP",
+          "SEED-OB-T02-MAMMOGRAPHY",
+          "SEED-OB-T02-MILK-CULTURE"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.6,
+        "CONTEXT_SIZE": {
+          "characters": 2906,
+          "words": 191
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 9,
+        "discipline": "OBGYN",
+        "fail_closed_reason": null,
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 5.218,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-OB-T03-DANGLE",
+          "SEED-OB-T03-EMPTY",
+          "SEED-OB-T03-MASSAGE"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-OB-T03-DANGLE",
+          "SEED-OB-T03-DISCARD",
+          "SEED-OB-T03-EMPTY",
+          "SEED-OB-T03-MASSAGE",
+          "SEED-OB-T03-SHIELD"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-03"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 2916,
+          "words": 191
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 0.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 9,
+        "discipline": "OBGYN",
+        "fail_closed_reason": null,
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 5.607,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-OB-T03-DANGLE",
+          "SEED-OB-T03-EMPTY",
+          "SEED-OB-T03-MASSAGE"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-04"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 880,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 3,
+        "discipline": "OBGYN",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 7.897,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-05"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 1036,
+          "words": 56
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 1,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 5.834,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PED-T01-ASTHMA",
+          "SEED-PED-T01-FOREIGN-BODY",
+          "SEED-PED-T01-PNEUMONIA"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-01"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 975,
+          "words": 52
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 0,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 4.826,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PED-T02-CBC",
+          "SEED-PED-T02-CONTINUOUS",
+          "SEED-PED-T02-CXR",
+          "SEED-PED-T02-VIRAL"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.16666666666666666,
+        "CONTEXT_SIZE": {
+          "characters": 1555,
+          "words": 92
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 2,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 1,
+        "known_bad_returned": [],
+        "latency_ms": 5.534,
+        "priority_class": "CORE",
+        "ranked_count": 1,
+        "ranked_seed_ids": [
+          "SEED-PED-T03-HFNC"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PED-T03-EPINEPHRINE",
+          "SEED-PED-T03-FLUIDS",
+          "SEED-PED-T03-HFNC",
+          "SEED-PED-T03-HYPERTONIC",
+          "SEED-PED-T03-SALBUTAMOL",
+          "SEED-PED-T03-SUCTION"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-03"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 1103,
+          "words": 60
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 0,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 5.521,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-04"
+      },
+      {
+        "CANDIDATE_RECALL": 0.2,
+        "CONTEXT_SIZE": {
+          "characters": 1556,
+          "words": 92
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 1,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 3,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 2,
+        "known_bad_returned": [],
+        "latency_ms": 4.938,
+        "priority_class": "CORE",
+        "ranked_count": 1,
+        "ranked_seed_ids": [
+          "SEED-PED-T03-HFNC"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PED-T03-EPINEPHRINE",
+          "SEED-PED-T03-HFNC",
+          "SEED-PED-T03-HYPERTONIC",
+          "SEED-PED-T03-SALBUTAMOL",
+          "SEED-PED-T03-SUCTION"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-05"
+      },
+      {
+        "CANDIDATE_RECALL": 1.0,
+        "CONTEXT_SIZE": {
+          "characters": 3122,
+          "words": 183
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 1,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 4,
+        "discipline": "PHELO",
+        "fail_closed_reason": null,
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 5.757,
+        "priority_class": "CORE",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-PHELO-T01-HEALTHY-SCREENEE",
+          "SEED-PHELO-T01-LENGTH",
+          "SEED-PHELO-T01-OVERDIAGNOSIS"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-PHELO-T01-HEALTHY-SCREENEE",
+          "SEED-PHELO-T01-LENGTH",
+          "SEED-PHELO-T01-OVERDIAGNOSIS"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-01"
+      },
+      {
+        "CANDIDATE_RECALL": 1.0,
+        "CONTEXT_SIZE": {
+          "characters": 3083,
+          "words": 201
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 3,
+        "discipline": "PHELO",
+        "fail_closed_reason": null,
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 5.904,
+        "priority_class": "CORE",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-G2-PHELO-T02-VOLUNTARY",
+          "SEED-PHELO-T02-DETECTION-COUNT",
+          "SEED-PHELO-T02-SENSITIVITY"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-G2-PHELO-T02-VOLUNTARY",
+          "SEED-PHELO-T02-DETECTION-COUNT",
+          "SEED-PHELO-T02-SENSITIVITY"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.75,
+        "CONTEXT_SIZE": {
+          "characters": 3015,
+          "words": 196
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 3,
+        "discipline": "PHELO",
+        "fail_closed_reason": null,
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 5.551,
+        "priority_class": "CORE",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-PHELO-T03-EVALUATE",
+          "SEED-PHELO-T03-PILOT",
+          "SEED-PHELO-T03-RAISE-CUTOFF"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-PHELO-T03-ECONOMIC",
+          "SEED-PHELO-T03-EVALUATE",
+          "SEED-PHELO-T03-PILOT",
+          "SEED-PHELO-T03-RAISE-CUTOFF"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-03"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 898,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 1,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 1,
+        "discipline": "PHELO",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 1,
+        "known_bad_returned": [],
+        "latency_ms": 4.883,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-04"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 1042,
+          "words": 52
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 1,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 1,
+        "discipline": "PHELO",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 1,
+        "known_bad_returned": [],
+        "latency_ms": 5.602,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-PHELO-T01-LEAD-TIME",
+          "SEED-PHELO-T01-LENGTH",
+          "SEED-PHELO-T01-OVERDIAGNOSIS"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-05"
+      },
+      {
+        "CANDIDATE_RECALL": 0.25,
+        "CONTEXT_SIZE": {
+          "characters": 1619,
+          "words": 95
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 1,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 1,
+        "known_bad_returned": [],
+        "latency_ms": 5.335,
+        "priority_class": "CORE",
+        "ranked_count": 1,
+        "ranked_seed_ids": [
+          "SEED-PSY-T01-BD2"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PSY-T01-ANEMIA",
+          "SEED-PSY-T01-BD2",
+          "SEED-PSY-T01-MEDICAL",
+          "SEED-PSY-T01-PDD"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-01"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 838,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 4,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 5.624,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-PSY-T02-CRISIS-TEAM",
+          "SEED-PSY-T02-SAFETY-PLAN"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.5,
+        "CONTEXT_SIZE": {
+          "characters": 2479,
+          "words": 152
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 1,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 3,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 5.255,
+        "priority_class": "CORE",
+        "ranked_count": 2,
+        "ranked_seed_ids": [
+          "SEED-PSY-T03-EXERCISE",
+          "SEED-PSY-T03-PSYCHOTHERAPY"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PSY-T03-COMBINED",
+          "SEED-PSY-T03-DIGITAL",
+          "SEED-PSY-T03-EXERCISE",
+          "SEED-PSY-T03-PSYCHOTHERAPY"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-03"
+      },
+      {
+        "CANDIDATE_RECALL": 0.6666666666666666,
+        "CONTEXT_SIZE": {
+          "characters": 2437,
+          "words": 149
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 2,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 4,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 4.813,
+        "priority_class": "CORE",
+        "ranked_count": 2,
+        "ranked_seed_ids": [
+          "SEED-PSY-T03-PSYCHOTHERAPY",
+          "SEED-PSY-T03-EXERCISE"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PSY-T03-COMBINED",
+          "SEED-PSY-T03-EXERCISE",
+          "SEED-PSY-T03-PSYCHOTHERAPY"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-04"
+      },
+      {
+        "CANDIDATE_RECALL": 0.3333333333333333,
+        "CONTEXT_SIZE": {
+          "characters": 1751,
+          "words": 102
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 2,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 1,
+        "known_bad_returned": [],
+        "latency_ms": 5.56,
+        "priority_class": "CORE",
+        "ranked_count": 1,
+        "ranked_seed_ids": [
+          "SEED-G2-PSY-T03-ECT"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-PSY-T03-AD-ALONE",
+          "SEED-G2-PSY-T03-ECT",
+          "SEED-PSY-T03-COMBINED"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-05"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 1603,
+          "words": 95
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 1,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 1,
+        "known_bad_returned": [],
+        "latency_ms": 5.252,
+        "priority_class": "CORE",
+        "ranked_count": 1,
+        "ranked_seed_ids": [
+          "SEED-PSY-T01-BD2"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 1,
+        "wave_label": "G2-PSY-06"
+      },
+      {
+        "CANDIDATE_RECALL": 1.0,
+        "CONTEXT_SIZE": {
+          "characters": 2968,
+          "words": 181
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 3,
+        "discipline": "SURG",
+        "fail_closed_reason": null,
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 5.244,
+        "priority_class": "CORE",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-SURG-T01-PID",
+          "SEED-SURG-T01-TORSION",
+          "SEED-SURG-T01-TOA"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-SURG-T01-PID",
+          "SEED-SURG-T01-TOA",
+          "SEED-SURG-T01-TORSION"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-SURG-01"
+      },
+      {
+        "CANDIDATE_RECALL": 0.8,
+        "CONTEXT_SIZE": {
+          "characters": 3776,
+          "words": 238
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 4,
+        "discipline": "SURG",
+        "fail_closed_reason": null,
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 5.236,
+        "priority_class": "CORE",
+        "ranked_count": 4,
+        "ranked_seed_ids": [
+          "SEED-SURG-T02-MRI",
+          "SEED-SURG-T02-OBSERVE",
+          "SEED-SURG-T02-US",
+          "SEED-SURG-T02-KUB"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-SURG-T02-KUB",
+          "SEED-SURG-T02-LAPAROSCOPY",
+          "SEED-SURG-T02-MRI",
+          "SEED-SURG-T02-OBSERVE",
+          "SEED-SURG-T02-US"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-SURG-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 964,
+          "words": 48
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 0,
+        "discipline": "SURG",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 5.467,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-SURG-T03-DRAINAGE",
+          "SEED-SURG-T03-INTERVAL",
+          "SEED-SURG-T03-NONOP"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-SURG-03"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 872,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "GRAPH",
+        "candidates_entering_the_index": 3,
+        "discipline": "SURG",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 4.866,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-SURG-04"
+      }
+    ],
+    "HYBRID": [
+      {
+        "CANDIDATE_RECALL": 0.3333333333333333,
+        "CONTEXT_SIZE": {
+          "characters": 1790,
+          "words": 102
+        },
+        "DISCOVERED_BUT_UNTYPED": 3,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.3333333333333333,
+        "anchor_floor_refusals": 2,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 84,
+        "discipline": "MED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 7.179,
+        "priority_class": "CORE",
+        "ranked_count": 1,
+        "ranked_seed_ids": [
+          "SEED-G2-MED-T01-PE"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-MED-T01-DISSECTION",
+          "SEED-G2-MED-T01-PE",
+          "SEED-G2-MED-T01-PERICARDITIS"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-01"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 998,
+          "words": 52
+        },
+        "DISCOVERED_BUT_UNTYPED": 11,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 92,
+        "discipline": "MED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 7.973,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-02"
+      },
+      {
+        "CANDIDATE_RECALL": 1.0,
+        "CONTEXT_SIZE": {
+          "characters": 3583,
+          "words": 231
+        },
+        "DISCOVERED_BUT_UNTYPED": 28,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.5,
+        "anchor_floor_refusals": 4,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 109,
+        "discipline": "MED",
+        "fail_closed_reason": null,
+        "indexed_count": 8,
+        "known_bad_returned": [],
+        "latency_ms": 7.433,
+        "priority_class": "CORE",
+        "ranked_count": 4,
+        "ranked_seed_ids": [
+          "SEED-G2-MED-T02-BETA-BLOCKER",
+          "SEED-G2-MED-T02-DIURETIC",
+          "SEED-G2-MED-T02-NITRATE",
+          "SEED-G2-MED-T02-VASOPRESSOR"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-G2-MED-T02-BETA-BLOCKER",
+          "SEED-G2-MED-T02-DIURETIC",
+          "SEED-G2-MED-T02-NITRATE",
+          "SEED-G2-MED-T02-VASOPRESSOR"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-03"
+      },
+      {
+        "CANDIDATE_RECALL": 1.0,
+        "CONTEXT_SIZE": {
+          "characters": 3092,
+          "words": 202
+        },
+        "DISCOVERED_BUT_UNTYPED": 1,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 82,
+        "discipline": "MED",
+        "fail_closed_reason": null,
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 8.302,
+        "priority_class": "CORE",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-G2-MED-T03-DEFERRED-ANGIO",
+          "SEED-G2-MED-T03-PPCI-ONLY",
+          "SEED-G2-MED-T03-RESCUE-ONLY"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-G2-MED-T03-DEFERRED-ANGIO",
+          "SEED-G2-MED-T03-PPCI-ONLY",
+          "SEED-G2-MED-T03-RESCUE-ONLY"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-04"
+      },
+      {
+        "CANDIDATE_RECALL": 0.25,
+        "CONTEXT_SIZE": {
+          "characters": 2942,
+          "words": 188
+        },
+        "DISCOVERED_BUT_UNTYPED": 3,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 0.3333333333333333,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.375,
+        "anchor_floor_refusals": 5,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 84,
+        "discipline": "MED",
+        "fail_closed_reason": null,
+        "indexed_count": 8,
+        "known_bad_returned": [],
+        "latency_ms": 7.848,
+        "priority_class": "CORE",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-G2-MED-T02-BETA-BLOCKER",
+          "SEED-G2-MED-T02-NITRATE",
+          "SEED-G2-MED-T04-ADMIT-NONINVASIVE"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-G2-MED-T04-ADMIT-NONINVASIVE",
+          "SEED-G2-MED-T04-CLINIC",
+          "SEED-G2-MED-T04-DISCHARGE-STRESS",
+          "SEED-G2-MED-T04-OBSERVE"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-MED-05"
+      },
+      {
+        "CANDIDATE_RECALL": 1.0,
+        "CONTEXT_SIZE": {
+          "characters": 2564,
+          "words": 150
+        },
+        "DISCOVERED_BUT_UNTYPED": 19,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 1,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.6666666666666666,
+        "anchor_floor_refusals": 1,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 100,
+        "discipline": "OBGYN",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 7,
+        "known_bad_returned": [],
+        "latency_ms": 8.345,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 2,
+        "ranked_seed_ids": [
+          "SEED-OB-T01-PHLEGMON",
+          "SEED-OB-T01-IBC"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-OB-T01-IBC",
+          "SEED-OB-T01-PHLEGMON"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-01"
+      },
+      {
+        "CANDIDATE_RECALL": 0.5,
+        "CONTEXT_SIZE": {
+          "characters": 2319,
+          "words": 138
+        },
+        "DISCOVERED_BUT_UNTYPED": 24,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.5,
+        "anchor_floor_refusals": 2,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 105,
+        "discipline": "OBGYN",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 6.964,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 2,
+        "ranked_seed_ids": [
+          "SEED-OB-T02-MAMMOGRAPHY",
+          "SEED-OB-T02-ASPIRATION"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-OB-T02-ASPIRATION",
+          "SEED-OB-T02-CRP",
+          "SEED-OB-T02-MAMMOGRAPHY",
+          "SEED-OB-T02-MILK-CULTURE"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.6,
+        "CONTEXT_SIZE": {
+          "characters": 2906,
+          "words": 191
+        },
+        "DISCOVERED_BUT_UNTYPED": 23,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.6,
+        "anchor_floor_refusals": 2,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 104,
+        "discipline": "OBGYN",
+        "fail_closed_reason": null,
+        "indexed_count": 5,
+        "known_bad_returned": [],
+        "latency_ms": 8.223,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-OB-T03-DANGLE",
+          "SEED-OB-T03-EMPTY",
+          "SEED-OB-T03-MASSAGE"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-OB-T03-DANGLE",
+          "SEED-OB-T03-DISCARD",
+          "SEED-OB-T03-EMPTY",
+          "SEED-OB-T03-MASSAGE",
+          "SEED-OB-T03-SHIELD"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-03"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 2916,
+          "words": 191
+        },
+        "DISCOVERED_BUT_UNTYPED": 23,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 0.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.6,
+        "anchor_floor_refusals": 2,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 104,
+        "discipline": "OBGYN",
+        "fail_closed_reason": null,
+        "indexed_count": 5,
+        "known_bad_returned": [],
+        "latency_ms": 8.227,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-OB-T03-DANGLE",
+          "SEED-OB-T03-EMPTY",
+          "SEED-OB-T03-MASSAGE"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-04"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 880,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 12,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 93,
+        "discipline": "OBGYN",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 8.282,
+        "priority_class": "IMPORTANT",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-OBGYN-05"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 1036,
+          "words": 56
+        },
+        "DISCOVERED_BUT_UNTYPED": 32,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": 0.0,
+        "anchor_floor_refusals": 3,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 113,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 8.92,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PED-T01-ASTHMA",
+          "SEED-PED-T01-FOREIGN-BODY",
+          "SEED-PED-T01-PNEUMONIA"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-01"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 975,
+          "words": 52
+        },
+        "DISCOVERED_BUT_UNTYPED": 14,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": 0.0,
+        "anchor_floor_refusals": 4,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 95,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 8.194,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PED-T02-CBC",
+          "SEED-PED-T02-CONTINUOUS",
+          "SEED-PED-T02-CXR",
+          "SEED-PED-T02-VIRAL"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.16666666666666666,
+        "CONTEXT_SIZE": {
+          "characters": 1555,
+          "words": 92
+        },
+        "DISCOVERED_BUT_UNTYPED": 10,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.16666666666666666,
+        "anchor_floor_refusals": 5,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 91,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "known_bad_returned": [],
+        "latency_ms": 7.195,
+        "priority_class": "CORE",
+        "ranked_count": 1,
+        "ranked_seed_ids": [
+          "SEED-PED-T03-HFNC"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PED-T03-EPINEPHRINE",
+          "SEED-PED-T03-FLUIDS",
+          "SEED-PED-T03-HFNC",
+          "SEED-PED-T03-HYPERTONIC",
+          "SEED-PED-T03-SALBUTAMOL",
+          "SEED-PED-T03-SUCTION"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-03"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 1103,
+          "words": 60
+        },
+        "DISCOVERED_BUT_UNTYPED": 13,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": 0.0,
+        "anchor_floor_refusals": 6,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 94,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "known_bad_returned": [],
+        "latency_ms": 10.186,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-04"
+      },
+      {
+        "CANDIDATE_RECALL": 0.2,
+        "CONTEXT_SIZE": {
+          "characters": 1556,
+          "words": 92
+        },
+        "DISCOVERED_BUT_UNTYPED": 9,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 1,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.2,
+        "anchor_floor_refusals": 4,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 90,
+        "discipline": "PED",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "known_bad_returned": [],
+        "latency_ms": 7.794,
+        "priority_class": "CORE",
+        "ranked_count": 1,
+        "ranked_seed_ids": [
+          "SEED-PED-T03-HFNC"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PED-T03-EPINEPHRINE",
+          "SEED-PED-T03-HFNC",
+          "SEED-PED-T03-HYPERTONIC",
+          "SEED-PED-T03-SALBUTAMOL",
+          "SEED-PED-T03-SUCTION"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PED-05"
+      },
+      {
+        "CANDIDATE_RECALL": 1.0,
+        "CONTEXT_SIZE": {
+          "characters": 3122,
+          "words": 183
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 1,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 81,
+        "discipline": "PHELO",
+        "fail_closed_reason": null,
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 8.295,
+        "priority_class": "CORE",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-PHELO-T01-HEALTHY-SCREENEE",
+          "SEED-PHELO-T01-LENGTH",
+          "SEED-PHELO-T01-OVERDIAGNOSIS"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-PHELO-T01-HEALTHY-SCREENEE",
+          "SEED-PHELO-T01-LENGTH",
+          "SEED-PHELO-T01-OVERDIAGNOSIS"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-01"
+      },
+      {
+        "CANDIDATE_RECALL": 1.0,
+        "CONTEXT_SIZE": {
+          "characters": 3083,
+          "words": 201
+        },
+        "DISCOVERED_BUT_UNTYPED": 3,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 84,
+        "discipline": "PHELO",
+        "fail_closed_reason": null,
+        "indexed_count": 5,
+        "known_bad_returned": [],
+        "latency_ms": 8.462,
+        "priority_class": "CORE",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-G2-PHELO-T02-VOLUNTARY",
+          "SEED-PHELO-T02-DETECTION-COUNT",
+          "SEED-PHELO-T02-SENSITIVITY"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-G2-PHELO-T02-VOLUNTARY",
+          "SEED-PHELO-T02-DETECTION-COUNT",
+          "SEED-PHELO-T02-SENSITIVITY"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.75,
+        "CONTEXT_SIZE": {
+          "characters": 3015,
+          "words": 196
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.75,
+        "anchor_floor_refusals": 1,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 81,
+        "discipline": "PHELO",
+        "fail_closed_reason": null,
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 8.244,
+        "priority_class": "CORE",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-PHELO-T03-EVALUATE",
+          "SEED-PHELO-T03-PILOT",
+          "SEED-PHELO-T03-RAISE-CUTOFF"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-PHELO-T03-ECONOMIC",
+          "SEED-PHELO-T03-EVALUATE",
+          "SEED-PHELO-T03-PILOT",
+          "SEED-PHELO-T03-RAISE-CUTOFF"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-03"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 898,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 10,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 1,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": 0.0,
+        "anchor_floor_refusals": 3,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 91,
+        "discipline": "PHELO",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 7.436,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-04"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 1042,
+          "words": 52
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 1,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": 0.0,
+        "anchor_floor_refusals": 3,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 81,
+        "discipline": "PHELO",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 8.409,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-PHELO-T01-LEAD-TIME",
+          "SEED-PHELO-T01-LENGTH",
+          "SEED-PHELO-T01-OVERDIAGNOSIS"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PHELO-05"
+      },
+      {
+        "CANDIDATE_RECALL": 0.25,
+        "CONTEXT_SIZE": {
+          "characters": 1619,
+          "words": 95
+        },
+        "DISCOVERED_BUT_UNTYPED": 9,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.25,
+        "anchor_floor_refusals": 3,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 90,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 8.236,
+        "priority_class": "CORE",
+        "ranked_count": 1,
+        "ranked_seed_ids": [
+          "SEED-PSY-T01-BD2"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PSY-T01-ANEMIA",
+          "SEED-PSY-T01-BD2",
+          "SEED-PSY-T01-MEDICAL",
+          "SEED-PSY-T01-PDD"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-01"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 838,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 5,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 86,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 10.894,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-PSY-T02-CRISIS-TEAM",
+          "SEED-PSY-T02-SAFETY-PLAN"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.5,
+        "CONTEXT_SIZE": {
+          "characters": 2479,
+          "words": 152
+        },
+        "DISCOVERED_BUT_UNTYPED": 16,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 1,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.4,
+        "anchor_floor_refusals": 3,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 97,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "known_bad_returned": [],
+        "latency_ms": 8.349,
+        "priority_class": "CORE",
+        "ranked_count": 2,
+        "ranked_seed_ids": [
+          "SEED-PSY-T03-EXERCISE",
+          "SEED-PSY-T03-PSYCHOTHERAPY"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PSY-T03-COMBINED",
+          "SEED-PSY-T03-DIGITAL",
+          "SEED-PSY-T03-EXERCISE",
+          "SEED-PSY-T03-PSYCHOTHERAPY"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-03"
+      },
+      {
+        "CANDIDATE_RECALL": 0.6666666666666666,
+        "CONTEXT_SIZE": {
+          "characters": 2437,
+          "words": 149
+        },
+        "DISCOVERED_BUT_UNTYPED": 13,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 2,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.5,
+        "anchor_floor_refusals": 2,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 94,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "known_bad_returned": [],
+        "latency_ms": 12.099,
+        "priority_class": "CORE",
+        "ranked_count": 2,
+        "ranked_seed_ids": [
+          "SEED-PSY-T03-PSYCHOTHERAPY",
+          "SEED-PSY-T03-EXERCISE"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-PSY-T03-COMBINED",
+          "SEED-PSY-T03-EXERCISE",
+          "SEED-PSY-T03-PSYCHOTHERAPY"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-04"
+      },
+      {
+        "CANDIDATE_RECALL": 0.3333333333333333,
+        "CONTEXT_SIZE": {
+          "characters": 1751,
+          "words": 102
+        },
+        "DISCOVERED_BUT_UNTYPED": 10,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.16666666666666666,
+        "anchor_floor_refusals": 5,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 91,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 6,
+        "known_bad_returned": [],
+        "latency_ms": 12.001,
+        "priority_class": "CORE",
+        "ranked_count": 1,
+        "ranked_seed_ids": [
+          "SEED-G2-PSY-T03-ECT"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-G2-PSY-T03-AD-ALONE",
+          "SEED-G2-PSY-T03-ECT",
+          "SEED-PSY-T03-COMBINED"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-PSY-05"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 1603,
+          "words": 95
+        },
+        "DISCOVERED_BUT_UNTYPED": 9,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.25,
+        "anchor_floor_refusals": 3,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 90,
+        "discipline": "PSY",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 4,
+        "known_bad_returned": [],
+        "latency_ms": 7.782,
+        "priority_class": "CORE",
+        "ranked_count": 1,
+        "ranked_seed_ids": [
+          "SEED-PSY-T01-BD2"
+        ],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 1,
+        "wave_label": "G2-PSY-06"
+      },
+      {
+        "CANDIDATE_RECALL": 1.0,
+        "CONTEXT_SIZE": {
+          "characters": 2968,
+          "words": 181
+        },
+        "DISCOVERED_BUT_UNTYPED": 13,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 1.0,
+        "anchor_floor_refusals": 0,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 94,
+        "discipline": "SURG",
+        "fail_closed_reason": null,
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 8.007,
+        "priority_class": "CORE",
+        "ranked_count": 3,
+        "ranked_seed_ids": [
+          "SEED-SURG-T01-PID",
+          "SEED-SURG-T01-TORSION",
+          "SEED-SURG-T01-TOA"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-SURG-T01-PID",
+          "SEED-SURG-T01-TOA",
+          "SEED-SURG-T01-TORSION"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-SURG-01"
+      },
+      {
+        "CANDIDATE_RECALL": 0.8,
+        "CONTEXT_SIZE": {
+          "characters": 3776,
+          "words": 238
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": 1.0,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": 1.0,
+        "SAME_DECISION_PRECISION": 1.0,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": 1.0,
+        "STEM_ANCHOR_SURVIVAL": 0.8,
+        "anchor_floor_refusals": 1,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 81,
+        "discipline": "SURG",
+        "fail_closed_reason": null,
+        "indexed_count": 5,
+        "known_bad_returned": [],
+        "latency_ms": 9.67,
+        "priority_class": "CORE",
+        "ranked_count": 4,
+        "ranked_seed_ids": [
+          "SEED-SURG-T02-MRI",
+          "SEED-SURG-T02-OBSERVE",
+          "SEED-SURG-T02-US",
+          "SEED-SURG-T02-KUB"
+        ],
+        "reaches_three_viable": true,
+        "reference_admitted": [
+          "SEED-SURG-T02-KUB",
+          "SEED-SURG-T02-LAPAROSCOPY",
+          "SEED-SURG-T02-MRI",
+          "SEED-SURG-T02-OBSERVE",
+          "SEED-SURG-T02-US"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-SURG-02"
+      },
+      {
+        "CANDIDATE_RECALL": 0.0,
+        "CONTEXT_SIZE": {
+          "characters": 964,
+          "words": 48
+        },
+        "DISCOVERED_BUT_UNTYPED": 28,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": 0.0,
+        "anchor_floor_refusals": 3,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 109,
+        "discipline": "SURG",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 3,
+        "known_bad_returned": [],
+        "latency_ms": 9.167,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [
+          "SEED-SURG-T03-DRAINAGE",
+          "SEED-SURG-T03-INTERVAL",
+          "SEED-SURG-T03-NONOP"
+        ],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-SURG-03"
+      },
+      {
+        "CANDIDATE_RECALL": null,
+        "CONTEXT_SIZE": {
+          "characters": 872,
+          "words": 44
+        },
+        "DISCOVERED_BUT_UNTYPED": 0,
+        "GRANULARITY_PRECISION": null,
+        "KNOWN_BAD_RETRIEVAL_RATE": 0.0,
+        "SAME_ARCHETYPE_PRECISION": null,
+        "SAME_DECISION_PRECISION": null,
+        "SECOND_KEY_REFUSAL": 0,
+        "SOURCE_TRACEABILITY": null,
+        "STEM_ANCHOR_SURVIVAL": null,
+        "anchor_floor_refusals": 0,
+        "arm": "HYBRID",
+        "candidates_entering_the_index": 81,
+        "discipline": "SURG",
+        "fail_closed_reason": "FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS",
+        "indexed_count": 0,
+        "known_bad_returned": [],
+        "latency_ms": 9.57,
+        "priority_class": "CORE",
+        "ranked_count": 0,
+        "ranked_seed_ids": [],
+        "reaches_three_viable": false,
+        "reference_admitted": [],
+        "same_decision_unjudged": 0,
+        "wave_label": "G2-SURG-04"
+      }
+    ]
+  },
+  "schema_version": "1.0",
+  "scope": "QGEN_CLINICAL_RETRIEVAL_BENCHMARK",
+  "summary_by_arm": {
+    "BM25": {
+      "CANDIDATE_RECALL_mean": 0.0,
+      "CONTEXT_SIZE_median_characters": 961,
+      "CONTEXT_SIZE_median_words": 50,
+      "DISCOVERED_BUT_UNTYPED_total": 341,
+      "GRANULARITY_PRECISION_mean": null,
+      "KNOWN_BAD_RETRIEVAL_RATE_mean": 0.0,
+      "OPPORTUNITIES_WITH_3_VIABLE": 0,
+      "SAME_ARCHETYPE_PRECISION_mean": null,
+      "SAME_DECISION_PRECISION_mean": null,
+      "SECOND_KEY_REFUSAL_total": 0,
+      "SOURCE_TRACEABILITY_mean": null,
+      "STEM_ANCHOR_SURVIVAL_mean": null,
+      "anchor_floor_refusals_total": 0,
+      "known_bad_returned_total": 0,
+      "latency_ms_p50": 9.905,
+      "latency_ms_p95": 43.274,
+      "opportunities": 30
+    },
+    "CURRENT_LIBRARY": {
+      "CANDIDATE_RECALL_mean": 0.4935,
+      "CONTEXT_SIZE_median_characters": 1737,
+      "CONTEXT_SIZE_median_words": 102,
+      "DISCOVERED_BUT_UNTYPED_total": 0,
+      "GRANULARITY_PRECISION_mean": 1.0,
+      "KNOWN_BAD_RETRIEVAL_RATE_mean": 0.0,
+      "OPPORTUNITIES_WITH_3_VIABLE": 10,
+      "SAME_ARCHETYPE_PRECISION_mean": 1.0,
+      "SAME_DECISION_PRECISION_mean": 0.9123,
+      "SECOND_KEY_REFUSAL_total": 8,
+      "SOURCE_TRACEABILITY_mean": 1.0,
+      "STEM_ANCHOR_SURVIVAL_mean": 0.4253,
+      "anchor_floor_refusals_total": 67,
+      "known_bad_returned_total": 0,
+      "latency_ms_p50": 5.502,
+      "latency_ms_p95": 9.469,
+      "opportunities": 30
+    },
+    "GRAPH": {
+      "CANDIDATE_RECALL_mean": 0.4935,
+      "CONTEXT_SIZE_median_characters": 1770,
+      "CONTEXT_SIZE_median_words": 102,
+      "DISCOVERED_BUT_UNTYPED_total": 0,
+      "GRANULARITY_PRECISION_mean": 1.0,
+      "KNOWN_BAD_RETRIEVAL_RATE_mean": 0.0,
+      "OPPORTUNITIES_WITH_3_VIABLE": 10,
+      "SAME_ARCHETYPE_PRECISION_mean": 1.0,
+      "SAME_DECISION_PRECISION_mean": 0.9123,
+      "SECOND_KEY_REFUSAL_total": 8,
+      "SOURCE_TRACEABILITY_mean": 1.0,
+      "STEM_ANCHOR_SURVIVAL_mean": 1.0,
+      "anchor_floor_refusals_total": 0,
+      "known_bad_returned_total": 0,
+      "latency_ms_p50": 5.467,
+      "latency_ms_p95": 7.179,
+      "opportunities": 30
+    },
+    "HYBRID": {
+      "CANDIDATE_RECALL_mean": 0.4935,
+      "CONTEXT_SIZE_median_characters": 1770,
+      "CONTEXT_SIZE_median_words": 102,
+      "DISCOVERED_BUT_UNTYPED_total": 341,
+      "GRANULARITY_PRECISION_mean": 1.0,
+      "KNOWN_BAD_RETRIEVAL_RATE_mean": 0.0,
+      "OPPORTUNITIES_WITH_3_VIABLE": 10,
+      "SAME_ARCHETYPE_PRECISION_mean": 1.0,
+      "SAME_DECISION_PRECISION_mean": 0.9123,
+      "SECOND_KEY_REFUSAL_total": 8,
+      "SOURCE_TRACEABILITY_mean": 1.0,
+      "STEM_ANCHOR_SURVIVAL_mean": 0.4253,
+      "anchor_floor_refusals_total": 67,
+      "known_bad_returned_total": 0,
+      "latency_ms_p50": 8.282,
+      "latency_ms_p95": 12.001,
+      "opportunities": 30
+    }
+  }
+}
