@@ -908,3 +908,74 @@ def test_a_context_feature_may_be_declared_absent():
     row = next(r for r in blueprint["required_features"] if r["stem_feature_id"] == "SF-KEY-C")
     assert row["polarity"] == "ABSENT"
     assert blueprint["fail_closed_reason"] is None
+
+
+# --------------------------------------------------- pilot integration tests
+
+from pathlib import Path  # noqa: E402
+
+from qbank.contrast_first_pilot import (  # noqa: E402
+    build_pilot_contrast_sets,
+    canonical_json,
+    load_curated_candidates,
+    load_stem_feature_vocabulary,
+    run_post_stem_revalidation,
+)
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_the_frozen_vocabulary_loads_and_covers_six_anchor_units():
+    vocabulary = load_stem_feature_vocabulary(ROOT)
+    assert len(vocabulary) == 6
+    assert sum(len(features) for features in vocabulary.values()) == 102
+
+
+def test_the_curated_candidate_pool_projects_every_enriched_and_anchored_seed():
+    pool = load_curated_candidates(ROOT)
+    assert len(pool) == 81
+    for candidate in pool:
+        assert candidate["discovery_sources"] == ["CURATED_LIBRARY"]
+        assert candidate["independent_seed_review"]
+
+
+def test_the_pre_stem_stage_is_deterministic():
+    first = build_pilot_contrast_sets(ROOT)
+    second = build_pilot_contrast_sets(ROOT)
+    assert canonical_json(first) == canonical_json(second)
+
+
+def test_the_pre_stem_stage_reaches_ten_blueprints_over_the_frozen_sample():
+    stage = build_pilot_contrast_sets(ROOT)
+    assert len(stage["results"]) == 18
+    ready = [row for row in stage["results"] if row["stage"] == "READY_FOR_STEM"]
+    valid = [row for row in stage["results"] if row.get("pre_stem_valid_contrast_set")]
+    assert len(valid) == 12
+    assert len(ready) == 10
+    for row in ready:
+        blueprint = row["stem_blueprint"]
+        assert blueprint["key_fully_supported"] is True
+        assert blueprint["every_competitor_live"] is True
+        assert blueprint["no_second_key"] is True
+
+
+def test_every_frozen_stem_realizes_its_blueprint_exactly():
+    stage = build_pilot_contrast_sets(ROOT)
+    post = run_post_stem_revalidation(ROOT, stage)
+    assert len(post["results"]) == 10
+    for row in post["results"]:
+        assert row["stem_realizes_the_blueprint_exactly"] is True, row["opportunity_label"]
+
+
+def test_post_stem_revalidation_runs_the_unchanged_production_gate():
+    stage = build_pilot_contrast_sets(ROOT)
+    post = run_post_stem_revalidation(ROOT, stage)
+    assert post["gate"] == "profile_contrast_retrieval.retrieve_profile_aware_contrasts"
+    for row in post["results"]:
+        # The pilot's headline claim, pinned so a later change cannot quietly
+        # erode it: every competitor the blueprint made live still clears the
+        # anchor floor against the realized stem, and none becomes a second key.
+        assert row["post_stem_3_viable"] is True, row["opportunity_label"]
+        assert row["excluded_by_rule"]["SAF_1"] == []
+        assert row["excluded_by_rule"]["ADM_3"] == []
+        assert row["retrieval"]["admissible_count"] >= CONTRAST_SET_MINIMUM

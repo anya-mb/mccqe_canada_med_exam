@@ -1398,3 +1398,88 @@ def _refusal_counts(refused: Sequence[dict[str, Any]]) -> dict[str, int]:
         for code in verdict["refusals"]:
             counts[code] = counts.get(code, 0) + 1
     return dict(sorted(counts.items()))
+
+
+PILOT_STEMS_PATH = "research/qgen/contrast_first_pilot_stems.json"
+
+
+def run_post_stem_revalidation(root, pre_stem: dict[str, Any]) -> dict[str, Any]:
+    """Stage 11: rerun every competitor against the ACTUAL frozen stem.
+
+    Through ``retrieve_profile_aware_contrasts``, unchanged. Contrast-first buys no
+    exemption here; if a competitor the blueprint made live does not clear the
+    floor against the realized stem, it is lost and the item fails closed.
+    """
+    stems = _read(root, PILOT_STEMS_PATH)["stems"]
+    rows: list[dict[str, Any]] = []
+    for record in pre_stem["results"]:
+        label = record["opportunity_label"]
+        if record["stage"] != "READY_FOR_STEM":
+            continue
+        stem = stems[label]
+        realized = {
+            "features": [
+                {
+                    "feature_id": feature["feature_id"],
+                    "polarity": feature["polarity"],
+                    "clinical_role": feature["clinical_role"],
+                }
+                for feature in stem["stem_feature_map"]
+            ]
+        }
+        result = revalidate_against_frozen_stem(
+            contrast_set=record["contrast_set"],
+            stem_feature_map=realized,
+            ranking_preference=record["ranking_preference"],
+            token_implications=record["token_implications"],
+        )
+        blueprint_features = {
+            row["stem_feature_id"]: row["polarity"]
+            for row in record["stem_blueprint"]["required_features"]
+        }
+        realized_features = {
+            feature["feature_id"]: feature["polarity"] for feature in stem["stem_feature_map"]
+        }
+        rows.append({
+            **result,
+            "difficulty_intent": record["difficulty_intent"],
+            "stem_realizes_the_blueprint_exactly": blueprint_features == realized_features,
+            "stem_word_count": len(stem["stem"].split()),
+            "realized_difficulty_evidence": _realized_difficulty_evidence(
+                record, result
+            ),
+        })
+    return {
+        "schema_version": "1.0",
+        "scope": "QGEN_CONTRAST_FIRST_POST_STEM_REVALIDATION",
+        "gate": "profile_contrast_retrieval.retrieve_profile_aware_contrasts",
+        "gate_unchanged": True,
+        "results": rows,
+    }
+
+
+def _realized_difficulty_evidence(
+    record: dict[str, Any], revalidation: dict[str, Any]
+) -> dict[str, Any]:
+    """Difficulty evidence recomputed from what the production gate actually saw."""
+    ranked = revalidation["retrieval"]["ranked_competitors"]
+    anchors = [row["anchors_present"] for row in ranked]
+    similarity = [
+        row["satisfied_conditions"] / row["total_conditions"]
+        for row in ranked if row["total_conditions"]
+    ]
+    design = record["difficulty_evidence"]
+    return {
+        **design,
+        "live_competitors_after_floor": len(ranked),
+        "competitors_with_at_least_one_anchor_present": sum(
+            1 for value in anchors if value
+        ),
+        "mean_anchors_present_per_competitor": (
+            round(sum(anchors) / len(anchors), 4) if anchors else 0.0
+        ),
+        "mean_competitor_similarity": (
+            round(sum(similarity) / len(similarity), 4) if similarity else 0.0
+        ),
+        "measured_from": "THE_PRODUCTION_GATE_AGAINST_THE_FROZEN_STEM",
+    }
