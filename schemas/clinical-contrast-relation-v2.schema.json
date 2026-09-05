@@ -1,0 +1,203 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mccqe.local/schemas/clinical-contrast-relation-v2.schema.json",
+  "title": "Clinical contrast relation V2",
+  "description": "An evidence-backed relation between two candidate concepts or actions in a named learner-decision context. It records why the two are confusable (shared features) and what actually distinguishes them (typed, evidence-cited discriminators), and it carries each side's correctness as a nested Boolean condition tree over typed feature-state assertions rather than a flat conjunction. A relation is derivative: it never changes frozen scope, allocation, manifests, seed packs or the stem-feature vocabulary, and it is not itself a clinical recommendation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "scope", "relation_set_id", "baseline_commit", "decision_domain",
+    "frozen", "relations"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "scope": {"const": "CLINICAL_CONTRAST_RELATION_V2"},
+    "relation_set_id": {"type": "string", "minLength": 1},
+    "baseline_commit": {"type": "string", "minLength": 7},
+    "derived_from": {"type": "string"},
+    "extraction_policy": {"type": "string"},
+    "decision_domain": {"$ref": "#/definitions/decision_domain"},
+    "frozen": {"type": "boolean"},
+    "frozen_sha256": {"type": "string"},
+    "relations": {"type": "array", "minItems": 1, "items": {"$ref": "#/definitions/relation"}}
+  },
+  "definitions": {
+    "feature_state": {"enum": ["PRESENT", "ABSENT", "UNKNOWN", "NOT_APPLICABLE"]},
+    "required_state": {"enum": ["PRESENT", "ABSENT", "NOT_APPLICABLE"]},
+    "decision_domain": {
+      "enum": ["PATIENT_CLINICAL", "POPULATION_PROGRAMME", "EVIDENCE_INTERPRETATION"],
+      "description": "Which family of facts is the object of the decision. A programme letter is background furniture at the bedside and the case material in a population item, so the same frozen clinical_role types differently in each."
+    },
+    "contrast_role": {
+      "enum": [
+        "BACKGROUND_CONTEXT", "RESOURCE_AVAILABILITY", "PRIOR_PROBABILITY_FEATURE",
+        "SHARED_PRESENTATION_FEATURE", "POSITIVE_SUPPORT", "TIMING_FEATURE",
+        "SEVERITY_FEATURE", "INVESTIGATION_FINDING", "MANAGEMENT_ELIGIBILITY",
+        "NEGATIVE_SUPPORT", "KEY_DISCRIMINATOR", "EXCLUSIONARY_FEATURE", "CONTRAINDICATION"
+      ]
+    },
+    "typed_feature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["feature_id", "contrast_role"],
+      "properties": {
+        "feature_id": {"type": "string", "minLength": 1},
+        "contrast_role": {"$ref": "#/definitions/contrast_role"},
+        "clinical_role": {"type": "string"},
+        "role_override_reason": {"type": "string"},
+        "note": {"type": "string"}
+      }
+    },
+    "predicate": {
+      "description": "A condition tree. A leaf carries feature_id with required_state; a branch carries an operator with a non-empty conditions list; COMPARISON and THRESHOLD carry feature_id, comparison and a numeric value. An empty conditions list is invalid: it has no truth value and must fail closed rather than default.",
+      "type": "object",
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "required": ["feature_id", "required_state"],
+          "properties": {
+            "feature_id": {"type": "string", "minLength": 1},
+            "required_state": {"$ref": "#/definitions/required_state"},
+            "prose_basis": {"type": "string"},
+            "note": {"type": "string"}
+          }
+        },
+        {
+          "additionalProperties": false,
+          "required": ["operator", "conditions"],
+          "properties": {
+            "operator": {"enum": ["ALL_OF", "ANY_OF", "NOT", "AT_LEAST_N"]},
+            "n": {"type": "integer", "minimum": 1},
+            "conditions": {
+              "type": "array", "minItems": 1, "items": {"$ref": "#/definitions/predicate"}
+            },
+            "prose_basis": {"type": "string"},
+            "note": {"type": "string"}
+          }
+        },
+        {
+          "additionalProperties": false,
+          "required": ["operator", "feature_id", "comparison", "value"],
+          "properties": {
+            "operator": {"enum": ["COMPARISON", "THRESHOLD"]},
+            "feature_id": {"type": "string", "minLength": 1},
+            "comparison": {"enum": ["lt", "lte", "gt", "gte", "eq", "ne"]},
+            "value": {"type": "number"},
+            "units": {"type": "string"},
+            "prose_basis": {"type": "string"},
+            "note": {"type": "string"}
+          }
+        }
+      ]
+    },
+    "discriminator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "feature_id", "favours", "required_state", "contrast_role", "salience", "evidence_refs"
+      ],
+      "properties": {
+        "feature_id": {"type": "string", "minLength": 1},
+        "favours": {"enum": ["A", "B"]},
+        "required_state": {"$ref": "#/definitions/required_state"},
+        "contrast_role": {"$ref": "#/definitions/contrast_role"},
+        "salience": {"enum": ["SALIENT", "MODERATE", "SUBTLE"]},
+        "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "statement": {"type": "string"}
+      }
+    },
+    "categorical_exclusion": {
+      "description": "Categorical exclusion is not inferiority and is never inferred from silence. It requires an explicit basis and cited evidence.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["predicate", "basis", "evidence_refs"],
+      "properties": {
+        "predicate": {"$ref": "#/definitions/predicate"},
+        "basis": {
+          "enum": [
+            "EXPLICIT_CONTRAINDICATION", "MUTUALLY_EXCLUSIVE_CLINICAL_STATE",
+            "EXPLICITLY_ABSENT_MANDATORY_FEATURE", "INCOMPATIBLE_TIMING",
+            "OBJECTIVE_TEST_RESULT", "WRONG_STAGE_OF_MANAGEMENT"
+          ]
+        },
+        "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "statement": {"type": "string"}
+      }
+    },
+    "concept": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["concept_id", "concept", "role_in_set"],
+      "properties": {
+        "concept_id": {"type": "string", "minLength": 1},
+        "concept": {"type": "string", "minLength": 1},
+        "role_in_set": {"enum": ["KEY", "COMPETITOR"]},
+        "member_id": {"type": "string"},
+        "seed_id": {"type": "string"},
+        "concept_category": {"type": "string"},
+        "study_unit_id": {"type": "string"}
+      }
+    },
+    "relation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contrast_relation_id", "learner_decision_id", "response_class",
+        "decision_granularity", "concept_a", "concept_b", "shared_features",
+        "a_supporting_features", "b_supporting_features", "discriminators",
+        "correctness_conditions_a", "correctness_conditions_b", "second_key_conditions",
+        "categorical_exclusion_conditions", "nesting_relation", "confusability",
+        "mcc_relevance", "evidence_refs", "verification_status"
+      ],
+      "properties": {
+        "contrast_relation_id": {"type": "string", "pattern": "^CCR2-[0-9a-f]{24}$"},
+        "opportunity_label": {"type": "string"},
+        "anchor_study_unit_id": {"type": "string"},
+        "learner_decision_id": {"type": "string", "minLength": 1},
+        "response_class": {"type": "string", "minLength": 1},
+        "decision_granularity": {"type": "string", "minLength": 1},
+        "concept_a": {"$ref": "#/definitions/concept"},
+        "concept_b": {"$ref": "#/definitions/concept"},
+        "shared_features": {"type": "array", "items": {"$ref": "#/definitions/typed_feature"}},
+        "a_supporting_features": {
+          "type": "array", "items": {"$ref": "#/definitions/typed_feature"}
+        },
+        "b_supporting_features": {
+          "type": "array", "items": {"$ref": "#/definitions/typed_feature"}
+        },
+        "discriminators": {"type": "array", "items": {"$ref": "#/definitions/discriminator"}},
+        "correctness_conditions_a": {"$ref": "#/definitions/predicate"},
+        "correctness_conditions_b": {"$ref": "#/definitions/predicate"},
+        "second_key_conditions": {"type": "array", "items": {"$ref": "#/definitions/predicate"}},
+        "categorical_exclusion_conditions": {
+          "type": "array", "items": {"$ref": "#/definitions/categorical_exclusion"}
+        },
+        "unmapped_disjuncts": {
+          "description": "Disjuncts of the cited prose for which the frozen study-unit vocabulary carries no feature. Recorded so a NOT_SATISFIED verdict over an incomplete disjunction is never read as a defeat.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["prose", "why_unmapped"],
+            "properties": {
+              "prose": {"type": "string"},
+              "why_unmapped": {"type": "string"}
+            }
+          }
+        },
+        "nesting_relation": {
+          "enum": ["NONE", "A_NESTS_IN_B", "B_NESTS_IN_A", "SAME_CONCEPT", "COMPLICATION_OF"]
+        },
+        "nesting_basis": {"type": "string"},
+        "confusability": {"enum": ["HIGH", "MODERATE", "LOW"]},
+        "mcc_relevance": {"type": "string", "minLength": 1},
+        "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "discovery_sources": {"type": "array", "items": {"type": "string"}},
+        "verification_status": {
+          "enum": ["EVIDENCE_VERIFIED", "EVIDENCE_PENDING", "UNVERIFIED"]
+        },
+        "verification_note": {"type": "string"}
+      }
+    }
+  }
+}
