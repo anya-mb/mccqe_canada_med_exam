@@ -21,7 +21,7 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `1f9ef4633009595ba6b04bf303d7ddf5b3fb6c43`.
+- Audited coordinator input commit: `e2904549ee8301f9da580136b0f93e6a190ba1b0`.
 - Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
@@ -619,7 +619,73 @@ This section is maintained by hand and sits outside the generated source-researc
   count distinct `nodes.study_unit_id` among the neighbours. That gives 183 reaching >=1 unit, **72 >=2, 10
   >=3, max 6**. Seeding only the 183 inventory ids gives 60/9/max 3, and depth 2 gives 121/71/max 29;
   neither is the recorded number. Quote the depth and the seed set whenever this figure is repeated.
-- QGEN_NEXT_STEP = `USER_REVIEW_RETRIEVAL_BENCHMARK`
+- **Contrast-first pilot (2026-09-05), design commit `f594838`, spec at
+  `docs/superpowers/specs/2026-09-05-contrast-first-difficulty-aware-item-construction-design.md`.**
+  The retrieval benchmark's decision stands and was not rerun. Because 15 of the 20 residual failures
+  were the anchor floor refusing a competitor an already-frozen stem gave no reason to consider, this
+  wave changed **generation order**, not any gate. Five things move upstream -- contrast discovery, the
+  stem-independent admission predicate P1-P6, the contrast matrix, and a stem blueprint solved as a
+  feature-set constraint problem over the frozen 102-feature study-unit vocabulary. `SAF_1` and `ADM_3`
+  cannot exist before a stem and were **not** moved; they run afterwards through
+  `retrieve_profile_aware_contrasts`, unchanged, which is also benchmark arm A.
+  `PRODUCTION_QUESTION_GENERATOR_CHANGED = NO`, `LLM_API_CALLS = 0`, no frozen artifact moved.
+- **Sample frozen before generation** at `f0556d0`: 18 opportunities, selection rule S1 stated before the
+  draw (per discipline one from each of the DIAGNOSTIC / INVESTIGATIVE / THERAPEUTIC_OR_DISPOSITION
+  families, CORE first, then unused learner decision, then lowest wave label), 16 of 18 CORE, difficulty
+  6/6/6 assigned from the nature of each decision and not from what the library supports. The rule
+  excludes `G2-MED-04`, one of only two archived stem-first accepts, so the comparison is reported against
+  both the 18-subset and the full frozen 30. Metrics were frozen in the same artifact.
+- **Funnel: 18 attempted -> 12 valid pre-stem contrast sets -> 10 blueprints -> 10 stems -> 10 post-stem
+  3-viable -> 2 ACCEPTED, 8 REJECTED, 8 NO_SAFE_ITEM.** Against the archived stem-first arm on the same 18:
+  post-stem 3-viable **7 -> 10** (+3, +42.9 %), anchor-floor failures **9 -> 0** with refusals **34 -> 0**,
+  second-key refusals **3 -> 0**, items realized **3 -> 10**, ACCEPTED **1 -> 2**, NO_SAFE_ITEM **15 -> 8**,
+  REJECTED **2 -> 8**. `G2-PHELO-03` is a CORE decision the archived arm could not make safe and this one did.
+- **`CONTRAST_FIRST_ASSESSMENT = PROMISING_NEEDS_LARGER_PILOT`.** All three limbs of the pre-registered rule
+  hold: accepted-item safety perfect (both accepted items score 0 on all nine dimensions), post-stem survival
+  materially improved, safe yield improved and a previously impossible CORE decision became safe. It is not
+  VALIDATED, and the counter-evidence is recorded rather than explained away: **8 of 10 realized items were
+  rejected** and the three independent reviewers recorded **45 defects** across the ten --
+  UNSUPPORTED_CLAIMS 12, UNNATURAL_STEM_ENGINEERING 7, SECOND_KEY_RISK 6, FACTUAL_ERRORS 6, AMBIGUOUS 5,
+  CRITICAL_FACT_SAFETY 4, REDUNDANCY 2, COMPETITOR_WITHOUT_STEM_ANCHOR 2, NUMERIC 1. Two accepted items
+  cannot separate an architecture that works from one that happened to work twice.
+- **The finding that matters most.** `COMPETITOR_WITHOUT_STEM_ANCHOR` was **0 by the production gate and 2 by
+  an independent reviewer on the same item** (`G2-SURG-02`). The frozen anchor layer counts a generic scenario
+  fact -- imaging is available, suspicion is intermediate -- as a plausibility anchor. Stem-first rarely
+  exposed this because such anchors were rarely present by chance; contrast-first states them deliberately, so
+  a weak anchor becomes visible stem furniture. The architecture did not create the defect, it made **anchor
+  quality** the binding constraint. `G2-SURG-02` also scored UNNATURAL_STEM_ENGINEERING 4 and is the
+  assembled-checklist failure the design's own section 16 predicted.
+- **One real defect found by running the stage, not by reading it.** CO-3 refused four opportunities for
+  "defeating a competitor only by explicit verbal denial" when the stem defeated it with a *positive* finding.
+  An explicit denial is now only a PRESENT-required condition the blueprint assigns ABSENT; two regression
+  tests pin both directions. A second fix threads the profile's declared `token_implications` through P2, as
+  production ADM_1 does.
+- `NEXT_DOMINANT_BOTTLENECK = OPTION_REALIZATION`, meaning the option-and-rationale layer. All three reviewers
+  independently identified one template clause: every competitor rationale ends "That condition is not met
+  here", which is false whenever the stem is merely *silent* about the condition. It accounts for almost all
+  of UNSUPPORTED_CLAIMS 12 and touches 7 of the 10 realized items. Runner-up is anchor quality, above. Neither
+  is fixed here.
+- **Recurring structural property of the frozen library, worth knowing before the next wave:** several curated
+  competitors carry a single plausibility anchor that is also their single correctness condition, so they can
+  be live only by being a second key and are unusable in any contrast set. This is the most common reason a
+  contrast set fell below three (`G2-OBGYN-02`, `G2-OBGYN-03`, `G2-SURG-03`, `G2-PSY-01`).
+- Difficulty: attempted 6/6/6, accepted EASY 0, MEDIUM 1, HARD 1. Intent match EASY 0/0, MEDIUM 1/1, HARD 0/1
+  -- the accepted HARD item was judged EASY by both the deterministic checks and the reviewer, because its
+  capacity shortfall was stated so completely that little inference was left. `question_difficulty.py` was
+  reused unmodified.
+- Graph: `GRAPH_USED_UPSTREAM = YES`, seeded at the target node the key answers over inverted `ANSWERS` then
+  `CONFUSED_WITH`, because arm C's stem-seeded traversal is unusable when there is no stem.
+  `GRAPH_UNIQUE_USEFUL_CONTRIBUTIONS = 0`: it reached 5 typed concepts beyond the admissible pool and all five
+  were already curated seeds refused by P2, plus 6 Toronto Notes topic nodes that may never justify a claim.
+  Consistent with the benchmark; recorded rather than engineered away.
+- Context, characters only because no local tokenizer is installed: total per opportunity median 14,895 / p95
+  17,157. The stem author's own context is median **510** / p95 707, because it carries feature ids, their
+  frozen normalized text and the prohibitions, and no option string.
+- `COPYRIGHT_AUDIT = PASS`, longest verbatim Toronto Notes run **0** across all 10 tracked pilot artifacts.
+  Focused tests **72**; full canonical suite **1224/0** at the final code state. Reports rebuild with
+  `qbank run-contrast-first-pilot` and a test asserts they regenerate byte-identically from committed
+  artifacts. Docs at `docs/contrast-first-generation.md`.
+- QGEN_NEXT_STEP = `USER_REVIEW_CONTRAST_FIRST_PILOT`
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 
 ## Research-level policy

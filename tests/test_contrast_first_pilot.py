@@ -979,3 +979,34 @@ def test_post_stem_revalidation_runs_the_unchanged_production_gate():
         assert row["excluded_by_rule"]["SAF_1"] == []
         assert row["excluded_by_rule"]["ADM_3"] == []
         assert row["retrieval"]["admissible_count"] >= CONTRAST_SET_MINIMUM
+
+
+def test_the_reports_regenerate_byte_identically_from_committed_artifacts():
+    import json
+
+    from qbank.contrast_first_pilot import build_pilot_reports
+
+    reports = build_pilot_reports(ROOT)
+    for key, relative in (
+        ("execution", "reports/qgen_contrast_first_pilot_execution.json"),
+        ("review", "reports/qgen_contrast_first_independent_review.json"),
+        ("comparison", "reports/qgen_contrast_first_vs_stem_first_comparison.json"),
+    ):
+        committed = json.loads((ROOT / relative).read_text())
+        assert canonical_json(reports[key]) == canonical_json(committed), relative
+
+
+def test_the_comparison_reads_an_archived_baseline_and_never_regenerates_it():
+    from qbank.contrast_first_pilot import build_pilot_reports
+
+    comparison = build_pilot_reports(ROOT)["comparison"]
+    assert "archived" in comparison["population"]
+    assert comparison["deltas"]["POST_STEM_3_VIABLE"]["stem_first"] == 7
+    assert comparison["deltas"]["STEM_ANCHOR_FLOOR_FAILURES"]["contrast_first"] == 0
+
+
+def test_a_copyright_pass_cannot_be_claimed_without_the_index(tmp_path):
+    from qbank.contrast_first_pilot import ContrastFirstError, measure_copyright
+
+    with pytest.raises(ContrastFirstError, match="index is unavailable"):
+        measure_copyright(tmp_path, ["README.md"])

@@ -930,6 +930,26 @@ def _command_build_clinical_graph(arguments: argparse.Namespace) -> None:
     print(json.dumps({"command": "build-clinical-graph", **counts}, indent=2, sort_keys=True))
 
 
+def _command_run_contrast_first_pilot(arguments: argparse.Namespace) -> None:
+    """Rebuild the contrast-first pilot reports from committed artifacts."""
+    from .contrast_first_pilot import build_pilot_reports
+
+    root = canonical_root(getattr(arguments, "root", Path.cwd()))
+    reports = build_pilot_reports(root)
+    for key, relative in (
+        ("execution", "reports/qgen_contrast_first_pilot_execution.json"),
+        ("review", "reports/qgen_contrast_first_independent_review.json"),
+        ("comparison", "reports/qgen_contrast_first_vs_stem_first_comparison.json"),
+    ):
+        write_json_atomic(resolve_root_path(root, relative), reports[key])
+    print(json.dumps({
+        "CONTRAST_FIRST_ASSESSMENT":
+            reports["execution"]["decision"]["CONTRAST_FIRST_ASSESSMENT"],
+        "metrics": reports["execution"]["metrics"]["CONTRAST_FIRST"],
+        "COPYRIGHT_AUDIT": reports["execution"]["copyright"]["COPYRIGHT_AUDIT"],
+    }, indent=2, sort_keys=True))
+
+
 def _command_run_retrieval_benchmark(arguments: argparse.Namespace) -> None:
     """Run the frozen-G2 four-arm retrieval benchmark."""
     from .retrieval_benchmark import run_benchmark
@@ -1045,6 +1065,7 @@ def _parser() -> argparse.ArgumentParser:
         ("build-normalization-inventory", "measure global concept normalization over local source terms", _command_build_normalization_inventory),
         ("build-clinical-graph", "project the typed clinical contrast graph into the local index", _command_build_clinical_graph),
         ("run-retrieval-benchmark", "run the frozen-G2 four-arm retrieval benchmark", _command_run_retrieval_benchmark),
+        ("run-contrast-first-pilot", "rebuild the contrast-first pilot reports", _command_run_contrast_first_pilot),
     )
     parsers = {}
     for name, help_text, handler in commands:

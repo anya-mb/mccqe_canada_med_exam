@@ -1,0 +1,596 @@
+{
+  "accepted_item_safety": {
+    "AMBIGUOUS_BEST_ANSWERS": 0,
+    "COMPETITOR_WITHOUT_STEM_ANCHOR": 0,
+    "CRITICAL_FACT_SAFETY_FAILURES": 0,
+    "FACTUAL_ERRORS": 0,
+    "MATERIAL_REDUNDANCY": 0,
+    "NUMERIC_ERRORS": 0,
+    "SECOND_KEY_RISK": 0,
+    "UNNATURAL_STEM_ENGINEERING": 0,
+    "UNSUPPORTED_CLAIMS": 0
+  },
+  "context_characters": {
+    "TOTAL_PER_OPPORTUNITY": {
+      "max": 17157,
+      "median": 14895,
+      "min": 13010,
+      "p95": 17157
+    },
+    "contrast_matrix": {
+      "max": 7107,
+      "median": 5708,
+      "min": 5109,
+      "p95": 7107
+    },
+    "generation_context": {
+      "max": 707,
+      "median": 510,
+      "min": 351,
+      "p95": 707
+    },
+    "opportunity_metadata": {
+      "max": 1092,
+      "median": 990,
+      "min": 911,
+      "p95": 1092
+    },
+    "retrieved_evidence": {
+      "max": 2085,
+      "median": 1375,
+      "min": 976,
+      "p95": 2085
+    },
+    "stem_blueprint": {
+      "max": 3274,
+      "median": 2590,
+      "min": 2156,
+      "p95": 3274
+    },
+    "verification_context": {
+      "max": 4206,
+      "median": 3623,
+      "min": 2986,
+      "p95": 4206
+    }
+  },
+  "context_note": "No local tokenizer is installed -- tiktoken, transformers, sentencepiece and tokenizers are all absent -- and characters are not equated with tokens.",
+  "copyright": {
+    "COPYRIGHT_AUDIT": "PASS",
+    "artifacts_scanned": 10,
+    "longest_verbatim_toronto_notes_run_words": 0,
+    "method": "Every artifact is scanned for the longest run of consecutive tokens also occurring in the locally indexed Toronto Notes corpus, seeded on 12-word matches. The fingerprint set is built in memory and never written.",
+    "per_artifact": [
+      {
+        "artifact": "docs/superpowers/specs/2026-09-05-contrast-first-difficulty-aware-item-construction-design.md",
+        "longest_verbatim_run_words": 0
+      },
+      {
+        "artifact": "docs/contrast-first-generation.md",
+        "longest_verbatim_run_words": 0
+      },
+      {
+        "artifact": "scripts/qbank/contrast_first_pilot.py",
+        "longest_verbatim_run_words": 0
+      },
+      {
+        "artifact": "tests/test_contrast_first_pilot.py",
+        "longest_verbatim_run_words": 0
+      },
+      {
+        "artifact": "research/qgen/contrast_first_pilot_opportunities.json",
+        "longest_verbatim_run_words": 0
+      },
+      {
+        "artifact": "research/qgen/contrast_first_pilot_authoring.json",
+        "longest_verbatim_run_words": 0
+      },
+      {
+        "artifact": "research/qgen/contrast_first_pilot_stems.json",
+        "longest_verbatim_run_words": 0
+      },
+      {
+        "artifact": "research/qgen/contrast_first_pilot_blind_solver.json",
+        "longest_verbatim_run_words": 0
+      },
+      {
+        "artifact": "research/qgen/contrast_first_pilot_items.json",
+        "longest_verbatim_run_words": 0
+      },
+      {
+        "artifact": "research/qgen/contrast_first_pilot_reviews.json",
+        "longest_verbatim_run_words": 0
+      }
+    ]
+  },
+  "decision": {
+    "CONTRAST_FIRST_ASSESSMENT": "PROMISING_NEEDS_LARGER_PILOT",
+    "basis": "All three limbs of the rule frozen before results hold. Accepted-item safety is perfect: both accepted items score zero on all nine dimensions. Post-stem viable survival rose from 7 of 18 to 10 of 18, with anchor-floor refusals falling from 34 to 0 and second-key refusals from 3 to 0. Safe yield rose from 1 to 2, and G2-PHELO-03 is a CORE decision the archived stem-first arm could not make safe and this one did.",
+    "the_finding_that_matters_most": "COMPETITOR_WITHOUT_STEM_ANCHOR was 0 by the production gate and 2 by an independent reviewer on the same item. The frozen anchor layer counts a generic scenario fact -- imaging is available, suspicion is intermediate -- as a plausibility anchor. Stem-first rarely exposed this because such anchors were rarely present by chance. Contrast-first states them deliberately, so a weak anchor becomes visible stem furniture. The architecture did not create the defect; it made the anchor layer's quality the binding constraint.",
+    "what_it_demonstrably_did_not_do": "It did not produce safe items at a rate the accepted-item standard can rely on, and on G2-SURG-02 it produced the assembled-checklist stem the design warned about, scoring 4 for unnatural engineering and 2 for competitors with no genuine stem anchor even though the deterministic anchor floor passed them.",
+    "what_the_architecture_demonstrably_did": "It removed the bottleneck it targeted. Every competitor the blueprint made live cleared the production anchor floor against the realized stem and none became a second key, measured through the unchanged production gate.",
+    "why_this_is_not_VALIDATED": "Eight of the ten realized items were rejected, an 80 per cent rejection rate, and the independent reviewers recorded 45 defects across those ten items. UNNATURAL_STEM_ENGINEERING was found seven times, which is the failure mode section 16 of the design named as the likeliest way this architecture would fail. Two accepted items cannot distinguish an architecture that works from one that happened to work twice."
+  },
+  "design": "docs/superpowers/specs/2026-09-05-contrast-first-difficulty-aware-item-construction-design.md",
+  "difficulty": {
+    "EASY": {
+      "accepted": 0,
+      "attempted": 6,
+      "intent_match": "0/0",
+      "reviewer_structural_difficulty": {}
+    },
+    "HARD": {
+      "accepted": 1,
+      "attempted": 6,
+      "intent_match": "0/1",
+      "reviewer_structural_difficulty": {
+        "G2-PHELO-03": "EASY"
+      }
+    },
+    "MEDIUM": {
+      "accepted": 1,
+      "attempted": 6,
+      "intent_match": "1/1",
+      "reviewer_structural_difficulty": {
+        "G2-PHELO-02": "MEDIUM"
+      }
+    }
+  },
+  "llm_api_calls": 0,
+  "metrics": {
+    "CONTRAST_FIRST": {
+      "ACCEPTED": 2,
+      "ARCHETYPE_FAILURES": 1,
+      "EVIDENCE_FAILURES": 0,
+      "ITEMS_REALIZED": 10,
+      "LEARNER_DECISION_FAILURES": 0,
+      "NO_SAFE_ITEM": 8,
+      "OPPORTUNITIES_ATTEMPTED": 18,
+      "OPTION_REALIZATION_FAILURES": 2,
+      "POST_STEM_3_VIABLE": 10,
+      "PRE_STEM_VALID_CONTRAST_SET": 12,
+      "REJECTED": 8,
+      "SECOND_KEY_FAILURES": 0,
+      "STEM_ANCHOR_FLOOR_FAILURES": 0
+    },
+    "STEM_FIRST_18_SUBSET_ARCHIVED": {
+      "ACCEPTED": 1,
+      "ARCHETYPE_FAILURES": 1,
+      "EVIDENCE_FAILURES": 0,
+      "ITEMS_REALIZED": 3,
+      "LEARNER_DECISION_FAILURES": null,
+      "NO_SAFE_ITEM": 15,
+      "OPPORTUNITIES_ATTEMPTED": 18,
+      "OPTION_REALIZATION_FAILURES": null,
+      "POST_STEM_3_VIABLE": 7,
+      "PRE_STEM_VALID_CONTRAST_SET": null,
+      "REJECTED": 2,
+      "SECOND_KEY_FAILURES": 3,
+      "STEM_ANCHOR_FLOOR_FAILURES": 9,
+      "anchor_floor_refusals_total": 34
+    },
+    "STEM_FIRST_FULL_30_ARCHIVED": {
+      "ACCEPTED": 2,
+      "NO_SAFE_ITEM": 26,
+      "OPPORTUNITIES_ATTEMPTED": 30,
+      "POST_STEM_3_VIABLE": 10,
+      "REJECTED": 2,
+      "anchor_floor_refusals_total": 67
+    }
+  },
+  "next_dominant_bottleneck": {
+    "NEXT_DOMINANT_BOTTLENECK": "OPTION_REALIZATION",
+    "meaning": "The option-and-rationale realization layer. Seven of the ten realized items carry a rationale defect from one fixed template clause, and all three reviewers identified it independently: every competitor rationale ends 'That condition is not met here', which is a false assertion whenever the stem is merely silent about the condition rather than stating it to be false. UNSUPPORTED_CLAIMS at 12 is the largest single defect count in the pilot and is almost entirely this.",
+    "not_fixed_here": true,
+    "runner_up": "Anchor quality in the frozen plausibility layer, per the finding above. Named here and deliberately not fixed in this task."
+  },
+  "one_attempt_only": true,
+  "opportunity_outcomes": {
+    "G2-MED-01": {
+      "fail_closed_reason": "FAIL_CLOSED_BLUEPRINT_UNSATISFIABLE",
+      "stage_reached": "BLUEPRINT",
+      "terminal_state": "NO_SAFE_ITEM"
+    },
+    "G2-MED-02": {
+      "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+      "stage_reached": "PRE_STEM",
+      "terminal_state": "NO_SAFE_ITEM"
+    },
+    "G2-MED-03": {
+      "blind_solver_confidence": "HIGH",
+      "blind_solver_declared_ambiguity": false,
+      "blind_solver_key_supported": true,
+      "deterministic_structural_difficulty": {
+        "DIFFICULTY_INTENT": "HARD",
+        "MATCH": "UNCERTAIN",
+        "STRUCTURAL_DIFFICULTY_REVIEW": "UNCERTAIN",
+        "difficulty_is_authored_not_measured": true,
+        "failed_checks": [
+          "mean_anchors_present_per_competitor"
+        ],
+        "levels_whose_checks_are_satisfied": [],
+        "option_set_was_not_degraded": true
+      },
+      "fail_closed_reason": null,
+      "option_realization_admissible": true,
+      "option_realization_violations": [],
+      "post_stem_3_viable": true,
+      "reject_reason": "Furosemide and sublingual nitroglycerin are eliminated by one and the same preload proposition, so one option slot does no independent work. The paired troponin values have no role in the decision the lead-in asks for in an activated primary-PCI pathway and read as inserted item furniture; they also imply an awkward total ischaemic time.",
+      "reviewer_structural_difficulty": "MEDIUM",
+      "safety_counts": {
+        "AMBIGUOUS_BEST_ANSWERS": 0,
+        "COMPETITOR_WITHOUT_STEM_ANCHOR": 0,
+        "CRITICAL_FACT_SAFETY_FAILURES": 0,
+        "FACTUAL_ERRORS": 0,
+        "MATERIAL_REDUNDANCY": 1,
+        "NUMERIC_ERRORS": 0,
+        "SECOND_KEY_RISK": 0,
+        "UNNATURAL_STEM_ENGINEERING": 1,
+        "UNSUPPORTED_CLAIMS": 0
+      },
+      "stage_reached": "INDEPENDENT_REVIEW",
+      "terminal_state": "REJECTED"
+    },
+    "G2-OBGYN-01": {
+      "blind_solver_confidence": "HIGH",
+      "blind_solver_declared_ambiguity": false,
+      "blind_solver_key_supported": true,
+      "deterministic_structural_difficulty": {
+        "DIFFICULTY_INTENT": "EASY",
+        "MATCH": "YES",
+        "STRUCTURAL_DIFFICULTY_REVIEW": "EASY",
+        "difficulty_is_authored_not_measured": true,
+        "failed_checks": [],
+        "levels_whose_checks_are_satisfied": [
+          "EASY"
+        ],
+        "option_set_was_not_degraded": true
+      },
+      "fail_closed_reason": null,
+      "option_realization_admissible": true,
+      "option_realization_violations": [],
+      "post_stem_3_viable": true,
+      "reject_reason": "Two unsupported rationale claims. The packet says an abscess often presents with a palpable collection, which does not license the categorical inverse that no fluctuance excludes a drainable collection, and that sentence would teach a candidate to under-use ultrasound in a lactating woman with a mass. The packet also attaches the stated presentation to inflammatory mastitis and never supplies a criterion for calling it bacterial.",
+      "reviewer_structural_difficulty": "EASY",
+      "safety_counts": {
+        "AMBIGUOUS_BEST_ANSWERS": 0,
+        "COMPETITOR_WITHOUT_STEM_ANCHOR": 0,
+        "CRITICAL_FACT_SAFETY_FAILURES": 1,
+        "FACTUAL_ERRORS": 0,
+        "MATERIAL_REDUNDANCY": 0,
+        "NUMERIC_ERRORS": 0,
+        "SECOND_KEY_RISK": 0,
+        "UNNATURAL_STEM_ENGINEERING": 0,
+        "UNSUPPORTED_CLAIMS": 2
+      },
+      "stage_reached": "INDEPENDENT_REVIEW",
+      "terminal_state": "REJECTED"
+    },
+    "G2-OBGYN-02": {
+      "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+      "stage_reached": "CONTRAST_SET",
+      "terminal_state": "NO_SAFE_ITEM"
+    },
+    "G2-OBGYN-03": {
+      "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+      "stage_reached": "CONTRAST_SET",
+      "terminal_state": "NO_SAFE_ITEM"
+    },
+    "G2-PED-01": {
+      "blind_solver_confidence": "HIGH",
+      "blind_solver_declared_ambiguity": false,
+      "blind_solver_key_supported": true,
+      "deterministic_structural_difficulty": {
+        "DIFFICULTY_INTENT": "MEDIUM",
+        "MATCH": "YES",
+        "STRUCTURAL_DIFFICULTY_REVIEW": "MEDIUM",
+        "difficulty_is_authored_not_measured": true,
+        "failed_checks": [],
+        "levels_whose_checks_are_satisfied": [
+          "MEDIUM"
+        ],
+        "option_set_was_not_degraded": true
+      },
+      "fail_closed_reason": null,
+      "option_realization_admissible": true,
+      "option_realization_violations": [],
+      "post_stem_3_viable": true,
+      "reject_reason": "The asymmetric reduced air entry was inserted to keep pneumonia and foreign body live and is then dismissed in the key rationale by a claim no cited packet supports; that same claim contradicts the item's own foreign-body rationale, leaves pneumonia as a defensible second key, and would teach a candidate to under-weight the cardinal sign of foreign body aspiration in an infant.",
+      "reviewer_structural_difficulty": "EASY_TO_MEDIUM",
+      "safety_counts": {
+        "AMBIGUOUS_BEST_ANSWERS": 0,
+        "COMPETITOR_WITHOUT_STEM_ANCHOR": 0,
+        "CRITICAL_FACT_SAFETY_FAILURES": 1,
+        "FACTUAL_ERRORS": 0,
+        "MATERIAL_REDUNDANCY": 0,
+        "NUMERIC_ERRORS": 0,
+        "SECOND_KEY_RISK": 1,
+        "UNNATURAL_STEM_ENGINEERING": 1,
+        "UNSUPPORTED_CLAIMS": 2
+      },
+      "stage_reached": "INDEPENDENT_REVIEW",
+      "terminal_state": "REJECTED"
+    },
+    "G2-PED-02": {
+      "blind_solver_confidence": "MODERATE",
+      "blind_solver_declared_ambiguity": true,
+      "blind_solver_key_supported": true,
+      "deterministic_structural_difficulty": {
+        "DIFFICULTY_INTENT": "EASY",
+        "MATCH": "YES",
+        "STRUCTURAL_DIFFICULTY_REVIEW": "EASY",
+        "difficulty_is_authored_not_measured": true,
+        "failed_checks": [],
+        "levels_whose_checks_are_satisfied": [
+          "EASY"
+        ],
+        "option_set_was_not_degraded": true
+      },
+      "fail_closed_reason": null,
+      "option_realization_admissible": true,
+      "option_realization_violations": [],
+      "post_stem_3_viable": true,
+      "reject_reason": "The keyed answer is arguably wrong. The stem's own facts satisfy the guideline conditions the rationales say are unmet: the cohorting sentence is the cited indication for viral testing, and failure to improve is the cited indication for a radiograph, while the infant meets none of the quoted preconditions for intermittent monitoring. Not repairable by editing rationales.",
+      "reviewer_structural_difficulty": "HARD_FOR_THE_WRONG_REASON",
+      "safety_counts": {
+        "AMBIGUOUS_BEST_ANSWERS": 2,
+        "COMPETITOR_WITHOUT_STEM_ANCHOR": 0,
+        "CRITICAL_FACT_SAFETY_FAILURES": 2,
+        "FACTUAL_ERRORS": 3,
+        "MATERIAL_REDUNDANCY": 0,
+        "NUMERIC_ERRORS": 0,
+        "SECOND_KEY_RISK": 2,
+        "UNNATURAL_STEM_ENGINEERING": 1,
+        "UNSUPPORTED_CLAIMS": 1
+      },
+      "stage_reached": "INDEPENDENT_REVIEW",
+      "terminal_state": "REJECTED"
+    },
+    "G2-PED-03": {
+      "fail_closed_reason": "FAIL_CLOSED_BLUEPRINT_UNSATISFIABLE",
+      "stage_reached": "BLUEPRINT",
+      "terminal_state": "NO_SAFE_ITEM"
+    },
+    "G2-PHELO-01": {
+      "blind_solver_confidence": "HIGH",
+      "blind_solver_declared_ambiguity": false,
+      "blind_solver_key_supported": true,
+      "deterministic_structural_difficulty": {
+        "DIFFICULTY_INTENT": "EASY",
+        "MATCH": "YES",
+        "STRUCTURAL_DIFFICULTY_REVIEW": "EASY",
+        "difficulty_is_authored_not_measured": true,
+        "failed_checks": [],
+        "levels_whose_checks_are_satisfied": [
+          "EASY"
+        ],
+        "option_set_was_not_degraded": true
+      },
+      "fail_closed_reason": null,
+      "option_realization_admissible": false,
+      "option_realization_violations": [
+        "OPTION_SPECIFICITY_MISMATCH"
+      ],
+      "post_stem_3_viable": true,
+      "reject_reason": "Length-time bias is a defensible second key. Randomisation excludes healthy-screenee bias but not length bias or overdiagnosis, and the stem supplies no case-mix or case-count data to separate them from lead time, so the rationales exclude two options by asserting facts the stem never states.",
+      "reviewer_structural_difficulty": "MEDIUM",
+      "safety_counts": {
+        "AMBIGUOUS_BEST_ANSWERS": 1,
+        "COMPETITOR_WITHOUT_STEM_ANCHOR": 0,
+        "CRITICAL_FACT_SAFETY_FAILURES": 0,
+        "FACTUAL_ERRORS": 1,
+        "MATERIAL_REDUNDANCY": 0,
+        "NUMERIC_ERRORS": 0,
+        "SECOND_KEY_RISK": 1,
+        "UNNATURAL_STEM_ENGINEERING": 0,
+        "UNSUPPORTED_CLAIMS": 2
+      },
+      "stage_reached": "INDEPENDENT_REVIEW",
+      "terminal_state": "REJECTED"
+    },
+    "G2-PHELO-02": {
+      "blind_solver_confidence": "HIGH",
+      "blind_solver_declared_ambiguity": false,
+      "blind_solver_key_supported": true,
+      "deterministic_structural_difficulty": {
+        "DIFFICULTY_INTENT": "MEDIUM",
+        "MATCH": "YES",
+        "STRUCTURAL_DIFFICULTY_REVIEW": "MEDIUM",
+        "difficulty_is_authored_not_measured": true,
+        "failed_checks": [],
+        "levels_whose_checks_are_satisfied": [
+          "MEDIUM"
+        ],
+        "option_set_was_not_degraded": true
+      },
+      "fail_closed_reason": null,
+      "option_realization_admissible": true,
+      "option_realization_violations": [],
+      "post_stem_3_viable": true,
+      "reject_reason": null,
+      "reviewer_structural_difficulty": "MEDIUM",
+      "safety_counts": {
+        "AMBIGUOUS_BEST_ANSWERS": 0,
+        "COMPETITOR_WITHOUT_STEM_ANCHOR": 0,
+        "CRITICAL_FACT_SAFETY_FAILURES": 0,
+        "FACTUAL_ERRORS": 0,
+        "MATERIAL_REDUNDANCY": 0,
+        "NUMERIC_ERRORS": 0,
+        "SECOND_KEY_RISK": 0,
+        "UNNATURAL_STEM_ENGINEERING": 0,
+        "UNSUPPORTED_CLAIMS": 0
+      },
+      "stage_reached": "INDEPENDENT_REVIEW",
+      "terminal_state": "ACCEPTED"
+    },
+    "G2-PHELO-03": {
+      "blind_solver_confidence": "HIGH",
+      "blind_solver_declared_ambiguity": false,
+      "blind_solver_key_supported": true,
+      "deterministic_structural_difficulty": {
+        "DIFFICULTY_INTENT": "HARD",
+        "MATCH": "NO",
+        "STRUCTURAL_DIFFICULTY_REVIEW": "MEDIUM",
+        "difficulty_is_authored_not_measured": true,
+        "failed_checks": [
+          "load_bearing_stem_feature_count",
+          "mean_anchors_present_per_competitor"
+        ],
+        "levels_whose_checks_are_satisfied": [
+          "MEDIUM"
+        ],
+        "option_set_was_not_degraded": true
+      },
+      "fail_closed_reason": null,
+      "option_realization_admissible": true,
+      "option_realization_violations": [],
+      "post_stem_3_viable": true,
+      "reject_reason": null,
+      "reviewer_structural_difficulty": "EASY",
+      "safety_counts": {
+        "AMBIGUOUS_BEST_ANSWERS": 0,
+        "COMPETITOR_WITHOUT_STEM_ANCHOR": 0,
+        "CRITICAL_FACT_SAFETY_FAILURES": 0,
+        "FACTUAL_ERRORS": 0,
+        "MATERIAL_REDUNDANCY": 0,
+        "NUMERIC_ERRORS": 0,
+        "SECOND_KEY_RISK": 0,
+        "UNNATURAL_STEM_ENGINEERING": 0,
+        "UNSUPPORTED_CLAIMS": 0
+      },
+      "stage_reached": "INDEPENDENT_REVIEW",
+      "terminal_state": "ACCEPTED"
+    },
+    "G2-PSY-01": {
+      "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+      "stage_reached": "CONTRAST_SET",
+      "terminal_state": "NO_SAFE_ITEM"
+    },
+    "G2-PSY-02": {
+      "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+      "stage_reached": "PRE_STEM",
+      "terminal_state": "NO_SAFE_ITEM"
+    },
+    "G2-PSY-03": {
+      "blind_solver_confidence": "MODERATE",
+      "blind_solver_declared_ambiguity": true,
+      "blind_solver_key_supported": true,
+      "deterministic_structural_difficulty": {
+        "DIFFICULTY_INTENT": "EASY",
+        "MATCH": "YES",
+        "STRUCTURAL_DIFFICULTY_REVIEW": "EASY",
+        "difficulty_is_authored_not_measured": true,
+        "failed_checks": [],
+        "levels_whose_checks_are_satisfied": [
+          "EASY"
+        ],
+        "option_set_was_not_degraded": true
+      },
+      "fail_closed_reason": null,
+      "option_realization_admissible": true,
+      "option_realization_violations": [],
+      "post_stem_3_viable": true,
+      "reject_reason": "Digitally delivered CBT is a second defensible key. The access barrier the blueprint inserted to defeat in-person psychotherapy is precisely the condition under which digital CBT is indicated, so it strengthens that competitor rather than weakening it, and the stem reports no patient preference, which is the only stated ground for preferring medication.",
+      "reviewer_structural_difficulty": "HARD",
+      "safety_counts": {
+        "AMBIGUOUS_BEST_ANSWERS": 1,
+        "COMPETITOR_WITHOUT_STEM_ANCHOR": 0,
+        "CRITICAL_FACT_SAFETY_FAILURES": 0,
+        "FACTUAL_ERRORS": 1,
+        "MATERIAL_REDUNDANCY": 0,
+        "NUMERIC_ERRORS": 0,
+        "SECOND_KEY_RISK": 1,
+        "UNNATURAL_STEM_ENGINEERING": 0,
+        "UNSUPPORTED_CLAIMS": 2
+      },
+      "stage_reached": "INDEPENDENT_REVIEW",
+      "terminal_state": "REJECTED"
+    },
+    "G2-SURG-01": {
+      "blind_solver_confidence": "HIGH",
+      "blind_solver_declared_ambiguity": false,
+      "blind_solver_key_supported": true,
+      "deterministic_structural_difficulty": {
+        "DIFFICULTY_INTENT": "EASY",
+        "MATCH": "YES",
+        "STRUCTURAL_DIFFICULTY_REVIEW": "EASY",
+        "difficulty_is_authored_not_measured": true,
+        "failed_checks": [],
+        "levels_whose_checks_are_satisfied": [
+          "EASY"
+        ],
+        "option_set_was_not_degraded": true
+      },
+      "fail_closed_reason": null,
+      "option_realization_admissible": true,
+      "option_realization_violations": [],
+      "post_stem_3_viable": true,
+      "reject_reason": "Pelvic inflammatory disease and tubo-ovarian abscess test the same discrimination, the latter being a complication of the former, and both rationales defeat their option using pelvic examination findings the stem never reports. A lone-category cue is also present: the key is the only non-gynaecologic option.",
+      "reviewer_structural_difficulty": "EASY_TO_MEDIUM",
+      "safety_counts": {
+        "AMBIGUOUS_BEST_ANSWERS": 0,
+        "COMPETITOR_WITHOUT_STEM_ANCHOR": 0,
+        "CRITICAL_FACT_SAFETY_FAILURES": 0,
+        "FACTUAL_ERRORS": 0,
+        "MATERIAL_REDUNDANCY": 1,
+        "NUMERIC_ERRORS": 0,
+        "SECOND_KEY_RISK": 0,
+        "UNNATURAL_STEM_ENGINEERING": 0,
+        "UNSUPPORTED_CLAIMS": 1
+      },
+      "stage_reached": "INDEPENDENT_REVIEW",
+      "terminal_state": "REJECTED"
+    },
+    "G2-SURG-02": {
+      "blind_solver_confidence": "HIGH",
+      "blind_solver_declared_ambiguity": false,
+      "blind_solver_key_supported": true,
+      "deterministic_structural_difficulty": {
+        "DIFFICULTY_INTENT": "MEDIUM",
+        "MATCH": "YES",
+        "STRUCTURAL_DIFFICULTY_REVIEW": "MEDIUM",
+        "difficulty_is_authored_not_measured": true,
+        "failed_checks": [],
+        "levels_whose_checks_are_satisfied": [
+          "MEDIUM"
+        ],
+        "option_set_was_not_degraded": true
+      },
+      "fail_closed_reason": null,
+      "option_realization_admissible": false,
+      "option_realization_violations": [
+        "OPTION_SPECIFICITY_MISMATCH"
+      ],
+      "post_stem_3_viable": true,
+      "reject_reason": "The stem's own findings score Alvarado 7, the high band calling for surgical consultation, while the stem asserts intermediate suspicion and the key depends on the intermediate band; the quoted Alvarado bands overlap at 4; ultrasonography is a defensible second key on the item's own stepwise evidence and is defeated only by a body-habitus fact the stem never gives; MRI and ultrasound-with-KUB have no positive stem anchor; and the pre-declared probability band, the contrast clearance and the availability clause are all present because options need them.",
+      "reviewer_structural_difficulty": "EASY",
+      "safety_counts": {
+        "AMBIGUOUS_BEST_ANSWERS": 1,
+        "COMPETITOR_WITHOUT_STEM_ANCHOR": 2,
+        "CRITICAL_FACT_SAFETY_FAILURES": 0,
+        "FACTUAL_ERRORS": 1,
+        "MATERIAL_REDUNDANCY": 0,
+        "NUMERIC_ERRORS": 1,
+        "SECOND_KEY_RISK": 1,
+        "UNNATURAL_STEM_ENGINEERING": 4,
+        "UNSUPPORTED_CLAIMS": 2
+      },
+      "stage_reached": "INDEPENDENT_REVIEW",
+      "terminal_state": "REJECTED"
+    },
+    "G2-SURG-03": {
+      "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+      "stage_reached": "CONTRAST_SET",
+      "terminal_state": "NO_SAFE_ITEM"
+    }
+  },
+  "pilot_id": "contrast_first_pilot_2026_09_05",
+  "production_generator_changed": false,
+  "schema_version": "1.0",
+  "scope": "QGEN_CONTRAST_FIRST_PILOT_EXECUTION",
+  "targeted_research_declined_reason": {
+    "G2-MED-02": "No seed of any target carries MEDICINE with INVESTIGATION_SELECTION and INVESTIGATION_SET together, so the index is empty before any stem exists. Building three competitors would need new currentness-sensitive authoritative research, and it would test contrast coverage rather than generation order, which is what this pilot is for.",
+    "G2-PSY-02": "Two competitors secure immediate safety and the rest are refused because they secure nothing, which is the PSYCHIATRY option-set contract working as written. A third would have to be an involuntary-admission option whose criteria are provincial legislation, and no frozen evidence packet carries it."
+  },
+  "targeted_research_passes_run": 0
+}

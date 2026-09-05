@@ -1483,3 +1483,477 @@ def _realized_difficulty_evidence(
         ),
         "measured_from": "THE_PRODUCTION_GATE_AGAINST_THE_FROZEN_STEM",
     }
+
+
+# ------------------------------------------------------------- measurement
+
+
+PILOT_REVIEWS_PATH = "research/qgen/contrast_first_pilot_reviews.json"
+PILOT_BLIND_PATH = "research/qgen/contrast_first_pilot_blind_solver.json"
+PILOT_ITEMS_PATH = "research/qgen/contrast_first_pilot_items.json"
+BENCHMARK_PATH = "reports/qgen_clinical_retrieval_benchmark.json"
+RETEST_PATH = "reports/qgen_g2_stem_anchor_retest_execution.json"
+EVIDENCE_PACKETS = (
+    "research/qgen/pilot/QGEN-MED-007.acs-chapter-review-pilot-10.evidence.json",
+    "research/qgen/generalization/cross_discipline_generalization_15.evidence.json",
+    "research/qgen/generalization/cross_discipline_generalization_15_r2.evidence.json",
+    "research/qgen/generalization/cross_discipline_generalization_15_r3.evidence.json",
+    "research/qgen/generalization/cross_discipline_generalization_15_r4.evidence.json",
+)
+
+SAFETY_DIMENSIONS = (
+    "FACTUAL_ERRORS", "NUMERIC_ERRORS", "UNSUPPORTED_CLAIMS", "AMBIGUOUS_BEST_ANSWERS",
+    "CRITICAL_FACT_SAFETY_FAILURES", "MATERIAL_REDUNDANCY",
+    "COMPETITOR_WITHOUT_STEM_ANCHOR", "SECOND_KEY_RISK", "UNNATURAL_STEM_ENGINEERING",
+)
+
+
+def load_evidence_claims(root) -> dict[str, str]:
+    """Claim id to statement, over the frozen evidence packets this pilot cites."""
+    claims: dict[str, str] = {}
+    for relative in EVIDENCE_PACKETS:
+        try:
+            packet = _read(root, relative)
+        except ContrastFirstError:
+            continue
+        for claim in packet.get("claims", []):
+            claims.setdefault(claim["claim_id"], claim["statement"])
+    return claims
+
+
+def measure_context_sizes(root, pre_stem: dict[str, Any]) -> dict[str, Any]:
+    """Serialized characters per authoring stage. No token figure is invented."""
+    import statistics
+
+    frozen = {
+        row["opportunity_label"]: row
+        for row in _read(root, PILOT_OPPORTUNITIES_PATH)["opportunities"]
+    }
+    stems = _read(root, PILOT_STEMS_PATH)["stems"]
+    items = _read(root, PILOT_ITEMS_PATH)["items"]
+    vocabulary = load_stem_feature_vocabulary(root)
+    claims = load_evidence_claims(root)
+
+    rows: list[dict[str, Any]] = []
+    for record in pre_stem["results"]:
+        if record["stage"] != "READY_FOR_STEM":
+            continue
+        label = record["opportunity_label"]
+        matrix = record["contrast_matrix"]
+        blueprint = record["stem_blueprint"]
+        unit = record["anchor_study_unit_id"]
+        cited = set(matrix["key"]["evidence_refs"])
+        for row in matrix["rows"]:
+            cited |= set(row["EVIDENCE_PROVENANCE"]["plausibility"])
+            cited |= set(row["EVIDENCE_PROVENANCE"]["discrimination"])
+        evidence = "\n".join(
+            f"{claim}: {claims[claim]}" for claim in sorted(cited) if claim in claims
+        )
+        # What the stem author actually receives: feature ids, their frozen
+        # normalized text, and the prohibitions. No option string.
+        generation = "\n".join(
+            [frozen[label]["lead_in_from_frozen_baseline"],
+             frozen[label]["learner_decision_id"], frozen[label]["difficulty_intent"]]
+            + [
+                f"{row['stem_feature_id']} {row['polarity']} :: "
+                f"{vocabulary[unit][row['stem_feature_id']]['normalized_feature']}"
+                for row in blueprint["required_features"]
+            ]
+            + [
+                f"FORBIDDEN {row['stem_feature_id']} {row['polarity']}"
+                for row in blueprint["forbidden_features"]
+            ]
+        )
+        item = items[label]
+        verification = "\n".join(
+            [item["stem"], item["lead_in"]]
+            + [f"{o['label']}. {o['text']}\n{o['rationale']}" for o in item["options"]]
+            + [evidence]
+        )
+        rows.append({
+            "opportunity_label": label,
+            "opportunity_metadata": len(canonical_json(frozen[label])),
+            "contrast_matrix": len(canonical_json(matrix)),
+            "retrieved_evidence": len(evidence),
+            "stem_blueprint": len(canonical_json(blueprint)),
+            "generation_context": len(generation),
+            "verification_context": len(verification),
+        })
+
+    fields = [key for key in rows[0] if key != "opportunity_label"]
+
+    def summarise(values: list[int]) -> dict[str, int]:
+        ordered = sorted(values)
+        index = min(len(ordered) - 1, int(round(0.95 * (len(ordered) - 1))))
+        return {"median": int(statistics.median(ordered)), "p95": ordered[index],
+                "min": ordered[0], "max": ordered[-1]}
+
+    summary = {field: summarise([row[field] for row in rows]) for field in fields}
+    summary["TOTAL_PER_OPPORTUNITY"] = summarise(
+        [sum(row[field] for field in fields) for row in rows]
+    )
+    return {
+        "unit": "CHARACTERS",
+        "per_opportunity": rows,
+        "summary": summary,
+        "tokens_not_reported_because": (
+            "No local tokenizer is installed -- tiktoken, transformers, sentencepiece "
+            "and tokenizers are all absent -- and characters are not equated with tokens."
+        ),
+    }
+
+
+def measure_copyright(root, relatives: Sequence[str], *, seed: int = 12) -> dict[str, Any]:
+    """Longest verbatim Toronto Notes run, in words, per artifact.
+
+    Requires the local index, which is gitignored and rebuilt by
+    ``qbank build-tn-index``. Fails closed rather than reporting a pass it did
+    not measure.
+    """
+    import re
+    import sqlite3
+    from pathlib import Path
+
+    index = Path(root) / "derived/tn_index/tn_index.sqlite3"
+    if not index.is_file():
+        raise ContrastFirstError(
+            "the Toronto Notes index is unavailable, so a copyright pass cannot be "
+            "claimed; run `qbank build-tn-index` first"
+        )
+    word = re.compile(r"[a-z0-9]+")
+    connection = sqlite3.connect(index)
+    corpus: set[str] = set()
+    for (text,) in connection.execute("SELECT text FROM chunk_text"):
+        tokens = word.findall(text.lower())
+        for start in range(len(tokens) - seed + 1):
+            corpus.add(" ".join(tokens[start:start + seed]))
+
+    results: list[dict[str, Any]] = []
+    worst = 0
+    for relative in relatives:
+        path = Path(root) / relative
+        if not path.is_file():
+            continue
+        tokens = word.findall(path.read_text().lower())
+        longest = 0
+        for start in range(len(tokens) - seed + 1):
+            if " ".join(tokens[start:start + seed]) in corpus:
+                end = start + seed
+                while end < len(tokens) and " ".join(
+                    tokens[end - seed + 1:end + 1]
+                ) in corpus:
+                    end += 1
+                longest = max(longest, end - start)
+        worst = max(worst, longest)
+        results.append({"artifact": relative, "longest_verbatim_run_words": longest})
+    return {
+        "COPYRIGHT_AUDIT": "PASS" if worst == 0 else "REVIEW",
+        "longest_verbatim_toronto_notes_run_words": worst,
+        "artifacts_scanned": len(results),
+        "per_artifact": results,
+        "method": (
+            f"Every artifact is scanned for the longest run of consecutive tokens also "
+            f"occurring in the locally indexed Toronto Notes corpus, seeded on "
+            f"{seed}-word matches. The fingerprint set is built in memory and never written."
+        ),
+    }
+
+
+TRACKED_PILOT_ARTIFACTS = (
+    "docs/superpowers/specs/2026-09-05-contrast-first-difficulty-aware-item-construction-design.md",
+    "docs/contrast-first-generation.md",
+    "scripts/qbank/contrast_first_pilot.py",
+    "tests/test_contrast_first_pilot.py",
+    "research/qgen/contrast_first_pilot_opportunities.json",
+    "research/qgen/contrast_first_pilot_authoring.json",
+    "research/qgen/contrast_first_pilot_stems.json",
+    "research/qgen/contrast_first_pilot_blind_solver.json",
+    "research/qgen/contrast_first_pilot_items.json",
+    "research/qgen/contrast_first_pilot_reviews.json",
+)
+
+
+#: Authored judgements, kept next to the code that measures the numbers they
+#: interpret so that neither can drift from the other.
+TARGETED_RESEARCH_DECLINED = {
+    "G2-MED-02": (
+        "No seed of any target carries MEDICINE with INVESTIGATION_SELECTION and "
+        "INVESTIGATION_SET together, so the index is empty before any stem exists. "
+        "Building three competitors would need new currentness-sensitive authoritative "
+        "research, and it would test contrast coverage rather than generation order, "
+        "which is what this pilot is for."),
+    "G2-PSY-02": (
+        "Two competitors secure immediate safety and the rest are refused because they "
+        "secure nothing, which is the PSYCHIATRY option-set contract working as written. "
+        "A third would have to be an involuntary-admission option whose criteria are "
+        "provincial legislation, and no frozen evidence packet carries it."),
+}
+
+PILOT_DECISION = {
+    "CONTRAST_FIRST_ASSESSMENT": "PROMISING_NEEDS_LARGER_PILOT",
+    "basis": (
+        "All three limbs of the rule frozen before results hold. Accepted-item safety "
+        "is perfect: both accepted items score zero on all nine dimensions. Post-stem "
+        "viable survival rose from 7 of 18 to 10 of 18, with anchor-floor refusals "
+        "falling from 34 to 0 and second-key refusals from 3 to 0. Safe yield rose from "
+        "1 to 2, and G2-PHELO-03 is a CORE decision the archived stem-first arm could "
+        "not make safe and this one did."),
+    "why_this_is_not_VALIDATED": (
+        "Eight of the ten realized items were rejected, an 80 per cent rejection rate, "
+        "and the independent reviewers recorded 45 defects across those ten items. "
+        "UNNATURAL_STEM_ENGINEERING was found seven times, which is the failure mode "
+        "section 16 of the design named as the likeliest way this architecture would "
+        "fail. Two accepted items cannot distinguish an architecture that works from "
+        "one that happened to work twice."),
+    "what_the_architecture_demonstrably_did": (
+        "It removed the bottleneck it targeted. Every competitor the blueprint made "
+        "live cleared the production anchor floor against the realized stem and none "
+        "became a second key, measured through the unchanged production gate."),
+    "what_it_demonstrably_did_not_do": (
+        "It did not produce safe items at a rate the accepted-item standard can rely "
+        "on, and on G2-SURG-02 it produced the assembled-checklist stem the design "
+        "warned about, scoring 4 for unnatural engineering and 2 for competitors with "
+        "no genuine stem anchor even though the deterministic anchor floor passed them."),
+    "the_finding_that_matters_most": (
+        "COMPETITOR_WITHOUT_STEM_ANCHOR was 0 by the production gate and 2 by an "
+        "independent reviewer on the same item. The frozen anchor layer counts a "
+        "generic scenario fact -- imaging is available, suspicion is intermediate -- as "
+        "a plausibility anchor. Stem-first rarely exposed this because such anchors were "
+        "rarely present by chance. Contrast-first states them deliberately, so a weak "
+        "anchor becomes visible stem furniture. The architecture did not create the "
+        "defect; it made the anchor layer's quality the binding constraint."),
+}
+
+PILOT_NEXT_BOTTLENECK = {
+    "NEXT_DOMINANT_BOTTLENECK": "OPTION_REALIZATION",
+    "meaning": (
+        "The option-and-rationale realization layer. Seven of the ten realized items "
+        "carry a rationale defect from one fixed template clause, and all three "
+        "reviewers identified it independently: every competitor rationale ends 'That "
+        "condition is not met here', which is a false assertion whenever the stem is "
+        "merely silent about the condition rather than stating it to be false. "
+        "UNSUPPORTED_CLAIMS at 12 is the largest single defect count in the pilot and "
+        "is almost entirely this."),
+    "runner_up": (
+        "Anchor quality in the frozen plausibility layer, per the finding above. Named "
+        "here and deliberately not fixed in this task."),
+    "not_fixed_here": True,
+}
+
+
+def build_pilot_reports(root) -> dict[str, dict[str, Any]]:
+    """Assemble the three canonical pilot reports from committed artifacts only.
+
+    The stem-first arm is read from the archived benchmark and retest. It is never
+    regenerated: rerunning a baseline after seeing the new arm's results is the
+    clearest way to manufacture a favourable comparison.
+    """
+    pre_stem = build_pilot_contrast_sets(root)
+    post_stem = run_post_stem_revalidation(root, pre_stem)
+    frozen = _read(root, PILOT_OPPORTUNITIES_PATH)
+    items = _read(root, PILOT_ITEMS_PATH)
+    blind = _read(root, PILOT_BLIND_PATH)
+    reviews = _read(root, PILOT_REVIEWS_PATH)
+    benchmark = _read(root, BENCHMARK_PATH)
+    retest = _read(root, RETEST_PATH)["terminal_state_by_opportunity"]
+
+    arm_a = {row["wave_label"]: row for row in benchmark["results_by_arm"]["CURRENT_LIBRARY"]}
+    sample = [row["opportunity_label"] for row in frozen["opportunities"]]
+    priority = {row["opportunity_label"]: row["priority_class"] for row in frozen["opportunities"]}
+    intent = {row["opportunity_label"]: row["difficulty_intent"] for row in frozen["opportunities"]}
+    pre = {row["opportunity_label"]: row for row in pre_stem["results"]}
+    post = {row["opportunity_label"]: row for row in post_stem["results"]}
+    verdicts = items["option_realization_verdicts"]
+
+    outcomes: dict[str, Any] = {}
+    for label in sample:
+        record = pre[label]
+        if record["stage"] != "READY_FOR_STEM":
+            outcomes[label] = {"terminal_state": "NO_SAFE_ITEM",
+                               "stage_reached": record["stage"],
+                               "fail_closed_reason": record["fail_closed_reason"]}
+            continue
+        review = reviews["reviews"][label]
+        accepted = review["VERDICT"] == "ACCEPT"
+        outcomes[label] = {
+            "terminal_state": "ACCEPTED" if accepted else "REJECTED",
+            "stage_reached": "INDEPENDENT_REVIEW",
+            "fail_closed_reason": None,
+            "reject_reason": None if accepted else review.get("REJECT_REASON"),
+            "blind_solver_key_supported": blind["results"][label]["key_supported"],
+            "blind_solver_confidence": blind["results"][label]["confidence"],
+            "blind_solver_declared_ambiguity": blind["results"][label]["ambiguity_declared"],
+            "option_realization_admissible": verdicts[label]["admissible"],
+            "option_realization_violations": verdicts[label]["violations"],
+            "post_stem_3_viable": post[label]["post_stem_3_viable"],
+            "safety_counts": {key: review[key] for key in SAFETY_DIMENSIONS},
+            "reviewer_structural_difficulty": review["DIFFICULTY_STRUCTURAL"],
+            "deterministic_structural_difficulty": structural_difficulty_review(
+                post[label]["realized_difficulty_evidence"], declared_intent=intent[label]
+            ),
+        }
+
+    accepted_labels = [l for l in sample if outcomes[l]["terminal_state"] == "ACCEPTED"]
+    realized = [l for l in sample if l in post]
+
+    contrast_first = {
+        "OPPORTUNITIES_ATTEMPTED": len(sample),
+        "PRE_STEM_VALID_CONTRAST_SET": sum(
+            1 for l in sample if pre[l].get("pre_stem_valid_contrast_set")),
+        "POST_STEM_3_VIABLE": sum(1 for l in realized if post[l]["post_stem_3_viable"]),
+        "ITEMS_REALIZED": len(realized),
+        "ACCEPTED": len(accepted_labels),
+        "NO_SAFE_ITEM": sum(1 for l in sample if outcomes[l]["terminal_state"] == "NO_SAFE_ITEM"),
+        "REJECTED": sum(1 for l in sample if outcomes[l]["terminal_state"] == "REJECTED"),
+        "STEM_ANCHOR_FLOOR_FAILURES": sum(
+            1 for l in realized if post[l]["excluded_by_rule"]["SAF_1"]),
+        "SECOND_KEY_FAILURES": sum(1 for l in realized if post[l]["excluded_by_rule"]["ADM_3"]),
+        "ARCHETYPE_FAILURES": sum(
+            1 for l in sample if pre[l]["admissible_candidate_count"] == 0),
+        "LEARNER_DECISION_FAILURES": sum(
+            1 for l in realized if post[l]["excluded_by_rule"]["ADM_1"]),
+        "OPTION_REALIZATION_FAILURES": sum(
+            1 for l in realized if not verdicts[l]["admissible"]),
+        "EVIDENCE_FAILURES": 0,
+    }
+    stem_first = {
+        "OPPORTUNITIES_ATTEMPTED": len(sample),
+        "PRE_STEM_VALID_CONTRAST_SET": None,
+        "POST_STEM_3_VIABLE": sum(1 for l in sample if arm_a[l]["reaches_three_viable"]),
+        "ITEMS_REALIZED": sum(1 for l in sample if retest[l] in ("ACCEPTED", "REJECTED")),
+        "ACCEPTED": sum(1 for l in sample if retest[l] == "ACCEPTED"),
+        "NO_SAFE_ITEM": sum(1 for l in sample if retest[l] == "NO_SAFE_ITEM"),
+        "REJECTED": sum(1 for l in sample if retest[l] == "REJECTED"),
+        "STEM_ANCHOR_FLOOR_FAILURES": sum(
+            1 for l in sample if not arm_a[l]["reaches_three_viable"]
+            and arm_a[l]["ranked_count"] + arm_a[l]["anchor_floor_refusals"] >= 3),
+        "SECOND_KEY_FAILURES": sum(arm_a[l]["SECOND_KEY_REFUSAL"] for l in sample),
+        "ARCHETYPE_FAILURES": sum(1 for l in sample if arm_a[l]["indexed_count"] == 0),
+        "LEARNER_DECISION_FAILURES": None,
+        "OPTION_REALIZATION_FAILURES": None,
+        "EVIDENCE_FAILURES": 0,
+        "anchor_floor_refusals_total": sum(arm_a[l]["anchor_floor_refusals"] for l in sample),
+    }
+    full_30 = {
+        "OPPORTUNITIES_ATTEMPTED": len(arm_a),
+        "POST_STEM_3_VIABLE": sum(1 for l in arm_a if arm_a[l]["reaches_three_viable"]),
+        "ACCEPTED": sum(1 for l in arm_a if retest[l] == "ACCEPTED"),
+        "REJECTED": sum(1 for l in arm_a if retest[l] == "REJECTED"),
+        "NO_SAFE_ITEM": sum(1 for l in arm_a if retest[l] == "NO_SAFE_ITEM"),
+        "anchor_floor_refusals_total": sum(arm_a[l]["anchor_floor_refusals"] for l in arm_a),
+    }
+
+    safety_totals = {
+        key: sum(outcomes[l]["safety_counts"][key] for l in accepted_labels)
+        for key in SAFETY_DIMENSIONS
+    }
+    realized_defects = {
+        key: sum(reviews["reviews"][l][key] for l in realized) for key in SAFETY_DIMENSIONS
+    }
+
+    difficulty: dict[str, Any] = {}
+    for level in DIFFICULTY_INTENTS:
+        labels = [l for l in sample if intent[l] == level]
+        accepted_at_level = [l for l in labels if outcomes[l]["terminal_state"] == "ACCEPTED"]
+        matched = sum(
+            1 for l in accepted_at_level
+            if outcomes[l]["deterministic_structural_difficulty"]["MATCH"] == "YES"
+        )
+        difficulty[level] = {
+            "attempted": len(labels), "accepted": len(accepted_at_level),
+            "intent_match": f"{matched}/{len(accepted_at_level)}",
+            "reviewer_structural_difficulty": {
+                l: outcomes[l]["reviewer_structural_difficulty"] for l in accepted_at_level
+            },
+        }
+
+    previously_impossible_core = [
+        l for l in accepted_labels if retest[l] == "NO_SAFE_ITEM" and priority[l] == "CORE"
+    ]
+
+    context = measure_context_sizes(root, pre_stem)
+    copyright_audit = measure_copyright(root, TRACKED_PILOT_ARTIFACTS)
+
+    def delta(key: str) -> dict[str, Any] | None:
+        before, after = stem_first.get(key), contrast_first.get(key)
+        if before is None or after is None:
+            return None
+        return {"stem_first": before, "contrast_first": after, "absolute": after - before,
+                "relative": None if before == 0 else round((after - before) / before, 4)}
+
+    execution = {
+        "schema_version": "1.0", "scope": "QGEN_CONTRAST_FIRST_PILOT_EXECUTION",
+        "pilot_id": frozen["pilot_id"],
+        "design": ("docs/superpowers/specs/"
+                   "2026-09-05-contrast-first-difficulty-aware-item-construction-design.md"),
+        "production_generator_changed": False,
+        "llm_api_calls": 0,
+        "one_attempt_only": True,
+        "targeted_research_passes_run": 0,
+        "targeted_research_declined_reason": TARGETED_RESEARCH_DECLINED,
+        "decision": PILOT_DECISION,
+        "next_dominant_bottleneck": PILOT_NEXT_BOTTLENECK,
+        "opportunity_outcomes": outcomes,
+        "metrics": {"CONTRAST_FIRST": contrast_first,
+                    "STEM_FIRST_18_SUBSET_ARCHIVED": stem_first,
+                    "STEM_FIRST_FULL_30_ARCHIVED": full_30},
+        "difficulty": difficulty,
+        "accepted_item_safety": safety_totals,
+        "context_characters": context["summary"],
+        "context_note": context["tokens_not_reported_because"],
+        "copyright": copyright_audit,
+    }
+    review_report = {
+        "schema_version": "1.0", "scope": "QGEN_CONTRAST_FIRST_INDEPENDENT_REVIEW",
+        "pilot_id": frozen["pilot_id"],
+        "protocol": reviews["protocol"],
+        "blind_solver": blind["summary"],
+        "reviews": reviews["reviews"],
+        "accepted_item_safety_totals": safety_totals,
+        "all_accepted_item_safety_counts_are_zero": all(
+            value == 0 for value in safety_totals.values()),
+        "counter_evidence_not_to_be_read_past": {
+            "items_realized": len(realized),
+            "items_rejected_by_independent_review": len(realized) - len(accepted_labels),
+            "rejection_rate": round((len(realized) - len(accepted_labels)) / len(realized), 4),
+            "defect_totals_across_all_realized_items": realized_defects,
+            "defects_per_item": {
+                l: {"total": sum(reviews["reviews"][l][k] for k in SAFETY_DIMENSIONS),
+                    "verdict": reviews["reviews"][l]["VERDICT"]}
+                for l in realized
+            },
+            "note": (
+                "The accepted-item safety counts are all zero because both accepted "
+                "items are clean, not because the pilot produced few defects. Across "
+                f"all ten realized items the reviewers recorded "
+                f"{sum(realized_defects.values())} defects. The repository's own "
+                "reviewer-calibration rule is to compare defect counts rather than "
+                "pass rates, so both are reported."),
+        },
+        "reviewer_identified_systematic_root_cause":
+            reviews["reviewer_identified_systematic_root_cause"],
+    }
+    comparison = {
+        "schema_version": "1.0", "scope": "QGEN_CONTRAST_FIRST_VS_STEM_FIRST",
+        "pilot_id": frozen["pilot_id"],
+        "population": ("The same 18 frozen opportunities. The stem-first arm is "
+                       "archived, not regenerated."),
+        "baseline_sources": frozen["frozen_metrics"]["baseline_source"],
+        "deltas": {key: delta(key) for key in contrast_first},
+        "full_30_context": full_30,
+        "previously_impossible_core_decisions_now_safe": previously_impossible_core,
+        "promising_rule_limbs": {
+            "accepted_item_safety_remains_perfect": all(
+                value == 0 for value in safety_totals.values()),
+            "post_stem_viable_survival_improves":
+                contrast_first["POST_STEM_3_VIABLE"] > stem_first["POST_STEM_3_VIABLE"],
+            "safe_yield_improves_or_a_core_decision_becomes_safe": (
+                contrast_first["ACCEPTED"] > stem_first["ACCEPTED"]
+                or bool(previously_impossible_core)),
+        },
+        "materiality": {
+            "defined_before_results": True,
+            "rule": frozen["frozen_metrics"]["comparison_rule"]["promising_requires_all_three"],
+        },
+    }
+    return {"execution": execution, "review": review_report, "comparison": comparison}
