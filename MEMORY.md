@@ -603,6 +603,22 @@ This section is maintained by hand and sits outside the generated source-researc
   0 anchor-floor refusals against arm A's 67, at equal recall and precision.
 - Copyright rescanned again after the inventory regeneration: longest verbatim run **0** in the report and
   in both changed source files. `COPYRIGHT_AUDIT = PASS`. Index database still untracked.
+- **Why the other 20 of 30 opportunities still fail, classified (2026-09-05).** Every one fails closed as
+  `FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS`, and the primary cause was read per opportunity off the
+  frozen arm-A funnel (`candidates_entering_the_index` -> `indexed_count` -> ADM_1/ADM_3/SAF_1 ->
+  `ranked_count`): **`STEM_ANCHOR_FLOOR` 15, `ARCHETYPE_FILTER` 3, `LEARNER_DECISION_FILTER` 2**. The
+  causes that would have indicted retrieval are all **zero**: `NO_RELEVANT_SOURCE_CONCEPT` 0,
+  `NORMALIZATION_MISS` 0, `BM25_RECALL_MISS` 0, `GRAPH_CONNECTIVITY_MISS` 0, `EVIDENCE_LIMITATION` 0.
+  The three `ARCHETYPE_FILTER` cases (G2-MED-02, G2-OBGYN-05, G2-SURG-04) reach `indexed_count = 0`: no
+  seed in the library carries the opportunity's discipline profile *and* item archetype *and* option-set
+  archetype, so they are a seed-coverage gap, not a retrieval gap. This is the evidence for
+  `RETRIEVAL_NOT_MAIN_PROBLEM`: the yield of 10/30 is low because 17 of the 20 shortfalls are a safety or
+  admissibility refusal working as designed, and no better retriever can undo a refusal.
+- The 72 cross-unit figure is reproducible and its method is now pinned, because it is definition-sensitive:
+  seed **all 196** typed clinical concept nodes, traverse `graph_neighbourhood` at **`max_depth=1`**, and
+  count distinct `nodes.study_unit_id` among the neighbours. That gives 183 reaching >=1 unit, **72 >=2, 10
+  >=3, max 6**. Seeding only the 183 inventory ids gives 60/9/max 3, and depth 2 gives 121/71/max 29;
+  neither is the recorded number. Quote the depth and the seed set whenever this figure is repeated.
 - QGEN_NEXT_STEP = `USER_REVIEW_RETRIEVAL_BENCHMARK`
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 
