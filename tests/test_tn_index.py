@@ -209,7 +209,7 @@ def test_the_only_pages_without_chunks_are_the_quality_flagged_ones(index_path):
 def test_the_tracked_build_manifest_carries_counts_and_no_corpus_prose(index_path, tmp_path):
     from qbank.tn_index import BUILD_MANIFEST_RELATIVE_PATH, write_index_build_manifest
 
-    document = write_index_build_manifest(ROOT, index_path)
+    document = write_index_build_manifest(tmp_path, index_path)
     assert document["counts"]["pages_indexed"] == 1595
     assert document["index_is_a_tracked_artifact"] is False
     assert document["authority_role"] == "TOPIC_DISCOVERY_SOURCE"
@@ -217,4 +217,45 @@ def test_the_tracked_build_manifest_carries_counts_and_no_corpus_prose(index_pat
     # The manifest describes the corpus; it must not contain any of it. Every long
     # token in it should be a hash, an identifier or one of its own field values.
     assert "Ischemic Heart Disease" not in serialized
+    assert (tmp_path / BUILD_MANIFEST_RELATIVE_PATH).is_file()
     assert (ROOT / BUILD_MANIFEST_RELATIVE_PATH).is_file()
+
+
+def test_writing_a_manifest_never_touches_the_tracked_repository_copy(index_path, tmp_path):
+    """A test run must leave the tracked manifest byte-identical.
+
+    The manifest carries two measured fields, so a write aimed at the repository
+    root would dirty the working tree on every suite run and make the tracked
+    artifact disagree with itself between machines.
+    """
+    from qbank.tn_index import BUILD_MANIFEST_RELATIVE_PATH, write_index_build_manifest
+
+    tracked = ROOT / BUILD_MANIFEST_RELATIVE_PATH
+    before = tracked.read_bytes()
+    write_index_build_manifest(tmp_path, index_path)
+    assert tracked.read_bytes() == before
+
+
+def test_the_manifest_is_deterministic_apart_from_its_measured_fields(tmp_path):
+    """Two independent builds of the same corpus describe themselves identically.
+
+    ``build_seconds`` is wall clock and ``index_bytes`` depends on how SQLite
+    happened to lay the file out, so both are excluded by name. Everything else --
+    hashes, counts, chunk-size distribution, tokenizer settings -- must reproduce.
+    """
+    from qbank.tn_index import write_index_build_manifest
+
+    MEASURED = {"build_seconds", "index_bytes"}
+    documents = []
+    for name in ("first", "second"):
+        root = tmp_path / name
+        root.mkdir()
+        index = root / "tn_index.sqlite3"
+        build_tn_index(ROOT, index, page_limit=40)
+        documents.append(write_index_build_manifest(root, index))
+    first, second = documents
+    assert set(first) == set(second)
+    assert {k: v for k, v in first.items() if k not in MEASURED} == {
+        k: v for k, v in second.items() if k not in MEASURED
+    }
+    assert first["counts"]["chunks_indexed"] > 0

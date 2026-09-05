@@ -905,6 +905,21 @@ def _command_build_tn_index(arguments: argparse.Namespace) -> None:
     }, indent=2, sort_keys=True))
 
 
+def _command_build_normalization_inventory(arguments: argparse.Namespace) -> None:
+    """Measure the global concept normalization problem over local source terms."""
+    from .clinical_concepts import INVENTORY_RELATIVE_PATH, build_normalization_inventory
+
+    root = canonical_root(getattr(arguments, "root", Path.cwd()))
+    document = build_normalization_inventory(root)
+    write_json_atomic(resolve_root_path(root, INVENTORY_RELATIVE_PATH), document)
+    print(json.dumps({
+        "command": "build-normalization-inventory",
+        "report_relative_path": INVENTORY_RELATIVE_PATH,
+        **document["counts"],
+        **document["mapping_type_counts"],
+    }, indent=2, sort_keys=True))
+
+
 def _command_build_clinical_graph(arguments: argparse.Namespace) -> None:
     """Project the typed clinical contrast graph into the local index."""
     from .clinical_graph import build_clinical_graph
@@ -1027,6 +1042,7 @@ def _parser() -> argparse.ArgumentParser:
         ("validate-foundational-evidence", "validate canonical foundational evidence claim cards", _command_validate_foundational_evidence),
         ("build-foundational-evidence-audit", "build canonical foundational evidence audit", _command_build_foundational_evidence_audit),
         ("build-tn-index", "rebuild the local Toronto Notes index and its tracked build manifest", _command_build_tn_index),
+        ("build-normalization-inventory", "measure global concept normalization over local source terms", _command_build_normalization_inventory),
         ("build-clinical-graph", "project the typed clinical contrast graph into the local index", _command_build_clinical_graph),
         ("run-retrieval-benchmark", "run the frozen-G2 four-arm retrieval benchmark", _command_run_retrieval_benchmark),
     )

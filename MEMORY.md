@@ -21,7 +21,7 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `42a367455d268445f53ba4571ebffecc7c7cdce7`.
+- Audited coordinator input commit: `4b5ffc31ca3f61e60f874a2181571a469c29d41c`.
 - Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
@@ -521,6 +521,42 @@ This section is maintained by hand and sits outside the generated source-researc
 - `PRODUCTION_QUESTION_GENERATOR_CHANGED = NO`. `safe_yield_wave`, `question_opportunity` and
   `profile_contrast_retrieval` are untouched, and `profile_contrast_retrieval` must stay untouched
   because it *is* benchmark arm A. `RECOMMENDED_ARCHITECTURE_ACTION` stays `DO_NOT_SCALE`.
+- **Phase-B normalization inventory closed out (2026-09-05).** The milestone's own named deliverable
+  `reports/qgen_global_concept_normalization_inventory.json` was missing and is now built by
+  `qbank build-normalization-inventory`. It measures the local vocabulary the graph design turns on:
+  **183 local source terms** (102 frozen stem features plus 81 curated competitors) across **34** local
+  study units, against 2,561 global concepts. `EXACT_LABEL_MATCHES_ACROSS_UNITS = 0`,
+  `NORMALIZED_TEXT_MATCHES_ACROSS_UNITS = 0`, `POSSIBLE_ALIAS_MATCHES = 0`,
+  `CROSS_UNIT_CANONICAL_CONCEPTS = 0`. The Phase-0 zero-collision finding therefore **widens** rather than
+  narrows: it holds over the whole local vocabulary and all 34 units, not just the 102 stem features and
+  6 anchor units, which strengthens `BINDING_CONSTRAINT = TYPED_ANCHOR_AND_CONDITION_POPULATION`. The zero
+  is measured and a test plants a synthetic duplicate to prove the measurement can report a collision.
+- Mapping types over the 183 local terms, one per term: **EXACT 68, NORMALIZED_EXACT 102, ALIAS 0,
+  RELATED_BUT_DISTINCT 10, AMBIGUOUS 3, UNRESOLVED 0**. Confidence is 1.0 where a stated rule resolved the
+  surface form and 0.0 where the layer fails closed; nothing between the two is invented. The 3 AMBIGUOUS
+  are `Pulmonary embolism`, `Acute pericarditis` and `Pelvic inflammatory disease`, each a curated clinical
+  concept colliding with a same-named TN discovery topic; all three carry `canonical_concept_id: null`.
+- **The refused merges are the report's real content.** Five pairs clear a 0.5 token-Jaccard floor and are
+  kept as separate concepts: absolute contraindication to *aspirin* vs to *fibrinolysis* (0.75), depressive
+  syndrome due to *hypothyroidism* (SU-E-30) vs due to *anaemia* (SU-H-02) (0.667, the only cross-unit pair
+  in the set), *lead-time* vs *length-time* bias (0.5), and two others. The floor is a reporting threshold
+  and never a merging rule. This is the Phase-B evidence that string similarity does not prove concept
+  identity.
+- **Tracked-manifest determinism defect found and fixed.** `tests/test_tn_index.py` wrote the tracked
+  `research/tn2025/tn_index_build_manifest.json` from a throwaway tmp index at the *repository* root, so
+  every suite run dirtied the working tree and the tracked measured fields described a temporary database.
+  Test-side only; no production code changed. Two regression tests added: a manifest write never touches
+  the tracked copy, and two independent builds describe themselves identically apart from `build_seconds`
+  and `index_bytes`, which are wall clock and file layout by nature.
+- The manifest's `index_bytes` 31,932,416 (30.5 MB) and the 36.7 MB figure above are both correct and
+  measure different things: the manifest sizes the TN index alone, while `derived/tn_index/tn_index.sqlite3`
+  reaches 36.7 MB once the clinical graph is projected into the same database.
+- Copyright rescanned 2026-09-05 over 19 artifacts: longest verbatim Toronto Notes run **0** in every one,
+  including the new inventory report. `COPYRIGHT_AUDIT = PASS`. The 24 pre-existing frozen artifacts with
+  22-31 word runs are unchanged and still raised for a separate decision.
+- Tests at this state: focused 24 (`test_clinical_concepts.py`) and 20 (`test_tn_index.py`); full canonical
+  suite **1146/0**. `LLM_API_CALLS = 0`, `SEMANTIC_ADJUDICATIONS = 0`: nothing needed adjudication, because
+  no cross-unit merge candidate survived the deterministic pass.
 - QGEN_NEXT_STEP = `USER_REVIEW_RETRIEVAL_BENCHMARK`
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 

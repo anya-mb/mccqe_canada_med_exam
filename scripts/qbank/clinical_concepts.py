@@ -341,3 +341,199 @@ def detect_mentions(index: dict[str, Any], text: str) -> list[dict[str, Any]]:
                     "end": starts[position + length - 1] + len(tokens[position + length - 1]),
                 })
     return sorted(hits, key=lambda hit: (hit["start"], hit["concept_id"]))
+
+
+# ------------------------------------------- global normalization inventory
+
+MAPPING_TYPES = (
+    "EXACT",
+    "NORMALIZED_EXACT",
+    "ALIAS",
+    "RELATED_BUT_DISTINCT",
+    "AMBIGUOUS",
+    "UNRESOLVED",
+)
+
+# Two local terms are treated as a *refused merge* rather than a merge candidate
+# when at least half their normalized tokens coincide. The floor is a reporting
+# threshold, never a merging rule: nothing in this module ever merges on it.
+RELATED_BUT_DISTINCT_JACCARD_FLOOR = 0.5
+
+INVENTORY_RELATIVE_PATH = "reports/qgen_global_concept_normalization_inventory.json"
+
+
+def collect_local_terms(vocabulary: dict[str, Any]) -> list[dict[str, Any]]:
+    """Collect every concept that entered the vocabulary with a local scope.
+
+    Two vocabularies are study-unit-local: the frozen canonical stem features,
+    which name what a realized stem states, and the curated contrast competitors,
+    which name what an option set may offer. Toronto Notes topics and study-unit
+    titles are discovery vocabulary and carry no local clinical scope, so they are
+    the target of normalization rather than an input to it.
+    """
+    terms: list[dict[str, Any]] = []
+    for concept in vocabulary["concepts"]:
+        provenance = concept["provenance"]
+        if concept["concept_type"] == "FINDING":
+            study_unit = provenance.get("anchor_study_unit_id")
+        elif concept["vocabulary_source"] == "CURATED_CONTRAST_SEED":
+            study_unit = provenance.get("study_unit_id")
+        else:
+            continue
+        if not study_unit:
+            raise ClinicalConceptError(
+                f"a local term carries no study unit: {concept['concept_id']}"
+            )
+        terms.append({
+            "local_feature_id": concept["concept_id"],
+            "local_study_unit": study_unit,
+            "local_label": concept["preferred_label"],
+            "concept_type": concept["concept_type"],
+            "vocabulary_source": concept["vocabulary_source"],
+        })
+    return sorted(terms, key=lambda row: row["local_feature_id"])
+
+
+def measure_cross_unit_collisions(terms: Iterable[dict[str, Any]]) -> dict[str, int]:
+    """Count labels that name the same thing in more than one study unit.
+
+    This is the measurement the graph design turns on. If it returns zero the
+    local identifiers are study-unit-local names rather than global clinical
+    concept identifiers, and a graph built directly on them would be a set of
+    per-unit islands.
+    """
+    exact: dict[str, set[str]] = {}
+    normalized: dict[str, set[str]] = {}
+    for term in terms:
+        exact.setdefault(term["local_label"], set()).add(term["local_study_unit"])
+        key = normalize_surface_form(term["local_label"])
+        normalized.setdefault(key, set()).add(term["local_study_unit"])
+    return {
+        "EXACT_LABEL_MATCHES_ACROSS_UNITS": sum(
+            1 for units in exact.values() if len(units) > 1
+        ),
+        "NORMALIZED_TEXT_MATCHES_ACROSS_UNITS": sum(
+            1 for units in normalized.values() if len(units) > 1
+        ),
+    }
+
+
+def _refused_merges(terms: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Pairs a string-similarity merge would have collapsed, and why it must not."""
+    import itertools
+
+    tokens = {
+        term["local_feature_id"]: frozenset(
+            normalize_surface_form(term["local_label"]).split()
+        )
+        for term in terms
+    }
+    pairs: list[dict[str, Any]] = []
+    for left, right in itertools.combinations(terms, 2):
+        first, second = tokens[left["local_feature_id"]], tokens[right["local_feature_id"]]
+        if not first or not second or first == second:
+            continue
+        overlap = len(first & second) / len(first | second)
+        if overlap < RELATED_BUT_DISTINCT_JACCARD_FLOOR:
+            continue
+        pairs.append({
+            "local_feature_ids": [left["local_feature_id"], right["local_feature_id"]],
+            "local_labels": [left["local_label"], right["local_label"]],
+            "local_study_units": [left["local_study_unit"], right["local_study_unit"]],
+            "cross_unit": left["local_study_unit"] != right["local_study_unit"],
+            "token_jaccard": round(overlap, 3),
+            "distinguishing_tokens": sorted(first ^ second),
+        })
+    return sorted(pairs, key=lambda row: (-row["token_jaccard"], row["local_feature_ids"]))
+
+
+def build_normalization_inventory(root: Path) -> dict[str, Any]:
+    """Measure how far local source terms already are from global concepts.
+
+    Deterministic throughout. Confidence is 1.0 where a stated rule resolved the
+    surface form and 0.0 where the layer fails closed; no gradation between the
+    two is invented, because nothing here estimates a likelihood.
+    """
+    vocabulary = build_concept_vocabulary(root)
+    index = build_alias_index(vocabulary)
+    terms = collect_local_terms(vocabulary)
+    refused = _refused_merges(terms)
+    entangled = {
+        feature_id for pair in refused for feature_id in pair["local_feature_ids"]
+    }
+
+    mappings: list[dict[str, Any]] = []
+    for term in terms:
+        label = term["local_label"]
+        resolution = resolve_surface_form(index, label)
+        owner = resolution.get("concept_id")
+        if resolution["state"] == "UNRESOLVED":
+            mapping_type = "UNRESOLVED"
+        elif resolution["state"] == "MULTI_MATCH" or owner != term["local_feature_id"]:
+            mapping_type = "AMBIGUOUS"
+        elif term["local_feature_id"] in entangled:
+            mapping_type = "RELATED_BUT_DISTINCT"
+        elif resolution["rule"] != "EXACT":
+            mapping_type = "ALIAS"
+        elif normalize_surface_form(label) != label:
+            mapping_type = "NORMALIZED_EXACT"
+        else:
+            mapping_type = "EXACT"
+        failed_closed = mapping_type in {"AMBIGUOUS", "UNRESOLVED"}
+        mappings.append({
+            "local_feature_id": term["local_feature_id"],
+            "local_study_unit": term["local_study_unit"],
+            "local_label": label,
+            "normalized_label": normalize_surface_form(label),
+            "canonical_concept_id": None if failed_closed else term["local_feature_id"],
+            "concept_type": term["concept_type"],
+            "mapping_type": mapping_type,
+            "confidence": 0.0 if failed_closed else 1.0,
+            "provenance": {
+                "vocabulary_source": term["vocabulary_source"],
+                "resolution_state": resolution["state"],
+                "candidate_concept_ids": resolution.get("candidate_concept_ids", []),
+            },
+        })
+
+    counts = {mapping_type: 0 for mapping_type in MAPPING_TYPES}
+    for row in mappings:
+        counts[row["mapping_type"]] += 1
+
+    units_by_owner: dict[str, set[str]] = {}
+    for row in mappings:
+        if row["canonical_concept_id"]:
+            units_by_owner.setdefault(row["canonical_concept_id"], set()).add(
+                row["local_study_unit"]
+            )
+    alias_collisions = sum(
+        1
+        for entries in index["aliases"].values()
+        if len({entry["concept_id"] for entry in entries}
+               & {term["local_feature_id"] for term in terms}) > 1
+    )
+
+    return {
+        "schema_version": "1.0",
+        "scope": "GLOBAL_CONCEPT_NORMALIZATION_INVENTORY",
+        "rebuild_command": "qbank build-normalization-inventory",
+        "counts": {
+            "LOCAL_TERMS_TOTAL": len(terms),
+            "LOCAL_STUDY_UNITS": len({term["local_study_unit"] for term in terms}),
+            "GLOBAL_CONCEPTS_TOTAL": len(vocabulary["concepts"]),
+            "CROSS_UNIT_CANONICAL_CONCEPTS": sum(
+                1 for units in units_by_owner.values() if len(units) > 1
+            ),
+            "UNRESOLVED_TYPINGS": len(vocabulary["unresolved"]),
+        },
+        "cross_unit_measurement": {
+            **measure_cross_unit_collisions(terms),
+            "POSSIBLE_ALIAS_MATCHES": alias_collisions,
+            "SEMANTICALLY_RELATED_BUT_DISTINCT_TERMS": len(entangled),
+            "AMBIGUOUS_TERMS": counts["AMBIGUOUS"],
+        },
+        "mapping_type_counts": counts,
+        "related_but_distinct_floor": RELATED_BUT_DISTINCT_JACCARD_FLOOR,
+        "related_but_distinct_pairs": refused,
+        "mappings": mappings,
+    }

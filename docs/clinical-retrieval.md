@@ -93,6 +93,26 @@ hypokalemia and hypertonic with hypotonic saline; both are pinned by tests. To a
 add it to the vocabulary source artifact, not to the normalizer. A surface form owned by two concepts
 resolves to `MULTI_MATCH` and is never silently assigned to one of them.
 
+## Measuring the normalization problem
+
+```bash
+.venv/bin/python -m qbank build-normalization-inventory
+```
+
+Writes `reports/qgen_global_concept_normalization_inventory.json`: every study-unit-local source term
+(the frozen stem features and the curated competitors) with the canonical concept it resolves to, its
+mapping type and its local provenance, which is kept rather than replaced.
+
+Read `cross_unit_measurement` first. All four collision counts are currently zero, which is the finding
+the graph design rests on: the local identifiers are study-unit-local names, not global clinical concept
+identifiers, so a graph built directly on them would be per-unit islands. The zero is measured, and a
+test plants a synthetic duplicate to prove the measurement can report a collision.
+
+Read `related_but_distinct_pairs` second. These are the merges a string-similarity pass would have made
+and this layer refuses -- contraindication to aspirin against contraindication to fibrinolysis,
+lead-time against length-time bias. The Jaccard floor is a reporting threshold. Nothing merges on it,
+and a term whose own label is owned by two concepts is `AMBIGUOUS` with a null canonical concept.
+
 ## Difficulty intent
 
 `qbank.question_difficulty`. `DIFFICULTY_INTENT` (EASY / MEDIUM / HARD) is authored and available at

@@ -205,3 +205,95 @@ def test_a_typed_clinical_concept_never_merges_into_a_topic(vocabulary):
     ]
     for row in conflicts:
         assert len(row["types"]) > 1
+
+
+# ------------------------------------------- global normalization inventory
+
+
+def _inventory():
+    from qbank.clinical_concepts import build_normalization_inventory
+
+    return build_normalization_inventory(ROOT)
+
+
+def test_the_inventory_accounts_for_every_local_term_exactly_once():
+    """Each local source term gets one mapping type and the totals reconcile."""
+    from qbank.clinical_concepts import MAPPING_TYPES
+
+    document = _inventory()
+    counts = document["mapping_type_counts"]
+    assert set(counts) == set(MAPPING_TYPES)
+    assert sum(counts.values()) == document["counts"]["LOCAL_TERMS_TOTAL"]
+    assert len(document["mappings"]) == document["counts"]["LOCAL_TERMS_TOTAL"]
+    assert len({row["local_feature_id"] for row in document["mappings"]}) == len(
+        document["mappings"]
+    )
+
+
+def test_every_mapping_row_keeps_its_local_provenance():
+    """Normalization supplements the local identifiers; it never replaces them."""
+    for row in _inventory()["mappings"]:
+        assert row["local_feature_id"]
+        assert row["local_study_unit"]
+        assert row["local_label"]
+        assert row["provenance"]["vocabulary_source"]
+
+
+def test_ambiguous_and_unresolved_terms_are_never_given_a_canonical_concept():
+    """Fail closed: an unresolvable surface form must not be assigned an owner."""
+    for row in _inventory()["mappings"]:
+        if row["mapping_type"] in {"AMBIGUOUS", "UNRESOLVED"}:
+            assert row["canonical_concept_id"] is None
+            assert row["confidence"] == 0.0
+        else:
+            assert row["canonical_concept_id"]
+            assert row["confidence"] == 1.0
+
+
+def test_related_but_distinct_terms_keep_separate_canonical_concepts():
+    """String similarity must never collapse two clinical entities into one."""
+    document = _inventory()
+    owners = {row["local_feature_id"]: row["canonical_concept_id"]
+              for row in document["mappings"]}
+    assert document["related_but_distinct_pairs"], "the refused-merge evidence is empty"
+    for pair in document["related_but_distinct_pairs"]:
+        left, right = pair["local_feature_ids"]
+        assert owners[left] != owners[right]
+        assert pair["token_jaccard"] >= 0.5
+
+
+def test_the_cross_unit_measurement_can_actually_report_a_collision():
+    """The zero is measured, not asserted: a planted duplicate must be counted."""
+    from qbank.clinical_concepts import measure_cross_unit_collisions
+
+    partitioned = [
+        {"local_feature_id": "A", "local_study_unit": "SU-1", "local_label": "Chest pain"},
+        {"local_feature_id": "B", "local_study_unit": "SU-2", "local_label": "Dyspnea"},
+    ]
+    assert measure_cross_unit_collisions(partitioned)["EXACT_LABEL_MATCHES_ACROSS_UNITS"] == 0
+    collided = partitioned + [
+        {"local_feature_id": "C", "local_study_unit": "SU-2", "local_label": "Chest pain"},
+        {"local_feature_id": "D", "local_study_unit": "SU-3", "local_label": "chest  pain!"},
+    ]
+    measured = measure_cross_unit_collisions(collided)
+    assert measured["EXACT_LABEL_MATCHES_ACROSS_UNITS"] == 1
+    assert measured["NORMALIZED_TEXT_MATCHES_ACROSS_UNITS"] == 1
+
+
+def test_the_inventory_is_deterministic():
+    assert _inventory() == _inventory()
+
+
+def test_the_inventory_carries_no_toronto_notes_topic_prose():
+    """Only repository-authored local labels reach the report; TN titles do not."""
+    import json
+
+    from qbank.clinical_concepts import build_concept_vocabulary
+
+    serialized = json.dumps(_inventory())
+    topics = [concept["preferred_label"]
+              for concept in build_concept_vocabulary(ROOT)["concepts"]
+              if concept["vocabulary_source"] == "TN_TOC_TOPIC"]
+    assert topics
+    leaked = [title for title in topics if len(title) > 24 and title in serialized]
+    assert leaked == []
