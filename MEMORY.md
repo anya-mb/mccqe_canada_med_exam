@@ -685,7 +685,103 @@ This section is maintained by hand and sits outside the generated source-researc
   Focused tests **72**; full canonical suite **1224/0** at the final code state. Reports rebuild with
   `qbank run-contrast-first-pilot` and a test asserts they regenerate byte-identically from committed
   artifacts. Docs at `docs/contrast-first-generation.md`.
-- QGEN_NEXT_STEP = `USER_REVIEW_CONTRAST_FIRST_PILOT`
+- **Contrast-first option-failure diagnosis (2026-09-05), diagnosed at `889ecb8`.** Diagnosis-only:
+  `PRODUCTION_CODE_CHANGED = NO`, no opportunity, contrast set, matrix, stem, item, seed, gate or verdict
+  moved, `FROZEN_QGEN_ARTIFACTS_CHANGED = 0`, `LLM_API_CALLS = 0`, no larger pilot, no new retrieval, no
+  embeddings, graph untouched. `reports/qgen_contrast_first_option_failure_diagnosis.json`. Stages were
+  recomputed from the frozen artifacts through `build_pilot_contrast_sets` and
+  `run_post_stem_revalidation` rather than read from the pilot narrative.
+- **`NEXT_DOMINANT_BOTTLENECK = OPTION_REALIZATION` is refuted by its own artifacts, and the refutation is
+  the headline.** Distractor realization is *already* lossless: **32 of 32** realized distractor option
+  texts are the frozen curated `competitor_concept` string verbatim, **32 of 32** "Live:" clauses are the
+  seed's frozen `why_a_partially_knowledgeable_candidate_might_choose_it` verbatim, and **32 of 32**
+  "Inferior: Correct where..." clauses are the seed's frozen
+  `conditions_under_which_competitor_would_be_correct` verbatim. The only clinical claim the option layer
+  authors for a distractor is the appended sentence "That condition is not met here." (32 of 32).
+  `PROVENANCE_LOCKED_OPTION_REALIZATION` would lock what is already locked, so it was **not implemented**.
+- `PRIMARY_FAILURE_COUNTS` over the eight rejected items, one earliest cause each, each resting on a quoted
+  reviewer sentence: **`A_CONTRAST_SET_DEFECT` 3** (G2-MED-03, G2-SURG-01, G2-SURG-02),
+  **`C_STEM_BLUEPRINT_DEFECT` 3** (G2-PED-01, G2-PSY-03, G2-PHELO-01),
+  **`B_CONTRAST_MATRIX_DEFECT` 1** (G2-PED-02), **`H_OPTION_WORDING_REALIZATION_DEFECT` 1** (G2-OBGYN-01).
+  Option-layer causes G-L total **1 of 8**. `GOOD_CONCEPT_BAD_RENDERING` 1,
+  `BAD_CONCEPT_BEFORE_RENDERING` 4, `OTHER_FAILURE` 3. As primaries,
+  `KEY_DISTRACTOR_SCOPE_ASYMMETRY`, `OPTION_CATEGORY_MISMATCH`, `DECISION_GRANULARITY_MISMATCH`,
+  `CUEING_OR_TESTWISENESS` and `UNSUPPORTED_QUALIFIER_IN_RENDERED_OPTION_TEXT` are all **0**.
+- **The decisive counterfactual, not the defect tally.** Asked per item whether every reject-forcing defect
+  would disappear given an option layer that never asserted an unstated condition false and never mutated a
+  cited claim: **1 yes (G2-OBGYN-01), 7 no**. Rewording the template clause would lower `UNSUPPORTED_CLAIMS`
+  from 12 but change **no** verdict except that one, because in the other seven the competitor is genuinely
+  live (second key), the pair is redundant, or the key itself is wrong. R1 said of G2-PED-02 in terms:
+  not repairable by editing rationales.
+- `PRIMARY_BOTTLENECK = MULTIPLE_INDEPENDENT_BOTTLENECKS` under the task's own rule (no option-layer cause
+  reaches a plurality), so `BOUNDED_FIX_IMPLEMENTED = NO`, `FIX = NONE`, `FROZEN_REPLAY_RUN = NO`. But the
+  seven non-option primaries are **not seven unrelated problems**: all seven are failure modes of one layer
+  the phase-9 vocabulary has no name for, the **contrast-relation model** -- the frozen
+  `plausibility_anchor_feature_ids` and `condition_predicates` over which the matrix, the blueprint solver
+  and the anchor floor all reason. Four measured defects, in order of cost:
+  (1) **silence is scored as defeat** -- `_satisfied` counts an unassigned feature as unsatisfied, and
+  forbidding a feature PRESENT never assigns it ABSENT, so `no_second_key` passes over competitors the stem
+  never addressed (G2-PHELO-01, G2-PSY-03, and every template clause);
+  (2) **no competitor-versus-competitor test** -- redundant, nested or anchor-equals-condition competitors
+  are admissible (G2-MED-03 one preload proposition defeats two options, G2-SURG-01 tubo-ovarian abscess
+  nests in PID, G2-PED-01 `SF-P147-FOCAL-ASYMMETRIC-FINDINGS` is simultaneously the only available anchor
+  and a correctness condition of two competitors);
+  (3) **anchors are untyped** -- `SF-GS76-FEMALE-REPRODUCTIVE-AGE` and `SF-GS76-IMAGING-AVAILABLE-NOW`
+  count as plausibility anchors and no reviewer accepts them (G2-SURG-01, G2-SURG-02); this is the pilot's
+  already-recorded anchor-quality finding, now attributed;
+  (4) **correctness conditions are conjunction-only** -- `CLM-R2-PED-VIRAL-INDICATION` reads "infection
+  control purposes, **or** high risk patients" and `CLM-R2-PED-CXR-INDICATION` reads "unclear, ... not as
+  expected **or** severity"; both are carried as conjunctions, so G2-PED-02 scored two genuinely correct
+  competitors as defeated and keyed an answer its own `CLM-R4-PED-CONTINUOUS` contradicts.
+- **The smallest property separating the two accepted controls from the eight rejections, measured.** Not
+  seed strength, anchor count, response-class parity, decision-granularity parity, option wording or
+  cueing -- every one of those is uniform across both groups or present in both (a mild lone-category cue
+  appears in both accepted items). It is whether the stem's description is **closed over the domain of each
+  competitor's unmet condition**. Every unsatisfied condition was classified against a stated rule:
+  accepted **CLOSED 3 / OPEN 1 / STATED_CONTRARY 2** over 6 competitors; rejected **CLOSED 15 / OPEN 15 /
+  STATED_CONTRARY 4** over 26. Competitors defeated *only* by open silence: accepted 1 of 6, rejected 9 of
+  26. Both accepted items sit at the cohort minimum of **0.67** silent conditions per competitor; every
+  rejected item is at 0.75 or above. In the accepted items the silences fall in domains the stem enumerates
+  -- the contents of a letter, the region's staffing -- so silence is a real negation; in the rejected ones
+  they fall on a pelvic examination never performed, a treatment preference never elicited, a case mix
+  never reported, a body habitus never given. **Stated limit: two controls cannot prove a property, and
+  G2-PHELO-03 was accepted while carrying one open-silence competitor.** This is the strongest measured
+  association, not a validated rule.
+- Option-realization contract audit: `validate_option_realization` receives only the matrix's `seed_id`
+  set. It validates **no rationale text at all**, so realization may freely change severity, timing,
+  management stage, certainty, diagnostic specificity, scope, population, route, modality or granularity in
+  a rationale. Measured exercise of that freedom is near zero for distractors and confined to the
+  free-authored **key** rationale, which is where G2-OBGYN-01's two unsupported claims live: `CLM-R2-OB-ABSCESS`
+  says an abscess "often" has a palpable collection and the key rationale renders the categorical inverse
+  (POLARIZED); `CLM-R2-OB-MASTITIS-ANCHOR` attaches the presentation to *inflammatory* mastitis and the key
+  rationale renders it as defining both (BROADENED). The contract fired on 2 of 10 items
+  (`OPTION_SPECIFICITY_MISMATCH` on G2-PHELO-01 and G2-SURG-02); both were rejected, so precision 2/2,
+  recall 2/8.
+- `DIFFICULTY_STATUS = NOT_VALIDATED`, and difficulty shares the root rather than being separate.
+  `EASY_FAILURE_ROOT = EASY_FEATURE_BUDGET_MAXIMISES_OPEN_SILENCE`: all five realized EASY items were
+  rejected, their causes spread exactly like the cohort, but `REQUIRED_FEATURE_CAP` gives EASY the smallest
+  stem-feature budget and EASY stems carry the most unaddressed competitor conditions -- **1.20** silent
+  conditions per competitor against 1.06 at MEDIUM and 0.71 at HARD. Closing a competitor's condition costs
+  stem material, so the ladder's budget runs opposite to what safe discrimination needs.
+  `HARD_DIFFICULTY_MISMATCH_ROOT = SAFETY_AND_DIFFICULTY_ARE_IN_DIRECT_TENSION_UNDER_THE_CURRENT_MODEL`:
+  G2-PHELO-03 was declared HARD and judged EASY because its shortfall is "closed off so completely that
+  little inference is left" -- the very property that made it safe -- while
+  `MAXIMUM_ABSENT_REQUIRED_FEATURES` is 0 at HARD, forbidding the explicit denials that close a domain and
+  pushing HARD items toward the open silence that produced the second keys.
+- Context cost, characters only: median 14,895 / p95 17,157 per opportunity, unchanged. Components as a
+  share of the median total: **contrast matrix 38.3 %**, verification context 24.3 %, stem blueprint 17.4 %,
+  retrieved evidence 9.2 %, opportunity metadata 6.6 %, stem-author generation context 3.4 %.
+  `NEXT_TOKEN_OPTIMIZATION_TARGET = CONTRAST_MATRIX_ROW_PAYLOAD`: in **39 of 39** rows `SUPPORTING_FEATURES`
+  is an exact duplicate of `SHARED_PLAUSIBILITY_FEATURES.stem_feature_ids` and
+  `DEFEATING_DISCRIMINATORS.unsatisfiable_conditions` an exact duplicate of the ids already in
+  `CORRECTNESS_CONDITIONS` -- 424 characters at the median, 7.2 % of the matrix, 2.8 % of the total.
+  **Identified only and deliberately not removed**, because deleting them edits the frozen matrix schema and
+  moves its content hash.
+- `COPYRIGHT_AUDIT = PASS`, longest verbatim Toronto Notes run **0** in the new report. Focused tests
+  `tests/test_contrast_first_pilot.py` **72/0**; full canonical suite `NOT_REQUIRED` and not run, because no
+  production code, validator or executable canonical artifact changed. `RECOMMENDED_ARCHITECTURE_ACTION`
+  stays `DO_NOT_SCALE`.
+- QGEN_NEXT_STEP = `FIX_CONTRAST_RELATION_MODEL_SILENCE_AS_DEFEAT_FIRST`
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 
 ## Research-level policy
