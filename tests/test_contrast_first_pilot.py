@@ -897,3 +897,14 @@ def test_a_competitor_defeated_only_by_a_stated_absence_is_flagged():
     assert "CO-3" in evaluate_clinical_coherence(
         blueprint, vocabulary=VOCABULARY
     )["violations"]
+
+
+def test_a_context_feature_may_be_declared_absent():
+    matrix = build_contrast_matrix(contrast_set())
+    blueprint = solve_stem_blueprint(
+        matrix, vocabulary=VOCABULARY,
+        context_features=[{"stem_feature_id": "SF-KEY-C", "polarity": "ABSENT"}],
+    )
+    row = next(r for r in blueprint["required_features"] if r["stem_feature_id"] == "SF-KEY-C")
+    assert row["polarity"] == "ABSENT"
+    assert blueprint["fail_closed_reason"] is None

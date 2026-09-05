@@ -428,7 +428,7 @@ def solve_stem_blueprint(
     vocabulary: dict[str, dict[str, Any]],
     difficulty_intent: str | None = None,
     contradiction_pairs: Iterable[tuple[str, str]] = (),
-    context_features: Sequence[str] = (),
+    context_features: Sequence[str | dict[str, str]] = (),
 ) -> dict[str, Any]:
     """Solve the feature set a stem must realize, before a word of it is written.
 
@@ -446,7 +446,13 @@ def solve_stem_blueprint(
     rows = sorted(matrix["rows"], key=lambda row: row["seed_id"])
     key_conditions = matrix["key"]["correctness_conditions"]
 
-    named = {condition["stem_feature_id"] for condition in key_conditions} | set(context_features)
+    context = [
+        {"stem_feature_id": row, "polarity": "PRESENT"} if isinstance(row, str) else dict(row)
+        for row in context_features
+    ]
+    named = {condition["stem_feature_id"] for condition in key_conditions} | {
+        row["stem_feature_id"] for row in context
+    }
     for row in rows:
         named |= set(row["SUPPORTING_FEATURES"])
         named |= {condition["stem_feature_id"] for condition in row["CORRECTNESS_CONDITIONS"]}
@@ -487,11 +493,13 @@ def solve_stem_blueprint(
     # case is not load-bearing but its absence would read as a gap. They enter
     # under the same rules as everything else: inside the frozen vocabulary, no
     # contradiction, and never completing a competitor's correctness signature.
-    for feature in sorted(set(context_features)):
+    for row in sorted(context, key=lambda entry: entry["stem_feature_id"]):
+        feature = row["stem_feature_id"]
+        polarity = row.get("polarity", "PRESENT")
         if feature in assignment:
             continue
         trial = dict(assignment)
-        trial[feature] = "PRESENT"
+        trial[feature] = polarity
         if _fully_satisfies_any(rows, trial) is not None or contradicts(feature, assignment):
             return _blueprint(
                 matrix, intent, assignment, provenance, rows,
@@ -499,7 +507,7 @@ def solve_stem_blueprint(
                 note=f"context feature {feature} would complete a competitor or contradict the stem",
                 vocabulary=vocabulary,
             )
-        assignment[feature] = "PRESENT"
+        assignment[feature] = polarity
         provenance.setdefault(feature, []).append("OPTIONAL_CONTEXT")
 
     # The floor pass. Competitors are visited in seed order and each anchor
