@@ -1,0 +1,265 @@
+{
+  "architectures": [
+    {
+      "debuggability": "Excellent.",
+      "determinism": "Full.",
+      "fit_with_safe_yield": "Perfect, but yield-limited.",
+      "hallucination_risk": "Lowest. Every competitor is a reviewed seed with cited claims.",
+      "id": "A",
+      "implementation_complexity": "Already implemented.",
+      "incremental_update_cost": "Linear in human/LLM authoring effort. Extrapolating the observed rate to 1487 study units is the binding constraint.",
+      "initial_indexing_cost": "None.",
+      "medical_currentness": "Handled per claim in the evidence packets.",
+      "name": "CURRENT_CURATED_CONTRAST_LIBRARY_ONLY",
+      "ongoing_token_cost": "Low per item, but very high per unit of coverage: each new study unit needs hand-authored seeds, enrichment and anchors.",
+      "retrieval_quality": "High precision where a seed exists; zero recall where none does. Measured: 19 of 30 frozen G2 opportunities fail closed for want of admissible competitors, 2 of them with an empty index.",
+      "source_traceability": "Complete: seed -> evidence claim -> source sha256.",
+      "stem_specific_competitor_quality": "Best available today. The stem-anchor floor and the ADM-3 ceiling are validated and produce LIVE_BUT_INFERIOR sets when supply exists.",
+      "verdict": "Necessary and validated; insufficient alone. Coverage growth is the problem."
+    },
+    {
+      "debuggability": "Moderate - ranking is opaque relative to an index lookup.",
+      "determinism": "BM25 is deterministic; dense retrieval is deterministic given a pinned model.",
+      "fit_with_safe_yield": "Poor as the primary competitor source; useful as a candidate-discovery and evidence-locating layer.",
+      "hallucination_risk": "Moderate. Passages ground claims but the LLM must still infer the competitor relation, which is where invention enters.",
+      "id": "B",
+      "implementation_complexity": "Low.",
+      "incremental_update_cost": "Trivial.",
+      "initial_indexing_cost": "Very low. FTS5 over 6.76 MB is seconds.",
+      "medical_currentness": "Poor on its own - the corpus is a 2025 textbook and would silently answer currentness questions.",
+      "name": "PLAIN_LOCAL_RAG",
+      "ongoing_token_cost": "Moderate: retrieved passages are prose and are large relative to structured rows.",
+      "retrieval_quality": "Recall improves sharply; precision for this task is poor. Lexical or dense similarity over 1.7M tokens returns passages about the topic, not competitors for the realized stem.",
+      "source_traceability": "Good at passage level; the relation itself is unsourced.",
+      "stem_specific_competitor_quality": "Weak. This is precisely the G2 failure mode already diagnosed: generic medical similarity is what admitted the R4 defective distractors. Similarity cannot express 'plausible here but defeated by this printed datum'.",
+      "verdict": "Good discovery substrate, wrong decision layer."
+    },
+    {
+      "debuggability": "Poor - failures are distributed across extraction, summarization and community detection.",
+      "determinism": "Low. LLM extraction is not reproducible without pinning and caching every call.",
+      "fit_with_safe_yield": "Poor. The pipeline fails closed on unsourced claims; a generated summary is model agreement, which AGENTS.md explicitly says is not evidence.",
+      "hallucination_risk": "Higher than A or D. Entity, relationship and community summaries are LLM-authored text that then becomes the retrieved 'evidence', which inserts a generated layer between the source and the claim.",
+      "id": "C",
+      "implementation_complexity": "High.",
+      "incremental_update_cost": "High; community structure shifts under insertion.",
+      "initial_indexing_cost": "The decisive objection. See graphrag_cost_analysis.",
+      "medical_currentness": "Not modelled. GraphRAG has no notion of an authority hierarchy or a currentness date on an edge.",
+      "name": "FULL_GENERIC_GRAPHRAG",
+      "ongoing_token_cost": "High, and re-indexing on corpus change is expensive.",
+      "retrieval_quality": "Strong for corpus-global, thematic and multi-hop narrative questions.",
+      "source_traceability": "Present but indirect - claims trace to summaries that trace to text units.",
+      "stem_specific_competitor_quality": "No better than B for this task, and possibly worse. GraphRAG's summarization layers abstract away the exact stem-level features the floor needs; entity/relationship summaries are prose, not typed predicates with polarity.",
+      "verdict": "Rejected. It buys global summarization the project does not need and pays for it with the two properties the project most needs, determinism and provenance."
+    },
+    {
+      "debuggability": "High - every candidate names the edge that produced it and every edge names its source page.",
+      "determinism": "High. Retrieval and ranking stay deterministic; the LLM reasons over a fixed retrieved set.",
+      "fit_with_safe_yield": "Direct. The graph produces exactly the LIVE_BUT_INFERIOR set the wave already consumes; the stem-anchor floor and ADM-3 ceiling are unchanged and keep their veto.",
+      "hallucination_risk": "Lowest of the retrieval-augmented options. Nothing enters the candidate set without an edge; nothing enters an item without a cited claim; the existing gates are unchanged.",
+      "id": "D",
+      "implementation_complexity": "Moderate, and it is an extension of committed structures rather than a new subsystem.",
+      "incremental_update_cost": "Low and local - edges are added per study unit without touching the rest.",
+      "initial_indexing_cost": "Low. Stages 1-3 are deterministic; the LLM is used only where deterministic extraction is provably insufficient, and only for opportunities actually being generated.",
+      "medical_currentness": "Modelled explicitly by authority_role and currentness_date on the edge, so a 2025 textbook edge cannot outrank current Canadian guidance.",
+      "name": "HYBRID_CLINICAL_CONTRAST_GRAPH_PLUS_LOCAL_RAG",
+      "ongoing_token_cost": "Lowest per generated item, because the model receives a small typed neighbourhood instead of prose.",
+      "retrieval_quality": "Graph supplies typed, decision-scoped candidates; BM25 supplies recall for concepts the graph has not yet typed and locates the evidence span. Union then deterministic filter.",
+      "source_traceability": "Complete and page-level, extending the edge schema already in the repository.",
+      "stem_specific_competitor_quality": "Highest. The graph stores the two relations the floor and ceiling need - what makes a competitor considerable, and what makes it wrong - as typed edges with polarity, rather than leaving them to similarity.",
+      "verdict": "Recommended, conditional on the frozen-G2 benchmark in this artifact demonstrating a retrieval gain before coverage is expanded."
+    }
+  ],
+  "baseline_commit": "7d829ac",
+  "context_size_projection": {
+    "current_approach_evidence_packet_plus_seeds": "roughly 3,000-6,000",
+    "estimate_class": "ENGINEERING_ESTIMATE",
+    "expected_effect": "LOWER than today and SUBSTANTIALLY_LOWER than any prose-retrieval alternative, because typed rows replace prose and the candidate set is capped at 3-6 competitors.",
+    "full_graphrag_local_search_with_community_context": "roughly 8,000-20,000",
+    "hybrid_typed_neighbourhood_plus_cited_claims": "roughly 1,500-3,000",
+    "measured_from_repository_artifacts": false,
+    "note": "ENGINEERING ESTIMATE, not a measurement. Approximate tokens of retrieved material handed to the model for one generated question, budgeted by hand from the shape of the intended context packet. No figure here was deterministically measured from repository artifacts, including the current-approach row, which has not been instrumented. Relative sizes only; no dollar figures. Actual context sizes are measured by the frozen-G2 retrieval benchmark, whose metric list already includes retrieved context tokens per opportunity.",
+    "plain_rag_top_k_page_passages": "roughly 8,000-15,000",
+    "whole_chapter_if_ever_sent": "roughly 100,000"
+  },
+  "decision": {
+    "architecture_recommendation_conditional_on_benchmark": true,
+    "conditional_on": "FROZEN_G2_RETRIEVAL_BENCHMARK passing its stated decision rule",
+    "deterministic_whole_book_index": "RECOMMENDED",
+    "full_corpus_llm_extraction_recommended": false,
+    "full_graphrag_recommended": false,
+    "full_llm_graph_extraction_over_1595_pages": "NOT_RECOMMENDED",
+    "graph_construction_authorized": false,
+    "llm_api_required": false,
+    "local_embeddings": "BENCHMARK_FIRST",
+    "local_first": true,
+    "note": "A recommendation to test in the stated phase order, not an authorization to build. Conditional on the frozen-G2 retrieval benchmark meeting its pre-committed decision rule; if plain BM25 alone closes the gap no graph is built, and if no arm closes it the graph must not be built.",
+    "recommended_retrieval_architecture": "HYBRID_CLINICAL_CONTRAST_GRAPH_PLUS_RAG",
+    "sqlite_fts5_recommended": true
+  },
+  "frozen_g2_retrieval_benchmark": {
+    "arms": [
+      "A_CURRENT_CONTRAST_LIBRARY",
+      "B_PLAIN_BM25_RAG",
+      "C_GRAPH_ONLY",
+      "D_HYBRID_GRAPH_PLUS_TEXT"
+    ],
+    "decision_rule": "Expand graph coverage only if arm D beats arm A on opportunities reaching three admissible competitors AND does not lose on stem-anchor survival or second-key rejection. If arm B alone closes the gap, build no graph. If no arm closes it, the bottleneck is not retrieval and the graph must not be built.",
+    "explicitly_not_the_only_metric": "final accepted yield",
+    "held_constant": [
+      "the frozen stems and their stem-feature maps",
+      "the keys",
+      "the option-set archetypes",
+      "the stem-anchor floor",
+      "the ADM-3 second-key ceiling",
+      "the evidence packets"
+    ],
+    "metrics": [
+      "candidate_recall_against_a_frozen_human_reference_competitor_set",
+      "same_learner_decision_precision",
+      "same_option_set_archetype_precision",
+      "decision_granularity_precision",
+      "stem_anchor_survival_rate",
+      "second_key_rejection_rate",
+      "opportunities_reaching_at_least_three_admissible_competitors",
+      "retrieved_context_tokens_per_opportunity",
+      "share_of_returned_candidates_carrying_a_page_level_source_reference"
+    ],
+    "population": "The 30 frozen G2 opportunities, unchanged, with special attention to the 19 that end FAIL_CLOSED_INSUFFICIENT_ADMISSIBLE_COMPETITORS and the 2 with an empty retrieval index.",
+    "reference_set_rule": "The reference competitor set must be frozen BEFORE any arm is run, and must be authored without seeing which arm retrieves what.",
+    "status": "DESIGNED_NOT_RUN"
+  },
+  "generated_at": "2026-09-04",
+  "graphrag_cost_analysis": {
+    "conclusion": "Standard GraphRAG would spend its entire indexing budget on the layers this project cannot use, and would weaken the two properties it depends on. GRAPH_YES, GRAPHRAG_NO.",
+    "fast_method": "FastGraphRAG replaces LLM entity extraction with noun-phrase extraction (NLTK/spaCy/regex), defines relationships by text-unit co-occurrence, drops entity and relationship summarization, and builds community reports from source text. It trades graph fidelity for cost.",
+    "projection_for_this_corpus": {
+      "corpus_tokens": 1691190,
+      "dollar_cost": "NOT_ESTIMATED - deliberately, because it depends on model and provider and the task forbids fabricating cost figures.",
+      "estimate_class_llm_call_counts": "ENGINEERING_ESTIMATE",
+      "hard_constraint": "The project's stated constraint is no LLM API calls and small context. A standard GraphRAG index violates it by construction.",
+      "measured_from_repository_artifacts": "corpus_tokens and both text_unit counts are measured/derived deterministically from the committed corpus; the LLM-call order of magnitude is an ENGINEERING ESTIMATE and is not an experimental result.",
+      "order_of_magnitude_llm_calls_for_a_standard_index": "10^4, before gleanings and before any re-index",
+      "text_units_at_300_tokens_with_overlap": 6201,
+      "text_units_at_600_tokens_with_overlap": 3101
+    },
+    "published_cost_signals": [
+      "Microsoft's own documentation warns that GraphRAG indexing can be an expensive operation.",
+      "Graph extraction is reported as roughly 75% of indexing cost.",
+      "A widely cited figure for one average-sized textbook is on the order of 4,000 LLM calls for a single indexing pass."
+    ],
+    "published_cost_signals_note": "Third-party published signals about GraphRAG cost in general. They are not measurements of this corpus and are used only as order-of-magnitude arguments.",
+    "stages_unnecessary_for_this_use_case": [
+      "Community detection and community report generation. Our retrieval question is strictly local: given a learner decision, an item archetype, an option-set archetype and a realized stem-feature map, return competitors. It is never 'what are the themes of this corpus'.",
+      "Entity and relationship summarization. Summaries are prose; the pipeline needs typed predicates with polarity and a cited claim, and a summary is strictly worse than the source span for that purpose.",
+      "Open-vocabulary entity extraction. Our node vocabulary is not open - it is bounded by the 1487 study units, the 198 MCC objectives, the option-set archetypes and the stem-feature vocabulary."
+    ],
+    "standard_pipeline_stages_and_llm_need": {
+      "claim_extraction": "LLM (optional)",
+      "community_detection": "deterministic (Leiden)",
+      "community_report_generation": "LLM",
+      "entity_extraction": "LLM",
+      "entity_summarization": "LLM",
+      "relationship_extraction": "LLM",
+      "relationship_summarization": "LLM"
+    }
+  },
+  "measured_corpus_inventory": {
+    "chapter_manifests": 32,
+    "clean_text_approx_tokens": 1691190,
+    "clean_text_bytes": 6764761,
+    "mcc_objectives_in_registry": 198,
+    "mean_page_approx_tokens": 1060,
+    "mean_page_bytes": 4241,
+    "mean_pages_per_study_unit": 4.9,
+    "mean_tokens_per_study_unit": 5198,
+    "median_pages_per_study_unit": 2.0,
+    "note": "All figures below were measured deterministically from the committed local corpus. No page was re-OCRed and no page was read by an LLM to produce them.",
+    "one_large_chapter_approx_tokens": 100913,
+    "page_index_carries_sha256_per_page": true,
+    "pages_flagged_low_quality": 2,
+    "pages_with_extracted_headings": 1025,
+    "study_units": 1487,
+    "study_units_carrying_testable_competencies": 1423,
+    "study_units_with_mcc_evidence": 1247,
+    "study_units_with_pdf_page_range": 1486,
+    "testable_competency_statements": 1815,
+    "toc_node_levels": {
+      "chapter": 32,
+      "section": 468,
+      "topic": 1519
+    },
+    "toc_nodes": 2019,
+    "toronto_notes_pages_ocred": 1595
+  },
+  "measured_existing_normalized_layer": {
+    "anchor_study_units_with_typed_edges": 1,
+    "contrast_seeds": 105,
+    "distinct_competitor_concept_ids": 105,
+    "existing_edge_fields": [
+      "contrast_id",
+      "anchor_concept_id",
+      "contrast_concept_id",
+      "anchor{study_unit_id,chapter_id,source_node_ids,tn_pages,pdf_pages}",
+      "contrast{...}",
+      "decision_context",
+      "applicable_learner_decisions",
+      "shared_features",
+      "plausible_error",
+      "neighboring_choice",
+      "decisive_discriminant",
+      "excluded_contexts",
+      "evidence_refs{claim_id,claim_sha256}",
+      "quality_status",
+      "reviewer_id",
+      "validated_at",
+      "content_sha256"
+    ],
+    "interpretation": "The bottleneck named at the checkpoint - CONTRAST_LIBRARY_COVERAGE - is quantified here. The typed edge schema already models plausibility (shared_features), the candidate's error path (plausible_error), the defeat (decisive_discriminant), the second-key guard (excluded_contexts) and full page-level provenance. It exists for one study unit out of 1487. The missing thing is population, not design.",
+    "note": "The project already has a partial clinical contrast graph. Its schema is proven; its coverage is not.",
+    "stem_feature_study_unit_coverage_percent": 0.4,
+    "stem_feature_vocabulary_features": 102,
+    "stem_feature_vocabulary_study_units": 6,
+    "study_unit_coverage_percent": 3.1,
+    "study_units_touched_by_contrast_library": 46,
+    "typed_contrast_edges_in_chapter_global_library": 12,
+    "typed_edge_study_unit_coverage_percent": 0.07
+  },
+  "measured_vs_estimated": {
+    "deterministically_measured": [
+      "measured_corpus_inventory",
+      "measured_existing_normalized_layer",
+      "graphrag_cost_analysis.projection_for_this_corpus.corpus_tokens",
+      "graphrag_cost_analysis.projection_for_this_corpus.text_units_at_300_tokens_with_overlap",
+      "graphrag_cost_analysis.projection_for_this_corpus.text_units_at_600_tokens_with_overlap"
+    ],
+    "engineering_estimate": [
+      "context_size_projection (all rows)",
+      "graphrag_cost_analysis.projection_for_this_corpus.order_of_magnitude_llm_calls_for_a_standard_index",
+      "graphrag_cost_analysis.published_cost_signals",
+      "storage_evaluation.graph_size_projection"
+    ],
+    "rule": "Estimated figures must never be presented as experimentally established facts."
+  },
+  "schema_version": "1.1",
+  "scope": "QGEN_RETRIEVAL_ARCHITECTURE_COMPARISON",
+  "status": "DESIGN_RESEARCH_ONLY_NOTHING_BUILT",
+  "storage_evaluation": {
+    "graph_size_projection": {
+      "conclusion": "Two to three orders of magnitude below where a dedicated graph database earns its operational cost.",
+      "edges_upper_bound_order": "low hundreds of thousands even at generous branching",
+      "nodes_upper_bound_order": "low tens of thousands (1487 study units + a bounded concept set per unit + 198 objectives + archetype and decision nodes)"
+    },
+    "recommendation": {
+      "analysis_export": "NetworkX, for offline analysis and export only, not in the retrieval path",
+      "canonical_serialization": "JSON artifacts remain canonical and reviewable; SQLite is a derived, rebuildable index",
+      "embeddings": "BENCHMARK_FIRST. Add local embeddings only if the frozen-G2 benchmark shows BM25 plus graph misses candidates that embeddings recover. If they are added, use a locally runnable sentence-encoder class model (a few hundred MB, CPU-only); 3k-6k text units is a trivial index and needs no GPU and no embedding API.",
+      "graph_store": "SQLite adjacency tables (nodes, edges, edge_provenance), one file, versioned alongside the JSON artifacts",
+      "rejected_now": [
+        "Neo4j",
+        "external vector database",
+        "any hosted service"
+      ],
+      "text_retrieval": "SQLite FTS5 with BM25 over clean-ocr page and study-unit spans"
+    }
+  }
+}
