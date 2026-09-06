@@ -21,7 +21,7 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `e2904549ee8301f9da580136b0f93e6a190ba1b0`.
+- Audited coordinator input commit: `f8bd916e4d5959d303dbfe4cec864bdd2a047e66`.
 - Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
@@ -781,7 +781,62 @@ This section is maintained by hand and sits outside the generated source-researc
   `tests/test_contrast_first_pilot.py` **72/0**; full canonical suite `NOT_REQUIRED` and not run, because no
   production code, validator or executable canonical artifact changed. `RECOMMENDED_ARCHITECTURE_ACTION`
   stays `DO_NOT_SCALE`.
-- QGEN_NEXT_STEP = `FIX_CONTRAST_RELATION_MODEL_SILENCE_AS_DEFEAT_FIRST`
+- **Clinical contrast relation model V2 (2026-09-05), from `3ebdfb3`.** Design `58066e9`
+  (`docs/superpowers/specs/2026-09-05-clinical-contrast-relation-model-v2-design.md`),
+  engine `55d1749`, relations and counterfactual `c6eeebe`, solver `810e721`, replay `f8bd916`.
+  `V2_ASSESSMENT = CLINICAL_CONTRAST_MODEL_V2_PROMISING`. No production generator replaced, no
+  broad bank generated, `FROZEN_QGEN_ARTIFACTS_CHANGED = 0`, `LLM_API_CALLS = 0`, no embeddings,
+  no full-book Toronto Notes extraction, graph untouched, `CLAUDE.md` unchanged.
+- The four diagnosed defects are fixed and nothing else is. A feature the state map does not
+  name resolves `UNKNOWN`, predicates evaluate under Kleene three-valued logic, correctness is a
+  nested Boolean tree, features carry a semantic contrast role whose class depends on the
+  decision domain, and every option set is evaluated over all pairs by `CS2-1..CS2-9`.
+  Derived absences survive where the frozen contradiction pairs entail them, so "the letter
+  states the relative benefit only" still says the denominator is missing.
+- **Counterfactual against the unaltered V1 stems: `COUNTERFACTUAL_GATE = PASS` on all six
+  precommitted limbs.** `NON_OPTION_REJECTIONS_INTERCEPTED_PRE_FINAL_REVIEW = 7/7`,
+  `ACCEPTED_V1_CONTROLS_PRESERVED = 2/2`, silence-as-absence defects **15 -> 0**. G2-OBGYN-01 is
+  deliberately not intercepted: its cause was `H_OPTION_WORDING_REALIZATION_DEFECT`, and a
+  contrast-relation model has nothing to say about a rationale that polarizes its own claim.
+- **V2 replay over the same ten opportunities: `V2_ACCEPTED = 4/10`, `V2_REJECTED = 1/10`,
+  `V2_NO_SAFE_ITEM = 5/10`, against V1's 2 / 8 / 0.** Reviewer defect total over all realized
+  items **45 -> 1**. `ACCEPTED_ITEM_SAFETY = PASS`, zero on all eleven dimensions. Every realized
+  item clears `retrieve_profile_aware_contrasts` unchanged with no ADM_1, ADM_3 or SAF_1
+  exclusion. Difficulty intent match EASY 1/1, MEDIUM 1/1, HARD 1/2; G2-PHELO-03 is declared
+  HARD and reads EASY for the same reason it did in V1, its shortfall being stated completely.
+- **Failure moved upstream rather than yield moving up.** V1 realized ten items and eight were
+  rejected after a reviewer read them; V2 realizes five and refuses five before a stem exists,
+  each by the defect the diagnosis named. V2 converts unsafe items into no items.
+- **The one rejection is the most informative result.** G2-OBGYN-01 fails because
+  `CLM-R2-OB-MASTITIS-ANCHOR` describes inflammatory mastitis in the stem's own words and
+  separates bacterial mastitis from it only by whether antibiotics are needed to resolve it,
+  which nothing at presentation settles. The key concept is one level finer than any frozen
+  vocabulary feature can resolve. **V2 has no gate for an out-of-set concept that shares every
+  discriminator with the key**; a human reading caught it and no rule did.
+- Two mechanisms were added during authoring and both are load-bearing:
+  `forbidden_present_features`, which refuses a feature a cited claim makes the signature of a
+  concept the option set cannot contain, and discriminator scoping, because a feature two
+  concepts share cannot decide between them however well cited it is.
+- **The specified medium-36 pilot was not run and cannot be built.**
+  `MEDIUM_36_PILOT_TRIGGERED = NO`. The frozen opportunity universe is **30**; only **18** carry
+  an authored option-set contract; **16** of those reach three admissible curated candidates;
+  **10** are consumed by this replay, leaving **6**. Building 36 needs new opportunities, seed
+  packs with independent seed review and current-source evidence packets, which is source-packet
+  research rather than an architecture pilot.
+- `WHOLE_BOOK_CONTRAST_SCALING_DECISION = SCALE_CONTRAST_RELATIONS_ON_DEMAND`. Sixty-eight
+  relations settled ten opportunities; all-pairs precomputation over 1,595 pages is the
+  combinatorial explosion the design refuses. Keep the concept, evidence and contrast graphs
+  logically distinct.
+- Context cost, characters only: median **8,481** / p95 **9,123** per opportunity against V1's
+  14,895 / 17,157. The V1 optimization target `CONTRAST_MATRIX_ROW_PAYLOAD` does not arise: the
+  V2 path has no contrast matrix. `COPYRIGHT_AUDIT = PASS`, longest verbatim Toronto Notes run
+  **0**. Focused tests **88/0**; full canonical suite **1312/0** at the final code state.
+- `NEXT_DOMINANT_BOTTLENECK = CONTRAST_SUPPLY`. Not retrieval, settled by the four-arm
+  benchmark, and no longer the relation model. The curated library carries three usable
+  competitors for too few opportunities once V2 removes the nested, redundant and
+  anchor-equals-condition members, and 12 of 30 opportunities have no option-set contract at all.
+  Runner-up: the missing out-of-set second-key gate above.
+- QGEN_NEXT_STEP = `USER_REVIEW_CLINICAL_CONTRAST_V2`
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 
 ## Research-level policy
