@@ -520,3 +520,343 @@ REUSE_MATRIX = [
         "why": "Out of scope. PRODUCTION_GENERATOR_REPLACED = NO.",
     },
 ]
+
+
+# ------------------------------------------------------------------- identity
+
+
+def supply_context(
+    opportunity: Mapping[str, Any], *, decision_domain: str = "PATIENT_CLINICAL"
+) -> dict[str, str]:
+    """The five dimensions a contrast relation may never be reused across."""
+    return {
+        "learner_decision_id": opportunity["learner_decision_id"],
+        "demanded_response_class": opportunity["demanded_response_class"],
+        "decision_granularity": opportunity["decision_granularity"],
+        "anchor_study_unit_id": opportunity["anchor_study_unit_id"],
+        "decision_domain": decision_domain,
+    }
+
+
+_CONTEXT_FIELDS = (
+    "learner_decision_id",
+    "demanded_response_class",
+    "decision_granularity",
+    "anchor_study_unit_id",
+    "decision_domain",
+)
+
+
+def _context_tuple(context: Mapping[str, Any]) -> list[str]:
+    missing = [field for field in _CONTEXT_FIELDS if not context.get(field)]
+    if missing:
+        raise ContrastSupplyError(
+            f"a supply context needs {', '.join(missing)}; identity fails closed"
+        )
+    return [str(context[field]) for field in _CONTEXT_FIELDS]
+
+
+def candidate_id(concept_id: str, context: Mapping[str, Any]) -> str:
+    """A candidate's id in one decision context, content-addressed and stable."""
+    if not concept_id:
+        raise ContrastSupplyError("a candidate needs a canonical concept id")
+    digest = content_sha256([concept_id, _context_tuple(context)])
+    return f"CSUP-{digest[:20]}"
+
+
+def cache_key(concept_a_id: str, concept_b_id: str, context: Mapping[str, Any]) -> str:
+    """Order-independent over the pair, and bound to the decision context.
+
+    A relation between two concepts for a DIAGNOSIS decision says nothing about
+    the same two concepts for a MANAGEMENT decision, so the context is part of
+    the identity rather than a note beside it.
+    """
+    if not concept_a_id or not concept_b_id:
+        raise ContrastSupplyError("a cache key needs two canonical concept ids")
+    pair = sorted([concept_a_id, concept_b_id])
+    digest = content_sha256([pair, _context_tuple(context)])
+    return f"CSUPKEY-{digest[:24]}"
+
+
+# ------------------------------------------------------------------ filtering
+
+
+def filter_candidates(
+    candidates: Sequence[Mapping[str, Any]], context: Mapping[str, Any]
+) -> tuple[list[dict[str, Any]], dict[str, str]]:
+    """Response class first, then granularity. Same questions as CS2-3 and CS2-4.
+
+    Asked here so a relation is never acquired for a candidate the set gate would
+    refuse anyway; the gate still asks them again on the assembled set.
+    """
+    kept: list[dict[str, Any]] = []
+    refused: dict[str, str] = {}
+    for candidate in candidates:
+        member_id = candidate["member_id"]
+        tokens = set(candidate.get("response_class_tokens") or [])
+        if context["demanded_response_class"] not in tokens:
+            refused[member_id] = "RESPONSE_CLASS_MISMATCH"
+            continue
+        if candidate.get("decision_granularity") != context["decision_granularity"]:
+            refused[member_id] = "GRANULARITY_MISMATCH"
+            continue
+        kept.append(dict(candidate))
+    return kept, refused
+
+
+# --------------------------------------------------------------- deduplication
+
+
+def deduplicate_candidates(
+    candidates: Sequence[Mapping[str, Any]],
+) -> tuple[list[dict[str, Any]], dict[str, str]]:
+    """One row per canonical concept id, with every provenance kept.
+
+    The first arrival wins the row because discovery is ordered: a curated
+    library hit outranks a Toronto Notes hit for the same concept, and the fact
+    that both found it is worth recording rather than discarding.
+    """
+    kept: list[dict[str, Any]] = []
+    by_concept: dict[str, dict[str, Any]] = {}
+    removed: dict[str, str] = {}
+    for candidate in candidates:
+        concept_id = candidate.get("concept_id")
+        if not concept_id:
+            raise ContrastSupplyError(
+                f"{candidate.get('member_id')} has no canonical concept id to deduplicate on"
+            )
+        source = candidate.get("discovery_source")
+        if concept_id in by_concept:
+            removed[candidate["member_id"]] = "DUPLICATE_CONCEPT_ID"
+            sources = by_concept[concept_id]["discovery_sources"]
+            if source and source not in sources:
+                sources.append(source)
+            continue
+        row = dict(candidate)
+        row["discovery_sources"] = [source] if source else list(
+            candidate.get("discovery_sources") or []
+        )
+        by_concept[concept_id] = row
+        kept.append(row)
+    return kept, removed
+
+
+def parent_subtype_collisions(
+    candidates: Sequence[Mapping[str, Any]], nesting: Sequence[Mapping[str, Any]]
+) -> list[dict[str, Any]]:
+    """Declared nesting between two candidates that would share an option set.
+
+    Read off the declared relations, never guessed from wording. This is the same
+    fact `CS2-1` fires on; surfacing it during acquisition stops a nested pair
+    from being counted as two units of supply.
+    """
+    members = {candidate["member_id"] for candidate in candidates}
+    collisions = []
+    for row in nesting:
+        pair = sorted(row["pair"])
+        if row.get("nesting_relation", "NONE") == "NONE":
+            continue
+        if not set(pair) <= members:
+            continue
+        collisions.append({"pair": pair, "nesting_relation": row["nesting_relation"]})
+    return sorted(collisions, key=lambda row: row["pair"])
+
+
+# ---------------------------------------------------------- bounded retrieval
+
+
+def retrieve_tn_chunks(
+    connection: sqlite3.Connection, query: str, *, limit: int
+) -> list[dict[str, Any]]:
+    """A small, bounded Toronto Notes read for concept discovery and context.
+
+    Never a chapter. The bound is enforced rather than advised, because the whole
+    economic case for on-demand supply is that one discovery operation costs a
+    handful of chunks.
+    """
+    if not (TN_CHUNK_FLOOR <= limit <= TN_CHUNK_CEILING):
+        raise ContrastSupplyError(
+            f"a discovery retrieval takes between {TN_CHUNK_FLOOR} and "
+            f"{TN_CHUNK_CEILING} chunks, not {limit}"
+        )
+    terms = [term for term in _tokenize(query) if term]
+    if not terms:
+        raise ContrastSupplyError("a retrieval request needs at least one usable term")
+    expression = " OR ".join(f'"{term}"' for term in terms)
+    try:
+        rows = connection.execute(
+            "SELECT c.chunk_id, c.pdf_page, c.tn_node_id, c.subheading, "
+            "bm25(chunks_fts) FROM chunks_fts JOIN chunks c ON c.rowid = chunks_fts.rowid "
+            "WHERE chunks_fts MATCH ? ORDER BY bm25(chunks_fts) LIMIT ?",
+            (expression, limit),
+        ).fetchall()
+    except sqlite3.OperationalError as exc:
+        raise ContrastSupplyError(f"text query is unusable: {exc}") from exc
+    return [
+        {
+            "chunk_id": chunk_id,
+            "pdf_page": pdf_page,
+            "tn_node_id": tn_node_id,
+            "subheading": subheading,
+            "bm25": score,
+            "authority_role": "TOPIC_DISCOVERY_SOURCE",
+        }
+        for chunk_id, pdf_page, tn_node_id, subheading, score in rows
+    ]
+
+
+def _tokenize(text: str) -> list[str]:
+    import re
+
+    return [
+        term for term in re.findall(r"[a-z][a-z0-9-]{2,}", (text or "").lower())
+        if term not in _QUERY_STOPWORDS
+    ]
+
+
+_QUERY_STOPWORDS = frozenset({
+    "the", "and", "for", "with", "that", "this", "from", "are", "was", "were",
+    "which", "when", "where", "not", "any", "its", "has", "have",
+})
+
+
+# ------------------------------------------------------------- one wave only
+
+
+class AcquisitionLedger:
+    """Phase 14. One bounded acquisition wave per opportunity, enforced.
+
+    A second wave is how a pipeline talks itself into a question: enrich, fail,
+    enrich again, until something passes. The ledger refuses.
+    """
+
+    def __init__(self) -> None:
+        self.waves: dict[str, dict[str, Any]] = {}
+        self._open: set[str] = set()
+
+    def open_wave(self, label: str) -> None:
+        entry = self.waves.setdefault(label, {"waves": 0, "candidates_discovered": 0})
+        if entry["waves"] >= ACQUISITION_WAVES_PER_OPPORTUNITY:
+            raise ContrastSupplyError(
+                f"{label} has already had its one bounded acquisition wave; "
+                "NO_SAFE_ITEM stands rather than being enriched away"
+            )
+        entry["waves"] += 1
+        self._open.add(label)
+
+    def close_wave(self, label: str, *, candidates_discovered: int) -> None:
+        if label not in self._open:
+            raise ContrastSupplyError(f"no acquisition wave is open for {label}")
+        self.waves[label]["candidates_discovered"] = candidates_discovered
+        self._open.discard(label)
+
+
+# ----------------------------------------------------- validation and admission
+
+REVIEW_VERDICTS = ("APPROVED", "REJECTED", "UNCERTAIN")
+
+
+def validate_acquired_relation(
+    relation: Mapping[str, Any],
+    *,
+    vocabulary: Mapping[str, Any] | None = None,
+    enforce_anchor_sufficiency: bool = False,
+) -> None:
+    """The V2 relation schema, plus the two supply-only rules S-1 and S-4(c)."""
+    from .clinical_contrast_v2 import validate_contrast_relation
+
+    validate_contrast_relation(relation)
+
+    verdict = (relation.get("review") or {}).get("verdict")
+    if verdict is not None and verdict not in REVIEW_VERDICTS:
+        raise ContrastSupplyError(f"unknown review verdict: {verdict}")
+
+    if vocabulary is not None:
+        declared = set()
+        for side in ("shared_features", "a_supporting_features", "b_supporting_features"):
+            declared.update(row["feature_id"] for row in relation[side])
+        for side in ("correctness_conditions_a", "correctness_conditions_b"):
+            declared.update(predicate_feature_ids(relation[side]))
+        unknown = sorted(declared - set(vocabulary))
+        if unknown:
+            raise ContrastSupplyError(
+                "S-1: the frozen stem-feature vocabulary is read-only and carries no "
+                f"{', '.join(unknown)}"
+            )
+
+    if enforce_anchor_sufficiency:
+        _enforce_anchor_sufficiency(relation)
+
+
+def _enforce_anchor_sufficiency(relation: Mapping[str, Any]) -> None:
+    """S-4 limb (c), on the competitor side of the relation.
+
+    An anchor set every member of which completes the candidate's own correctness
+    signature buys nothing: `CS2-6` would refuse the candidate anyway, and an
+    anchor added to get past that rule rather than to state a shared finding is
+    the exact abuse the design names.
+    """
+    anchors = sorted({
+        row["feature_id"] for row in relation["b_supporting_features"]
+        if discriminative_class(row["contrast_role"]) in ANCHOR_CLASSES
+    })
+    if not anchors:
+        return
+    if not can_be_live_without_being_correct(
+        {"correctness_conditions": relation["correctness_conditions_b"]}, anchors
+    ):
+        raise ContrastSupplyError(
+            "S-4(c): every usable anchor also completes this candidate's correctness "
+            f"signature ({', '.join(anchors)}), so it can be live only by being a "
+            "second key and is not supply"
+        )
+
+
+def admit_relation(
+    cache: dict[str, dict[str, Any]],
+    relation: Mapping[str, Any],
+    context: Mapping[str, Any],
+    *,
+    vocabulary: Mapping[str, Any] | None = None,
+) -> bool:
+    """Admit one reviewed relation to the cache. Anything but APPROVED fails closed."""
+    from .clinical_contrast_v2 import build_contrast_relation
+
+    review = relation.get("review") or {}
+    verdict = review.get("verdict")
+    if verdict not in REVIEW_VERDICTS:
+        raise ContrastSupplyError(
+            "a relation without an independent review verdict is not admissible"
+        )
+    if verdict != "APPROVED":
+        return False
+    if relation.get("verification_status") != "EVIDENCE_VERIFIED":
+        return False
+
+    validate_acquired_relation(relation, vocabulary=vocabulary)
+    payload = {key: value for key, value in relation.items() if key != "review"}
+    built = build_contrast_relation(**payload)
+    key = cache_key(
+        relation["concept_a"]["concept_id"], relation["concept_b"]["concept_id"], context
+    )
+    cache[key] = {
+        "cache_key": key,
+        "context": {field: context[field] for field in _CONTEXT_FIELDS},
+        "concept_pair": sorted([
+            relation["concept_a"]["concept_id"], relation["concept_b"]["concept_id"]
+        ]),
+        "relation": built,
+        "review": dict(review),
+    }
+    return True
+
+
+def lookup_cached_relation(
+    cache: Mapping[str, Mapping[str, Any]],
+    concept_a_id: str,
+    concept_b_id: str,
+    context: Mapping[str, Any],
+) -> dict[str, Any] | None:
+    """A cache hit, or None. There is no near-miss and no fallback."""
+    entry = cache.get(cache_key(concept_a_id, concept_b_id, context))
+    return dict(entry) if entry is not None else None
