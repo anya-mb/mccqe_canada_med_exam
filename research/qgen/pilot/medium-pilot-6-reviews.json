@@ -1,0 +1,45 @@
+{
+  "llm_api_calls": 0,
+  "pilot_id": "medium-pilot-snapshot-v2",
+  "protocol": {
+    "independence_limit": "A separate reasoning pass by the same model instance rather than a separate agent, and the reviewer had already seen the blueprint while building the pilot. It is weaker than the three fresh reviewers of the contrast-first pilot and is stated rather than glossed. It is not a blind review and is not claimed to be one.",
+    "standard": "An accepted item requires zero on all eleven dimensions. One scored defect rejects.",
+    "what_was_reviewed": "Every item the pilot generated, against the eleven canonical V2 accepted-item dimensions and the wider construction dimensions, judged against the item text and against the cited claims reread verbatim from the frozen R2 and R4 evidence packets."
+  },
+  "review_id": "medium-pilot-independent-review-1",
+  "reviews": {
+    "G2-SURG-03": {
+      "AMBIGUOUS_BEST_ANSWERS": 0,
+      "BOOLEAN_LOGIC_DEFECT": 0,
+      "COMPETITOR_WITHOUT_STEM_ANCHOR": 0,
+      "CRITICAL_FACT_SAFETY_FAILURES": 0,
+      "FACTUAL_ERRORS": 0,
+      "MATERIAL_REDUNDANCY": 0,
+      "NUMERIC_ERRORS": 0,
+      "SECOND_KEY_RISK": 0,
+      "SILENCE_AS_ABSENCE_DEFECT": 0,
+      "UNNATURAL_STEM_ENGINEERING": 0,
+      "UNSUPPORTED_CLAIMS": 1,
+      "VERDICT": "REJECT",
+      "notes": {
+        "AMBIGUOUS_BEST_ANSWERS": "Not scored. Among the four options the answer is not close: the two antibiotic strategies and the percutaneous one are each excluded by the stated peritonitis on their own cited scopes. The blind solve reached the keyed strategy with high confidence.",
+        "BOOLEAN_LOGIC_DEFECT": "Not scored. The interval option's tree is read as the disjunction its frozen prose states -- the V1 layer had carried it as a conjunction -- and only the walled-off disjunct is defeated, by the declared contradiction. The antibiotics-alone tree is a conjunction and is defeated at the uncomplicated-disease conjunct, again by a declared contradiction rather than by silence.",
+        "CLINICAL_COHERENCE": "The vignette is internally consistent: a two-day migratory course, a ten-hour spread, fever, and four-quadrant peritonism with a compensated circulation.",
+        "COMPETITOR_WITHOUT_STEM_ANCHOR": "Not scored, with a reservation recorded. All three competitors are live on the stated migratory right lower quadrant pain, which the supply wave added as a shared presentation anchor. The cited claims scope each strategy to appendicitis rather than naming the symptom, and migratory pain is the frozen vocabulary's only statement of that presentation. A reviewer who required the claim to name the feature itself would refuse the anchor and the opportunity would then fail at contrast-set size instead. That is a weaker anchoring than a finding specific to each strategy would be.",
+        "CUEING": "No length or specificity giveaway; the key is the second-shortest option and the longest is a distractor. The stem shares no four-token run with the key and does not contain the word appendectomy.",
+        "DIFFICULTY_INTENT": "Declared HARD, reads EASY. The blind solve reached it with high confidence and named no finding that had to be weighed against another. The cause is structural rather than stylistic: at HARD the solver may spend no explicit denial, so it settled the set with one dramatic stated finding, and a finding strong enough to settle three competitors at once is strong enough to give the answer away.",
+        "DISTRACTOR_PLAUSIBILITY": "Each distractor is a strategy a real candidate reaches for -- the antibiotics-first literature, the interval plan, the drainage recommendation for complicated disease -- and each is defeated by the restriction its own evidence carries. That part of the construction works.",
+        "LEARNER_DECISION_FIDELITY": "Faithful. LD-GS76-03 is the operative-versus-non-operative choice, the lead-in asks for a management strategy and every option is a complete strategy at the same granularity.",
+        "MCCQE_LEVEL": "Appropriate content, wrong difficulty. Operative source control for generalised peritonitis is squarely a graduating-physician decision, but as written it is a recall-level one.",
+        "PAIRWISE_OPTION_COHERENCE": "Four distinct strategies on one axis of source control: immediate operative, deferred operative, percutaneous, none. No pair collapses.",
+        "RATIONALE_QUALITY": "The distractor rationales are the strongest part of the item: each names the attraction, the stem evidence and the cited restriction. The key rationale is the weak one, for the reason scored above.",
+        "SILENCE_AS_ABSENCE_DEFECT": "Not scored, and the interval-appendectomy rationale is the one to check. Its tree is a disjunction and one disjunct, an operative contraindication, is unstated. The rationale does not claim there is no contraindication; it says what outweighs the silence. That is the contract.",
+        "UNNATURAL_STEM_ENGINEERING": "Not scored, with a reservation. The closing sentence hands the candidate the diagnosis and the complication as the team's judgement rather than leaving both to be inferred. In a management-strategy item with a which-strategy lead-in that is conventional, and the frozen key correctness conditions require a clinical-suspicion feature that can only be stated as a judgement. It is nonetheless the stem doing work the candidate might otherwise do.",
+        "UNSUPPORTED_CLAIMS": "Scored, and it is the reason for the verdict. The key rationale rests on CLM-R2-SURG-STANDARD, whose own words are 'Appendectomy in adult NON-COMPLICATED appendicitis is the standard of care'. The stem states free perforation with generalised peritonitis, which is complicated appendicitis by the same packet's own vocabulary -- CLM-R2-SURG-DRAINAGE uses 'complicated appendicitis' for exactly this class. The rationale as written elides the scope qualifier and applies the claim to a patient the claim excludes. Nothing else in the frozen evidence covers operative management of free perforation, and the packet carries no claim about the laparoscopic route in peritonitis either, so the option's own qualifier is uncited too. The clinical answer is not in doubt -- appendicectomy is unarguably right here -- but supplying that from medical knowledge is the reconstruction the repository policy forbids, and an item whose key rationale is a scope elision cannot be accepted.",
+        "the_defect_this_exposes": "The blueprint settled two of the three competitors with a stated positive contrary, perforation with generalised peritonitis, chosen because the declared contradiction list makes it incompatible with what those competitors need. Nothing in the solver asks whether that stated contrary carries the patient outside the evidence scope of the KEY's own correctness conditions. Here it does. The key's tree was read from a claim about non-complicated disease, and the device that made the item settleable at HARD is precisely what made the key's citation inapplicable. There is no gate for this, and it is the mirror image of the silence-as-absence defect V2 was built to close."
+      }
+    }
+  },
+  "schema_version": "1.0",
+  "scope": "QGEN_MEDIUM_PILOT_INDEPENDENT_REVIEW"
+}

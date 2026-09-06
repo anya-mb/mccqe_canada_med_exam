@@ -1,0 +1,253 @@
+{
+  "ACTIVATED": false,
+  "APPROVED_NEXT_SNAPSHOT_EXTENSIONS": 5,
+  "PROPOSED_ANCHOR_EXTENSIONS_NEXT_SNAPSHOT": 8,
+  "PROPOSED_FEATURE_EXTENSIONS_NEXT_SNAPSHOT": 2,
+  "REJECTED_NEXT_SNAPSHOT_EXTENSIONS": 0,
+  "UNCERTAIN_NEXT_SNAPSHOT_EXTENSIONS": 5,
+  "activation_note": "Nothing here is activated. FEATURE_ANCHOR_SNAPSHOT_V2 is unchanged and no SNAPSHOT_V3 is built. Building it is the opening step of the next batch, not of the batch that proposed these.",
+  "collected_against_snapshot": "FEATURE_ANCHOR_SNAPSHOT_V2",
+  "extensions": [
+    {
+      "blocked_by": "Growing the frozen stem-feature vocabulary needs an evidence packet for the feature, and is outside this pilot's authorization.",
+      "clinical_role": "SYMPTOM",
+      "eligible_in_this_batch": false,
+      "independent_review": {
+        "reasoning": "The feature is the right diagnosis of the failure: dissection, embolism, pericarditis and the key all share severe acute chest pain, and SU-C-21 can state pain only as abrupt-and-maximal, pleuritic-and-positional or refluxlike, each of which is already some competitor's correctness condition. But growing the frozen 102-feature vocabulary requires an evidence packet for the feature and an authorization this pilot does not carry, and no cited claim in the current packets states severe acute chest pain as a normalized feature. UNCERTAIN fails closed.",
+        "reviewer_id": "R-MP-EXTENSION-REVIEW",
+        "scope_decision": "Blocked on an evidence packet and on authorization, not on the reading.",
+        "verdict": "UNCERTAIN"
+      },
+      "kind": "NEW_FEATURE",
+      "member_id": "SEED-G2-MED-T01-DISSECTION",
+      "normalized_feature": "severe acute chest pain is the presenting complaint",
+      "opportunity_label": "G2-MED-01",
+      "proposed_feature_id": "SF-C21-SEVERE-ACUTE-CHEST-PAIN",
+      "why": "It is the presentation every competitor in this set shares with the key and the reason a candidate considers an aortic cause at all. Without it dissection is expressible only as its own correctness conditions.",
+      "why_not_eligible": "The wave refused the candidate outright, and the feature it would have needed is not in the frozen vocabulary."
+    },
+    {
+      "contrast_role": "POSITIVE_SUPPORT",
+      "eligible_in_this_batch": false,
+      "evidence_refs": [
+        "CLM-R2-OB-CONTINUE-FEEDING",
+        "CLM-R2-OB-MASTITIS-ANCHOR"
+      ],
+      "independent_review": {
+        "reasoning": "CLM-R2-OB-CONTINUE-FEEDING exists to answer this instruction in bacterial mastitis, and CLM-R2-OB-MASTITIS-ANCHOR states bacterial mastitis as the segmental erythematous, oedematous, painful breast. The claim names the presentation, not merely the disease, so S-4 limb B is met on the claim's own words. Limb C holds: the competitor is correct only where a contraindication to the infant receiving the milk exists, which segmental erythema is not.",
+        "reviewer_id": "R-MP-EXTENSION-REVIEW",
+        "scope_decision": "Scoped to LD-OB54-03. It must not reach LD-OB54-02, where the same erythema is a key correctness condition of a different decision and an unscoped anchor would move an opportunity no reviewer considered -- the G2-PSY-04 leak, pointed at this study unit.",
+        "verdict": "APPROVED"
+      },
+      "kind": "NEW_ANCHOR_RELATION",
+      "member_id": "SEED-OB-T03-DISCARD",
+      "opportunity_label": "G2-OBGYN-03",
+      "proposed_feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+      "s4_limb_b": "CLM-R2-OB-CONTINUE-FEEDING states that bacterial mastitis is not a contraindication to breastfeeding and that women should not be told to express and discard. The claim exists because the presence of bacterial mastitis is the recognized reason clinicians reach for this instruction, and CLM-R2-OB-MASTITIS-ANCHOR states that mastitis as the segmental erythematous, oedematous, painful breast. It is the presentation feature this candidate shares with the key.",
+      "s4_limb_c": "The candidate's correctness condition is that a contraindication to the infant receiving the milk is present. Segmental erythema is not that condition and does not appear in its tree, so the anchor makes the candidate live without making it correct.",
+      "scope_opportunity_labels": [
+        "G2-OBGYN-03"
+      ],
+      "wave_verdict": "APPROVED",
+      "why_not_eligible": "FEATURE_ANCHOR_SNAPSHOT_V2 does not assert this anchor relation for SEED-OB-T03-DISCARD. The pinned snapshot is not rebuilt inside the batch, so the relation is invisible to every item in it and is carried to the next snapshot cycle for independent review."
+    },
+    {
+      "blocked_by": "Growing the frozen stem-feature vocabulary is outside this pilot's authorization.",
+      "clinical_role": "VITAL_SIGN",
+      "eligible_in_this_batch": false,
+      "independent_review": {
+        "reasoning": "The evidence for this one already exists: CLM-R4-PED-FEEDING states a respiratory rate above 60 breaths per minute as the threshold at which oral feeding may be unsafe, so unlike the chest-pain feature this is blocked on authorization rather than on evidence. It is also the cleanest fix available for the defect that stopped this opportunity, because it would give nasogastric fluids an anchor that is not the high-flow competitor's whole correctness condition. It is recorded and not activated.",
+        "reviewer_id": "R-MP-EXTENSION-REVIEW",
+        "scope_decision": "Blocked on authorization to grow the frozen vocabulary, not on evidence.",
+        "verdict": "UNCERTAIN"
+      },
+      "kind": "NEW_FEATURE",
+      "member_id": "SEED-PED-T03-FLUIDS",
+      "normalized_feature": "the respiratory rate is above sixty breaths per minute",
+      "opportunity_label": "G2-PED-03",
+      "proposed_feature_id": "SF-P147-TACHYPNOEA-ABOVE-60",
+      "why": "CLM-R4-PED-FEEDING names this number as the aspiration-risk threshold. The frozen vocabulary can only say escalating work of breathing, which collapses a measured vital sign into the judgement that non-invasive support is being considered, and that collapse is what makes three competitors share one anchor.",
+      "why_not_eligible": "The wave refused the candidate outright, and the feature it would have needed is not in the frozen vocabulary."
+    },
+    {
+      "contrast_role": "TIMING_FEATURE",
+      "eligible_in_this_batch": false,
+      "evidence_refs": [
+        "CLM-R2-PED-DX-ANCHOR",
+        "CLM-R4-PED-SUCTION"
+      ],
+      "independent_review": {
+        "reasoning": "CLM-R2-PED-DX-ANCHOR states the prodrome as two to three days of fever, cough and rhinorrhea. Rhinorrhea is the nasal secretion the competitor addresses, so the claim names a presentation feature the candidate shares with the key rather than merely the disease. Limb C holds: nasal obstruction limiting feeds is untouched. The distinction from the epinephrine and fluids proposals the wave refused is real and is the reason this one passes -- there the same prodrome bears on nothing the option does.",
+        "reviewer_id": "R-MP-EXTENSION-REVIEW",
+        "scope_decision": "Scoped to LD-P147-03.",
+        "verdict": "APPROVED"
+      },
+      "kind": "NEW_ANCHOR_RELATION",
+      "member_id": "SEED-PED-T03-SUCTION",
+      "opportunity_label": "G2-PED-03",
+      "proposed_feature_id": "SF-P147-VIRAL-PRODROME",
+      "s4_limb_b": "CLM-R2-PED-DX-ANCHOR states the bronchiolitis prodrome as two to three days of fever, cough and rhinorrhea. Rhinorrhea is the nasal secretion suctioning addresses, and CLM-R4-PED-SUCTION is a claim about suctioning in exactly that illness. The coryzal prodrome is the presentation feature the candidate shares with the key.",
+      "s4_limb_c": "The candidate's correctness condition is that nasal obstruction is limiting feeding or comfort. A coryzal prodrome is not that condition -- an infant may be coryzal without obstruction limiting feeds -- so the anchor makes the candidate live without making it correct.",
+      "scope_opportunity_labels": [
+        "G2-PED-03"
+      ],
+      "wave_verdict": "APPROVED",
+      "why_not_eligible": "FEATURE_ANCHOR_SNAPSHOT_V2 does not assert this anchor relation for SEED-PED-T03-SUCTION. The pinned snapshot is not rebuilt inside the batch, so the relation is invisible to every item in it and is carried to the next snapshot cycle for independent review."
+    },
+    {
+      "contrast_role": "SHARED_PRESENTATION_FEATURE",
+      "eligible_in_this_batch": false,
+      "evidence_refs": [
+        "CLM-R2-PSY-DDX-MEDICAL"
+      ],
+      "independent_review": {
+        "reasoning": "The same claim and the same limb; CLM-R4-PSY-LABS names anaemia as one of the two conditions the baseline count is drawn to exclude in this presentation. Limb C holds.",
+        "reviewer_id": "R-MP-EXTENSION-REVIEW",
+        "scope_decision": "Scoped to LD-PS12-01.",
+        "verdict": "APPROVED"
+      },
+      "kind": "NEW_ANCHOR_RELATION",
+      "member_id": "SEED-PSY-T01-ANEMIA",
+      "opportunity_label": "G2-PSY-01",
+      "proposed_feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+      "s4_limb_b": "The same claim and the same limb as the hypothyroid competitor: nonpsychiatric medical conditions presenting with depressive symptoms belong in the differential.",
+      "s4_limb_c": "Its correctness condition is an abnormal complete blood count, which the anchor is not.",
+      "scope_opportunity_labels": [
+        "G2-PSY-01"
+      ],
+      "wave_verdict": "APPROVED",
+      "why_not_eligible": "FEATURE_ANCHOR_SNAPSHOT_V2 does not assert this anchor relation for SEED-PSY-T01-ANEMIA. The pinned snapshot is not rebuilt inside the batch, so the relation is invisible to every item in it and is carried to the next snapshot cycle for independent review."
+    },
+    {
+      "contrast_role": "SHARED_PRESENTATION_FEATURE",
+      "eligible_in_this_batch": false,
+      "evidence_refs": [
+        "CLM-R2-PSY-DDX-MEDICAL"
+      ],
+      "independent_review": {
+        "reasoning": "CLM-R2-PSY-DDX-MEDICAL states that the differential should include nonpsychiatric medical conditions that present with depressive symptoms. That is the feature, named as the reason to consider the candidate. Limb C holds: an abnormal thyroid stimulating hormone is untouched.",
+        "reviewer_id": "R-MP-EXTENSION-REVIEW",
+        "scope_decision": "Scoped to LD-PS12-01.",
+        "verdict": "APPROVED"
+      },
+      "kind": "NEW_ANCHOR_RELATION",
+      "member_id": "SEED-PSY-T01-MEDICAL",
+      "opportunity_label": "G2-PSY-01",
+      "proposed_feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+      "s4_limb_b": "CLM-R2-PSY-DDX-MEDICAL states in terms that the differential should include nonpsychiatric medical conditions that present with depressive symptoms. The depressive symptoms are named as the reason to consider the candidate and are shared with the key.",
+      "s4_limb_c": "Its correctness condition is an abnormal thyroid stimulating hormone. A depressive syndrome is not that, so the anchor makes it live without making it correct.",
+      "scope_opportunity_labels": [
+        "G2-PSY-01"
+      ],
+      "wave_verdict": "APPROVED",
+      "why_not_eligible": "FEATURE_ANCHOR_SNAPSHOT_V2 does not assert this anchor relation for SEED-PSY-T01-MEDICAL. The pinned snapshot is not rebuilt inside the batch, so the relation is invisible to every item in it and is carried to the next snapshot cycle for independent review."
+    },
+    {
+      "contrast_role": "SHARED_PRESENTATION_FEATURE",
+      "eligible_in_this_batch": false,
+      "evidence_refs": [
+        "CLM-R2-PSY-PDD"
+      ],
+      "independent_review": {
+        "reasoning": "CLM-R2-PSY-PDD characterises the disorder by two or more depressive symptoms present for more than two years, so the claim names the depressive syndrome itself. Limb C holds: the two-year floor and the absent interepisode recovery are untouched.",
+        "reviewer_id": "R-MP-EXTENSION-REVIEW",
+        "scope_decision": "Scoped to LD-PS12-01. SU-PS-12 already carries two other decisions in the frozen universe and an unscoped relation would reach both.",
+        "verdict": "APPROVED"
+      },
+      "kind": "NEW_ANCHOR_RELATION",
+      "member_id": "SEED-PSY-T01-PDD",
+      "opportunity_label": "G2-PSY-01",
+      "proposed_feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+      "s4_limb_b": "CLM-R2-PSY-PDD characterises persistent depressive disorder by two or more depressive symptoms present for more than two years. The depressive syndrome is the presentation the claim names, and it is the feature this candidate shares with the key.",
+      "s4_limb_c": "Its correctness tree is a chronic two-year course together with an absence of interepisode recovery. A current depressive syndrome is neither conjunct, so the anchor makes it live without making it correct. The anchor is needed because its only frozen anchor, the chronic course, is declared contradictory with the interepisode recovery the key requires, so no stem that keys this item can state it.",
+      "scope_opportunity_labels": [
+        "G2-PSY-01"
+      ],
+      "wave_verdict": "APPROVED",
+      "why_not_eligible": "FEATURE_ANCHOR_SNAPSHOT_V2 does not assert this anchor relation for SEED-PSY-T01-PDD. The pinned snapshot is not rebuilt inside the batch, so the relation is invisible to every item in it and is carried to the next snapshot cycle for independent review."
+    },
+    {
+      "contrast_role": "SHARED_PRESENTATION_FEATURE",
+      "eligible_in_this_batch": false,
+      "evidence_refs": [
+        "CLM-R2-SURG-DRAINAGE",
+        "CLM-R2-SURG-STANDARD"
+      ],
+      "independent_review": {
+        "reasoning": "The same reading and the same CS2-7 evidence.",
+        "reviewer_id": "R-MP-EXTENSION-REVIEW",
+        "scope_decision": "Would have been scoped to LD-GS76-03. Not activated.",
+        "verdict": "UNCERTAIN"
+      },
+      "kind": "NEW_ANCHOR_RELATION",
+      "member_id": "SEED-SURG-T03-DRAINAGE",
+      "opportunity_label": "G2-SURG-03",
+      "proposed_feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+      "s4_limb_b": "Every cited claim in this set scopes its strategy to appendicitis: CLM-R2-SURG-STANDARD to adult non-complicated appendicitis, CLM-R2-SURG-NONOP to adult uncomplicated appendicitis, CLM-R2-SURG-DRAINAGE to complicated appendicitis with a phlegmon or walled-off abscess. Central pain migrating to the right lower quadrant is the frozen SU-GS-76 vocabulary's only statement of that presentation, and it is the key's own correctness condition, so it is the presentation feature the candidate shares with the key.",
+      "s4_limb_c": "Its single correctness condition is the walled-off collection, which is also its only frozen anchor -- the anchor-equals-condition shape CS2-6 refuses. Migratory pain is not that condition, so the addition is what makes the competitor admissible.",
+      "scope_opportunity_labels": [
+        "G2-SURG-03"
+      ],
+      "wave_verdict": "APPROVED",
+      "why_not_eligible": "FEATURE_ANCHOR_SNAPSHOT_V2 does not assert this anchor relation for SEED-SURG-T03-DRAINAGE. The pinned snapshot is not rebuilt inside the batch, so the relation is invisible to every item in it and is carried to the next snapshot cycle for independent review."
+    },
+    {
+      "contrast_role": "SHARED_PRESENTATION_FEATURE",
+      "eligible_in_this_batch": false,
+      "evidence_refs": [
+        "CLM-R2-SURG-DRAINAGE",
+        "CLM-R2-SURG-STANDARD"
+      ],
+      "independent_review": {
+        "reasoning": "S-4 limb B is not met on a strict reading, and the strict reading is the one the registry adopted. CLM-R2-SURG-DRAINAGE and CLM-R2-SURG-STANDARD name appendicitis, the disease. They do not name migratory right lower quadrant pain, the feature. The wave admitted the anchor by substituting the vocabulary's statement of the disease for the claim's own words, which is an inference and not a citation.\nThe downstream evidence agrees and is why this is decided rather than argued. In the counterfactual run the three competitors this anchor served were live on it and on nothing else, and the post-stem coherence gate fired CS2-7 SET_LIVES_ON_ONE_FEATURE -- the set living on a single feature is exactly the degeneracy an anchor of this kind produces. The production gate refused all three under the pinned snapshot for the separate reason that the relation is not in it. UNCERTAIN fails closed.",
+        "reviewer_id": "R-MP-EXTENSION-REVIEW",
+        "scope_decision": "Would have been scoped to LD-GS76-03. Not activated.",
+        "verdict": "UNCERTAIN"
+      },
+      "kind": "NEW_ANCHOR_RELATION",
+      "member_id": "SEED-SURG-T03-INTERVAL",
+      "opportunity_label": "G2-SURG-03",
+      "proposed_feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+      "s4_limb_b": "Every cited claim in this set scopes its strategy to appendicitis: CLM-R2-SURG-STANDARD to adult non-complicated appendicitis, CLM-R2-SURG-NONOP to adult uncomplicated appendicitis, CLM-R2-SURG-DRAINAGE to complicated appendicitis with a phlegmon or walled-off abscess. Central pain migrating to the right lower quadrant is the frozen SU-GS-76 vocabulary's only statement of that presentation, and it is the key's own correctness condition, so it is the presentation feature the candidate shares with the key.",
+      "s4_limb_c": "Its correctness tree is a disjunction of an operative contraindication and a walled-off phlegmon or abscess. Migratory right lower quadrant pain is neither disjunct, so the anchor makes it live without making it correct. The anchor is needed because its only presentation-class frozen anchor is the walled-off collection, which is itself a disjunct.",
+      "scope_opportunity_labels": [
+        "G2-SURG-03"
+      ],
+      "wave_verdict": "APPROVED",
+      "why_not_eligible": "FEATURE_ANCHOR_SNAPSHOT_V2 does not assert this anchor relation for SEED-SURG-T03-INTERVAL. The pinned snapshot is not rebuilt inside the batch, so the relation is invisible to every item in it and is carried to the next snapshot cycle for independent review."
+    },
+    {
+      "contrast_role": "SHARED_PRESENTATION_FEATURE",
+      "eligible_in_this_batch": false,
+      "evidence_refs": [
+        "CLM-R2-SURG-NONOP",
+        "CLM-R2-SURG-STANDARD"
+      ],
+      "independent_review": {
+        "reasoning": "The same reading and the same CS2-7 evidence. This competitor is the weaker case of the three: its only frozen anchor is a clinical judgement that types BACKGROUND_CONTEXT in a patient decision, so without the proposed relation it has no plausibility anchor at all, and approving a contested relation because a competitor would otherwise be unusable is the reasoning the registry was built to refuse.",
+        "reviewer_id": "R-MP-EXTENSION-REVIEW",
+        "scope_decision": "Would have been scoped to LD-GS76-03. Not activated.",
+        "verdict": "UNCERTAIN"
+      },
+      "kind": "NEW_ANCHOR_RELATION",
+      "member_id": "SEED-SURG-T03-NONOP",
+      "opportunity_label": "G2-SURG-03",
+      "proposed_feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+      "s4_limb_b": "Every cited claim in this set scopes its strategy to appendicitis: CLM-R2-SURG-STANDARD to adult non-complicated appendicitis, CLM-R2-SURG-NONOP to adult uncomplicated appendicitis, CLM-R2-SURG-DRAINAGE to complicated appendicitis with a phlegmon or walled-off abscess. Central pain migrating to the right lower quadrant is the frozen SU-GS-76 vocabulary's only statement of that presentation, and it is the key's own correctness condition, so it is the presentation feature the candidate shares with the key.",
+      "s4_limb_c": "Its correctness tree is uncomplicated disease with an accepted recurrence risk together with the absence of perforation. Migratory pain is neither conjunct. The anchor is needed because its only frozen anchor is a clinical judgement, which types BACKGROUND_CONTEXT in a patient decision and cannot carry plausibility at all.",
+      "scope_opportunity_labels": [
+        "G2-SURG-03"
+      ],
+      "wave_verdict": "APPROVED",
+      "why_not_eligible": "FEATURE_ANCHOR_SNAPSHOT_V2 does not assert this anchor relation for SEED-SURG-T03-NONOP. The pinned snapshot is not rebuilt inside the batch, so the relation is invisible to every item in it and is carried to the next snapshot cycle for independent review."
+    }
+  ],
+  "llm_api_calls": 0,
+  "pilot_id": "medium-pilot-snapshot-v2",
+  "review_protocol": {
+    "independence_limit": "A separate reasoning pass by the same model instance rather than a separate agent. It did have one thing the wave reviewer did not: the downstream result, including which sets the coherence gate refused. That is why it overturns three of the wave's own approvals rather than ratifying them.",
+    "standard": "Design rule S-4 on a strict reading, plus the scope rule the registry milestone added: an approved anchor relation names the decision contexts its review considered and applies nowhere else. UNCERTAIN fails closed."
+  },
+  "schema_version": "1.0",
+  "scope": "QGEN_MEDIUM_PILOT_PROPOSED_SNAPSHOT_EXTENSIONS"
+}

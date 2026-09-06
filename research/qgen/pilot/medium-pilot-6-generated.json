@@ -1,0 +1,58 @@
+{
+  "authorship": {
+    "blind_solver_protocol": "One fresh reading of the frozen stem and lead-in alone. No key, no contrast set, no blueprint, no options, no rationale. The limit is stated rather than glossed: this is a separate reasoning pass by the same model instance, not a separate agent.",
+    "option_contract": "Distractor option text is the frozen competitor_concept string verbatim, under the unchanged option realization contract.",
+    "rationale_contract": "Every distractor rationale says why the option is plausible, which stem evidence bears on it, and which cited discriminator makes it inferior. Where the stem is silent the rationale says what outweighs the silence rather than asserting the condition unmet.",
+    "rule": "One generation attempt per opportunity, no retry to improve a score. Only the opportunity whose supplied V2 blueprint is satisfiable is authored; the other five are NO_SAFE_ITEM and no prose exists for them.",
+    "stem_contract": "The stem realizes its blueprint exactly: every PRESENT feature stated, every ABSENT feature stated as absent, and no other feature of SU-GS-76 asserted in either direction. Prose carrying no vocabulary feature is free clinical colour."
+  },
+  "blind_solver": {
+    "G2-SURG-03": {
+      "ambiguity_declared": "The route is arguable. With four-quadrant peritonitis some surgeons would open rather than start laparoscopically, and nothing in the stem settles that. The decision the lead-in asks about -- operate on this admission rather than treat non-operatively -- is not ambiguous.",
+      "answer_offered": "Take him to theatre on this admission for appendicectomy and peritoneal lavage, after resuscitation and intravenous antibiotics.",
+      "artificiality_flagged": "The last sentence states the team's diagnostic conclusion rather than leaving it to be drawn. It is conventional in a management-strategy item, but it does mean the stem does the diagnostic work.",
+      "confidence": "HIGH",
+      "difficulty_comment": "The stem hands over both the diagnosis and the complication in terms. Once generalised peritonitis is stated, the operative indication is the first thing an early clinical clerk is taught and no finding has to be weighed against another.",
+      "difficulty_read": "EASY",
+      "key_supported": true,
+      "reasoning": "Two days of pain that migrated from the umbilicus to the right lower quadrant in a 19-year-old man is appendicitis until proven otherwise. The spread of pain over the past ten hours with rigidity, guarding and rebound tenderness in every quadrant is generalised peritonitis from free perforation. Contamination that is not walled off cannot be drained or allowed to settle; it needs operative source control.",
+      "stronger_alternative_identified": null
+    }
+  },
+  "feature_anchor_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2",
+  "items": {
+    "G2-SURG-03": {
+      "distractor_rationales": {
+        "SEED-SURG-T03-DRAINAGE": "Plausible: CLM-R2-SURG-DRAINAGE does recommend imaging-guided percutaneous drainage in complicated appendicitis, and this is complicated appendicitis. Inferior: the same claim scopes drainage to a walled-off abscess at presentation, and the stem states free perforation with generalised peritonitis. Contamination that is not contained is not a collection a percutaneous drain can control.",
+        "SEED-SURG-T03-INTERVAL": "Plausible: interval appendectomy is a real strategy, and a candidate who recalls that some appendicitis is treated with antibiotics first will reach for the plan that still ends in an operation. Inferior: CLM-R2-SURG-DRAINAGE confines antibiotics-first management of complicated appendicitis to disease with a phlegmon or a walled-off abscess, and the stem states free perforation with generalised peritonitis, which is not disease that can be allowed to settle over six to eight weeks. What decides against this option is the stated peritonitis, not the question of whether an operative contraindication exists, on which the stem is silent.",
+        "SEED-SURG-T03-NONOP": "Plausible: CLM-R2-SURG-NONOP is real trial evidence for antibiotics alone in adult appendicitis, and a candidate who has read it may apply it generally. Inferior: that evidence is confined to uncomplicated appendicitis, and even inside that restriction 53 percent of patients crossed over to surgery within 48 hours. The stem states perforation with generalised peritonitis, so the disease is not uncomplicated and the restriction the trials carry excludes this patient."
+      },
+      "key_option_text": "Laparoscopic appendectomy on this admission",
+      "key_rationale": "Appendicitis that has perforated with generalised peritonitis needs source control on this admission, and CLM-R2-SURG-STANDARD makes appendectomy the standard of care in adult appendicitis, advocated by the American College of Surgeons, the Society for Surgery of the Alimentary Tract and the World Society of Emergency Surgery. The two antibiotic-based strategies and the percutaneous one are each confined by their own evidence to disease this patient does not have: CLM-R2-SURG-NONOP to uncomplicated appendicitis, CLM-R2-SURG-DRAINAGE to a phlegmon or a walled-off abscess.",
+      "lead_in": "Which management strategy is most appropriate?",
+      "stem": "A 19-year-old man is brought to the emergency department with abdominal pain that began around the umbilicus two days ago and had settled into the right lower quadrant by the following morning. He vomited twice on the first day and has eaten nothing since. Over the past ten hours the pain has spread across the whole abdomen and he finds any movement intolerable. His temperature is 38.7 degrees Celsius, his pulse is 106 beats per minute and his blood pressure is 126/78 mmHg. He lies still with his knees drawn up; the abdomen does not move with respiration and there is rigidity with guarding and rebound tenderness in all four quadrants. The surgical team judges the clinical probability of acute appendicitis to be high and the appendix to have perforated, with generalised peritonitis.",
+      "stem_feature_map": [
+        {
+          "feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+          "polarity": "PRESENT",
+          "source_span": "abdominal pain that began around the umbilicus two days ago and had settled into the right lower quadrant by the following morning"
+        },
+        {
+          "feature_id": "SF-GS76-HIGH-CLINICAL-SUSPICION-YOUNG-MALE",
+          "polarity": "PRESENT",
+          "source_span": "A 19-year-old man ... The surgical team judges the clinical probability of acute appendicitis to be high"
+        },
+        {
+          "feature_id": "SF-GS76-PERFORATION-WITH-PERITONITIS",
+          "polarity": "PRESENT",
+          "source_span": "there is rigidity with guarding and rebound tenderness in all four quadrants. The surgical team judges ... the appendix to have perforated, with generalised peritonitis"
+        }
+      ]
+    }
+  },
+  "llm_api_calls": 0,
+  "one_attempt_per_opportunity": true,
+  "pilot_id": "medium-pilot-snapshot-v2",
+  "schema_version": "1.0",
+  "scope": "QGEN_MEDIUM_PILOT_GENERATED"
+}
