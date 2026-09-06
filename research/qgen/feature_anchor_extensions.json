@@ -1,0 +1,748 @@
+{
+  "baseline_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V1",
+  "derived_from": "research/qgen/clinical_contrast_supply_acquisition.json",
+  "extension_set_id": "frozen-five-supply-extensions",
+  "extensions": [
+    {
+      "anchor_study_unit_id": "SU-P-147",
+      "classification": "ANCHOR_RELATION_ONLY",
+      "concept_id_reconciliation": "REGISTERED_ID_DIFFERS_FROM_SUPPLY_DECLARED_ID",
+      "context": {
+        "role_override_source": null,
+        "s4_limb_b": "CLM-R2-PED-DDX-ATYPICAL states that a broad differential should be considered especially in atypical presentations such as severe respiratory distress; CLM-R2-PED-DDX-TABLE is that differential and contains this candidate. Escalating work of breathing is therefore a cited reason to consider it, and it is a presentation feature the key shares.",
+        "s4_limb_c": "The candidate's correctness conditions are ANY_OF(abrupt onset without prodrome, focal or asymmetric findings). Escalating work of breathing satisfies neither, so the anchor makes the candidate live without making it correct.",
+        "supply_declared_contrast_role": "POSITIVE_SUPPORT",
+        "supply_rule": "S-4"
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": "SINGLE_DIAGNOSIS",
+      "declared_anchor_role": null,
+      "evidence_refs": [
+        "CLM-R2-PED-DDX-ATYPICAL",
+        "CLM-R2-PED-DDX-TABLE"
+      ],
+      "extension_id": "FAX-001",
+      "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+      "feature_status": "FEATURE_ALREADY_EXISTS",
+      "learner_decision": "QGEN-GEN-PED-T01",
+      "member_id": "SEED-PED-T01-FOREIGN-BODY",
+      "proposed_by": "on-demand contrast supply wave `on-demand-contrast-supply-frozen-5`",
+      "registry_review": {
+        "anchor_strength_and_role": "SF-P147-MODERATE-SEVERE-DISTRESS is typed EXAMINATION_FINDING, which types to POSITIVE_SUPPORT and so to the PRESENTATION discriminative class in PATIENT_CLINICAL. It is an observation of the patient rather than a resource clause or a meta-judgement about the decider, so it is the kind of feature that can carry plausibility on its own. No role override is needed and none is declared.",
+        "boolean_semantics": "Verified independently against the frozen enrichment rather than against the supply layer's summary: the correctness tree is ANY_OF(SF-P147-ABRUPT-ONSET-NO-PRODROME, SF-P147-FOCAL-ASYMMETRIC-FINDINGS). SF-P147-MODERATE-SEVERE-DISTRESS is not a disjunct of it, so the anchor cannot complete the correctness signature.",
+        "categorical_exclusion_risk": "NONE. The anchor adds no category and does not move the candidate's concept category, so CS2-5 sees the same option-set shape.",
+        "clinically_meaningful": true,
+        "correctly_typed": true,
+        "learner_decision_relevance": "QGEN-GEN-PED-T01 is the most-likely-diagnosis decision in a wheezing infant, which is the decision the cited differential is a differential for.",
+        "mcc_level_relevant": true,
+        "medical_correctness": "Escalating work of breathing in an infant with a first wheeze is a recognised trigger for widening the differential to include aspiration. CLM-R2-PED-DDX-ATYPICAL names severe respiratory distress as exactly such an atypical presentation and CLM-R2-PED-DDX-TABLE contains foreign body aspiration. Both were reread in full for this review.",
+        "minimality_note": "The relation is needed because without it CS2-6 refuses this candidate: its frozen anchor set equals its correctness conditions exactly. That is a structural defect in the frozen anchor derivation, not a yield argument.",
+        "needed_for_a_validated_contrast_relation": true,
+        "not_a_duplicate": true,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reviewer_id": "R-REGISTRY-1",
+        "second_key_risk": "NONE, on the Boolean check above.",
+        "source_support": "CLM-R2-PED-DDX-ATYPICAL and CLM-R2-PED-DDX-TABLE, both VERIFIED_COMPLETE in the R2 evidence packet, both reread verbatim.",
+        "state_semantics": "Required state PRESENT. Where the stem is silent the feature is UNKNOWN and the relation does not fire; nothing here reads silence as absence.",
+        "verdict": "APPROVED"
+      },
+      "required_state": "PRESENT",
+      "response_class": [
+        "ACUTE_RESPIRATORY_DISTRESS",
+        "AIRFLOW_OBSTRUCTION"
+      ],
+      "seed_id": "SEED-PED-T01-FOREIGN-BODY",
+      "source_opportunity": "G2-PED-01",
+      "supply_acquisition_kind": "ANCHOR_ADDITION",
+      "supply_declared_concept_id": "CONCEPT-R2-SU-P-147-FOREIGN-BODY",
+      "supply_discovery_source": "APPROVED_V2_RELATION",
+      "supply_wave_review": {
+        "reviewer_id": "R-SUPPLY-A",
+        "verdict": "APPROVED"
+      },
+      "target_concept_id": "CONCEPT-R4-SU-OT-56-FOREIGN-BODY"
+    },
+    {
+      "anchor_study_unit_id": "SU-P-147",
+      "classification": "ANCHOR_RELATION_ONLY",
+      "concept_id_reconciliation": "REGISTERED_ID_DIFFERS_FROM_SUPPLY_DECLARED_ID",
+      "context": {
+        "role_override_source": null,
+        "s4_limb_b": "The same cited sentence, and the same differential table, which contains this candidate too.",
+        "s4_limb_c": "The candidate's correctness conditions are ANY_OF(not improving as expected, severity raising bacterial concern, focal consolidation). Escalating work of breathing satisfies none of the three: severity raising a specific concern for bacterial infection is a separate frozen feature and is not entailed by work of breathing alone.",
+        "supply_declared_contrast_role": "POSITIVE_SUPPORT",
+        "supply_rule": "S-4"
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": "SINGLE_DIAGNOSIS",
+      "declared_anchor_role": null,
+      "evidence_refs": [
+        "CLM-R2-PED-DDX-ATYPICAL",
+        "CLM-R2-PED-DDX-TABLE"
+      ],
+      "extension_id": "FAX-002",
+      "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+      "feature_status": "FEATURE_ALREADY_EXISTS",
+      "learner_decision": "QGEN-GEN-PED-T01",
+      "member_id": "SEED-PED-T01-PNEUMONIA",
+      "proposed_by": "on-demand contrast supply wave `on-demand-contrast-supply-frozen-5`",
+      "registry_review": {
+        "anchor_strength_and_role": "Same feature and same typing as the aspiration relation: EXAMINATION_FINDING to POSITIVE_SUPPORT, inside ANCHOR_CLASSES.",
+        "boolean_semantics": "The correctness tree is ANY_OF(SF-P147-FAILING-TO-IMPROVE, SF-P147-SEVERE-OR-BACTERIAL-CONCERN, SF-P147-FOCAL-ASYMMETRIC-FINDINGS). The anchor is not among the three.",
+        "categorical_exclusion_risk": "NONE; no category moves.",
+        "clinically_meaningful": true,
+        "correctly_typed": true,
+        "learner_decision_relevance": "Same decision and same cited differential.",
+        "mcc_level_relevant": true,
+        "medical_correctness": "Bacterial pneumonia is the standard alternative considered in an infant with a lower respiratory illness and rising work of breathing, and it sits in the same cited differential table.",
+        "minimality_note": "Needed for the same structural reason: this candidate's frozen anchor set is a subset of its own correctness disjuncts.",
+        "needed_for_a_validated_contrast_relation": true,
+        "not_a_duplicate": true,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reviewer_id": "R-REGISTRY-1",
+        "second_key_risk": "NONE by the gate, and this is the one relation in the set where the review had to work. The objection is that CLM-GEN-PED-INV-01 speaks of 'severity suggesting an alternative such as bacterial pneumonia', so a reader could collapse escalating work of breathing into SF-P147-SEVERE-OR-BACTERIAL-CONCERN, which IS a disjunct. The frozen vocabulary keeps them apart and the distinction is real: SF-P147-MODERATE-SEVERE-DISTRESS is an observation of respiratory effort, while SF-P147-SEVERE-OR-BACTERIAL-CONCERN is the judgement that a specific bacterial possibility has been raised, and the frozen G2-PED-01 reading already types the latter as SEVERITY_FEATURE on CLM-R2-PED-CXR-INDICATION for that reason. A stem that states the observation and not the judgement leaves the disjunct UNKNOWN, so the tree is INDETERMINATE and not SATISFIED. The relation is approved on that reading and the objection is recorded rather than dismissed.",
+        "source_support": "CLM-R2-PED-DDX-ATYPICAL and CLM-R2-PED-DDX-TABLE, both VERIFIED_COMPLETE.",
+        "state_semantics": "Required state PRESENT; silence stays UNKNOWN.",
+        "verdict": "APPROVED"
+      },
+      "required_state": "PRESENT",
+      "response_class": [
+        "ACUTE_RESPIRATORY_DISTRESS",
+        "SYSTEMIC_INFLAMMATORY_ILLNESS"
+      ],
+      "seed_id": "SEED-PED-T01-PNEUMONIA",
+      "source_opportunity": "G2-PED-01",
+      "supply_acquisition_kind": "ANCHOR_ADDITION",
+      "supply_declared_concept_id": "CONCEPT-R2-SU-P-147-PNEUMONIA",
+      "supply_discovery_source": "APPROVED_V2_RELATION",
+      "supply_wave_review": {
+        "reviewer_id": "R-SUPPLY-A",
+        "verdict": "APPROVED"
+      },
+      "target_concept_id": "CONCEPT-R4-SU-P-149-PNEUMONIA"
+    },
+    {
+      "anchor_study_unit_id": "SU-P-147",
+      "classification": "NEW_FEATURE_REQUIRED",
+      "concept_id_reconciliation": "NOT_APPLICABLE",
+      "context": {
+        "supply_refusal_reasons": [
+          "S-1. The frozen SU-P-147 vocabulary carries no feature in which this candidate could state a correctness condition: there is nothing for noisy breathing since birth, for a positional or biphasic character, or for a chronic course. Refused rather than expressed in a borrowed feature."
+        ],
+        "supply_rule": null
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": null,
+      "declared_anchor_role": null,
+      "evidence_refs": [],
+      "extension_id": "FAX-003",
+      "feature_id": null,
+      "feature_status": "FEATURE_DOES_NOT_EXIST",
+      "learner_decision": null,
+      "member_id": "CANDIDATE-PED-T01-CROUP",
+      "proposed_by": "on-demand contrast supply wave `on-demand-contrast-supply-frozen-5`",
+      "registry_review": {
+        "clinically_meaningful": null,
+        "correctly_typed": null,
+        "mcc_level_relevant": null,
+        "needed_for_a_validated_contrast_relation": null,
+        "not_a_duplicate": null,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reason": "SU-P-147 has no feature for noisy breathing since birth, a positional or biphasic character, or a chronic course, so this candidate cannot state a correctness condition at all. Registering three new features to hold them is a vocabulary extension, which needs its own evidence packet and its own authorization; this registry does not grow the frozen vocabulary. REJECTED, and recorded as blocked by the vocabulary rather than by clinical merit -- laryngotracheomalacia is in CLM-R2-PED-DDX-TABLE and is a legitimate competitor concept.",
+        "reviewer_id": "R-REGISTRY-1",
+        "verdict": "REJECTED"
+      },
+      "required_state": null,
+      "response_class": [],
+      "seed_id": null,
+      "source_opportunity": "G2-PED-01",
+      "supply_acquisition_kind": "NEW_CONCEPT",
+      "supply_declared_concept_id": "CONCEPT-TN-P-S16-LARYNGOTRACHEOMALACIA",
+      "supply_discovery_source": "TN_FTS",
+      "supply_wave_review": {
+        "reviewer_id": "R-SUPPLY-A",
+        "verdict": "REJECTED"
+      },
+      "target_concept_id": "CONCEPT-TN-P-S16-LARYNGOTRACHEOMALACIA"
+    },
+    {
+      "anchor_study_unit_id": "SU-P-147",
+      "classification": "NEW_FEATURE_REQUIRED",
+      "concept_id_reconciliation": "NOT_APPLICABLE",
+      "context": {
+        "supply_refusal_reasons": [
+          "S-1. No frozen SU-P-147 feature carries a murmur, hepatomegaly, poor feeding with sweating, or failure to thrive, so the candidate has no correctness condition to state."
+        ],
+        "supply_rule": null
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": null,
+      "declared_anchor_role": null,
+      "evidence_refs": [],
+      "extension_id": "FAX-004",
+      "feature_id": null,
+      "feature_status": "FEATURE_DOES_NOT_EXIST",
+      "learner_decision": null,
+      "member_id": "CANDIDATE-PED-T01-CHF",
+      "proposed_by": "on-demand contrast supply wave `on-demand-contrast-supply-frozen-5`",
+      "registry_review": {
+        "clinically_meaningful": null,
+        "correctly_typed": null,
+        "mcc_level_relevant": null,
+        "needed_for_a_validated_contrast_relation": null,
+        "not_a_duplicate": null,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reason": "Same ceiling: no frozen feature carries a murmur, hepatomegaly, poor feeding with sweating or failure to thrive. REJECTED for the same reason and with the same caveat.",
+        "reviewer_id": "R-REGISTRY-1",
+        "verdict": "REJECTED"
+      },
+      "required_state": null,
+      "response_class": [],
+      "seed_id": null,
+      "source_opportunity": "G2-PED-01",
+      "supply_acquisition_kind": "NEW_CONCEPT",
+      "supply_declared_concept_id": "CONCEPT-TN-P-S16-CONGESTIVE-HEART-FAILURE",
+      "supply_discovery_source": "TN_FTS",
+      "supply_wave_review": {
+        "reviewer_id": "R-SUPPLY-A",
+        "verdict": "REJECTED"
+      },
+      "target_concept_id": "CONCEPT-TN-P-S16-CONGESTIVE-HEART-FAILURE"
+    },
+    {
+      "anchor_study_unit_id": "SU-P-147",
+      "classification": "NEW_FEATURE_REQUIRED",
+      "concept_id_reconciliation": "NOT_APPLICABLE",
+      "context": {
+        "supply_refusal_reasons": [
+          "S-1. Same ceiling: no frozen feature for a feed-related or positional pattern."
+        ],
+        "supply_rule": null
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": null,
+      "declared_anchor_role": null,
+      "evidence_refs": [],
+      "extension_id": "FAX-005",
+      "feature_id": null,
+      "feature_status": "FEATURE_DOES_NOT_EXIST",
+      "learner_decision": null,
+      "member_id": "CANDIDATE-PED-T01-GERD",
+      "proposed_by": "on-demand contrast supply wave `on-demand-contrast-supply-frozen-5`",
+      "registry_review": {
+        "clinically_meaningful": null,
+        "correctly_typed": null,
+        "mcc_level_relevant": null,
+        "needed_for_a_validated_contrast_relation": null,
+        "not_a_duplicate": null,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reason": "Same ceiling: no frozen feature for a feed-related or positional pattern. REJECTED.",
+        "reviewer_id": "R-REGISTRY-1",
+        "verdict": "REJECTED"
+      },
+      "required_state": null,
+      "response_class": [],
+      "seed_id": null,
+      "source_opportunity": "G2-PED-01",
+      "supply_acquisition_kind": "NEW_CONCEPT",
+      "supply_declared_concept_id": "CONCEPT-TN-P-S16-GASTROESOPHAGEAL-REFLUX",
+      "supply_discovery_source": "TN_FTS",
+      "supply_wave_review": {
+        "reviewer_id": "R-SUPPLY-A",
+        "verdict": "REJECTED"
+      },
+      "target_concept_id": "CONCEPT-TN-P-S16-GASTROESOPHAGEAL-REFLUX"
+    },
+    {
+      "anchor_study_unit_id": "SU-P-147",
+      "classification": "ANCHOR_RELATION_ONLY",
+      "concept_id_reconciliation": "REGISTERED_ID_DIFFERS_FROM_SUPPLY_DECLARED_ID",
+      "context": {
+        "role_override_source": null,
+        "s4_limb_b": "CLM-R2-PED-DDX-ATYPICAL names severe respiratory distress as the atypical presentation in which a broader differential, including bacterial infection, should be considered; CLM-R2-PED-CBC-SBI leaves the decision to order the test to clinical judgement. Escalating work of breathing is therefore a cited reason a candidate might reach for blood tests, and it is a presentation feature the key shares.",
+        "s4_limb_c": "Correctness requires SF-P147-SEVERE-OR-BACTERIAL-CONCERN, a stated clinical judgement that bacterial infection is a specific possibility. Work of breathing alone does not supply it.",
+        "supply_declared_contrast_role": "POSITIVE_SUPPORT",
+        "supply_rule": "S-4"
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": "SINGLE_NEXT_ASSESSMENT",
+      "declared_anchor_role": null,
+      "evidence_refs": [
+        "CLM-R2-PED-CBC-SBI",
+        "CLM-R2-PED-DDX-ATYPICAL"
+      ],
+      "extension_id": "FAX-006",
+      "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+      "feature_status": "FEATURE_ALREADY_EXISTS",
+      "learner_decision": "QGEN-GEN-PED-T02",
+      "member_id": "SEED-PED-T02-CBC",
+      "proposed_by": "on-demand contrast supply wave `on-demand-contrast-supply-frozen-5`",
+      "registry_review": {
+        "anchor_strength_and_role": "EXAMINATION_FINDING to POSITIVE_SUPPORT, inside ANCHOR_CLASSES.",
+        "boolean_semantics": "Correctness is ALL_OF(SF-P147-SEVERE-OR-BACTERIAL-CONCERN PRESENT), a single conjunct which the anchor is not.",
+        "categorical_exclusion_risk": "NONE.",
+        "clinically_meaningful": true,
+        "correctly_typed": true,
+        "learner_decision_relevance": "QGEN-GEN-PED-T02 is the next-assessment decision in an admitted infant with bronchiolitis, at SINGLE_NEXT_ASSESSMENT granularity, which is this candidate's own granularity.",
+        "mcc_level_relevant": true,
+        "medical_correctness": "Reaching for blood tests in a sick-looking infant is a recognised and commonly over-used response, which is what makes it a real distractor. CLM-R2-PED-CBC-SBI leaves the decision to clinical judgement and CLM-GEN-PED-INV-01 reserves investigation for severity suggesting an alternative.",
+        "minimality_note": "Its single frozen anchor is its single correctness condition, the anchor-equals-condition shape CS2-6 exists to refuse.",
+        "needed_for_a_validated_contrast_relation": true,
+        "not_a_duplicate": true,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reviewer_id": "R-REGISTRY-1",
+        "second_key_risk": "NONE, and the evidence is unusually direct: CLM-R2-PED-CBC-SBI states that a complete blood count has not been found useful in predicting serious bacterial infection, so it cannot become the single best answer on a stem that raises no specific bacterial concern.",
+        "source_support": "CLM-R2-PED-CBC-SBI and CLM-GEN-PED-INV-01, both VERIFIED_COMPLETE.",
+        "state_semantics": "Required state PRESENT; silence stays UNKNOWN.",
+        "verdict": "APPROVED"
+      },
+      "required_state": "PRESENT",
+      "response_class": [
+        "BIOCHEMICAL",
+        "MICROBIOLOGIC"
+      ],
+      "seed_id": "SEED-PED-T02-CBC",
+      "source_opportunity": "G2-PED-02",
+      "supply_acquisition_kind": "NEW_MEMBER_WITH_ANCHOR_ADDITION",
+      "supply_declared_concept_id": "CONCEPT-R2-SU-P-147-CBC",
+      "supply_discovery_source": "CURATED_LIBRARY",
+      "supply_wave_review": {
+        "reviewer_id": "R-SUPPLY-B",
+        "verdict": "APPROVED"
+      },
+      "target_concept_id": "CONCEPT-R4-SU-P-147-CBC"
+    },
+    {
+      "anchor_study_unit_id": "SU-P-147",
+      "classification": "INVALID_EXTENSION",
+      "concept_id_reconciliation": "NOT_APPLICABLE",
+      "context": {
+        "supply_refusal_reasons": [
+          "S-3. No admitted evidence claim states when a blood gas is or is not indicated in bronchiolitis, so its correctness conditions could only be asserted. A relation without evidence is an opinion."
+        ],
+        "supply_rule": null
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": null,
+      "declared_anchor_role": null,
+      "evidence_refs": [],
+      "extension_id": "FAX-007",
+      "feature_id": null,
+      "feature_status": "FEATURE_DOES_NOT_EXIST",
+      "learner_decision": null,
+      "member_id": "CANDIDATE-PED-T02-BLOOD-GAS",
+      "proposed_by": "on-demand contrast supply wave `on-demand-contrast-supply-frozen-5`",
+      "registry_review": {
+        "clinically_meaningful": null,
+        "correctly_typed": null,
+        "mcc_level_relevant": null,
+        "needed_for_a_validated_contrast_relation": null,
+        "not_a_duplicate": null,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reason": "The earliest blocking property is evidence, not vocabulary. No admitted claim states when a capillary blood gas is or is not indicated in bronchiolitis, so any correctness condition would be asserted rather than cited. The evidence contract refuses it before the vocabulary question arises. REJECTED.",
+        "reviewer_id": "R-REGISTRY-1",
+        "verdict": "REJECTED"
+      },
+      "required_state": null,
+      "response_class": [],
+      "seed_id": null,
+      "source_opportunity": "G2-PED-02",
+      "supply_acquisition_kind": "NEW_CONCEPT",
+      "supply_declared_concept_id": "CONCEPT-TN-P-S16-CAPILLARY-BLOOD-GAS",
+      "supply_discovery_source": "TN_FTS",
+      "supply_wave_review": {
+        "reviewer_id": "R-SUPPLY-B",
+        "verdict": "REJECTED"
+      },
+      "target_concept_id": "CONCEPT-TN-P-S16-CAPILLARY-BLOOD-GAS"
+    },
+    {
+      "anchor_study_unit_id": "SU-PS-12",
+      "classification": "ANCHOR_RELATION_ONLY",
+      "concept_id_reconciliation": "AGREES",
+      "context": {
+        "role_override_source": "The frozen G2-PSY-03 reading already types SF-PS12-MODERATE-SEVERITY as SEVERITY_FEATURE, on CLM-R2-PSY-MODERATE-CHOICE and CLM-GEN-PSY-TX-01.",
+        "s4_limb_b": "CLM-R4-PSY-COMBINED states that combining psychological treatment with pharmacotherapy is more effective than either alone for acute treatment, without restricting that statement to severe episodes. The severity band is the operative criterion for this treatment choice under CLM-R2-PSY-MODERATE-CHOICE, so a stated moderate band is a cited reason a candidate might choose the combination, and it is the presentation feature the key rests on too.",
+        "s4_limb_c": "Correctness requires a severe episode without psychotic features. A moderate band does not satisfy it; the frozen SU-PS-12 contradiction list makes the two mutually exclusive, so the anchor is the opposite of sufficient.",
+        "supply_declared_contrast_role": "SEVERITY_FEATURE",
+        "supply_rule": "S-4"
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": "INITIAL_TREATMENT_PLAN",
+      "declared_anchor_role": "SEVERITY_FEATURE",
+      "evidence_refs": [
+        "CLM-R2-PSY-MODERATE-CHOICE",
+        "CLM-R4-PSY-COMBINED"
+      ],
+      "extension_id": "FAX-008",
+      "feature_id": "SF-PS12-MODERATE-SEVERITY",
+      "feature_status": "FEATURE_ALREADY_EXISTS",
+      "learner_decision": "QGEN-GEN-PSY-T03",
+      "member_id": "SEED-PSY-T03-COMBINED",
+      "proposed_by": "on-demand contrast supply wave `on-demand-contrast-supply-frozen-5`",
+      "registry_review": {
+        "anchor_strength_and_role": "This is the relation that needs the declared role and the reason the field exists. SF-PS12-MODERATE-SEVERITY is typed CLINICAL_JUDGEMENT in the frozen vocabulary, which types to BACKGROUND_CONTEXT in PATIENT_CLINICAL and is OUTSIDE ANCHOR_CLASSES. The relation therefore declares SEVERITY_FEATURE, and it is not a new judgement: the frozen G2-PSY-03 reading already carries exactly that role override, cited to CLM-R2-PSY-MODERATE-CHOICE and CLM-GEN-PSY-TX-01, and it predates the supply wave. Verified by rereading research/qgen/pilot/contrast-first-v2-frozen-10-readings.json.",
+        "boolean_semantics": "Correctness is ALL_OF(SF-PS12-SEVERE-WITHOUT-PSYCHOSIS PRESENT). The anchor is not that feature, and the frozen SU-PS-12 contradiction list makes moderate and severe mutually exclusive, so a stated moderate band entails the correctness condition ABSENT. The anchor is the opposite of sufficient.",
+        "categorical_exclusion_risk": "NONE. COMBINED_TREATMENT is its own concept category and is distinct from the key's PHARMACOTHERAPY, so it does not deepen a category imbalance.",
+        "clinically_meaningful": true,
+        "correctly_typed": true,
+        "learner_decision_relevance": "QGEN-GEN-PSY-T03, initial treatment for a moderate depressive episode, at INITIAL_TREATMENT_PLAN granularity.",
+        "mcc_level_relevant": true,
+        "medical_correctness": "Starting both modalities at once is a defensible-sounding answer at moderate severity and CLM-R4-PSY-COMBINED states in general terms that combining psychological treatment with pharmacotherapy is more effective than either alone. The reason it is not the single best answer is a real guideline distinction rather than a trick.",
+        "minimality_note": "Its single frozen anchor is its single correctness condition; without the relation it can be live only by being a second key.",
+        "needed_for_a_validated_contrast_relation": true,
+        "not_a_duplicate": true,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reviewer_id": "R-REGISTRY-1",
+        "second_key_risk": "NONE. CLM-R2-PSY-MODERATE-CHOICE makes the moderate-severity initial choice psychotherapy or an antidepressant, and CLM-R4-PSY-COMBINED recommends the combination in severe episodes. Live and inferior, not co-correct.",
+        "source_support": "CLM-R4-PSY-COMBINED and CLM-R2-PSY-MODERATE-CHOICE, both VERIFIED_COMPLETE.",
+        "state_semantics": "Required state PRESENT; silence stays UNKNOWN.",
+        "verdict": "APPROVED"
+      },
+      "required_state": "PRESENT",
+      "response_class": [
+        "COMBINED_TREATMENT",
+        "PHARMACOLOGIC_TREATMENT"
+      ],
+      "seed_id": "SEED-PSY-T03-COMBINED",
+      "source_opportunity": "G2-PSY-03",
+      "supply_acquisition_kind": "NEW_MEMBER_WITH_ANCHOR_ADDITION",
+      "supply_declared_concept_id": "CONCEPT-R4-SU-PS-12-COMBINED",
+      "supply_discovery_source": "CURATED_LIBRARY",
+      "supply_wave_review": {
+        "reviewer_id": "R-SUPPLY-C",
+        "verdict": "APPROVED"
+      },
+      "target_concept_id": "CONCEPT-R4-SU-PS-12-COMBINED"
+    },
+    {
+      "anchor_study_unit_id": "SU-PS-12",
+      "classification": "ANCHOR_RELATION_ONLY",
+      "concept_id_reconciliation": "NOT_APPLICABLE",
+      "context": {
+        "supply_refusal_reasons": [
+          "CS2-6 as frozen: each of its usable anchors, documented imminent suicide risk and psychotic features, is also a disjunct of its correctness conditions, so it can be live only by being a second key.",
+          "S-4(b) refuses the repair. The only anchor that would not be sufficient is the moderate severity band, and CLM-GEN-PSY-TX-01 states in terms that ECT is not a routine first choice in this context. Asserting that a moderate band makes ECT considerable would fabricate the plausibility the rule requires to be cited."
+        ],
+        "supply_rule": null
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": "INITIAL_TREATMENT_PLAN",
+      "declared_anchor_role": null,
+      "evidence_refs": [],
+      "extension_id": "FAX-009",
+      "feature_id": null,
+      "feature_status": "FEATURE_ALREADY_EXISTS",
+      "learner_decision": "QGEN-G2-PSY-T03X",
+      "member_id": "SEED-G2-PSY-T03-ECT",
+      "proposed_by": "on-demand contrast supply wave `on-demand-contrast-supply-frozen-5`",
+      "registry_review": {
+        "clinically_meaningful": null,
+        "correctly_typed": null,
+        "mcc_level_relevant": null,
+        "needed_for_a_validated_contrast_relation": null,
+        "not_a_duplicate": null,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reason": "A real anchor-relation proposal, refused on evidence. Each of its usable anchors, documented imminent suicide risk and psychotic features, is also a disjunct of its correctness conditions. The only anchor that would not be sufficient is the moderate severity band, and CLM-GEN-PSY-TX-01 states that electroconvulsive therapy is not a routine first choice in this context, so asserting that a moderate band makes it considerable would fabricate the very plausibility the rule requires to be cited. REJECTED.",
+        "reviewer_id": "R-REGISTRY-1",
+        "verdict": "REJECTED"
+      },
+      "required_state": null,
+      "response_class": [
+        "MANAGEMENT_STRATEGY_FOR_PRESENTATION"
+      ],
+      "seed_id": "SEED-G2-PSY-T03-ECT",
+      "source_opportunity": "G2-PSY-03",
+      "supply_acquisition_kind": "NEW_MEMBER_WITH_ANCHOR_ADDITION",
+      "supply_declared_concept_id": "CONCEPT-R2-SU-PS-12-ECT",
+      "supply_discovery_source": "CURATED_LIBRARY",
+      "supply_wave_review": {
+        "reviewer_id": "R-SUPPLY-C",
+        "verdict": "REJECTED"
+      },
+      "target_concept_id": "CONCEPT-G2-ECT"
+    },
+    {
+      "anchor_study_unit_id": "SU-PS-12",
+      "classification": "INVALID_EXTENSION",
+      "concept_id_reconciliation": "NOT_APPLICABLE",
+      "context": {
+        "supply_refusal_reasons": [
+          "Deduplication. The key of this opportunity is a first-line antidepressant, so the candidate is the same concept in the same option set: SAME_CONCEPT nesting, which CS2-1 would refuse and which is not supply."
+        ],
+        "supply_rule": null
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": "INITIAL_TREATMENT_PLAN",
+      "declared_anchor_role": null,
+      "evidence_refs": [],
+      "extension_id": "FAX-010",
+      "feature_id": null,
+      "feature_status": "FEATURE_ALREADY_EXISTS",
+      "learner_decision": "QGEN-G2-PSY-T03X",
+      "member_id": "SEED-G2-PSY-T03-AD-ALONE",
+      "proposed_by": "on-demand contrast supply wave `on-demand-contrast-supply-frozen-5`",
+      "registry_review": {
+        "clinically_meaningful": null,
+        "correctly_typed": null,
+        "mcc_level_relevant": null,
+        "needed_for_a_validated_contrast_relation": null,
+        "not_a_duplicate": null,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reason": "No anchor relation is proposed and none would help: the key of this opportunity is a first-line antidepressant, so the candidate is the same concept in the same option set. Duplicate. REJECTED.",
+        "reviewer_id": "R-REGISTRY-1",
+        "verdict": "REJECTED"
+      },
+      "required_state": null,
+      "response_class": [
+        "PHARMACOLOGIC_TREATMENT"
+      ],
+      "seed_id": "SEED-G2-PSY-T03-AD-ALONE",
+      "source_opportunity": "G2-PSY-03",
+      "supply_acquisition_kind": "NEW_MEMBER",
+      "supply_declared_concept_id": "CONCEPT-R2-SU-PS-12-AD-ALONE",
+      "supply_discovery_source": "CURATED_LIBRARY",
+      "supply_wave_review": {
+        "reviewer_id": "R-SUPPLY-C",
+        "verdict": "REJECTED"
+      },
+      "target_concept_id": "CONCEPT-G2-ANTIDEPRESSANT-ALONE"
+    },
+    {
+      "anchor_study_unit_id": "SU-GS-76",
+      "classification": "NEW_FEATURE_REQUIRED",
+      "concept_id_reconciliation": "NOT_APPLICABLE",
+      "context": {
+        "supply_refusal_reasons": [
+          "S-1. The frozen SU-GS-76 vocabulary holds no feature for a chronic or relapsing bowel history, for diarrhoea, for weight loss or for perianal disease, so this candidate has no correctness condition it could state."
+        ],
+        "supply_rule": null
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": null,
+      "declared_anchor_role": null,
+      "evidence_refs": [],
+      "extension_id": "FAX-011",
+      "feature_id": null,
+      "feature_status": "FEATURE_DOES_NOT_EXIST",
+      "learner_decision": null,
+      "member_id": "CANDIDATE-SURG-T01-CROHN",
+      "proposed_by": "on-demand contrast supply wave `on-demand-contrast-supply-frozen-5`",
+      "registry_review": {
+        "clinically_meaningful": null,
+        "correctly_typed": null,
+        "mcc_level_relevant": null,
+        "needed_for_a_validated_contrast_relation": null,
+        "not_a_duplicate": null,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reason": "SU-GS-76 holds no feature for a chronic or relapsing bowel history, diarrhoea, weight loss or perianal disease. This is the single largest cause of G2-SURG-01's refusal and it is a vocabulary bound, restated here rather than worked around. REJECTED.",
+        "reviewer_id": "R-REGISTRY-1",
+        "verdict": "REJECTED"
+      },
+      "required_state": null,
+      "response_class": [],
+      "seed_id": null,
+      "source_opportunity": "G2-SURG-01",
+      "supply_acquisition_kind": "NEW_CONCEPT",
+      "supply_declared_concept_id": "CONCEPT-TN-GS-S02-CROHN-DISEASE",
+      "supply_discovery_source": "TN_FTS",
+      "supply_wave_review": {
+        "reviewer_id": "R-SUPPLY-D",
+        "verdict": "REJECTED"
+      },
+      "target_concept_id": "CONCEPT-TN-GS-S02-CROHN-DISEASE"
+    },
+    {
+      "anchor_study_unit_id": "SU-GS-76",
+      "classification": "NEW_FEATURE_REQUIRED",
+      "concept_id_reconciliation": "NOT_APPLICABLE",
+      "context": {
+        "supply_refusal_reasons": [
+          "S-1. No frozen feature carries a preceding or concurrent viral illness, tender mobile lymphadenopathy, or a non-migratory pain pattern."
+        ],
+        "supply_rule": null
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": null,
+      "declared_anchor_role": null,
+      "evidence_refs": [],
+      "extension_id": "FAX-012",
+      "feature_id": null,
+      "feature_status": "FEATURE_DOES_NOT_EXIST",
+      "learner_decision": null,
+      "member_id": "CANDIDATE-SURG-T01-MESENTERIC-ADENITIS",
+      "proposed_by": "on-demand contrast supply wave `on-demand-contrast-supply-frozen-5`",
+      "registry_review": {
+        "clinically_meaningful": null,
+        "correctly_typed": null,
+        "mcc_level_relevant": null,
+        "needed_for_a_validated_contrast_relation": null,
+        "not_a_duplicate": null,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reason": "No frozen feature carries a preceding viral illness, tender mobile lymphadenopathy or a non-migratory pain pattern. REJECTED.",
+        "reviewer_id": "R-REGISTRY-1",
+        "verdict": "REJECTED"
+      },
+      "required_state": null,
+      "response_class": [],
+      "seed_id": null,
+      "source_opportunity": "G2-SURG-01",
+      "supply_acquisition_kind": "NEW_CONCEPT",
+      "supply_declared_concept_id": "CONCEPT-TN-GS-S02-MESENTERIC-LYMPHADENITIS",
+      "supply_discovery_source": "TN_FTS",
+      "supply_wave_review": {
+        "reviewer_id": "R-SUPPLY-D",
+        "verdict": "REJECTED"
+      },
+      "target_concept_id": "CONCEPT-TN-GS-S02-MESENTERIC-LYMPHADENITIS"
+    },
+    {
+      "anchor_study_unit_id": "SU-GS-76",
+      "classification": "ANCHOR_RELATION_ONLY",
+      "concept_id_reconciliation": "NOT_APPLICABLE",
+      "context": {
+        "supply_refusal_reasons": [
+          "CS2-6 and S-4(c). The single frozen feature available to it, 'flank-to-groin colic with haematuria makes a ureteral stone the leading diagnosis', is simultaneously its only usable plausibility anchor and its whole correctness condition, so it can be live only by being a second key.",
+          "S-4(b) refuses the repair. No other SU-GS-76 presentation feature is cited anywhere as a reason to consider a stone; migratory right lower quadrant pain is the appendiceal pattern and the frozen contradiction list makes the two mutually exclusive."
+        ],
+        "supply_rule": null
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": null,
+      "declared_anchor_role": null,
+      "evidence_refs": [],
+      "extension_id": "FAX-013",
+      "feature_id": null,
+      "feature_status": "FEATURE_ALREADY_EXISTS",
+      "learner_decision": null,
+      "member_id": "CANDIDATE-SURG-T01-URETERIC-COLIC",
+      "proposed_by": "on-demand contrast supply wave `on-demand-contrast-supply-frozen-5`",
+      "registry_review": {
+        "clinically_meaningful": null,
+        "correctly_typed": null,
+        "mcc_level_relevant": null,
+        "needed_for_a_validated_contrast_relation": null,
+        "not_a_duplicate": null,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reason": "The feature exists, so this is a genuine anchor-relation proposal and it is refused on its merits. The only SU-GS-76 feature available to it, flank-to-groin colic with haematuria, is simultaneously its only usable anchor and its whole correctness condition, so admitting the relation would admit a candidate that can be live only by being a second key. No other presentation feature is cited anywhere as a reason to consider a stone, and the frozen contradiction list makes migratory right-lower-quadrant pain incompatible with it. REJECTED on second-key risk and on absent source support.",
+        "reviewer_id": "R-REGISTRY-1",
+        "verdict": "REJECTED"
+      },
+      "required_state": null,
+      "response_class": [],
+      "seed_id": null,
+      "source_opportunity": "G2-SURG-01",
+      "supply_acquisition_kind": "NEW_CONCEPT",
+      "supply_declared_concept_id": "CONCEPT-R4-SU-GS-76-URETERAL-STONE",
+      "supply_discovery_source": "TN_FTS",
+      "supply_wave_review": {
+        "reviewer_id": "R-SUPPLY-D",
+        "verdict": "REJECTED"
+      },
+      "target_concept_id": "CONCEPT-R4-SU-GS-76-URETERAL-STONE"
+    },
+    {
+      "anchor_study_unit_id": "SU-GS-76",
+      "classification": "INVALID_EXTENSION",
+      "concept_id_reconciliation": "NOT_APPLICABLE",
+      "context": {
+        "supply_refusal_reasons": [
+          "It does not solve the problem it was discovered for. CS2-5 fires twice on the assembled set because the key is alone in its category while the competitors close ranks in a single gynaecologic category; a fourth gynaecologic competitor deepens that imbalance.",
+          "The reviewer explicitly considered and refused declaring it a separate concept category, for example EARLY_PREGNANCY_COMPLICATION, in order to clear CS2-5. The cue CS2-5 exists to catch is that appendicitis is the only non-gynaecologic option on the page, and a relabelling would hide the cue from the rule while leaving it in front of the candidate. That is gaming the gate, not supplying contrast.",
+          "S-4(b) separately: no admitted claim names a SU-GS-76 presentation feature as a reason to consider ectopic pregnancy, so it would have no usable anchor either."
+        ],
+        "supply_rule": null
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": null,
+      "declared_anchor_role": null,
+      "evidence_refs": [],
+      "extension_id": "FAX-014",
+      "feature_id": null,
+      "feature_status": "FEATURE_ALREADY_EXISTS",
+      "learner_decision": null,
+      "member_id": "CANDIDATE-SURG-T01-ECTOPIC",
+      "proposed_by": "on-demand contrast supply wave `on-demand-contrast-supply-frozen-5`",
+      "registry_review": {
+        "clinically_meaningful": null,
+        "correctly_typed": null,
+        "mcc_level_relevant": null,
+        "needed_for_a_validated_contrast_relation": null,
+        "not_a_duplicate": null,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reason": "Refused as an extension rather than as a concept. It does not solve the problem it was discovered for -- CS2-5 already fires because the key is the only non-gynaecologic option, and a fourth gynaecologic competitor deepens that. The supply reviewer's refusal to relabel it into a separate concept category to clear CS2-5 is upheld in full: relabelling would hide the cue from the rule while leaving it in front of the candidate. REJECTED.",
+        "reviewer_id": "R-REGISTRY-1",
+        "verdict": "REJECTED"
+      },
+      "required_state": null,
+      "response_class": [],
+      "seed_id": null,
+      "source_opportunity": "G2-SURG-01",
+      "supply_acquisition_kind": "NEW_CONCEPT",
+      "supply_declared_concept_id": "CONCEPT-R4-SU-GS-76-ECTOPIC-PREGNANCY",
+      "supply_discovery_source": "CURATED_EVIDENCE",
+      "supply_wave_review": {
+        "reviewer_id": "R-SUPPLY-D",
+        "verdict": "REJECTED"
+      },
+      "target_concept_id": "CONCEPT-R4-SU-GS-76-ECTOPIC-PREGNANCY"
+    },
+    {
+      "anchor_study_unit_id": "SU-GS-76",
+      "classification": "ANCHOR_RELATION_ONLY",
+      "concept_id_reconciliation": "NOT_APPLICABLE",
+      "context": {
+        "supply_refusal_reasons": [
+          "CS2-7. Its only declared anchor, SF-GS76-HIGH-CLINICAL-SUSPICION-YOUNG-MALE, is a CLINICAL_JUDGEMENT feature that types to BACKGROUND_CONTEXT, so nothing carries its plausibility.",
+          "S-4(b) refuses the repair: no admitted claim names a SU-GS-76 presentation feature as a reason to go straight to laparoscopy, and the frozen contradiction list makes high suspicion in a young male incompatible with this opportunity's intermediate suspicion and with a female patient.",
+          "It would not have helped in any case. CS2-9 fires on this opportunity's own frozen key: both of its correctness conditions, an Alvarado suspicion band the frozen reading deliberately refuses to retype and a resource clause, are NON_DISCRIMINATING, so no set built around this key is coherent however many competitors it has."
+        ],
+        "supply_rule": null
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": "SINGLE_NEXT_DIAGNOSTIC_STEP",
+      "declared_anchor_role": null,
+      "evidence_refs": [],
+      "extension_id": "FAX-015",
+      "feature_id": null,
+      "feature_status": "FEATURE_ALREADY_EXISTS",
+      "learner_decision": "QGEN-GEN-SURG-T02",
+      "member_id": "SEED-SURG-T02-LAPAROSCOPY",
+      "proposed_by": "on-demand contrast supply wave `on-demand-contrast-supply-frozen-5`",
+      "registry_review": {
+        "clinically_meaningful": null,
+        "correctly_typed": null,
+        "mcc_level_relevant": null,
+        "needed_for_a_validated_contrast_relation": null,
+        "not_a_duplicate": null,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reason": "A real anchor-relation proposal and the clearest example of why anchor roles have to be typed. Its only declared anchor, SF-GS76-HIGH-CLINICAL-SUSPICION-YOUNG-MALE, is a CLINICAL_JUDGEMENT feature that types to BACKGROUND_CONTEXT and carries no plausibility. No admitted claim names any SU-GS-76 presentation feature as a reason to go straight to laparoscopy, and the frozen contradiction list makes high suspicion in a young male incompatible with this opportunity's intermediate suspicion and female patient. It would not have helped in any case: CS2-9 fires on this opportunity's own frozen key. REJECTED.",
+        "reviewer_id": "R-REGISTRY-1",
+        "verdict": "REJECTED"
+      },
+      "required_state": null,
+      "response_class": [
+        "STRUCTURAL"
+      ],
+      "seed_id": "SEED-SURG-T02-LAPAROSCOPY",
+      "source_opportunity": "G2-SURG-02",
+      "supply_acquisition_kind": "NEW_MEMBER",
+      "supply_declared_concept_id": "CONCEPT-R2-SU-GS-76-LAPAROSCOPY",
+      "supply_discovery_source": "CURATED_LIBRARY",
+      "supply_wave_review": {
+        "reviewer_id": "R-SUPPLY-E",
+        "verdict": "REJECTED"
+      },
+      "target_concept_id": "CONCEPT-R4-SU-GS-76-LAPAROSCOPY"
+    }
+  ],
+  "no_new_discovery": "Every proposal here was discovered by the already-run frozen-five supply wave. No further supply wave was run, no competitor was discovered and no evidence was acquired.",
+  "review_independence": {
+    "stated_limit": "R-REGISTRY-1 is a separate reasoning pass by the same model instance rather than a separate agent, which is a weaker form of independence than the three fresh reviewers of the contrast-first pilot. It is stated rather than glossed. Every load-bearing claim was checked against the frozen artifact rather than against the supply layer's summary of it: the correctness trees were reread from the frozen enrichments, the role override from the frozen V2 readings, and all six cited claims from the R2 and R4 evidence packets.",
+    "what_is_new": "A registry-level review, R-REGISTRY-1, on the questions a registry has to answer and the supply wave never asked: does the feature exist, is the anchor role inside ANCHOR_CLASSES or does it need a cited override, is the relation a duplicate of one already registered, and does it survive the minimality rule.",
+    "what_is_reused": "The supply wave's own clinical review, by R-SUPPLY-A/B/C, on medical plausibility, learner-decision match, response class, granularity, Boolean reading and second-key risk. It is recorded per extension and not re-litigated."
+  },
+  "schema_version": "1.0",
+  "scope": "QGEN_FEATURE_ANCHOR_REGISTRY_EXTENSIONS",
+  "target_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2"
+}

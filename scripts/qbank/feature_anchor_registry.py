@@ -435,3 +435,560 @@ def build_reconciliation(root) -> dict[str, Any]:
             ],
         },
     }
+
+
+# ------------------------------------------------------------ the registry
+
+BASELINE_SNAPSHOT_ID = "FEATURE_ANCHOR_SNAPSHOT_V1"
+EXTENDED_SNAPSHOT_ID = "FEATURE_ANCHOR_SNAPSHOT_V2"
+
+SNAPSHOTS_PATH = "research/qgen/feature_anchor_snapshots.json"
+EXTENSIONS_PATH = "research/qgen/feature_anchor_extensions.json"
+
+#: The registry is a boundary, and this is the whole of what it may say about a
+#: state. V2's four, imported rather than restated.
+REGISTRY_FEATURE_STATES = ("PRESENT", "ABSENT", "UNKNOWN", "NOT_APPLICABLE")
+
+REVIEW_VERDICTS = ("APPROVED", "REJECTED", "UNCERTAIN")
+
+#: Only APPROVED enters a snapshot. UNCERTAIN fails closed exactly as REJECTED
+#: does, which is the point of naming it separately.
+ADMISSIBLE_REVIEW_VERDICTS = frozenset({"APPROVED"})
+
+EXTENSION_CLASSIFICATIONS = (
+    "FEATURE_ALREADY_EXISTS",
+    "NEW_FEATURE_REQUIRED",
+    "ANCHOR_RELATION_ONLY",
+    "INVALID_EXTENSION",
+)
+
+VERIFICATION_STATUSES = ("FROZEN_CANONICAL", "EVIDENCE_VERIFIED", "EVIDENCE_PENDING")
+
+
+def canonical_json(payload: Any) -> str:
+    return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+
+
+def content_sha256(payload: Any) -> str:
+    import hashlib
+
+    return hashlib.sha256(canonical_json(payload).encode("utf-8")).hexdigest()
+
+
+def supported_roles_for(feature_type: str) -> dict[str, str]:
+    """The contrast role this feature type yields in each decision domain.
+
+    Computed from the canonical V2 mapping and never authored, so the role
+    ontology cannot grow through the registry.
+    """
+    from .clinical_contrast_v2 import (
+        DECISION_DOMAINS,
+        ClinicalContrastV2Error,
+        contrast_role_for,
+    )
+
+    roles: dict[str, str] = {}
+    for domain in DECISION_DOMAINS:
+        try:
+            roles[domain] = contrast_role_for(feature_type, decision_domain=domain)
+        except ClinicalContrastV2Error:
+            continue
+    return roles
+
+
+def _non_anchor_domains(roles: Mapping[str, str]) -> list[str]:
+    from .clinical_contrast_v2 import ANCHOR_CLASSES, discriminative_class
+
+    return sorted(
+        domain for domain, role in roles.items()
+        if discriminative_class(role) not in ANCHOR_CLASSES
+    )
+
+
+def build_feature_registry(root, *, introduced_in_version: str) -> list[dict[str, Any]]:
+    """Import the frozen stem-feature vocabulary as registry feature rows.
+
+    Nothing is reinterpreted. `feature_id`, `preferred_label` and `feature_type`
+    are the frozen `stem_feature_id`, `normalized_feature` and `clinical_role`;
+    `canonical_concept_id` is the feature id, which the Phase-B normalization
+    inventory measured to be the resolved canonical concept for every local term.
+    """
+    rows: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for unit in _read(root, VOCABULARY_PATH)["anchors"]:
+        study_unit = unit["anchor_study_unit_id"]
+        for feature in unit["features"]:
+            feature_id = feature["stem_feature_id"]
+            if feature_id in seen:
+                raise FeatureAnchorRegistryError(
+                    f"duplicate feature id in the frozen vocabulary: {feature_id}"
+                )
+            seen.add(feature_id)
+            roles = supported_roles_for(feature["clinical_role"])
+            rows.append({
+                "feature_id": feature_id,
+                "canonical_concept_id": feature_id,
+                "preferred_label": feature["normalized_feature"],
+                "feature_type": feature["clinical_role"],
+                "allowed_states": list(REGISTRY_FEATURE_STATES),
+                "supported_roles": roles,
+                "non_anchor_in_decision_domains": _non_anchor_domains(roles),
+                "provenance": {
+                    "artifact": VOCABULARY_PATH,
+                    "study_unit_id": study_unit,
+                    "kind": "FROZEN_STUDY_UNIT_VOCABULARY",
+                },
+                "verification_status": "FROZEN_CANONICAL",
+                "introduced_in_version": introduced_in_version,
+                "deprecated_in_version": None,
+            })
+    return sorted(rows, key=lambda row: row["feature_id"])
+
+
+ANCHOR_IDENTITY_FIELDS = (
+    "feature_id",
+    "target_concept_id",
+    "learner_decision",
+    "decision_granularity",
+    "required_state",
+)
+
+
+def anchor_relation_id(identity: Mapping[str, Any]) -> str:
+    """Content-address an anchor relation over its identity tuple alone.
+
+    Evidence, role and derivation prose are deliberately excluded: restating why
+    a relation holds must not move the id of the relation.
+    """
+    missing = [field for field in ANCHOR_IDENTITY_FIELDS if not identity.get(field)]
+    if missing:
+        raise FeatureAnchorRegistryError(
+            f"an anchor relation needs {', '.join(missing)} to have an identity"
+        )
+    payload = {field: identity[field] for field in ANCHOR_IDENTITY_FIELDS}
+    return "AR-" + content_sha256(payload)[:16]
+
+
+def _seed_rows(root) -> dict[str, dict[str, Any]]:
+    """Join the three frozen packs, enrichments and anchor layers by seed id."""
+    resolved: dict[str, dict[str, Any]] = {}
+    for base in SEED_PACK_BASES:
+        pack = _read(root, f"{base}.json")
+        enrichment = {
+            seed["seed_id"]: seed for seed in _read(root, f"{base}.enrichment.json")["seeds"]
+        }
+        anchors = {
+            seed["seed_id"]: seed for seed in _read(root, f"{base}.stem_anchors.json")["seeds"]
+        }
+        for target in pack["targets"]:
+            for seed in target["seeds"]:
+                seed_id = seed["seed_id"]
+                tags = enrichment.get(seed_id)
+                anchor_row = anchors.get(seed_id)
+                if tags is None or anchor_row is None:
+                    continue
+                if seed_id in resolved:
+                    raise FeatureAnchorRegistryError(f"duplicate seed id: {seed_id}")
+                resolved[seed_id] = {
+                    "seed_id": seed_id,
+                    "pack": base.rsplit("/", 1)[-1],
+                    "learner_decision": target["target_id"],
+                    "target_concept_id": seed.get("competitor_concept_id"),
+                    "competitor_concept": seed.get("competitor_concept"),
+                    "decision_granularity": seed.get("competitor_decision_granularity"),
+                    "response_class_tokens": list(tags.get("response_class_tokens") or []),
+                    "anchor_study_unit_id": anchor_row.get("anchor_study_unit_id"),
+                    "plausibility_anchors": list(anchor_row.get("plausibility_anchors") or []),
+                    "no_anchor_finding": anchor_row.get("no_anchor_finding"),
+                }
+    return resolved
+
+
+def build_baseline_anchor_relations(
+    root, features: Sequence[Mapping[str, Any]], *, introduced_in_version: str
+) -> list[dict[str, Any]]:
+    """Import the three frozen stem-anchor packs as typed anchor relations.
+
+    One relation per (seed, anchor feature) pair. The derivation rule and the
+    derivation sentence the frozen pack already carries are preserved verbatim,
+    so a relation can always be traced back to the artifact that stated it.
+    """
+    by_id = {row["feature_id"]: row for row in features}
+    rows: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for seed_id, seed in sorted(_seed_rows(root).items()):
+        if not seed["target_concept_id"]:
+            raise FeatureAnchorRegistryError(f"seed {seed_id} carries no concept id")
+        for anchor in seed["plausibility_anchors"]:
+            feature_id = anchor["stem_feature_id"]
+            feature = by_id.get(feature_id)
+            if feature is None:
+                raise FeatureAnchorRegistryError(
+                    f"{seed_id} anchors on {feature_id}, which is not a registered feature"
+                )
+            identity = {
+                "feature_id": feature_id,
+                "target_concept_id": seed["target_concept_id"],
+                "learner_decision": seed["learner_decision"],
+                "decision_granularity": seed["decision_granularity"],
+                "required_state": "PRESENT",
+            }
+            relation_id = anchor_relation_id(identity)
+            if relation_id in seen:
+                raise FeatureAnchorRegistryError(
+                    f"duplicate anchor relation identity: {relation_id}"
+                )
+            seen.add(relation_id)
+            rows.append({
+                "anchor_relation_id": relation_id,
+                **identity,
+                "seed_id": seed_id,
+                "response_class": sorted(seed["response_class_tokens"]),
+                "anchor_role_by_decision_domain": feature["supported_roles"],
+                "declared_anchor_role": None,
+                "non_anchor_in_decision_domains": feature["non_anchor_in_decision_domains"],
+                "anchor_study_unit_id": seed["anchor_study_unit_id"],
+                "context": {
+                    "derivation_rule": anchor.get("rule"),
+                    "derivation": anchor.get("derivation"),
+                    "source_artifact": (
+                        "research/qgen/generalization/"
+                        f"{seed['pack']}.stem_anchors.json"
+                    ),
+                },
+                "evidence_refs": [],
+                "verification_status": "FROZEN_CANONICAL",
+                "introduced_in_version": introduced_in_version,
+                "deprecated_in_version": None,
+            })
+    return sorted(rows, key=lambda row: (row["seed_id"], row["feature_id"]))
+
+
+def registry_hash(
+    features: Sequence[Mapping[str, Any]], relations: Sequence[Mapping[str, Any]]
+) -> str:
+    """SHA-256 over the rows and nothing else, so a rebuild reproduces it."""
+    return content_sha256({
+        "features": sorted(features, key=lambda row: row["feature_id"]),
+        "anchor_relations": sorted(relations, key=lambda row: row["anchor_relation_id"]),
+    })
+
+
+# --------------------------------------------------------------- snapshots
+
+
+def validate_extension(extension: Mapping[str, Any]) -> None:
+    """Schema and policy for one proposed registry extension."""
+    classification = extension.get("classification")
+    if classification not in EXTENSION_CLASSIFICATIONS:
+        raise FeatureAnchorRegistryError(
+            f"unknown extension classification: {classification}"
+        )
+    verdict = (extension.get("registry_review") or {}).get("verdict")
+    if verdict not in REVIEW_VERDICTS:
+        raise FeatureAnchorRegistryError(
+            f"{extension.get('extension_id')}: an extension needs a review verdict"
+        )
+    if verdict in ADMISSIBLE_REVIEW_VERDICTS:
+        if classification != "ANCHOR_RELATION_ONLY":
+            raise FeatureAnchorRegistryError(
+                f"{extension['extension_id']}: only an ANCHOR_RELATION_ONLY extension "
+                "may be approved by this registry; a new feature reopens the frozen "
+                "vocabulary and needs its own authorization"
+            )
+        if not extension.get("evidence_refs"):
+            raise FeatureAnchorRegistryError(
+                f"{extension['extension_id']}: an approved extension needs evidence; "
+                "model memory is not evidence"
+            )
+        if extension.get("required_state") != "PRESENT":
+            raise FeatureAnchorRegistryError(
+                f"{extension['extension_id']}: anchor relations require PRESENT"
+            )
+        for criterion in (
+            "clinically_meaningful", "mcc_level_relevant",
+            "needed_for_a_validated_contrast_relation", "not_a_duplicate",
+            "correctly_typed",
+        ):
+            if extension["registry_review"].get(criterion) is not True:
+                raise FeatureAnchorRegistryError(
+                    f"{extension['extension_id']}: minimality criterion {criterion} "
+                    "is not satisfied, so the extension is not admissible"
+                )
+
+
+def load_extensions(root) -> dict[str, Any]:
+    """Load the proposed extension set. Every proposal is validated."""
+    document = _read(root, EXTENSIONS_PATH)
+    for extension in document["extensions"]:
+        validate_extension(extension)
+    return document
+
+
+def approved_extensions(document: Mapping[str, Any]) -> list[dict[str, Any]]:
+    return sorted(
+        (
+            extension for extension in document["extensions"]
+            if extension["registry_review"]["verdict"] in ADMISSIBLE_REVIEW_VERDICTS
+        ),
+        key=lambda row: row["extension_id"],
+    )
+
+
+def _extension_relation(
+    extension: Mapping[str, Any],
+    features: Mapping[str, Mapping[str, Any]],
+    *,
+    introduced_in_version: str,
+) -> dict[str, Any]:
+    feature = features.get(extension["feature_id"])
+    if feature is None:
+        raise FeatureAnchorRegistryError(
+            f"{extension['extension_id']}: {extension['feature_id']} is not a "
+            "registered feature, so no anchor relation can name it"
+        )
+    identity = {
+        "feature_id": extension["feature_id"],
+        "target_concept_id": extension["target_concept_id"],
+        "learner_decision": extension["learner_decision"],
+        "decision_granularity": extension["decision_granularity"],
+        "required_state": extension["required_state"],
+    }
+    declared = extension.get("declared_anchor_role")
+    from .clinical_contrast_v2 import CONTRAST_ROLES
+
+    if declared is not None and declared not in CONTRAST_ROLES:
+        raise FeatureAnchorRegistryError(
+            f"{extension['extension_id']}: unknown contrast role {declared}"
+        )
+    return {
+        "anchor_relation_id": anchor_relation_id(identity),
+        **identity,
+        "seed_id": extension["seed_id"],
+        "response_class": sorted(extension.get("response_class") or []),
+        "anchor_role_by_decision_domain": feature["supported_roles"],
+        "declared_anchor_role": declared,
+        "non_anchor_in_decision_domains": feature["non_anchor_in_decision_domains"],
+        "anchor_study_unit_id": extension["anchor_study_unit_id"],
+        "context": dict(extension["context"]),
+        "evidence_refs": sorted(extension["evidence_refs"]),
+        "verification_status": "EVIDENCE_VERIFIED",
+        "introduced_in_version": introduced_in_version,
+        "deprecated_in_version": None,
+    }
+
+
+def build_snapshot(
+    root, *, snapshot_id: str, extensions: Sequence[Mapping[str, Any]] = ()
+) -> dict[str, Any]:
+    """Build one explicit snapshot. Deterministic and content-addressed."""
+    features = build_feature_registry(root, introduced_in_version=BASELINE_SNAPSHOT_ID)
+    relations = build_baseline_anchor_relations(
+        root, features, introduced_in_version=BASELINE_SNAPSHOT_ID
+    )
+    by_feature = {row["feature_id"]: row for row in features}
+    existing = {row["anchor_relation_id"] for row in relations}
+
+    added: list[dict[str, Any]] = []
+    for extension in extensions:
+        validate_extension(extension)
+        if extension["registry_review"]["verdict"] not in ADMISSIBLE_REVIEW_VERDICTS:
+            raise FeatureAnchorRegistryError(
+                f"{extension['extension_id']}: only APPROVED extensions build a snapshot"
+            )
+        relation = _extension_relation(
+            extension, by_feature, introduced_in_version=snapshot_id
+        )
+        if relation["anchor_relation_id"] in existing:
+            raise FeatureAnchorRegistryError(
+                f"{extension['extension_id']}: this anchor relation already exists, "
+                "so the extension is a duplicate rather than supply"
+            )
+        existing.add(relation["anchor_relation_id"])
+        added.append(relation)
+
+    relations = sorted(
+        relations + added, key=lambda row: (row["seed_id"], row["feature_id"])
+    )
+    scope = sorted(
+        (
+            {
+                "seed_id": seed_id,
+                "target_concept_id": seed["target_concept_id"],
+                "learner_decision": seed["learner_decision"],
+                "decision_granularity": seed["decision_granularity"],
+                "anchor_study_unit_id": seed["anchor_study_unit_id"],
+                "no_anchor_finding": seed["no_anchor_finding"],
+            }
+            for seed_id, seed in _seed_rows(root).items()
+        ),
+        key=lambda row: row["seed_id"],
+    )
+    return {
+        "snapshot_id": snapshot_id,
+        "anchor_scope": scope,
+        "built_from": {
+            "vocabulary": VOCABULARY_PATH,
+            "vocabulary_sha256": _sha256_of_file(root, VOCABULARY_PATH),
+            "stem_anchor_packs": [
+                {
+                    "artifact": f"{base}.stem_anchors.json",
+                    "sha256": _sha256_of_file(root, f"{base}.stem_anchors.json"),
+                }
+                for base in SEED_PACK_BASES
+            ],
+            "baseline_snapshot_id": (
+                None if snapshot_id == BASELINE_SNAPSHOT_ID else BASELINE_SNAPSHOT_ID
+            ),
+        },
+        "features": features,
+        "anchor_relations": relations,
+        "feature_count": len(features),
+        "anchor_relation_count": len(relations),
+        "registry_hash": registry_hash(features, relations),
+        "extension_diff": {
+            "FEATURES_ADDED": 0,
+            "ANCHOR_RELATIONS_ADDED": len(added),
+            "added_anchor_relations": sorted(
+                (
+                    {
+                        "anchor_relation_id": row["anchor_relation_id"],
+                        "feature_id": row["feature_id"],
+                        "seed_id": row["seed_id"],
+                        "learner_decision": row["learner_decision"],
+                        "declared_anchor_role": row["declared_anchor_role"],
+                        "evidence_refs": row["evidence_refs"],
+                    }
+                    for row in added
+                ),
+                key=lambda row: row["anchor_relation_id"],
+            ),
+            "extension_ids": sorted(row["extension_id"] for row in extensions),
+        },
+    }
+
+
+def build_snapshot_store(root) -> dict[str, Any]:
+    """Build every canonical snapshot, in one deterministic pass."""
+    extensions = load_extensions(root)
+    baseline = build_snapshot(root, snapshot_id=BASELINE_SNAPSHOT_ID)
+    extended = build_snapshot(
+        root,
+        snapshot_id=EXTENDED_SNAPSHOT_ID,
+        extensions=approved_extensions(extensions),
+    )
+    return {
+        "schema_version": "1.0",
+        "scope": "QGEN_FEATURE_ANCHOR_REGISTRY_SNAPSHOTS",
+        "there_is_no_latest": (
+            "Snapshots are addressed by id. No consumer may resolve a snapshot "
+            "implicitly, and no consumer reads this file's ordering."
+        ),
+        "extension_set_id": extensions["extension_set_id"],
+        "snapshots": {
+            BASELINE_SNAPSHOT_ID: baseline,
+            EXTENDED_SNAPSHOT_ID: extended,
+        },
+    }
+
+
+def load_snapshot(root, snapshot_id: str) -> dict[str, Any]:
+    """Load one snapshot by explicit id, and verify its hash before returning it.
+
+    There is no default and no `latest`: an implicit read is the failure mode the
+    whole design exists to prevent, so asking for one raises.
+    """
+    if not isinstance(snapshot_id, str) or not snapshot_id:
+        raise FeatureAnchorRegistryError(
+            "a snapshot must be pinned by explicit id; there is no latest"
+        )
+    if snapshot_id.upper() in {"LATEST", "CURRENT", "HEAD"}:
+        raise FeatureAnchorRegistryError(
+            f"{snapshot_id} is not a snapshot id; pin an explicit snapshot"
+        )
+    store = _read(root, SNAPSHOTS_PATH)
+    snapshot = store["snapshots"].get(snapshot_id)
+    if snapshot is None:
+        raise FeatureAnchorRegistryError(f"unknown feature/anchor snapshot: {snapshot_id}")
+    recomputed = registry_hash(snapshot["features"], snapshot["anchor_relations"])
+    if recomputed != snapshot["registry_hash"]:
+        raise FeatureAnchorRegistryError(
+            f"{snapshot_id}: registry hash does not match its rows"
+        )
+    return snapshot
+
+
+def snapshot_anchor_index(snapshot: Mapping[str, Any]) -> dict[str, list[str]]:
+    """Anchor feature ids per seed, which is the join key retrieval already uses.
+
+    The relation's identity is the concept, the learner decision and the
+    granularity; `seed_id` is provenance. Because `competitor_concept_id` is
+    unique across all 81 retrievable seeds and the identity tuple collides zero
+    times, projecting onto the seed is lossless, and a collision is refused
+    rather than merged.
+    """
+    index: dict[str, set[str]] = {
+        row["seed_id"]: set() for row in snapshot.get("anchor_scope") or []
+    }
+    identities: dict[str, tuple[str, str, str]] = {
+        row["seed_id"]: (
+            row["target_concept_id"], row["learner_decision"], row["decision_granularity"]
+        )
+        for row in snapshot.get("anchor_scope") or []
+    }
+    for relation in snapshot["anchor_relations"]:
+        seed_id = relation["seed_id"]
+        identity = (
+            relation["target_concept_id"],
+            relation["learner_decision"],
+            relation["decision_granularity"],
+        )
+        if identities.setdefault(seed_id, identity) != identity:
+            raise FeatureAnchorRegistryError(
+                f"{seed_id} carries anchor relations for two different identities"
+            )
+        index.setdefault(seed_id, set()).add(relation["feature_id"])
+    return {seed_id: sorted(features) for seed_id, features in sorted(index.items())}
+
+
+def anchor_feature_ids(
+    snapshot: Mapping[str, Any],
+    *,
+    target_concept_id: str,
+    learner_decision: str,
+) -> list[str]:
+    """The anchors this snapshot asserts for one competitor under one decision.
+
+    Registration is not entitlement: a feature the registry knows about anchors
+    nothing until a relation says it does, for this decision.
+    """
+    return sorted({
+        relation["feature_id"]
+        for relation in snapshot["anchor_relations"]
+        if relation["target_concept_id"] == target_concept_id
+        and relation["learner_decision"] == learner_decision
+    })
+
+
+def registry_state(
+    snapshot: Mapping[str, Any], state_map: Mapping[str, Any], feature_id: str
+) -> str:
+    """Resolve a feature's state at the registry boundary.
+
+    The one rule this boundary enforces on its own behalf: a feature the map does
+    not name is `UNKNOWN`, and no consumer may ask the registry to read that as
+    `ABSENT`. A feature the registry does not know is refused rather than
+    silently resolved, because an unregistered id is a contract error and not an
+    unstated finding.
+    """
+    if feature_id not in {row["feature_id"] for row in snapshot["features"]}:
+        raise FeatureAnchorRegistryError(
+            f"{feature_id} is not in snapshot {snapshot['snapshot_id']}"
+        )
+    entry = state_map.get(feature_id)
+    if entry is None:
+        return "UNKNOWN"
+    state = entry.get("state", entry.get("polarity"))
+    if state not in REGISTRY_FEATURE_STATES:
+        raise FeatureAnchorRegistryError(f"{feature_id}: unknown state {state}")
+    return state

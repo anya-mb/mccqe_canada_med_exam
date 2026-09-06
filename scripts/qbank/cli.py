@@ -1069,6 +1069,24 @@ def _command_run_contrast_supply_wave(arguments: argparse.Namespace) -> None:
     }, indent=2, sort_keys=True))
 
 
+def _command_build_feature_anchor_snapshots(arguments: argparse.Namespace) -> None:
+    """Rebuild every canonical feature/anchor snapshot deterministically."""
+    from .feature_anchor_registry import SNAPSHOTS_PATH, build_snapshot_store
+
+    root = canonical_root(getattr(arguments, "root", Path.cwd()))
+    store = build_snapshot_store(root)
+    write_json_atomic(resolve_root_path(root, SNAPSHOTS_PATH), store)
+    print(json.dumps({
+        snapshot_id: {
+            "registry_hash": snapshot["registry_hash"],
+            "feature_count": snapshot["feature_count"],
+            "anchor_relation_count": snapshot["anchor_relation_count"],
+            "ANCHOR_RELATIONS_ADDED": snapshot["extension_diff"]["ANCHOR_RELATIONS_ADDED"],
+        }
+        for snapshot_id, snapshot in store["snapshots"].items()
+    }, indent=2, sort_keys=True))
+
+
 def _command_build_feature_anchor_reconciliation(arguments: argparse.Namespace) -> None:
     """Map every writer and reader of the feature and anchor contract."""
     from .feature_anchor_registry import (
@@ -1218,6 +1236,11 @@ def _parser() -> argparse.ArgumentParser:
             "run-contrast-supply-diagnosis",
             "diagnose contrast supply for the five V2 NO_SAFE_ITEM opportunities",
             _command_run_contrast_supply_diagnosis,
+        ),
+        (
+            "build-feature-anchor-snapshots",
+            "rebuild the canonical feature and anchor-relation snapshots",
+            _command_build_feature_anchor_snapshots,
         ),
         (
             "build-feature-anchor-reconciliation",
