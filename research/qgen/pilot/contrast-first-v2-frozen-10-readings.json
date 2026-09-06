@@ -1,0 +1,1142 @@
+{
+  "authorship": {
+    "concept_category_rule": "concept_category names the kind of move an option is, on one axis chosen per set: mechanism of action for a management set, disease mechanism for a diagnosis set, modality for an imaging set, bias mechanism for an epidemiology set. It is authored from what the option does, and two options share a category only when a candidate choosing between them is making the same kind of choice.",
+    "disjunction_reading_rule": "A prose clause list joined by 'or' is ANY_OF; a clause list joined by 'and' where every clause must hold of the same patient is ALL_OF; two independent indications listed together ('correct in X, and as the first modality in Y') are ANY_OF, because either alone makes the option right. Where a disjunct has no feature in the frozen vocabulary it is recorded in unmapped_disjuncts and never silently dropped.",
+    "llm_api_calls": 0,
+    "role_override_rule": "A CLINICAL_JUDGEMENT feature may be typed to a PRESENTATION-class contrast role only when a cited claim makes the judgement itself the guideline's operative criterion AND the judgement is not a score recomputed from other findings the stem also states. Severity bands in bronchiolitis monitoring and in depression treatment selection meet both limbs; an Alvarado suspicion band meets the first and fails the second, and is left BACKGROUND_CONTEXT.",
+    "what_is_not_changed": "No opportunity, MCC objective, learner decision, difficulty intent, seed, stem, option, verdict or evidence packet moves. Every feature id is drawn from the frozen g2_stem_feature_vocabulary and every claim id from a frozen evidence packet. No new clinical claim is authored: every predicate carries the prose it is a reading of.",
+    "what_this_is": "The authored semantic layer of the V2 replay: for each of the ten frozen final-review opportunities, a re-reading of the already frozen conditions_under_which_competitor_would_be_correct prose and of the cited evidence claims into a Boolean condition tree, plus the typed role overrides and the evidence-backed discriminators."
+  },
+  "baseline_commit": "3ebdfb3",
+  "derived_from": "research/qgen/contrast_first_pilot_authoring.json",
+  "opportunities": {
+    "G2-MED-03": {
+      "competitors": {
+        "SEED-G2-MED-T02-BETA-BLOCKER": {
+          "concept_category": "NEUROHORMONAL_BLOCKADE",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-C21-END-ORGAN-HYPOPERFUSION",
+                "required_state": "ABSENT"
+              },
+              {
+                "feature_id": "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS",
+                "required_state": "ABSENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct after stabilization, once the patient is out of a low-output state and is not at risk of cardiogenic shock.' Two conditions joined by 'and', so a conjunction is the faithful reading."
+          },
+          "evidence_refs": [
+            "CLM-ACS-RV-INFARCTION-STABILIZATION-01"
+          ]
+        },
+        "SEED-G2-MED-T02-DIURETIC": {
+          "concept_category": "PRELOAD_REDUCTION",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-C21-PULMONARY-CONGESTION",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS",
+                "required_state": "ABSENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where the raised filling pressure is accompanied by pulmonary congestion in a patient who is not preload dependent.' The V1 encoding carried only the congestion clause and dropped 'not preload dependent'; both are conjuncts."
+          },
+          "evidence_refs": [
+            "CLM-ACS-RV-INFARCTION-STABILIZATION-01"
+          ]
+        },
+        "SEED-G2-MED-T02-NITRATE": {
+          "concept_category": "PRELOAD_REDUCTION",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS",
+                "required_state": "ABSENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct for ischaemic pain in a patient whose physiology is not preload dependent and who is not hypotensive.' Both clauses resolve to the same frozen feature."
+          },
+          "evidence_refs": [
+            "CLM-ACS-RV-INFARCTION-STABILIZATION-01"
+          ]
+        },
+        "SEED-G2-MED-T02-VASOPRESSOR": {
+          "concept_category": "VASOACTIVE_SUPPORT",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-C21-END-ORGAN-HYPOPERFUSION",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where acute-myocardial-infarction cardiogenic shock is present, that is persistent hypotension or a vasopressor requirement with end-organ hypoperfusion.' The disjunction inside the definition is internal to the single frozen feature."
+          },
+          "evidence_refs": [
+            "CLM-ACS-AMI-CARDIOGENIC-SHOCK-01"
+          ]
+        }
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "key": {
+        "concept_category": "PRELOAD_AUGMENTATION",
+        "correctness_conditions": {
+          "conditions": [
+            {
+              "feature_id": "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "CLM-ACS-RV-INFARCTION-STABILIZATION-01: hypotension with elevated jugular venous pressure and clear lung fields in inferior STEMI identifies right-ventricular infarction physiology, for which preload is cautiously optimized with intravenous fluid."
+        },
+        "evidence_refs": [
+          "CLM-ACS-RV-INFARCTION-STABILIZATION-01"
+        ],
+        "v1_condition_dropped": {
+          "SF-C21-TROPONIN-RISE-OR-FALL": "The V1 key carried a troponin trajectory as a correctness condition. No cited claim makes the troponin trajectory a criterion for preload optimization; CLM-ACS-RV-INFARCTION-STABILIZATION-01 names the ECG territory and the haemodynamic pattern only. R1 recorded that the paired troponin values have no role in the decision the lead-in asks for, and requiring them obliged the stem to state a finding the decision does not use. Dropped in the V2 reading."
+        }
+      },
+      "key_discriminators": [
+        {
+          "contrast_role": "KEY_DISCRIMINATOR",
+          "evidence_refs": [
+            "CLM-ACS-RV-INFARCTION-STABILIZATION-01"
+          ],
+          "favours": "A",
+          "feature_id": "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS",
+          "required_state": "PRESENT",
+          "salience": "SALIENT",
+          "statement": "Hypotension with a raised jugular venous pressure and clear lungs is the preload-dependent pattern in which fluid is given and preload-reducing agents are avoided."
+        }
+      ],
+      "nesting": [],
+      "role_overrides": {}
+    },
+    "G2-OBGYN-01": {
+      "competitors": {
+        "SEED-OB-T01-ABSCESS": {
+          "concept_category": "SUPPURATIVE_COLLECTION",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-OB54-FLUCTUANT-COLLECTION",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where a palpable fluid collection is present in a well-defined area of the breast.'"
+          },
+          "evidence_refs": [
+            "CLM-R2-OB-ABSCESS",
+            "CLM-GEN-OB-INV-01"
+          ]
+        },
+        "SEED-OB-T01-GALACTOCELE": {
+          "concept_category": "RETENTION_LESION",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-OB54-MASS-DECREASES-AFTER-FEED",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
+                "required_state": "ABSENT"
+              },
+              {
+                "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+                "required_state": "ABSENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct for a moderately firm mass without erythema or systemic symptoms, decreasing temporarily after a feed.' CLM-R4-OB-GALACTOCELE reads the same way. Three conjuncts; V1 carried two and omitted the erythema clause."
+          },
+          "evidence_refs": [
+            "CLM-R4-OB-GALACTOCELE"
+          ]
+        },
+        "SEED-OB-T01-IBC": {
+          "concept_category": "NEOPLASTIC",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-OB54-SKIN-THICKENING-PEAU-DORANGE",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-OB54-RECURRENCE-SAME-LOCATION",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ANY_OF",
+            "prose_basis": "Frozen seed: 'Correct with skin thickening, breast retraction and a peau d'orange appearance, or with recurrence in the same location.' Explicitly disjunctive; V1 carried two conjuncts."
+          },
+          "evidence_refs": [
+            "CLM-R2-OB-IBC"
+          ]
+        }
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "key": {
+        "concept_category": "INFECTIVE_INFLAMMATORY",
+        "correctness_conditions": {
+          "conditions": [
+            {
+              "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "CLM-R2-OB-MASTITIS-ANCHOR: an increasingly erythematous, edematous and painful region of the breast with systemic signs and symptoms; CLM-GEN-OB-DX-01 adds unilateral localized tenderness, erythema and heat with fever or malaise."
+        },
+        "evidence_refs": [
+          "CLM-R2-OB-MASTITIS-ANCHOR",
+          "CLM-GEN-OB-DX-01"
+        ]
+      },
+      "key_discriminators": [
+        {
+          "contrast_role": "KEY_DISCRIMINATOR",
+          "evidence_refs": [
+            "CLM-R2-OB-MASTITIS-ANCHOR",
+            "CLM-R2-OB-IBC"
+          ],
+          "favours": "A",
+          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
+          "required_state": "PRESENT",
+          "salience": "MODERATE",
+          "statement": "Systemic signs with a segmental erythematous breast are the mastitis pattern; the inflammatory-carcinoma concern is raised by skin thickening, retraction and peau d'orange rather than by systemic illness."
+        },
+        {
+          "contrast_role": "KEY_DISCRIMINATOR",
+          "evidence_refs": [
+            "CLM-R4-OB-PHLEGMON",
+            "CLM-R2-OB-ABSCESS"
+          ],
+          "favours": "A",
+          "feature_id": "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
+          "required_state": "PRESENT",
+          "salience": "SALIENT",
+          "statement": "A firm mass-like area without fluctuance is the phlegmon end of the spectrum; an abscess is a drainable fluid collection."
+        }
+      ],
+      "nesting": [],
+      "role_overrides": {}
+    },
+    "G2-PED-01": {
+      "competitors": {
+        "SEED-PED-T01-ASTHMA": {
+          "concept_category": "REACTIVE_AIRWAY",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "conditions": [
+                  {
+                    "feature_id": "SF-P147-AGE-UNDER-12M",
+                    "required_state": "PRESENT"
+                  }
+                ],
+                "operator": "NOT"
+              },
+              {
+                "conditions": [
+                  {
+                    "feature_id": "SF-P147-ATOPY-OR-RECURRENCE",
+                    "required_state": "PRESENT"
+                  },
+                  {
+                    "feature_id": "SF-P147-VIRAL-PRODROME",
+                    "required_state": "ABSENT"
+                  }
+                ],
+                "operator": "ANY_OF"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct in an older infant or child with frequent recurrences, atopy, or wheeze without a viral upper respiratory prodrome.' The age clause is a precondition; the three following clauses are joined by 'or'. V1 carried the whole statement as a conjunction of two predicates and omitted the age precondition."
+          },
+          "evidence_refs": [
+            "CLM-R2-PED-DDX-ATYPICAL",
+            "CLM-R2-PED-DDX-TABLE"
+          ]
+        },
+        "SEED-PED-T01-FOREIGN-BODY": {
+          "concept_category": "MECHANICAL_OBSTRUCTION",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-P147-ABRUPT-ONSET-NO-PRODROME",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ANY_OF",
+            "prose_basis": "Frozen seed: 'Correct where the onset is abrupt without a viral prodrome, or where findings are focal or asymmetric.' Explicitly disjunctive; V1 carried it as a conjunction."
+          },
+          "evidence_refs": [
+            "CLM-R2-PED-DDX-TABLE",
+            "CLM-R2-PED-DDX-ATYPICAL"
+          ]
+        },
+        "SEED-PED-T01-PNEUMONIA": {
+          "concept_category": "BACTERIAL_PARENCHYMAL",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ANY_OF",
+            "prose_basis": "Frozen seed: 'Correct where the illness is not improving as expected, where severity raises the possibility of bacterial infection, or where a focal consolidation is demonstrated.' Three disjuncts; V1 carried three conjuncts."
+          },
+          "evidence_refs": [
+            "CLM-R2-PED-CXR-INDICATION",
+            "CLM-GEN-PED-INV-01"
+          ]
+        }
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "key": {
+        "concept_category": "VIRAL_LOWER_AIRWAY",
+        "correctness_conditions": {
+          "conditions": [
+            {
+              "feature_id": "SF-P147-AGE-UNDER-12M",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-P147-FIRST-WHEEZE",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-P147-VIRAL-PRODROME",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "CLM-R2-PED-DX-ANCHOR: bronchiolitis typically presents with a first episode of wheezing before the age of 12 months, beginning with a two-to-three-day viral prodrome."
+        },
+        "evidence_refs": [
+          "CLM-R2-PED-DX-ANCHOR",
+          "CLM-GEN-PED-DX-01"
+        ]
+      },
+      "key_discriminators": [
+        {
+          "contrast_role": "KEY_DISCRIMINATOR",
+          "evidence_refs": [
+            "CLM-R2-PED-DX-ANCHOR"
+          ],
+          "favours": "A",
+          "feature_id": "SF-P147-VIRAL-PRODROME",
+          "required_state": "PRESENT",
+          "salience": "MODERATE",
+          "statement": "A two-to-three-day coryzal prodrome preceding a first wheeze under twelve months is the bronchiolitis pattern rather than an atypical presentation."
+        }
+      ],
+      "nesting": [],
+      "role_overrides": {
+        "SF-P147-SEVERE-OR-BACTERIAL-CONCERN": {
+          "contrast_role": "SEVERITY_FEATURE",
+          "evidence_refs": [
+            "CLM-R2-PED-CXR-INDICATION"
+          ],
+          "reason": "CLM-R2-PED-CXR-INDICATION makes 'the severity of disease raises other diagnostic possibilities such as bacterial pneumonia' the operative criterion itself, and it is a bedside gestalt rather than a score recomputed from other findings the stem also states."
+        }
+      }
+    },
+    "G2-PED-02": {
+      "competitors": {
+        "SEED-PED-T02-CONTINUOUS": {
+          "concept_category": "MONITORING_INTENSITY",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-P147-HIGH-RISK-EARLY-COURSE",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct for a high-risk patient early in the course of the disease.' A single condition."
+          },
+          "evidence_refs": [
+            "CLM-R4-PED-CONTINUOUS"
+          ]
+        },
+        "SEED-PED-T02-CXR": {
+          "concept_category": "DIAGNOSTIC_IMAGING",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ANY_OF",
+            "prose_basis": "Frozen seed: 'Correct where the diagnosis is unclear, improvement is not as expected, or severity raises the possibility of bacterial pneumonia.' Explicitly disjunctive; V1 carried two conjuncts."
+          },
+          "evidence_refs": [
+            "CLM-R2-PED-CXR-INDICATION",
+            "CLM-GEN-PED-INV-01"
+          ],
+          "unmapped_disjuncts": [
+            {
+              "prose": "the diagnosis is unclear",
+              "why_unmapped": "The frozen SU-P-147 vocabulary carries no feature for diagnostic uncertainty. Recorded so a NOT_SATISFIED verdict over this incomplete disjunction is never read as a defeat."
+            }
+          ]
+        },
+        "SEED-PED-T02-VIRAL": {
+          "concept_category": "MICROBIOLOGIC_TESTING",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-P147-INFECTION-CONTROL-NEED",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-P147-HIGH-RISK-EARLY-COURSE",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ANY_OF",
+            "prose_basis": "Frozen seed: 'Correct where testing is required for infection control purposes, or in a high risk patient where the result will influence treatment.' CLM-R2-PED-VIRAL-INDICATION reads the same way. Explicitly disjunctive; V1 carried two conjuncts."
+          },
+          "evidence_refs": [
+            "CLM-R2-PED-VIRAL-INDICATION",
+            "CLM-R2-PED-VIRAL-NOTHELPFUL"
+          ]
+        }
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "key": {
+        "concept_category": "MONITORING_INTENSITY",
+        "correctness_conditions": {
+          "conditions": [
+            {
+              "feature_id": "SF-P147-HIGH-RISK-EARLY-COURSE",
+              "required_state": "ABSENT"
+            },
+            {
+              "conditions": [
+                {
+                  "feature_id": "SF-P147-HYPOXEMIA",
+                  "required_state": "ABSENT"
+                },
+                {
+                  "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+                  "required_state": "ABSENT"
+                }
+              ],
+              "operator": "ALL_OF"
+            }
+          ],
+          "operator": "ANY_OF",
+          "prose_basis": "CLM-R4-PED-CONTINUOUS: 'intermittent monitoring is most appropriate for lower-risk patients and for all patients once they are feeding well, weaning from supplemental oxygen and showing improvement in work of breathing.' Two independent routes to the same recommendation, so a disjunction. The V1 key condition was SF-P147-VIRAL-PRODROME, which is the diagnosis anchor and states nothing about monitoring intensity."
+        },
+        "evidence_refs": [
+          "CLM-R4-PED-CONTINUOUS",
+          "CLM-R4-PED-MONITORING",
+          "CLM-R2-PED-INV-ANCHOR"
+        ],
+        "v1_condition_dropped": {
+          "SF-P147-VIRAL-PRODROME": "A diagnostic anchor carried as the key's correctness condition for a monitoring decision. R2 recorded that the key is contradicted by its own cited CLM-R4-PED-CONTINUOUS, whose preconditions for intermittent monitoring the infant does not meet. The V2 reading takes the monitoring criteria from the claim that governs monitoring."
+        }
+      },
+      "key_discriminators": [],
+      "nesting": [],
+      "role_overrides": {
+        "SF-P147-HIGH-RISK-EARLY-COURSE": {
+          "contrast_role": "SEVERITY_FEATURE",
+          "evidence_refs": [
+            "CLM-R4-PED-CONTINUOUS"
+          ],
+          "reason": "CLM-R4-PED-CONTINUOUS makes 'high-risk patients early in the course of disease' the operative criterion for the monitoring choice itself, and it is a bedside risk judgement rather than a score recomputed from other findings the stem also states."
+        },
+        "SF-P147-SEVERE-OR-BACTERIAL-CONCERN": {
+          "contrast_role": "SEVERITY_FEATURE",
+          "evidence_refs": [
+            "CLM-R2-PED-CXR-INDICATION"
+          ],
+          "reason": "CLM-R2-PED-CXR-INDICATION makes severity raising other diagnostic possibilities the operative criterion for the film."
+        }
+      }
+    },
+    "G2-PHELO-01": {
+      "competitors": {
+        "SEED-PHELO-T01-HEALTHY-SCREENEE": {
+          "concept_category": "BIAS_FROM_GROUP_COMPOSITION",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-PH07-SELF-SELECTED-GROUPS",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where the compared groups self-selected and differ in baseline health.' CLM-R2-PHELO-HEALTHY-VOLUNTEER reads the same way."
+          },
+          "evidence_refs": [
+            "CLM-R2-PHELO-HEALTHY-VOLUNTEER",
+            "CLM-GEN-PHELO-BIAS-01"
+          ]
+        },
+        "SEED-PHELO-T01-LENGTH": {
+          "concept_category": "BIAS_FROM_DISEASE_TEMPO",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-PH07-INDOLENT-VARIANT-OVERREPRESENTED",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where the screened group contains a disproportionate share of slowly progressing variants of the disease.' CLM-R2-PHELO-LENGTH reads the same way."
+          },
+          "evidence_refs": [
+            "CLM-R2-PHELO-LENGTH",
+            "CLM-GEN-PHELO-BIAS-01"
+          ]
+        },
+        "SEED-PHELO-T01-OVERDIAGNOSIS": {
+          "concept_category": "BIAS_FROM_NONPROGRESSIVE_DISEASE",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-PH07-MORE-CASES-DIAGNOSED-IN-SCREENED",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where more cases are diagnosed in the screened group than in the unscreened group.' CLM-R2-PHELO-OVERDIAGNOSIS reads the same way."
+          },
+          "evidence_refs": [
+            "CLM-R2-PHELO-OVERDIAGNOSIS",
+            "CLM-GEN-PHELO-BIAS-01"
+          ]
+        }
+      },
+      "decision_domain": "EVIDENCE_INTERPRETATION",
+      "key": {
+        "concept_category": "BIAS_FROM_EARLIER_DIAGNOSIS",
+        "correctness_conditions": {
+          "conditions": [
+            {
+              "feature_id": "SF-PH07-SURVIVAL-LONGER-IN-SCREENED",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-PH07-MORTALITY-UNCHANGED",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "CLM-R2-PHELO-LEAD-TIME and CLM-GEN-PHELO-BIAS-01: lead-time bias increases measured survival from diagnosis merely because screening advances the diagnosis date without delaying death."
+        },
+        "evidence_refs": [
+          "CLM-R2-PHELO-LEAD-TIME",
+          "CLM-GEN-PHELO-BIAS-01"
+        ]
+      },
+      "key_discriminators": [],
+      "nesting": [],
+      "no_key_discriminator_note": "Randomisation into equal groups excludes the healthy-screenee explanation and nothing else. Neither CLM-R2-PHELO-LENGTH nor CLM-R2-PHELO-OVERDIAGNOSIS is addressed by randomisation, and unchanged mortality is equally consistent with all three remaining explanations, so no stated feature of this stem discriminates lead-time from length-time or overdiagnosis. Asserting one here would be the unsupported claim the reviewers found.",
+      "role_overrides": {}
+    },
+    "G2-PHELO-02": {
+      "competitors": {
+        "SEED-G2-PHELO-T02-VOLUNTARY": {
+          "concept_category": "PARTICIPATION_FRAMING",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
+                "required_state": "ABSENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where the letter's defect is that readers feel obliged to attend, rather than that the benefit is stated in a form they cannot interpret.' CLM-R2-PHELO-REMINDERS supplies the perceived-authority defect."
+          },
+          "evidence_refs": [
+            "CLM-R2-PHELO-REMINDERS",
+            "CLM-R2-PHELO-ACCEPTABILITY"
+          ]
+        },
+        "SEED-PHELO-T02-DETECTION-COUNT": {
+          "concept_category": "DETECTION_YIELD_REPORTING",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-PH07-DENOMINATOR-AND-HARMS-PRESENT",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where the reader also has the denominator and the harms, so the figure can be interpreted.'"
+          },
+          "evidence_refs": [
+            "CLM-R4-PHELO-ABSOLUTE",
+            "CLM-R4-PHELO-FALSEPOS"
+          ]
+        },
+        "SEED-PHELO-T02-SENSITIVITY": {
+          "concept_category": "TEST_PERFORMANCE_REPORTING",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-PH07-AUDIENCE-CAN-INTERPRET-TEST-METRICS",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct as programme documentation, where the audience can interpret the figures.'"
+          },
+          "evidence_refs": [
+            "CLM-R4-PHELO-ACTION-POLICY",
+            "CLM-R2-PHELO-ACCEPTABILITY"
+          ]
+        }
+      },
+      "decision_domain": "POPULATION_PROGRAMME",
+      "key": {
+        "concept_category": "ABSOLUTE_BENEFIT_AND_HARM_DISCLOSURE",
+        "correctness_conditions": {
+          "conditions": [
+            {
+              "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "CLM-R4-PHELO-ABSOLUTE: a relative statement sounds impressive but may not help an individual who would benefit more from an absolute figure. CLM-R4-PHELO-CONSENT-CRITERION and CLM-R2-PHELO-ACCEPTABILITY make protected autonomy and informed choice the objective the presentation must serve."
+        },
+        "evidence_refs": [
+          "CLM-R4-PHELO-ABSOLUTE",
+          "CLM-R4-PHELO-CONSENT-CRITERION",
+          "CLM-R2-PHELO-ACCEPTABILITY",
+          "CLM-R4-PHELO-FALSEPOS"
+        ]
+      },
+      "key_discriminators": [
+        {
+          "contrast_role": "MANAGEMENT_ELIGIBILITY",
+          "evidence_refs": [
+            "CLM-R4-PHELO-CONSENT-CRITERION",
+            "CLM-R2-PHELO-ACCEPTABILITY",
+            "CLM-R4-PHELO-ABSOLUTE"
+          ],
+          "favours": "A",
+          "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
+          "required_state": "PRESENT",
+          "salience": "MODERATE",
+          "statement": "Where the programme's stated objective is informed choice, autonomy is compromised by the way information is given, so the revision must give the invited person figures they can act on rather than figures that describe the test's performance."
+        },
+        {
+          "contrast_role": "INVESTIGATION_FINDING",
+          "evidence_refs": [
+            "CLM-R4-PHELO-ABSOLUTE"
+          ],
+          "favours": "A",
+          "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
+          "required_state": "PRESENT",
+          "salience": "SALIENT",
+          "statement": "A relative-risk-only statement is the specific defect an absolute figure repairs."
+        }
+      ],
+      "nesting": [],
+      "role_overrides": {}
+    },
+    "G2-PHELO-03": {
+      "competitors": {
+        "SEED-PHELO-T03-EVALUATE": {
+          "concept_category": "LAUNCH_WITH_EVALUATION",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+                "required_state": "ABSENT"
+              },
+              {
+                "feature_id": "SF-PH07-GOALS-AND-EVALUATION-DEFINED",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct as a standing requirement of any programme that does launch.' CLM-R4-PHELO-EVALUATION makes continuing evaluation a requirement of a programme that launches, which presupposes the shortfall is not there."
+          },
+          "evidence_refs": [
+            "CLM-R4-PHELO-EVALUATION",
+            "CLM-R4-PHELO-ECONOMIC"
+          ]
+        },
+        "SEED-PHELO-T03-PILOT": {
+          "concept_category": "LIMITED_SCALE_LAUNCH",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where the constraint is cost or logistics rather than an absolute shortfall in the confirmatory pathway.' CLM-R2-PHELO-COST-CONTINUITY supplies the cost constraint."
+          },
+          "evidence_refs": [
+            "CLM-R2-PHELO-COST-CONTINUITY",
+            "CLM-R4-PHELO-ECONOMIC"
+          ]
+        },
+        "SEED-PHELO-T03-RAISE-CUTOFF": {
+          "concept_category": "THRESHOLD_ADJUSTMENT",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-PH07-THRESHOLD-TOO-FAR-TOWARD-LOW-RISK",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where the current threshold sits too far toward the low-risk end and is generating avoidable low-yield referrals.' CLM-R2-PHELO-CUTOFF reads the same way."
+          },
+          "evidence_refs": [
+            "CLM-R2-PHELO-CUTOFF",
+            "CLM-R4-PHELO-ACTION-POLICY"
+          ]
+        }
+      },
+      "decision_domain": "POPULATION_PROGRAMME",
+      "key": {
+        "concept_category": "DEFER_LAUNCH",
+        "correctness_conditions": {
+          "conditions": [
+            {
+              "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "CLM-GEN-PHELO-ORG-01: a test should not be launched at population scale when the downstream diagnostic and treatment pathway cannot be delivered. CLM-R2-PHELO-FACILITIES and CLM-R4-PHELO-HARM-LABEL supply the harm."
+        },
+        "evidence_refs": [
+          "CLM-GEN-PHELO-ORG-01",
+          "CLM-R2-PHELO-FACILITIES",
+          "CLM-R4-PHELO-HARM-LABEL",
+          "CLM-R2-PHELO-ACCEPTED-TREATMENT"
+        ],
+        "v1_condition_dropped": {
+          "SF-PH07-GOALS-AND-EVALUATION-DEFINED": "The V1 key carried the programme's defined goals as a correctness condition. Defined goals are a standing requirement of any programme (CLM-R4-PHELO-EVALUATION) and are not a reason to defer a launch; the reason to defer is the confirmatory-pathway shortfall. Retained as background material rather than as a condition."
+        }
+      },
+      "key_discriminators": [
+        {
+          "contrast_role": "MANAGEMENT_ELIGIBILITY",
+          "evidence_refs": [
+            "CLM-GEN-PHELO-ORG-01",
+            "CLM-R4-PHELO-HARM-LABEL",
+            "CLM-R2-PHELO-CUTOFF"
+          ],
+          "favours": "A",
+          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+          "required_state": "PRESENT",
+          "salience": "MODERATE",
+          "statement": "An absolute shortfall in the confirmatory pathway is not repaired by moving the cut-off: raising it reduces referral volume but still labels people who cannot then be investigated, which is the harm CLM-R4-PHELO-HARM-LABEL names."
+        }
+      ],
+      "nesting": [],
+      "role_overrides": {}
+    },
+    "G2-PSY-03": {
+      "competitors": {
+        "SEED-PSY-T03-DIGITAL": {
+          "concept_category": "DIGITALLY_DELIVERED_PSYCHOTHERAPY",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-PS12-PSYCHOTHERAPY-INACCESSIBLE-IN-PERSON",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where psychotherapy is the chosen modality and in-person delivery is not available.' Two conjuncts joined by 'and'; CLM-R4-PSY-DIGITAL supports delivery by digital format."
+          },
+          "evidence_refs": [
+            "CLM-R4-PSY-DIGITAL",
+            "CLM-R4-PSY-PSYCHOTHERAPY"
+          ]
+        },
+        "SEED-PSY-T03-EXERCISE": {
+          "concept_category": "LIFESTYLE_INTERVENTION",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-PS12-MILD-SEVERITY",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct as first-line monotherapy for mild depression, and as a second-line adjunct at moderate severity.' The second clause is a second-line adjunctive role, not a first-line answer to this lead-in, so only the mild-severity condition is a correctness condition here. CLM-R4-PSY-EXERCISE reads the same way."
+          },
+          "evidence_refs": [
+            "CLM-R4-PSY-EXERCISE"
+          ]
+        },
+        "SEED-PSY-T03-PSYCHOTHERAPY": {
+          "concept_category": "IN_PERSON_PSYCHOTHERAPY",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "conditions": [
+                  {
+                    "feature_id": "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY",
+                    "required_state": "PRESENT"
+                  },
+                  {
+                    "feature_id": "SF-PS12-PSYCHOTHERAPY-INACCESSIBLE-IN-PERSON",
+                    "required_state": "ABSENT"
+                  }
+                ],
+                "operator": "ALL_OF"
+              },
+              {
+                "feature_id": "SF-PS12-MILD-SEVERITY",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ANY_OF",
+            "prose_basis": "Frozen seed: 'Correct where the patient prefers it and it is readily accessible, and preferred at mild severity.' A conjunction of preference and accessibility, or mild severity on its own; CLM-R4-PSY-MILD supplies the second route. V1 carried preference and mild severity as a flat conjunction."
+          },
+          "evidence_refs": [
+            "CLM-R4-PSY-PSYCHOTHERAPY",
+            "CLM-R4-PSY-MILD",
+            "CLM-R2-PSY-MODERATE-CHOICE"
+          ]
+        }
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "key": {
+        "concept_category": "PHARMACOTHERAPY",
+        "correctness_conditions": {
+          "conditions": [
+            {
+              "feature_id": "SF-PS12-MODERATE-SEVERITY",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-PS12-HIGH-IMMINENT-SUICIDE-RISK",
+              "required_state": "ABSENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "CLM-GEN-PSY-TX-01: for moderate major depression with low to moderate safety risk, structured psychotherapy or a first-line antidepressant are evidence-based initial treatments selected collaboratively."
+        },
+        "evidence_refs": [
+          "CLM-GEN-PSY-TX-01",
+          "CLM-R2-PSY-MODERATE-CHOICE",
+          "CLM-R2-PSY-FIRST-LINE"
+        ],
+        "key_is_non_exclusive_note": "CLM-GEN-PSY-TX-01 and CLM-R2-PSY-MODERATE-CHOICE both make the moderate-severity choice a collaborative one between two equally supported modalities. The key's own conditions therefore cannot exclude structured psychotherapy on severity alone, which is why the stem's access barrier and the unelicited preference are load-bearing rather than decorative."
+      },
+      "key_discriminators": [],
+      "nesting": [],
+      "no_key_discriminator_note": "No evidence-backed discriminator favours a first-line antidepressant over structured psychotherapy at moderate severity: CLM-R2-PSY-MODERATE-CHOICE calls them equally effective in the short term and CLM-R4-PSY-PSYCHOTHERAPY makes the choice depend on context, availability and patient preference. Nothing may be asserted here that the evidence does not carry.",
+      "role_overrides": {
+        "SF-PS12-MILD-SEVERITY": {
+          "contrast_role": "SEVERITY_FEATURE",
+          "evidence_refs": [
+            "CLM-R4-PSY-MILD"
+          ],
+          "reason": "CLM-R4-PSY-MILD makes mild severity the operative criterion for preferring psychotherapy, on the same grounds."
+        },
+        "SF-PS12-MODERATE-SEVERITY": {
+          "contrast_role": "SEVERITY_FEATURE",
+          "evidence_refs": [
+            "CLM-R2-PSY-MODERATE-CHOICE",
+            "CLM-GEN-PSY-TX-01"
+          ],
+          "reason": "CLM-R2-PSY-MODERATE-CHOICE makes the severity band the operative criterion for the treatment choice itself, and the band is a clinician's syndromic assessment rather than a score recomputed from other findings the stem also states."
+        }
+      }
+    },
+    "G2-SURG-01": {
+      "competitors": {
+        "SEED-SURG-T01-PID": {
+          "concept_category": "GYNAECOLOGIC_CAUSE",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-GS76-FEMALE-REPRODUCTIVE-AGE",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-GS76-CERVICAL-MOTION-OR-ADNEXAL-TENDERNESS",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where the pelvic examination shows cervical motion tenderness or adnexal tenderness with lower abdominal tenderness.' The internal disjunction is already inside the single frozen feature; CLM-R4-SURG-PID-CRITERIA names the same criteria."
+          },
+          "evidence_refs": [
+            "CLM-R4-SURG-PID-CRITERIA",
+            "CLM-R4-SURG-FEMALE-DDX"
+          ]
+        },
+        "SEED-SURG-T01-TOA": {
+          "concept_category": "GYNAECOLOGIC_CAUSE",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-GS76-CERVICAL-MOTION-OR-ADNEXAL-TENDERNESS",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-GS76-GRADUAL-ONSET-PELVIC-INFECTION",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where the pain has been more gradual in onset with the pelvic findings of upper genital tract infection.' CLM-R4-SURG-TOA-ONSET supplies the gradual onset."
+          },
+          "evidence_refs": [
+            "CLM-R4-SURG-TOA-ONSET",
+            "CLM-R4-SURG-PID-SURGICAL"
+          ]
+        },
+        "SEED-SURG-T01-TORSION": {
+          "concept_category": "GYNAECOLOGIC_CAUSE",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-GS76-FEMALE-REPRODUCTIVE-AGE",
+                "required_state": "PRESENT"
+              },
+              {
+                "conditions": [
+                  {
+                    "feature_id": "SF-GS76-ADNEXAL-MASS-5CM-OR-MORE",
+                    "required_state": "PRESENT"
+                  }
+                ],
+                "operator": "ANY_OF"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where there is an adnexal mass of five centimetres or more, or intermittent severe pain with a poorly localised or absent tenderness pattern.' Disjunctive, with only the first disjunct present in the frozen vocabulary."
+          },
+          "evidence_refs": [
+            "CLM-R4-SURG-TORSION-RISK",
+            "CLM-R4-SURG-TORSION-PRESENT"
+          ],
+          "unmapped_disjuncts": [
+            {
+              "prose": "intermittent severe pain with a poorly localised or absent tenderness pattern",
+              "why_unmapped": "CLM-R4-SURG-TORSION-PRESENT describes it, but the frozen SU-GS-76 vocabulary carries no feature for an intermittent or absent tenderness pattern. Recorded so an unsatisfied verdict over this incomplete disjunction is never read as a defeat."
+            }
+          ]
+        }
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "key": {
+        "concept_category": "NON_GYNAECOLOGIC_CAUSE",
+        "correctness_conditions": {
+          "conditions": [
+            {
+              "feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "CLM-R4-SURG-PRESENTATION: pain initially epigastric or periumbilical that migrates to the right lower quadrant, with localized right lower quadrant tenderness."
+        },
+        "evidence_refs": [
+          "CLM-R4-SURG-PRESENTATION",
+          "CLM-GEN-SURG-DX-01"
+        ]
+      },
+      "key_discriminators": [
+        {
+          "contrast_role": "KEY_DISCRIMINATOR",
+          "evidence_refs": [
+            "CLM-R4-SURG-PRESENTATION",
+            "CLM-R4-SURG-TOA-ONSET"
+          ],
+          "favours": "A",
+          "feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+          "required_state": "PRESENT",
+          "salience": "MODERATE",
+          "statement": "Migration of pain from the periumbilical region to the right lower quadrant is the appendiceal pattern; the upper genital tract causes present with pelvic pain of more gradual onset."
+        }
+      ],
+      "nesting": [
+        {
+          "basis": "A tubo-ovarian abscess is a complication of upper genital tract infection, so the pair tests one and the same discrimination. CLM-R4-SURG-PID-SURGICAL treats them as one hospitalization decision and CLM-R4-SURG-TOA-ONSET describes the abscess as a presentation of the same process.",
+          "evidence_refs": [
+            "CLM-R4-SURG-PID-SURGICAL",
+            "CLM-R4-SURG-TOA-ONSET"
+          ],
+          "nesting_relation": "COMPLICATION_OF",
+          "pair": [
+            "SEED-SURG-T01-PID",
+            "SEED-SURG-T01-TOA"
+          ]
+        }
+      ],
+      "role_overrides": {}
+    },
+    "G2-SURG-02": {
+      "competitors": {
+        "SEED-SURG-T02-KUB": {
+          "concept_category": "TARGETED_RADIOGRAPHY",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where a ureteral stone is the leading diagnosis.' CLM-R4-SURG-STONE-IMAGING makes ultrasonography with kidney-ureter-bladder radiography the initial modality for that."
+          },
+          "evidence_refs": [
+            "CLM-R4-SURG-STONE-IMAGING",
+            "CLM-R4-SURG-STONE-CONSERVATIVE"
+          ]
+        },
+        "SEED-SURG-T02-MRI": {
+          "concept_category": "CROSS_SECTIONAL_IMAGING",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-GS76-PREGNANT",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-GS76-NONDIAGNOSTIC-IMAGING-ALREADY",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct in pregnancy when ultrasound is non-definitive.' CLM-R2-SURG-MRI reads the same way: useful in pregnancy when ultrasound is non-definitive. Both clauses are required, so a conjunction."
+          },
+          "evidence_refs": [
+            "CLM-R2-SURG-MRI",
+            "CLM-GEN-SURG-INV-01"
+          ]
+        },
+        "SEED-SURG-T02-OBSERVE": {
+          "concept_category": "CLINICAL_REASSESSMENT",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-GS76-NONDIAGNOSTIC-IMAGING-ALREADY",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct after non-diagnostic imaging, where clinical suspicion on reassessment is intermediate or low.' CLM-R4-SURG-NONDIAGNOSTIC: observe for intermediate or low clinical suspicion after a non-diagnostic scan."
+          },
+          "evidence_refs": [
+            "CLM-R4-SURG-NONDIAGNOSTIC"
+          ]
+        },
+        "SEED-SURG-T02-US": {
+          "concept_category": "SONOGRAPHY",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-GS76-LOW-BMI",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-GS76-PREGNANT",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ANY_OF",
+            "prose_basis": "Frozen seed: 'Correct in a low body mass index patient, and as the first modality in pregnancy.' Two independent indications listed together, so a disjunction: either one on its own makes ultrasound the right first modality. CLM-R2-SURG-US and CLM-GEN-SURG-INV-01 read the same way. V1 carried them as a conjunction, which requires a patient who is both."
+          },
+          "evidence_refs": [
+            "CLM-R2-SURG-US",
+            "CLM-GEN-SURG-INV-01"
+          ]
+        }
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "key": {
+        "concept_category": "CROSS_SECTIONAL_IMAGING",
+        "correctness_conditions": {
+          "conditions": [
+            {
+              "feature_id": "SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-GS76-IMAGING-AVAILABLE-NOW",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "CLM-GEN-SURG-INV-01: in a nonpregnant adult with intermediate probability, contrast-enhanced CT is appropriate when a definitive adult evaluation is needed. Carried unchanged from V1 so the counterfactual measures the set as it was assembled."
+        },
+        "evidence_refs": [
+          "CLM-GEN-SURG-INV-01",
+          "CLM-R2-SURG-ALVARADO",
+          "CLM-R2-SURG-CT"
+        ]
+      },
+      "key_discriminators": [],
+      "nesting": [],
+      "role_override_refusals": {
+        "SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION": "Deliberately left BACKGROUND_CONTEXT. CLM-R2-SURG-ALVARADO does make the suspicion band the operative criterion for imaging, but the band is a score recomputed from findings the stem also states, so declaring it in the stem declares the answer and can contradict the findings beside it. That is exactly the Alvarado contradiction R1 found: the stem's own findings score 7, the high band, while the stem asserts the intermediate band. The override rule requires a judgement that is not derived from other stem-stated findings."
+      },
+      "role_overrides": {}
+    }
+  },
+  "pilot_id": "contrast-first-v2-frozen-10",
+  "schema_version": "1.0",
+  "scope": "QGEN_CONTRAST_FIRST_V2_FROZEN_10_READINGS"
+}

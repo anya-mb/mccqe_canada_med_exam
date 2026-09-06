@@ -1,0 +1,4135 @@
+{
+  "boolean_logic_correction": {
+    "G2-PED-01": {
+      "corrected": true,
+      "defect": "The foreign-body and pneumonia seeds both read 'or' in their frozen prose and were carried as conjunctions.",
+      "v1_behaviour": "SCORED_DEFEATED",
+      "v2_behaviour": [
+        "SEED-PED-T01-FOREIGN-BODY",
+        "SEED-PED-T01-PNEUMONIA"
+      ]
+    },
+    "G2-PED-02": {
+      "corrected": true,
+      "defect": "CLM-R2-PED-VIRAL-INDICATION and CLM-R2-PED-CXR-INDICATION are disjunctive indications carried as conjunctions, so a competitor whose first disjunct the stem states was scored 1 of 2 and treated as defeated.",
+      "v1_behaviour": "SCORED_DEFEATED",
+      "v2_behaviour": [
+        "SEED-PED-T02-CXR",
+        "SEED-PED-T02-VIRAL"
+      ]
+    }
+  },
+  "counts": {
+    "ACCEPTED_V1_CONTROLS_PRESERVED": "2/2",
+    "KNOWN_SILENCE_AS_ABSENCE_DEFECTS_AFTER": 0,
+    "KNOWN_SILENCE_AS_ABSENCE_DEFECTS_BEFORE": 15,
+    "NON_OPTION_REJECTIONS_INTERCEPTED_PRE_FINAL_REVIEW": "7/7",
+    "OPPORTUNITIES_REPLAYED": 10,
+    "V2_NO_SAFE_ITEM": [
+      "G2-MED-03",
+      "G2-PED-01",
+      "G2-PED-02",
+      "G2-PHELO-01",
+      "G2-PSY-03",
+      "G2-SURG-01",
+      "G2-SURG-02"
+    ],
+    "V2_READY_FOR_STEM": [
+      "G2-OBGYN-01",
+      "G2-PHELO-02",
+      "G2-PHELO-03"
+    ],
+    "intercepted": [
+      "G2-MED-03",
+      "G2-PED-01",
+      "G2-PED-02",
+      "G2-PHELO-01",
+      "G2-PSY-03",
+      "G2-SURG-01",
+      "G2-SURG-02"
+    ],
+    "not_intercepted": []
+  },
+  "defect_regression_fixtures": {
+    "COMPETITOR_VERSUS_COMPETITOR": [
+      "G2-MED-03",
+      "G2-SURG-01",
+      "G2-PED-01"
+    ],
+    "CONJUNCTION_ONLY_CORRECTNESS": [
+      "G2-PED-02"
+    ],
+    "SILENCE_AS_ABSENCE": [
+      "G2-PHELO-01",
+      "G2-PSY-03"
+    ],
+    "UNTYPED_ANCHOR": [
+      "G2-SURG-01",
+      "G2-SURG-02"
+    ]
+  },
+  "design": "docs/superpowers/specs/2026-09-05-clinical-contrast-relation-model-v2-design.md",
+  "diagnosed_set_defects_found_at_assembly": {
+    "G2-MED-03": [
+      "CS2-2"
+    ],
+    "G2-PED-01": [
+      "CS2-6"
+    ],
+    "G2-SURG-01": [
+      "CS2-1",
+      "CS2-5"
+    ]
+  },
+  "frozen_qgen_artifacts_changed": 0,
+  "gate": {
+    "COUNTERFACTUAL_GATE": "PASS",
+    "limbs": {
+      "ALL_KNOWN_BOOLEAN_LOGIC_DEFECTS_CORRECTED": true,
+      "AT_LEAST_5_OF_7_NON_OPTION_REJECTIONS_INTERCEPTED": true,
+      "NO_ACCEPTED_V1_CONTROL_BECOMES_UNSAFE": true,
+      "SECOND_KEY_CEILING_REMAINS_EFFECTIVE": true,
+      "SET_COHERENCE_IDENTIFIES_THE_DIAGNOSED_SET_DEFECTS": true,
+      "SILENCE_AS_ABSENCE_DEFECTS_ELIMINATED": true
+    },
+    "precommitted_in": "section 14.1 of the design, before any V2 result existed"
+  },
+  "llm_api_calls": 0,
+  "method": "The V2 relation model is evaluated against the ten frozen V1 stems exactly as they were written. No stem, option, seed, evidence packet or verdict is changed and no question prose is generated. The only question asked is whether the relation model would have classified the competitors correctly on the material that was actually produced.",
+  "per_item": {
+    "G2-MED-03": {
+      "V1_PRIMARY_EARLIEST_CAUSE": "A_CONTRAST_SET_DEFECT",
+      "V1_VERDICT": "REJECT",
+      "V2_FAIL_CLOSED_REASONS": [
+        "FAIL_CLOSED_CONTRAST_SET_COHERENCE",
+        "FAIL_CLOSED_POST_STEM_SET_COHERENCE"
+      ],
+      "V2_INTERCEPTED_AT": "CONTRAST_SET_ASSEMBLY",
+      "V2_TERMINAL_STATE": "NO_SAFE_ITEM",
+      "ambiguous": [],
+      "assembly_violations": [
+        "CS2-2"
+      ],
+      "competitor_states": {
+        "SEED-G2-MED-T02-BETA-BLOCKER": "LIVE_BUT_INFERIOR",
+        "SEED-G2-MED-T02-DIURETIC": "LIVE_BUT_INFERIOR",
+        "SEED-G2-MED-T02-NITRATE": "LIVE_BUT_INFERIOR",
+        "SEED-G2-MED-T02-VASOPRESSOR": "LIVE_BUT_INFERIOR"
+      },
+      "competitors_carrying_second_key_risk": [],
+      "difficulty_intent": "HARD",
+      "discipline": "MED",
+      "key_correctness_under_the_frozen_stem": "SATISFIED",
+      "post_stem_violations": [
+        "CS2-2"
+      ],
+      "second_keys": [],
+      "silence_as_absence_defects_after": [],
+      "silence_as_absence_defects_before": [
+        {
+          "member_id": "SEED-G2-MED-T02-VASOPRESSOR",
+          "unresolved_features": [
+            "SF-C21-END-ORGAN-HYPOPERFUSION"
+          ],
+          "v1_would_have_scored": "DEFEATED_BY_AN_UNSTATED_CONDITION",
+          "v2_scores": "LIVE_BUT_INFERIOR"
+        }
+      ],
+      "would_the_diagnosed_failure_have_been_prevented": "YES"
+    },
+    "G2-OBGYN-01": {
+      "V1_PRIMARY_EARLIEST_CAUSE": "H_OPTION_WORDING_REALIZATION_DEFECT",
+      "V1_VERDICT": "REJECT",
+      "V2_FAIL_CLOSED_REASONS": [],
+      "V2_INTERCEPTED_AT": null,
+      "V2_TERMINAL_STATE": "READY_FOR_STEM",
+      "ambiguous": [],
+      "assembly_violations": [],
+      "competitor_states": {
+        "SEED-OB-T01-ABSCESS": "LIVE_BUT_INFERIOR",
+        "SEED-OB-T01-GALACTOCELE": "LIVE_BUT_INFERIOR",
+        "SEED-OB-T01-IBC": "LIVE_BUT_INFERIOR"
+      },
+      "competitors_carrying_second_key_risk": [],
+      "difficulty_intent": "EASY",
+      "discipline": "OBGYN",
+      "key_correctness_under_the_frozen_stem": "SATISFIED",
+      "post_stem_violations": [],
+      "second_keys": [],
+      "silence_as_absence_defects_after": [],
+      "silence_as_absence_defects_before": [
+        {
+          "member_id": "SEED-OB-T01-IBC",
+          "unresolved_features": [
+            "SF-OB54-RECURRENCE-SAME-LOCATION",
+            "SF-OB54-SKIN-THICKENING-PEAU-DORANGE"
+          ],
+          "v1_would_have_scored": "DEFEATED_BY_AN_UNSTATED_CONDITION",
+          "v2_scores": "LIVE_BUT_INFERIOR"
+        }
+      ],
+      "would_the_diagnosed_failure_have_been_prevented": "NO"
+    },
+    "G2-PED-01": {
+      "V1_PRIMARY_EARLIEST_CAUSE": "C_STEM_BLUEPRINT_DEFECT",
+      "V1_VERDICT": "REJECT",
+      "V2_FAIL_CLOSED_REASONS": [
+        "FAIL_CLOSED_CONTRAST_SET_COHERENCE",
+        "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "FAIL_CLOSED_POST_STEM_SET_COHERENCE",
+        "FAIL_CLOSED_SECOND_KEY"
+      ],
+      "V2_INTERCEPTED_AT": "CONTRAST_SET_ASSEMBLY",
+      "V2_TERMINAL_STATE": "NO_SAFE_ITEM",
+      "ambiguous": [],
+      "assembly_violations": [
+        "CS2-6"
+      ],
+      "competitor_states": {
+        "SEED-PED-T01-ASTHMA": "LIVE_BUT_INFERIOR",
+        "SEED-PED-T01-FOREIGN-BODY": "SECOND_KEY",
+        "SEED-PED-T01-PNEUMONIA": "SECOND_KEY"
+      },
+      "competitors_carrying_second_key_risk": [],
+      "difficulty_intent": "MEDIUM",
+      "discipline": "PED",
+      "key_correctness_under_the_frozen_stem": "SATISFIED",
+      "post_stem_violations": [
+        "CS2-6"
+      ],
+      "second_keys": [
+        "SEED-PED-T01-FOREIGN-BODY",
+        "SEED-PED-T01-PNEUMONIA"
+      ],
+      "silence_as_absence_defects_after": [],
+      "silence_as_absence_defects_before": [],
+      "would_the_diagnosed_failure_have_been_prevented": "YES"
+    },
+    "G2-PED-02": {
+      "V1_PRIMARY_EARLIEST_CAUSE": "B_CONTRAST_MATRIX_DEFECT",
+      "V1_VERDICT": "REJECT",
+      "V2_FAIL_CLOSED_REASONS": [
+        "FAIL_CLOSED_AMBIGUOUS_COMPETITOR",
+        "FAIL_CLOSED_CONTRAST_SET_COHERENCE",
+        "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "FAIL_CLOSED_KEY_NOT_ESTABLISHED_BY_THE_STEM",
+        "FAIL_CLOSED_POST_STEM_SET_COHERENCE",
+        "FAIL_CLOSED_SECOND_KEY"
+      ],
+      "V2_INTERCEPTED_AT": "CONTRAST_SET_ASSEMBLY",
+      "V2_TERMINAL_STATE": "NO_SAFE_ITEM",
+      "ambiguous": [
+        "SEED-PED-T02-CONTINUOUS"
+      ],
+      "assembly_violations": [
+        "CS2-6"
+      ],
+      "competitor_states": {
+        "SEED-PED-T02-CONTINUOUS": "AMBIGUOUS",
+        "SEED-PED-T02-CXR": "SECOND_KEY",
+        "SEED-PED-T02-VIRAL": "SECOND_KEY"
+      },
+      "competitors_carrying_second_key_risk": [
+        "SEED-PED-T02-CONTINUOUS"
+      ],
+      "difficulty_intent": "EASY",
+      "discipline": "PED",
+      "key_correctness_under_the_frozen_stem": "INDETERMINATE",
+      "post_stem_violations": [
+        "CS2-6",
+        "CS2-7"
+      ],
+      "second_keys": [
+        "SEED-PED-T02-CXR",
+        "SEED-PED-T02-VIRAL"
+      ],
+      "silence_as_absence_defects_after": [],
+      "silence_as_absence_defects_before": [
+        {
+          "member_id": "SEED-PED-T02-CONTINUOUS",
+          "unresolved_features": [
+            "SF-P147-HIGH-RISK-EARLY-COURSE"
+          ],
+          "v1_would_have_scored": "DEFEATED_BY_AN_UNSTATED_CONDITION",
+          "v2_scores": "AMBIGUOUS"
+        }
+      ],
+      "would_the_diagnosed_failure_have_been_prevented": "YES"
+    },
+    "G2-PHELO-01": {
+      "V1_PRIMARY_EARLIEST_CAUSE": "C_STEM_BLUEPRINT_DEFECT",
+      "V1_VERDICT": "REJECT",
+      "V2_FAIL_CLOSED_REASONS": [
+        "FAIL_CLOSED_AMBIGUOUS_COMPETITOR",
+        "FAIL_CLOSED_CONTRAST_SET_SIZE"
+      ],
+      "V2_INTERCEPTED_AT": "POST_STEM_REVALIDATION",
+      "V2_TERMINAL_STATE": "NO_SAFE_ITEM",
+      "ambiguous": [
+        "SEED-PHELO-T01-LENGTH",
+        "SEED-PHELO-T01-OVERDIAGNOSIS"
+      ],
+      "assembly_violations": [],
+      "competitor_states": {
+        "SEED-PHELO-T01-HEALTHY-SCREENEE": "LIVE_BUT_INFERIOR",
+        "SEED-PHELO-T01-LENGTH": "AMBIGUOUS",
+        "SEED-PHELO-T01-OVERDIAGNOSIS": "AMBIGUOUS"
+      },
+      "competitors_carrying_second_key_risk": [
+        "SEED-PHELO-T01-LENGTH",
+        "SEED-PHELO-T01-OVERDIAGNOSIS"
+      ],
+      "difficulty_intent": "EASY",
+      "discipline": "PHELO",
+      "key_correctness_under_the_frozen_stem": "SATISFIED",
+      "post_stem_violations": [],
+      "second_keys": [],
+      "silence_as_absence_defects_after": [],
+      "silence_as_absence_defects_before": [
+        {
+          "member_id": "SEED-PHELO-T01-LENGTH",
+          "unresolved_features": [
+            "SF-PH07-INDOLENT-VARIANT-OVERREPRESENTED"
+          ],
+          "v1_would_have_scored": "DEFEATED_BY_AN_UNSTATED_CONDITION",
+          "v2_scores": "AMBIGUOUS"
+        },
+        {
+          "member_id": "SEED-PHELO-T01-OVERDIAGNOSIS",
+          "unresolved_features": [
+            "SF-PH07-MORE-CASES-DIAGNOSED-IN-SCREENED"
+          ],
+          "v1_would_have_scored": "DEFEATED_BY_AN_UNSTATED_CONDITION",
+          "v2_scores": "AMBIGUOUS"
+        }
+      ],
+      "would_the_diagnosed_failure_have_been_prevented": "YES"
+    },
+    "G2-PHELO-02": {
+      "V1_PRIMARY_EARLIEST_CAUSE": null,
+      "V1_VERDICT": "ACCEPT",
+      "V2_FAIL_CLOSED_REASONS": [],
+      "V2_INTERCEPTED_AT": null,
+      "V2_TERMINAL_STATE": "READY_FOR_STEM",
+      "ambiguous": [],
+      "assembly_violations": [],
+      "competitor_states": {
+        "SEED-G2-PHELO-T02-VOLUNTARY": "LIVE_BUT_INFERIOR",
+        "SEED-PHELO-T02-DETECTION-COUNT": "LIVE_BUT_INFERIOR",
+        "SEED-PHELO-T02-SENSITIVITY": "LIVE_BUT_INFERIOR"
+      },
+      "competitors_carrying_second_key_risk": [],
+      "difficulty_intent": "MEDIUM",
+      "discipline": "PHELO",
+      "key_correctness_under_the_frozen_stem": "SATISFIED",
+      "post_stem_violations": [],
+      "second_keys": [],
+      "silence_as_absence_defects_after": [],
+      "silence_as_absence_defects_before": [
+        {
+          "member_id": "SEED-PHELO-T02-SENSITIVITY",
+          "unresolved_features": [
+            "SF-PH07-AUDIENCE-CAN-INTERPRET-TEST-METRICS"
+          ],
+          "v1_would_have_scored": "DEFEATED_BY_AN_UNSTATED_CONDITION",
+          "v2_scores": "LIVE_BUT_INFERIOR"
+        }
+      ],
+      "would_the_diagnosed_failure_have_been_prevented": "NOT_APPLICABLE_ACCEPTED_CONTROL"
+    },
+    "G2-PHELO-03": {
+      "V1_PRIMARY_EARLIEST_CAUSE": null,
+      "V1_VERDICT": "ACCEPT",
+      "V2_FAIL_CLOSED_REASONS": [],
+      "V2_INTERCEPTED_AT": null,
+      "V2_TERMINAL_STATE": "READY_FOR_STEM",
+      "ambiguous": [],
+      "assembly_violations": [],
+      "competitor_states": {
+        "SEED-PHELO-T03-EVALUATE": "LIVE_BUT_INFERIOR",
+        "SEED-PHELO-T03-PILOT": "LIVE_BUT_INFERIOR",
+        "SEED-PHELO-T03-RAISE-CUTOFF": "LIVE_BUT_INFERIOR"
+      },
+      "competitors_carrying_second_key_risk": [],
+      "difficulty_intent": "HARD",
+      "discipline": "PHELO",
+      "key_correctness_under_the_frozen_stem": "SATISFIED",
+      "post_stem_violations": [],
+      "second_keys": [],
+      "silence_as_absence_defects_after": [],
+      "silence_as_absence_defects_before": [
+        {
+          "member_id": "SEED-PHELO-T03-RAISE-CUTOFF",
+          "unresolved_features": [
+            "SF-PH07-THRESHOLD-TOO-FAR-TOWARD-LOW-RISK"
+          ],
+          "v1_would_have_scored": "DEFEATED_BY_AN_UNSTATED_CONDITION",
+          "v2_scores": "LIVE_BUT_INFERIOR"
+        }
+      ],
+      "would_the_diagnosed_failure_have_been_prevented": "NOT_APPLICABLE_ACCEPTED_CONTROL"
+    },
+    "G2-PSY-03": {
+      "V1_PRIMARY_EARLIEST_CAUSE": "C_STEM_BLUEPRINT_DEFECT",
+      "V1_VERDICT": "REJECT",
+      "V2_FAIL_CLOSED_REASONS": [
+        "FAIL_CLOSED_COMPETITOR_WITHOUT_STEM_ANCHOR",
+        "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "FAIL_CLOSED_POST_STEM_SET_COHERENCE"
+      ],
+      "V2_INTERCEPTED_AT": "POST_STEM_REVALIDATION",
+      "V2_TERMINAL_STATE": "NO_SAFE_ITEM",
+      "ambiguous": [],
+      "assembly_violations": [],
+      "competitor_states": {
+        "SEED-PSY-T03-DIGITAL": "INSUFFICIENT_SUPPORT",
+        "SEED-PSY-T03-EXERCISE": "LIVE_BUT_INFERIOR",
+        "SEED-PSY-T03-PSYCHOTHERAPY": "LIVE_BUT_INFERIOR"
+      },
+      "competitors_carrying_second_key_risk": [
+        "SEED-PSY-T03-DIGITAL"
+      ],
+      "difficulty_intent": "EASY",
+      "discipline": "PSY",
+      "key_correctness_under_the_frozen_stem": "SATISFIED",
+      "post_stem_violations": [
+        "CS2-7"
+      ],
+      "second_keys": [],
+      "silence_as_absence_defects_after": [],
+      "silence_as_absence_defects_before": [
+        {
+          "member_id": "SEED-PSY-T03-DIGITAL",
+          "unresolved_features": [
+            "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY"
+          ],
+          "v1_would_have_scored": "DEFEATED_BY_AN_UNSTATED_CONDITION",
+          "v2_scores": "INSUFFICIENT_SUPPORT"
+        }
+      ],
+      "would_the_diagnosed_failure_have_been_prevented": "YES"
+    },
+    "G2-SURG-01": {
+      "V1_PRIMARY_EARLIEST_CAUSE": "A_CONTRAST_SET_DEFECT",
+      "V1_VERDICT": "REJECT",
+      "V2_FAIL_CLOSED_REASONS": [
+        "FAIL_CLOSED_COMPETITOR_WITHOUT_STEM_ANCHOR",
+        "FAIL_CLOSED_CONTRAST_SET_COHERENCE",
+        "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "FAIL_CLOSED_POST_STEM_SET_COHERENCE"
+      ],
+      "V2_INTERCEPTED_AT": "CONTRAST_SET_ASSEMBLY",
+      "V2_TERMINAL_STATE": "NO_SAFE_ITEM",
+      "ambiguous": [],
+      "assembly_violations": [
+        "CS2-1",
+        "CS2-5"
+      ],
+      "competitor_states": {
+        "SEED-SURG-T01-PID": "INSUFFICIENT_SUPPORT",
+        "SEED-SURG-T01-TOA": "INSUFFICIENT_SUPPORT",
+        "SEED-SURG-T01-TORSION": "INSUFFICIENT_SUPPORT"
+      },
+      "competitors_carrying_second_key_risk": [],
+      "difficulty_intent": "EASY",
+      "discipline": "SURG",
+      "key_correctness_under_the_frozen_stem": "SATISFIED",
+      "post_stem_violations": [
+        "CS2-1",
+        "CS2-5",
+        "CS2-7"
+      ],
+      "second_keys": [],
+      "silence_as_absence_defects_after": [],
+      "silence_as_absence_defects_before": [
+        {
+          "member_id": "SEED-SURG-T01-PID",
+          "unresolved_features": [
+            "SF-GS76-CERVICAL-MOTION-OR-ADNEXAL-TENDERNESS"
+          ],
+          "v1_would_have_scored": "DEFEATED_BY_AN_UNSTATED_CONDITION",
+          "v2_scores": "INSUFFICIENT_SUPPORT"
+        },
+        {
+          "member_id": "SEED-SURG-T01-TOA",
+          "unresolved_features": [
+            "SF-GS76-CERVICAL-MOTION-OR-ADNEXAL-TENDERNESS",
+            "SF-GS76-GRADUAL-ONSET-PELVIC-INFECTION"
+          ],
+          "v1_would_have_scored": "DEFEATED_BY_AN_UNSTATED_CONDITION",
+          "v2_scores": "INSUFFICIENT_SUPPORT"
+        },
+        {
+          "member_id": "SEED-SURG-T01-TORSION",
+          "unresolved_features": [
+            "SF-GS76-ADNEXAL-MASS-5CM-OR-MORE"
+          ],
+          "v1_would_have_scored": "DEFEATED_BY_AN_UNSTATED_CONDITION",
+          "v2_scores": "INSUFFICIENT_SUPPORT"
+        }
+      ],
+      "would_the_diagnosed_failure_have_been_prevented": "YES"
+    },
+    "G2-SURG-02": {
+      "V1_PRIMARY_EARLIEST_CAUSE": "A_CONTRAST_SET_DEFECT",
+      "V1_VERDICT": "REJECT",
+      "V2_FAIL_CLOSED_REASONS": [
+        "FAIL_CLOSED_COMPETITOR_WITHOUT_STEM_ANCHOR",
+        "FAIL_CLOSED_CONTRAST_SET_COHERENCE",
+        "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "FAIL_CLOSED_POST_STEM_SET_COHERENCE"
+      ],
+      "V2_INTERCEPTED_AT": "CONTRAST_SET_ASSEMBLY",
+      "V2_TERMINAL_STATE": "NO_SAFE_ITEM",
+      "ambiguous": [],
+      "assembly_violations": [
+        "CS2-6",
+        "CS2-7",
+        "CS2-9"
+      ],
+      "competitor_states": {
+        "SEED-SURG-T02-KUB": "INSUFFICIENT_SUPPORT",
+        "SEED-SURG-T02-MRI": "INSUFFICIENT_SUPPORT",
+        "SEED-SURG-T02-OBSERVE": "INSUFFICIENT_SUPPORT",
+        "SEED-SURG-T02-US": "INSUFFICIENT_SUPPORT"
+      },
+      "competitors_carrying_second_key_risk": [
+        "SEED-SURG-T02-KUB",
+        "SEED-SURG-T02-MRI",
+        "SEED-SURG-T02-OBSERVE",
+        "SEED-SURG-T02-US"
+      ],
+      "difficulty_intent": "MEDIUM",
+      "discipline": "SURG",
+      "key_correctness_under_the_frozen_stem": "SATISFIED",
+      "post_stem_violations": [
+        "CS2-6",
+        "CS2-7",
+        "CS2-9"
+      ],
+      "second_keys": [],
+      "silence_as_absence_defects_after": [],
+      "silence_as_absence_defects_before": [
+        {
+          "member_id": "SEED-SURG-T02-KUB",
+          "unresolved_features": [
+            "SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS"
+          ],
+          "v1_would_have_scored": "DEFEATED_BY_AN_UNSTATED_CONDITION",
+          "v2_scores": "INSUFFICIENT_SUPPORT"
+        },
+        {
+          "member_id": "SEED-SURG-T02-MRI",
+          "unresolved_features": [
+            "SF-GS76-NONDIAGNOSTIC-IMAGING-ALREADY",
+            "SF-GS76-PREGNANT"
+          ],
+          "v1_would_have_scored": "DEFEATED_BY_AN_UNSTATED_CONDITION",
+          "v2_scores": "INSUFFICIENT_SUPPORT"
+        },
+        {
+          "member_id": "SEED-SURG-T02-OBSERVE",
+          "unresolved_features": [
+            "SF-GS76-NONDIAGNOSTIC-IMAGING-ALREADY"
+          ],
+          "v1_would_have_scored": "DEFEATED_BY_AN_UNSTATED_CONDITION",
+          "v2_scores": "INSUFFICIENT_SUPPORT"
+        },
+        {
+          "member_id": "SEED-SURG-T02-US",
+          "unresolved_features": [
+            "SF-GS76-LOW-BMI",
+            "SF-GS76-PREGNANT"
+          ],
+          "v1_would_have_scored": "DEFEATED_BY_AN_UNSTATED_CONDITION",
+          "v2_scores": "INSUFFICIENT_SUPPORT"
+        }
+      ],
+      "would_the_diagnosed_failure_have_been_prevented": "YES"
+    }
+  },
+  "pilot_id": "contrast-first-v2-frozen-10",
+  "questions_generated": 0,
+  "replay": {
+    "pilot_id": "contrast-first-v2-frozen-10",
+    "questions_generated": 0,
+    "results": [
+      {
+        "assembly_coherence": {
+          "coherent": false,
+          "decision_domain": "PATIENT_CLINICAL",
+          "detail": [
+            {
+              "concept_category": "PRELOAD_REDUCTION",
+              "defeated_by": [
+                "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS"
+              ],
+              "name": "MUTUAL_REDUNDANCY",
+              "note": "two options of the same kind die on one and the same proposition, so one option slot does no independent work",
+              "pair": [
+                "SEED-G2-MED-T02-DIURETIC",
+                "SEED-G2-MED-T02-NITRATE"
+              ],
+              "rule": "CS2-2"
+            }
+          ],
+          "opportunity_label": "G2-MED-03",
+          "pairs_evaluated": 10,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-G2-MED-T02-BETA-BLOCKER"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-G2-MED-T02-DIURETIC"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-G2-MED-T02-NITRATE"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-G2-MED-T02-VASOPRESSOR"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-G2-MED-T02-BETA-BLOCKER",
+                "SEED-G2-MED-T02-DIURETIC"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-G2-MED-T02-BETA-BLOCKER",
+                "SEED-G2-MED-T02-NITRATE"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-G2-MED-T02-BETA-BLOCKER",
+                "SEED-G2-MED-T02-VASOPRESSOR"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-G2-MED-T02-DIURETIC",
+                "SEED-G2-MED-T02-NITRATE"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-G2-MED-T02-DIURETIC",
+                "SEED-G2-MED-T02-VASOPRESSOR"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-G2-MED-T02-NITRATE",
+                "SEED-G2-MED-T02-VASOPRESSOR"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": false,
+          "usable_anchors_per_competitor": {
+            "SEED-G2-MED-T02-BETA-BLOCKER": [
+              "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+              "SF-C21-TROPONIN-RISE-OR-FALL"
+            ],
+            "SEED-G2-MED-T02-DIURETIC": [
+              "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS",
+              "SF-C21-PULMONARY-CONGESTION"
+            ],
+            "SEED-G2-MED-T02-NITRATE": [
+              "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+              "SF-C21-TROPONIN-RISE-OR-FALL"
+            ],
+            "SEED-G2-MED-T02-VASOPRESSOR": [
+              "SF-C21-END-ORGAN-HYPOPERFUSION",
+              "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS"
+            ]
+          },
+          "violations": [
+            "CS2-2"
+          ]
+        },
+        "competitor_verdicts": [
+          {
+            "admissible_as_distractor": true,
+            "anchors_present": [
+              "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+              "SF-C21-TROPONIN-RISE-OR-FALL"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Give intravenous metoprolol to reduce myocardial oxygen demand",
+            "correctness": "NOT_SATISFIED",
+            "decided_by_discriminators": [
+              "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS"
+            ],
+            "defeated_by": [
+              "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS"
+            ],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-C21-END-ORGAN-HYPOPERFUSION",
+                  "required": "ABSENT",
+                  "result": "INDETERMINATE"
+                },
+                {
+                  "asserted_state": "PRESENT",
+                  "explicitness": "EXPLICIT",
+                  "feature_id": "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS",
+                  "required": "ABSENT",
+                  "result": "NOT_SATISFIED"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "NOT_SATISFIED"
+            },
+            "member_id": "SEED-G2-MED-T02-BETA-BLOCKER",
+            "presentation_anchors_present": [
+              "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+              "SF-C21-TROPONIN-RISE-OR-FALL"
+            ],
+            "second_key_risk": false,
+            "state": "LIVE_BUT_INFERIOR",
+            "unresolved_features": [
+              "SF-C21-END-ORGAN-HYPOPERFUSION"
+            ]
+          },
+          {
+            "admissible_as_distractor": true,
+            "anchors_present": [
+              "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Give intravenous furosemide for the raised jugular venous pressure",
+            "correctness": "NOT_SATISFIED",
+            "decided_by_discriminators": [
+              "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS"
+            ],
+            "defeated_by": [
+              "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS",
+              "SF-C21-PULMONARY-CONGESTION"
+            ],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "ABSENT",
+                  "explicitness": "IMPLIED",
+                  "feature_id": "SF-C21-PULMONARY-CONGESTION",
+                  "required": "PRESENT",
+                  "result": "NOT_SATISFIED"
+                },
+                {
+                  "asserted_state": "PRESENT",
+                  "explicitness": "EXPLICIT",
+                  "feature_id": "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS",
+                  "required": "ABSENT",
+                  "result": "NOT_SATISFIED"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "NOT_SATISFIED"
+            },
+            "member_id": "SEED-G2-MED-T02-DIURETIC",
+            "presentation_anchors_present": [
+              "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS"
+            ],
+            "second_key_risk": false,
+            "state": "LIVE_BUT_INFERIOR",
+            "unresolved_features": []
+          },
+          {
+            "admissible_as_distractor": true,
+            "anchors_present": [
+              "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+              "SF-C21-TROPONIN-RISE-OR-FALL"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Give sublingual nitroglycerin for the ischaemic pain",
+            "correctness": "NOT_SATISFIED",
+            "decided_by_discriminators": [
+              "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS"
+            ],
+            "defeated_by": [
+              "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS"
+            ],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "PRESENT",
+                  "explicitness": "EXPLICIT",
+                  "feature_id": "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS",
+                  "required": "ABSENT",
+                  "result": "NOT_SATISFIED"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "NOT_SATISFIED"
+            },
+            "member_id": "SEED-G2-MED-T02-NITRATE",
+            "presentation_anchors_present": [
+              "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+              "SF-C21-TROPONIN-RISE-OR-FALL"
+            ],
+            "second_key_risk": false,
+            "state": "LIVE_BUT_INFERIOR",
+            "unresolved_features": []
+          },
+          {
+            "admissible_as_distractor": true,
+            "anchors_present": [
+              "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Start a norepinephrine infusion",
+            "correctness": "INDETERMINATE",
+            "decided_by_discriminators": [
+              "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS"
+            ],
+            "defeated_by": [],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-C21-END-ORGAN-HYPOPERFUSION",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "INDETERMINATE"
+            },
+            "member_id": "SEED-G2-MED-T02-VASOPRESSOR",
+            "presentation_anchors_present": [
+              "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS"
+            ],
+            "second_key_risk": false,
+            "state": "LIVE_BUT_INFERIOR",
+            "unresolved_features": [
+              "SF-C21-END-ORGAN-HYPOPERFUSION"
+            ]
+          }
+        ],
+        "difficulty_intent": "HARD",
+        "discipline": "MED",
+        "features_implied_absent_by_contradiction": [
+          "SF-C21-DEVICE-TIME-EXCEEDS-WINDOW",
+          "SF-C21-INITIAL-TROPONIN-NOT-ELEVATED",
+          "SF-C21-NONDIAGNOSTIC-ECG",
+          "SF-C21-PULMONARY-CONGESTION",
+          "SF-C21-WIDESPREAD-ST-ELEVATION-PR-DEPRESSION"
+        ],
+        "key_correctness_under_the_frozen_stem": "SATISFIED",
+        "key_explanation": {
+          "conditions": [
+            {
+              "asserted_state": "PRESENT",
+              "explicitness": "EXPLICIT",
+              "feature_id": "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+              "required": "PRESENT",
+              "result": "SATISFIED"
+            },
+            {
+              "asserted_state": "PRESENT",
+              "explicitness": "EXPLICIT",
+              "feature_id": "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS",
+              "required": "PRESENT",
+              "result": "SATISFIED"
+            }
+          ],
+          "operator": "ALL_OF",
+          "result": "SATISFIED"
+        },
+        "key_unresolved_features": [],
+        "live_but_inferior_count": 4,
+        "opportunity_label": "G2-MED-03",
+        "post_stem_coherence": {
+          "coherent": false,
+          "decision_domain": "PATIENT_CLINICAL",
+          "detail": [
+            {
+              "concept_category": "PRELOAD_REDUCTION",
+              "defeated_by": [
+                "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS"
+              ],
+              "name": "MUTUAL_REDUNDANCY",
+              "note": "two options of the same kind die on one and the same proposition, so one option slot does no independent work",
+              "pair": [
+                "SEED-G2-MED-T02-DIURETIC",
+                "SEED-G2-MED-T02-NITRATE"
+              ],
+              "rule": "CS2-2"
+            }
+          ],
+          "opportunity_label": "G2-MED-03",
+          "pairs_evaluated": 10,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-G2-MED-T02-BETA-BLOCKER"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-G2-MED-T02-DIURETIC"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-G2-MED-T02-NITRATE"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-G2-MED-T02-VASOPRESSOR"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-G2-MED-T02-BETA-BLOCKER",
+                "SEED-G2-MED-T02-DIURETIC"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-G2-MED-T02-BETA-BLOCKER",
+                "SEED-G2-MED-T02-NITRATE"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-G2-MED-T02-BETA-BLOCKER",
+                "SEED-G2-MED-T02-VASOPRESSOR"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-G2-MED-T02-DIURETIC",
+                "SEED-G2-MED-T02-NITRATE"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-G2-MED-T02-DIURETIC",
+                "SEED-G2-MED-T02-VASOPRESSOR"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-G2-MED-T02-NITRATE",
+                "SEED-G2-MED-T02-VASOPRESSOR"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": true,
+          "usable_anchors_per_competitor": {
+            "SEED-G2-MED-T02-BETA-BLOCKER": [
+              "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+              "SF-C21-TROPONIN-RISE-OR-FALL"
+            ],
+            "SEED-G2-MED-T02-DIURETIC": [
+              "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS"
+            ],
+            "SEED-G2-MED-T02-NITRATE": [
+              "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+              "SF-C21-TROPONIN-RISE-OR-FALL"
+            ],
+            "SEED-G2-MED-T02-VASOPRESSOR": [
+              "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS"
+            ]
+          },
+          "violations": [
+            "CS2-2"
+          ]
+        },
+        "stem_asserted_features": [
+          "SF-C21-DEVICE-TIME-WITHIN-WINDOW",
+          "SF-C21-DIAGNOSTIC-ST-ELEVATION",
+          "SF-C21-HYPOTENSION-RAISED-JVP-CLEAR-LUNGS",
+          "SF-C21-TROPONIN-RISE-OR-FALL"
+        ],
+        "v1_primary_earliest_cause": "A_CONTRAST_SET_DEFECT",
+        "v1_reject_reason": "Furosemide and sublingual nitroglycerin are eliminated by one and the same preload proposition, so one option slot does no independent work. The paired troponin values have no role in the decision the lead-in asks for in an activated primary-PCI pathway and read as inserted item furniture; they also imply an awkward total ischaemic time.",
+        "v1_verdict": "REJECT",
+        "v2_fail_closed_reasons": [
+          "FAIL_CLOSED_CONTRAST_SET_COHERENCE",
+          "FAIL_CLOSED_POST_STEM_SET_COHERENCE"
+        ],
+        "v2_terminal_state": "NO_SAFE_ITEM"
+      },
+      {
+        "assembly_coherence": {
+          "coherent": true,
+          "decision_domain": "PATIENT_CLINICAL",
+          "detail": [],
+          "opportunity_label": "G2-OBGYN-01",
+          "pairs_evaluated": 6,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-OB-T01-ABSCESS"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-OB-T01-GALACTOCELE"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-OB-T01-IBC"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-OB-T01-ABSCESS",
+                "SEED-OB-T01-GALACTOCELE"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-OB-T01-ABSCESS",
+                "SEED-OB-T01-IBC"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-OB-T01-GALACTOCELE",
+                "SEED-OB-T01-IBC"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": false,
+          "usable_anchors_per_competitor": {
+            "SEED-OB-T01-ABSCESS": [
+              "SF-OB54-FLUCTUANT-COLLECTION",
+              "SF-OB54-SYSTEMIC-ILLNESS",
+              "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+            ],
+            "SEED-OB-T01-GALACTOCELE": [
+              "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
+              "SF-OB54-MASS-DECREASES-AFTER-FEED"
+            ],
+            "SEED-OB-T01-IBC": [
+              "SF-OB54-RECURRENCE-SAME-LOCATION",
+              "SF-OB54-SKIN-THICKENING-PEAU-DORANGE",
+              "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+            ]
+          },
+          "violations": []
+        },
+        "competitor_verdicts": [
+          {
+            "admissible_as_distractor": true,
+            "anchors_present": [
+              "SF-OB54-SYSTEMIC-ILLNESS",
+              "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Lactational breast abscess",
+            "correctness": "NOT_SATISFIED",
+            "decided_by_discriminators": [
+              "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
+              "SF-OB54-SYSTEMIC-ILLNESS"
+            ],
+            "defeated_by": [
+              "SF-OB54-FLUCTUANT-COLLECTION"
+            ],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "ABSENT",
+                  "explicitness": "IMPLIED",
+                  "feature_id": "SF-OB54-FLUCTUANT-COLLECTION",
+                  "required": "PRESENT",
+                  "result": "NOT_SATISFIED"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "NOT_SATISFIED"
+            },
+            "member_id": "SEED-OB-T01-ABSCESS",
+            "presentation_anchors_present": [
+              "SF-OB54-SYSTEMIC-ILLNESS",
+              "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+            ],
+            "second_key_risk": false,
+            "state": "LIVE_BUT_INFERIOR",
+            "unresolved_features": []
+          },
+          {
+            "admissible_as_distractor": true,
+            "anchors_present": [
+              "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Galactocele",
+            "correctness": "NOT_SATISFIED",
+            "decided_by_discriminators": [
+              "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
+              "SF-OB54-SYSTEMIC-ILLNESS"
+            ],
+            "defeated_by": [
+              "SF-OB54-SYSTEMIC-ILLNESS",
+              "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+            ],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-OB54-MASS-DECREASES-AFTER-FEED",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                },
+                {
+                  "asserted_state": "PRESENT",
+                  "explicitness": "EXPLICIT",
+                  "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
+                  "required": "ABSENT",
+                  "result": "NOT_SATISFIED"
+                },
+                {
+                  "asserted_state": "PRESENT",
+                  "explicitness": "EXPLICIT",
+                  "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+                  "required": "ABSENT",
+                  "result": "NOT_SATISFIED"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "NOT_SATISFIED"
+            },
+            "member_id": "SEED-OB-T01-GALACTOCELE",
+            "presentation_anchors_present": [
+              "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE"
+            ],
+            "second_key_risk": false,
+            "state": "LIVE_BUT_INFERIOR",
+            "unresolved_features": [
+              "SF-OB54-MASS-DECREASES-AFTER-FEED"
+            ]
+          },
+          {
+            "admissible_as_distractor": true,
+            "anchors_present": [
+              "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Inflammatory breast cancer",
+            "correctness": "INDETERMINATE",
+            "decided_by_discriminators": [
+              "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
+              "SF-OB54-SYSTEMIC-ILLNESS"
+            ],
+            "defeated_by": [],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-OB54-SKIN-THICKENING-PEAU-DORANGE",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                },
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-OB54-RECURRENCE-SAME-LOCATION",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                }
+              ],
+              "operator": "ANY_OF",
+              "result": "INDETERMINATE"
+            },
+            "member_id": "SEED-OB-T01-IBC",
+            "presentation_anchors_present": [
+              "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+            ],
+            "second_key_risk": false,
+            "state": "LIVE_BUT_INFERIOR",
+            "unresolved_features": [
+              "SF-OB54-RECURRENCE-SAME-LOCATION",
+              "SF-OB54-SKIN-THICKENING-PEAU-DORANGE"
+            ]
+          }
+        ],
+        "difficulty_intent": "EASY",
+        "discipline": "OBGYN",
+        "features_implied_absent_by_contradiction": [
+          "SF-OB54-BILATERAL-DAY-3-TO-5",
+          "SF-OB54-FLUCTUANT-COLLECTION",
+          "SF-OB54-MILD-FOCAL-INDURATION-NO-SYSTEMIC",
+          "SF-OB54-PERSISTENT-MASS-AFTER-INFLAMMATION-RESOLVED"
+        ],
+        "key_correctness_under_the_frozen_stem": "SATISFIED",
+        "key_explanation": {
+          "conditions": [
+            {
+              "asserted_state": "PRESENT",
+              "explicitness": "EXPLICIT",
+              "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+              "required": "PRESENT",
+              "result": "SATISFIED"
+            },
+            {
+              "asserted_state": "PRESENT",
+              "explicitness": "EXPLICIT",
+              "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
+              "required": "PRESENT",
+              "result": "SATISFIED"
+            }
+          ],
+          "operator": "ALL_OF",
+          "result": "SATISFIED"
+        },
+        "key_unresolved_features": [],
+        "live_but_inferior_count": 3,
+        "opportunity_label": "G2-OBGYN-01",
+        "post_stem_coherence": {
+          "coherent": true,
+          "decision_domain": "PATIENT_CLINICAL",
+          "detail": [],
+          "opportunity_label": "G2-OBGYN-01",
+          "pairs_evaluated": 6,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-OB-T01-ABSCESS"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-OB-T01-GALACTOCELE"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-OB-T01-IBC"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-OB-T01-ABSCESS",
+                "SEED-OB-T01-GALACTOCELE"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-OB-T01-ABSCESS",
+                "SEED-OB-T01-IBC"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-OB-T01-GALACTOCELE",
+                "SEED-OB-T01-IBC"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": true,
+          "usable_anchors_per_competitor": {
+            "SEED-OB-T01-ABSCESS": [
+              "SF-OB54-SYSTEMIC-ILLNESS",
+              "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+            ],
+            "SEED-OB-T01-GALACTOCELE": [
+              "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE"
+            ],
+            "SEED-OB-T01-IBC": [
+              "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+            ]
+          },
+          "violations": []
+        },
+        "stem_asserted_features": [
+          "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
+          "SF-OB54-SYSTEMIC-ILLNESS",
+          "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+        ],
+        "v1_primary_earliest_cause": "H_OPTION_WORDING_REALIZATION_DEFECT",
+        "v1_reject_reason": "Two unsupported rationale claims. The packet says an abscess often presents with a palpable collection, which does not license the categorical inverse that no fluctuance excludes a drainable collection, and that sentence would teach a candidate to under-use ultrasound in a lactating woman with a mass. The packet also attaches the stated presentation to inflammatory mastitis and never supplies a criterion for calling it bacterial.",
+        "v1_verdict": "REJECT",
+        "v2_fail_closed_reasons": [],
+        "v2_terminal_state": "READY_FOR_STEM"
+      },
+      {
+        "assembly_coherence": {
+          "coherent": false,
+          "decision_domain": "PATIENT_CLINICAL",
+          "detail": [
+            {
+              "anchors": [
+                "SF-P147-ABRUPT-ONSET-NO-PRODROME",
+                "SF-P147-FOCAL-ASYMMETRIC-FINDINGS"
+              ],
+              "member_id": "SEED-PED-T01-FOREIGN-BODY",
+              "name": "ANCHOR_EQUALS_CONDITION",
+              "note": "every usable plausibility anchor also completes its own correctness signature, so it is live only when it is a second key",
+              "rule": "CS2-6"
+            },
+            {
+              "anchors": [
+                "SF-P147-FAILING-TO-IMPROVE",
+                "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+                "SF-P147-SEVERE-OR-BACTERIAL-CONCERN"
+              ],
+              "member_id": "SEED-PED-T01-PNEUMONIA",
+              "name": "ANCHOR_EQUALS_CONDITION",
+              "note": "every usable plausibility anchor also completes its own correctness signature, so it is live only when it is a second key",
+              "rule": "CS2-6"
+            }
+          ],
+          "opportunity_label": "G2-PED-01",
+          "pairs_evaluated": 6,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-PED-T01-ASTHMA"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PED-T01-FOREIGN-BODY"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PED-T01-PNEUMONIA"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PED-T01-ASTHMA",
+                "SEED-PED-T01-FOREIGN-BODY"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PED-T01-ASTHMA",
+                "SEED-PED-T01-PNEUMONIA"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PED-T01-FOREIGN-BODY",
+                "SEED-PED-T01-PNEUMONIA"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": false,
+          "usable_anchors_per_competitor": {
+            "SEED-PED-T01-ASTHMA": [
+              "SF-P147-ATOPY-OR-RECURRENCE"
+            ],
+            "SEED-PED-T01-FOREIGN-BODY": [
+              "SF-P147-ABRUPT-ONSET-NO-PRODROME",
+              "SF-P147-FOCAL-ASYMMETRIC-FINDINGS"
+            ],
+            "SEED-PED-T01-PNEUMONIA": [
+              "SF-P147-FAILING-TO-IMPROVE",
+              "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+              "SF-P147-SEVERE-OR-BACTERIAL-CONCERN"
+            ]
+          },
+          "violations": [
+            "CS2-6"
+          ]
+        },
+        "competitor_verdicts": [
+          {
+            "admissible_as_distractor": true,
+            "anchors_present": [
+              "SF-P147-ATOPY-OR-RECURRENCE"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "First presentation of asthma",
+            "correctness": "NOT_SATISFIED",
+            "decided_by_discriminators": [
+              "SF-P147-VIRAL-PRODROME"
+            ],
+            "defeated_by": [
+              "SF-P147-VIRAL-PRODROME"
+            ],
+            "explanation": {
+              "conditions": [
+                {
+                  "conditions": [
+                    {
+                      "asserted_state": "PRESENT",
+                      "explicitness": "EXPLICIT",
+                      "feature_id": "SF-P147-AGE-UNDER-12M",
+                      "required": "PRESENT",
+                      "result": "SATISFIED"
+                    }
+                  ],
+                  "operator": "NOT",
+                  "result": "NOT_SATISFIED"
+                },
+                {
+                  "conditions": [
+                    {
+                      "asserted_state": "PRESENT",
+                      "explicitness": "EXPLICIT",
+                      "feature_id": "SF-P147-ATOPY-OR-RECURRENCE",
+                      "required": "PRESENT",
+                      "result": "SATISFIED"
+                    },
+                    {
+                      "asserted_state": "PRESENT",
+                      "explicitness": "EXPLICIT",
+                      "feature_id": "SF-P147-VIRAL-PRODROME",
+                      "required": "ABSENT",
+                      "result": "NOT_SATISFIED"
+                    }
+                  ],
+                  "operator": "ANY_OF",
+                  "result": "SATISFIED"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "NOT_SATISFIED"
+            },
+            "member_id": "SEED-PED-T01-ASTHMA",
+            "presentation_anchors_present": [
+              "SF-P147-ATOPY-OR-RECURRENCE"
+            ],
+            "second_key_risk": false,
+            "state": "LIVE_BUT_INFERIOR",
+            "unresolved_features": []
+          },
+          {
+            "admissible_as_distractor": false,
+            "anchors_present": [
+              "SF-P147-FOCAL-ASYMMETRIC-FINDINGS"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Foreign body aspiration",
+            "correctness": "SATISFIED",
+            "decided_by_discriminators": [
+              "SF-P147-VIRAL-PRODROME"
+            ],
+            "defeated_by": [
+              "SF-P147-ABRUPT-ONSET-NO-PRODROME"
+            ],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "ABSENT",
+                  "explicitness": "IMPLIED",
+                  "feature_id": "SF-P147-ABRUPT-ONSET-NO-PRODROME",
+                  "required": "PRESENT",
+                  "result": "NOT_SATISFIED"
+                },
+                {
+                  "asserted_state": "PRESENT",
+                  "explicitness": "EXPLICIT",
+                  "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+                  "required": "PRESENT",
+                  "result": "SATISFIED"
+                }
+              ],
+              "operator": "ANY_OF",
+              "result": "SATISFIED"
+            },
+            "member_id": "SEED-PED-T01-FOREIGN-BODY",
+            "presentation_anchors_present": [
+              "SF-P147-FOCAL-ASYMMETRIC-FINDINGS"
+            ],
+            "second_key_risk": false,
+            "state": "SECOND_KEY",
+            "unresolved_features": []
+          },
+          {
+            "admissible_as_distractor": false,
+            "anchors_present": [
+              "SF-P147-FOCAL-ASYMMETRIC-FINDINGS"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Community-acquired pneumonia",
+            "correctness": "SATISFIED",
+            "decided_by_discriminators": [
+              "SF-P147-VIRAL-PRODROME"
+            ],
+            "defeated_by": [],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                },
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                },
+                {
+                  "asserted_state": "PRESENT",
+                  "explicitness": "EXPLICIT",
+                  "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+                  "required": "PRESENT",
+                  "result": "SATISFIED"
+                }
+              ],
+              "operator": "ANY_OF",
+              "result": "SATISFIED"
+            },
+            "member_id": "SEED-PED-T01-PNEUMONIA",
+            "presentation_anchors_present": [
+              "SF-P147-FOCAL-ASYMMETRIC-FINDINGS"
+            ],
+            "second_key_risk": false,
+            "state": "SECOND_KEY",
+            "unresolved_features": [
+              "SF-P147-FAILING-TO-IMPROVE",
+              "SF-P147-SEVERE-OR-BACTERIAL-CONCERN"
+            ]
+          }
+        ],
+        "difficulty_intent": "MEDIUM",
+        "discipline": "PED",
+        "features_implied_absent_by_contradiction": [
+          "SF-P147-ABRUPT-ONSET-NO-PRODROME"
+        ],
+        "key_correctness_under_the_frozen_stem": "SATISFIED",
+        "key_explanation": {
+          "conditions": [
+            {
+              "asserted_state": "PRESENT",
+              "explicitness": "EXPLICIT",
+              "feature_id": "SF-P147-AGE-UNDER-12M",
+              "required": "PRESENT",
+              "result": "SATISFIED"
+            },
+            {
+              "asserted_state": "PRESENT",
+              "explicitness": "EXPLICIT",
+              "feature_id": "SF-P147-FIRST-WHEEZE",
+              "required": "PRESENT",
+              "result": "SATISFIED"
+            },
+            {
+              "asserted_state": "PRESENT",
+              "explicitness": "EXPLICIT",
+              "feature_id": "SF-P147-VIRAL-PRODROME",
+              "required": "PRESENT",
+              "result": "SATISFIED"
+            }
+          ],
+          "operator": "ALL_OF",
+          "result": "SATISFIED"
+        },
+        "key_unresolved_features": [],
+        "live_but_inferior_count": 1,
+        "opportunity_label": "G2-PED-01",
+        "post_stem_coherence": {
+          "coherent": false,
+          "decision_domain": "PATIENT_CLINICAL",
+          "detail": [
+            {
+              "anchors": [
+                "SF-P147-ABRUPT-ONSET-NO-PRODROME",
+                "SF-P147-FOCAL-ASYMMETRIC-FINDINGS"
+              ],
+              "member_id": "SEED-PED-T01-FOREIGN-BODY",
+              "name": "ANCHOR_EQUALS_CONDITION",
+              "note": "every usable plausibility anchor also completes its own correctness signature, so it is live only when it is a second key",
+              "rule": "CS2-6"
+            },
+            {
+              "anchors": [
+                "SF-P147-FAILING-TO-IMPROVE",
+                "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+                "SF-P147-SEVERE-OR-BACTERIAL-CONCERN"
+              ],
+              "member_id": "SEED-PED-T01-PNEUMONIA",
+              "name": "ANCHOR_EQUALS_CONDITION",
+              "note": "every usable plausibility anchor also completes its own correctness signature, so it is live only when it is a second key",
+              "rule": "CS2-6"
+            }
+          ],
+          "opportunity_label": "G2-PED-01",
+          "pairs_evaluated": 6,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-PED-T01-ASTHMA"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PED-T01-FOREIGN-BODY"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PED-T01-PNEUMONIA"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PED-T01-ASTHMA",
+                "SEED-PED-T01-FOREIGN-BODY"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PED-T01-ASTHMA",
+                "SEED-PED-T01-PNEUMONIA"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PED-T01-FOREIGN-BODY",
+                "SEED-PED-T01-PNEUMONIA"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": true,
+          "usable_anchors_per_competitor": {
+            "SEED-PED-T01-ASTHMA": [
+              "SF-P147-ATOPY-OR-RECURRENCE"
+            ],
+            "SEED-PED-T01-FOREIGN-BODY": [
+              "SF-P147-FOCAL-ASYMMETRIC-FINDINGS"
+            ],
+            "SEED-PED-T01-PNEUMONIA": [
+              "SF-P147-FOCAL-ASYMMETRIC-FINDINGS"
+            ]
+          },
+          "violations": [
+            "CS2-6"
+          ]
+        },
+        "stem_asserted_features": [
+          "SF-P147-AGE-UNDER-12M",
+          "SF-P147-ATOPY-OR-RECURRENCE",
+          "SF-P147-FIRST-WHEEZE",
+          "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+          "SF-P147-VIRAL-PRODROME"
+        ],
+        "v1_primary_earliest_cause": "C_STEM_BLUEPRINT_DEFECT",
+        "v1_reject_reason": "The asymmetric reduced air entry was inserted to keep pneumonia and foreign body live and is then dismissed in the key rationale by a claim no cited packet supports; that same claim contradicts the item's own foreign-body rationale, leaves pneumonia as a defensible second key, and would teach a candidate to under-weight the cardinal sign of foreign body aspiration in an infant.",
+        "v1_verdict": "REJECT",
+        "v2_fail_closed_reasons": [
+          "FAIL_CLOSED_CONTRAST_SET_COHERENCE",
+          "FAIL_CLOSED_CONTRAST_SET_SIZE",
+          "FAIL_CLOSED_POST_STEM_SET_COHERENCE",
+          "FAIL_CLOSED_SECOND_KEY"
+        ],
+        "v2_terminal_state": "NO_SAFE_ITEM"
+      },
+      {
+        "assembly_coherence": {
+          "coherent": false,
+          "decision_domain": "PATIENT_CLINICAL",
+          "detail": [
+            {
+              "anchors": [
+                "SF-P147-HIGH-RISK-EARLY-COURSE"
+              ],
+              "member_id": "SEED-PED-T02-VIRAL",
+              "name": "ANCHOR_EQUALS_CONDITION",
+              "note": "every usable plausibility anchor also completes its own correctness signature, so it is live only when it is a second key",
+              "rule": "CS2-6"
+            }
+          ],
+          "opportunity_label": "G2-PED-02",
+          "pairs_evaluated": 6,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-PED-T02-CONTINUOUS"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PED-T02-CXR"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PED-T02-VIRAL"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PED-T02-CONTINUOUS",
+                "SEED-PED-T02-CXR"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PED-T02-CONTINUOUS",
+                "SEED-PED-T02-VIRAL"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PED-T02-CXR",
+                "SEED-PED-T02-VIRAL"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": false,
+          "usable_anchors_per_competitor": {
+            "SEED-PED-T02-CONTINUOUS": [
+              "SF-P147-HIGH-RISK-EARLY-COURSE",
+              "SF-P147-HYPOXEMIA"
+            ],
+            "SEED-PED-T02-CXR": [
+              "SF-P147-FAILING-TO-IMPROVE",
+              "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+              "SF-P147-SEVERE-OR-BACTERIAL-CONCERN"
+            ],
+            "SEED-PED-T02-VIRAL": [
+              "SF-P147-HIGH-RISK-EARLY-COURSE"
+            ]
+          },
+          "violations": [
+            "CS2-6"
+          ]
+        },
+        "competitor_verdicts": [
+          {
+            "admissible_as_distractor": false,
+            "anchors_present": [
+              "SF-P147-HYPOXEMIA"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Continuous pulse oximetry and cardiorespiratory monitoring",
+            "correctness": "INDETERMINATE",
+            "decided_by_discriminators": [],
+            "defeated_by": [],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-P147-HIGH-RISK-EARLY-COURSE",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "INDETERMINATE"
+            },
+            "member_id": "SEED-PED-T02-CONTINUOUS",
+            "presentation_anchors_present": [
+              "SF-P147-HYPOXEMIA"
+            ],
+            "second_key_risk": true,
+            "state": "AMBIGUOUS",
+            "unresolved_features": [
+              "SF-P147-HIGH-RISK-EARLY-COURSE"
+            ]
+          },
+          {
+            "admissible_as_distractor": false,
+            "anchors_present": [
+              "SF-P147-FAILING-TO-IMPROVE"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Chest radiograph",
+            "correctness": "SATISFIED",
+            "decided_by_discriminators": [],
+            "defeated_by": [],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "PRESENT",
+                  "explicitness": "EXPLICIT",
+                  "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+                  "required": "PRESENT",
+                  "result": "SATISFIED"
+                },
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                }
+              ],
+              "operator": "ANY_OF",
+              "result": "SATISFIED"
+            },
+            "member_id": "SEED-PED-T02-CXR",
+            "presentation_anchors_present": [
+              "SF-P147-FAILING-TO-IMPROVE"
+            ],
+            "second_key_risk": false,
+            "state": "SECOND_KEY",
+            "unresolved_features": [
+              "SF-P147-SEVERE-OR-BACTERIAL-CONCERN"
+            ]
+          },
+          {
+            "admissible_as_distractor": false,
+            "anchors_present": [
+              "SF-P147-INFECTION-CONTROL-NEED"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Nasopharyngeal swab for respiratory viruses",
+            "correctness": "SATISFIED",
+            "decided_by_discriminators": [],
+            "defeated_by": [],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "PRESENT",
+                  "explicitness": "EXPLICIT",
+                  "feature_id": "SF-P147-INFECTION-CONTROL-NEED",
+                  "required": "PRESENT",
+                  "result": "SATISFIED"
+                },
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-P147-HIGH-RISK-EARLY-COURSE",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                }
+              ],
+              "operator": "ANY_OF",
+              "result": "SATISFIED"
+            },
+            "member_id": "SEED-PED-T02-VIRAL",
+            "presentation_anchors_present": [],
+            "second_key_risk": false,
+            "state": "SECOND_KEY",
+            "unresolved_features": [
+              "SF-P147-HIGH-RISK-EARLY-COURSE"
+            ]
+          }
+        ],
+        "difficulty_intent": "EASY",
+        "discipline": "PED",
+        "features_implied_absent_by_contradiction": [
+          "SF-P147-ABRUPT-ONSET-NO-PRODROME",
+          "SF-P147-DISCHARGE-CRITERIA-MET"
+        ],
+        "key_correctness_under_the_frozen_stem": "INDETERMINATE",
+        "key_explanation": {
+          "conditions": [
+            {
+              "asserted_state": "UNKNOWN",
+              "explicitness": "NOT_STATED",
+              "feature_id": "SF-P147-HIGH-RISK-EARLY-COURSE",
+              "required": "ABSENT",
+              "result": "INDETERMINATE"
+            },
+            {
+              "conditions": [
+                {
+                  "asserted_state": "PRESENT",
+                  "explicitness": "EXPLICIT",
+                  "feature_id": "SF-P147-HYPOXEMIA",
+                  "required": "ABSENT",
+                  "result": "NOT_SATISFIED"
+                },
+                {
+                  "asserted_state": "PRESENT",
+                  "explicitness": "EXPLICIT",
+                  "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+                  "required": "ABSENT",
+                  "result": "NOT_SATISFIED"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "NOT_SATISFIED"
+            }
+          ],
+          "operator": "ANY_OF",
+          "result": "INDETERMINATE"
+        },
+        "key_unresolved_features": [
+          "SF-P147-HIGH-RISK-EARLY-COURSE"
+        ],
+        "live_but_inferior_count": 0,
+        "opportunity_label": "G2-PED-02",
+        "post_stem_coherence": {
+          "coherent": false,
+          "decision_domain": "PATIENT_CLINICAL",
+          "detail": [
+            {
+              "anchors": [
+                "SF-P147-HIGH-RISK-EARLY-COURSE"
+              ],
+              "member_id": "SEED-PED-T02-VIRAL",
+              "name": "ANCHOR_EQUALS_CONDITION",
+              "note": "every usable plausibility anchor also completes its own correctness signature, so it is live only when it is a second key",
+              "rule": "CS2-6"
+            },
+            {
+              "members": [
+                "SEED-PED-T02-VIRAL"
+              ],
+              "name": "SET_ANCHOR_DEGENERACY",
+              "reason": "NO_USABLE_ANCHOR",
+              "rule": "CS2-7",
+              "state_map_supplied": true
+            }
+          ],
+          "opportunity_label": "G2-PED-02",
+          "pairs_evaluated": 6,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-PED-T02-CONTINUOUS"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PED-T02-CXR"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PED-T02-VIRAL"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PED-T02-CONTINUOUS",
+                "SEED-PED-T02-CXR"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PED-T02-CONTINUOUS",
+                "SEED-PED-T02-VIRAL"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PED-T02-CXR",
+                "SEED-PED-T02-VIRAL"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": true,
+          "usable_anchors_per_competitor": {
+            "SEED-PED-T02-CONTINUOUS": [
+              "SF-P147-HYPOXEMIA"
+            ],
+            "SEED-PED-T02-CXR": [
+              "SF-P147-FAILING-TO-IMPROVE"
+            ],
+            "SEED-PED-T02-VIRAL": []
+          },
+          "violations": [
+            "CS2-6",
+            "CS2-7"
+          ]
+        },
+        "stem_asserted_features": [
+          "SF-P147-FAILING-TO-IMPROVE",
+          "SF-P147-HYPOXEMIA",
+          "SF-P147-INFECTION-CONTROL-NEED",
+          "SF-P147-VIRAL-PRODROME"
+        ],
+        "v1_primary_earliest_cause": "B_CONTRAST_MATRIX_DEFECT",
+        "v1_reject_reason": "The keyed answer is arguably wrong. The stem's own facts satisfy the guideline conditions the rationales say are unmet: the cohorting sentence is the cited indication for viral testing, and failure to improve is the cited indication for a radiograph, while the infant meets none of the quoted preconditions for intermittent monitoring. Not repairable by editing rationales.",
+        "v1_verdict": "REJECT",
+        "v2_fail_closed_reasons": [
+          "FAIL_CLOSED_AMBIGUOUS_COMPETITOR",
+          "FAIL_CLOSED_CONTRAST_SET_COHERENCE",
+          "FAIL_CLOSED_CONTRAST_SET_SIZE",
+          "FAIL_CLOSED_KEY_NOT_ESTABLISHED_BY_THE_STEM",
+          "FAIL_CLOSED_POST_STEM_SET_COHERENCE",
+          "FAIL_CLOSED_SECOND_KEY"
+        ],
+        "v2_terminal_state": "NO_SAFE_ITEM"
+      },
+      {
+        "assembly_coherence": {
+          "coherent": true,
+          "decision_domain": "EVIDENCE_INTERPRETATION",
+          "detail": [],
+          "opportunity_label": "G2-PHELO-01",
+          "pairs_evaluated": 6,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-PHELO-T01-HEALTHY-SCREENEE"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PHELO-T01-LENGTH"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PHELO-T01-OVERDIAGNOSIS"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PHELO-T01-HEALTHY-SCREENEE",
+                "SEED-PHELO-T01-LENGTH"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PHELO-T01-HEALTHY-SCREENEE",
+                "SEED-PHELO-T01-OVERDIAGNOSIS"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PHELO-T01-LENGTH",
+                "SEED-PHELO-T01-OVERDIAGNOSIS"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": false,
+          "usable_anchors_per_competitor": {
+            "SEED-PHELO-T01-HEALTHY-SCREENEE": [
+              "SF-PH07-SELF-SELECTED-GROUPS",
+              "SF-PH07-SURVIVAL-LONGER-IN-SCREENED"
+            ],
+            "SEED-PHELO-T01-LENGTH": [
+              "SF-PH07-INDOLENT-VARIANT-OVERREPRESENTED",
+              "SF-PH07-MORTALITY-UNCHANGED",
+              "SF-PH07-SURVIVAL-LONGER-IN-SCREENED"
+            ],
+            "SEED-PHELO-T01-OVERDIAGNOSIS": [
+              "SF-PH07-MORE-CASES-DIAGNOSED-IN-SCREENED",
+              "SF-PH07-MORTALITY-UNCHANGED",
+              "SF-PH07-SURVIVAL-LONGER-IN-SCREENED"
+            ]
+          },
+          "violations": []
+        },
+        "competitor_verdicts": [
+          {
+            "admissible_as_distractor": true,
+            "anchors_present": [
+              "SF-PH07-SURVIVAL-LONGER-IN-SCREENED"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Healthy screenee (selection) bias",
+            "correctness": "NOT_SATISFIED",
+            "decided_by_discriminators": [],
+            "defeated_by": [
+              "SF-PH07-SELF-SELECTED-GROUPS"
+            ],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "ABSENT",
+                  "explicitness": "IMPLIED",
+                  "feature_id": "SF-PH07-SELF-SELECTED-GROUPS",
+                  "required": "PRESENT",
+                  "result": "NOT_SATISFIED"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "NOT_SATISFIED"
+            },
+            "member_id": "SEED-PHELO-T01-HEALTHY-SCREENEE",
+            "presentation_anchors_present": [
+              "SF-PH07-SURVIVAL-LONGER-IN-SCREENED"
+            ],
+            "second_key_risk": false,
+            "state": "LIVE_BUT_INFERIOR",
+            "unresolved_features": []
+          },
+          {
+            "admissible_as_distractor": false,
+            "anchors_present": [
+              "SF-PH07-MORTALITY-UNCHANGED",
+              "SF-PH07-SURVIVAL-LONGER-IN-SCREENED"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Length-time bias",
+            "correctness": "INDETERMINATE",
+            "decided_by_discriminators": [],
+            "defeated_by": [],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-PH07-INDOLENT-VARIANT-OVERREPRESENTED",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "INDETERMINATE"
+            },
+            "member_id": "SEED-PHELO-T01-LENGTH",
+            "presentation_anchors_present": [
+              "SF-PH07-MORTALITY-UNCHANGED",
+              "SF-PH07-SURVIVAL-LONGER-IN-SCREENED"
+            ],
+            "second_key_risk": true,
+            "state": "AMBIGUOUS",
+            "unresolved_features": [
+              "SF-PH07-INDOLENT-VARIANT-OVERREPRESENTED"
+            ]
+          },
+          {
+            "admissible_as_distractor": false,
+            "anchors_present": [
+              "SF-PH07-MORTALITY-UNCHANGED",
+              "SF-PH07-SURVIVAL-LONGER-IN-SCREENED"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Overdiagnosis",
+            "correctness": "INDETERMINATE",
+            "decided_by_discriminators": [],
+            "defeated_by": [],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-PH07-MORE-CASES-DIAGNOSED-IN-SCREENED",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "INDETERMINATE"
+            },
+            "member_id": "SEED-PHELO-T01-OVERDIAGNOSIS",
+            "presentation_anchors_present": [
+              "SF-PH07-MORTALITY-UNCHANGED",
+              "SF-PH07-SURVIVAL-LONGER-IN-SCREENED"
+            ],
+            "second_key_risk": true,
+            "state": "AMBIGUOUS",
+            "unresolved_features": [
+              "SF-PH07-MORE-CASES-DIAGNOSED-IN-SCREENED"
+            ]
+          }
+        ],
+        "difficulty_intent": "EASY",
+        "discipline": "PHELO",
+        "features_implied_absent_by_contradiction": [
+          "SF-PH07-SELF-SELECTED-GROUPS"
+        ],
+        "key_correctness_under_the_frozen_stem": "SATISFIED",
+        "key_explanation": {
+          "conditions": [
+            {
+              "asserted_state": "PRESENT",
+              "explicitness": "EXPLICIT",
+              "feature_id": "SF-PH07-SURVIVAL-LONGER-IN-SCREENED",
+              "required": "PRESENT",
+              "result": "SATISFIED"
+            },
+            {
+              "asserted_state": "PRESENT",
+              "explicitness": "EXPLICIT",
+              "feature_id": "SF-PH07-MORTALITY-UNCHANGED",
+              "required": "PRESENT",
+              "result": "SATISFIED"
+            }
+          ],
+          "operator": "ALL_OF",
+          "result": "SATISFIED"
+        },
+        "key_unresolved_features": [],
+        "live_but_inferior_count": 1,
+        "opportunity_label": "G2-PHELO-01",
+        "post_stem_coherence": {
+          "coherent": true,
+          "decision_domain": "EVIDENCE_INTERPRETATION",
+          "detail": [],
+          "opportunity_label": "G2-PHELO-01",
+          "pairs_evaluated": 6,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-PHELO-T01-HEALTHY-SCREENEE"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PHELO-T01-LENGTH"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PHELO-T01-OVERDIAGNOSIS"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PHELO-T01-HEALTHY-SCREENEE",
+                "SEED-PHELO-T01-LENGTH"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PHELO-T01-HEALTHY-SCREENEE",
+                "SEED-PHELO-T01-OVERDIAGNOSIS"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PHELO-T01-LENGTH",
+                "SEED-PHELO-T01-OVERDIAGNOSIS"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": true,
+          "usable_anchors_per_competitor": {
+            "SEED-PHELO-T01-HEALTHY-SCREENEE": [
+              "SF-PH07-SURVIVAL-LONGER-IN-SCREENED"
+            ],
+            "SEED-PHELO-T01-LENGTH": [
+              "SF-PH07-MORTALITY-UNCHANGED",
+              "SF-PH07-SURVIVAL-LONGER-IN-SCREENED"
+            ],
+            "SEED-PHELO-T01-OVERDIAGNOSIS": [
+              "SF-PH07-MORTALITY-UNCHANGED",
+              "SF-PH07-SURVIVAL-LONGER-IN-SCREENED"
+            ]
+          },
+          "violations": []
+        },
+        "stem_asserted_features": [
+          "SF-PH07-MORTALITY-UNCHANGED",
+          "SF-PH07-RANDOMISED-EQUAL-GROUPS",
+          "SF-PH07-SURVIVAL-LONGER-IN-SCREENED"
+        ],
+        "v1_primary_earliest_cause": "C_STEM_BLUEPRINT_DEFECT",
+        "v1_reject_reason": "Length-time bias is a defensible second key. Randomisation excludes healthy-screenee bias but not length bias or overdiagnosis, and the stem supplies no case-mix or case-count data to separate them from lead time, so the rationales exclude two options by asserting facts the stem never states.",
+        "v1_verdict": "REJECT",
+        "v2_fail_closed_reasons": [
+          "FAIL_CLOSED_AMBIGUOUS_COMPETITOR",
+          "FAIL_CLOSED_CONTRAST_SET_SIZE"
+        ],
+        "v2_terminal_state": "NO_SAFE_ITEM"
+      },
+      {
+        "assembly_coherence": {
+          "coherent": true,
+          "decision_domain": "POPULATION_PROGRAMME",
+          "detail": [],
+          "opportunity_label": "G2-PHELO-02",
+          "pairs_evaluated": 6,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-G2-PHELO-T02-VOLUNTARY"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PHELO-T02-DETECTION-COUNT"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PHELO-T02-SENSITIVITY"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-G2-PHELO-T02-VOLUNTARY",
+                "SEED-PHELO-T02-DETECTION-COUNT"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-G2-PHELO-T02-VOLUNTARY",
+                "SEED-PHELO-T02-SENSITIVITY"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PHELO-T02-DETECTION-COUNT",
+                "SEED-PHELO-T02-SENSITIVITY"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": false,
+          "usable_anchors_per_competitor": {
+            "SEED-G2-PHELO-T02-VOLUNTARY": [
+              "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
+            ],
+            "SEED-PHELO-T02-DETECTION-COUNT": [
+              "SF-PH07-DENOMINATOR-AND-HARMS-PRESENT",
+              "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
+            ],
+            "SEED-PHELO-T02-SENSITIVITY": [
+              "SF-PH07-AUDIENCE-CAN-INTERPRET-TEST-METRICS",
+              "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
+            ]
+          },
+          "violations": []
+        },
+        "competitor_verdicts": [
+          {
+            "admissible_as_distractor": true,
+            "anchors_present": [
+              "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Add a statement that participation is voluntary and that declining will not affect any other care",
+            "correctness": "NOT_SATISFIED",
+            "decided_by_discriminators": [
+              "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
+              "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
+            ],
+            "defeated_by": [
+              "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
+            ],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "PRESENT",
+                  "explicitness": "EXPLICIT",
+                  "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
+                  "required": "ABSENT",
+                  "result": "NOT_SATISFIED"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "NOT_SATISFIED"
+            },
+            "member_id": "SEED-G2-PHELO-T02-VOLUNTARY",
+            "presentation_anchors_present": [
+              "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
+            ],
+            "second_key_risk": false,
+            "state": "LIVE_BUT_INFERIOR",
+            "unresolved_features": []
+          },
+          {
+            "admissible_as_distractor": true,
+            "anchors_present": [
+              "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Add the number of cancers the programme detected last year",
+            "correctness": "NOT_SATISFIED",
+            "decided_by_discriminators": [
+              "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
+              "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
+            ],
+            "defeated_by": [
+              "SF-PH07-DENOMINATOR-AND-HARMS-PRESENT"
+            ],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "ABSENT",
+                  "explicitness": "IMPLIED",
+                  "feature_id": "SF-PH07-DENOMINATOR-AND-HARMS-PRESENT",
+                  "required": "PRESENT",
+                  "result": "NOT_SATISFIED"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "NOT_SATISFIED"
+            },
+            "member_id": "SEED-PHELO-T02-DETECTION-COUNT",
+            "presentation_anchors_present": [
+              "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
+            ],
+            "second_key_risk": false,
+            "state": "LIVE_BUT_INFERIOR",
+            "unresolved_features": []
+          },
+          {
+            "admissible_as_distractor": true,
+            "anchors_present": [
+              "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Add the sensitivity and specificity of the screening test",
+            "correctness": "INDETERMINATE",
+            "decided_by_discriminators": [
+              "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
+              "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
+            ],
+            "defeated_by": [],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-PH07-AUDIENCE-CAN-INTERPRET-TEST-METRICS",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "INDETERMINATE"
+            },
+            "member_id": "SEED-PHELO-T02-SENSITIVITY",
+            "presentation_anchors_present": [
+              "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
+            ],
+            "second_key_risk": false,
+            "state": "LIVE_BUT_INFERIOR",
+            "unresolved_features": [
+              "SF-PH07-AUDIENCE-CAN-INTERPRET-TEST-METRICS"
+            ]
+          }
+        ],
+        "difficulty_intent": "MEDIUM",
+        "discipline": "PHELO",
+        "features_implied_absent_by_contradiction": [
+          "SF-PH07-DENOMINATOR-AND-HARMS-PRESENT",
+          "SF-PH07-UPTAKE-IS-THE-STATED-OBJECTIVE"
+        ],
+        "key_correctness_under_the_frozen_stem": "SATISFIED",
+        "key_explanation": {
+          "conditions": [
+            {
+              "asserted_state": "PRESENT",
+              "explicitness": "EXPLICIT",
+              "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
+              "required": "PRESENT",
+              "result": "SATISFIED"
+            },
+            {
+              "asserted_state": "PRESENT",
+              "explicitness": "EXPLICIT",
+              "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
+              "required": "PRESENT",
+              "result": "SATISFIED"
+            }
+          ],
+          "operator": "ALL_OF",
+          "result": "SATISFIED"
+        },
+        "key_unresolved_features": [],
+        "live_but_inferior_count": 3,
+        "opportunity_label": "G2-PHELO-02",
+        "post_stem_coherence": {
+          "coherent": true,
+          "decision_domain": "POPULATION_PROGRAMME",
+          "detail": [],
+          "opportunity_label": "G2-PHELO-02",
+          "pairs_evaluated": 6,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-G2-PHELO-T02-VOLUNTARY"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PHELO-T02-DETECTION-COUNT"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PHELO-T02-SENSITIVITY"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-G2-PHELO-T02-VOLUNTARY",
+                "SEED-PHELO-T02-DETECTION-COUNT"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-G2-PHELO-T02-VOLUNTARY",
+                "SEED-PHELO-T02-SENSITIVITY"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PHELO-T02-DETECTION-COUNT",
+                "SEED-PHELO-T02-SENSITIVITY"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": true,
+          "usable_anchors_per_competitor": {
+            "SEED-G2-PHELO-T02-VOLUNTARY": [
+              "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
+            ],
+            "SEED-PHELO-T02-DETECTION-COUNT": [
+              "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
+            ],
+            "SEED-PHELO-T02-SENSITIVITY": [
+              "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
+            ]
+          },
+          "violations": []
+        },
+        "stem_asserted_features": [
+          "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
+          "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
+        ],
+        "v1_primary_earliest_cause": null,
+        "v1_reject_reason": null,
+        "v1_verdict": "ACCEPT",
+        "v2_fail_closed_reasons": [],
+        "v2_terminal_state": "READY_FOR_STEM"
+      },
+      {
+        "assembly_coherence": {
+          "coherent": true,
+          "decision_domain": "POPULATION_PROGRAMME",
+          "detail": [],
+          "opportunity_label": "G2-PHELO-03",
+          "pairs_evaluated": 6,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-PHELO-T03-EVALUATE"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PHELO-T03-PILOT"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PHELO-T03-RAISE-CUTOFF"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PHELO-T03-EVALUATE",
+                "SEED-PHELO-T03-PILOT"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PHELO-T03-EVALUATE",
+                "SEED-PHELO-T03-RAISE-CUTOFF"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PHELO-T03-PILOT",
+                "SEED-PHELO-T03-RAISE-CUTOFF"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": false,
+          "usable_anchors_per_competitor": {
+            "SEED-PHELO-T03-EVALUATE": [
+              "SF-PH07-GOALS-AND-EVALUATION-DEFINED"
+            ],
+            "SEED-PHELO-T03-PILOT": [
+              "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+              "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS"
+            ],
+            "SEED-PHELO-T03-RAISE-CUTOFF": [
+              "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+              "SF-PH07-THRESHOLD-TOO-FAR-TOWARD-LOW-RISK"
+            ]
+          },
+          "violations": []
+        },
+        "competitor_verdicts": [
+          {
+            "admissible_as_distractor": true,
+            "anchors_present": [
+              "SF-PH07-GOALS-AND-EVALUATION-DEFINED"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Launch as planned with continuing evaluation against programme goals",
+            "correctness": "NOT_SATISFIED",
+            "decided_by_discriminators": [
+              "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
+            ],
+            "defeated_by": [
+              "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
+            ],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "PRESENT",
+                  "explicitness": "EXPLICIT",
+                  "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+                  "required": "ABSENT",
+                  "result": "NOT_SATISFIED"
+                },
+                {
+                  "asserted_state": "PRESENT",
+                  "explicitness": "EXPLICIT",
+                  "feature_id": "SF-PH07-GOALS-AND-EVALUATION-DEFINED",
+                  "required": "PRESENT",
+                  "result": "SATISFIED"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "NOT_SATISFIED"
+            },
+            "member_id": "SEED-PHELO-T03-EVALUATE",
+            "presentation_anchors_present": [
+              "SF-PH07-GOALS-AND-EVALUATION-DEFINED"
+            ],
+            "second_key_risk": false,
+            "state": "LIVE_BUT_INFERIOR",
+            "unresolved_features": []
+          },
+          {
+            "admissible_as_distractor": true,
+            "anchors_present": [
+              "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Launch in a single district as a pilot and expand later",
+            "correctness": "NOT_SATISFIED",
+            "decided_by_discriminators": [
+              "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
+            ],
+            "defeated_by": [
+              "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS"
+            ],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "ABSENT",
+                  "explicitness": "IMPLIED",
+                  "feature_id": "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS",
+                  "required": "PRESENT",
+                  "result": "NOT_SATISFIED"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "NOT_SATISFIED"
+            },
+            "member_id": "SEED-PHELO-T03-PILOT",
+            "presentation_anchors_present": [
+              "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
+            ],
+            "second_key_risk": false,
+            "state": "LIVE_BUT_INFERIOR",
+            "unresolved_features": []
+          },
+          {
+            "admissible_as_distractor": true,
+            "anchors_present": [
+              "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Raise the threshold so that fewer results are called positive",
+            "correctness": "INDETERMINATE",
+            "decided_by_discriminators": [
+              "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
+            ],
+            "defeated_by": [],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-PH07-THRESHOLD-TOO-FAR-TOWARD-LOW-RISK",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "INDETERMINATE"
+            },
+            "member_id": "SEED-PHELO-T03-RAISE-CUTOFF",
+            "presentation_anchors_present": [
+              "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
+            ],
+            "second_key_risk": false,
+            "state": "LIVE_BUT_INFERIOR",
+            "unresolved_features": [
+              "SF-PH07-THRESHOLD-TOO-FAR-TOWARD-LOW-RISK"
+            ]
+          }
+        ],
+        "difficulty_intent": "HARD",
+        "discipline": "PHELO",
+        "features_implied_absent_by_contradiction": [
+          "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS"
+        ],
+        "key_correctness_under_the_frozen_stem": "SATISFIED",
+        "key_explanation": {
+          "conditions": [
+            {
+              "asserted_state": "PRESENT",
+              "explicitness": "EXPLICIT",
+              "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+              "required": "PRESENT",
+              "result": "SATISFIED"
+            }
+          ],
+          "operator": "ALL_OF",
+          "result": "SATISFIED"
+        },
+        "key_unresolved_features": [],
+        "live_but_inferior_count": 3,
+        "opportunity_label": "G2-PHELO-03",
+        "post_stem_coherence": {
+          "coherent": true,
+          "decision_domain": "POPULATION_PROGRAMME",
+          "detail": [],
+          "opportunity_label": "G2-PHELO-03",
+          "pairs_evaluated": 6,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-PHELO-T03-EVALUATE"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PHELO-T03-PILOT"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PHELO-T03-RAISE-CUTOFF"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PHELO-T03-EVALUATE",
+                "SEED-PHELO-T03-PILOT"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PHELO-T03-EVALUATE",
+                "SEED-PHELO-T03-RAISE-CUTOFF"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PHELO-T03-PILOT",
+                "SEED-PHELO-T03-RAISE-CUTOFF"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": true,
+          "usable_anchors_per_competitor": {
+            "SEED-PHELO-T03-EVALUATE": [
+              "SF-PH07-GOALS-AND-EVALUATION-DEFINED"
+            ],
+            "SEED-PHELO-T03-PILOT": [
+              "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
+            ],
+            "SEED-PHELO-T03-RAISE-CUTOFF": [
+              "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
+            ]
+          },
+          "violations": []
+        },
+        "stem_asserted_features": [
+          "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+          "SF-PH07-GOALS-AND-EVALUATION-DEFINED"
+        ],
+        "v1_primary_earliest_cause": null,
+        "v1_reject_reason": null,
+        "v1_verdict": "ACCEPT",
+        "v2_fail_closed_reasons": [],
+        "v2_terminal_state": "READY_FOR_STEM"
+      },
+      {
+        "assembly_coherence": {
+          "coherent": true,
+          "decision_domain": "PATIENT_CLINICAL",
+          "detail": [],
+          "opportunity_label": "G2-PSY-03",
+          "pairs_evaluated": 6,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-PSY-T03-DIGITAL"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PSY-T03-EXERCISE"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PSY-T03-PSYCHOTHERAPY"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PSY-T03-DIGITAL",
+                "SEED-PSY-T03-EXERCISE"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PSY-T03-DIGITAL",
+                "SEED-PSY-T03-PSYCHOTHERAPY"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PSY-T03-EXERCISE",
+                "SEED-PSY-T03-PSYCHOTHERAPY"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": false,
+          "usable_anchors_per_competitor": {
+            "SEED-PSY-T03-DIGITAL": [
+              "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY"
+            ],
+            "SEED-PSY-T03-EXERCISE": [
+              "SF-PS12-MILD-SEVERITY",
+              "SF-PS12-MODERATE-SEVERITY"
+            ],
+            "SEED-PSY-T03-PSYCHOTHERAPY": [
+              "SF-PS12-MILD-SEVERITY",
+              "SF-PS12-MODERATE-SEVERITY",
+              "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY"
+            ]
+          },
+          "violations": []
+        },
+        "competitor_verdicts": [
+          {
+            "admissible_as_distractor": false,
+            "anchors_present": [
+              "SF-PS12-PSYCHOTHERAPY-INACCESSIBLE-IN-PERSON"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Digitally delivered cognitive behavioural therapy",
+            "correctness": "INDETERMINATE",
+            "decided_by_discriminators": [],
+            "defeated_by": [],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                },
+                {
+                  "asserted_state": "PRESENT",
+                  "explicitness": "EXPLICIT",
+                  "feature_id": "SF-PS12-PSYCHOTHERAPY-INACCESSIBLE-IN-PERSON",
+                  "required": "PRESENT",
+                  "result": "SATISFIED"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "INDETERMINATE"
+            },
+            "member_id": "SEED-PSY-T03-DIGITAL",
+            "presentation_anchors_present": [],
+            "second_key_risk": true,
+            "state": "INSUFFICIENT_SUPPORT",
+            "unresolved_features": [
+              "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY"
+            ]
+          },
+          {
+            "admissible_as_distractor": true,
+            "anchors_present": [
+              "SF-PS12-MODERATE-SEVERITY"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "A supervised exercise programme as sole initial treatment",
+            "correctness": "NOT_SATISFIED",
+            "decided_by_discriminators": [],
+            "defeated_by": [
+              "SF-PS12-MILD-SEVERITY"
+            ],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "ABSENT",
+                  "explicitness": "IMPLIED",
+                  "feature_id": "SF-PS12-MILD-SEVERITY",
+                  "required": "PRESENT",
+                  "result": "NOT_SATISFIED"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "NOT_SATISFIED"
+            },
+            "member_id": "SEED-PSY-T03-EXERCISE",
+            "presentation_anchors_present": [
+              "SF-PS12-MODERATE-SEVERITY"
+            ],
+            "second_key_risk": false,
+            "state": "LIVE_BUT_INFERIOR",
+            "unresolved_features": []
+          },
+          {
+            "admissible_as_distractor": true,
+            "anchors_present": [
+              "SF-PS12-MODERATE-SEVERITY"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Structured psychotherapy such as cognitive behavioural therapy",
+            "correctness": "NOT_SATISFIED",
+            "decided_by_discriminators": [],
+            "defeated_by": [
+              "SF-PS12-MILD-SEVERITY",
+              "SF-PS12-PSYCHOTHERAPY-INACCESSIBLE-IN-PERSON"
+            ],
+            "explanation": {
+              "conditions": [
+                {
+                  "conditions": [
+                    {
+                      "asserted_state": "UNKNOWN",
+                      "explicitness": "NOT_STATED",
+                      "feature_id": "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY",
+                      "required": "PRESENT",
+                      "result": "INDETERMINATE"
+                    },
+                    {
+                      "asserted_state": "PRESENT",
+                      "explicitness": "EXPLICIT",
+                      "feature_id": "SF-PS12-PSYCHOTHERAPY-INACCESSIBLE-IN-PERSON",
+                      "required": "ABSENT",
+                      "result": "NOT_SATISFIED"
+                    }
+                  ],
+                  "operator": "ALL_OF",
+                  "result": "NOT_SATISFIED"
+                },
+                {
+                  "asserted_state": "ABSENT",
+                  "explicitness": "IMPLIED",
+                  "feature_id": "SF-PS12-MILD-SEVERITY",
+                  "required": "PRESENT",
+                  "result": "NOT_SATISFIED"
+                }
+              ],
+              "operator": "ANY_OF",
+              "result": "NOT_SATISFIED"
+            },
+            "member_id": "SEED-PSY-T03-PSYCHOTHERAPY",
+            "presentation_anchors_present": [
+              "SF-PS12-MODERATE-SEVERITY"
+            ],
+            "second_key_risk": false,
+            "state": "LIVE_BUT_INFERIOR",
+            "unresolved_features": [
+              "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY"
+            ]
+          }
+        ],
+        "difficulty_intent": "EASY",
+        "discipline": "PSY",
+        "features_implied_absent_by_contradiction": [
+          "SF-PS12-MILD-SEVERITY",
+          "SF-PS12-PSYCHOTIC-FEATURES",
+          "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS"
+        ],
+        "key_correctness_under_the_frozen_stem": "SATISFIED",
+        "key_explanation": {
+          "conditions": [
+            {
+              "asserted_state": "PRESENT",
+              "explicitness": "EXPLICIT",
+              "feature_id": "SF-PS12-MODERATE-SEVERITY",
+              "required": "PRESENT",
+              "result": "SATISFIED"
+            },
+            {
+              "asserted_state": "ABSENT",
+              "explicitness": "EXPLICIT",
+              "feature_id": "SF-PS12-HIGH-IMMINENT-SUICIDE-RISK",
+              "required": "ABSENT",
+              "result": "SATISFIED"
+            }
+          ],
+          "operator": "ALL_OF",
+          "result": "SATISFIED"
+        },
+        "key_unresolved_features": [],
+        "live_but_inferior_count": 2,
+        "opportunity_label": "G2-PSY-03",
+        "post_stem_coherence": {
+          "coherent": false,
+          "decision_domain": "PATIENT_CLINICAL",
+          "detail": [
+            {
+              "members": [
+                "SEED-PSY-T03-DIGITAL"
+              ],
+              "name": "SET_ANCHOR_DEGENERACY",
+              "reason": "NO_USABLE_ANCHOR",
+              "rule": "CS2-7",
+              "state_map_supplied": true
+            }
+          ],
+          "opportunity_label": "G2-PSY-03",
+          "pairs_evaluated": 6,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-PSY-T03-DIGITAL"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PSY-T03-EXERCISE"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-PSY-T03-PSYCHOTHERAPY"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PSY-T03-DIGITAL",
+                "SEED-PSY-T03-EXERCISE"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PSY-T03-DIGITAL",
+                "SEED-PSY-T03-PSYCHOTHERAPY"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-PSY-T03-EXERCISE",
+                "SEED-PSY-T03-PSYCHOTHERAPY"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": true,
+          "usable_anchors_per_competitor": {
+            "SEED-PSY-T03-DIGITAL": [],
+            "SEED-PSY-T03-EXERCISE": [
+              "SF-PS12-MODERATE-SEVERITY"
+            ],
+            "SEED-PSY-T03-PSYCHOTHERAPY": [
+              "SF-PS12-MODERATE-SEVERITY"
+            ]
+          },
+          "violations": [
+            "CS2-7"
+          ]
+        },
+        "stem_asserted_features": [
+          "SF-PS12-HIGH-IMMINENT-SUICIDE-RISK",
+          "SF-PS12-MODERATE-SEVERITY",
+          "SF-PS12-PSYCHOTHERAPY-INACCESSIBLE-IN-PERSON"
+        ],
+        "v1_primary_earliest_cause": "C_STEM_BLUEPRINT_DEFECT",
+        "v1_reject_reason": "Digitally delivered CBT is a second defensible key. The access barrier the blueprint inserted to defeat in-person psychotherapy is precisely the condition under which digital CBT is indicated, so it strengthens that competitor rather than weakening it, and the stem reports no patient preference, which is the only stated ground for preferring medication.",
+        "v1_verdict": "REJECT",
+        "v2_fail_closed_reasons": [
+          "FAIL_CLOSED_COMPETITOR_WITHOUT_STEM_ANCHOR",
+          "FAIL_CLOSED_CONTRAST_SET_SIZE",
+          "FAIL_CLOSED_POST_STEM_SET_COHERENCE"
+        ],
+        "v2_terminal_state": "NO_SAFE_ITEM"
+      },
+      {
+        "assembly_coherence": {
+          "coherent": false,
+          "decision_domain": "PATIENT_CLINICAL",
+          "detail": [
+            {
+              "evidence_refs": [
+                "CLM-R4-SURG-FEMALE-DDX",
+                "CLM-R4-SURG-PID-CRITERIA",
+                "CLM-R4-SURG-PID-SURGICAL",
+                "CLM-R4-SURG-TOA-ONSET"
+              ],
+              "name": "NESTED_OR_DUPLICATE_CONCEPT",
+              "nesting_relation": "COMPLICATION_OF",
+              "pair": [
+                "SEED-SURG-T01-PID",
+                "SEED-SURG-T01-TOA"
+              ],
+              "rule": "CS2-1"
+            },
+            {
+              "categories": {
+                "GYNAECOLOGIC_CAUSE": [
+                  "SEED-SURG-T01-PID",
+                  "SEED-SURG-T01-TOA",
+                  "SEED-SURG-T01-TORSION"
+                ],
+                "NON_GYNAECOLOGIC_CAUSE": [
+                  "KEY"
+                ]
+              },
+              "competitor_category": "GYNAECOLOGIC_CAUSE",
+              "key_category": "NON_GYNAECOLOGIC_CAUSE",
+              "name": "CATEGORY_IMBALANCE",
+              "reason": "LONE_KEY_CATEGORY",
+              "rule": "CS2-5"
+            },
+            {
+              "category": "GYNAECOLOGIC_CAUSE",
+              "members": [
+                "SEED-SURG-T01-PID",
+                "SEED-SURG-T01-TOA",
+                "SEED-SURG-T01-TORSION"
+              ],
+              "name": "CATEGORY_IMBALANCE",
+              "reason": "ONE_BROAD_CATEGORY_BESIDE_NARROW_SUBTYPES",
+              "rule": "CS2-5"
+            }
+          ],
+          "opportunity_label": "G2-SURG-01",
+          "pairs_evaluated": 6,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-SURG-T01-PID"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-SURG-T01-TOA"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-SURG-T01-TORSION"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-SURG-T01-PID",
+                "SEED-SURG-T01-TOA"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-SURG-T01-PID",
+                "SEED-SURG-T01-TORSION"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-SURG-T01-TOA",
+                "SEED-SURG-T01-TORSION"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": false,
+          "usable_anchors_per_competitor": {
+            "SEED-SURG-T01-PID": [
+              "SF-GS76-CERVICAL-MOTION-OR-ADNEXAL-TENDERNESS"
+            ],
+            "SEED-SURG-T01-TOA": [
+              "SF-GS76-CERVICAL-MOTION-OR-ADNEXAL-TENDERNESS",
+              "SF-GS76-GRADUAL-ONSET-PELVIC-INFECTION"
+            ],
+            "SEED-SURG-T01-TORSION": [
+              "SF-GS76-ADNEXAL-MASS-5CM-OR-MORE"
+            ]
+          },
+          "violations": [
+            "CS2-1",
+            "CS2-5"
+          ]
+        },
+        "competitor_verdicts": [
+          {
+            "admissible_as_distractor": false,
+            "anchors_present": [
+              "SF-GS76-FEMALE-REPRODUCTIVE-AGE"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Pelvic inflammatory disease",
+            "correctness": "INDETERMINATE",
+            "decided_by_discriminators": [
+              "SF-GS76-MIGRATORY-RLQ-PAIN"
+            ],
+            "defeated_by": [],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "PRESENT",
+                  "explicitness": "EXPLICIT",
+                  "feature_id": "SF-GS76-FEMALE-REPRODUCTIVE-AGE",
+                  "required": "PRESENT",
+                  "result": "SATISFIED"
+                },
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-GS76-CERVICAL-MOTION-OR-ADNEXAL-TENDERNESS",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "INDETERMINATE"
+            },
+            "member_id": "SEED-SURG-T01-PID",
+            "presentation_anchors_present": [],
+            "second_key_risk": false,
+            "state": "INSUFFICIENT_SUPPORT",
+            "unresolved_features": [
+              "SF-GS76-CERVICAL-MOTION-OR-ADNEXAL-TENDERNESS"
+            ]
+          },
+          {
+            "admissible_as_distractor": false,
+            "anchors_present": [
+              "SF-GS76-FEMALE-REPRODUCTIVE-AGE"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Tubo-ovarian abscess",
+            "correctness": "INDETERMINATE",
+            "decided_by_discriminators": [
+              "SF-GS76-MIGRATORY-RLQ-PAIN"
+            ],
+            "defeated_by": [],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-GS76-CERVICAL-MOTION-OR-ADNEXAL-TENDERNESS",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                },
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-GS76-GRADUAL-ONSET-PELVIC-INFECTION",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "INDETERMINATE"
+            },
+            "member_id": "SEED-SURG-T01-TOA",
+            "presentation_anchors_present": [],
+            "second_key_risk": false,
+            "state": "INSUFFICIENT_SUPPORT",
+            "unresolved_features": [
+              "SF-GS76-CERVICAL-MOTION-OR-ADNEXAL-TENDERNESS",
+              "SF-GS76-GRADUAL-ONSET-PELVIC-INFECTION"
+            ]
+          },
+          {
+            "admissible_as_distractor": false,
+            "anchors_present": [
+              "SF-GS76-FEMALE-REPRODUCTIVE-AGE"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Ovarian torsion",
+            "correctness": "INDETERMINATE",
+            "decided_by_discriminators": [
+              "SF-GS76-MIGRATORY-RLQ-PAIN"
+            ],
+            "defeated_by": [],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "PRESENT",
+                  "explicitness": "EXPLICIT",
+                  "feature_id": "SF-GS76-FEMALE-REPRODUCTIVE-AGE",
+                  "required": "PRESENT",
+                  "result": "SATISFIED"
+                },
+                {
+                  "conditions": [
+                    {
+                      "asserted_state": "UNKNOWN",
+                      "explicitness": "NOT_STATED",
+                      "feature_id": "SF-GS76-ADNEXAL-MASS-5CM-OR-MORE",
+                      "required": "PRESENT",
+                      "result": "INDETERMINATE"
+                    }
+                  ],
+                  "operator": "ANY_OF",
+                  "result": "INDETERMINATE"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "INDETERMINATE"
+            },
+            "member_id": "SEED-SURG-T01-TORSION",
+            "presentation_anchors_present": [],
+            "second_key_risk": false,
+            "state": "INSUFFICIENT_SUPPORT",
+            "unresolved_features": [
+              "SF-GS76-ADNEXAL-MASS-5CM-OR-MORE"
+            ]
+          }
+        ],
+        "difficulty_intent": "EASY",
+        "discipline": "SURG",
+        "features_implied_absent_by_contradiction": [
+          "SF-GS76-HIGH-CLINICAL-SUSPICION-YOUNG-MALE",
+          "SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS"
+        ],
+        "key_correctness_under_the_frozen_stem": "SATISFIED",
+        "key_explanation": {
+          "conditions": [
+            {
+              "asserted_state": "PRESENT",
+              "explicitness": "EXPLICIT",
+              "feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+              "required": "PRESENT",
+              "result": "SATISFIED"
+            }
+          ],
+          "operator": "ALL_OF",
+          "result": "SATISFIED"
+        },
+        "key_unresolved_features": [],
+        "live_but_inferior_count": 0,
+        "opportunity_label": "G2-SURG-01",
+        "post_stem_coherence": {
+          "coherent": false,
+          "decision_domain": "PATIENT_CLINICAL",
+          "detail": [
+            {
+              "evidence_refs": [
+                "CLM-R4-SURG-FEMALE-DDX",
+                "CLM-R4-SURG-PID-CRITERIA",
+                "CLM-R4-SURG-PID-SURGICAL",
+                "CLM-R4-SURG-TOA-ONSET"
+              ],
+              "name": "NESTED_OR_DUPLICATE_CONCEPT",
+              "nesting_relation": "COMPLICATION_OF",
+              "pair": [
+                "SEED-SURG-T01-PID",
+                "SEED-SURG-T01-TOA"
+              ],
+              "rule": "CS2-1"
+            },
+            {
+              "categories": {
+                "GYNAECOLOGIC_CAUSE": [
+                  "SEED-SURG-T01-PID",
+                  "SEED-SURG-T01-TOA",
+                  "SEED-SURG-T01-TORSION"
+                ],
+                "NON_GYNAECOLOGIC_CAUSE": [
+                  "KEY"
+                ]
+              },
+              "competitor_category": "GYNAECOLOGIC_CAUSE",
+              "key_category": "NON_GYNAECOLOGIC_CAUSE",
+              "name": "CATEGORY_IMBALANCE",
+              "reason": "LONE_KEY_CATEGORY",
+              "rule": "CS2-5"
+            },
+            {
+              "category": "GYNAECOLOGIC_CAUSE",
+              "members": [
+                "SEED-SURG-T01-PID",
+                "SEED-SURG-T01-TOA",
+                "SEED-SURG-T01-TORSION"
+              ],
+              "name": "CATEGORY_IMBALANCE",
+              "reason": "ONE_BROAD_CATEGORY_BESIDE_NARROW_SUBTYPES",
+              "rule": "CS2-5"
+            },
+            {
+              "members": [
+                "SEED-SURG-T01-PID",
+                "SEED-SURG-T01-TOA",
+                "SEED-SURG-T01-TORSION"
+              ],
+              "name": "SET_ANCHOR_DEGENERACY",
+              "reason": "NO_USABLE_ANCHOR",
+              "rule": "CS2-7",
+              "state_map_supplied": true
+            }
+          ],
+          "opportunity_label": "G2-SURG-01",
+          "pairs_evaluated": 6,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-SURG-T01-PID"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-SURG-T01-TOA"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-SURG-T01-TORSION"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-SURG-T01-PID",
+                "SEED-SURG-T01-TOA"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-SURG-T01-PID",
+                "SEED-SURG-T01-TORSION"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-SURG-T01-TOA",
+                "SEED-SURG-T01-TORSION"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": true,
+          "usable_anchors_per_competitor": {
+            "SEED-SURG-T01-PID": [],
+            "SEED-SURG-T01-TOA": [],
+            "SEED-SURG-T01-TORSION": []
+          },
+          "violations": [
+            "CS2-1",
+            "CS2-5",
+            "CS2-7"
+          ]
+        },
+        "stem_asserted_features": [
+          "SF-GS76-FEMALE-REPRODUCTIVE-AGE",
+          "SF-GS76-MIGRATORY-RLQ-PAIN"
+        ],
+        "v1_primary_earliest_cause": "A_CONTRAST_SET_DEFECT",
+        "v1_reject_reason": "Pelvic inflammatory disease and tubo-ovarian abscess test the same discrimination, the latter being a complication of the former, and both rationales defeat their option using pelvic examination findings the stem never reports. A lone-category cue is also present: the key is the only non-gynaecologic option.",
+        "v1_verdict": "REJECT",
+        "v2_fail_closed_reasons": [
+          "FAIL_CLOSED_COMPETITOR_WITHOUT_STEM_ANCHOR",
+          "FAIL_CLOSED_CONTRAST_SET_COHERENCE",
+          "FAIL_CLOSED_CONTRAST_SET_SIZE",
+          "FAIL_CLOSED_POST_STEM_SET_COHERENCE"
+        ],
+        "v2_terminal_state": "NO_SAFE_ITEM"
+      },
+      {
+        "assembly_coherence": {
+          "coherent": false,
+          "decision_domain": "PATIENT_CLINICAL",
+          "detail": [
+            {
+              "key": "KEY",
+              "key_condition_classes": [
+                "NON_DISCRIMINATING"
+              ],
+              "name": "KEY_CONDITION_NOT_OBSERVABLE",
+              "note": "every key correctness condition is a meta-assertion or a resource clause, so the stem can only declare the answer rather than show it",
+              "rule": "CS2-9"
+            },
+            {
+              "anchors": [
+                "SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS"
+              ],
+              "member_id": "SEED-SURG-T02-KUB",
+              "name": "ANCHOR_EQUALS_CONDITION",
+              "note": "every usable plausibility anchor also completes its own correctness signature, so it is live only when it is a second key",
+              "rule": "CS2-6"
+            },
+            {
+              "members": [
+                "SEED-SURG-T02-US"
+              ],
+              "name": "SET_ANCHOR_DEGENERACY",
+              "reason": "NO_USABLE_ANCHOR",
+              "rule": "CS2-7",
+              "state_map_supplied": false
+            }
+          ],
+          "opportunity_label": "G2-SURG-02",
+          "pairs_evaluated": 10,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-SURG-T02-KUB"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-SURG-T02-MRI"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-SURG-T02-OBSERVE"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-SURG-T02-US"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-SURG-T02-KUB",
+                "SEED-SURG-T02-MRI"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-SURG-T02-KUB",
+                "SEED-SURG-T02-OBSERVE"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-SURG-T02-KUB",
+                "SEED-SURG-T02-US"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-SURG-T02-MRI",
+                "SEED-SURG-T02-OBSERVE"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-SURG-T02-MRI",
+                "SEED-SURG-T02-US"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-SURG-T02-OBSERVE",
+                "SEED-SURG-T02-US"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": false,
+          "usable_anchors_per_competitor": {
+            "SEED-SURG-T02-KUB": [
+              "SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS"
+            ],
+            "SEED-SURG-T02-MRI": [
+              "SF-GS76-NONDIAGNOSTIC-IMAGING-ALREADY"
+            ],
+            "SEED-SURG-T02-OBSERVE": [
+              "SF-GS76-NONDIAGNOSTIC-IMAGING-ALREADY"
+            ],
+            "SEED-SURG-T02-US": []
+          },
+          "violations": [
+            "CS2-6",
+            "CS2-7",
+            "CS2-9"
+          ]
+        },
+        "competitor_verdicts": [
+          {
+            "admissible_as_distractor": false,
+            "anchors_present": [
+              "SF-GS76-IMAGING-AVAILABLE-NOW"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Ultrasonography with a plain kidney-ureter-bladder film",
+            "correctness": "INDETERMINATE",
+            "decided_by_discriminators": [],
+            "defeated_by": [],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "INDETERMINATE"
+            },
+            "member_id": "SEED-SURG-T02-KUB",
+            "presentation_anchors_present": [],
+            "second_key_risk": true,
+            "state": "INSUFFICIENT_SUPPORT",
+            "unresolved_features": [
+              "SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS"
+            ]
+          },
+          {
+            "admissible_as_distractor": false,
+            "anchors_present": [
+              "SF-GS76-IMAGING-AVAILABLE-NOW",
+              "SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Magnetic resonance imaging of the abdomen",
+            "correctness": "INDETERMINATE",
+            "decided_by_discriminators": [],
+            "defeated_by": [],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-GS76-PREGNANT",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                },
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-GS76-NONDIAGNOSTIC-IMAGING-ALREADY",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "INDETERMINATE"
+            },
+            "member_id": "SEED-SURG-T02-MRI",
+            "presentation_anchors_present": [],
+            "second_key_risk": true,
+            "state": "INSUFFICIENT_SUPPORT",
+            "unresolved_features": [
+              "SF-GS76-NONDIAGNOSTIC-IMAGING-ALREADY",
+              "SF-GS76-PREGNANT"
+            ]
+          },
+          {
+            "admissible_as_distractor": false,
+            "anchors_present": [
+              "SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Admit for serial abdominal examination without imaging",
+            "correctness": "INDETERMINATE",
+            "decided_by_discriminators": [],
+            "defeated_by": [],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-GS76-NONDIAGNOSTIC-IMAGING-ALREADY",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                },
+                {
+                  "asserted_state": "PRESENT",
+                  "explicitness": "EXPLICIT",
+                  "feature_id": "SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION",
+                  "required": "PRESENT",
+                  "result": "SATISFIED"
+                }
+              ],
+              "operator": "ALL_OF",
+              "result": "INDETERMINATE"
+            },
+            "member_id": "SEED-SURG-T02-OBSERVE",
+            "presentation_anchors_present": [],
+            "second_key_risk": true,
+            "state": "INSUFFICIENT_SUPPORT",
+            "unresolved_features": [
+              "SF-GS76-NONDIAGNOSTIC-IMAGING-ALREADY"
+            ]
+          },
+          {
+            "admissible_as_distractor": false,
+            "anchors_present": [
+              "SF-GS76-IMAGING-AVAILABLE-NOW",
+              "SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION"
+            ],
+            "categorically_excluded_by": [],
+            "concept": "Abdominal ultrasonography",
+            "correctness": "INDETERMINATE",
+            "decided_by_discriminators": [],
+            "defeated_by": [],
+            "explanation": {
+              "conditions": [
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-GS76-LOW-BMI",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                },
+                {
+                  "asserted_state": "UNKNOWN",
+                  "explicitness": "NOT_STATED",
+                  "feature_id": "SF-GS76-PREGNANT",
+                  "required": "PRESENT",
+                  "result": "INDETERMINATE"
+                }
+              ],
+              "operator": "ANY_OF",
+              "result": "INDETERMINATE"
+            },
+            "member_id": "SEED-SURG-T02-US",
+            "presentation_anchors_present": [],
+            "second_key_risk": true,
+            "state": "INSUFFICIENT_SUPPORT",
+            "unresolved_features": [
+              "SF-GS76-LOW-BMI",
+              "SF-GS76-PREGNANT"
+            ]
+          }
+        ],
+        "difficulty_intent": "MEDIUM",
+        "discipline": "SURG",
+        "features_implied_absent_by_contradiction": [
+          "SF-GS76-HIGH-CLINICAL-SUSPICION-YOUNG-MALE"
+        ],
+        "key_correctness_under_the_frozen_stem": "SATISFIED",
+        "key_explanation": {
+          "conditions": [
+            {
+              "asserted_state": "PRESENT",
+              "explicitness": "EXPLICIT",
+              "feature_id": "SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION",
+              "required": "PRESENT",
+              "result": "SATISFIED"
+            },
+            {
+              "asserted_state": "PRESENT",
+              "explicitness": "EXPLICIT",
+              "feature_id": "SF-GS76-IMAGING-AVAILABLE-NOW",
+              "required": "PRESENT",
+              "result": "SATISFIED"
+            }
+          ],
+          "operator": "ALL_OF",
+          "result": "SATISFIED"
+        },
+        "key_unresolved_features": [],
+        "live_but_inferior_count": 0,
+        "opportunity_label": "G2-SURG-02",
+        "post_stem_coherence": {
+          "coherent": false,
+          "decision_domain": "PATIENT_CLINICAL",
+          "detail": [
+            {
+              "key": "KEY",
+              "key_condition_classes": [
+                "NON_DISCRIMINATING"
+              ],
+              "name": "KEY_CONDITION_NOT_OBSERVABLE",
+              "note": "every key correctness condition is a meta-assertion or a resource clause, so the stem can only declare the answer rather than show it",
+              "rule": "CS2-9"
+            },
+            {
+              "anchors": [
+                "SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS"
+              ],
+              "member_id": "SEED-SURG-T02-KUB",
+              "name": "ANCHOR_EQUALS_CONDITION",
+              "note": "every usable plausibility anchor also completes its own correctness signature, so it is live only when it is a second key",
+              "rule": "CS2-6"
+            },
+            {
+              "members": [
+                "SEED-SURG-T02-KUB",
+                "SEED-SURG-T02-MRI",
+                "SEED-SURG-T02-OBSERVE",
+                "SEED-SURG-T02-US"
+              ],
+              "name": "SET_ANCHOR_DEGENERACY",
+              "reason": "NO_USABLE_ANCHOR",
+              "rule": "CS2-7",
+              "state_map_supplied": true
+            }
+          ],
+          "opportunity_label": "G2-SURG-02",
+          "pairs_evaluated": 10,
+          "pairwise": [
+            {
+              "pair": [
+                "KEY",
+                "SEED-SURG-T02-KUB"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-SURG-T02-MRI"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-SURG-T02-OBSERVE"
+              ]
+            },
+            {
+              "pair": [
+                "KEY",
+                "SEED-SURG-T02-US"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-SURG-T02-KUB",
+                "SEED-SURG-T02-MRI"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-SURG-T02-KUB",
+                "SEED-SURG-T02-OBSERVE"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-SURG-T02-KUB",
+                "SEED-SURG-T02-US"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-SURG-T02-MRI",
+                "SEED-SURG-T02-OBSERVE"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-SURG-T02-MRI",
+                "SEED-SURG-T02-US"
+              ]
+            },
+            {
+              "pair": [
+                "SEED-SURG-T02-OBSERVE",
+                "SEED-SURG-T02-US"
+              ]
+            }
+          ],
+          "rules_applied": [
+            "CS2-1",
+            "CS2-2",
+            "CS2-3",
+            "CS2-4",
+            "CS2-5",
+            "CS2-6",
+            "CS2-7",
+            "CS2-8",
+            "CS2-9"
+          ],
+          "state_map_supplied": true,
+          "usable_anchors_per_competitor": {
+            "SEED-SURG-T02-KUB": [],
+            "SEED-SURG-T02-MRI": [],
+            "SEED-SURG-T02-OBSERVE": [],
+            "SEED-SURG-T02-US": []
+          },
+          "violations": [
+            "CS2-6",
+            "CS2-7",
+            "CS2-9"
+          ]
+        },
+        "stem_asserted_features": [
+          "SF-GS76-IMAGING-AVAILABLE-NOW",
+          "SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION"
+        ],
+        "v1_primary_earliest_cause": "A_CONTRAST_SET_DEFECT",
+        "v1_reject_reason": "The stem's own findings score Alvarado 7, the high band calling for surgical consultation, while the stem asserts intermediate suspicion and the key depends on the intermediate band; the quoted Alvarado bands overlap at 4; ultrasonography is a defensible second key on the item's own stepwise evidence and is defeated only by a body-habitus fact the stem never gives; MRI and ultrasound-with-KUB have no positive stem anchor; and the pre-declared probability band, the contrast clearance and the availability clause are all present because options need them.",
+        "v1_verdict": "REJECT",
+        "v2_fail_closed_reasons": [
+          "FAIL_CLOSED_COMPETITOR_WITHOUT_STEM_ANCHOR",
+          "FAIL_CLOSED_CONTRAST_SET_COHERENCE",
+          "FAIL_CLOSED_CONTRAST_SET_SIZE",
+          "FAIL_CLOSED_POST_STEM_SET_COHERENCE"
+        ],
+        "v2_terminal_state": "NO_SAFE_ITEM"
+      }
+    ],
+    "schema_version": "1.0",
+    "scope": "QGEN_CONTRAST_FIRST_V2_COUNTERFACTUAL_REPLAY",
+    "stems_are_unchanged": true
+  },
+  "schema_version": "1.0",
+  "scope": "QGEN_CLINICAL_CONTRAST_V2_COUNTERFACTUAL",
+  "starting_commit": "3ebdfb3",
+  "stems_changed": 0,
+  "what_v2_does_not_claim": "G2-OBGYN-01 is not intercepted and is not counted as a miss. Its single reject-forcing cause was H_OPTION_WORDING_REALIZATION_DEFECT, two rationale claims authored at realization, and the diagnosis established that a perfect option layer would have prevented it. A contrast-relation model has nothing to say about a rationale that polarizes its own cited claim, and V2 correctly passes the item through to the layer that owns the defect."
+}

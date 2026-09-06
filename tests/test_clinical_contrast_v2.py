@@ -699,3 +699,77 @@ def test_second_key_risk_is_flagged_whenever_nothing_settles_the_competitor():
         discriminators=[KEY_DISCRIMINATOR],
     )
     assert settled["second_key_risk"] is False
+
+
+def test_a_key_alone_in_its_category_does_not_cue_when_competitors_are_all_distinct():
+    """In a diagnosis set every option is normally its own entity."""
+    report = evaluate_contrast_set_coherence(healthy_set(members=[
+        member("key", "KEY", concept_category="VIRAL_LOWER_AIRWAY"),
+        member("alpha", "COMPETITOR", concept_category="REACTIVE_AIRWAY"),
+        member("beta", "COMPETITOR", concept_category="MECHANICAL_OBSTRUCTION"),
+        member("gamma", "COMPETITOR", concept_category="BACTERIAL_PARENCHYMAL"),
+    ]))
+    assert "CS2-5" not in report["violations"]
+
+
+def test_redundancy_needs_the_same_kind_of_option_not_only_the_same_defeat():
+    """Two different kinds of move may legitimately fail on one stated fact.
+
+    Both accepted V1 controls carry such a pair. What R1 called out in G2-MED-03
+    was narrower: furosemide and nitroglycerin are the same move, preload
+    reduction, dying on the same preload proposition.
+    """
+    same_move = evaluate_contrast_set_coherence(contrast_set([
+        member("key", "KEY", correctness_conditions=leaf("SF-PRELOAD"),
+               concept_category="PRELOAD_AUGMENTATION"),
+        member("alpha", "COMPETITOR", correctness_conditions=leaf("SF-PRELOAD", ABSENT),
+               concept_category="PRELOAD_REDUCTION"),
+        member("beta", "COMPETITOR", correctness_conditions=leaf("SF-PRELOAD", ABSENT),
+               concept_category="PRELOAD_REDUCTION"),
+        member("gamma", "COMPETITOR", concept_category="VASOACTIVE_SUPPORT"),
+    ]))
+    assert "CS2-2" in same_move["violations"]
+    different_moves = evaluate_contrast_set_coherence(contrast_set([
+        member("key", "KEY", correctness_conditions=leaf("SF-PRELOAD"),
+               concept_category="PRELOAD_AUGMENTATION"),
+        member("alpha", "COMPETITOR", correctness_conditions=leaf("SF-PRELOAD", ABSENT),
+               concept_category="PRELOAD_REDUCTION"),
+        member("beta", "COMPETITOR", correctness_conditions=leaf("SF-PRELOAD", ABSENT),
+               concept_category="NEUROHORMONAL_BLOCKADE"),
+        member("gamma", "COMPETITOR", concept_category="VASOACTIVE_SUPPORT"),
+    ]))
+    assert "CS2-2" not in different_moves["violations"]
+
+
+def test_a_competitor_with_a_second_unmet_condition_is_not_anchor_equals_condition():
+    """G2-PHELO-03's evaluation option: its anchor is a condition, and it is still
+    defeated by a *different* condition the stem states contrary, so it can be
+    live without being correct."""
+    report = evaluate_contrast_set_coherence(healthy_set(members=[
+        member("key", "KEY"),
+        member("alpha", "COMPETITOR",
+               supporting_features=[
+                   {"feature_id": "SF-GOALS", "contrast_role": "INVESTIGATION_FINDING"}
+               ],
+               correctness_conditions={
+                   "operator": "ALL_OF",
+                   "conditions": [leaf("SF-GOALS"), leaf("SF-CAPACITY-GAP", ABSENT)],
+               }),
+        member("beta", "COMPETITOR"),
+        member("gamma", "COMPETITOR"),
+    ]))
+    assert "CS2-6" not in report["violations"]
+
+
+def test_a_disjunctive_key_entails_none_of_its_branches():
+    from qbank.clinical_contrast_v2 import entailed_leaves
+
+    conjunctive = {"operator": "ALL_OF", "conditions": [leaf("A"), leaf("B")]}
+    disjunctive = {"operator": "ANY_OF", "conditions": [leaf("A"), leaf("B")]}
+    assert [row["feature_id"] for row in entailed_leaves(conjunctive)] == ["A", "B"]
+    assert entailed_leaves(disjunctive) == []
+    nested = {
+        "operator": "ALL_OF",
+        "conditions": [leaf("A"), {"operator": "ANY_OF", "conditions": [leaf("B"), leaf("C")]}],
+    }
+    assert [row["feature_id"] for row in entailed_leaves(nested)] == ["A"]

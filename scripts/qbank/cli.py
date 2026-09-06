@@ -950,6 +950,31 @@ def _command_run_contrast_first_pilot(arguments: argparse.Namespace) -> None:
     }, indent=2, sort_keys=True))
 
 
+def _command_run_contrast_v2_counterfactual(arguments: argparse.Namespace) -> None:
+    """Replay the V2 contrast-relation model against the frozen V1 stems."""
+    from .contrast_first_v2_pilot import build_counterfactual_report, build_relation_cache
+
+    root = canonical_root(getattr(arguments, "root", Path.cwd()))
+    report = build_counterfactual_report(root)
+    contrast_sets = report.pop("contrast_sets")
+    write_json_atomic(
+        resolve_root_path(root, "research/qgen/pilot/contrast-first-v2-frozen-10-relations.json"),
+        contrast_sets,
+    )
+    write_json_atomic(
+        resolve_root_path(root, "research/qgen/clinical_contrast_relations_v2.json"),
+        build_relation_cache(root, contrast_sets),
+    )
+    write_json_atomic(
+        resolve_root_path(root, "reports/qgen_clinical_contrast_v2_counterfactual.json"),
+        report,
+    )
+    print(json.dumps({
+        "COUNTERFACTUAL_GATE": report["gate"]["COUNTERFACTUAL_GATE"],
+        "counts": report["counts"],
+    }, indent=2, sort_keys=True))
+
+
 def _command_run_retrieval_benchmark(arguments: argparse.Namespace) -> None:
     """Run the frozen-G2 four-arm retrieval benchmark."""
     from .retrieval_benchmark import run_benchmark
@@ -1066,6 +1091,11 @@ def _parser() -> argparse.ArgumentParser:
         ("build-clinical-graph", "project the typed clinical contrast graph into the local index", _command_build_clinical_graph),
         ("run-retrieval-benchmark", "run the frozen-G2 four-arm retrieval benchmark", _command_run_retrieval_benchmark),
         ("run-contrast-first-pilot", "rebuild the contrast-first pilot reports", _command_run_contrast_first_pilot),
+        (
+            "run-contrast-v2-counterfactual",
+            "replay the V2 contrast-relation model against the frozen V1 stems",
+            _command_run_contrast_v2_counterfactual,
+        ),
     )
     parsers = {}
     for name, help_text, handler in commands:

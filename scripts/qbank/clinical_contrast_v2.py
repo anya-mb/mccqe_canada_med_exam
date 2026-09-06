@@ -764,6 +764,25 @@ def _leaf_signature(node: Mapping[str, Any]) -> frozenset[tuple[str, str]]:
     )
 
 
+def entailed_leaves(node: Mapping[str, Any]) -> list[dict[str, Any]]:
+    """Leaves a satisfied predicate necessarily forces.
+
+    Only conjunctive paths qualify. Every child of an ``ALL_OF`` must hold, so its
+    leaves are entailed; a satisfied ``ANY_OF`` forces none of its branches in
+    particular, and neither does ``NOT`` or ``AT_LEAST_N``. Reading a disjunctive
+    key as though every disjunct held is defect 4 pointed the other way.
+    """
+    validate_predicate(node)
+    if _is_state_leaf(node):
+        return [dict(node)]
+    if node.get("operator") == "ALL_OF":
+        leaves: list[dict[str, Any]] = []
+        for child in node["conditions"]:
+            leaves.extend(entailed_leaves(child))
+        return leaves
+    return []
+
+
 def _key_implied_state_map(
     key: Mapping[str, Any], contradiction_pairs: Sequence[Sequence[str]]
 ) -> tuple[dict[str, Any], dict[str, str]]:
@@ -776,7 +795,7 @@ def _key_implied_state_map(
     """
     assertions = []
     provenance: dict[str, str] = {}
-    for leaf in predicate_leaves(key["correctness_conditions"]):
+    for leaf in entailed_leaves(key["correctness_conditions"]):
         required = leaf.get("required_state")
         if required not in (PRESENT, ABSENT):
             continue
@@ -787,6 +806,30 @@ def _key_implied_state_map(
         if feature_id not in provenance:
             provenance[feature_id] = assertion.get("implied_by", feature_id)
     return implied, provenance
+
+
+def can_be_live_without_being_correct(
+    competitor: Mapping[str, Any],
+    usable_anchors: Sequence[str],
+    *,
+    contradiction_pairs: Sequence[Sequence[str]] = (),
+) -> bool:
+    """Is there an anchor that makes this competitor live but not yet correct?
+
+    A competitor whose every usable anchor also completes its own correctness
+    signature can be given a reason to be considered only by being made a second
+    key. That is a property of the set, fixed before any stem exists, and no stem
+    can repair it.
+    """
+    conditions = competitor["correctness_conditions"]
+    for anchor in usable_anchors:
+        trial = build_feature_state_map(
+            [feature_assertion(anchor, PRESENT)],
+            contradiction_pairs=contradiction_pairs,
+        )
+        if evaluate_predicate(conditions, trial) != SATISFIED:
+            return True
+    return False
 
 
 def evaluate_contrast_set_coherence(
@@ -838,10 +881,9 @@ def evaluate_contrast_set_coherence(
     demanded = contrast_set["demanded_response_class"]
     for competitor in competitors:
         tokens = competitor.get("response_class_tokens") or []
-        if demanded not in tokens and demanded not in (key.get("response_class_tokens") or []):
-            fire("CS2-3", member_id=competitor["member_id"], response_class_tokens=list(tokens))
-        elif tokens and demanded not in tokens:
-            fire("CS2-3", member_id=competitor["member_id"], response_class_tokens=list(tokens))
+        if demanded not in tokens:
+            fire("CS2-3", member_id=competitor["member_id"],
+                 response_class_tokens=sorted(tokens), demanded_response_class=demanded)
         if competitor.get("decision_granularity") != contrast_set["decision_granularity"]:
             fire("CS2-4", member_id=competitor["member_id"],
                  decision_granularity=competitor.get("decision_granularity"),
@@ -873,8 +915,15 @@ def evaluate_contrast_set_coherence(
             row["member_id"]
         )
     key_category = key.get("concept_category") or "UNDECLARED"
-    if len(categories.get(key_category, [])) == 1 and len(categories) > 1:
+    competitor_categories = {
+        row.get("concept_category") or "UNDECLARED" for row in competitors
+    }
+    # A key alone in its category only cues when the competitors close ranks in a
+    # single category of their own. In a diagnosis set every option is normally
+    # its own entity, and that is not a cue.
+    if len(categories.get(key_category, [])) == 1 and len(competitor_categories) == 1:
         fire("CS2-5", reason="LONE_KEY_CATEGORY", key_category=key_category,
+             competitor_category=sorted(competitor_categories)[0],
              categories={name: sorted(rows) for name, rows in sorted(categories.items())})
     for name, rows in sorted(categories.items()):
         if name != key_category and len(rows) >= 3 and len(members) - len(rows) <= 1:
@@ -883,19 +932,20 @@ def evaluate_contrast_set_coherence(
 
     # ---- CS2-6, a competitor that can be live only by being a second key.
     for competitor in competitors:
-        condition_features = set(predicate_feature_ids(competitor["correctness_conditions"]))
-        anchors = [
+        anchors = sorted({
             row["feature_id"] for row in competitor.get("supporting_features") or []
             if discriminative_class(
                 role_of(row["feature_id"], row.get("contrast_role"))
                 or "BACKGROUND_CONTEXT"
             ) in ANCHOR_CLASSES
-        ]
-        if anchors and set(anchors) <= condition_features:
-            fire("CS2-6", member_id=competitor["member_id"],
-                 anchors=sorted(set(anchors)),
-                 note=("its only usable plausibility anchors are also its own correctness "
-                       "conditions, so it is live only when it is a second key"))
+        })
+        if anchors and not can_be_live_without_being_correct(
+            competitor, anchors, contradiction_pairs=contradiction_pairs
+        ):
+            fire("CS2-6", member_id=competitor["member_id"], anchors=anchors,
+                 note=("every usable plausibility anchor also completes its own "
+                       "correctness signature, so it is live only when it is a "
+                       "second key"))
 
     # ---- CS2-2 and CS2-8, competitor against competitor.
     implied, provenance = _key_implied_state_map(key, contradiction_pairs)
@@ -909,17 +959,22 @@ def evaluate_contrast_set_coherence(
             for feature_id in defeating_features(conditions, implied)
         )
 
+    category_of = {
+        row["member_id"]: row.get("concept_category") or "UNDECLARED" for row in competitors
+    }
     ordered = [row["member_id"] for row in competitors]
     for index, left in enumerate(ordered):
         for right in ordered[index + 1:]:
             shared_defeat = defeated_by_key[left]
-            if shared_defeat and shared_defeat == defeated_by_key[right] and len(
-                shared_defeat
-            ) == 1:
+            same_kind = category_of[left] == category_of[right]
+            if same_kind and shared_defeat and shared_defeat == defeated_by_key[
+                right
+            ] and len(shared_defeat) == 1:
                 fire("CS2-2", pair=[left, right],
                      defeated_by=sorted(shared_defeat),
-                     note=("both die on one and the same proposition, so one option slot "
-                           "does no independent work"))
+                     concept_category=category_of[left],
+                     note=("two options of the same kind die on one and the same "
+                           "proposition, so one option slot does no independent work"))
             if signatures[left] and signatures[left] == signatures[right]:
                 fire("CS2-8", pair=[left, right],
                      correctness_leaves=sorted(
