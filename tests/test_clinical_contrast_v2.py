@@ -659,3 +659,43 @@ def test_a_set_needs_exactly_one_key():
             member("key", "KEY"), member("other", "KEY"),
             member("alpha", "COMPETITOR"), member("beta", "COMPETITOR"),
         ]))
+
+
+def test_a_second_key_is_reported_even_when_the_stem_does_not_anchor_it():
+    """G2-PED-02: the swab is correct under the stem's own facts and unanchored.
+
+    Being correct is the more serious finding, so it outranks plausibility.
+    """
+    verdict = classify_competitor(
+        competitor(
+            supporting_features=[
+                {"feature_id": "SF-AVAILABLE", "contrast_role": "RESOURCE_AVAILABILITY"}
+            ],
+            correctness_conditions={
+                "operator": "ANY_OF",
+                "conditions": [leaf("SF-AVAILABLE"), leaf("SF-RISK")],
+            },
+        ),
+        state_map(**{"SF_AVAILABLE": PRESENT}),
+        discriminators=[],
+    )
+    assert verdict["state"] == SECOND_KEY
+    assert verdict["presentation_anchors_present"] == []
+
+
+def test_second_key_risk_is_flagged_whenever_nothing_settles_the_competitor():
+    unsettled = classify_competitor(
+        competitor(supporting_features=[
+            {"feature_id": "SF-AVAILABLE", "contrast_role": "RESOURCE_AVAILABILITY"}
+        ]),
+        state_map(**{"SF_AVAILABLE": PRESENT}),
+        discriminators=[],
+    )
+    assert unsettled["state"] == INSUFFICIENT_SUPPORT
+    assert unsettled["second_key_risk"] is True
+    settled = classify_competitor(
+        competitor(),
+        state_map(**{"SF_SHARED": PRESENT, "SF_COMP_ONLY": ABSENT}),
+        discriminators=[KEY_DISCRIMINATOR],
+    )
+    assert settled["second_key_risk"] is False

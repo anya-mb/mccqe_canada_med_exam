@@ -700,12 +700,16 @@ def classify_competitor(
         ) == SATISFIED
     })
 
+    # A competitor the stem makes correct is a second key whether or not the stem
+    # also anchors it, and that is the more serious finding, so it is decided
+    # before plausibility rather than after.
+    second_key_risk = correctness == INDETERMINATE and not satisfied_key_discriminators
     if excluded_by:
         state = CATEGORICALLY_EXCLUDED
-    elif not presentation_anchors:
-        state = INSUFFICIENT_SUPPORT
     elif correctness == SATISFIED:
         state = SECOND_KEY
+    elif not presentation_anchors:
+        state = INSUFFICIENT_SUPPORT
     elif correctness == NOT_SATISFIED:
         state = LIVE_BUT_INFERIOR
     elif satisfied_key_discriminators:
@@ -723,6 +727,10 @@ def classify_competitor(
         "unresolved_features": unresolved_features(conditions, state_map),
         "decided_by_discriminators": satisfied_key_discriminators,
         "categorically_excluded_by": excluded_by,
+        # True whenever nothing the stem states settles the competitor, whatever
+        # the final state. An INSUFFICIENT_SUPPORT competitor carrying this flag
+        # is still a competitor a candidate could defend.
+        "second_key_risk": second_key_risk,
         "explanation": explain_predicate(conditions, state_map),
         "admissible_as_distractor": state in ADMISSIBLE_COMPETITOR_STATES,
     }
