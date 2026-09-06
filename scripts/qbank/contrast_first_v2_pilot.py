@@ -42,11 +42,14 @@ from .clinical_contrast_v2 import (
     explain_predicate,
     feature_assertion,
     predicate_feature_ids,
+    predicate_leaves,
     resolve_state,
     unresolved_features,
     validate_predicate,
 )
 from .contrast_first_pilot import (
+    MAXIMUM_ABSENT_REQUIRED_FEATURES,
+    REQUIRED_FEATURE_CAP,
     ContrastFirstError,
     load_curated_candidates,
     load_profile_contract,
@@ -117,6 +120,23 @@ def typed_supporting_features(
 
 
 # ------------------------------------------------------------ contrast sets
+
+
+def contradiction_pairs_for(
+    readings: Mapping[str, Any], authoring: Mapping[str, Any], unit: str
+) -> list[tuple[str, str]]:
+    """The frozen V1 contradictions plus any the V2 readings add, with evidence.
+
+    The frozen list is read and never written. A V2 addition must be a negation of
+    the same proposition about the same quantity and must cite a claim; the
+    readings file records the basis for each.
+    """
+    pairs = [tuple(pair) for pair in (authoring["contradiction_pairs"].get(unit) or [])]
+    for row in (readings.get("additional_contradiction_pairs") or {}).get(unit) or []:
+        pair = tuple(row["pair"])
+        if pair not in pairs:
+            pairs.append(pair)
+    return pairs
 
 
 def build_v2_contrast_sets(root) -> dict[str, Any]:
@@ -218,7 +238,7 @@ def build_v2_contrast_sets(root) -> dict[str, Any]:
                 for member in members for row in member["supporting_features"]
             },
         }
-        pairs = [tuple(pair) for pair in (authoring["contradiction_pairs"].get(unit) or [])]
+        pairs = contradiction_pairs_for(readings, authoring, unit)
         coherence = evaluate_contrast_set_coherence(
             contrast_set, contradiction_pairs=pairs
         )
@@ -803,4 +823,513 @@ def build_relation_cache(root, contrast_sets: dict[str, Any]) -> dict[str, Any]:
         ),
         "frozen": False,
         "relations": sorted(relations, key=lambda row: row["contrast_relation_id"]),
+    }
+
+
+# --------------------------------------------------------- V2 set selection
+
+
+def select_admissible_subset(
+    contrast_set: Mapping[str, Any],
+    coherence: Mapping[str, Any],
+    *,
+    contradiction_pairs: Sequence[Sequence[str]],
+) -> dict[str, Any]:
+    """Drop the members the coherence gate refuses, deterministically.
+
+    One pass, not a search. A member named by CS2-6 or CS2-7 is unusable on its
+    own account and goes; a CS2-1 or CS2-2 pair is a redundancy between two
+    members, and the later seed id is dropped so the choice cannot be tuned. If
+    fewer than three competitors survive the opportunity fails closed, which is
+    the answer rather than a reason to go looking for a fourth.
+    """
+    members = {row["member_id"]: row for row in contrast_set["members"]}
+    dropped: dict[str, str] = {}
+    for row in coherence["detail"]:
+        rule = row["rule"]
+        if rule in ("CS2-6", "CS2-7") and row.get("member_id"):
+            dropped.setdefault(row["member_id"], rule)
+        elif rule in ("CS2-6", "CS2-7") and row.get("members"):
+            for member_id in row["members"]:
+                dropped.setdefault(member_id, rule)
+        elif rule in ("CS2-1", "CS2-2", "CS2-8") and row.get("pair"):
+            keep, drop = sorted(row["pair"])
+            if keep not in dropped:
+                dropped.setdefault(drop, rule)
+        elif rule in ("CS2-3", "CS2-4") and row.get("member_id"):
+            dropped.setdefault(row["member_id"], rule)
+
+    kept = [
+        row for row in contrast_set["members"]
+        if row["role_in_set"] == "KEY" or row["member_id"] not in dropped
+    ]
+    reduced = dict(contrast_set)
+    reduced["members"] = kept
+    reduced["relations"] = [
+        relation for relation in contrast_set["relations"]
+        if relation["concept_a"]["member_id"] not in dropped
+        and relation["concept_b"]["member_id"] not in dropped
+    ]
+    competitors = [row for row in kept if row["role_in_set"] == "COMPETITOR"]
+    if len(competitors) < 3:
+        return {
+            "admissible": False,
+            "dropped": dict(sorted(dropped.items())),
+            "surviving_competitors": sorted(row["member_id"] for row in competitors),
+            "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+            "contrast_set": reduced,
+            "residual_violations": None,
+        }
+    residual = evaluate_contrast_set_coherence(
+        reduced, contradiction_pairs=contradiction_pairs
+    )
+    return {
+        "admissible": residual["coherent"],
+        "dropped": dict(sorted(dropped.items())),
+        "surviving_competitors": sorted(row["member_id"] for row in competitors),
+        "fail_closed_reason": (
+            None if residual["coherent"] else "FAIL_CLOSED_CONTRAST_SET_COHERENCE"
+        ),
+        "contrast_set": reduced,
+        "residual_violations": residual["violations"],
+        "residual_coherence": residual,
+    }
+
+
+# ------------------------------------------------------- V2 blueprint solver
+
+#: How a competitor may be settled. Silence is not on the list, which is the
+#: whole difference from V1.
+SETTLEMENT_ROUTES = ("STATED_CONTRARY", "EXPLICIT_DENIAL", "EVIDENCE_BACKED_DISCRIMINATOR")
+
+
+def _assign(
+    assignment: dict[str, str],
+    feature_id: str,
+    state: str,
+    *,
+    contradiction_pairs: Sequence[Sequence[str]],
+) -> dict[str, str] | None:
+    """Return a copy with the assignment added, or None if it contradicts."""
+    if assignment.get(feature_id, state) != state:
+        return None
+    trial = dict(assignment)
+    trial[feature_id] = state
+    if state == PRESENT:
+        for pair in contradiction_pairs:
+            if feature_id not in pair:
+                continue
+            other = pair[0] if pair[1] == feature_id else pair[1]
+            if trial.get(other) == PRESENT:
+                return None
+    return trial
+
+
+def _state_map_of(
+    assignment: Mapping[str, str], *, contradiction_pairs: Sequence[Sequence[str]]
+) -> dict[str, dict[str, Any]]:
+    return build_feature_state_map(
+        [feature_assertion(feature_id, state) for feature_id, state in assignment.items()],
+        contradiction_pairs=contradiction_pairs,
+    )
+
+
+def _satisfy_key(
+    node: Mapping[str, Any],
+    assignment: dict[str, str],
+    *,
+    contradiction_pairs: Sequence[Sequence[str]],
+) -> dict[str, str] | None:
+    """Assign the minimum that makes the key's condition tree SATISFIED.
+
+    ``ALL_OF`` requires every branch; ``ANY_OF`` takes the first branch that can be
+    satisfied without contradiction, in the order the reading declares them, so a
+    disjunctive key is solved as a disjunction rather than as every disjunct at
+    once.
+    """
+    validate_predicate(node)
+    if _is_leaf(node):
+        required = node.get("required_state")
+        if required not in (PRESENT, ABSENT):
+            return None
+        return _assign(
+            assignment, node["feature_id"], required,
+            contradiction_pairs=contradiction_pairs,
+        )
+    operator = node["operator"]
+    if operator == "ALL_OF":
+        current: dict[str, str] | None = dict(assignment)
+        for child in node["conditions"]:
+            current = _satisfy_key(
+                child, current, contradiction_pairs=contradiction_pairs
+            ) if current is not None else None
+        return current
+    if operator == "ANY_OF":
+        for child in node["conditions"]:
+            solved = _satisfy_key(
+                child, dict(assignment), contradiction_pairs=contradiction_pairs
+            )
+            if solved is not None:
+                return solved
+        return None
+    if operator == "NOT":
+        child = node["conditions"][0]
+        if not _is_leaf(child):
+            return None
+        required = child.get("required_state")
+        opposite = ABSENT if required == PRESENT else PRESENT
+        return _assign(
+            assignment, child["feature_id"], opposite,
+            contradiction_pairs=contradiction_pairs,
+        )
+    return None
+
+
+def _is_leaf(node: Mapping[str, Any]) -> bool:
+    return "required_state" in node and "operator" not in node
+
+
+def solve_v2_blueprint(
+    contrast_set: Mapping[str, Any],
+    reading: Mapping[str, Any],
+    *,
+    vocabulary: Mapping[str, Mapping[str, Any]],
+    contradiction_pairs: Sequence[Sequence[str]],
+    context_features: Sequence[Mapping[str, str]] = (),
+) -> dict[str, Any]:
+    """Solve the feature states a V2 stem must realize, before a word is written.
+
+    Four constraints hold together or the blueprint fails closed: the key's
+    condition tree SATISFIED, every competitor live on a PRESENTATION-class anchor
+    the stem actually states, no competitor SATISFIED, and **every** competitor
+    settled by a stated contrary or by an evidence-backed discriminator the stem
+    also states. That last one is the constraint V1 did not have, and it is why an
+    open silence can no longer be mistaken for a defeat.
+
+    Explicit denials are the cheapest way to settle a competitor and the least
+    natural, so they stay bounded by the same per-difficulty budget the coherence
+    contract already applies. The discriminator route is not bounded, because a
+    stated finding that favours the key is the legitimate way to make an item
+    hard without denying anything.
+    """
+    key = next(row for row in contrast_set["members"] if row["role_in_set"] == "KEY")
+    competitors = [row for row in contrast_set["members"] if row["role_in_set"] == "COMPETITOR"]
+    intent = contrast_set["difficulty_intent"]
+    pairs = [tuple(pair) for pair in contradiction_pairs]
+
+    assignment = _satisfy_key(
+        key["correctness_conditions"], {}, contradiction_pairs=pairs
+    )
+    if assignment is None:
+        return _v2_blueprint(
+            contrast_set, {}, {}, [],
+            "FAIL_CLOSED_KEY_UNSATISFIABLE", vocabulary=vocabulary,
+            contradiction_pairs=pairs,
+        )
+    provenance = {feature: ["KEY_CORRECTNESS_CONDITION"] for feature in assignment}
+
+    # ---- anchor pass. Only a PRESENTATION-class feature counts, so no stem can
+    # be made to carry a competitor on a demographic or an availability clause.
+    for competitor in competitors:
+        if _live(competitor, assignment, pairs):
+            continue
+        choices: list[tuple[int, str]] = []
+        for row in sorted(
+            competitor["supporting_features"], key=lambda entry: entry["feature_id"]
+        ):
+            if discriminative_class(row["contrast_role"]) not in ANCHOR_CLASSES:
+                continue
+            trial = _assign(
+                assignment, row["feature_id"], PRESENT, contradiction_pairs=pairs
+            )
+            if trial is None or _any_satisfied(competitors, trial, pairs):
+                continue
+            coverage = sum(
+                1 for other in competitors
+                if not _live(other, assignment, pairs)
+                and row["feature_id"] in {
+                    entry["feature_id"] for entry in other["supporting_features"]
+                }
+            )
+            choices.append((-coverage, row["feature_id"]))
+        if not choices:
+            return _v2_blueprint(
+                contrast_set, assignment, provenance, [],
+                "FAIL_CLOSED_NO_USABLE_ANCHOR", vocabulary=vocabulary,
+                contradiction_pairs=pairs,
+                note=f"{competitor['member_id']} has no statable presentation anchor",
+            )
+        _, chosen = sorted(choices)[0]
+        assignment[chosen] = PRESENT
+        provenance.setdefault(chosen, []).append("COMPETITOR_ANCHOR")
+
+    # ---- optional colour, added after the load-bearing work rather than before
+    # it. A context feature that would starve a competitor of its anchor, or
+    # complete a competitor's signature, is simply not added.
+    normalized_context = [
+        {"stem_feature_id": row, "polarity": PRESENT} if isinstance(row, str) else dict(row)
+        for row in context_features
+    ]
+    for row in sorted(normalized_context, key=lambda entry: entry["stem_feature_id"]):
+        feature_id = row["stem_feature_id"]
+        if feature_id in assignment or feature_id not in vocabulary:
+            continue
+        trial = _assign(
+            assignment, feature_id, row.get("polarity", PRESENT), contradiction_pairs=pairs
+        )
+        if trial is None or _any_satisfied(competitors, trial, pairs):
+            continue
+        if any(not _live(other, trial, pairs) for other in competitors):
+            continue
+        assignment = trial
+        provenance.setdefault(feature_id, []).append("OPTIONAL_CONTEXT")
+
+    # ---- settlement pass. Every competitor must be settled, and by a named route.
+    denial_budget = MAXIMUM_ABSENT_REQUIRED_FEATURES[intent]
+    denials = sum(1 for state in assignment.values() if state == ABSENT)
+    settlement: dict[str, dict[str, Any]] = {}
+    for competitor in competitors:
+        route = _settlement_route(competitor, reading, assignment, pairs)
+        if route is not None:
+            settlement[competitor["member_id"]] = route
+            continue
+        applied = False
+        # First try a discriminator the stem could state anyway. It costs nothing
+        # in naturalness and it is the route that keeps a HARD item hard.
+        for discriminator in _applicable_discriminators(reading, competitor["member_id"]):
+            trial = _assign(
+                assignment, discriminator["feature_id"], discriminator["required_state"],
+                contradiction_pairs=pairs,
+            )
+            if trial is None or _any_satisfied(competitors, trial, pairs):
+                continue
+            assignment = trial
+            provenance.setdefault(discriminator["feature_id"], []).append(
+                "KEY_DISCRIMINATOR"
+            )
+            applied = True
+            break
+        # Next try to close the domain with a stated positive finding that the
+        # declared contradictions make incompatible with what the competitor
+        # needs. "The number of cases diagnosed was the same in both arms" is a
+        # finding a report would carry anyway; "there was no excess of indolent
+        # tumours" is a denial written for the item's benefit. Prefer the finding.
+        if not applied:
+            state_map = _state_map_of(assignment, contradiction_pairs=pairs)
+            for feature_id in unresolved_features(
+                competitor["correctness_conditions"], state_map
+            ):
+                if _required_state_of(
+                    competitor["correctness_conditions"], feature_id
+                ) != PRESENT:
+                    continue
+                for pair in pairs:
+                    if feature_id not in pair:
+                        continue
+                    other = pair[0] if pair[1] == feature_id else pair[1]
+                    if other in assignment or other not in vocabulary:
+                        continue
+                    trial = _assign(
+                        assignment, other, PRESENT, contradiction_pairs=pairs
+                    )
+                    if trial is None or _any_satisfied(competitors, trial, pairs):
+                        continue
+                    assignment = trial
+                    provenance.setdefault(other, []).append("STATED_POSITIVE_CONTRARY")
+                    applied = True
+                    break
+                if applied:
+                    break
+        if not applied and denials < denial_budget:
+            for feature_id in unresolved_features(
+                competitor["correctness_conditions"],
+                _state_map_of(assignment, contradiction_pairs=pairs),
+            ):
+                required = _required_state_of(
+                    competitor["correctness_conditions"], feature_id
+                )
+                opposite = ABSENT if required == PRESENT else PRESENT
+                trial = _assign(
+                    assignment, feature_id, opposite, contradiction_pairs=pairs
+                )
+                if trial is None or _any_satisfied(competitors, trial, pairs):
+                    continue
+                assignment = trial
+                provenance.setdefault(feature_id, []).append("EXPLICIT_DENIAL")
+                denials += 1
+                applied = True
+                break
+        route = _settlement_route(competitor, reading, assignment, pairs)
+        if route is None:
+            return _v2_blueprint(
+                contrast_set, assignment, provenance, [],
+                "FAIL_CLOSED_COMPETITOR_CANNOT_BE_SETTLED", vocabulary=vocabulary,
+                contradiction_pairs=pairs,
+                note=(f"{competitor['member_id']} would be left resting on information "
+                      "the stem does not state, and the difficulty contract has no "
+                      "explicit denial left to spend"),
+            )
+        settlement[competitor["member_id"]] = route
+
+    if len(assignment) > REQUIRED_FEATURE_CAP[intent]:
+        return _v2_blueprint(
+            contrast_set, assignment, provenance, [],
+            "FAIL_CLOSED_REQUIRED_FEATURE_CAP", vocabulary=vocabulary,
+            contradiction_pairs=pairs,
+            note=(f"{len(assignment)} required features against a cap of "
+                  f"{REQUIRED_FEATURE_CAP[intent]} at {intent}"),
+        )
+    return _v2_blueprint(
+        contrast_set, assignment, provenance, settlement, None,
+        vocabulary=vocabulary, contradiction_pairs=pairs,
+    )
+
+
+def _required_state_of(node: Mapping[str, Any], feature_id: str) -> str:
+    for leaf in predicate_leaves(node):
+        if leaf["feature_id"] == feature_id:
+            return leaf.get("required_state") or PRESENT
+    return PRESENT
+
+
+def _live(
+    competitor: Mapping[str, Any],
+    assignment: Mapping[str, str],
+    pairs: Sequence[Sequence[str]],
+) -> bool:
+    return any(
+        assignment.get(row["feature_id"]) == PRESENT
+        and discriminative_class(row["contrast_role"]) in ANCHOR_CLASSES
+        for row in competitor["supporting_features"]
+    )
+
+
+def _any_satisfied(
+    competitors: Sequence[Mapping[str, Any]],
+    assignment: Mapping[str, str],
+    pairs: Sequence[Sequence[str]],
+) -> bool:
+    state_map = _state_map_of(assignment, contradiction_pairs=pairs)
+    return any(
+        evaluate_predicate(row["correctness_conditions"], state_map) == SATISFIED
+        for row in competitors
+    )
+
+
+def _settlement_route(
+    competitor: Mapping[str, Any],
+    reading: Mapping[str, Any],
+    assignment: Mapping[str, str],
+    pairs: Sequence[Sequence[str]],
+) -> dict[str, Any] | None:
+    """How, if at all, this competitor is settled under the current assignment."""
+    state_map = _state_map_of(assignment, contradiction_pairs=pairs)
+    verdict = classify_competitor(
+        competitor, state_map,
+        discriminators=_applicable_discriminators(reading, competitor["member_id"]),
+    )
+    if verdict["state"] != LIVE_BUT_INFERIOR:
+        return None
+    if verdict["correctness"] == NOT_SATISFIED:
+        explicit = [
+            feature_id for feature_id in verdict["defeated_by"]
+            if assignment.get(feature_id) == ABSENT
+        ]
+        return {
+            "route": "EXPLICIT_DENIAL" if explicit else "STATED_CONTRARY",
+            "features": verdict["defeated_by"],
+            "explicitly_denied": explicit,
+        }
+    return {
+        "route": "EVIDENCE_BACKED_DISCRIMINATOR",
+        "features": verdict["decided_by_discriminators"],
+        "unresolved_but_outweighed": verdict["unresolved_features"],
+    }
+
+
+def _v2_blueprint(
+    contrast_set: Mapping[str, Any],
+    assignment: Mapping[str, str],
+    provenance: Mapping[str, Sequence[str]],
+    settlement: Any,
+    fail_closed: str | None,
+    *,
+    vocabulary: Mapping[str, Mapping[str, Any]],
+    contradiction_pairs: Sequence[Sequence[str]],
+    note: str | None = None,
+) -> dict[str, Any]:
+    key = next(row for row in contrast_set["members"] if row["role_in_set"] == "KEY")
+    competitors = [row for row in contrast_set["members"] if row["role_in_set"] == "COMPETITOR"]
+    roles = {
+        row["feature_id"]: row["contrast_role"]
+        for member in contrast_set["members"] for row in member["supporting_features"]
+    }
+    state_map = _state_map_of(assignment, contradiction_pairs=contradiction_pairs)
+    return {
+        "schema_version": "1.0",
+        "scope": "QGEN_STEM_BLUEPRINT_V2",
+        "opportunity_label": contrast_set["opportunity_label"],
+        "difficulty_intent": contrast_set["difficulty_intent"],
+        "decision_domain": contrast_set["decision_domain"],
+        "anchor_study_unit_id": contrast_set["anchor_study_unit_id"],
+        "key_concept": key["concept"],
+        "FEATURES_PRESENT": sorted(
+            feature for feature, state in assignment.items() if state == PRESENT
+        ),
+        "FEATURES_ABSENT": sorted(
+            feature for feature, state in assignment.items() if state == ABSENT
+        ),
+        "FEATURES_ALLOWED_UNKNOWN": sorted(
+            set(vocabulary) - set(assignment)
+        ),
+        "required_features": [
+            {
+                "stem_feature_id": feature,
+                "state": assignment[feature],
+                "contrast_role": roles.get(feature),
+                "clinical_role": vocabulary.get(feature, {}).get("clinical_role"),
+                "normalized_feature": vocabulary.get(feature, {}).get("normalized_feature"),
+                "roles": sorted(set(provenance.get(feature, ["OPTIONAL_CONTEXT"]))),
+            }
+            for feature in sorted(assignment)
+        ],
+        "SHARED_PLAUSIBILITY_FEATURES": sorted({
+            row["feature_id"]
+            for competitor in competitors for row in competitor["supporting_features"]
+            if assignment.get(row["feature_id"]) == PRESENT
+            and discriminative_class(row["contrast_role"]) in ANCHOR_CLASSES
+        }),
+        "KEY_DISCRIMINATORS": sorted({
+            feature for feature, roles_used in provenance.items()
+            if "KEY_DISCRIMINATOR" in roles_used
+        }),
+        "SECOND_KEY_RISK_FEATURES": sorted({
+            feature_id
+            for competitor in competitors
+            for feature_id in unresolved_features(
+                competitor["correctness_conditions"], state_map
+            )
+        }),
+        "CATEGORICAL_EXCLUSION_FEATURES": sorted({
+            feature_id
+            for competitor in competitors
+            for exclusion in competitor.get("categorical_exclusion_conditions") or []
+            for feature_id in predicate_feature_ids(exclusion["predicate"])
+        }),
+        "BACKGROUND_CONTEXT": sorted({
+            feature for feature in assignment
+            if roles.get(feature) and discriminative_class(roles[feature])
+            in ("NON_DISCRIMINATING", "PRIOR_ONLY")
+        }),
+        "competitor_settlement": settlement if isinstance(settlement, dict) else {},
+        "key_correctness": evaluate_predicate(key["correctness_conditions"], state_map),
+        "fail_closed_reason": fail_closed,
+        "note": note,
+        "explicit_denials": sorted(
+            feature for feature, state in assignment.items() if state == ABSENT
+        ),
+        "explicit_denial_budget": MAXIMUM_ABSENT_REQUIRED_FEATURES[
+            contrast_set["difficulty_intent"]
+        ],
+        "required_feature_cap": REQUIRED_FEATURE_CAP[contrast_set["difficulty_intent"]],
     }
