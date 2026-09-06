@@ -1069,6 +1069,25 @@ def _command_run_contrast_supply_wave(arguments: argparse.Namespace) -> None:
     }, indent=2, sort_keys=True))
 
 
+def _command_build_feature_anchor_reconciliation(arguments: argparse.Namespace) -> None:
+    """Map every writer and reader of the feature and anchor contract."""
+    from .feature_anchor_registry import (
+        RECONCILIATION_REPORT_PATH,
+        build_reconciliation,
+    )
+
+    root = canonical_root(getattr(arguments, "root", Path.cwd()))
+    report = build_reconciliation(root)
+    write_json_atomic(resolve_root_path(root, RECONCILIATION_REPORT_PATH), report)
+    print(json.dumps({
+        "conclusion": report["conclusion"],
+        "supply_invisibility": {
+            key: value for key, value in report["supply_invisibility"].items()
+            if key != "additions"
+        },
+    }, indent=2, sort_keys=True))
+
+
 def _command_run_retrieval_benchmark(arguments: argparse.Namespace) -> None:
     """Run the frozen-G2 four-arm retrieval benchmark."""
     from .retrieval_benchmark import run_benchmark
@@ -1199,6 +1218,11 @@ def _parser() -> argparse.ArgumentParser:
             "run-contrast-supply-diagnosis",
             "diagnose contrast supply for the five V2 NO_SAFE_ITEM opportunities",
             _command_run_contrast_supply_diagnosis,
+        ),
+        (
+            "build-feature-anchor-reconciliation",
+            "map the writers and readers of the feature and anchor contract",
+            _command_build_feature_anchor_reconciliation,
         ),
         (
             "run-contrast-supply-wave",

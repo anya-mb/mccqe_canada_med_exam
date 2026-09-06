@@ -1,0 +1,322 @@
+{
+  "anchor_population": {
+    "ANCHOR_PAIRS": 153,
+    "DISTINCT_FEATURES_USED_AS_AN_ANCHOR": 87,
+    "FEATURES_IN_FROZEN_VOCABULARY": 102,
+    "SEEDS_WITH_AN_ANCHOR_ROW": 81,
+    "SEEDS_WITH_AN_EMPTY_ANCHOR_SET": [
+      "SEED-PED-T03-HYPERTONIC"
+    ],
+    "STUDY_UNITS_IN_FROZEN_VOCABULARY": 6,
+    "anchor_features_by_clinical_role": {
+      "CLINICAL_JUDGEMENT": 14,
+      "DEMOGRAPHIC": 3,
+      "EXAMINATION_FINDING": 15,
+      "EXPLICIT_RISK_INVENTORY": 1,
+      "HISTORY": 3,
+      "INVESTIGATION_RESULT": 12,
+      "LONGITUDINAL_COURSE": 3,
+      "PATIENT_PREFERENCE": 1,
+      "PROGRAMME_CAPACITY": 2,
+      "PROGRAMME_DOCUMENT": 5,
+      "PROGRAMME_OBJECTIVE": 3,
+      "STUDY_DESIGN": 1,
+      "STUDY_RESULT": 4,
+      "SYMPTOM": 5,
+      "SYSTEM_CONSTRAINT": 7,
+      "TIME_COURSE": 6,
+      "VITAL_SIGN": 2
+    },
+    "per_pack": [
+      {
+        "anchor_pairs": 114,
+        "anchor_rows": 62,
+        "pack": "competitive_contrast_seed_pack_r4",
+        "sha256": "485ea0a36ccf4eb1927a6b02694ad67fe3ee5c6515b3fdd06252da3fe000f003"
+      },
+      {
+        "anchor_pairs": 30,
+        "anchor_rows": 14,
+        "pack": "competitive_contrast_seed_pack_g2_targeted",
+        "sha256": "e7aea4ffcef44c72fe09ba56bb28d19e0782294c79b5e866de2e1fed9b59d604"
+      },
+      {
+        "anchor_pairs": 9,
+        "anchor_rows": 5,
+        "pack": "competitive_contrast_seed_pack_g2_extensions",
+        "sha256": "942d8435652b231590e5e94563d155f35c089420fd0af2daee0e737f656417d3"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "ARTIFACT": "research/qgen/safe_yield/g2_stem_feature_vocabulary.json",
+      "CURRENT_SOURCE_OF_TRUTH": true,
+      "IMMUTABLE": true,
+      "KNOWN_MISMATCH": "It is the only feature vocabulary and it carries no version, so a consumer cannot say which vocabulary it read. Its `clinical_role` is the sole input to V2 role typing, and three of its roles (CLINICAL_JUDGEMENT, SYSTEM_CONSTRAINT, PROGRAMME_CAPACITY) type to non-anchor classes in PATIENT_CLINICAL while the frozen anchor packs already use features of those roles as anchors.",
+      "READERS": [
+        "scripts/qbank/build_stem_anchor_layer.py",
+        "scripts/qbank/clinical_concepts.py",
+        "scripts/qbank/contrast_first_pilot.py",
+        "scripts/qbank/contrast_supply.py",
+        "scripts/qbank/feature_anchor_registry.py",
+        "tests/test_stem_anchor_floor.py"
+      ],
+      "VERSIONED": false,
+      "WRITER": "authored for the G2 profile pilot and frozen; no builder rewrites it",
+      "layer": "CLINICAL_FEATURE_IDENTITY"
+    },
+    {
+      "ARTIFACT": "research/qgen/generalization/*.stem_anchors.json",
+      "CURRENT_SOURCE_OF_TRUTH": true,
+      "IMMUTABLE": true,
+      "KNOWN_MISMATCH": "THE DEFECT. This is the artifact `SAF_1` reads, through `profile_contrast_retrieval.build_retrieval_index` and `contrast_first_pilot.load_curated_candidates`. Supply rule S-2 forbids the supply layer to edit it, so an anchor supply adds is invisible to the production gate. It is keyed by `seed_id`, carries no anchor role, no required state and no evidence reference, and its rows are a flat list of feature ids rather than typed relations.",
+      "READERS": [
+        "scripts/qbank/build_stem_anchor_layer.py",
+        "scripts/qbank/clinical_graph.py",
+        "scripts/qbank/clinical_retrieval.py",
+        "scripts/qbank/contrast_first_pilot.py",
+        "scripts/qbank/feature_anchor_registry.py",
+        "tests/test_clinical_graph.py",
+        "tests/test_profile_retrieval_wave.py",
+        "tests/test_stem_anchor_floor.py"
+      ],
+      "VERSIONED": false,
+      "WRITER": "scripts/qbank/build_stem_anchor_layer.py, under rules R1-R4",
+      "layer": "PLAUSIBILITY_ANCHOR_RELATIONS"
+    },
+    {
+      "ARTIFACT": "research/qgen/generalization/*.enrichment.json",
+      "CURRENT_SOURCE_OF_TRUTH": true,
+      "IMMUTABLE": true,
+      "KNOWN_MISMATCH": "Correctness conditions and plausibility anchors live in two separately frozen artifacts with no shared identity, which is why `CS2-6` ANCHOR_EQUALS_CONDITION has to be recomputed by joining them.",
+      "READERS": [
+        "scripts/qbank/build_stem_anchor_layer.py",
+        "scripts/qbank/clinical_concepts.py",
+        "scripts/qbank/clinical_graph.py",
+        "scripts/qbank/clinical_retrieval.py",
+        "scripts/qbank/contrast_first_pilot.py",
+        "scripts/qbank/feature_anchor_registry.py",
+        "tests/test_profile_retrieval_wave.py",
+        "tests/test_stem_anchor_floor.py"
+      ],
+      "VERSIONED": false,
+      "WRITER": "authored for the G2 pilot and frozen",
+      "layer": "CORRECTNESS_CONDITIONS"
+    },
+    {
+      "ARTIFACT": "research/qgen/generalization/*.json (curated seed packs)",
+      "CURRENT_SOURCE_OF_TRUTH": true,
+      "IMMUTABLE": true,
+      "KNOWN_MISMATCH": "`competitor_concept_id` is unique across all 81 retrievable seeds, so concept identity is already stable; nothing consumes it as identity, because every downstream reader keys on `seed_id` instead.",
+      "READERS": [
+        "scripts/qbank/build_stem_anchor_layer.py",
+        "scripts/qbank/clinical_concepts.py",
+        "scripts/qbank/clinical_graph.py",
+        "scripts/qbank/clinical_retrieval.py",
+        "scripts/qbank/contrast_first_pilot.py",
+        "scripts/qbank/feature_anchor_registry.py",
+        "tests/test_clinical_graph.py",
+        "tests/test_profile_contrast_retrieval.py",
+        "tests/test_profile_retrieval_wave.py",
+        "tests/test_stem_anchor_floor.py"
+      ],
+      "VERSIONED": true,
+      "WRITER": "authored and independently reviewed per pack; frozen",
+      "layer": "COMPETITOR_CONCEPT_IDENTITY"
+    },
+    {
+      "ARTIFACT": "scripts/qbank/clinical_contrast_v2.py (role and state model)",
+      "CURRENT_SOURCE_OF_TRUTH": true,
+      "IMMUTABLE": false,
+      "KNOWN_MISMATCH": "The four states and the thirteen contrast roles are canonical and correct, but they are expressed only in code, so no artifact can record which role model it was validated against, and no anchor row can declare the role under which it is an anchor.",
+      "READERS": [
+        "scripts/qbank/cli.py",
+        "scripts/qbank/contrast_first_v2_pilot.py",
+        "scripts/qbank/contrast_supply.py",
+        "scripts/qbank/feature_anchor_registry.py",
+        "tests/test_clinical_contrast_v2.py",
+        "tests/test_contrast_first_v2_pilot.py",
+        "tests/test_contrast_supply.py"
+      ],
+      "VERSIONED": false,
+      "WRITER": "code, not data: CONTRAST_ROLES and CLINICAL_ROLE_TO_CONTRAST_ROLE",
+      "layer": "FEATURE_STATE_AND_ROLE_SEMANTICS"
+    },
+    {
+      "ARTIFACT": "research/qgen/clinical_contrast_relations_v2.json",
+      "CURRENT_SOURCE_OF_TRUTH": true,
+      "IMMUTABLE": true,
+      "KNOWN_MISMATCH": "A relation's `b_supporting_features` carry typed contrast roles and are the V2 reading of a competitor's anchors, but they are a second, independent statement of the same relation the stem-anchor packs state untyped. Nothing reconciles the two.",
+      "READERS": [
+        "scripts/qbank/cli.py",
+        "scripts/qbank/contrast_first_v2_pilot.py",
+        "scripts/qbank/contrast_supply.py",
+        "scripts/qbank/feature_anchor_registry.py",
+        "tests/test_contrast_first_v2_pilot.py"
+      ],
+      "VERSIONED": true,
+      "WRITER": "authored for the V2 milestone; 68 frozen relations",
+      "layer": "V2_CONTRAST_RELATIONS"
+    },
+    {
+      "ARTIFACT": "research/qgen/clinical_contrast_supply_acquisition.json",
+      "CURRENT_SOURCE_OF_TRUTH": true,
+      "IMMUTABLE": true,
+      "KNOWN_MISMATCH": "It holds the four independently approved anchor additions and has no path into any artifact `SAF_1` reads. `apply_supply_to_contrast_set` applies them to an in-memory V2 contrast set only.",
+      "READERS": [
+        "scripts/qbank/contrast_supply.py",
+        "scripts/qbank/feature_anchor_registry.py"
+      ],
+      "VERSIONED": true,
+      "WRITER": "authored for the supply wave and frozen before any generation",
+      "layer": "PROPOSED_ANCHOR_EXTENSIONS"
+    },
+    {
+      "ARTIFACT": "research/qgen/clinical_contrast_supply_cache.json",
+      "CURRENT_SOURCE_OF_TRUTH": false,
+      "IMMUTABLE": false,
+      "KNOWN_MISMATCH": "A cache entry's content hash moves when an anchor is added, which is correct, but the cache records no feature/anchor snapshot, so two entries built against different anchor populations are indistinguishable.",
+      "READERS": [
+        "scripts/qbank/contrast_supply.py",
+        "scripts/qbank/feature_anchor_registry.py",
+        "tests/test_contrast_supply.py"
+      ],
+      "VERSIONED": true,
+      "WRITER": "scripts/qbank/contrast_supply.py, keyed by decision context",
+      "layer": "SUPPLY_RELATION_CACHE"
+    },
+    {
+      "ARTIFACT": "research/qgen/safe_yield/g2_profile_pilot.*.json",
+      "CURRENT_SOURCE_OF_TRUTH": false,
+      "IMMUTABLE": true,
+      "KNOWN_MISMATCH": "None to repair. Historical; must keep reading the frozen packs byte-identically and must not see any registry extension.",
+      "READERS": [
+        "scripts/qbank/contrast_first_v2_pilot.py",
+        "scripts/qbank/feature_anchor_registry.py",
+        "scripts/qbank/retrieval_benchmark.py",
+        "tests/test_clinical_retrieval.py",
+        "tests/test_profile_retrieval_wave.py",
+        "tests/test_stem_anchor_floor.py"
+      ],
+      "VERSIONED": true,
+      "WRITER": "the G2 wave; frozen",
+      "layer": "FROZEN_G2_EXPERIMENT"
+    },
+    {
+      "ARTIFACT": "research/qgen/contrast_first_pilot_*.json",
+      "CURRENT_SOURCE_OF_TRUTH": false,
+      "IMMUTABLE": true,
+      "KNOWN_MISMATCH": "None to repair. Historical.",
+      "READERS": [
+        "scripts/qbank/cli.py",
+        "scripts/qbank/contrast_first_pilot.py",
+        "scripts/qbank/contrast_first_v2_pilot.py",
+        "scripts/qbank/feature_anchor_registry.py",
+        "tests/test_contrast_first_pilot.py",
+        "tests/test_contrast_supply.py"
+      ],
+      "VERSIONED": true,
+      "WRITER": "the contrast-first pilot; frozen",
+      "layer": "FROZEN_V1_PILOT"
+    },
+    {
+      "ARTIFACT": "research/qgen/safe_yield/retrieval_benchmark_reference.json",
+      "CURRENT_SOURCE_OF_TRUTH": false,
+      "IMMUTABLE": true,
+      "KNOWN_MISMATCH": "None to repair, but it is the reason `retrieve_profile_aware_contrasts` must not change its rule or its verdicts: that function is benchmark arm A.",
+      "READERS": [
+        "scripts/qbank/feature_anchor_registry.py",
+        "tests/test_retrieval_benchmark.py"
+      ],
+      "VERSIONED": true,
+      "WRITER": "derived from the frozen semantic-admissibility record; frozen",
+      "layer": "FROZEN_RETRIEVAL_BENCHMARK"
+    }
+  ],
+  "conclusion": {
+    "NOT_REQUIRED": [
+      "changing the SAF_1 rule",
+      "growing the frozen 102-feature vocabulary",
+      "expanding the graph or the Toronto Notes index",
+      "re-reviewing the four approved supply relations clinically"
+    ],
+    "PRIMARY_MISMATCH": "ANCHOR_RELATIONS_ARE_NOT_A_SHARED_VERSIONED_CONTRACT",
+    "REQUIRED_CHANGE": "One versioned registry of feature identity and anchor relations, built into explicit content-addressed snapshots, consumed by V2, SAF_1, profile-aware retrieval and supply through an explicit pin.",
+    "SECONDARY_MISMATCH": "ANCHOR_ROWS_ARE_UNTYPED_AND_CARRY_NO_EVIDENCE"
+  },
+  "head_commit": "14f450891008974367f518e197793eb0ad94a555",
+  "immutability_positions": {
+    "must_stay_byte_identical": [
+      "research/qgen/safe_yield/g2_stem_feature_vocabulary.json",
+      "research/qgen/generalization/competitive_contrast_seed_pack_r4.json",
+      "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json",
+      "research/qgen/generalization/competitive_contrast_seed_pack_g2_extensions.json",
+      "research/qgen/generalization/competitive_contrast_seed_pack_r4.enrichment.json",
+      "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.enrichment.json",
+      "research/qgen/generalization/competitive_contrast_seed_pack_g2_extensions.enrichment.json",
+      "research/qgen/generalization/competitive_contrast_seed_pack_r4.stem_anchors.json",
+      "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.stem_anchors.json",
+      "research/qgen/generalization/competitive_contrast_seed_pack_g2_extensions.stem_anchors.json",
+      "research/qgen/clinical_contrast_relations_v2.json",
+      "research/qgen/clinical_contrast_supply_acquisition.json",
+      "research/qgen/clinical_contrast_supply_frozen5_generated.json",
+      "research/qgen/safe_yield/retrieval_benchmark_reference.json"
+    ],
+    "rule": "A new canonical registry is introduced beside these artifacts and imports them. Nothing is appended to them."
+  },
+  "llm_api_calls": 0,
+  "production_code_changed": false,
+  "readers_of_the_anchor_layer": {
+    "SAF_1": "profile_contrast_retrieval.retrieve_profile_aware_contrasts reads row['plausibility_anchor_feature_ids'] and refuses a competitor with no anchor PRESENT. The rule is correct and is not the defect.",
+    "index_builders": [
+      "profile_contrast_retrieval.build_retrieval_index",
+      "contrast_first_pilot.load_curated_candidates",
+      "contrast_first_pilot.contrast_set_retrieval_index"
+    ],
+    "the_seam": "All three builders are where a frozen pack becomes an index row. That, not SAF_1, is where a pinned snapshot has to be consumable."
+  },
+  "schema_version": "1.0",
+  "scope": "QGEN_FEATURE_ANCHOR_CONTRACT_RECONCILIATION",
+  "starting_commit": "14f4508",
+  "supply_invisibility": {
+    "APPROVED_ANCHOR_ADDITIONS": 4,
+    "INVISIBLE_TO_SAF1_TODAY": 4,
+    "VISIBLE_TO_SAF1_TODAY": 0,
+    "additions": [
+      {
+        "contrast_role": "POSITIVE_SUPPORT",
+        "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+        "in_frozen_stem_anchor_pack": false,
+        "member_has_a_frozen_anchor_row": true,
+        "member_id": "SEED-PED-T01-FOREIGN-BODY",
+        "opportunity_label": "G2-PED-01"
+      },
+      {
+        "contrast_role": "POSITIVE_SUPPORT",
+        "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+        "in_frozen_stem_anchor_pack": false,
+        "member_has_a_frozen_anchor_row": true,
+        "member_id": "SEED-PED-T01-PNEUMONIA",
+        "opportunity_label": "G2-PED-01"
+      },
+      {
+        "contrast_role": "POSITIVE_SUPPORT",
+        "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+        "in_frozen_stem_anchor_pack": false,
+        "member_has_a_frozen_anchor_row": true,
+        "member_id": "SEED-PED-T02-CBC",
+        "opportunity_label": "G2-PED-02"
+      },
+      {
+        "contrast_role": "SEVERITY_FEATURE",
+        "feature_id": "SF-PS12-MODERATE-SEVERITY",
+        "in_frozen_stem_anchor_pack": false,
+        "member_has_a_frozen_anchor_row": true,
+        "member_id": "SEED-PSY-T03-COMBINED",
+        "opportunity_label": "G2-PSY-03"
+      }
+    ]
+  },
+  "the_defect_in_one_sentence": "V2, the supply layer and the production gate all reason over clinical features and plausibility anchors, but only the production gate's reader is bound to a frozen artifact the supply layer may not write, so a clinically legitimate, independently approved anchor exists in one reader's world and not in the other's."
+}
