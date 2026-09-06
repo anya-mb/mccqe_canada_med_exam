@@ -1113,6 +1113,43 @@ def _command_run_feature_anchor_gate_replay(arguments: argparse.Namespace) -> No
     }, indent=2, sort_keys=True))
 
 
+def _command_run_medium_pilot(arguments: argparse.Namespace) -> None:
+    """Rebuild every medium-pilot artifact from the committed frozen inputs."""
+    from .medium_pilot import (
+        MILESTONE_REPORT_PATH,
+        build_execution_report,
+        build_milestone_report,
+        build_pilot_freeze,
+        build_review_report,
+        medium_pilot_paths,
+    )
+
+    root = canonical_root(getattr(arguments, "root", Path.cwd()))
+    builders = (
+        (medium_pilot_paths()["freeze"], build_pilot_freeze),
+        (medium_pilot_paths()["execution"], build_execution_report),
+        (medium_pilot_paths()["review"], build_review_report),
+        (medium_pilot_paths()["milestone"], build_milestone_report),
+    )
+    report = None
+    for relative, builder in builders:
+        report = builder(root)
+        write_json_atomic(resolve_root_path(root, relative), report)
+    milestone = json.loads(resolve_root_path(root, MILESTONE_REPORT_PATH).read_text())
+    print(json.dumps({
+        "MEDIUM_PILOT_N": milestone["MEDIUM_PILOT_N"],
+        "counts": milestone["counts"],
+        "failure_taxonomy": {
+            key: milestone["failure_taxonomy"][key] for key in (
+                "MEDIUM_FAILURE_COUNTS", "SYSTEMATIC_DEFECT",
+                "SYSTEMATIC_DEFECT_GE_20_PERCENT",
+            )
+        },
+        "SNAPSHOT_LIFECYCLE_STATUS": milestone["SNAPSHOT_LIFECYCLE_STATUS"],
+        "NEXT_DOMINANT_BOTTLENECK": milestone["NEXT_DOMINANT_BOTTLENECK"],
+    }, indent=2, sort_keys=True))
+
+
 def _command_build_feature_anchor_snapshots(arguments: argparse.Namespace) -> None:
     """Rebuild every canonical feature/anchor snapshot deterministically."""
     from .feature_anchor_registry import SNAPSHOTS_PATH, build_snapshot_store
@@ -1305,6 +1342,11 @@ def _parser() -> argparse.ArgumentParser:
             "run-contrast-supply-wave",
             "run the bounded on-demand contrast supply wave and its recovery report",
             _command_run_contrast_supply_wave,
+        ),
+        (
+            "run-medium-pilot",
+            "rebuild the cross-discipline medium pilot against its pinned snapshot",
+            _command_run_medium_pilot,
         ),
     )
     parsers = {}

@@ -24,6 +24,7 @@ from .clinical_contrast_v2 import (
     ABSENT,
     AMBIGUOUS,
     ANCHOR_CLASSES,
+    CONTRAST_SET_MINIMUM_COMPETITORS,
     INDETERMINATE,
     INSUFFICIENT_SUPPORT,
     LIVE_BUT_INFERIOR,
@@ -140,9 +141,16 @@ def contradiction_pairs_for(
     return pairs
 
 
-def build_v2_contrast_sets(root) -> dict[str, Any]:
-    """Build the V2 members, every pairwise relation, and the coherence report."""
-    readings = _read(root, V2_READINGS_PATH)
+def build_v2_contrast_sets(
+    root, *, readings_path: str = V2_READINGS_PATH
+) -> dict[str, Any]:
+    """Build the V2 members, every pairwise relation, and the coherence report.
+
+    ``readings_path`` exists so a second frozen batch can drive the same builder
+    over its own authored readings. It defaults to the frozen-ten file, so every
+    historical call site and every historical report is unchanged.
+    """
+    readings = _read(root, readings_path)
     frozen = {
         row["opportunity_label"]: row
         for row in _read(root, V1_OPPORTUNITIES_PATH)["opportunities"]
@@ -240,7 +248,15 @@ def build_v2_contrast_sets(root) -> dict[str, Any]:
             },
         }
         pairs = contradiction_pairs_for(readings, authoring, unit)
-        coherence = evaluate_contrast_set_coherence(
+        # A set that starts below the minimum is refused exactly as before; what
+        # changes is that the refusal is *reported* rather than raised, so a
+        # pre-supply baseline can be measured on a batch whose frozen competitor
+        # list is short and an acquisition wave can then be asked to close it.
+        # The frozen ten and the frozen five never reach this branch.
+        undersized = sum(
+            1 for member in members if member["role_in_set"] == "COMPETITOR"
+        ) < CONTRAST_SET_MINIMUM_COMPETITORS
+        coherence = None if undersized else evaluate_contrast_set_coherence(
             contrast_set, contradiction_pairs=pairs
         )
         results.append({
@@ -253,10 +269,13 @@ def build_v2_contrast_sets(root) -> dict[str, Any]:
             "assembly_coherence": coherence,
             "contradiction_pairs": [list(pair) for pair in pairs],
             "terminal_state_at_assembly": (
-                None if coherence["coherent"] else "NO_SAFE_ITEM"
+                None if coherence is not None and coherence["coherent"]
+                else "NO_SAFE_ITEM"
             ),
             "fail_closed_reason_at_assembly": (
-                None if coherence["coherent"] else "FAIL_CLOSED_CONTRAST_SET_COHERENCE"
+                "FAIL_CLOSED_CONTRAST_SET_SIZE" if undersized
+                else None if coherence["coherent"]
+                else "FAIL_CLOSED_CONTRAST_SET_COHERENCE"
             ),
         })
 
@@ -264,7 +283,7 @@ def build_v2_contrast_sets(root) -> dict[str, Any]:
         "schema_version": "1.0",
         "scope": "QGEN_CONTRAST_FIRST_V2_CONTRAST_SETS",
         "pilot_id": readings["pilot_id"],
-        "readings": V2_READINGS_PATH,
+        "readings": readings_path,
         "results": results,
     }
 
@@ -1358,7 +1377,12 @@ def _v2_blueprint(
 V2_GENERATED_PATH = "research/qgen/pilot/contrast-first-v2-frozen-10-generated.json"
 
 
-def run_v2_replay(root) -> dict[str, Any]:
+def run_v2_replay(
+    root,
+    *,
+    readings_path: str = V2_READINGS_PATH,
+    generated_path: str = V2_GENERATED_PATH,
+) -> dict[str, Any]:
     """Phases 22 to 27: select, solve, realize, revalidate, and never retry.
 
     One attempt per opportunity. An opportunity whose set cannot be made
@@ -1367,10 +1391,10 @@ def run_v2_replay(root) -> dict[str, Any]:
     V2 classifier *and* the unchanged production gate
     ``retrieve_profile_aware_contrasts``, so V2 buys itself no exemption.
     """
-    contrast_sets = build_v2_contrast_sets(root)
-    readings = _read(root, V2_READINGS_PATH)
+    contrast_sets = build_v2_contrast_sets(root, readings_path=readings_path)
+    readings = _read(root, readings_path)
     authoring = _read(root, V1_AUTHORING_PATH)
-    generated = _read(root, V2_GENERATED_PATH)
+    generated = _read(root, generated_path)
     frozen = {
         row["opportunity_label"]: row
         for row in _read(root, V1_OPPORTUNITIES_PATH)["opportunities"]
@@ -1390,6 +1414,14 @@ def run_v2_replay(root) -> dict[str, Any]:
             "decision_domain": record["decision_domain"],
             "priority_class": frozen[label]["priority_class"],
         }
+        if record["assembly_coherence"] is None:
+            row.update({
+                "stage_reached": "CONTRAST_SET_ASSEMBLY",
+                "terminal_state": "NO_SAFE_ITEM",
+                "fail_closed_reason": record["fail_closed_reason_at_assembly"],
+            })
+            rows.append(row)
+            continue
         selection = select_admissible_subset(
             record["contrast_set"], record["assembly_coherence"],
             contradiction_pairs=pairs,

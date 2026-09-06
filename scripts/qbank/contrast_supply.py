@@ -24,6 +24,7 @@ import sqlite3
 from typing import Any, Iterable, Mapping, Sequence
 
 from .clinical_contrast_v2 import (
+    CONTRAST_SET_MINIMUM_COMPETITORS,
     ANCHOR_CLASSES,
     PRESENT as PRESENT_STATE,
     ClinicalContrastV2Error,
@@ -882,8 +883,10 @@ ACQUISITION_KINDS = (
 )
 
 
-def load_acquisition(root) -> dict[str, Any]:
-    document = _read(root, SUPPLY_ACQUISITION_PATH)
+def load_acquisition(
+    root, *, acquisition_path: str = SUPPLY_ACQUISITION_PATH
+) -> dict[str, Any]:
+    document = _read(root, acquisition_path)
     if document.get("waves_per_opportunity") != ACQUISITION_WAVES_PER_OPPORTUNITY:
         raise ContrastSupplyError(
             "the acquisition artifact declares more than one wave per opportunity"
@@ -1004,14 +1007,23 @@ def apply_supply_to_contrast_set(
     return supplied
 
 
-def run_acquisition_wave(root) -> dict[str, Any]:
-    """Phase 15. One bounded wave over the five, then measure, and stop."""
-    acquisition = load_acquisition(root)
+def run_acquisition_wave(
+    root,
+    *,
+    acquisition_path: str = SUPPLY_ACQUISITION_PATH,
+    readings_path: str = V2_READINGS_PATH,
+) -> dict[str, Any]:
+    """Phase 15. One bounded wave over the five, then measure, and stop.
+
+    The two paths default to the frozen-five artifacts, so the historical wave
+    and its report are unchanged. A later frozen batch supplies its own pair.
+    """
+    acquisition = load_acquisition(root, acquisition_path=acquisition_path)
     opportunities = {
         row["opportunity_label"]: row
         for row in _read(root, V1_OPPORTUNITIES_PATH)["opportunities"]
     }
-    readings = _read(root, V2_READINGS_PATH)["opportunities"]
+    readings = _read(root, readings_path)["opportunities"]
     vocabulary = load_stem_feature_vocabulary(root)
     curated = {row["seed_id"]: row for row in load_curated_candidates(root)}
     frozen_relations = {
@@ -1023,7 +1035,7 @@ def run_acquisition_wave(root) -> dict[str, Any]:
     cache: dict[str, dict[str, Any]] = {}
     results: list[dict[str, Any]] = []
 
-    for row in build_v2_contrast_sets(root)["results"]:
+    for row in build_v2_contrast_sets(root, readings_path=readings_path)["results"]:
         label = row["opportunity_label"]
         entry = acquisition["opportunities"].get(label)
         if entry is None:
@@ -1044,10 +1056,28 @@ def run_acquisition_wave(root) -> dict[str, Any]:
             vocabulary=vocabulary[row["anchor_study_unit_id"]], curated=curated,
         )
         pairs = row["contradiction_pairs"]
-        coherence = evaluate_contrast_set_coherence(
+        # Supply may have lifted an under-size frozen set over the minimum; the
+        # gate then runs on the supplied set exactly as it always has. Where it
+        # did not, the refusal is reported rather than raised, so a wave that
+        # could not close the gap is measurable instead of fatal. The frozen-five
+        # wave never reaches this branch.
+        undersized = sum(
+            1 for member in supplied_set["members"]
+            if member["role_in_set"] == "COMPETITOR"
+        ) < CONTRAST_SET_MINIMUM_COMPETITORS
+        coherence = None if undersized else evaluate_contrast_set_coherence(
             supplied_set, contradiction_pairs=pairs
         )
-        selection = select_admissible_subset(
+        selection = {
+            "admissible": False,
+            "dropped": {},
+            "surviving_competitors": sorted(
+                member["member_id"] for member in supplied_set["members"]
+                if member["role_in_set"] == "COMPETITOR"
+            ),
+            "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+            "residual_violations": None,
+        } if undersized else select_admissible_subset(
             supplied_set, coherence, contradiction_pairs=pairs
         )
 
@@ -1109,15 +1139,19 @@ def run_acquisition_wave(root) -> dict[str, Any]:
                 for candidate in _approved(entry)
             },
             "supply": supplied_set["supply"],
-            "VALID_COMPETITORS_BEFORE": sorted(
+            "VALID_COMPETITORS_BEFORE": [] if row["assembly_coherence"] is None
+            else sorted(
                 select_admissible_subset(
                     row["contrast_set"], row["assembly_coherence"],
                     contradiction_pairs=pairs,
                 )["surviving_competitors"]
             ),
             "VALID_COMPETITORS_AFTER": sorted(selection["surviving_competitors"]),
-            "assembly_violations_after": coherence["violations"],
-            "assembly_detail_after": [
+            "assembly_violations_after": (
+                ["FAIL_CLOSED_CONTRAST_SET_SIZE"] if coherence is None
+                else coherence["violations"]
+            ),
+            "assembly_detail_after": [] if coherence is None else [
                 {key: value for key, value in detail.items() if key != "note"}
                 for detail in coherence["detail"]
             ],
@@ -1164,6 +1198,27 @@ def solve_supplied_blueprint(
     from .contrast_first_v2_pilot import solve_v2_blueprint
 
     pairs = record["contradiction_pairs"]
+    # A set the wave could not lift over the minimum is refused here rather than
+    # inside the gate, so the opportunity carries a reason instead of raising.
+    if sum(
+        1 for member in record["contrast_set"]["members"]
+        if member["role_in_set"] == "COMPETITOR"
+    ) < CONTRAST_SET_MINIMUM_COMPETITORS:
+        return {
+            "stage_reached": "CONTRAST_SET_ASSEMBLY",
+            "terminal_state": "NO_SAFE_ITEM",
+            "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+            "selection": {
+                "admissible": False,
+                "surviving_competitors": sorted(
+                    member["member_id"] for member in record["contrast_set"]["members"]
+                    if member["role_in_set"] == "COMPETITOR"
+                ),
+                "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+            },
+            "blueprint": None,
+            "dropped_unsettleable": None,
+        }
     coherence = evaluate_contrast_set_coherence(
         record["contrast_set"], contradiction_pairs=pairs
     )
@@ -1380,12 +1435,19 @@ def run_frozen5_replay(
     wave: Mapping[str, Any],
     *,
     feature_anchor_snapshot: Mapping[str, Any] | None = None,
+    readings_path: str = V2_READINGS_PATH,
+    generated_path: str = None,
+    reviews_path: str | None = None,
+    scope: str = "QGEN_ON_DEMAND_SUPPLY_FROZEN5_REPLAY",
 ) -> dict[str, Any]:
     """Phase 19. One attempt for each opportunity whose supply reached three.
 
     ``feature_anchor_snapshot`` pins which snapshot supplies `SAF_1`'s anchors in
     the production gate. Unpinned, this replays exactly as it did against the
     frozen packs, and the committed recovery report still regenerates from it.
+
+    The three path arguments default to the frozen-five artifacts, so that replay
+    is unchanged; a later frozen batch passes its own and gets the same pipeline.
     """
     from .clinical_contrast_v2 import (
         build_feature_state_map,
@@ -1401,16 +1463,21 @@ def run_frozen5_replay(
         build_v2_contrast_sets,
     )
 
-    readings = _read(root, V2_READINGS_PATH)["opportunities"]
+    readings = _read(root, readings_path)["opportunities"]
     authoring = _read(root, V1_AUTHORING_PATH)["opportunities"]
     frozen = {
         row["opportunity_label"]: row
         for row in _read(root, V1_OPPORTUNITIES_PATH)["opportunities"]
     }
     vocabulary = load_stem_feature_vocabulary(root)
-    generated = _read(root, SUPPLY_GENERATED_PATH)
+    generated = _read(root, generated_path or SUPPLY_GENERATED_PATH)
+    reviews = (
+        generated["reviews"] if reviews_path is None
+        else _read(root, reviews_path)["reviews"]
+    )
     baseline = {
-        row["opportunity_label"]: row for row in build_v2_contrast_sets(root)["results"]
+        row["opportunity_label"]: row
+        for row in build_v2_contrast_sets(root, readings_path=readings_path)["results"]
     }
 
     rows: list[dict[str, Any]] = []
@@ -1515,13 +1582,13 @@ def run_frozen5_replay(
                 key_option_text=item["key_option_text"], stem_text=item["stem"],
             ),
             "blind_solver": generated["blind_solver"][label],
-            "review": generated["reviews"][label],
+            "review": reviews[label],
         })
         rows.append(row)
 
     return {
         "schema_version": "1.0",
-        "scope": "QGEN_ON_DEMAND_SUPPLY_FROZEN5_REPLAY",
+        "scope": scope,
         "one_attempt_per_opportunity": True,
         "production_gate": "profile_contrast_retrieval.retrieve_profile_aware_contrasts",
         "production_gate_unchanged": True,
