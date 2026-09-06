@@ -219,3 +219,66 @@ def test_contract_reconciliation_passes_on_every_precommitted_limb(replay):
 def test_the_gate_replay_report_regenerates_byte_identically():
     committed = json.loads((ROOT / GATE_REPLAY_REPORT_PATH).read_text())
     assert build_gate_replay(ROOT) == committed
+
+
+# ------------------------------------------------ frozen-five replay and decision
+
+
+@pytest.fixture(scope="module")
+def frozen5():
+    from scripts.qbank.feature_anchor_registry import build_frozen5_registry_replay
+
+    return build_frozen5_registry_replay(ROOT)
+
+
+def test_only_the_anchor_contract_moved_in_the_frozen_five_replay(frozen5):
+    """The two blueprint refusals are untouched, which is the correct outcome."""
+    rows = frozen5["per_opportunity"]
+    for label in ("G2-PED-02", "G2-PSY-03", "G2-SURG-01", "G2-SURG-02"):
+        assert rows[label]["legacy"] == rows[label]["new_snapshot"]
+    assert rows["G2-PED-01"]["legacy"]["passes_the_production_anchor_contract"] is False
+    assert rows["G2-PED-01"]["new_snapshot"]["passes_the_production_anchor_contract"] is True
+
+
+def test_the_frozen_five_before_and_after_accounting(frozen5):
+    counts = frozen5["counts"]
+    assert counts["FROZEN5_WITH_3_VALID_BEFORE_SUPPLY"] == "1/5"
+    assert counts["FROZEN5_WITH_3_VALID_AFTER_SUPPLY"] == "3/5"
+    assert counts["FROZEN5_VISIBLE_TO_LEGACY_SAF1"] == "0/5"
+    assert counts["FROZEN5_VISIBLE_TO_NEW_SAF1"] == "1/5"
+    assert counts["FROZEN5_GENERATED_BEFORE_REGISTRY_FIX"] == 1
+    assert counts["FROZEN5_GENERATED_AFTER_REGISTRY_FIX"] == 1
+    assert counts["FROZEN5_ACCEPTED_BEFORE_REGISTRY_FIX"] == 0
+    assert counts["FROZEN5_ACCEPTED_AFTER_REGISTRY_FIX"] == 1
+    assert counts["NEW_GENERATION_ATTEMPTS_RUN"] == 0
+
+
+def test_accepted_item_safety_is_perfect(frozen5):
+    assert frozen5["ACCEPTED_ITEM_SAFETY"] == "PASS"
+    assert set(frozen5["accepted_item_safety"].values()) == {0}
+    assert len(frozen5["accepted_item_safety"]) == 11
+
+
+def test_the_supply_context_cost_did_not_move(frozen5):
+    """The registry adds no serialization, so the recorded figures must hold."""
+    supply = frozen5["context_characters"]["supply_layer_only"]
+    assert supply["TOTAL_PER_OPPORTUNITY"] == {"median": 35824, "p95": 42860}
+
+
+def test_the_medium36_trigger_is_met_and_the_pilot_is_still_unbuildable():
+    from scripts.qbank.feature_anchor_registry import build_milestone_report
+
+    milestone = build_milestone_report(ROOT)
+    assert milestone["medium36"]["ALL_TRIGGER_LIMBS_MET"] is True
+    assert milestone["medium36"]["PILOT_IS_BUILDABLE"] is False
+    assert milestone["medium36"]["MEDIUM36_TRIGGERED"] == "NO"
+    assert milestone["medium36"]["feasibility"]["FROZEN_OPPORTUNITY_UNIVERSE"] == 30
+
+
+def test_the_frozen_five_replay_report_regenerates_byte_identically():
+    from scripts.qbank.feature_anchor_registry import (
+        FROZEN5_REPLAY_REPORT_PATH, build_frozen5_registry_replay,
+    )
+
+    committed = json.loads((ROOT / FROZEN5_REPLAY_REPORT_PATH).read_text())
+    assert build_frozen5_registry_replay(ROOT) == committed

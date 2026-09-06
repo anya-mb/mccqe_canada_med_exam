@@ -1,0 +1,97 @@
+{
+  "CONTRACT_RECONCILIATION": "PASS",
+  "FEATURE_ANCHOR_REGISTRY_MILESTONE": "COMPLETE",
+  "NEXT_DOMINANT_BOTTLENECK": "EVIDENCE_SCOPING",
+  "copyright": {
+    "COPYRIGHT_AUDIT": "PASS",
+    "artifacts_scanned": 10,
+    "longest_verbatim_toronto_notes_run_words": 0,
+    "method": "Every artifact is scanned for the longest run of consecutive tokens also occurring in the locally indexed Toronto Notes corpus, seeded on 12-word matches. The fingerprint set is built in memory and never written.",
+    "per_artifact": [
+      {
+        "artifact": "docs/superpowers/specs/2026-09-06-versioned-clinical-feature-anchor-registry-design.md",
+        "longest_verbatim_run_words": 0
+      },
+      {
+        "artifact": "scripts/qbank/feature_anchor_registry.py",
+        "longest_verbatim_run_words": 0
+      },
+      {
+        "artifact": "tests/test_feature_anchor_registry.py",
+        "longest_verbatim_run_words": 0
+      },
+      {
+        "artifact": "tests/test_feature_anchor_adapters.py",
+        "longest_verbatim_run_words": 0
+      },
+      {
+        "artifact": "research/qgen/feature_anchor_extensions.json",
+        "longest_verbatim_run_words": 0
+      },
+      {
+        "artifact": "research/qgen/feature_anchor_snapshots.json",
+        "longest_verbatim_run_words": 0
+      },
+      {
+        "artifact": "research/qgen/feature_anchor_registry_frozen5_review.json",
+        "longest_verbatim_run_words": 0
+      },
+      {
+        "artifact": "reports/qgen_feature_anchor_contract_reconciliation.json",
+        "longest_verbatim_run_words": 0
+      },
+      {
+        "artifact": "reports/qgen_feature_anchor_registry_gate_replay.json",
+        "longest_verbatim_run_words": 0
+      },
+      {
+        "artifact": "reports/qgen_feature_anchor_registry_frozen5_replay.json",
+        "longest_verbatim_run_words": 0
+      }
+    ]
+  },
+  "llm_api_calls": 0,
+  "medium36": {
+    "ALL_TRIGGER_LIMBS_MET": true,
+    "MEDIUM36_TRIGGERED": "NO",
+    "PILOT_IS_BUILDABLE": false,
+    "feasibility": {
+      "ALREADY_CONSUMED_BY_THIS_V2_REPLAY": 10,
+      "FEASIBLE": false,
+      "FROZEN_OPPORTUNITY_UNIVERSE": 30,
+      "OF_THOSE_WITH_AT_LEAST_THREE_ADMISSIBLE_CANDIDATES": 16,
+      "OPPORTUNITIES_WITH_AN_AUTHORED_OPTION_SET_CONTRACT": 18,
+      "REMAINING_UNUSED": 6,
+      "REQUIRED_BY_THE_SPECIFIED_PILOT": 36
+    },
+    "trigger_limbs": {
+      "ACCEPTED_ITEM_SAFETY_REMAINS_PERFECT": true,
+      "A_PREVIOUSLY_BLOCKED_VALID_OPPORTUNITY_IS_ADMITTED_END_TO_END": true,
+      "CONTRACT_RECONCILIATION_PASS": true
+    },
+    "why_not": "The Phase 26 trigger is met for the first time -- contract reconciliation passes, a previously blocked and independently valid opportunity is now admitted end to end, and accepted-item safety is perfect. The pilot still cannot be built, and that is the only reason it is not run. The whole frozen opportunity universe is 30, which is fewer than the 36 the specified pilot needs. Only 18 of those 30 carry the demanded response class and decision granularity the pre-stem predicates require, because the option set contract was authored for the contrast-first sample and for no other opportunity. Sixteen of the 18 reach three admissible curated candidates, and ten of those are consumed by this replay, leaving six. Building 36 would require authoring new opportunities, new competitive contrast seed packs with independent seed review, and new current-source evidence packets, which is the source-packet research stage rather than an architecture pilot, and the repository policy forbids inventing seeds or reconstructing evidence."
+  },
+  "next_bottleneck_detail": "The anchor layer is no longer the bottleneck: it is versioned, shared and extendable, and the one opportunity it was blocking is now accepted. What replaces it is measured rather than guessed. Of the four frozen-five opportunities still refused, two (G2-PED-02, G2-PSY-03) fail closed inside the blueprint solver on settleability and on supply rule S-6, and two (G2-SURG-01, G2-SURG-02) fail because SU-GS-76 carries no feature in which a non-gynaecologic differential could state a correctness condition and because CS2-9 fires on G2-SURG-02's own frozen key. The five NEW_FEATURE_REQUIRED extension proposals are all the same shape: a clinically legitimate competitor the vocabulary cannot express, and the vocabulary cannot grow without an evidence packet for the features it would need. That is evidence scoping, and it is now the largest single cause.",
+  "not_done_and_not_claimed": [
+    "The frozen 102-feature stem-feature vocabulary was not grown, so the five NEW_FEATURE_REQUIRED proposals stay refused and G2-SURG-01 stays inexpressible.",
+    "No new supply wave, no candidate discovery, no new evidence, no embeddings, no graph or Toronto Notes FTS expansion.",
+    "No new generation attempt was run, because none became available.",
+    "The out-of-set second-key gate V2 lacks is still not built.",
+    "Difficulty calibration is untouched; the one realized item is still declared MEDIUM and reads EASY."
+  ],
+  "production_lifecycle": {
+    "INVARIANT": "Knowledge is never mutated underneath an active experiment. An extension proposed during a batch is invisible to every later question in that same batch, which is what prevents adaptive contamination; and an approved anchor applies only in the decision contexts its review named.",
+    "RUN_N": "pin SNAPSHOT_N for every opportunity in the batch and record its id and registry hash in the batch's own artifact",
+    "THEN": [
+      "generate and independently review the batch against SNAPSHOT_N",
+      "collect proposed extensions without applying any of them",
+      "review the extensions independently, with UNCERTAIN failing closed",
+      "build SNAPSHOT_N+1 deterministically from SNAPSHOT_N plus the approved set, recording the exact diff",
+      "run the next batch against SNAPSHOT_N+1"
+    ]
+  },
+  "scaling_precondition_now_met": "The supply milestone recorded one stated precondition for scaling on-demand supply: that the plausibility-anchor layer become extendable and shared with the production gate. It is. Scaling is still not authorised here, and the binding constraint has moved rather than lifted.",
+  "schema_version": "1.0",
+  "scope": "QGEN_FEATURE_ANCHOR_REGISTRY_MILESTONE",
+  "starting_commit": "14f4508"
+}

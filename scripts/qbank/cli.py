@@ -1069,6 +1069,32 @@ def _command_run_contrast_supply_wave(arguments: argparse.Namespace) -> None:
     }, indent=2, sort_keys=True))
 
 
+def _command_run_feature_anchor_registry_milestone(arguments: argparse.Namespace) -> None:
+    """Replay the frozen five against the new snapshot and decide the milestone."""
+    from .feature_anchor_registry import (
+        FROZEN5_REPLAY_REPORT_PATH,
+        MILESTONE_REPORT_PATH,
+        build_frozen5_registry_replay,
+        build_milestone_report,
+    )
+
+    root = canonical_root(getattr(arguments, "root", Path.cwd()))
+    replay = build_frozen5_registry_replay(root)
+    write_json_atomic(resolve_root_path(root, FROZEN5_REPLAY_REPORT_PATH), replay)
+    milestone = build_milestone_report(root)
+    write_json_atomic(resolve_root_path(root, MILESTONE_REPORT_PATH), milestone)
+    print(json.dumps({
+        "FEATURE_ANCHOR_REGISTRY_MILESTONE": milestone[
+            "FEATURE_ANCHOR_REGISTRY_MILESTONE"
+        ],
+        "CONTRACT_RECONCILIATION": milestone["CONTRACT_RECONCILIATION"],
+        "counts": replay["counts"],
+        "ACCEPTED_ITEM_SAFETY": replay["ACCEPTED_ITEM_SAFETY"],
+        "MEDIUM36_TRIGGERED": milestone["medium36"]["MEDIUM36_TRIGGERED"],
+        "COPYRIGHT_AUDIT": milestone["copyright"]["COPYRIGHT_AUDIT"],
+    }, indent=2, sort_keys=True))
+
+
 def _command_run_feature_anchor_gate_replay(arguments: argparse.Namespace) -> None:
     """Replay the frozen-five gates under the legacy packs and both snapshots."""
     from .feature_anchor_registry import GATE_REPLAY_REPORT_PATH, build_gate_replay
@@ -1254,6 +1280,11 @@ def _parser() -> argparse.ArgumentParser:
             "run-contrast-supply-diagnosis",
             "diagnose contrast supply for the five V2 NO_SAFE_ITEM opportunities",
             _command_run_contrast_supply_diagnosis,
+        ),
+        (
+            "run-feature-anchor-registry-milestone",
+            "replay the frozen five against the new snapshot and decide the milestone",
+            _command_run_feature_anchor_registry_milestone,
         ),
         (
             "run-feature-anchor-gate-replay",

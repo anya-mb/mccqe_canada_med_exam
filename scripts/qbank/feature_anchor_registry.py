@@ -1449,3 +1449,266 @@ def _no_gate_weakened(regression: Mapping[str, Any]) -> bool:
         and extended["SECOND_KEY_REFUSALS"] == legacy["SECOND_KEY_REFUSALS"]
         and extended["ACCEPTED_CONTROLS_PRESERVED"] >= legacy["ACCEPTED_CONTROLS_PRESERVED"]
     )
+
+
+# ----------------------------------------- Phases 22 to 25 and 29: the replay
+
+FROZEN5_REPLAY_REPORT_PATH = "reports/qgen_feature_anchor_registry_frozen5_replay.json"
+FRESH_REVIEW_PATH = "research/qgen/feature_anchor_registry_frozen5_review.json"
+
+ACCEPTED_SAFETY_DIMENSIONS = (
+    "FACTUAL_ERRORS", "NUMERIC_ERRORS", "UNSUPPORTED_CLAIMS", "AMBIGUOUS_BEST_ANSWERS",
+    "CRITICAL_FACT_SAFETY_FAILURES", "MATERIAL_REDUNDANCY",
+    "COMPETITOR_WITHOUT_STEM_ANCHOR", "SECOND_KEY_RISK", "UNNATURAL_STEM_ENGINEERING",
+    "SILENCE_AS_ABSENCE_DEFECT", "BOOLEAN_LOGIC_DEFECT",
+)
+
+
+def build_frozen5_registry_replay(root) -> dict[str, Any]:
+    """Phases 22 to 25. The same supply artifacts, one variable: the snapshot."""
+    from .contrast_supply import (
+        measure_supply_context, run_acquisition_wave, run_frozen5_replay,
+    )
+
+    extended = load_snapshot(root, EXTENDED_SNAPSHOT_ID)
+    wave = run_acquisition_wave(root)
+    legacy = run_frozen5_replay(root, wave)
+    new = run_frozen5_replay(root, wave, feature_anchor_snapshot=extended)
+
+    def _terminal(replay: Mapping[str, Any]) -> dict[str, Any]:
+        rows = {}
+        for row in replay["results"]:
+            gate = row.get("production_gate")
+            realized = row["stage_reached"] == "INDEPENDENT_REVIEW"
+            rows[row["opportunity_label"]] = {
+                "three_valid_after_supply": row["three_valid_after"],
+                "stage_reached": row["stage_reached"],
+                "fail_closed_reason": row.get("fail_closed_reason"),
+                "item_realized": realized,
+                "passes_the_production_anchor_contract": (
+                    gate["post_stem_3_viable"] if gate else None
+                ),
+                "saf1_refusals": (gate["excluded_by_rule"]["SAF_1"] if gate else None),
+            }
+        return rows
+
+    legacy_rows, new_rows = _terminal(legacy), _terminal(new)
+    visible_legacy = sorted(
+        label for label, row in legacy_rows.items()
+        if row["passes_the_production_anchor_contract"]
+    )
+    visible_new = sorted(
+        label for label, row in new_rows.items()
+        if row["passes_the_production_anchor_contract"]
+    )
+
+    review = _read(root, FRESH_REVIEW_PATH)
+    accepted = sorted(
+        label for label in visible_new
+        if review["reviews"].get(label, {}).get("VERDICT") == "ACCEPT"
+    )
+    accepted_safety = {
+        dimension: sum(review["reviews"][label][dimension] for label in accepted)
+        for dimension in ACCEPTED_SAFETY_DIMENSIONS
+    }
+    realized_new = sorted(label for label, row in new_rows.items() if row["item_realized"])
+
+    context = measure_supply_context(wave, new)
+    supply_summary = context["supply_layer_only"]["summary"]
+
+    return {
+        "schema_version": "1.0",
+        "scope": "QGEN_FEATURE_ANCHOR_REGISTRY_FROZEN5_REPLAY",
+        "starting_commit": "14f4508",
+        "llm_api_calls": 0,
+        "one_attempt_per_opportunity": True,
+        "only_variable": "feature_anchor_snapshot_id",
+        "what_was_not_done": (
+            "No candidate was discovered, no supply wave was run, no evidence was "
+            "acquired, no key, difficulty or contrast relation was changed, and no "
+            "item was re-authored. No new generation attempt was made either, and "
+            "the reason is that none became available: the registry moves the "
+            "anchor contract, and the two opportunities that fail closed before a "
+            "stem exists fail on settleability and on supply rule S-6, neither of "
+            "which an anchor snapshot touches."
+        ),
+        "feature_anchor_snapshot_id": EXTENDED_SNAPSHOT_ID,
+        "registry_hash": extended["registry_hash"],
+        "per_opportunity": {
+            label: {"legacy": legacy_rows[label], "new_snapshot": new_rows[label]}
+            for label in sorted(legacy_rows)
+        },
+        "counts": {
+            "FROZEN5_WITH_3_VALID_BEFORE_SUPPLY": "1/5",
+            "FROZEN5_WITH_3_VALID_AFTER_SUPPLY": "{}/5".format(
+                sum(1 for row in new_rows.values() if row["three_valid_after_supply"])
+            ),
+            "FROZEN5_VISIBLE_TO_LEGACY_SAF1": f"{len(visible_legacy)}/5",
+            "FROZEN5_VISIBLE_TO_NEW_SAF1": f"{len(visible_new)}/5",
+            "visible_to_legacy_saf1": visible_legacy,
+            "visible_to_new_saf1": visible_new,
+            "FROZEN5_GENERATED_BEFORE_REGISTRY_FIX": 1,
+            "FROZEN5_GENERATED_AFTER_REGISTRY_FIX": len(realized_new),
+            "FROZEN5_ACCEPTED_BEFORE_REGISTRY_FIX": 0,
+            "FROZEN5_ACCEPTED_AFTER_REGISTRY_FIX": len(accepted),
+            "accepted": accepted,
+            "NEW_GENERATION_ATTEMPTS_RUN": 0,
+        },
+        "accepted_item_safety": accepted_safety,
+        "ACCEPTED_ITEM_SAFETY": (
+            "NO_ACCEPTED_ITEMS" if not accepted
+            else ("PASS" if not any(accepted_safety.values()) else "FAIL")
+        ),
+        "review": review,
+        "context_characters": {
+            "unit": "CHARACTERS",
+            "tokens_not_reported_because": (
+                "No local tokenizer is installed, and characters are not equated "
+                "with tokens."
+            ),
+            "v2_comparable": context["v2_comparable"]["summary"],
+            "supply_layer_only": supply_summary,
+            "NEXT_TOKEN_OPTIMIZATION_TARGET": "SERIALIZED_PAIRWISE_RELATION_PAYLOAD",
+            "why_not_optimized_here": (
+                "Phase 29's own rule: do not optimize before contract validation. "
+                "The registry now gives the supply layer stable feature and anchor "
+                "relation ids, which is the precondition for sending "
+                "`anchor_relation_id` references instead of re-serializing a "
+                "competitor's full anchor and condition payload on every pairwise "
+                "relation. Nothing was removed here, and no evidence a semantic "
+                "reviewer needs was touched."
+            ),
+        },
+    }
+
+
+# ------------------------------------- Phases 26 to 33: decision and audits
+
+MILESTONE_REPORT_PATH = "reports/qgen_feature_anchor_registry_milestone.json"
+
+TRACKED_REGISTRY_ARTIFACTS = (
+    "docs/superpowers/specs/"
+    "2026-09-06-versioned-clinical-feature-anchor-registry-design.md",
+    "scripts/qbank/feature_anchor_registry.py",
+    "tests/test_feature_anchor_registry.py",
+    "tests/test_feature_anchor_adapters.py",
+    EXTENSIONS_PATH,
+    SNAPSHOTS_PATH,
+    FRESH_REVIEW_PATH,
+    RECONCILIATION_REPORT_PATH,
+    GATE_REPLAY_REPORT_PATH,
+    FROZEN5_REPLAY_REPORT_PATH,
+)
+
+
+def build_milestone_report(root) -> dict[str, Any]:
+    """The milestone decision, the 36-pilot gate, and the audits."""
+    from .contrast_first_pilot import measure_copyright
+    from .contrast_supply import build_frozen5_recovery_report
+
+    replay = _read(root, GATE_REPLAY_REPORT_PATH)
+    frozen5 = _read(root, FROZEN5_REPLAY_REPORT_PATH)
+    feasibility = build_frozen5_recovery_report(root)["medium_pilot_feasibility"]
+
+    reconciliation_pass = replay["CONTRACT_RECONCILIATION"] == "PASS"
+    admitted_end_to_end = frozen5["counts"]["FROZEN5_ACCEPTED_AFTER_REGISTRY_FIX"] >= 1
+    safety_perfect = frozen5["ACCEPTED_ITEM_SAFETY"] == "PASS"
+
+    trigger = {
+        "CONTRACT_RECONCILIATION_PASS": reconciliation_pass,
+        "A_PREVIOUSLY_BLOCKED_VALID_OPPORTUNITY_IS_ADMITTED_END_TO_END": (
+            admitted_end_to_end
+        ),
+        "ACCEPTED_ITEM_SAFETY_REMAINS_PERFECT": safety_perfect,
+    }
+    buildable = feasibility["FEASIBLE"]
+    return {
+        "schema_version": "1.0",
+        "scope": "QGEN_FEATURE_ANCHOR_REGISTRY_MILESTONE",
+        "starting_commit": "14f4508",
+        "llm_api_calls": 0,
+        "FEATURE_ANCHOR_REGISTRY_MILESTONE": (
+            "COMPLETE" if reconciliation_pass and safety_perfect else "PARTIAL"
+        ),
+        "CONTRACT_RECONCILIATION": replay["CONTRACT_RECONCILIATION"],
+        "medium36": {
+            "MEDIUM36_TRIGGERED": "YES" if all(trigger.values()) and buildable else "NO",
+            "trigger_limbs": trigger,
+            "ALL_TRIGGER_LIMBS_MET": all(trigger.values()),
+            "PILOT_IS_BUILDABLE": buildable,
+            "why_not": (
+                "The Phase 26 trigger is met for the first time -- contract "
+                "reconciliation passes, a previously blocked and independently valid "
+                "opportunity is now admitted end to end, and accepted-item safety is "
+                "perfect. The pilot still cannot be built, and that is the only "
+                "reason it is not run. "
+                + feasibility["why_not"]
+            ),
+            "feasibility": {
+                key: feasibility[key] for key in (
+                    "FROZEN_OPPORTUNITY_UNIVERSE",
+                    "OPPORTUNITIES_WITH_AN_AUTHORED_OPTION_SET_CONTRACT",
+                    "OF_THOSE_WITH_AT_LEAST_THREE_ADMISSIBLE_CANDIDATES",
+                    "ALREADY_CONSUMED_BY_THIS_V2_REPLAY",
+                    "REMAINING_UNUSED",
+                    "REQUIRED_BY_THE_SPECIFIED_PILOT",
+                    "FEASIBLE",
+                )
+            },
+        },
+        "production_lifecycle": {
+            "RUN_N": (
+                "pin SNAPSHOT_N for every opportunity in the batch and record its "
+                "id and registry hash in the batch's own artifact"
+            ),
+            "THEN": [
+                "generate and independently review the batch against SNAPSHOT_N",
+                "collect proposed extensions without applying any of them",
+                "review the extensions independently, with UNCERTAIN failing closed",
+                "build SNAPSHOT_N+1 deterministically from SNAPSHOT_N plus the "
+                "approved set, recording the exact diff",
+                "run the next batch against SNAPSHOT_N+1",
+            ],
+            "INVARIANT": (
+                "Knowledge is never mutated underneath an active experiment. An "
+                "extension proposed during a batch is invisible to every later "
+                "question in that same batch, which is what prevents adaptive "
+                "contamination; and an approved anchor applies only in the decision "
+                "contexts its review named."
+            ),
+        },
+        "scaling_precondition_now_met": (
+            "The supply milestone recorded one stated precondition for scaling "
+            "on-demand supply: that the plausibility-anchor layer become extendable "
+            "and shared with the production gate. It is. Scaling is still not "
+            "authorised here, and the binding constraint has moved rather than lifted."
+        ),
+        "copyright": measure_copyright(root, TRACKED_REGISTRY_ARTIFACTS),
+        "not_done_and_not_claimed": [
+            "The frozen 102-feature stem-feature vocabulary was not grown, so the "
+            "five NEW_FEATURE_REQUIRED proposals stay refused and G2-SURG-01 stays "
+            "inexpressible.",
+            "No new supply wave, no candidate discovery, no new evidence, no "
+            "embeddings, no graph or Toronto Notes FTS expansion.",
+            "No new generation attempt was run, because none became available.",
+            "The out-of-set second-key gate V2 lacks is still not built.",
+            "Difficulty calibration is untouched; the one realized item is still "
+            "declared MEDIUM and reads EASY.",
+        ],
+        "NEXT_DOMINANT_BOTTLENECK": "EVIDENCE_SCOPING",
+        "next_bottleneck_detail": (
+            "The anchor layer is no longer the bottleneck: it is versioned, shared "
+            "and extendable, and the one opportunity it was blocking is now "
+            "accepted. What replaces it is measured rather than guessed. Of the "
+            "four frozen-five opportunities still refused, two (G2-PED-02, "
+            "G2-PSY-03) fail closed inside the blueprint solver on settleability "
+            "and on supply rule S-6, and two (G2-SURG-01, G2-SURG-02) fail because "
+            "SU-GS-76 carries no feature in which a non-gynaecologic differential "
+            "could state a correctness condition and because CS2-9 fires on "
+            "G2-SURG-02's own frozen key. The five NEW_FEATURE_REQUIRED extension "
+            "proposals are all the same shape: a clinically legitimate competitor "
+            "the vocabulary cannot express, and the vocabulary cannot grow without "
+            "an evidence packet for the features it would need. That is evidence "
+            "scoping, and it is now the largest single cause."
+        ),
+    }
