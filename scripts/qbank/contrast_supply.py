@@ -1787,6 +1787,7 @@ def build_frozen5_recovery_report(root) -> dict[str, Any]:
         "wave": wave,
         "medium_pilot_feasibility": medium36,
         "decision": decision,
+        "final_analysis": FINAL_ANALYSIS,
         "context_characters": measure_supply_context(wave, replay),
         "copyright": measure_copyright(root, SUPPLY_TRACKED_ARTIFACTS),
     }
@@ -1848,3 +1849,88 @@ def decide_supply_assessment(
             "recovered opportunities produce independently accepted items. Zero did."
         ),
     }
+
+
+# ------------------------------------------------------------ Phases 30 to 38
+
+#: Measured after the wave, and frozen here so the numbers cannot drift from the
+#: prose. Every count in it is reproduced by the code above or by the graph and
+#: FTS queries the acquisition artifact records.
+FINAL_ANALYSIS = {
+    "GRAPH_UNIQUE_APPROVED_CONTRIBUTIONS": 0,
+    "graph_measurement": (
+        "`graph_neighbourhood` was run at max_depth=1 from the study unit and the "
+        "Toronto Notes topic node for both anchor units. SU-P-147 reaches 6 CONCEPT "
+        "nodes and 1 topic node; SU-GS-76 reaches 3 CONCEPT nodes and 16 topic "
+        "nodes. Every one of the 9 concept nodes is already a curated seed, so the "
+        "graph discovered nothing the ordered sources above it had not. That "
+        "reproduces the contrast-first pilot's GRAPH_UNIQUE_USEFUL_CONTRIBUTIONS = 0 "
+        "and is a reason to keep the graph as a provenance and navigation aid rather "
+        "than expand it."
+    ),
+    "TN_FTS_UNIQUE_APPROVED_CONTRIBUTIONS": 0,
+    "fts_measurement": (
+        "Five bounded retrievals of 15 chunks each returned 8 candidate concepts, all "
+        "8 refused. But the refusals are not a retrieval failure and this is the "
+        "distinction the milestone asked for. For G2-SURG-01 the retrieval returned "
+        "exactly the non-gynaecologic differential the opportunity needed -- Crohn "
+        "disease, mesenteric lymphadenitis, caecal diverticulitis, genitourinary and "
+        "cardiopulmonary causes -- and every one of them was refused because the "
+        "frozen SU-GS-76 vocabulary has no feature in which it could state a "
+        "correctness condition. Used as evidence and concept discovery rather than as "
+        "a competitor generator, FTS did its job: it proved the ceiling instead of "
+        "papering over it."
+    ),
+    "LOCAL_EMBEDDING_TRIGGER_MET": "NO",
+    "embedding_trigger_reasoning": (
+        "The trigger is specific known-good competitors that remain unfindable "
+        "despite the curated library, the graph, TN FTS and source evidence, while "
+        "being known to exist in the corpus. Nothing in this wave meets it: the "
+        "competitors that are missing were all found, by BM25 and by the claim cards, "
+        "and then refused because they cannot be expressed. A better retriever "
+        "returns the same list."
+    ),
+    "difficulty": {
+        "EASY": {"attempted": 2, "realized": 0, "accepted": 0, "intent_match": "0/0"},
+        "MEDIUM": {"attempted": 2, "realized": 1, "accepted": 0, "intent_match": "0/1"},
+        "HARD": {"attempted": 0, "realized": 0, "accepted": 0, "intent_match": "0/0"},
+        "note": (
+            "One realized item, declared MEDIUM and read EASY by the blind solve and "
+            "by the review, for the reason already recorded for G2-PHELO-03: every "
+            "key condition is stated completely, and the completeness that makes an "
+            "item safe is what makes it read easy. One item cannot establish that "
+            "difficulty calibration is the next bottleneck, and it is not claimed."
+        ),
+    },
+    "WHOLE_BOOK_CONTRAST_SCALING_DECISION": "SCALE_CONTRAST_RELATIONS_ON_DEMAND",
+    "scaling_rationale": (
+        "Broad prepopulation is refused on measured evidence rather than on "
+        "principle: over these five opportunities a prepopulated graph would have "
+        "contributed 0 novel concepts and a prepopulated FTS competitor index 0 "
+        "approved relations, because the binding constraint is expressibility rather "
+        "than recall. On-demand acquisition, by contrast, settled 42 relation "
+        "requests with 29 cache hits and 13 new relations. The direction stands, with "
+        "one stated precondition: until the plausibility-anchor layer is extendable "
+        "and shared with the production gate, scaling on-demand supply scales "
+        "V2-admissible sets that production will refuse."
+    ),
+    "NEXT_DOMINANT_BOTTLENECK": "OTHER_FROZEN_STEM_FEATURE_AND_ANCHOR_LAYER",
+    "next_bottleneck_detail": (
+        "Two of the five refusals are the frozen vocabulary and the frozen anchor "
+        "pack directly -- G2-SURG-01 cannot express a non-gynaecologic differential, "
+        "and G2-PED-01's added anchors are invisible to the production anchor floor. "
+        "Two more, G2-PED-02 and G2-PSY-03, are the difficulty contract's settlement "
+        "budget colliding with conditions the vocabulary leaves unstateable. Only "
+        "G2-SURG-02 is something else, and that is a defect in its own frozen key. "
+        "Runner-up bottleneck: DIFFICULTY_CALIBRATION, on the same evidence as before "
+        "and no stronger."
+    ),
+    "NEXT_STEP": "USER_REVIEW_SUPPLY_MILESTONE",
+    "why_user_review": (
+        "The change this wave points at -- making the plausibility-anchor layer an "
+        "extendable, independently reviewed artifact that both V2 and "
+        "retrieve_profile_aware_contrasts read, and deciding whether the frozen "
+        "stem-feature vocabulary may grow -- reopens a frozen layer. AGENTS.md "
+        "requires explicit authorization for that, and this task did not carry it."
+    ),
+}

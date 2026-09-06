@@ -21,7 +21,7 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `f8bd916e4d5959d303dbfe4cec864bdd2a047e66`.
+- Audited coordinator input commit: `1a132aa429409c220295eddeb7f1d2b91d0bca58`.
 - Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
@@ -836,7 +836,84 @@ This section is maintained by hand and sits outside the generated source-researc
   competitors for too few opportunities once V2 removes the nested, redundant and
   anchor-equals-condition members, and 12 of 30 opportunities have no option-set contract at all.
   Runner-up: the missing out-of-set second-key gate above.
-- QGEN_NEXT_STEP = `USER_REVIEW_CLINICAL_CONTRAST_V2`
+- **On-demand clinical contrast supply (2026-09-05), from `b591226`.** Diagnosis `02cfa58`, design
+  `42cdca3` (`docs/superpowers/specs/2026-09-05-on-demand-clinical-contrast-supply-design.md`),
+  infrastructure `ad1c820`, wave `1a132aa`. `SUPPLY_ASSESSMENT = ON_DEMAND_CONTRAST_SUPPLY_PROMISING`.
+  V2 was not redesigned, the production generator was not replaced, no broad bank was generated,
+  no embeddings, no whole-book extraction, `LLM_API_CALLS = 0`, `FROZEN_QGEN_ARTIFACTS_CHANGED = 0`,
+  `CLAUDE.md` unchanged.
+- **The diagnosis is the part worth remembering.** Six competitor drops across the five frozen
+  NO_SAFE_ITEM opportunities: four `CS2-6` ANCHOR_EQUALS_CONDITION, one `CS2-7` NO_USABLE_ANCHOR,
+  one `CS2-1` nesting. Five of the six are properties of the **frozen stem-anchor layer** rather
+  than of the clinical concept, so the missing supply was anchor supply, not concept supply.
+  `FROZEN5_PRIMARY_SUPPLY_CAUSES` = `H_CURRENT_CONTRAST_LIBRARY_COVERAGE_GAP` (G2-PED-01,
+  G2-PED-02), `L_OTHER_DIFFICULTY_SETTLEMENT_BUDGET` (G2-PSY-03),
+  `L_OTHER_FROZEN_STEM_FEATURE_VOCABULARY_CEILING` (G2-SURG-01),
+  `L_OTHER_KEY_CONDITION_NOT_OBSERVABLE` (G2-SURG-02).
+- **One bounded wave each: 15 candidates discovered, 15 reviewed, 4 approved, 11 refused, 0
+  uncertain.** Opportunities holding three admissible V2 competitors went **1/5 -> 3/5**. All four
+  approved relations came from sources already in the repository -- 2 `APPROVED_V2_RELATION`, 2
+  `CURATED_LIBRARY` -- and all four rest on rule S-4, an evidence-cited plausibility anchor added to
+  a candidate whose frozen anchor row equalled its own correctness conditions. New-supply safety is
+  zero on all eight dimensions.
+- **The finding that matters most: an anchor the supply layer adds is invisible to the production
+  gate.** G2-PED-01 reached a stem, realized its blueprint exactly, stayed post-stem coherent and
+  was accepted by an independent review scoring zero on all eleven dimensions -- and
+  `retrieve_profile_aware_contrasts` then refused two of its three competitors under **`SAF_1`
+  STEM_PLAUSIBILITY_ANCHOR_ABSENT**, because that rule reads the frozen stem-anchor pack that design
+  rule S-2 forbids supply to edit. `FROZEN5_RECOVERED_ACCEPTED = 0`. Supply can move a competitor in
+  V2's semantics and cannot move it in production's.
+- **Rule S-6 was added mid-wave, before any stem was written, and it changed an outcome.** The
+  solver's first admissible blueprint for G2-PSY-03 dropped digital CBT from the option set and then
+  asserted the inaccessibility of in-person delivery, a required-PRESENT leaf of that same dropped
+  candidate. Supply may not remove an option and then spend its own condition to defeat its
+  neighbour; G2-PSY-03 fails closed again as `FAIL_CLOSED_DROPPED_CANDIDATE_SIGNATURE_SPENT`.
+- The two surgical opportunities stayed refused for the reasons the diagnosis predicted and neither
+  is a retrieval failure. Toronto Notes FTS returned exactly the non-gynaecologic right-lower-quadrant
+  differential G2-SURG-01 needs -- Crohn disease, mesenteric lymphadenitis, caecal diverticulitis,
+  genitourinary and cardiopulmonary causes -- and every one was refused because SU-GS-76 carries no
+  feature in which it could state a correctness condition. G2-SURG-02 fails `CS2-9` on its own frozen
+  key and no competitor supply reaches that.
+- The reviewer also refused, in terms, to relabel ectopic pregnancy into a separate concept category
+  to clear `CS2-5`: the cue that rule exists to catch is that appendicitis is the only
+  non-gynaecologic option on the page, and a relabelling would hide the cue from the rule while
+  leaving it in front of the candidate.
+- `GRAPH_UNIQUE_APPROVED_CONTRIBUTIONS = 0`, measured: `graph_neighbourhood` at `max_depth=1` from
+  each study unit and its Toronto Notes topic node reaches 6 and 3 CONCEPT nodes, and all 9 are
+  already curated seeds. `TN_FTS_UNIQUE_APPROVED_CONTRIBUTIONS = 0`.
+  `LOCAL_EMBEDDING_TRIGGER_MET = NO`: the missing competitors were all found and then refused as
+  inexpressible, so a better retriever returns the same list.
+- Cache economics: `TOTAL_RELATION_REQUESTS 42`, `CONTRAST_CACHE_HITS 29`, `NEW_RELATIONS_CREATED 13`,
+  reuse across opportunities and disciplines 0. Adding an anchor changes a relation's payload and so
+  its content hash, which is why the two opportunities that received anchors show few hits.
+- Context, characters, measured the same way `measure_v2_context` measures it so the comparison is
+  like for like: median **9,422** / p95 9,422 over the one realized item against V2's 8,481 / 9,123.
+  The supply layer adds a further median **35,824** / p95 42,860 per opportunity, **96 % of it the
+  serialized pairwise relation payload**, which is the next token-cost target if this scales.
+- `MEDIUM_36_PILOT_TRIGGERED = NO`, for two independent and sufficient reasons: the Phase 21 trigger
+  is not met with zero accepted items, and the pilot still cannot be built. Re-measured unchanged --
+  frozen opportunity universe 30, 18 with an authored option-set contract, 16 reaching three
+  admissible candidates, 10 consumed by the V2 replay, **6 remaining**.
+- `WHOLE_BOOK_CONTRAST_SCALING_DECISION = SCALE_CONTRAST_RELATIONS_ON_DEMAND` stands, now on measured
+  evidence against the alternative rather than on principle: broad prepopulation would have
+  contributed 0 novel concepts and 0 approved relations here, because the constraint is
+  expressibility rather than recall. One stated precondition: until the plausibility-anchor layer is
+  extendable and shared with the production gate, scaling on-demand supply scales V2-admissible sets
+  that production refuses.
+- `COPYRIGHT_AUDIT = PASS`, longest verbatim Toronto Notes run **0** over 8 tracked artifacts. Focused
+  tests `tests/test_contrast_supply.py` **30/0**; full canonical suite **1342/0** at the final code
+  state. Reports rebuild with `qbank run-contrast-supply-diagnosis` and `qbank
+  run-contrast-supply-wave`, and a test asserts each regenerates byte-identically.
+- `NEXT_DOMINANT_BOTTLENECK = OTHER_FROZEN_STEM_FEATURE_AND_ANCHOR_LAYER`. Four of the five refusals
+  are that layer directly or the difficulty settlement budget colliding with what it cannot state;
+  only G2-SURG-02 is something else. Runner-up stays `DIFFICULTY_CALIBRATION`, on no stronger
+  evidence than before: the single realized item was declared MEDIUM and read EASY, for the same
+  reason G2-PHELO-03 did.
+- QGEN_NEXT_STEP = `USER_REVIEW_SUPPLY_MILESTONE`. The change this points at -- making the
+  plausibility-anchor layer an extendable, independently reviewed artifact that both V2 and
+  `retrieve_profile_aware_contrasts` read, and deciding whether the frozen stem-feature vocabulary
+  may grow -- reopens a frozen layer, which AGENTS.md requires explicit authorization for and this
+  task did not carry.
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 
 ## Research-level policy
