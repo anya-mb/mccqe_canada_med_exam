@@ -17,7 +17,9 @@
   "authorship": {
     "additional_contradiction_pair_rule": "A V2 contradiction pair may be declared only where two frozen vocabulary features are negations of one another about the same quantity, with a cited claim. It is an addition to a derivative file and never edits the frozen V1 contradiction list.",
     "concept_category_rule": "concept_category names the kind of move an option is, on one axis chosen per set: mechanism of action for a management set, disease mechanism for a diagnosis set, modality for an imaging set, bias mechanism for an epidemiology set. It is authored from what the option does, and two options share a category only when a candidate choosing between them is making the same kind of choice.",
+    "discriminator_scoping_rule": "A discriminator is declared against the competitors it actually decides. A feature two concepts share cannot discriminate between them, however well cited it is, and an unscoped discriminator would let the solver settle a competitor on a fact that does not bear on it.",
     "disjunction_reading_rule": "A prose clause list joined by 'or' is ANY_OF; a clause list joined by 'and' where every clause must hold of the same patient is ALL_OF; two independent indications listed together ('correct in X, and as the first modality in Y') are ANY_OF, because either alone makes the option right. Where a disjunct has no feature in the frozen vocabulary it is recorded in unmapped_disjuncts and never silently dropped.",
+    "forbidden_present_feature_rule": "A feature is forbidden PRESENT where a cited claim makes it the signature of a concept that is not in the option set. A stem that states it would carry a second key the option set cannot contain, which no rationale can repair.",
     "llm_api_calls": 0,
     "role_override_rule": "A CLINICAL_JUDGEMENT feature may be typed to a PRESENTATION-class contrast role only when a cited claim makes the judgement itself the guideline's operative criterion AND the judgement is not a score recomputed from other findings the stem also states. Severity bands in bronchiolitis monitoring and in depression treatment selection meet both limbs; an Alvarado suspicion band meets the first and fails the second, and is left BACKGROUND_CONTEXT.",
     "what_is_not_changed": "No opportunity, MCC objective, learner decision, difficulty intent, seed, stem, option, verdict or evidence packet moves. Every feature id is drawn from the frozen g2_stem_feature_vocabulary and every claim id from a frozen evidence packet. No new clinical claim is authored: every predicate carries the prose it is a reading of.",
@@ -206,6 +208,15 @@
         }
       },
       "decision_domain": "PATIENT_CLINICAL",
+      "forbidden_present_features": {
+        "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE": {
+          "basis": "CLM-R4-OB-PHLEGMON: phlegmon should be suspected with a history of mastitis that worsens into a firm, mass-like area without fluctuance. Asserting this feature in a woman with systemic mastitis symptoms makes phlegmon the best answer, and phlegmon is not in this option set, so the stem would carry a second key outside the contrast set. The V1 item stated it and its key rationale then had to render CLM-R2-OB-ABSCESS as its categorical inverse to explain the finding away, which is the H_OPTION_WORDING_REALIZATION_DEFECT the diagnosis recorded.",
+          "evidence_refs": [
+            "CLM-R4-OB-PHLEGMON",
+            "CLM-R2-OB-ABSCESS"
+          ]
+        }
+      },
       "key": {
         "concept_category": "INFECTIVE_INFLAMMATORY",
         "correctness_conditions": {
@@ -229,6 +240,9 @@
       },
       "key_discriminators": [
         {
+          "against": [
+            "SEED-OB-T01-IBC"
+          ],
           "contrast_role": "KEY_DISCRIMINATOR",
           "evidence_refs": [
             "CLM-R2-OB-MASTITIS-ANCHOR",
@@ -238,23 +252,13 @@
           "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
           "required_state": "PRESENT",
           "salience": "MODERATE",
+          "scoping_reason": "Systemic illness does not separate mastitis from an abscess, which is a progression of the same infection and is at least as febrile. It separates the infective picture from inflammatory breast cancer, whose concern CLM-R2-OB-IBC raises on skin thickening, retraction and peau d'orange.",
           "statement": "Systemic signs with a segmental erythematous breast are the mastitis pattern; the inflammatory-carcinoma concern is raised by skin thickening, retraction and peau d'orange rather than by systemic illness."
-        },
-        {
-          "contrast_role": "KEY_DISCRIMINATOR",
-          "evidence_refs": [
-            "CLM-R4-OB-PHLEGMON",
-            "CLM-R2-OB-ABSCESS"
-          ],
-          "favours": "A",
-          "feature_id": "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
-          "required_state": "PRESENT",
-          "salience": "SALIENT",
-          "statement": "A firm mass-like area without fluctuance is the phlegmon end of the spectrum; an abscess is a drainable fluid collection."
         }
       ],
       "nesting": [],
-      "role_overrides": {}
+      "role_overrides": {},
+      "settlement_note": "The lactational abscess competitor has no evidence-backed discriminator against it: an abscess is a progression of bacterial mastitis and shares its systemic features, so the only thing that separates them is whether a drainable collection is there. That has to be stated, and it is the single explicit denial this EASY item spends."
     },
     "G2-PED-01": {
       "competitors": {
@@ -672,6 +676,9 @@
       },
       "key_discriminators": [
         {
+          "against": [
+            "SEED-PHELO-T02-SENSITIVITY"
+          ],
           "contrast_role": "MANAGEMENT_ELIGIBILITY",
           "evidence_refs": [
             "CLM-R4-PHELO-CONSENT-CRITERION",
@@ -682,9 +689,13 @@
           "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
           "required_state": "PRESENT",
           "salience": "MODERATE",
+          "scoping_reason": "A voluntariness statement is itself an autonomy measure, so the stated objective cannot be a discriminator against it. It is a discriminator against reporting test performance, which does not give the invited person a figure they can act on.",
           "statement": "Where the programme's stated objective is informed choice, autonomy is compromised by the way information is given, so the revision must give the invited person figures they can act on rather than figures that describe the test's performance."
         },
         {
+          "against": [
+            "SEED-PHELO-T02-SENSITIVITY"
+          ],
           "contrast_role": "INVESTIGATION_FINDING",
           "evidence_refs": [
             "CLM-R4-PHELO-ABSOLUTE"
@@ -693,6 +704,7 @@
           "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
           "required_state": "PRESENT",
           "salience": "SALIENT",
+          "scoping_reason": "The relative-benefit-only defect is what an absolute figure repairs and what test-performance figures do not; the other two competitors are settled by the same fact stating their conditions contrary, not by a discriminator.",
           "statement": "A relative-risk-only statement is the specific defect an absolute figure repairs."
         }
       ],
@@ -782,6 +794,9 @@
       },
       "key_discriminators": [
         {
+          "against": [
+            "SEED-PHELO-T03-RAISE-CUTOFF"
+          ],
           "contrast_role": "MANAGEMENT_ELIGIBILITY",
           "evidence_refs": [
             "CLM-GEN-PHELO-ORG-01",
@@ -792,6 +807,7 @@
           "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
           "required_state": "PRESENT",
           "salience": "MODERATE",
+          "scoping_reason": "The capacity shortfall states the other two competitors' conditions contrary outright. Against a threshold change it is a genuine discriminator: raising the cut-off lowers referral volume without creating the confirmatory pathway.",
           "statement": "An absolute shortfall in the confirmatory pathway is not repaired by moving the cut-off: raising it reduces referral volume but still labels people who cannot then be investigated, which is the harm CLM-R4-PHELO-HARM-LABEL names."
         }
       ],

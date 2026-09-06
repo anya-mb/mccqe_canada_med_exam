@@ -259,3 +259,173 @@ def test_the_replay_reads_the_frozen_stems_and_writes_nothing(replay):
         assert set(row["features_implied_absent_by_contradiction"]).isdisjoint(
             row["stem_asserted_features"]
         ), label
+
+
+# ---------------------------------------------------------------- the replay
+
+
+@pytest.fixture(scope="module")
+def v2_replay():
+    from qbank.contrast_first_v2_pilot import run_v2_replay
+
+    return {row["opportunity_label"]: row for row in run_v2_replay(ROOT)["results"]}
+
+
+@pytest.fixture(scope="module")
+def verification(v2_replay):
+    from qbank.contrast_first_v2_pilot import build_verification_report, run_v2_replay
+
+    return build_verification_report(ROOT, run_v2_replay(ROOT))
+
+
+def test_one_attempt_per_opportunity_and_no_prose_for_a_refused_set(v2_replay):
+    for label, row in v2_replay.items():
+        if row["terminal_state"] == "NO_SAFE_ITEM":
+            assert "stem" not in row, label
+            assert row["fail_closed_reason"], label
+        else:
+            assert row["stem"], label
+
+
+def test_every_realized_stem_realizes_its_blueprint_exactly(v2_replay):
+    for label, row in v2_replay.items():
+        if row["stage_reached"] != "INDEPENDENT_REVIEW":
+            continue
+        assert row["stem_realizes_the_blueprint_exactly"], label
+
+
+def test_every_realized_item_clears_the_unchanged_production_gate(v2_replay):
+    for label, row in v2_replay.items():
+        if row["stage_reached"] != "INDEPENDENT_REVIEW":
+            continue
+        gate = row["production_gate"]
+        assert gate["post_stem_3_viable"], label
+        assert gate["gate_is_the_production_gate"] == (
+            "profile_contrast_retrieval.retrieve_profile_aware_contrasts"
+        )
+        for rule, excluded in gate["excluded_by_rule"].items():
+            assert excluded == [], (label, rule)
+
+
+def test_every_realized_competitor_is_live_but_inferior(v2_replay):
+    from qbank.clinical_contrast_v2 import LIVE_BUT_INFERIOR
+
+    for label, row in v2_replay.items():
+        if row["stage_reached"] != "INDEPENDENT_REVIEW":
+            continue
+        for verdict in row["competitor_verdicts"]:
+            assert verdict["state"] == LIVE_BUT_INFERIOR, (label, verdict["member_id"])
+            assert verdict["second_key_risk"] is False, (label, verdict["member_id"])
+
+
+def test_every_competitor_is_settled_by_a_named_route_never_by_silence(v2_replay):
+    from qbank.contrast_first_v2_pilot import SETTLEMENT_ROUTES
+
+    for label, row in v2_replay.items():
+        if row["stage_reached"] != "INDEPENDENT_REVIEW":
+            continue
+        settlement = row["stem_blueprint_v2"]["competitor_settlement"]
+        assert settlement, label
+        for member_id, route in settlement.items():
+            assert route["route"] in SETTLEMENT_ROUTES, (label, member_id)
+            assert route["features"], (label, member_id)
+
+
+def test_no_rationale_uses_the_v1_template_clause(v2_replay):
+    for label, row in v2_replay.items():
+        if row["stage_reached"] != "INDEPENDENT_REVIEW":
+            continue
+        for option in row["options"]:
+            assert "condition is not met here" not in option["rationale"].lower(), label
+
+
+def test_distractor_option_text_is_the_frozen_seed_string_verbatim(v2_replay):
+    from qbank.contrast_first_v2_pilot import build_v2_contrast_sets
+
+    concepts = {
+        member["member_id"]: member["concept"]
+        for record in build_v2_contrast_sets(ROOT)["results"]
+        for member in record["contrast_set"]["members"]
+    }
+    for label, row in v2_replay.items():
+        if row["stage_reached"] != "INDEPENDENT_REVIEW":
+            continue
+        for option in row["options"]:
+            if option["is_key"]:
+                continue
+            assert option["text"] == concepts[option["source"]], (label, option["source"])
+
+
+def test_accepted_item_safety_is_perfect(verification):
+    assert verification["ACCEPTED_ITEM_SAFETY"] == "PASS"
+    assert all(value == 0 for value in verification["accepted_item_safety"].values())
+
+
+def test_the_v2_outcome_over_the_same_ten_opportunities(verification):
+    assert verification["counts"] == {
+        "ITEMS_REALIZED": 5,
+        "ACCEPTED": 4,
+        "REJECTED": 1,
+        "NO_SAFE_ITEM": 5,
+        "accepted": ["G2-MED-03", "G2-PHELO-01", "G2-PHELO-02", "G2-PHELO-03"],
+        "rejected": ["G2-OBGYN-01"],
+        "no_safe_item": [
+            "G2-PED-01", "G2-PED-02", "G2-PSY-03", "G2-SURG-01", "G2-SURG-02",
+        ],
+    }
+
+
+def test_the_specified_medium_pilot_cannot_be_built_from_canonical_material():
+    from qbank.contrast_first_v2_pilot import measure_medium_pilot_supply
+
+    supply = measure_medium_pilot_supply(ROOT)
+    assert supply["FEASIBLE"] is False
+    assert supply["FROZEN_OPPORTUNITY_UNIVERSE"] == 30
+    assert supply["OPPORTUNITIES_WITH_AN_AUTHORED_OPTION_SET_CONTRACT"] == 18
+    assert supply["REMAINING_UNUSED"] == 6
+
+
+def test_the_v2_reports_regenerate_byte_identically_from_committed_artifacts():
+    from qbank.contrast_first_pilot import measure_copyright
+    from qbank.contrast_first_v2_pilot import (
+        V2_TRACKED_ARTIFACTS,
+        build_comparison_report,
+        build_counterfactual_report,
+        build_difficulty_report,
+        build_verification_report,
+        decide_v2_assessment,
+        measure_medium_pilot_supply,
+        measure_v2_context,
+        run_v2_replay,
+    )
+
+    rebuilt = run_v2_replay(ROOT)
+    verification = build_verification_report(ROOT, rebuilt)
+    counterfactual = build_counterfactual_report(ROOT)
+    counterfactual.pop("contrast_sets")
+    comparison = build_comparison_report(ROOT, rebuilt, verification, counterfactual)
+    supply = measure_medium_pilot_supply(ROOT)
+    decision = decide_v2_assessment(verification, comparison, counterfactual, supply)
+    verification.update({
+        "decision": decision,
+        "difficulty": build_difficulty_report(ROOT, rebuilt, verification),
+        "context_characters": measure_v2_context(ROOT, rebuilt),
+        "copyright": measure_copyright(ROOT, V2_TRACKED_ARTIFACTS),
+        "replay": rebuilt,
+    })
+    comparison["medium_pilot_feasibility"] = supply
+    comparison["decision"] = decision
+    for relative, value in (
+        ("reports/qgen_clinical_contrast_v2_pilot_verification.json", verification),
+        ("reports/qgen_clinical_contrast_v1_vs_v2.json", comparison),
+    ):
+        assert json.loads((ROOT / relative).read_text()) == value, relative
+
+
+def test_no_toronto_notes_text_is_reproduced():
+    from qbank.contrast_first_pilot import measure_copyright
+    from qbank.contrast_first_v2_pilot import V2_TRACKED_ARTIFACTS
+
+    audit = measure_copyright(ROOT, V2_TRACKED_ARTIFACTS)
+    assert audit["COPYRIGHT_AUDIT"] == "PASS"
+    assert audit["longest_verbatim_toronto_notes_run_words"] == 0

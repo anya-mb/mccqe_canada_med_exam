@@ -1823,7 +1823,7 @@
               "seed_id": "SEED-OB-T01-ABSCESS"
             },
             "confusability": "HIGH",
-            "contrast_relation_id": "CCR2-b558fca28d8b13c5f29350be",
+            "contrast_relation_id": "CCR2-61b169f0b2721e9c022d59c4",
             "correctness_conditions_a": {
               "conditions": [
                 {
@@ -1853,39 +1853,12 @@
               "CURATED_LIBRARY",
               "FROZEN_EVIDENCE_PACKET"
             ],
-            "discriminators": [
-              {
-                "contrast_role": "KEY_DISCRIMINATOR",
-                "evidence_refs": [
-                  "CLM-R2-OB-MASTITIS-ANCHOR",
-                  "CLM-R2-OB-IBC"
-                ],
-                "favours": "A",
-                "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
-                "required_state": "PRESENT",
-                "salience": "MODERATE",
-                "statement": "Systemic signs with a segmental erythematous breast are the mastitis pattern; the inflammatory-carcinoma concern is raised by skin thickening, retraction and peau d'orange rather than by systemic illness."
-              },
-              {
-                "contrast_role": "KEY_DISCRIMINATOR",
-                "evidence_refs": [
-                  "CLM-R4-OB-PHLEGMON",
-                  "CLM-R2-OB-ABSCESS"
-                ],
-                "favours": "A",
-                "feature_id": "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
-                "required_state": "PRESENT",
-                "salience": "SALIENT",
-                "statement": "A firm mass-like area without fluctuance is the phlegmon end of the spectrum; an abscess is a drainable fluid collection."
-              }
-            ],
+            "discriminators": [],
             "evidence_refs": [
               "CLM-GEN-OB-DX-01",
               "CLM-GEN-OB-INV-01",
               "CLM-R2-OB-ABSCESS",
-              "CLM-R2-OB-IBC",
-              "CLM-R2-OB-MASTITIS-ANCHOR",
-              "CLM-R4-OB-PHLEGMON"
+              "CLM-R2-OB-MASTITIS-ANCHOR"
             ],
             "learner_decision_id": "LD-OB54-01",
             "mcc_relevance": "LD-OB54-01 for MCC objective 80-2, IMPORTANT in OBGYN",
@@ -1905,6 +1878,11 @@
               }
             ],
             "shared_features": [
+              {
+                "clinical_role": "VITAL_SIGN",
+                "contrast_role": "SEVERITY_FEATURE",
+                "feature_id": "SF-OB54-SYSTEMIC-ILLNESS"
+              },
               {
                 "clinical_role": "EXAMINATION_FINDING",
                 "contrast_role": "POSITIVE_SUPPORT",
@@ -1956,7 +1934,7 @@
               "seed_id": "SEED-OB-T01-GALACTOCELE"
             },
             "confusability": "MODERATE",
-            "contrast_relation_id": "CCR2-d6ca25e48c5d51ea8aff8011",
+            "contrast_relation_id": "CCR2-b31c28db3528c4dc788197b6",
             "correctness_conditions_a": {
               "conditions": [
                 {
@@ -1994,39 +1972,11 @@
               "CURATED_LIBRARY",
               "FROZEN_EVIDENCE_PACKET"
             ],
-            "discriminators": [
-              {
-                "contrast_role": "KEY_DISCRIMINATOR",
-                "evidence_refs": [
-                  "CLM-R2-OB-MASTITIS-ANCHOR",
-                  "CLM-R2-OB-IBC"
-                ],
-                "favours": "A",
-                "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
-                "required_state": "PRESENT",
-                "salience": "MODERATE",
-                "statement": "Systemic signs with a segmental erythematous breast are the mastitis pattern; the inflammatory-carcinoma concern is raised by skin thickening, retraction and peau d'orange rather than by systemic illness."
-              },
-              {
-                "contrast_role": "KEY_DISCRIMINATOR",
-                "evidence_refs": [
-                  "CLM-R4-OB-PHLEGMON",
-                  "CLM-R2-OB-ABSCESS"
-                ],
-                "favours": "A",
-                "feature_id": "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
-                "required_state": "PRESENT",
-                "salience": "SALIENT",
-                "statement": "A firm mass-like area without fluctuance is the phlegmon end of the spectrum; an abscess is a drainable fluid collection."
-              }
-            ],
+            "discriminators": [],
             "evidence_refs": [
               "CLM-GEN-OB-DX-01",
-              "CLM-R2-OB-ABSCESS",
-              "CLM-R2-OB-IBC",
               "CLM-R2-OB-MASTITIS-ANCHOR",
-              "CLM-R4-OB-GALACTOCELE",
-              "CLM-R4-OB-PHLEGMON"
+              "CLM-R4-OB-GALACTOCELE"
             ],
             "learner_decision_id": "LD-OB54-01",
             "mcc_relevance": "LD-OB54-01 for MCC objective 80-2, IMPORTANT in OBGYN",
@@ -2104,7 +2054,7 @@
               "seed_id": "SEED-OB-T01-IBC"
             },
             "confusability": "HIGH",
-            "contrast_relation_id": "CCR2-4938dc05ed630dbbafe73444",
+            "contrast_relation_id": "CCR2-3efcc5c6ef841636d90bad8c",
             "correctness_conditions_a": {
               "conditions": [
                 {
@@ -2149,27 +2099,14 @@
                 "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
                 "required_state": "PRESENT",
                 "salience": "MODERATE",
+                "scoping_reason": "Systemic illness does not separate mastitis from an abscess, which is a progression of the same infection and is at least as febrile. It separates the infective picture from inflammatory breast cancer, whose concern CLM-R2-OB-IBC raises on skin thickening, retraction and peau d'orange.",
                 "statement": "Systemic signs with a segmental erythematous breast are the mastitis pattern; the inflammatory-carcinoma concern is raised by skin thickening, retraction and peau d'orange rather than by systemic illness."
-              },
-              {
-                "contrast_role": "KEY_DISCRIMINATOR",
-                "evidence_refs": [
-                  "CLM-R4-OB-PHLEGMON",
-                  "CLM-R2-OB-ABSCESS"
-                ],
-                "favours": "A",
-                "feature_id": "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
-                "required_state": "PRESENT",
-                "salience": "SALIENT",
-                "statement": "A firm mass-like area without fluctuance is the phlegmon end of the spectrum; an abscess is a drainable fluid collection."
               }
             ],
             "evidence_refs": [
               "CLM-GEN-OB-DX-01",
-              "CLM-R2-OB-ABSCESS",
               "CLM-R2-OB-IBC",
-              "CLM-R2-OB-MASTITIS-ANCHOR",
-              "CLM-R4-OB-PHLEGMON"
+              "CLM-R2-OB-MASTITIS-ANCHOR"
             ],
             "learner_decision_id": "LD-OB54-01",
             "mcc_relevance": "LD-OB54-01 for MCC objective 80-2, IMPORTANT in OBGYN",
@@ -4901,6 +4838,10 @@
         [
           "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
           "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS"
+        ],
+        [
+          "SF-PH07-INCIDENCE-EQUAL-BETWEEN-GROUPS",
+          "SF-PH07-MORE-CASES-DIAGNOSED-IN-SCREENED"
         ]
       ],
       "contrast_set": {
@@ -5861,6 +5802,10 @@
         [
           "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
           "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS"
+        ],
+        [
+          "SF-PH07-INCIDENCE-EQUAL-BETWEEN-GROUPS",
+          "SF-PH07-MORE-CASES-DIAGNOSED-IN-SCREENED"
         ]
       ],
       "contrast_set": {
@@ -6080,8 +6025,8 @@
               "role_in_set": "COMPETITOR",
               "seed_id": "SEED-G2-PHELO-T02-VOLUNTARY"
             },
-            "confusability": "MODERATE",
-            "contrast_relation_id": "CCR2-8568d37f45be816d017b7f11",
+            "confusability": "HIGH",
+            "contrast_relation_id": "CCR2-d12a1e958d97cf55644d3e90",
             "correctness_conditions_a": {
               "conditions": [
                 {
@@ -6111,32 +6056,7 @@
               "CURATED_LIBRARY",
               "FROZEN_EVIDENCE_PACKET"
             ],
-            "discriminators": [
-              {
-                "contrast_role": "MANAGEMENT_ELIGIBILITY",
-                "evidence_refs": [
-                  "CLM-R4-PHELO-CONSENT-CRITERION",
-                  "CLM-R2-PHELO-ACCEPTABILITY",
-                  "CLM-R4-PHELO-ABSOLUTE"
-                ],
-                "favours": "A",
-                "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
-                "required_state": "PRESENT",
-                "salience": "MODERATE",
-                "statement": "Where the programme's stated objective is informed choice, autonomy is compromised by the way information is given, so the revision must give the invited person figures they can act on rather than figures that describe the test's performance."
-              },
-              {
-                "contrast_role": "INVESTIGATION_FINDING",
-                "evidence_refs": [
-                  "CLM-R4-PHELO-ABSOLUTE"
-                ],
-                "favours": "A",
-                "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
-                "required_state": "PRESENT",
-                "salience": "SALIENT",
-                "statement": "A relative-risk-only statement is the specific defect an absolute figure repairs."
-              }
-            ],
+            "discriminators": [],
             "evidence_refs": [
               "CLM-R2-PHELO-ACCEPTABILITY",
               "CLM-R2-PHELO-REMINDERS",
@@ -6161,7 +6081,13 @@
                 "prose_basis": "Frozen seed: 'Correct where the letter's defect is that readers feel obliged to attend, rather than that the benefit is stated in a form they cannot interpret.' CLM-R2-PHELO-REMINDERS supplies the perceived-authority defect."
               }
             ],
-            "shared_features": [],
+            "shared_features": [
+              {
+                "clinical_role": "PROGRAMME_OBJECTIVE",
+                "contrast_role": "MANAGEMENT_ELIGIBILITY",
+                "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
+              }
+            ],
             "verification_status": "EVIDENCE_VERIFIED"
           },
           {
@@ -6206,8 +6132,8 @@
               "role_in_set": "COMPETITOR",
               "seed_id": "SEED-PHELO-T02-DETECTION-COUNT"
             },
-            "confusability": "MODERATE",
-            "contrast_relation_id": "CCR2-45e1e2b7dc42bfd95fee00b9",
+            "confusability": "HIGH",
+            "contrast_relation_id": "CCR2-61abbb4f88df7692f0c540ef",
             "correctness_conditions_a": {
               "conditions": [
                 {
@@ -6237,32 +6163,7 @@
               "CURATED_LIBRARY",
               "FROZEN_EVIDENCE_PACKET"
             ],
-            "discriminators": [
-              {
-                "contrast_role": "MANAGEMENT_ELIGIBILITY",
-                "evidence_refs": [
-                  "CLM-R4-PHELO-CONSENT-CRITERION",
-                  "CLM-R2-PHELO-ACCEPTABILITY",
-                  "CLM-R4-PHELO-ABSOLUTE"
-                ],
-                "favours": "A",
-                "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
-                "required_state": "PRESENT",
-                "salience": "MODERATE",
-                "statement": "Where the programme's stated objective is informed choice, autonomy is compromised by the way information is given, so the revision must give the invited person figures they can act on rather than figures that describe the test's performance."
-              },
-              {
-                "contrast_role": "INVESTIGATION_FINDING",
-                "evidence_refs": [
-                  "CLM-R4-PHELO-ABSOLUTE"
-                ],
-                "favours": "A",
-                "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
-                "required_state": "PRESENT",
-                "salience": "SALIENT",
-                "statement": "A relative-risk-only statement is the specific defect an absolute figure repairs."
-              }
-            ],
+            "discriminators": [],
             "evidence_refs": [
               "CLM-R2-PHELO-ACCEPTABILITY",
               "CLM-R4-PHELO-ABSOLUTE",
@@ -6286,7 +6187,13 @@
                 "prose_basis": "Frozen seed: 'Correct where the reader also has the denominator and the harms, so the figure can be interpreted.'"
               }
             ],
-            "shared_features": [],
+            "shared_features": [
+              {
+                "clinical_role": "PROGRAMME_DOCUMENT",
+                "contrast_role": "INVESTIGATION_FINDING",
+                "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
+              }
+            ],
             "verification_status": "EVIDENCE_VERIFIED"
           },
           {
@@ -6332,7 +6239,7 @@
               "seed_id": "SEED-PHELO-T02-SENSITIVITY"
             },
             "confusability": "MODERATE",
-            "contrast_relation_id": "CCR2-314e5fb4e687f10f89abb4f3",
+            "contrast_relation_id": "CCR2-e3251eb9b6ba2f886f9f78b1",
             "correctness_conditions_a": {
               "conditions": [
                 {
@@ -6374,6 +6281,7 @@
                 "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
                 "required_state": "PRESENT",
                 "salience": "MODERATE",
+                "scoping_reason": "A voluntariness statement is itself an autonomy measure, so the stated objective cannot be a discriminator against it. It is a discriminator against reporting test performance, which does not give the invited person a figure they can act on.",
                 "statement": "Where the programme's stated objective is informed choice, autonomy is compromised by the way information is given, so the revision must give the invited person figures they can act on rather than figures that describe the test's performance."
               },
               {
@@ -6385,6 +6293,7 @@
                 "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
                 "required_state": "PRESENT",
                 "salience": "SALIENT",
+                "scoping_reason": "The relative-benefit-only defect is what an absolute figure repairs and what test-performance figures do not; the other two competitors are settled by the same fact stating their conditions contrary, not by a discriminator.",
                 "statement": "A relative-risk-only statement is the specific defect an absolute figure repairs."
               }
             ],
@@ -6799,6 +6708,10 @@
         [
           "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
           "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS"
+        ],
+        [
+          "SF-PH07-INCIDENCE-EQUAL-BETWEEN-GROUPS",
+          "SF-PH07-MORE-CASES-DIAGNOSED-IN-SCREENED"
         ]
       ],
       "contrast_set": {
@@ -7009,7 +6922,7 @@
               "seed_id": "SEED-PHELO-T03-EVALUATE"
             },
             "confusability": "MODERATE",
-            "contrast_relation_id": "CCR2-3a03ce5a801f584d68f38676",
+            "contrast_relation_id": "CCR2-fe67c1b1b1b0855252870725",
             "correctness_conditions_a": {
               "conditions": [
                 {
@@ -7039,25 +6952,10 @@
               "CURATED_LIBRARY",
               "FROZEN_EVIDENCE_PACKET"
             ],
-            "discriminators": [
-              {
-                "contrast_role": "MANAGEMENT_ELIGIBILITY",
-                "evidence_refs": [
-                  "CLM-GEN-PHELO-ORG-01",
-                  "CLM-R4-PHELO-HARM-LABEL",
-                  "CLM-R2-PHELO-CUTOFF"
-                ],
-                "favours": "A",
-                "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
-                "required_state": "PRESENT",
-                "salience": "MODERATE",
-                "statement": "An absolute shortfall in the confirmatory pathway is not repaired by moving the cut-off: raising it reduces referral volume but still labels people who cannot then be investigated, which is the harm CLM-R4-PHELO-HARM-LABEL names."
-              }
-            ],
+            "discriminators": [],
             "evidence_refs": [
               "CLM-GEN-PHELO-ORG-01",
               "CLM-R2-PHELO-ACCEPTED-TREATMENT",
-              "CLM-R2-PHELO-CUTOFF",
               "CLM-R2-PHELO-FACILITIES",
               "CLM-R4-PHELO-ECONOMIC",
               "CLM-R4-PHELO-EVALUATION",
@@ -7124,8 +7022,8 @@
               "role_in_set": "COMPETITOR",
               "seed_id": "SEED-PHELO-T03-PILOT"
             },
-            "confusability": "MODERATE",
-            "contrast_relation_id": "CCR2-765da7ce0ca65522f057a51b",
+            "confusability": "HIGH",
+            "contrast_relation_id": "CCR2-0f5a4f05fa3204afd855911e",
             "correctness_conditions_a": {
               "conditions": [
                 {
@@ -7151,26 +7049,11 @@
               "CURATED_LIBRARY",
               "FROZEN_EVIDENCE_PACKET"
             ],
-            "discriminators": [
-              {
-                "contrast_role": "MANAGEMENT_ELIGIBILITY",
-                "evidence_refs": [
-                  "CLM-GEN-PHELO-ORG-01",
-                  "CLM-R4-PHELO-HARM-LABEL",
-                  "CLM-R2-PHELO-CUTOFF"
-                ],
-                "favours": "A",
-                "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
-                "required_state": "PRESENT",
-                "salience": "MODERATE",
-                "statement": "An absolute shortfall in the confirmatory pathway is not repaired by moving the cut-off: raising it reduces referral volume but still labels people who cannot then be investigated, which is the harm CLM-R4-PHELO-HARM-LABEL names."
-              }
-            ],
+            "discriminators": [],
             "evidence_refs": [
               "CLM-GEN-PHELO-ORG-01",
               "CLM-R2-PHELO-ACCEPTED-TREATMENT",
               "CLM-R2-PHELO-COST-CONTINUITY",
-              "CLM-R2-PHELO-CUTOFF",
               "CLM-R2-PHELO-FACILITIES",
               "CLM-R4-PHELO-ECONOMIC",
               "CLM-R4-PHELO-HARM-LABEL"
@@ -7192,7 +7075,13 @@
                 "prose_basis": "Frozen seed: 'Correct where the constraint is cost or logistics rather than an absolute shortfall in the confirmatory pathway.' CLM-R2-PHELO-COST-CONTINUITY supplies the cost constraint."
               }
             ],
-            "shared_features": [],
+            "shared_features": [
+              {
+                "clinical_role": "PROGRAMME_CAPACITY",
+                "contrast_role": "MANAGEMENT_ELIGIBILITY",
+                "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
+              }
+            ],
             "verification_status": "EVIDENCE_VERIFIED"
           },
           {
@@ -7233,7 +7122,7 @@
               "seed_id": "SEED-PHELO-T03-RAISE-CUTOFF"
             },
             "confusability": "MODERATE",
-            "contrast_relation_id": "CCR2-6acb8dad687a05ff0bf77f04",
+            "contrast_relation_id": "CCR2-bca89151465acdc15c017646",
             "correctness_conditions_a": {
               "conditions": [
                 {
@@ -7271,6 +7160,7 @@
                 "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
                 "required_state": "PRESENT",
                 "salience": "MODERATE",
+                "scoping_reason": "The capacity shortfall states the other two competitors' conditions contrary outright. Against a threshold change it is a genuine discriminator: raising the cut-off lowers referral volume without creating the confirmatory pathway.",
                 "statement": "An absolute shortfall in the confirmatory pathway is not repaired by moving the cut-off: raising it reduces referral volume but still labels people who cannot then be investigated, which is the harm CLM-R4-PHELO-HARM-LABEL names."
               }
             ],

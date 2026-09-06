@@ -103,7 +103,11 @@
         "contrast_role": {"$ref": "#/definitions/contrast_role"},
         "salience": {"enum": ["SALIENT", "MODERATE", "SUBTLE"]},
         "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string"}},
-        "statement": {"type": "string"}
+        "statement": {"type": "string"},
+        "scoping_reason": {
+          "description": "Why this discriminator is declared against these competitors and not others. A feature two concepts share cannot discriminate between them, however well cited it is.",
+          "type": "string"
+        }
       }
     },
     "categorical_exclusion": {

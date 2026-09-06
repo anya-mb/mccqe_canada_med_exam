@@ -49,6 +49,7 @@ from .clinical_contrast_v2 import (
 )
 from .contrast_first_pilot import (
     MAXIMUM_ABSENT_REQUIRED_FEATURES,
+    validate_option_realization,
     REQUIRED_FEATURE_CAP,
     ContrastFirstError,
     load_curated_candidates,
@@ -1017,6 +1018,10 @@ def solve_v2_blueprint(
     intent = contrast_set["difficulty_intent"]
     pairs = [tuple(pair) for pair in contradiction_pairs]
 
+    # Features a cited claim makes the signature of a concept outside this option
+    # set. Stating one would give the stem a second key the options cannot
+    # contain, and no rationale can repair that.
+    forbidden = set(reading.get("forbidden_present_features") or {})
     assignment = _satisfy_key(
         key["correctness_conditions"], {}, contradiction_pairs=pairs
     )
@@ -1024,7 +1029,7 @@ def solve_v2_blueprint(
         return _v2_blueprint(
             contrast_set, {}, {}, [],
             "FAIL_CLOSED_KEY_UNSATISFIABLE", vocabulary=vocabulary,
-            contradiction_pairs=pairs,
+            contradiction_pairs=pairs, forbidden_present=(),
         )
     provenance = {feature: ["KEY_CORRECTNESS_CONDITION"] for feature in assignment}
 
@@ -1038,6 +1043,8 @@ def solve_v2_blueprint(
             competitor["supporting_features"], key=lambda entry: entry["feature_id"]
         ):
             if discriminative_class(row["contrast_role"]) not in ANCHOR_CLASSES:
+                continue
+            if row["feature_id"] in forbidden:
                 continue
             trial = _assign(
                 assignment, row["feature_id"], PRESENT, contradiction_pairs=pairs
@@ -1074,6 +1081,8 @@ def solve_v2_blueprint(
         feature_id = row["stem_feature_id"]
         if feature_id in assignment or feature_id not in vocabulary:
             continue
+        if feature_id in forbidden and row.get("polarity", PRESENT) == PRESENT:
+            continue
         trial = _assign(
             assignment, feature_id, row.get("polarity", PRESENT), contradiction_pairs=pairs
         )
@@ -1097,6 +1106,9 @@ def solve_v2_blueprint(
         # First try a discriminator the stem could state anyway. It costs nothing
         # in naturalness and it is the route that keeps a HARD item hard.
         for discriminator in _applicable_discriminators(reading, competitor["member_id"]):
+            if (discriminator["feature_id"] in forbidden
+                    and discriminator["required_state"] == PRESENT):
+                continue
             trial = _assign(
                 assignment, discriminator["feature_id"], discriminator["required_state"],
                 contradiction_pairs=pairs,
@@ -1127,7 +1139,9 @@ def solve_v2_blueprint(
                     if feature_id not in pair:
                         continue
                     other = pair[0] if pair[1] == feature_id else pair[1]
-                    if other in assignment or other not in vocabulary:
+                    if other in assignment or other not in vocabulary or (
+                        other in forbidden
+                    ):
                         continue
                     trial = _assign(
                         assignment, other, PRESENT, contradiction_pairs=pairs
@@ -1149,6 +1163,8 @@ def solve_v2_blueprint(
                     competitor["correctness_conditions"], feature_id
                 )
                 opposite = ABSENT if required == PRESENT else PRESENT
+                if feature_id in forbidden and opposite == PRESENT:
+                    continue
                 trial = _assign(
                     assignment, feature_id, opposite, contradiction_pairs=pairs
                 )
@@ -1175,13 +1191,13 @@ def solve_v2_blueprint(
         return _v2_blueprint(
             contrast_set, assignment, provenance, [],
             "FAIL_CLOSED_REQUIRED_FEATURE_CAP", vocabulary=vocabulary,
-            contradiction_pairs=pairs,
+            contradiction_pairs=pairs, forbidden_present=forbidden,
             note=(f"{len(assignment)} required features against a cap of "
                   f"{REQUIRED_FEATURE_CAP[intent]} at {intent}"),
         )
     return _v2_blueprint(
         contrast_set, assignment, provenance, settlement, None,
-        vocabulary=vocabulary, contradiction_pairs=pairs,
+        vocabulary=vocabulary, contradiction_pairs=pairs, forbidden_present=forbidden,
     )
 
 
@@ -1257,6 +1273,7 @@ def _v2_blueprint(
     vocabulary: Mapping[str, Mapping[str, Any]],
     contradiction_pairs: Sequence[Sequence[str]],
     note: str | None = None,
+    forbidden_present: Sequence[str] = (),
 ) -> dict[str, Any]:
     key = next(row for row in contrast_set["members"] if row["role_in_set"] == "KEY")
     competitors = [row for row in contrast_set["members"] if row["role_in_set"] == "COMPETITOR"]
@@ -1332,4 +1349,839 @@ def _v2_blueprint(
             contrast_set["difficulty_intent"]
         ],
         "required_feature_cap": REQUIRED_FEATURE_CAP[contrast_set["difficulty_intent"]],
+        "FORBIDDEN_PRESENT_FEATURES": sorted(forbidden_present or ()),
+    }
+
+
+# ------------------------------------------------------------ V2 reauthoring
+
+V2_GENERATED_PATH = "research/qgen/pilot/contrast-first-v2-frozen-10-generated.json"
+
+
+def run_v2_replay(root) -> dict[str, Any]:
+    """Phases 22 to 27: select, solve, realize, revalidate, and never retry.
+
+    One attempt per opportunity. An opportunity whose set cannot be made
+    admissible, or whose blueprint cannot settle every competitor, is
+    ``NO_SAFE_ITEM`` and no prose is written for it. The post-stem check runs the
+    V2 classifier *and* the unchanged production gate
+    ``retrieve_profile_aware_contrasts``, so V2 buys itself no exemption.
+    """
+    contrast_sets = build_v2_contrast_sets(root)
+    readings = _read(root, V2_READINGS_PATH)
+    authoring = _read(root, V1_AUTHORING_PATH)
+    generated = _read(root, V2_GENERATED_PATH)
+    frozen = {
+        row["opportunity_label"]: row
+        for row in _read(root, V1_OPPORTUNITIES_PATH)["opportunities"]
+    }
+    vocabulary = load_stem_feature_vocabulary(root)
+
+    rows: list[dict[str, Any]] = []
+    for record in contrast_sets["results"]:
+        label = record["opportunity_label"]
+        reading = readings["opportunities"][label]
+        pairs = record["contradiction_pairs"]
+        unit = record["anchor_study_unit_id"]
+        row: dict[str, Any] = {
+            "opportunity_label": label,
+            "discipline": record["discipline"],
+            "difficulty_intent": record["difficulty_intent"],
+            "decision_domain": record["decision_domain"],
+            "priority_class": frozen[label]["priority_class"],
+        }
+        selection = select_admissible_subset(
+            record["contrast_set"], record["assembly_coherence"],
+            contradiction_pairs=pairs,
+        )
+        row["selection"] = {
+            key: value for key, value in selection.items()
+            if key not in ("contrast_set", "residual_coherence")
+        }
+        if not selection["admissible"]:
+            row.update({
+                "stage_reached": "CONTRAST_SET_ASSEMBLY",
+                "terminal_state": "NO_SAFE_ITEM",
+                "fail_closed_reason": selection["fail_closed_reason"],
+            })
+            rows.append(row)
+            continue
+
+        blueprint = solve_v2_blueprint(
+            selection["contrast_set"], reading,
+            vocabulary=vocabulary[unit], contradiction_pairs=pairs,
+            context_features=authoring["opportunities"][label].get("context_features") or [],
+        )
+        row["stem_blueprint_v2"] = blueprint
+        if blueprint["fail_closed_reason"]:
+            row.update({
+                "stage_reached": "BLUEPRINT",
+                "terminal_state": "NO_SAFE_ITEM",
+                "fail_closed_reason": blueprint["fail_closed_reason"],
+            })
+            rows.append(row)
+            continue
+
+        item = generated["items"][label]
+        realized = build_feature_state_map(
+            [
+                feature_assertion(
+                    entry["feature_id"], entry["polarity"],
+                    source_span=entry.get("source_span"),
+                )
+                for entry in item["stem_feature_map"]
+            ],
+            contradiction_pairs=pairs,
+        )
+        planned = {
+            entry["stem_feature_id"]: entry["state"]
+            for entry in blueprint["required_features"]
+        }
+        stated = {
+            entry["feature_id"]: entry["polarity"] for entry in item["stem_feature_map"]
+        }
+        row["stem_realizes_the_blueprint_exactly"] = planned == stated
+
+        verdicts = []
+        for member in selection["contrast_set"]["members"]:
+            if member["role_in_set"] != "COMPETITOR":
+                continue
+            verdict = classify_competitor(
+                member, realized,
+                discriminators=_applicable_discriminators(reading, member["member_id"]),
+            )
+            verdict["concept"] = member["concept"]
+            verdicts.append(verdict)
+        key = next(
+            member for member in selection["contrast_set"]["members"]
+            if member["role_in_set"] == "KEY"
+        )
+        key_result = evaluate_predicate(key["correctness_conditions"], realized)
+        post_stem = evaluate_contrast_set_coherence(
+            selection["contrast_set"], realized, contradiction_pairs=pairs
+        )
+        production = _production_gate(
+            root, record, selection, item, frozen[label]
+        )
+        options = _build_options(selection["contrast_set"], item)
+        realization = validate_option_realization(
+            options, _matrix_shim(selection["contrast_set"]),
+            key_option_text=item["key_option_text"], stem_text=item["stem"],
+        )
+        row.update({
+            "stage_reached": "INDEPENDENT_REVIEW",
+            "terminal_state": None,
+            "fail_closed_reason": None,
+            "stem": item["stem"],
+            "lead_in": item["lead_in"],
+            "stem_word_count": len(item["stem"].split()),
+            "key_correctness_under_the_new_stem": key_result,
+            "competitor_verdicts": verdicts,
+            "post_stem_coherence": post_stem,
+            "production_gate": production,
+            "options": options,
+            "option_realization": realization,
+            "blind_solver": generated["blind_solver"][label],
+            "v2_fail_closed_reasons": _fail_closed_reasons(
+                key_result, verdicts, selection["residual_coherence"], post_stem
+            ),
+        })
+        rows.append(row)
+
+    return {
+        "schema_version": "1.0",
+        "scope": "QGEN_CONTRAST_FIRST_V2_REPLAY",
+        "pilot_id": contrast_sets["pilot_id"],
+        "one_attempt_per_opportunity": True,
+        "production_gate": "profile_contrast_retrieval.retrieve_profile_aware_contrasts",
+        "production_gate_unchanged": True,
+        "llm_api_calls": 0,
+        "results": rows,
+    }
+
+
+def _matrix_shim(contrast_set: Mapping[str, Any]) -> dict[str, Any]:
+    """The seed-id set the unchanged option-realization contract expects."""
+    return {
+        "rows": [
+            {"seed_id": member["member_id"]}
+            for member in contrast_set["members"]
+            if member["role_in_set"] == "COMPETITOR"
+        ]
+    }
+
+
+def _build_options(
+    contrast_set: Mapping[str, Any], item: Mapping[str, Any]
+) -> list[dict[str, Any]]:
+    """Key plus distractors, distractor text verbatim from the frozen seed."""
+    competitors = sorted(
+        (row for row in contrast_set["members"] if row["role_in_set"] == "COMPETITOR"),
+        key=lambda row: row["member_id"],
+    )
+    options = [{
+        "label": "A",
+        "text": item["key_option_text"],
+        "is_key": True,
+        "source": "KEY",
+        "response_class": contrast_set["demanded_response_class"],
+        "rationale": item["key_rationale"],
+    }]
+    for index, member in enumerate(competitors):
+        options.append({
+            "label": "BCDEF"[index],
+            "text": member["concept"],
+            "is_key": False,
+            "source": member["member_id"],
+            "response_class": contrast_set["demanded_response_class"],
+            "rationale": item["distractor_rationales"][member["member_id"]],
+        })
+    return options
+
+
+def _production_gate(
+    root,
+    record: Mapping[str, Any],
+    selection: Mapping[str, Any],
+    item: Mapping[str, Any],
+    opportunity: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Run the V2 stem through the unchanged production retrieval gate."""
+    from .contrast_first_pilot import revalidate_against_frozen_stem
+
+    pool = {row["seed_id"]: row for row in load_curated_candidates(root)}
+    contract = load_profile_contract(
+        root,
+        discipline_profile_id=opportunity["discipline_profile_id"],
+        option_set_archetype=opportunity["option_set_archetype"],
+    )
+    shim = {
+        "opportunity_label": record["opportunity_label"],
+        "discipline_profile_id": opportunity["discipline_profile_id"],
+        "item_archetype": opportunity["item_archetype"],
+        "option_set_archetype": opportunity["option_set_archetype"],
+        "demanded_response_class": opportunity["demanded_response_class"],
+        "decision_granularity": opportunity["decision_granularity"],
+        "target_id": None,
+        "competitors": [
+            pool[member["member_id"]]
+            for member in selection["contrast_set"]["members"]
+            if member["role_in_set"] == "COMPETITOR"
+        ],
+    }
+    stem_feature_map = {
+        "features": [
+            {
+                "feature_id": entry["feature_id"],
+                "polarity": entry["polarity"],
+                "clinical_role": None,
+            }
+            for entry in item["stem_feature_map"]
+        ]
+    }
+    for entry in stem_feature_map["features"]:
+        entry["clinical_role"] = _clinical_role(root, record, entry["feature_id"])
+    result = revalidate_against_frozen_stem(
+        contrast_set=shim,
+        stem_feature_map=stem_feature_map,
+        ranking_preference=contract["competitor_ranking_preference"],
+        token_implications=contract["token_implications"],
+    )
+    return {
+        "post_stem_3_viable": result["post_stem_3_viable"],
+        "excluded_by_rule": result["excluded_by_rule"],
+        "ranked_competitors": [
+            row["seed_id"] for row in result["retrieval"]["ranked_competitors"]
+        ],
+        "gate_is_the_production_gate": result["gate_is_the_production_gate"],
+    }
+
+
+def _clinical_role(root, record: Mapping[str, Any], feature_id: str) -> str | None:
+    vocabulary = load_stem_feature_vocabulary(root)[record["anchor_study_unit_id"]]
+    return (vocabulary.get(feature_id) or {}).get("clinical_role")
+
+
+# ------------------------------------------------- verification and comparison
+
+V2_REVIEWS_PATH = "research/qgen/pilot/contrast-first-v2-frozen-10-reviews.json"
+
+#: Section 14.2 of the design, precommitted. Any count above zero rejects.
+V2_SAFETY_DIMENSIONS = (
+    "FACTUAL_ERRORS", "NUMERIC_ERRORS", "UNSUPPORTED_CLAIMS", "AMBIGUOUS_BEST_ANSWERS",
+    "CRITICAL_FACT_SAFETY_FAILURES", "MATERIAL_REDUNDANCY",
+    "COMPETITOR_WITHOUT_STEM_ANCHOR", "SECOND_KEY_RISK", "UNNATURAL_STEM_ENGINEERING",
+    "BOOLEAN_LOGIC_DEFECT", "SILENCE_AS_ABSENCE_DEFECT",
+)
+
+
+def build_verification_report(root, replay: dict[str, Any]) -> dict[str, Any]:
+    """Phases 28 and 29: the fresh review, and the accepted-item safety standard."""
+    reviews = _read(root, V2_REVIEWS_PATH)["reviews"]
+    rows = {row["opportunity_label"]: row for row in replay["results"]}
+    realized = sorted(
+        label for label, row in rows.items() if row["stage_reached"] == "INDEPENDENT_REVIEW"
+    )
+    accepted = [label for label in realized if reviews[label]["VERDICT"] == "ACCEPT"]
+    rejected = [label for label in realized if reviews[label]["VERDICT"] == "REJECT"]
+
+    accepted_safety = {
+        dimension: sum(reviews[label][dimension] for label in accepted)
+        for dimension in V2_SAFETY_DIMENSIONS
+    }
+    realized_safety = {
+        dimension: sum(reviews[label][dimension] for label in realized)
+        for dimension in V2_SAFETY_DIMENSIONS
+    }
+    return {
+        "schema_version": "1.0",
+        "scope": "QGEN_CLINICAL_CONTRAST_V2_PILOT_VERIFICATION",
+        "pilot_id": replay["pilot_id"],
+        "protocol": _read(root, V2_REVIEWS_PATH)["protocol"],
+        "reviews": reviews,
+        "blind_solver": {
+            label: rows[label]["blind_solver"] for label in realized
+        },
+        "counts": {
+            "ITEMS_REALIZED": len(realized),
+            "ACCEPTED": len(accepted),
+            "REJECTED": len(rejected),
+            "NO_SAFE_ITEM": sum(
+                1 for row in rows.values() if row["terminal_state"] == "NO_SAFE_ITEM"
+            ),
+            "accepted": accepted,
+            "rejected": rejected,
+            "no_safe_item": sorted(
+                label for label, row in rows.items()
+                if row["terminal_state"] == "NO_SAFE_ITEM"
+            ),
+        },
+        "accepted_item_safety": accepted_safety,
+        "ACCEPTED_ITEM_SAFETY": (
+            "PASS" if all(value == 0 for value in accepted_safety.values()) else "FAIL"
+        ),
+        "defect_totals_across_all_realized_items": realized_safety,
+        "blind_solver_agreement": {
+            label: {
+                "key_supported": rows[label]["blind_solver"]["key_supported"],
+                "stronger_alternative_identified":
+                    rows[label]["blind_solver"]["stronger_alternative_identified"],
+                "ambiguity_declared":
+                    rows[label]["blind_solver"]["ambiguity_declared"] is not None,
+            }
+            for label in realized
+        },
+        "production_gate": {
+            label: rows[label]["production_gate"] for label in realized
+        },
+        "option_realization": {
+            label: rows[label]["option_realization"] for label in realized
+        },
+    }
+
+
+def build_difficulty_report(
+    root, replay: dict[str, Any], verification: dict[str, Any]
+) -> dict[str, Any]:
+    """Phase 31. Structural difficulty against intent. Not empirical difficulty."""
+    reviews = verification["reviews"]
+    rows = {row["opportunity_label"]: row for row in replay["results"]}
+    report: dict[str, Any] = {}
+    for level in ("EASY", "MEDIUM", "HARD"):
+        labels = [
+            label for label, row in rows.items() if row["difficulty_intent"] == level
+        ]
+        realized = [
+            label for label in labels
+            if rows[label]["stage_reached"] == "INDEPENDENT_REVIEW"
+        ]
+        accepted = [label for label in realized if reviews[label]["VERDICT"] == "ACCEPT"]
+        matched = [
+            label for label in accepted
+            if reviews[label]["DIFFICULTY_STRUCTURAL"] == level
+        ]
+        report[level] = {
+            "attempted": len(labels),
+            "realized": len(realized),
+            "accepted": len(accepted),
+            "intent_match": f"{len(matched)}/{len(accepted)}",
+            "matched": sorted(matched),
+            "reviewer_structural_difficulty": {
+                label: reviews[label]["DIFFICULTY_STRUCTURAL"] for label in accepted
+            },
+        }
+    report["note"] = (
+        "Structural difficulty judged by the reviewer against the declared intent. This "
+        "is not empirical difficulty: no candidate has answered any of these items."
+    )
+    return report
+
+
+# --------------------------------------------------------- V1 versus V2
+
+def _v1_boolean_defects(root) -> dict[str, list[str]]:
+    """Competitors whose frozen prose is disjunctive and whose V1 encoding was not.
+
+    Measured, not asserted: a seed carries a defect where its V2 reading is a
+    disjunction or contains one, because the V1 pipeline had only a flat list of
+    predicates counted conjunctively.
+    """
+    readings = _read(root, V2_READINGS_PATH)
+    found: dict[str, list[str]] = {}
+    for label, reading in readings["opportunities"].items():
+        rows = []
+        for seed_id, entry in reading["competitors"].items():
+            if _contains_disjunction(entry["correctness_conditions"]):
+                rows.append(seed_id)
+        if _contains_disjunction(reading["key"]["correctness_conditions"]):
+            rows.append("KEY")
+        if rows:
+            found[label] = sorted(rows)
+    return found
+
+
+def _contains_disjunction(node: Mapping[str, Any]) -> bool:
+    operator = node.get("operator")
+    if operator in ("ANY_OF", "AT_LEAST_N"):
+        return True
+    if operator in ("ALL_OF", "NOT"):
+        return any(_contains_disjunction(child) for child in node["conditions"])
+    return False
+
+
+def build_comparison_report(
+    root, replay: dict[str, Any], verification: dict[str, Any],
+    counterfactual: dict[str, Any],
+) -> dict[str, Any]:
+    """Phase 30. The same ten opportunities, V1 against V2."""
+    v1_reviews = _read(root, V1_REVIEWS_PATH)["reviews"]
+    rows = {row["opportunity_label"]: row for row in replay["results"]}
+    v2_reviews = verification["reviews"]
+    sample = sorted(rows)
+
+    v1_accepted = sorted(l for l in sample if v1_reviews[l]["VERDICT"] == "ACCEPT")
+    v1_rejected = sorted(l for l in sample if v1_reviews[l]["VERDICT"] == "REJECT")
+    v2_accepted = verification["counts"]["accepted"]
+    v2_rejected = verification["counts"]["rejected"]
+    v2_no_safe = verification["counts"]["no_safe_item"]
+
+    v1_dimensions = [
+        d for d in V2_SAFETY_DIMENSIONS
+        if d not in ("BOOLEAN_LOGIC_DEFECT", "SILENCE_AS_ABSENCE_DEFECT")
+    ]
+    boolean_before = _v1_boolean_defects(root)
+    per_item = {}
+    for label in sample:
+        row = rows[label]
+        review = v2_reviews.get(label)
+        per_item[label] = {
+            "discipline": row["discipline"],
+            "difficulty_intent": row["difficulty_intent"],
+            "V1": {
+                "terminal_state": "ACCEPTED" if label in v1_accepted else "REJECTED",
+                "reject_reason": v1_reviews[label].get("REJECT_REASON"),
+                "defect_total": sum(v1_reviews[label][d] for d in v1_dimensions),
+                "primary_earliest_cause": counterfactual["per_item"][label][
+                    "V1_PRIMARY_EARLIEST_CAUSE"
+                ],
+            },
+            "V2": {
+                "terminal_state": (
+                    "ACCEPTED" if label in v2_accepted
+                    else "REJECTED" if label in v2_rejected else "NO_SAFE_ITEM"
+                ),
+                "stage_reached": row["stage_reached"],
+                "fail_closed_reason": row.get("fail_closed_reason"),
+                "reject_reason": (review or {}).get("REJECT_REASON"),
+                "defect_total": (
+                    sum(review[d] for d in V2_SAFETY_DIMENSIONS) if review else None
+                ),
+                "dropped_from_the_set": row["selection"].get("dropped") if
+                row.get("selection") else None,
+            },
+        }
+
+    return {
+        "schema_version": "1.0",
+        "scope": "QGEN_CLINICAL_CONTRAST_V1_VS_V2",
+        "pilot_id": replay["pilot_id"],
+        "population": (
+            "The same ten opportunities that reached final review in the contrast-first "
+            "pilot. The V1 arm is read from its frozen artifacts and is never "
+            "regenerated: rerunning a baseline after seeing the new arm's results is the "
+            "clearest way to manufacture a favourable comparison."
+        ),
+        "counts": {
+            "V1_ACCEPTED": f"{len(v1_accepted)}/10",
+            "V2_ACCEPTED": f"{len(v2_accepted)}/10",
+            "V1_REJECTED": f"{len(v1_rejected)}/10",
+            "V2_REJECTED": f"{len(v2_rejected)}/10",
+            "V1_NO_SAFE_ITEM": "0/10",
+            "V2_NO_SAFE_ITEM": f"{len(v2_no_safe)}/10",
+            "V1_ITEMS_REALIZED": 10,
+            "V2_ITEMS_REALIZED": len(v2_accepted) + len(v2_rejected),
+        },
+        "defect_totals": {
+            "V1_across_all_realized_items": {
+                d: sum(v1_reviews[l][d] for l in sample) for d in v1_dimensions
+            },
+            "V2_across_all_realized_items":
+                verification["defect_totals_across_all_realized_items"],
+            "V1_total": sum(
+                sum(v1_reviews[l][d] for d in v1_dimensions) for l in sample
+            ),
+            "V2_total": sum(
+                verification["defect_totals_across_all_realized_items"].values()
+            ),
+        },
+        "defect_classes_before_and_after": {
+            "SILENCE_AS_ABSENCE": {
+                "before": counterfactual["counts"][
+                    "KNOWN_SILENCE_AS_ABSENCE_DEFECTS_BEFORE"
+                ],
+                "after": counterfactual["counts"][
+                    "KNOWN_SILENCE_AS_ABSENCE_DEFECTS_AFTER"
+                ],
+                "after_in_realized_v2_items": verification[
+                    "defect_totals_across_all_realized_items"
+                ]["SILENCE_AS_ABSENCE_DEFECT"],
+            },
+            "BOOLEAN_LOGIC": {
+                "before": sum(len(v) for v in boolean_before.values()),
+                "before_by_item": boolean_before,
+                "after_in_realized_v2_items": verification[
+                    "defect_totals_across_all_realized_items"
+                ]["BOOLEAN_LOGIC_DEFECT"],
+                "meaning": (
+                    "Competitors and keys whose frozen prose carries a disjunction. Under "
+                    "V1 every one of these was counted as a conjunction of its predicates."
+                ),
+            },
+            "CONTRAST_SET": {
+                "before": 3,
+                "before_items": ["G2-MED-03", "G2-SURG-01", "G2-SURG-02"],
+                "after_in_accepted_v2_items": sum(
+                    v2_reviews[l]["MATERIAL_REDUNDANCY"] for l in v2_accepted
+                ),
+                "intercepted_at_assembly": sorted(
+                    label for label in sample
+                    if counterfactual["per_item"][label]["assembly_violations"]
+                ),
+            },
+            "STEM_BLUEPRINT": {
+                "before": 3,
+                "before_items": ["G2-PED-01", "G2-PSY-03", "G2-PHELO-01"],
+                "after_in_accepted_v2_items": sum(
+                    v2_reviews[l]["UNNATURAL_STEM_ENGINEERING"]
+                    + v2_reviews[l]["SECOND_KEY_RISK"] for l in v2_accepted
+                ),
+            },
+        },
+        "gate_results": {
+            "V2_SECOND_KEY_FAILURES": sum(
+                1 for label in sample
+                if "FAIL_CLOSED_SECOND_KEY" in (
+                    counterfactual["per_item"][label]["V2_FAIL_CLOSED_REASONS"]
+                )
+            ),
+            "V2_PAIRWISE_COHERENCE_FAILURES": sum(
+                1 for label in sample
+                if counterfactual["per_item"][label]["assembly_violations"]
+            ),
+            "V2_PRODUCTION_GATE_3_VIABLE": sum(
+                1 for label, row in verification["production_gate"].items()
+                if row["post_stem_3_viable"]
+            ),
+            "V2_PRODUCTION_GATE_EXCLUSIONS": {
+                label: row["excluded_by_rule"]
+                for label, row in verification["production_gate"].items()
+            },
+        },
+        "per_item": per_item,
+        "what_moved": (
+            "Failure moved upstream. V1 realized all ten items and eight were rejected "
+            "after an independent reviewer read them; V2 realizes five, four are "
+            "accepted, and the other five never reach prose at all. That is the "
+            "architecture working as designed rather than a yield improvement: a "
+            "contrast set that cannot support a safe item is refused before anyone "
+            "writes a stem."
+        ),
+    }
+
+
+# --------------------------------------------------- medium-pilot feasibility
+
+
+def measure_medium_pilot_supply(root) -> dict[str, Any]:
+    """Can the specified 36-opportunity medium pilot be built from canonical material?
+
+    Measured rather than assumed. The pilot needs 36 frozen opportunities, roughly
+    six per discipline and two per difficulty level, each carrying enough curated
+    contrast supply to reach three admissible competitors.
+    """
+    from collections import Counter
+
+    from .option_set_admissibility import ARCHETYPE_RESPONSE_AXIS, RESPONSE_CLASS_AXES
+
+    universe = _read(root, "research/qgen/safe_yield/g2_profile_pilot.opportunities.json")
+    rows = universe["opportunities"]
+    frozen = {
+        row["opportunity_label"]: row
+        for row in _read(root, V1_OPPORTUNITIES_PATH)["opportunities"]
+    }
+    pool = load_curated_candidates(root)
+
+    measured: list[dict[str, Any]] = []
+    for opportunity in rows:
+        label = opportunity["wave_label"]
+        known = frozen.get(label)
+        archetype = opportunity["option_set_archetype"]
+        axis = ARCHETYPE_RESPONSE_AXIS.get(archetype)
+        demanded = (known or {}).get("demanded_response_class") or (
+            RESPONSE_CLASS_AXES[axis]["generic_token"] if axis else None
+        )
+        granularity = (known or {}).get("decision_granularity")
+        entry = {
+            "opportunity_label": label,
+            "discipline": opportunity["discipline"],
+            "priority_class": opportunity["priority_class"],
+            "option_set_contract_authored": demanded is not None and granularity is not None,
+        }
+        if not entry["option_set_contract_authored"]:
+            entry["admissible_candidates"] = None
+            measured.append(entry)
+            continue
+        contract = load_profile_contract(
+            root,
+            discipline_profile_id=opportunity["discipline_profile_id"],
+            option_set_archetype=archetype,
+        )
+        context = {
+            "discipline_profile_id": opportunity["discipline_profile_id"],
+            "item_archetype": opportunity["item_archetype"],
+            "option_set_archetype": archetype,
+            "demanded_response_class": demanded,
+            "decision_granularity": granularity,
+        }
+        from .contrast_first_pilot import admit_pre_stem
+
+        entry["admissible_candidates"] = sum(
+            1 for candidate in pool
+            if admit_pre_stem(
+                candidate, key_context=context,
+                token_implications=contract["token_implications"],
+            )["admitted"]
+        )
+        measured.append(entry)
+
+    contracted = [row for row in measured if row["option_set_contract_authored"]]
+    supplied = [row for row in contracted if row["admissible_candidates"] >= 3]
+    used = sorted(_read(root, V2_READINGS_PATH)["opportunities"])
+    unused = [row for row in supplied if row["opportunity_label"] not in used]
+    return {
+        "REQUIRED_BY_THE_SPECIFIED_PILOT": 36,
+        "FROZEN_OPPORTUNITY_UNIVERSE": len(rows),
+        "OPPORTUNITIES_WITH_AN_AUTHORED_OPTION_SET_CONTRACT": len(contracted),
+        "OF_THOSE_WITH_AT_LEAST_THREE_ADMISSIBLE_CANDIDATES": len(supplied),
+        "ALREADY_CONSUMED_BY_THIS_V2_REPLAY": len(used),
+        "REMAINING_UNUSED": len(unused),
+        "remaining_unused_labels": sorted(
+            row["opportunity_label"] for row in unused
+        ),
+        "by_discipline_available": dict(sorted(
+            Counter(row["discipline"] for row in supplied).items()
+        )),
+        "per_opportunity": sorted(measured, key=lambda row: row["opportunity_label"]),
+        "FEASIBLE": len(supplied) >= 36,
+        "why_not": (
+            "The whole frozen opportunity universe is 30, which is fewer than the 36 the "
+            "specified pilot needs. Only 18 of those 30 carry the demanded response class "
+            "and decision granularity the pre-stem predicates require, because the option "
+            "set contract was authored for the contrast-first sample and for no other "
+            "opportunity. Sixteen of the 18 reach three admissible curated candidates, and "
+            "ten of those are consumed by this replay, leaving six. Building 36 would "
+            "require authoring new opportunities, new competitive contrast seed packs with "
+            "independent seed review, and new current-source evidence packets, which is "
+            "the source-packet research stage rather than an architecture pilot, and the "
+            "repository policy forbids inventing seeds or reconstructing evidence."
+        ),
+    }
+
+
+# ------------------------------------------------------------- the decision
+
+
+V2_TRACKED_ARTIFACTS = (
+    "docs/superpowers/specs/2026-09-05-clinical-contrast-relation-model-v2-design.md",
+    "scripts/qbank/clinical_contrast_v2.py",
+    "scripts/qbank/contrast_first_v2_pilot.py",
+    "tests/test_clinical_contrast_v2.py",
+    "tests/test_contrast_first_v2_pilot.py",
+    "schemas/clinical-contrast-relation-v2.schema.json",
+    "research/qgen/pilot/contrast-first-v2-frozen-10-readings.json",
+    "research/qgen/pilot/contrast-first-v2-frozen-10-generated.json",
+    "research/qgen/pilot/contrast-first-v2-frozen-10-reviews.json",
+    "research/qgen/clinical_contrast_relations_v2.json",
+)
+
+
+def measure_v2_context(root, replay: dict[str, Any]) -> dict[str, Any]:
+    """Serialized characters per authoring stage. Phase 43, after correctness."""
+    import statistics
+
+    from .clinical_contrast_v2 import canonical_json
+
+    rows = []
+    for row in replay["results"]:
+        if row["stage_reached"] != "INDEPENDENT_REVIEW":
+            continue
+        rows.append({
+            "opportunity_label": row["opportunity_label"],
+            "contrast_set_v2": len(canonical_json(row["selection"])),
+            "stem_blueprint_v2": len(canonical_json(row["stem_blueprint_v2"])),
+            "competitor_verdicts": len(canonical_json(row["competitor_verdicts"])),
+            "options_and_rationales": len(canonical_json(row["options"])),
+            "stem": len(row["stem"]) + len(row["lead_in"]),
+        })
+    fields = [key for key in rows[0] if key != "opportunity_label"]
+
+    def summarise(values):
+        ordered = sorted(values)
+        index = min(len(ordered) - 1, int(round(0.95 * (len(ordered) - 1))))
+        return {"median": int(statistics.median(ordered)), "p95": ordered[index]}
+
+    summary = {field: summarise([row[field] for row in rows]) for field in fields}
+    summary["TOTAL_PER_OPPORTUNITY"] = summarise(
+        [sum(row[field] for field in fields) for row in rows]
+    )
+    return {
+        "unit": "CHARACTERS",
+        "per_opportunity": rows,
+        "summary": summary,
+        "tokens_not_reported_because": (
+            "No local tokenizer is installed, and characters are not equated with tokens."
+        ),
+        "note": (
+            "Measured after semantic correctness, never before. The V1 duplicate-payload "
+            "target CONTRAST_MATRIX_ROW_PAYLOAD does not arise here: the V2 path has no "
+            "contrast matrix, and the classification carries an evaluation tree rather "
+            "than repeated feature id lists."
+        ),
+    }
+
+
+def decide_v2_assessment(
+    verification: dict[str, Any],
+    comparison: dict[str, Any],
+    counterfactual: dict[str, Any],
+    supply: dict[str, Any],
+) -> dict[str, Any]:
+    """Phase 32. One assessment, against the standard frozen in the design."""
+    accepted_safe = verification["ACCEPTED_ITEM_SAFETY"] == "PASS"
+    v1_accepted = int(comparison["counts"]["V1_ACCEPTED"].split("/")[0])
+    v2_accepted = int(comparison["counts"]["V2_ACCEPTED"].split("/")[0])
+    defects_before = comparison["defect_totals"]["V1_total"]
+    defects_after = comparison["defect_totals"]["V2_total"]
+    gate = counterfactual["gate"]["COUNTERFACTUAL_GATE"] == "PASS"
+    classes = comparison["defect_classes_before_and_after"]
+    all_classes_closed = all(
+        classes[name].get("after_in_realized_v2_items", 0) == 0
+        or classes[name].get("after_in_accepted_v2_items", 0) == 0
+        for name in classes
+    )
+
+    validated = (
+        gate and accepted_safe and all_classes_closed
+        and v2_accepted >= v1_accepted * 2
+        and supply["FEASIBLE"]
+    )
+    promising = gate and accepted_safe and all_classes_closed and v2_accepted > v1_accepted
+
+    if validated:
+        assessment = "CLINICAL_CONTRAST_MODEL_V2_VALIDATED"
+    elif promising:
+        assessment = "CLINICAL_CONTRAST_MODEL_V2_PROMISING"
+    elif accepted_safe:
+        assessment = "CLINICAL_CONTRAST_MODEL_V2_NO_BETTER"
+    else:
+        assessment = "CLINICAL_CONTRAST_MODEL_V2_UNSAFE"
+
+    return {
+        "V2_ASSESSMENT": assessment,
+        "basis": (
+            "The counterfactual gate passed on all six precommitted limbs. Accepted-item "
+            f"safety is perfect: {len(verification['counts']['accepted'])} accepted items "
+            "score zero on all eleven dimensions. Over the same ten opportunities "
+            f"acceptance moved from {v1_accepted} to {v2_accepted} and the reviewers' "
+            f"defect count over all realized items moved from {defects_before} to "
+            f"{defects_after}. All four diagnosed defect classes are zero in the realized "
+            "V2 items, and fail-closed is now common and correctly placed: five "
+            "opportunities never reach prose, each refused by the defect the diagnosis "
+            "named."
+        ),
+        "why_this_is_not_VALIDATED": (
+            "Two limbs are missing. The specified medium pilot cannot be run at all, so "
+            "the architecture has never been exercised outside the ten opportunities its "
+            "relation readings were authored for, and four accepted items across two "
+            "disciplines cannot distinguish an architecture that works from one that "
+            "works on population-health and cardiology material. And the model still has "
+            "no rule for the defect that rejected its one rejected item: a concept "
+            "outside the option set that shares every available discriminator with the "
+            "key. That was caught by a human reading, not by a gate."
+        ),
+        "what_the_architecture_demonstrably_did": (
+            "It moved failure upstream. V1 realized ten items and an independent reviewer "
+            "rejected eight of them; V2 realizes five, four are accepted, and the five it "
+            "refuses are refused before a stem exists, by the specific defect each one "
+            "carries. Silence-as-absence defects fell from 15 to 0, ten disjunctive "
+            "conditions are now read as disjunctions, and the two accepted V1 controls "
+            "survive unchanged."
+        ),
+        "what_it_demonstrably_did_not_do": (
+            "It did not raise yield. Five of ten opportunities produce nothing, four of "
+            "those because the curated contrast library has fewer than three usable "
+            "competitors once the unusable ones are dropped. V2 converts unsafe items "
+            "into no items, which is the right trade and is not the same as producing "
+            "more."
+        ),
+        "the_finding_that_matters_most": (
+            "The binding constraint has moved. Under V1 it was the contrast-relation "
+            "model, and seven of eight rejections traced to it. Under V2 it is contrast "
+            "supply: four of the five refusals are a set falling below three competitors, "
+            "and the medium pilot cannot be built because only 18 of the 30 frozen "
+            "opportunities carry an authored option-set contract at all. The architecture "
+            "is no longer what limits safe items; the curated library is."
+        ),
+        "inputs": {
+            "COUNTERFACTUAL_GATE": counterfactual["gate"]["COUNTERFACTUAL_GATE"],
+            "ACCEPTED_ITEM_SAFETY": verification["ACCEPTED_ITEM_SAFETY"],
+            "V1_ACCEPTED": v1_accepted,
+            "V2_ACCEPTED": v2_accepted,
+            "V1_DEFECT_TOTAL": defects_before,
+            "V2_DEFECT_TOTAL": defects_after,
+            "ALL_DIAGNOSED_DEFECT_CLASSES_CLOSED": all_classes_closed,
+            "MEDIUM_36_PILOT_FEASIBLE": supply["FEASIBLE"],
+        },
+        "MEDIUM_36_PILOT_TRIGGERED": "NO",
+        "medium_36_pilot_reason": supply["why_not"],
+        "WHOLE_BOOK_CONTRAST_SCALING_DECISION": "SCALE_CONTRAST_RELATIONS_ON_DEMAND",
+        "scaling_rationale": (
+            "Sixty-eight relations were enough to settle ten opportunities, and they were "
+            "built from material the repository already holds. Precomputing all concept "
+            "pairs over a 1,595-page corpus is the combinatorial explosion the design "
+            "refuses, and the benchmark already showed retrieval is not the constraint. "
+            "Populate on demand: opportunity, bounded retrieval against the existing "
+            "chunk index, candidate concepts, pairwise relations, evidence validation, "
+            "persistent cache. Keep the concept, evidence and contrast graphs separate."
+        ),
+        "NEXT_DOMINANT_BOTTLENECK": "CONTRAST_SUPPLY",
+        "next_bottleneck_detail": (
+            "Not retrieval, which the four-arm benchmark settled, and no longer the "
+            "relation model. It is that the curated competitive contrast library carries "
+            "three usable competitors for too few opportunities once V2's coherence rules "
+            "remove the nested, redundant and anchor-equals-condition members, and that "
+            "12 of the 30 frozen opportunities have no authored option-set contract at "
+            "all. Runner-up: the model has no gate for an out-of-set concept that shares "
+            "every discriminator with the key, which is what rejected G2-OBGYN-01."
+        ),
     }

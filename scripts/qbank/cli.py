@@ -975,6 +975,56 @@ def _command_run_contrast_v2_counterfactual(arguments: argparse.Namespace) -> No
     }, indent=2, sort_keys=True))
 
 
+def _command_run_contrast_v2_pilot(arguments: argparse.Namespace) -> None:
+    """Run the V2 replay, verification, comparison and decision over the frozen ten."""
+    from .contrast_first_v2_pilot import (
+        V2_TRACKED_ARTIFACTS,
+        build_comparison_report,
+        build_counterfactual_report,
+        build_difficulty_report,
+        build_verification_report,
+        decide_v2_assessment,
+        measure_medium_pilot_supply,
+        measure_v2_context,
+        run_v2_replay,
+    )
+    from .contrast_first_pilot import measure_copyright
+
+    root = canonical_root(getattr(arguments, "root", Path.cwd()))
+    replay = run_v2_replay(root)
+    verification = build_verification_report(root, replay)
+    counterfactual = build_counterfactual_report(root)
+    counterfactual.pop("contrast_sets")
+    comparison = build_comparison_report(root, replay, verification, counterfactual)
+    supply = measure_medium_pilot_supply(root)
+    decision = decide_v2_assessment(verification, comparison, counterfactual, supply)
+
+    verification.update({
+        "decision": decision,
+        "difficulty": build_difficulty_report(root, replay, verification),
+        "context_characters": measure_v2_context(root, replay),
+        "copyright": measure_copyright(root, V2_TRACKED_ARTIFACTS),
+        "replay": replay,
+    })
+    comparison["medium_pilot_feasibility"] = supply
+    comparison["decision"] = decision
+    write_json_atomic(
+        resolve_root_path(root, "reports/qgen_clinical_contrast_v2_pilot_verification.json"),
+        verification,
+    )
+    write_json_atomic(
+        resolve_root_path(root, "reports/qgen_clinical_contrast_v1_vs_v2.json"),
+        comparison,
+    )
+    print(json.dumps({
+        "V2_ASSESSMENT": decision["V2_ASSESSMENT"],
+        "ACCEPTED_ITEM_SAFETY": verification["ACCEPTED_ITEM_SAFETY"],
+        "counts": verification["counts"],
+        "MEDIUM_36_PILOT_TRIGGERED": decision["MEDIUM_36_PILOT_TRIGGERED"],
+        "COPYRIGHT_AUDIT": verification["copyright"]["COPYRIGHT_AUDIT"],
+    }, indent=2, sort_keys=True))
+
+
 def _command_run_retrieval_benchmark(arguments: argparse.Namespace) -> None:
     """Run the frozen-G2 four-arm retrieval benchmark."""
     from .retrieval_benchmark import run_benchmark
@@ -1095,6 +1145,11 @@ def _parser() -> argparse.ArgumentParser:
             "run-contrast-v2-counterfactual",
             "replay the V2 contrast-relation model against the frozen V1 stems",
             _command_run_contrast_v2_counterfactual,
+        ),
+        (
+            "run-contrast-v2-pilot",
+            "run the V2 replay, verification, comparison and decision",
+            _command_run_contrast_v2_pilot,
         ),
     )
     parsers = {}

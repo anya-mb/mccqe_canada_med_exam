@@ -476,6 +476,105 @@
     {
       "a_supporting_features": [
         {
+          "clinical_role": "PROGRAMME_CAPACITY",
+          "contrast_role": "MANAGEMENT_ELIGIBILITY",
+          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
+        }
+      ],
+      "anchor_study_unit_id": "SU-PH-07",
+      "b_supporting_features": [
+        {
+          "clinical_role": "PROGRAMME_CAPACITY",
+          "contrast_role": "MANAGEMENT_ELIGIBILITY",
+          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
+        },
+        {
+          "clinical_role": "PROGRAMME_CAPACITY",
+          "contrast_role": "MANAGEMENT_ELIGIBILITY",
+          "feature_id": "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS"
+        }
+      ],
+      "categorical_exclusion_conditions": [],
+      "concept_a": {
+        "concept": "Defer the launch until diagnostic and treatment capacity is in place",
+        "concept_category": "DEFER_LAUNCH",
+        "concept_id": "CONCEPT-CF-PH07-DEFER-LAUNCH",
+        "member_id": "KEY",
+        "role_in_set": "KEY"
+      },
+      "concept_b": {
+        "concept": "Launch in a single district as a pilot and expand later",
+        "concept_category": "LIMITED_SCALE_LAUNCH",
+        "concept_id": "CONCEPT-R4-SU-PH-07-PILOT",
+        "member_id": "SEED-PHELO-T03-PILOT",
+        "role_in_set": "COMPETITOR",
+        "seed_id": "SEED-PHELO-T03-PILOT"
+      },
+      "confusability": "HIGH",
+      "contrast_relation_id": "CCR2-0f5a4f05fa3204afd855911e",
+      "correctness_conditions_a": {
+        "conditions": [
+          {
+            "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+            "required_state": "PRESENT"
+          }
+        ],
+        "operator": "ALL_OF",
+        "prose_basis": "CLM-GEN-PHELO-ORG-01: a test should not be launched at population scale when the downstream diagnostic and treatment pathway cannot be delivered. CLM-R2-PHELO-FACILITIES and CLM-R4-PHELO-HARM-LABEL supply the harm."
+      },
+      "correctness_conditions_b": {
+        "conditions": [
+          {
+            "feature_id": "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS",
+            "required_state": "PRESENT"
+          }
+        ],
+        "operator": "ALL_OF",
+        "prose_basis": "Frozen seed: 'Correct where the constraint is cost or logistics rather than an absolute shortfall in the confirmatory pathway.' CLM-R2-PHELO-COST-CONTINUITY supplies the cost constraint."
+      },
+      "decision_granularity": "COMPLETE_PROGRAMME_DECISION",
+      "discovery_sources": [
+        "CURATED_LIBRARY",
+        "FROZEN_EVIDENCE_PACKET"
+      ],
+      "discriminators": [],
+      "evidence_refs": [
+        "CLM-GEN-PHELO-ORG-01",
+        "CLM-R2-PHELO-ACCEPTED-TREATMENT",
+        "CLM-R2-PHELO-COST-CONTINUITY",
+        "CLM-R2-PHELO-FACILITIES",
+        "CLM-R4-PHELO-ECONOMIC",
+        "CLM-R4-PHELO-HARM-LABEL"
+      ],
+      "learner_decision_id": "LD-PH07-03",
+      "mcc_relevance": "LD-PH07-03 for MCC objective 74, CORE in PHELO",
+      "nesting_relation": "NONE",
+      "opportunity_label": "G2-PHELO-03",
+      "response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+      "second_key_conditions": [
+        {
+          "conditions": [
+            {
+              "feature_id": "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct where the constraint is cost or logistics rather than an absolute shortfall in the confirmatory pathway.' CLM-R2-PHELO-COST-CONTINUITY supplies the cost constraint."
+        }
+      ],
+      "shared_features": [
+        {
+          "clinical_role": "PROGRAMME_CAPACITY",
+          "contrast_role": "MANAGEMENT_ELIGIBILITY",
+          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
+        }
+      ],
+      "verification_status": "EVIDENCE_VERIFIED"
+    },
+    {
+      "a_supporting_features": [
+        {
           "clinical_role": "CLINICAL_JUDGEMENT",
           "contrast_role": "SEVERITY_FEATURE",
           "feature_id": "SF-PS12-MILD-SEVERITY",
@@ -1894,132 +1993,6 @@
     {
       "a_supporting_features": [
         {
-          "clinical_role": "PROGRAMME_OBJECTIVE",
-          "contrast_role": "MANAGEMENT_ELIGIBILITY",
-          "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
-        },
-        {
-          "clinical_role": "PROGRAMME_DOCUMENT",
-          "contrast_role": "INVESTIGATION_FINDING",
-          "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
-        }
-      ],
-      "anchor_study_unit_id": "SU-PH-07",
-      "b_supporting_features": [
-        {
-          "clinical_role": "PROGRAMME_DOCUMENT",
-          "contrast_role": "INVESTIGATION_FINDING",
-          "feature_id": "SF-PH07-AUDIENCE-CAN-INTERPRET-TEST-METRICS"
-        },
-        {
-          "clinical_role": "PROGRAMME_OBJECTIVE",
-          "contrast_role": "MANAGEMENT_ELIGIBILITY",
-          "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
-        }
-      ],
-      "categorical_exclusion_conditions": [],
-      "concept_a": {
-        "concept": "Replace the relative benefit figure with the absolute chance of benefit and the chance of a false positive result",
-        "concept_category": "ABSOLUTE_BENEFIT_AND_HARM_DISCLOSURE",
-        "concept_id": "CONCEPT-CF-PH07-ABSOLUTE-BENEFIT",
-        "member_id": "KEY",
-        "role_in_set": "KEY"
-      },
-      "concept_b": {
-        "concept": "Add the sensitivity and specificity of the screening test",
-        "concept_category": "TEST_PERFORMANCE_REPORTING",
-        "concept_id": "CONCEPT-R4-SU-PH-07-TEST-PERFORMANCE",
-        "member_id": "SEED-PHELO-T02-SENSITIVITY",
-        "role_in_set": "COMPETITOR",
-        "seed_id": "SEED-PHELO-T02-SENSITIVITY"
-      },
-      "confusability": "MODERATE",
-      "contrast_relation_id": "CCR2-314e5fb4e687f10f89abb4f3",
-      "correctness_conditions_a": {
-        "conditions": [
-          {
-            "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
-            "required_state": "PRESENT"
-          },
-          {
-            "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
-            "required_state": "PRESENT"
-          }
-        ],
-        "operator": "ALL_OF",
-        "prose_basis": "CLM-R4-PHELO-ABSOLUTE: a relative statement sounds impressive but may not help an individual who would benefit more from an absolute figure. CLM-R4-PHELO-CONSENT-CRITERION and CLM-R2-PHELO-ACCEPTABILITY make protected autonomy and informed choice the objective the presentation must serve."
-      },
-      "correctness_conditions_b": {
-        "conditions": [
-          {
-            "feature_id": "SF-PH07-AUDIENCE-CAN-INTERPRET-TEST-METRICS",
-            "required_state": "PRESENT"
-          }
-        ],
-        "operator": "ALL_OF",
-        "prose_basis": "Frozen seed: 'Correct as programme documentation, where the audience can interpret the figures.'"
-      },
-      "decision_granularity": "SINGLE_EDIT_TO_ONE_DOCUMENT",
-      "discovery_sources": [
-        "CURATED_LIBRARY",
-        "FROZEN_EVIDENCE_PACKET"
-      ],
-      "discriminators": [
-        {
-          "contrast_role": "MANAGEMENT_ELIGIBILITY",
-          "evidence_refs": [
-            "CLM-R4-PHELO-CONSENT-CRITERION",
-            "CLM-R2-PHELO-ACCEPTABILITY",
-            "CLM-R4-PHELO-ABSOLUTE"
-          ],
-          "favours": "A",
-          "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
-          "required_state": "PRESENT",
-          "salience": "MODERATE",
-          "statement": "Where the programme's stated objective is informed choice, autonomy is compromised by the way information is given, so the revision must give the invited person figures they can act on rather than figures that describe the test's performance."
-        },
-        {
-          "contrast_role": "INVESTIGATION_FINDING",
-          "evidence_refs": [
-            "CLM-R4-PHELO-ABSOLUTE"
-          ],
-          "favours": "A",
-          "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
-          "required_state": "PRESENT",
-          "salience": "SALIENT",
-          "statement": "A relative-risk-only statement is the specific defect an absolute figure repairs."
-        }
-      ],
-      "evidence_refs": [
-        "CLM-R2-PHELO-ACCEPTABILITY",
-        "CLM-R4-PHELO-ABSOLUTE",
-        "CLM-R4-PHELO-ACTION-POLICY",
-        "CLM-R4-PHELO-CONSENT-CRITERION",
-        "CLM-R4-PHELO-FALSEPOS"
-      ],
-      "learner_decision_id": "LD-PH07-02",
-      "mcc_relevance": "LD-PH07-02 for MCC objective 74, CORE in PHELO",
-      "nesting_relation": "NONE",
-      "opportunity_label": "G2-PHELO-02",
-      "response_class": "AUTONOMY",
-      "second_key_conditions": [
-        {
-          "conditions": [
-            {
-              "feature_id": "SF-PH07-AUDIENCE-CAN-INTERPRET-TEST-METRICS",
-              "required_state": "PRESENT"
-            }
-          ],
-          "operator": "ALL_OF",
-          "prose_basis": "Frozen seed: 'Correct as programme documentation, where the audience can interpret the figures.'"
-        }
-      ],
-      "shared_features": [],
-      "verification_status": "EVIDENCE_VERIFIED"
-    },
-    {
-      "a_supporting_features": [
-        {
           "clinical_role": "SYSTEM_CONSTRAINT",
           "contrast_role": "RESOURCE_AVAILABILITY",
           "feature_id": "SF-GS76-IMAGING-AVAILABLE-NOW"
@@ -2263,117 +2236,6 @@
     {
       "a_supporting_features": [
         {
-          "clinical_role": "PROGRAMME_CAPACITY",
-          "contrast_role": "MANAGEMENT_ELIGIBILITY",
-          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
-        }
-      ],
-      "anchor_study_unit_id": "SU-PH-07",
-      "b_supporting_features": [
-        {
-          "clinical_role": "PROGRAMME_DOCUMENT",
-          "contrast_role": "INVESTIGATION_FINDING",
-          "feature_id": "SF-PH07-GOALS-AND-EVALUATION-DEFINED"
-        }
-      ],
-      "categorical_exclusion_conditions": [],
-      "concept_a": {
-        "concept": "Defer the launch until diagnostic and treatment capacity is in place",
-        "concept_category": "DEFER_LAUNCH",
-        "concept_id": "CONCEPT-CF-PH07-DEFER-LAUNCH",
-        "member_id": "KEY",
-        "role_in_set": "KEY"
-      },
-      "concept_b": {
-        "concept": "Launch as planned with continuing evaluation against programme goals",
-        "concept_category": "LAUNCH_WITH_EVALUATION",
-        "concept_id": "CONCEPT-R4-SU-PH-07-EVALUATE",
-        "member_id": "SEED-PHELO-T03-EVALUATE",
-        "role_in_set": "COMPETITOR",
-        "seed_id": "SEED-PHELO-T03-EVALUATE"
-      },
-      "confusability": "MODERATE",
-      "contrast_relation_id": "CCR2-3a03ce5a801f584d68f38676",
-      "correctness_conditions_a": {
-        "conditions": [
-          {
-            "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
-            "required_state": "PRESENT"
-          }
-        ],
-        "operator": "ALL_OF",
-        "prose_basis": "CLM-GEN-PHELO-ORG-01: a test should not be launched at population scale when the downstream diagnostic and treatment pathway cannot be delivered. CLM-R2-PHELO-FACILITIES and CLM-R4-PHELO-HARM-LABEL supply the harm."
-      },
-      "correctness_conditions_b": {
-        "conditions": [
-          {
-            "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
-            "required_state": "ABSENT"
-          },
-          {
-            "feature_id": "SF-PH07-GOALS-AND-EVALUATION-DEFINED",
-            "required_state": "PRESENT"
-          }
-        ],
-        "operator": "ALL_OF",
-        "prose_basis": "Frozen seed: 'Correct as a standing requirement of any programme that does launch.' CLM-R4-PHELO-EVALUATION makes continuing evaluation a requirement of a programme that launches, which presupposes the shortfall is not there."
-      },
-      "decision_granularity": "COMPLETE_PROGRAMME_DECISION",
-      "discovery_sources": [
-        "CURATED_LIBRARY",
-        "FROZEN_EVIDENCE_PACKET"
-      ],
-      "discriminators": [
-        {
-          "contrast_role": "MANAGEMENT_ELIGIBILITY",
-          "evidence_refs": [
-            "CLM-GEN-PHELO-ORG-01",
-            "CLM-R4-PHELO-HARM-LABEL",
-            "CLM-R2-PHELO-CUTOFF"
-          ],
-          "favours": "A",
-          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
-          "required_state": "PRESENT",
-          "salience": "MODERATE",
-          "statement": "An absolute shortfall in the confirmatory pathway is not repaired by moving the cut-off: raising it reduces referral volume but still labels people who cannot then be investigated, which is the harm CLM-R4-PHELO-HARM-LABEL names."
-        }
-      ],
-      "evidence_refs": [
-        "CLM-GEN-PHELO-ORG-01",
-        "CLM-R2-PHELO-ACCEPTED-TREATMENT",
-        "CLM-R2-PHELO-CUTOFF",
-        "CLM-R2-PHELO-FACILITIES",
-        "CLM-R4-PHELO-ECONOMIC",
-        "CLM-R4-PHELO-EVALUATION",
-        "CLM-R4-PHELO-HARM-LABEL"
-      ],
-      "learner_decision_id": "LD-PH07-03",
-      "mcc_relevance": "LD-PH07-03 for MCC objective 74, CORE in PHELO",
-      "nesting_relation": "NONE",
-      "opportunity_label": "G2-PHELO-03",
-      "response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
-      "second_key_conditions": [
-        {
-          "conditions": [
-            {
-              "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
-              "required_state": "ABSENT"
-            },
-            {
-              "feature_id": "SF-PH07-GOALS-AND-EVALUATION-DEFINED",
-              "required_state": "PRESENT"
-            }
-          ],
-          "operator": "ALL_OF",
-          "prose_basis": "Frozen seed: 'Correct as a standing requirement of any programme that does launch.' CLM-R4-PHELO-EVALUATION makes continuing evaluation a requirement of a programme that launches, which presupposes the shortfall is not there."
-        }
-      ],
-      "shared_features": [],
-      "verification_status": "EVIDENCE_VERIFIED"
-    },
-    {
-      "a_supporting_features": [
-        {
           "clinical_role": "INVESTIGATION_RESULT",
           "contrast_role": "INVESTIGATION_FINDING",
           "feature_id": "SF-C21-DIAGNOSTIC-ST-ELEVATION"
@@ -2486,6 +2348,138 @@
         }
       ],
       "shared_features": [],
+      "verification_status": "EVIDENCE_VERIFIED"
+    },
+    {
+      "a_supporting_features": [
+        {
+          "clinical_role": "VITAL_SIGN",
+          "contrast_role": "SEVERITY_FEATURE",
+          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "contrast_role": "POSITIVE_SUPPORT",
+          "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+        }
+      ],
+      "anchor_study_unit_id": "SU-OB-54",
+      "b_supporting_features": [
+        {
+          "clinical_role": "HISTORY",
+          "contrast_role": "POSITIVE_SUPPORT",
+          "feature_id": "SF-OB54-RECURRENCE-SAME-LOCATION"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "contrast_role": "POSITIVE_SUPPORT",
+          "feature_id": "SF-OB54-SKIN-THICKENING-PEAU-DORANGE"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "contrast_role": "POSITIVE_SUPPORT",
+          "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+        }
+      ],
+      "categorical_exclusion_conditions": [],
+      "concept_a": {
+        "concept": "Bacterial mastitis",
+        "concept_category": "INFECTIVE_INFLAMMATORY",
+        "concept_id": "CONCEPT-CF-OB54-BACTERIAL-MASTITIS",
+        "member_id": "KEY",
+        "role_in_set": "KEY"
+      },
+      "concept_b": {
+        "concept": "Inflammatory breast cancer",
+        "concept_category": "NEOPLASTIC",
+        "concept_id": "CONCEPT-R4-SU-MI-31-IBC",
+        "member_id": "SEED-OB-T01-IBC",
+        "role_in_set": "COMPETITOR",
+        "seed_id": "SEED-OB-T01-IBC"
+      },
+      "confusability": "HIGH",
+      "contrast_relation_id": "CCR2-3efcc5c6ef841636d90bad8c",
+      "correctness_conditions_a": {
+        "conditions": [
+          {
+            "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+            "required_state": "PRESENT"
+          },
+          {
+            "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
+            "required_state": "PRESENT"
+          }
+        ],
+        "operator": "ALL_OF",
+        "prose_basis": "CLM-R2-OB-MASTITIS-ANCHOR: an increasingly erythematous, edematous and painful region of the breast with systemic signs and symptoms; CLM-GEN-OB-DX-01 adds unilateral localized tenderness, erythema and heat with fever or malaise."
+      },
+      "correctness_conditions_b": {
+        "conditions": [
+          {
+            "feature_id": "SF-OB54-SKIN-THICKENING-PEAU-DORANGE",
+            "required_state": "PRESENT"
+          },
+          {
+            "feature_id": "SF-OB54-RECURRENCE-SAME-LOCATION",
+            "required_state": "PRESENT"
+          }
+        ],
+        "operator": "ANY_OF",
+        "prose_basis": "Frozen seed: 'Correct with skin thickening, breast retraction and a peau d'orange appearance, or with recurrence in the same location.' Explicitly disjunctive; V1 carried two conjuncts."
+      },
+      "decision_granularity": "SINGLE_DIAGNOSIS",
+      "discovery_sources": [
+        "CURATED_LIBRARY",
+        "FROZEN_EVIDENCE_PACKET"
+      ],
+      "discriminators": [
+        {
+          "contrast_role": "KEY_DISCRIMINATOR",
+          "evidence_refs": [
+            "CLM-R2-OB-MASTITIS-ANCHOR",
+            "CLM-R2-OB-IBC"
+          ],
+          "favours": "A",
+          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
+          "required_state": "PRESENT",
+          "salience": "MODERATE",
+          "scoping_reason": "Systemic illness does not separate mastitis from an abscess, which is a progression of the same infection and is at least as febrile. It separates the infective picture from inflammatory breast cancer, whose concern CLM-R2-OB-IBC raises on skin thickening, retraction and peau d'orange.",
+          "statement": "Systemic signs with a segmental erythematous breast are the mastitis pattern; the inflammatory-carcinoma concern is raised by skin thickening, retraction and peau d'orange rather than by systemic illness."
+        }
+      ],
+      "evidence_refs": [
+        "CLM-GEN-OB-DX-01",
+        "CLM-R2-OB-IBC",
+        "CLM-R2-OB-MASTITIS-ANCHOR"
+      ],
+      "learner_decision_id": "LD-OB54-01",
+      "mcc_relevance": "LD-OB54-01 for MCC objective 80-2, IMPORTANT in OBGYN",
+      "nesting_relation": "NONE",
+      "opportunity_label": "G2-OBGYN-01",
+      "response_class": "PALPABLE_MASS_OR_FLUID_COLLECTION",
+      "second_key_conditions": [
+        {
+          "conditions": [
+            {
+              "feature_id": "SF-OB54-SKIN-THICKENING-PEAU-DORANGE",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-OB54-RECURRENCE-SAME-LOCATION",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ANY_OF",
+          "prose_basis": "Frozen seed: 'Correct with skin thickening, breast retraction and a peau d'orange appearance, or with recurrence in the same location.' Explicitly disjunctive; V1 carried two conjuncts."
+        }
+      ],
+      "shared_features": [
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "contrast_role": "POSITIVE_SUPPORT",
+          "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+        }
+      ],
       "verification_status": "EVIDENCE_VERIFIED"
     },
     {
@@ -2839,276 +2833,6 @@
         }
       ],
       "shared_features": [],
-      "verification_status": "EVIDENCE_VERIFIED"
-    },
-    {
-      "a_supporting_features": [
-        {
-          "clinical_role": "PROGRAMME_OBJECTIVE",
-          "contrast_role": "MANAGEMENT_ELIGIBILITY",
-          "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
-        },
-        {
-          "clinical_role": "PROGRAMME_DOCUMENT",
-          "contrast_role": "INVESTIGATION_FINDING",
-          "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
-        }
-      ],
-      "anchor_study_unit_id": "SU-PH-07",
-      "b_supporting_features": [
-        {
-          "clinical_role": "PROGRAMME_DOCUMENT",
-          "contrast_role": "INVESTIGATION_FINDING",
-          "feature_id": "SF-PH07-DENOMINATOR-AND-HARMS-PRESENT"
-        },
-        {
-          "clinical_role": "PROGRAMME_DOCUMENT",
-          "contrast_role": "INVESTIGATION_FINDING",
-          "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
-        }
-      ],
-      "categorical_exclusion_conditions": [],
-      "concept_a": {
-        "concept": "Replace the relative benefit figure with the absolute chance of benefit and the chance of a false positive result",
-        "concept_category": "ABSOLUTE_BENEFIT_AND_HARM_DISCLOSURE",
-        "concept_id": "CONCEPT-CF-PH07-ABSOLUTE-BENEFIT",
-        "member_id": "KEY",
-        "role_in_set": "KEY"
-      },
-      "concept_b": {
-        "concept": "Add the number of cancers the programme detected last year",
-        "concept_category": "DETECTION_YIELD_REPORTING",
-        "concept_id": "CONCEPT-R4-SU-PH-07-DETECTION-COUNT",
-        "member_id": "SEED-PHELO-T02-DETECTION-COUNT",
-        "role_in_set": "COMPETITOR",
-        "seed_id": "SEED-PHELO-T02-DETECTION-COUNT"
-      },
-      "confusability": "MODERATE",
-      "contrast_relation_id": "CCR2-45e1e2b7dc42bfd95fee00b9",
-      "correctness_conditions_a": {
-        "conditions": [
-          {
-            "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
-            "required_state": "PRESENT"
-          },
-          {
-            "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
-            "required_state": "PRESENT"
-          }
-        ],
-        "operator": "ALL_OF",
-        "prose_basis": "CLM-R4-PHELO-ABSOLUTE: a relative statement sounds impressive but may not help an individual who would benefit more from an absolute figure. CLM-R4-PHELO-CONSENT-CRITERION and CLM-R2-PHELO-ACCEPTABILITY make protected autonomy and informed choice the objective the presentation must serve."
-      },
-      "correctness_conditions_b": {
-        "conditions": [
-          {
-            "feature_id": "SF-PH07-DENOMINATOR-AND-HARMS-PRESENT",
-            "required_state": "PRESENT"
-          }
-        ],
-        "operator": "ALL_OF",
-        "prose_basis": "Frozen seed: 'Correct where the reader also has the denominator and the harms, so the figure can be interpreted.'"
-      },
-      "decision_granularity": "SINGLE_EDIT_TO_ONE_DOCUMENT",
-      "discovery_sources": [
-        "CURATED_LIBRARY",
-        "FROZEN_EVIDENCE_PACKET"
-      ],
-      "discriminators": [
-        {
-          "contrast_role": "MANAGEMENT_ELIGIBILITY",
-          "evidence_refs": [
-            "CLM-R4-PHELO-CONSENT-CRITERION",
-            "CLM-R2-PHELO-ACCEPTABILITY",
-            "CLM-R4-PHELO-ABSOLUTE"
-          ],
-          "favours": "A",
-          "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
-          "required_state": "PRESENT",
-          "salience": "MODERATE",
-          "statement": "Where the programme's stated objective is informed choice, autonomy is compromised by the way information is given, so the revision must give the invited person figures they can act on rather than figures that describe the test's performance."
-        },
-        {
-          "contrast_role": "INVESTIGATION_FINDING",
-          "evidence_refs": [
-            "CLM-R4-PHELO-ABSOLUTE"
-          ],
-          "favours": "A",
-          "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
-          "required_state": "PRESENT",
-          "salience": "SALIENT",
-          "statement": "A relative-risk-only statement is the specific defect an absolute figure repairs."
-        }
-      ],
-      "evidence_refs": [
-        "CLM-R2-PHELO-ACCEPTABILITY",
-        "CLM-R4-PHELO-ABSOLUTE",
-        "CLM-R4-PHELO-CONSENT-CRITERION",
-        "CLM-R4-PHELO-FALSEPOS"
-      ],
-      "learner_decision_id": "LD-PH07-02",
-      "mcc_relevance": "LD-PH07-02 for MCC objective 74, CORE in PHELO",
-      "nesting_relation": "NONE",
-      "opportunity_label": "G2-PHELO-02",
-      "response_class": "AUTONOMY",
-      "second_key_conditions": [
-        {
-          "conditions": [
-            {
-              "feature_id": "SF-PH07-DENOMINATOR-AND-HARMS-PRESENT",
-              "required_state": "PRESENT"
-            }
-          ],
-          "operator": "ALL_OF",
-          "prose_basis": "Frozen seed: 'Correct where the reader also has the denominator and the harms, so the figure can be interpreted.'"
-        }
-      ],
-      "shared_features": [],
-      "verification_status": "EVIDENCE_VERIFIED"
-    },
-    {
-      "a_supporting_features": [
-        {
-          "clinical_role": "VITAL_SIGN",
-          "contrast_role": "SEVERITY_FEATURE",
-          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS"
-        },
-        {
-          "clinical_role": "EXAMINATION_FINDING",
-          "contrast_role": "POSITIVE_SUPPORT",
-          "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
-        }
-      ],
-      "anchor_study_unit_id": "SU-OB-54",
-      "b_supporting_features": [
-        {
-          "clinical_role": "HISTORY",
-          "contrast_role": "POSITIVE_SUPPORT",
-          "feature_id": "SF-OB54-RECURRENCE-SAME-LOCATION"
-        },
-        {
-          "clinical_role": "EXAMINATION_FINDING",
-          "contrast_role": "POSITIVE_SUPPORT",
-          "feature_id": "SF-OB54-SKIN-THICKENING-PEAU-DORANGE"
-        },
-        {
-          "clinical_role": "EXAMINATION_FINDING",
-          "contrast_role": "POSITIVE_SUPPORT",
-          "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
-        }
-      ],
-      "categorical_exclusion_conditions": [],
-      "concept_a": {
-        "concept": "Bacterial mastitis",
-        "concept_category": "INFECTIVE_INFLAMMATORY",
-        "concept_id": "CONCEPT-CF-OB54-BACTERIAL-MASTITIS",
-        "member_id": "KEY",
-        "role_in_set": "KEY"
-      },
-      "concept_b": {
-        "concept": "Inflammatory breast cancer",
-        "concept_category": "NEOPLASTIC",
-        "concept_id": "CONCEPT-R4-SU-MI-31-IBC",
-        "member_id": "SEED-OB-T01-IBC",
-        "role_in_set": "COMPETITOR",
-        "seed_id": "SEED-OB-T01-IBC"
-      },
-      "confusability": "HIGH",
-      "contrast_relation_id": "CCR2-4938dc05ed630dbbafe73444",
-      "correctness_conditions_a": {
-        "conditions": [
-          {
-            "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
-            "required_state": "PRESENT"
-          },
-          {
-            "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
-            "required_state": "PRESENT"
-          }
-        ],
-        "operator": "ALL_OF",
-        "prose_basis": "CLM-R2-OB-MASTITIS-ANCHOR: an increasingly erythematous, edematous and painful region of the breast with systemic signs and symptoms; CLM-GEN-OB-DX-01 adds unilateral localized tenderness, erythema and heat with fever or malaise."
-      },
-      "correctness_conditions_b": {
-        "conditions": [
-          {
-            "feature_id": "SF-OB54-SKIN-THICKENING-PEAU-DORANGE",
-            "required_state": "PRESENT"
-          },
-          {
-            "feature_id": "SF-OB54-RECURRENCE-SAME-LOCATION",
-            "required_state": "PRESENT"
-          }
-        ],
-        "operator": "ANY_OF",
-        "prose_basis": "Frozen seed: 'Correct with skin thickening, breast retraction and a peau d'orange appearance, or with recurrence in the same location.' Explicitly disjunctive; V1 carried two conjuncts."
-      },
-      "decision_granularity": "SINGLE_DIAGNOSIS",
-      "discovery_sources": [
-        "CURATED_LIBRARY",
-        "FROZEN_EVIDENCE_PACKET"
-      ],
-      "discriminators": [
-        {
-          "contrast_role": "KEY_DISCRIMINATOR",
-          "evidence_refs": [
-            "CLM-R2-OB-MASTITIS-ANCHOR",
-            "CLM-R2-OB-IBC"
-          ],
-          "favours": "A",
-          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
-          "required_state": "PRESENT",
-          "salience": "MODERATE",
-          "statement": "Systemic signs with a segmental erythematous breast are the mastitis pattern; the inflammatory-carcinoma concern is raised by skin thickening, retraction and peau d'orange rather than by systemic illness."
-        },
-        {
-          "contrast_role": "KEY_DISCRIMINATOR",
-          "evidence_refs": [
-            "CLM-R4-OB-PHLEGMON",
-            "CLM-R2-OB-ABSCESS"
-          ],
-          "favours": "A",
-          "feature_id": "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
-          "required_state": "PRESENT",
-          "salience": "SALIENT",
-          "statement": "A firm mass-like area without fluctuance is the phlegmon end of the spectrum; an abscess is a drainable fluid collection."
-        }
-      ],
-      "evidence_refs": [
-        "CLM-GEN-OB-DX-01",
-        "CLM-R2-OB-ABSCESS",
-        "CLM-R2-OB-IBC",
-        "CLM-R2-OB-MASTITIS-ANCHOR",
-        "CLM-R4-OB-PHLEGMON"
-      ],
-      "learner_decision_id": "LD-OB54-01",
-      "mcc_relevance": "LD-OB54-01 for MCC objective 80-2, IMPORTANT in OBGYN",
-      "nesting_relation": "NONE",
-      "opportunity_label": "G2-OBGYN-01",
-      "response_class": "PALPABLE_MASS_OR_FLUID_COLLECTION",
-      "second_key_conditions": [
-        {
-          "conditions": [
-            {
-              "feature_id": "SF-OB54-SKIN-THICKENING-PEAU-DORANGE",
-              "required_state": "PRESENT"
-            },
-            {
-              "feature_id": "SF-OB54-RECURRENCE-SAME-LOCATION",
-              "required_state": "PRESENT"
-            }
-          ],
-          "operator": "ANY_OF",
-          "prose_basis": "Frozen seed: 'Correct with skin thickening, breast retraction and a peau d'orange appearance, or with recurrence in the same location.' Explicitly disjunctive; V1 carried two conjuncts."
-        }
-      ],
-      "shared_features": [
-        {
-          "clinical_role": "EXAMINATION_FINDING",
-          "contrast_role": "POSITIVE_SUPPORT",
-          "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
-        }
-      ],
       "verification_status": "EVIDENCE_VERIFIED"
     },
     {
@@ -3708,6 +3432,228 @@
     {
       "a_supporting_features": [
         {
+          "clinical_role": "PROGRAMME_OBJECTIVE",
+          "contrast_role": "MANAGEMENT_ELIGIBILITY",
+          "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
+        },
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "contrast_role": "INVESTIGATION_FINDING",
+          "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
+        }
+      ],
+      "anchor_study_unit_id": "SU-PH-07",
+      "b_supporting_features": [
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "contrast_role": "INVESTIGATION_FINDING",
+          "feature_id": "SF-PH07-DENOMINATOR-AND-HARMS-PRESENT"
+        },
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "contrast_role": "INVESTIGATION_FINDING",
+          "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
+        }
+      ],
+      "categorical_exclusion_conditions": [],
+      "concept_a": {
+        "concept": "Replace the relative benefit figure with the absolute chance of benefit and the chance of a false positive result",
+        "concept_category": "ABSOLUTE_BENEFIT_AND_HARM_DISCLOSURE",
+        "concept_id": "CONCEPT-CF-PH07-ABSOLUTE-BENEFIT",
+        "member_id": "KEY",
+        "role_in_set": "KEY"
+      },
+      "concept_b": {
+        "concept": "Add the number of cancers the programme detected last year",
+        "concept_category": "DETECTION_YIELD_REPORTING",
+        "concept_id": "CONCEPT-R4-SU-PH-07-DETECTION-COUNT",
+        "member_id": "SEED-PHELO-T02-DETECTION-COUNT",
+        "role_in_set": "COMPETITOR",
+        "seed_id": "SEED-PHELO-T02-DETECTION-COUNT"
+      },
+      "confusability": "HIGH",
+      "contrast_relation_id": "CCR2-61abbb4f88df7692f0c540ef",
+      "correctness_conditions_a": {
+        "conditions": [
+          {
+            "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
+            "required_state": "PRESENT"
+          },
+          {
+            "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
+            "required_state": "PRESENT"
+          }
+        ],
+        "operator": "ALL_OF",
+        "prose_basis": "CLM-R4-PHELO-ABSOLUTE: a relative statement sounds impressive but may not help an individual who would benefit more from an absolute figure. CLM-R4-PHELO-CONSENT-CRITERION and CLM-R2-PHELO-ACCEPTABILITY make protected autonomy and informed choice the objective the presentation must serve."
+      },
+      "correctness_conditions_b": {
+        "conditions": [
+          {
+            "feature_id": "SF-PH07-DENOMINATOR-AND-HARMS-PRESENT",
+            "required_state": "PRESENT"
+          }
+        ],
+        "operator": "ALL_OF",
+        "prose_basis": "Frozen seed: 'Correct where the reader also has the denominator and the harms, so the figure can be interpreted.'"
+      },
+      "decision_granularity": "SINGLE_EDIT_TO_ONE_DOCUMENT",
+      "discovery_sources": [
+        "CURATED_LIBRARY",
+        "FROZEN_EVIDENCE_PACKET"
+      ],
+      "discriminators": [],
+      "evidence_refs": [
+        "CLM-R2-PHELO-ACCEPTABILITY",
+        "CLM-R4-PHELO-ABSOLUTE",
+        "CLM-R4-PHELO-CONSENT-CRITERION",
+        "CLM-R4-PHELO-FALSEPOS"
+      ],
+      "learner_decision_id": "LD-PH07-02",
+      "mcc_relevance": "LD-PH07-02 for MCC objective 74, CORE in PHELO",
+      "nesting_relation": "NONE",
+      "opportunity_label": "G2-PHELO-02",
+      "response_class": "AUTONOMY",
+      "second_key_conditions": [
+        {
+          "conditions": [
+            {
+              "feature_id": "SF-PH07-DENOMINATOR-AND-HARMS-PRESENT",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct where the reader also has the denominator and the harms, so the figure can be interpreted.'"
+        }
+      ],
+      "shared_features": [
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "contrast_role": "INVESTIGATION_FINDING",
+          "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
+        }
+      ],
+      "verification_status": "EVIDENCE_VERIFIED"
+    },
+    {
+      "a_supporting_features": [
+        {
+          "clinical_role": "VITAL_SIGN",
+          "contrast_role": "SEVERITY_FEATURE",
+          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "contrast_role": "POSITIVE_SUPPORT",
+          "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+        }
+      ],
+      "anchor_study_unit_id": "SU-OB-54",
+      "b_supporting_features": [
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "contrast_role": "POSITIVE_SUPPORT",
+          "feature_id": "SF-OB54-FLUCTUANT-COLLECTION"
+        },
+        {
+          "clinical_role": "VITAL_SIGN",
+          "contrast_role": "SEVERITY_FEATURE",
+          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "contrast_role": "POSITIVE_SUPPORT",
+          "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+        }
+      ],
+      "categorical_exclusion_conditions": [],
+      "concept_a": {
+        "concept": "Bacterial mastitis",
+        "concept_category": "INFECTIVE_INFLAMMATORY",
+        "concept_id": "CONCEPT-CF-OB54-BACTERIAL-MASTITIS",
+        "member_id": "KEY",
+        "role_in_set": "KEY"
+      },
+      "concept_b": {
+        "concept": "Lactational breast abscess",
+        "concept_category": "SUPPURATIVE_COLLECTION",
+        "concept_id": "CONCEPT-R4-SU-OB-54-ABSCESS",
+        "member_id": "SEED-OB-T01-ABSCESS",
+        "role_in_set": "COMPETITOR",
+        "seed_id": "SEED-OB-T01-ABSCESS"
+      },
+      "confusability": "HIGH",
+      "contrast_relation_id": "CCR2-61b169f0b2721e9c022d59c4",
+      "correctness_conditions_a": {
+        "conditions": [
+          {
+            "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+            "required_state": "PRESENT"
+          },
+          {
+            "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
+            "required_state": "PRESENT"
+          }
+        ],
+        "operator": "ALL_OF",
+        "prose_basis": "CLM-R2-OB-MASTITIS-ANCHOR: an increasingly erythematous, edematous and painful region of the breast with systemic signs and symptoms; CLM-GEN-OB-DX-01 adds unilateral localized tenderness, erythema and heat with fever or malaise."
+      },
+      "correctness_conditions_b": {
+        "conditions": [
+          {
+            "feature_id": "SF-OB54-FLUCTUANT-COLLECTION",
+            "required_state": "PRESENT"
+          }
+        ],
+        "operator": "ALL_OF",
+        "prose_basis": "Frozen seed: 'Correct where a palpable fluid collection is present in a well-defined area of the breast.'"
+      },
+      "decision_granularity": "SINGLE_DIAGNOSIS",
+      "discovery_sources": [
+        "CURATED_LIBRARY",
+        "FROZEN_EVIDENCE_PACKET"
+      ],
+      "discriminators": [],
+      "evidence_refs": [
+        "CLM-GEN-OB-DX-01",
+        "CLM-GEN-OB-INV-01",
+        "CLM-R2-OB-ABSCESS",
+        "CLM-R2-OB-MASTITIS-ANCHOR"
+      ],
+      "learner_decision_id": "LD-OB54-01",
+      "mcc_relevance": "LD-OB54-01 for MCC objective 80-2, IMPORTANT in OBGYN",
+      "nesting_relation": "NONE",
+      "opportunity_label": "G2-OBGYN-01",
+      "response_class": "PALPABLE_MASS_OR_FLUID_COLLECTION",
+      "second_key_conditions": [
+        {
+          "conditions": [
+            {
+              "feature_id": "SF-OB54-FLUCTUANT-COLLECTION",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct where a palpable fluid collection is present in a well-defined area of the breast.'"
+        }
+      ],
+      "shared_features": [
+        {
+          "clinical_role": "VITAL_SIGN",
+          "contrast_role": "SEVERITY_FEATURE",
+          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS"
+        },
+        {
+          "clinical_role": "EXAMINATION_FINDING",
+          "contrast_role": "POSITIVE_SUPPORT",
+          "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+        }
+      ],
+      "verification_status": "EVIDENCE_VERIFIED"
+    },
+    {
+      "a_supporting_features": [
+        {
           "clinical_role": "SYSTEM_CONSTRAINT",
           "contrast_role": "RESOURCE_AVAILABILITY",
           "feature_id": "SF-GS76-IMAGING-AVAILABLE-NOW"
@@ -3832,113 +3778,6 @@
           "feature_id": "SF-GS76-NONDIAGNOSTIC-IMAGING-ALREADY"
         }
       ],
-      "verification_status": "EVIDENCE_VERIFIED"
-    },
-    {
-      "a_supporting_features": [
-        {
-          "clinical_role": "PROGRAMME_CAPACITY",
-          "contrast_role": "MANAGEMENT_ELIGIBILITY",
-          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
-        }
-      ],
-      "anchor_study_unit_id": "SU-PH-07",
-      "b_supporting_features": [
-        {
-          "clinical_role": "PROGRAMME_CAPACITY",
-          "contrast_role": "MANAGEMENT_ELIGIBILITY",
-          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
-        },
-        {
-          "clinical_role": "PROGRAMME_DOCUMENT",
-          "contrast_role": "INVESTIGATION_FINDING",
-          "feature_id": "SF-PH07-THRESHOLD-TOO-FAR-TOWARD-LOW-RISK"
-        }
-      ],
-      "categorical_exclusion_conditions": [],
-      "concept_a": {
-        "concept": "Defer the launch until diagnostic and treatment capacity is in place",
-        "concept_category": "DEFER_LAUNCH",
-        "concept_id": "CONCEPT-CF-PH07-DEFER-LAUNCH",
-        "member_id": "KEY",
-        "role_in_set": "KEY"
-      },
-      "concept_b": {
-        "concept": "Raise the threshold so that fewer results are called positive",
-        "concept_category": "THRESHOLD_ADJUSTMENT",
-        "concept_id": "CONCEPT-R4-SU-PH-07-RAISE-CUTOFF",
-        "member_id": "SEED-PHELO-T03-RAISE-CUTOFF",
-        "role_in_set": "COMPETITOR",
-        "seed_id": "SEED-PHELO-T03-RAISE-CUTOFF"
-      },
-      "confusability": "MODERATE",
-      "contrast_relation_id": "CCR2-6acb8dad687a05ff0bf77f04",
-      "correctness_conditions_a": {
-        "conditions": [
-          {
-            "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
-            "required_state": "PRESENT"
-          }
-        ],
-        "operator": "ALL_OF",
-        "prose_basis": "CLM-GEN-PHELO-ORG-01: a test should not be launched at population scale when the downstream diagnostic and treatment pathway cannot be delivered. CLM-R2-PHELO-FACILITIES and CLM-R4-PHELO-HARM-LABEL supply the harm."
-      },
-      "correctness_conditions_b": {
-        "conditions": [
-          {
-            "feature_id": "SF-PH07-THRESHOLD-TOO-FAR-TOWARD-LOW-RISK",
-            "required_state": "PRESENT"
-          }
-        ],
-        "operator": "ALL_OF",
-        "prose_basis": "Frozen seed: 'Correct where the current threshold sits too far toward the low-risk end and is generating avoidable low-yield referrals.' CLM-R2-PHELO-CUTOFF reads the same way."
-      },
-      "decision_granularity": "COMPLETE_PROGRAMME_DECISION",
-      "discovery_sources": [
-        "CURATED_LIBRARY",
-        "FROZEN_EVIDENCE_PACKET"
-      ],
-      "discriminators": [
-        {
-          "contrast_role": "MANAGEMENT_ELIGIBILITY",
-          "evidence_refs": [
-            "CLM-GEN-PHELO-ORG-01",
-            "CLM-R4-PHELO-HARM-LABEL",
-            "CLM-R2-PHELO-CUTOFF"
-          ],
-          "favours": "A",
-          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
-          "required_state": "PRESENT",
-          "salience": "MODERATE",
-          "statement": "An absolute shortfall in the confirmatory pathway is not repaired by moving the cut-off: raising it reduces referral volume but still labels people who cannot then be investigated, which is the harm CLM-R4-PHELO-HARM-LABEL names."
-        }
-      ],
-      "evidence_refs": [
-        "CLM-GEN-PHELO-ORG-01",
-        "CLM-R2-PHELO-ACCEPTED-TREATMENT",
-        "CLM-R2-PHELO-CUTOFF",
-        "CLM-R2-PHELO-FACILITIES",
-        "CLM-R4-PHELO-ACTION-POLICY",
-        "CLM-R4-PHELO-HARM-LABEL"
-      ],
-      "learner_decision_id": "LD-PH07-03",
-      "mcc_relevance": "LD-PH07-03 for MCC objective 74, CORE in PHELO",
-      "nesting_relation": "NONE",
-      "opportunity_label": "G2-PHELO-03",
-      "response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
-      "second_key_conditions": [
-        {
-          "conditions": [
-            {
-              "feature_id": "SF-PH07-THRESHOLD-TOO-FAR-TOWARD-LOW-RISK",
-              "required_state": "PRESENT"
-            }
-          ],
-          "operator": "ALL_OF",
-          "prose_basis": "Frozen seed: 'Correct where the current threshold sits too far toward the low-risk end and is generating avoidable low-yield referrals.' CLM-R2-PHELO-CUTOFF reads the same way."
-        }
-      ],
-      "shared_features": [],
       "verification_status": "EVIDENCE_VERIFIED"
     },
     {
@@ -4160,114 +3999,6 @@
           ],
           "operator": "ALL_OF",
           "prose_basis": "Frozen seed: 'Correct for a moderately firm mass without erythema or systemic symptoms, decreasing temporarily after a feed.' CLM-R4-OB-GALACTOCELE reads the same way. Three conjuncts; V1 carried two and omitted the erythema clause."
-        }
-      ],
-      "shared_features": [],
-      "verification_status": "EVIDENCE_VERIFIED"
-    },
-    {
-      "a_supporting_features": [
-        {
-          "clinical_role": "PROGRAMME_CAPACITY",
-          "contrast_role": "MANAGEMENT_ELIGIBILITY",
-          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
-        }
-      ],
-      "anchor_study_unit_id": "SU-PH-07",
-      "b_supporting_features": [
-        {
-          "clinical_role": "PROGRAMME_CAPACITY",
-          "contrast_role": "MANAGEMENT_ELIGIBILITY",
-          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
-        },
-        {
-          "clinical_role": "PROGRAMME_CAPACITY",
-          "contrast_role": "MANAGEMENT_ELIGIBILITY",
-          "feature_id": "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS"
-        }
-      ],
-      "categorical_exclusion_conditions": [],
-      "concept_a": {
-        "concept": "Defer the launch until diagnostic and treatment capacity is in place",
-        "concept_category": "DEFER_LAUNCH",
-        "concept_id": "CONCEPT-CF-PH07-DEFER-LAUNCH",
-        "member_id": "KEY",
-        "role_in_set": "KEY"
-      },
-      "concept_b": {
-        "concept": "Launch in a single district as a pilot and expand later",
-        "concept_category": "LIMITED_SCALE_LAUNCH",
-        "concept_id": "CONCEPT-R4-SU-PH-07-PILOT",
-        "member_id": "SEED-PHELO-T03-PILOT",
-        "role_in_set": "COMPETITOR",
-        "seed_id": "SEED-PHELO-T03-PILOT"
-      },
-      "confusability": "MODERATE",
-      "contrast_relation_id": "CCR2-765da7ce0ca65522f057a51b",
-      "correctness_conditions_a": {
-        "conditions": [
-          {
-            "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
-            "required_state": "PRESENT"
-          }
-        ],
-        "operator": "ALL_OF",
-        "prose_basis": "CLM-GEN-PHELO-ORG-01: a test should not be launched at population scale when the downstream diagnostic and treatment pathway cannot be delivered. CLM-R2-PHELO-FACILITIES and CLM-R4-PHELO-HARM-LABEL supply the harm."
-      },
-      "correctness_conditions_b": {
-        "conditions": [
-          {
-            "feature_id": "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS",
-            "required_state": "PRESENT"
-          }
-        ],
-        "operator": "ALL_OF",
-        "prose_basis": "Frozen seed: 'Correct where the constraint is cost or logistics rather than an absolute shortfall in the confirmatory pathway.' CLM-R2-PHELO-COST-CONTINUITY supplies the cost constraint."
-      },
-      "decision_granularity": "COMPLETE_PROGRAMME_DECISION",
-      "discovery_sources": [
-        "CURATED_LIBRARY",
-        "FROZEN_EVIDENCE_PACKET"
-      ],
-      "discriminators": [
-        {
-          "contrast_role": "MANAGEMENT_ELIGIBILITY",
-          "evidence_refs": [
-            "CLM-GEN-PHELO-ORG-01",
-            "CLM-R4-PHELO-HARM-LABEL",
-            "CLM-R2-PHELO-CUTOFF"
-          ],
-          "favours": "A",
-          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
-          "required_state": "PRESENT",
-          "salience": "MODERATE",
-          "statement": "An absolute shortfall in the confirmatory pathway is not repaired by moving the cut-off: raising it reduces referral volume but still labels people who cannot then be investigated, which is the harm CLM-R4-PHELO-HARM-LABEL names."
-        }
-      ],
-      "evidence_refs": [
-        "CLM-GEN-PHELO-ORG-01",
-        "CLM-R2-PHELO-ACCEPTED-TREATMENT",
-        "CLM-R2-PHELO-COST-CONTINUITY",
-        "CLM-R2-PHELO-CUTOFF",
-        "CLM-R2-PHELO-FACILITIES",
-        "CLM-R4-PHELO-ECONOMIC",
-        "CLM-R4-PHELO-HARM-LABEL"
-      ],
-      "learner_decision_id": "LD-PH07-03",
-      "mcc_relevance": "LD-PH07-03 for MCC objective 74, CORE in PHELO",
-      "nesting_relation": "NONE",
-      "opportunity_label": "G2-PHELO-03",
-      "response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
-      "second_key_conditions": [
-        {
-          "conditions": [
-            {
-              "feature_id": "SF-PH07-CONSTRAINT-IS-COST-OR-LOGISTICS",
-              "required_state": "PRESENT"
-            }
-          ],
-          "operator": "ALL_OF",
-          "prose_basis": "Frozen seed: 'Correct where the constraint is cost or logistics rather than an absolute shortfall in the confirmatory pathway.' CLM-R2-PHELO-COST-CONTINUITY supplies the cost constraint."
         }
       ],
       "shared_features": [],
@@ -4750,127 +4481,6 @@
           ],
           "operator": "ANY_OF",
           "prose_basis": "Frozen seed: 'Correct where the illness is not improving as expected, where severity raises the possibility of bacterial infection, or where a focal consolidation is demonstrated.' Three disjuncts; V1 carried three conjuncts."
-        }
-      ],
-      "shared_features": [],
-      "verification_status": "EVIDENCE_VERIFIED"
-    },
-    {
-      "a_supporting_features": [
-        {
-          "clinical_role": "PROGRAMME_OBJECTIVE",
-          "contrast_role": "MANAGEMENT_ELIGIBILITY",
-          "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
-        },
-        {
-          "clinical_role": "PROGRAMME_DOCUMENT",
-          "contrast_role": "INVESTIGATION_FINDING",
-          "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
-        }
-      ],
-      "anchor_study_unit_id": "SU-PH-07",
-      "b_supporting_features": [
-        {
-          "clinical_role": "PROGRAMME_OBJECTIVE",
-          "contrast_role": "MANAGEMENT_ELIGIBILITY",
-          "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
-        }
-      ],
-      "categorical_exclusion_conditions": [],
-      "concept_a": {
-        "concept": "Replace the relative benefit figure with the absolute chance of benefit and the chance of a false positive result",
-        "concept_category": "ABSOLUTE_BENEFIT_AND_HARM_DISCLOSURE",
-        "concept_id": "CONCEPT-CF-PH07-ABSOLUTE-BENEFIT",
-        "member_id": "KEY",
-        "role_in_set": "KEY"
-      },
-      "concept_b": {
-        "concept": "Add a statement that participation is voluntary and that declining will not affect any other care",
-        "concept_category": "PARTICIPATION_FRAMING",
-        "concept_id": "CONCEPT-G2-VOLUNTARY-STATEMENT",
-        "member_id": "SEED-G2-PHELO-T02-VOLUNTARY",
-        "role_in_set": "COMPETITOR",
-        "seed_id": "SEED-G2-PHELO-T02-VOLUNTARY"
-      },
-      "confusability": "MODERATE",
-      "contrast_relation_id": "CCR2-8568d37f45be816d017b7f11",
-      "correctness_conditions_a": {
-        "conditions": [
-          {
-            "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
-            "required_state": "PRESENT"
-          },
-          {
-            "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
-            "required_state": "PRESENT"
-          }
-        ],
-        "operator": "ALL_OF",
-        "prose_basis": "CLM-R4-PHELO-ABSOLUTE: a relative statement sounds impressive but may not help an individual who would benefit more from an absolute figure. CLM-R4-PHELO-CONSENT-CRITERION and CLM-R2-PHELO-ACCEPTABILITY make protected autonomy and informed choice the objective the presentation must serve."
-      },
-      "correctness_conditions_b": {
-        "conditions": [
-          {
-            "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
-            "required_state": "ABSENT"
-          }
-        ],
-        "operator": "ALL_OF",
-        "prose_basis": "Frozen seed: 'Correct where the letter's defect is that readers feel obliged to attend, rather than that the benefit is stated in a form they cannot interpret.' CLM-R2-PHELO-REMINDERS supplies the perceived-authority defect."
-      },
-      "decision_granularity": "SINGLE_EDIT_TO_ONE_DOCUMENT",
-      "discovery_sources": [
-        "CURATED_LIBRARY",
-        "FROZEN_EVIDENCE_PACKET"
-      ],
-      "discriminators": [
-        {
-          "contrast_role": "MANAGEMENT_ELIGIBILITY",
-          "evidence_refs": [
-            "CLM-R4-PHELO-CONSENT-CRITERION",
-            "CLM-R2-PHELO-ACCEPTABILITY",
-            "CLM-R4-PHELO-ABSOLUTE"
-          ],
-          "favours": "A",
-          "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
-          "required_state": "PRESENT",
-          "salience": "MODERATE",
-          "statement": "Where the programme's stated objective is informed choice, autonomy is compromised by the way information is given, so the revision must give the invited person figures they can act on rather than figures that describe the test's performance."
-        },
-        {
-          "contrast_role": "INVESTIGATION_FINDING",
-          "evidence_refs": [
-            "CLM-R4-PHELO-ABSOLUTE"
-          ],
-          "favours": "A",
-          "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
-          "required_state": "PRESENT",
-          "salience": "SALIENT",
-          "statement": "A relative-risk-only statement is the specific defect an absolute figure repairs."
-        }
-      ],
-      "evidence_refs": [
-        "CLM-R2-PHELO-ACCEPTABILITY",
-        "CLM-R2-PHELO-REMINDERS",
-        "CLM-R4-PHELO-ABSOLUTE",
-        "CLM-R4-PHELO-CONSENT-CRITERION",
-        "CLM-R4-PHELO-FALSEPOS"
-      ],
-      "learner_decision_id": "LD-PH07-02",
-      "mcc_relevance": "LD-PH07-02 for MCC objective 74, CORE in PHELO",
-      "nesting_relation": "NONE",
-      "opportunity_label": "G2-PHELO-02",
-      "response_class": "AUTONOMY",
-      "second_key_conditions": [
-        {
-          "conditions": [
-            {
-              "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
-              "required_state": "ABSENT"
-            }
-          ],
-          "operator": "ALL_OF",
-          "prose_basis": "Frozen seed: 'Correct where the letter's defect is that readers feel obliged to attend, rather than that the benefit is stated in a form they cannot interpret.' CLM-R2-PHELO-REMINDERS supplies the perceived-authority defect."
         }
       ],
       "shared_features": [],
@@ -6193,17 +5803,12 @@
         {
           "clinical_role": "EXAMINATION_FINDING",
           "contrast_role": "POSITIVE_SUPPORT",
-          "feature_id": "SF-OB54-FLUCTUANT-COLLECTION"
-        },
-        {
-          "clinical_role": "VITAL_SIGN",
-          "contrast_role": "SEVERITY_FEATURE",
-          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS"
+          "feature_id": "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE"
         },
         {
           "clinical_role": "EXAMINATION_FINDING",
           "contrast_role": "POSITIVE_SUPPORT",
-          "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+          "feature_id": "SF-OB54-MASS-DECREASES-AFTER-FEED"
         }
       ],
       "categorical_exclusion_conditions": [],
@@ -6215,15 +5820,15 @@
         "role_in_set": "KEY"
       },
       "concept_b": {
-        "concept": "Lactational breast abscess",
-        "concept_category": "SUPPURATIVE_COLLECTION",
-        "concept_id": "CONCEPT-R4-SU-OB-54-ABSCESS",
-        "member_id": "SEED-OB-T01-ABSCESS",
+        "concept": "Galactocele",
+        "concept_category": "RETENTION_LESION",
+        "concept_id": "CONCEPT-R4-SU-OB-54-GALACTOCELE",
+        "member_id": "SEED-OB-T01-GALACTOCELE",
         "role_in_set": "COMPETITOR",
-        "seed_id": "SEED-OB-T01-ABSCESS"
+        "seed_id": "SEED-OB-T01-GALACTOCELE"
       },
-      "confusability": "HIGH",
-      "contrast_relation_id": "CCR2-b558fca28d8b13c5f29350be",
+      "confusability": "MODERATE",
+      "contrast_relation_id": "CCR2-b31c28db3528c4dc788197b6",
       "correctness_conditions_a": {
         "conditions": [
           {
@@ -6241,51 +5846,31 @@
       "correctness_conditions_b": {
         "conditions": [
           {
-            "feature_id": "SF-OB54-FLUCTUANT-COLLECTION",
+            "feature_id": "SF-OB54-MASS-DECREASES-AFTER-FEED",
             "required_state": "PRESENT"
+          },
+          {
+            "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
+            "required_state": "ABSENT"
+          },
+          {
+            "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+            "required_state": "ABSENT"
           }
         ],
         "operator": "ALL_OF",
-        "prose_basis": "Frozen seed: 'Correct where a palpable fluid collection is present in a well-defined area of the breast.'"
+        "prose_basis": "Frozen seed: 'Correct for a moderately firm mass without erythema or systemic symptoms, decreasing temporarily after a feed.' CLM-R4-OB-GALACTOCELE reads the same way. Three conjuncts; V1 carried two and omitted the erythema clause."
       },
       "decision_granularity": "SINGLE_DIAGNOSIS",
       "discovery_sources": [
         "CURATED_LIBRARY",
         "FROZEN_EVIDENCE_PACKET"
       ],
-      "discriminators": [
-        {
-          "contrast_role": "KEY_DISCRIMINATOR",
-          "evidence_refs": [
-            "CLM-R2-OB-MASTITIS-ANCHOR",
-            "CLM-R2-OB-IBC"
-          ],
-          "favours": "A",
-          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
-          "required_state": "PRESENT",
-          "salience": "MODERATE",
-          "statement": "Systemic signs with a segmental erythematous breast are the mastitis pattern; the inflammatory-carcinoma concern is raised by skin thickening, retraction and peau d'orange rather than by systemic illness."
-        },
-        {
-          "contrast_role": "KEY_DISCRIMINATOR",
-          "evidence_refs": [
-            "CLM-R4-OB-PHLEGMON",
-            "CLM-R2-OB-ABSCESS"
-          ],
-          "favours": "A",
-          "feature_id": "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
-          "required_state": "PRESENT",
-          "salience": "SALIENT",
-          "statement": "A firm mass-like area without fluctuance is the phlegmon end of the spectrum; an abscess is a drainable fluid collection."
-        }
-      ],
+      "discriminators": [],
       "evidence_refs": [
         "CLM-GEN-OB-DX-01",
-        "CLM-GEN-OB-INV-01",
-        "CLM-R2-OB-ABSCESS",
-        "CLM-R2-OB-IBC",
         "CLM-R2-OB-MASTITIS-ANCHOR",
-        "CLM-R4-OB-PHLEGMON"
+        "CLM-R4-OB-GALACTOCELE"
       ],
       "learner_decision_id": "LD-OB54-01",
       "mcc_relevance": "LD-OB54-01 for MCC objective 80-2, IMPORTANT in OBGYN",
@@ -6296,21 +5881,23 @@
         {
           "conditions": [
             {
-              "feature_id": "SF-OB54-FLUCTUANT-COLLECTION",
+              "feature_id": "SF-OB54-MASS-DECREASES-AFTER-FEED",
               "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
+              "required_state": "ABSENT"
+            },
+            {
+              "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+              "required_state": "ABSENT"
             }
           ],
           "operator": "ALL_OF",
-          "prose_basis": "Frozen seed: 'Correct where a palpable fluid collection is present in a well-defined area of the breast.'"
+          "prose_basis": "Frozen seed: 'Correct for a moderately firm mass without erythema or systemic symptoms, decreasing temporarily after a feed.' CLM-R4-OB-GALACTOCELE reads the same way. Three conjuncts; V1 carried two and omitted the erythema clause."
         }
       ],
-      "shared_features": [
-        {
-          "clinical_role": "EXAMINATION_FINDING",
-          "contrast_role": "POSITIVE_SUPPORT",
-          "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
-        }
-      ],
+      "shared_features": [],
       "verification_status": "EVIDENCE_VERIFIED"
     },
     {
@@ -6517,6 +6104,114 @@
           ],
           "operator": "ALL_OF",
           "prose_basis": "Frozen seed: 'Correct where psychotherapy is the chosen modality and in-person delivery is not available.' Two conjuncts joined by 'and'; CLM-R4-PSY-DIGITAL supports delivery by digital format."
+        }
+      ],
+      "shared_features": [],
+      "verification_status": "EVIDENCE_VERIFIED"
+    },
+    {
+      "a_supporting_features": [
+        {
+          "clinical_role": "PROGRAMME_CAPACITY",
+          "contrast_role": "MANAGEMENT_ELIGIBILITY",
+          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
+        }
+      ],
+      "anchor_study_unit_id": "SU-PH-07",
+      "b_supporting_features": [
+        {
+          "clinical_role": "PROGRAMME_CAPACITY",
+          "contrast_role": "MANAGEMENT_ELIGIBILITY",
+          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
+        },
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "contrast_role": "INVESTIGATION_FINDING",
+          "feature_id": "SF-PH07-THRESHOLD-TOO-FAR-TOWARD-LOW-RISK"
+        }
+      ],
+      "categorical_exclusion_conditions": [],
+      "concept_a": {
+        "concept": "Defer the launch until diagnostic and treatment capacity is in place",
+        "concept_category": "DEFER_LAUNCH",
+        "concept_id": "CONCEPT-CF-PH07-DEFER-LAUNCH",
+        "member_id": "KEY",
+        "role_in_set": "KEY"
+      },
+      "concept_b": {
+        "concept": "Raise the threshold so that fewer results are called positive",
+        "concept_category": "THRESHOLD_ADJUSTMENT",
+        "concept_id": "CONCEPT-R4-SU-PH-07-RAISE-CUTOFF",
+        "member_id": "SEED-PHELO-T03-RAISE-CUTOFF",
+        "role_in_set": "COMPETITOR",
+        "seed_id": "SEED-PHELO-T03-RAISE-CUTOFF"
+      },
+      "confusability": "MODERATE",
+      "contrast_relation_id": "CCR2-bca89151465acdc15c017646",
+      "correctness_conditions_a": {
+        "conditions": [
+          {
+            "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+            "required_state": "PRESENT"
+          }
+        ],
+        "operator": "ALL_OF",
+        "prose_basis": "CLM-GEN-PHELO-ORG-01: a test should not be launched at population scale when the downstream diagnostic and treatment pathway cannot be delivered. CLM-R2-PHELO-FACILITIES and CLM-R4-PHELO-HARM-LABEL supply the harm."
+      },
+      "correctness_conditions_b": {
+        "conditions": [
+          {
+            "feature_id": "SF-PH07-THRESHOLD-TOO-FAR-TOWARD-LOW-RISK",
+            "required_state": "PRESENT"
+          }
+        ],
+        "operator": "ALL_OF",
+        "prose_basis": "Frozen seed: 'Correct where the current threshold sits too far toward the low-risk end and is generating avoidable low-yield referrals.' CLM-R2-PHELO-CUTOFF reads the same way."
+      },
+      "decision_granularity": "COMPLETE_PROGRAMME_DECISION",
+      "discovery_sources": [
+        "CURATED_LIBRARY",
+        "FROZEN_EVIDENCE_PACKET"
+      ],
+      "discriminators": [
+        {
+          "contrast_role": "MANAGEMENT_ELIGIBILITY",
+          "evidence_refs": [
+            "CLM-GEN-PHELO-ORG-01",
+            "CLM-R4-PHELO-HARM-LABEL",
+            "CLM-R2-PHELO-CUTOFF"
+          ],
+          "favours": "A",
+          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+          "required_state": "PRESENT",
+          "salience": "MODERATE",
+          "scoping_reason": "The capacity shortfall states the other two competitors' conditions contrary outright. Against a threshold change it is a genuine discriminator: raising the cut-off lowers referral volume without creating the confirmatory pathway.",
+          "statement": "An absolute shortfall in the confirmatory pathway is not repaired by moving the cut-off: raising it reduces referral volume but still labels people who cannot then be investigated, which is the harm CLM-R4-PHELO-HARM-LABEL names."
+        }
+      ],
+      "evidence_refs": [
+        "CLM-GEN-PHELO-ORG-01",
+        "CLM-R2-PHELO-ACCEPTED-TREATMENT",
+        "CLM-R2-PHELO-CUTOFF",
+        "CLM-R2-PHELO-FACILITIES",
+        "CLM-R4-PHELO-ACTION-POLICY",
+        "CLM-R4-PHELO-HARM-LABEL"
+      ],
+      "learner_decision_id": "LD-PH07-03",
+      "mcc_relevance": "LD-PH07-03 for MCC objective 74, CORE in PHELO",
+      "nesting_relation": "NONE",
+      "opportunity_label": "G2-PHELO-03",
+      "response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+      "second_key_conditions": [
+        {
+          "conditions": [
+            {
+              "feature_id": "SF-PH07-THRESHOLD-TOO-FAR-TOWARD-LOW-RISK",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct where the current threshold sits too far toward the low-risk end and is generating avoidable low-yield referrals.' CLM-R2-PHELO-CUTOFF reads the same way."
         }
       ],
       "shared_features": [],
@@ -7067,6 +6762,108 @@
     {
       "a_supporting_features": [
         {
+          "clinical_role": "PROGRAMME_OBJECTIVE",
+          "contrast_role": "MANAGEMENT_ELIGIBILITY",
+          "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
+        },
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "contrast_role": "INVESTIGATION_FINDING",
+          "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
+        }
+      ],
+      "anchor_study_unit_id": "SU-PH-07",
+      "b_supporting_features": [
+        {
+          "clinical_role": "PROGRAMME_OBJECTIVE",
+          "contrast_role": "MANAGEMENT_ELIGIBILITY",
+          "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
+        }
+      ],
+      "categorical_exclusion_conditions": [],
+      "concept_a": {
+        "concept": "Replace the relative benefit figure with the absolute chance of benefit and the chance of a false positive result",
+        "concept_category": "ABSOLUTE_BENEFIT_AND_HARM_DISCLOSURE",
+        "concept_id": "CONCEPT-CF-PH07-ABSOLUTE-BENEFIT",
+        "member_id": "KEY",
+        "role_in_set": "KEY"
+      },
+      "concept_b": {
+        "concept": "Add a statement that participation is voluntary and that declining will not affect any other care",
+        "concept_category": "PARTICIPATION_FRAMING",
+        "concept_id": "CONCEPT-G2-VOLUNTARY-STATEMENT",
+        "member_id": "SEED-G2-PHELO-T02-VOLUNTARY",
+        "role_in_set": "COMPETITOR",
+        "seed_id": "SEED-G2-PHELO-T02-VOLUNTARY"
+      },
+      "confusability": "HIGH",
+      "contrast_relation_id": "CCR2-d12a1e958d97cf55644d3e90",
+      "correctness_conditions_a": {
+        "conditions": [
+          {
+            "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
+            "required_state": "PRESENT"
+          },
+          {
+            "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
+            "required_state": "PRESENT"
+          }
+        ],
+        "operator": "ALL_OF",
+        "prose_basis": "CLM-R4-PHELO-ABSOLUTE: a relative statement sounds impressive but may not help an individual who would benefit more from an absolute figure. CLM-R4-PHELO-CONSENT-CRITERION and CLM-R2-PHELO-ACCEPTABILITY make protected autonomy and informed choice the objective the presentation must serve."
+      },
+      "correctness_conditions_b": {
+        "conditions": [
+          {
+            "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
+            "required_state": "ABSENT"
+          }
+        ],
+        "operator": "ALL_OF",
+        "prose_basis": "Frozen seed: 'Correct where the letter's defect is that readers feel obliged to attend, rather than that the benefit is stated in a form they cannot interpret.' CLM-R2-PHELO-REMINDERS supplies the perceived-authority defect."
+      },
+      "decision_granularity": "SINGLE_EDIT_TO_ONE_DOCUMENT",
+      "discovery_sources": [
+        "CURATED_LIBRARY",
+        "FROZEN_EVIDENCE_PACKET"
+      ],
+      "discriminators": [],
+      "evidence_refs": [
+        "CLM-R2-PHELO-ACCEPTABILITY",
+        "CLM-R2-PHELO-REMINDERS",
+        "CLM-R4-PHELO-ABSOLUTE",
+        "CLM-R4-PHELO-CONSENT-CRITERION",
+        "CLM-R4-PHELO-FALSEPOS"
+      ],
+      "learner_decision_id": "LD-PH07-02",
+      "mcc_relevance": "LD-PH07-02 for MCC objective 74, CORE in PHELO",
+      "nesting_relation": "NONE",
+      "opportunity_label": "G2-PHELO-02",
+      "response_class": "AUTONOMY",
+      "second_key_conditions": [
+        {
+          "conditions": [
+            {
+              "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
+              "required_state": "ABSENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct where the letter's defect is that readers feel obliged to attend, rather than that the benefit is stated in a form they cannot interpret.' CLM-R2-PHELO-REMINDERS supplies the perceived-authority defect."
+        }
+      ],
+      "shared_features": [
+        {
+          "clinical_role": "PROGRAMME_OBJECTIVE",
+          "contrast_role": "MANAGEMENT_ELIGIBILITY",
+          "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
+        }
+      ],
+      "verification_status": "EVIDENCE_VERIFIED"
+    },
+    {
+      "a_supporting_features": [
+        {
           "clinical_role": "TIME_COURSE",
           "contrast_role": "TIMING_FEATURE",
           "feature_id": "SF-P147-FAILING-TO-IMPROVE"
@@ -7309,149 +7106,6 @@
     {
       "a_supporting_features": [
         {
-          "clinical_role": "VITAL_SIGN",
-          "contrast_role": "SEVERITY_FEATURE",
-          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS"
-        },
-        {
-          "clinical_role": "EXAMINATION_FINDING",
-          "contrast_role": "POSITIVE_SUPPORT",
-          "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
-        }
-      ],
-      "anchor_study_unit_id": "SU-OB-54",
-      "b_supporting_features": [
-        {
-          "clinical_role": "EXAMINATION_FINDING",
-          "contrast_role": "POSITIVE_SUPPORT",
-          "feature_id": "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE"
-        },
-        {
-          "clinical_role": "EXAMINATION_FINDING",
-          "contrast_role": "POSITIVE_SUPPORT",
-          "feature_id": "SF-OB54-MASS-DECREASES-AFTER-FEED"
-        }
-      ],
-      "categorical_exclusion_conditions": [],
-      "concept_a": {
-        "concept": "Bacterial mastitis",
-        "concept_category": "INFECTIVE_INFLAMMATORY",
-        "concept_id": "CONCEPT-CF-OB54-BACTERIAL-MASTITIS",
-        "member_id": "KEY",
-        "role_in_set": "KEY"
-      },
-      "concept_b": {
-        "concept": "Galactocele",
-        "concept_category": "RETENTION_LESION",
-        "concept_id": "CONCEPT-R4-SU-OB-54-GALACTOCELE",
-        "member_id": "SEED-OB-T01-GALACTOCELE",
-        "role_in_set": "COMPETITOR",
-        "seed_id": "SEED-OB-T01-GALACTOCELE"
-      },
-      "confusability": "MODERATE",
-      "contrast_relation_id": "CCR2-d6ca25e48c5d51ea8aff8011",
-      "correctness_conditions_a": {
-        "conditions": [
-          {
-            "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
-            "required_state": "PRESENT"
-          },
-          {
-            "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
-            "required_state": "PRESENT"
-          }
-        ],
-        "operator": "ALL_OF",
-        "prose_basis": "CLM-R2-OB-MASTITIS-ANCHOR: an increasingly erythematous, edematous and painful region of the breast with systemic signs and symptoms; CLM-GEN-OB-DX-01 adds unilateral localized tenderness, erythema and heat with fever or malaise."
-      },
-      "correctness_conditions_b": {
-        "conditions": [
-          {
-            "feature_id": "SF-OB54-MASS-DECREASES-AFTER-FEED",
-            "required_state": "PRESENT"
-          },
-          {
-            "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
-            "required_state": "ABSENT"
-          },
-          {
-            "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
-            "required_state": "ABSENT"
-          }
-        ],
-        "operator": "ALL_OF",
-        "prose_basis": "Frozen seed: 'Correct for a moderately firm mass without erythema or systemic symptoms, decreasing temporarily after a feed.' CLM-R4-OB-GALACTOCELE reads the same way. Three conjuncts; V1 carried two and omitted the erythema clause."
-      },
-      "decision_granularity": "SINGLE_DIAGNOSIS",
-      "discovery_sources": [
-        "CURATED_LIBRARY",
-        "FROZEN_EVIDENCE_PACKET"
-      ],
-      "discriminators": [
-        {
-          "contrast_role": "KEY_DISCRIMINATOR",
-          "evidence_refs": [
-            "CLM-R2-OB-MASTITIS-ANCHOR",
-            "CLM-R2-OB-IBC"
-          ],
-          "favours": "A",
-          "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
-          "required_state": "PRESENT",
-          "salience": "MODERATE",
-          "statement": "Systemic signs with a segmental erythematous breast are the mastitis pattern; the inflammatory-carcinoma concern is raised by skin thickening, retraction and peau d'orange rather than by systemic illness."
-        },
-        {
-          "contrast_role": "KEY_DISCRIMINATOR",
-          "evidence_refs": [
-            "CLM-R4-OB-PHLEGMON",
-            "CLM-R2-OB-ABSCESS"
-          ],
-          "favours": "A",
-          "feature_id": "SF-OB54-FIRM-MASS-WITHOUT-FLUCTUANCE",
-          "required_state": "PRESENT",
-          "salience": "SALIENT",
-          "statement": "A firm mass-like area without fluctuance is the phlegmon end of the spectrum; an abscess is a drainable fluid collection."
-        }
-      ],
-      "evidence_refs": [
-        "CLM-GEN-OB-DX-01",
-        "CLM-R2-OB-ABSCESS",
-        "CLM-R2-OB-IBC",
-        "CLM-R2-OB-MASTITIS-ANCHOR",
-        "CLM-R4-OB-GALACTOCELE",
-        "CLM-R4-OB-PHLEGMON"
-      ],
-      "learner_decision_id": "LD-OB54-01",
-      "mcc_relevance": "LD-OB54-01 for MCC objective 80-2, IMPORTANT in OBGYN",
-      "nesting_relation": "NONE",
-      "opportunity_label": "G2-OBGYN-01",
-      "response_class": "PALPABLE_MASS_OR_FLUID_COLLECTION",
-      "second_key_conditions": [
-        {
-          "conditions": [
-            {
-              "feature_id": "SF-OB54-MASS-DECREASES-AFTER-FEED",
-              "required_state": "PRESENT"
-            },
-            {
-              "feature_id": "SF-OB54-SYSTEMIC-ILLNESS",
-              "required_state": "ABSENT"
-            },
-            {
-              "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
-              "required_state": "ABSENT"
-            }
-          ],
-          "operator": "ALL_OF",
-          "prose_basis": "Frozen seed: 'Correct for a moderately firm mass without erythema or systemic symptoms, decreasing temporarily after a feed.' CLM-R4-OB-GALACTOCELE reads the same way. Three conjuncts; V1 carried two and omitted the erythema clause."
-        }
-      ],
-      "shared_features": [],
-      "verification_status": "EVIDENCE_VERIFIED"
-    },
-    {
-      "a_supporting_features": [
-        {
           "clinical_role": "SYSTEM_CONSTRAINT",
           "contrast_role": "RESOURCE_AVAILABILITY",
           "feature_id": "SF-GS76-IMAGING-AVAILABLE-NOW"
@@ -7548,6 +7202,134 @@
           ],
           "operator": "ALL_OF",
           "prose_basis": "Frozen seed: 'Correct after non-diagnostic imaging, where clinical suspicion on reassessment is intermediate or low.' CLM-R4-SURG-NONDIAGNOSTIC: observe for intermediate or low clinical suspicion after a non-diagnostic scan."
+        }
+      ],
+      "shared_features": [],
+      "verification_status": "EVIDENCE_VERIFIED"
+    },
+    {
+      "a_supporting_features": [
+        {
+          "clinical_role": "PROGRAMME_OBJECTIVE",
+          "contrast_role": "MANAGEMENT_ELIGIBILITY",
+          "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
+        },
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "contrast_role": "INVESTIGATION_FINDING",
+          "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY"
+        }
+      ],
+      "anchor_study_unit_id": "SU-PH-07",
+      "b_supporting_features": [
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "contrast_role": "INVESTIGATION_FINDING",
+          "feature_id": "SF-PH07-AUDIENCE-CAN-INTERPRET-TEST-METRICS"
+        },
+        {
+          "clinical_role": "PROGRAMME_OBJECTIVE",
+          "contrast_role": "MANAGEMENT_ELIGIBILITY",
+          "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE"
+        }
+      ],
+      "categorical_exclusion_conditions": [],
+      "concept_a": {
+        "concept": "Replace the relative benefit figure with the absolute chance of benefit and the chance of a false positive result",
+        "concept_category": "ABSOLUTE_BENEFIT_AND_HARM_DISCLOSURE",
+        "concept_id": "CONCEPT-CF-PH07-ABSOLUTE-BENEFIT",
+        "member_id": "KEY",
+        "role_in_set": "KEY"
+      },
+      "concept_b": {
+        "concept": "Add the sensitivity and specificity of the screening test",
+        "concept_category": "TEST_PERFORMANCE_REPORTING",
+        "concept_id": "CONCEPT-R4-SU-PH-07-TEST-PERFORMANCE",
+        "member_id": "SEED-PHELO-T02-SENSITIVITY",
+        "role_in_set": "COMPETITOR",
+        "seed_id": "SEED-PHELO-T02-SENSITIVITY"
+      },
+      "confusability": "MODERATE",
+      "contrast_relation_id": "CCR2-e3251eb9b6ba2f886f9f78b1",
+      "correctness_conditions_a": {
+        "conditions": [
+          {
+            "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
+            "required_state": "PRESENT"
+          },
+          {
+            "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
+            "required_state": "PRESENT"
+          }
+        ],
+        "operator": "ALL_OF",
+        "prose_basis": "CLM-R4-PHELO-ABSOLUTE: a relative statement sounds impressive but may not help an individual who would benefit more from an absolute figure. CLM-R4-PHELO-CONSENT-CRITERION and CLM-R2-PHELO-ACCEPTABILITY make protected autonomy and informed choice the objective the presentation must serve."
+      },
+      "correctness_conditions_b": {
+        "conditions": [
+          {
+            "feature_id": "SF-PH07-AUDIENCE-CAN-INTERPRET-TEST-METRICS",
+            "required_state": "PRESENT"
+          }
+        ],
+        "operator": "ALL_OF",
+        "prose_basis": "Frozen seed: 'Correct as programme documentation, where the audience can interpret the figures.'"
+      },
+      "decision_granularity": "SINGLE_EDIT_TO_ONE_DOCUMENT",
+      "discovery_sources": [
+        "CURATED_LIBRARY",
+        "FROZEN_EVIDENCE_PACKET"
+      ],
+      "discriminators": [
+        {
+          "contrast_role": "MANAGEMENT_ELIGIBILITY",
+          "evidence_refs": [
+            "CLM-R4-PHELO-CONSENT-CRITERION",
+            "CLM-R2-PHELO-ACCEPTABILITY",
+            "CLM-R4-PHELO-ABSOLUTE"
+          ],
+          "favours": "A",
+          "feature_id": "SF-PH07-AUTONOMY-IS-THE-STATED-OBJECTIVE",
+          "required_state": "PRESENT",
+          "salience": "MODERATE",
+          "scoping_reason": "A voluntariness statement is itself an autonomy measure, so the stated objective cannot be a discriminator against it. It is a discriminator against reporting test performance, which does not give the invited person a figure they can act on.",
+          "statement": "Where the programme's stated objective is informed choice, autonomy is compromised by the way information is given, so the revision must give the invited person figures they can act on rather than figures that describe the test's performance."
+        },
+        {
+          "contrast_role": "INVESTIGATION_FINDING",
+          "evidence_refs": [
+            "CLM-R4-PHELO-ABSOLUTE"
+          ],
+          "favours": "A",
+          "feature_id": "SF-PH07-LETTER-STATES-RELATIVE-BENEFIT-ONLY",
+          "required_state": "PRESENT",
+          "salience": "SALIENT",
+          "scoping_reason": "The relative-benefit-only defect is what an absolute figure repairs and what test-performance figures do not; the other two competitors are settled by the same fact stating their conditions contrary, not by a discriminator.",
+          "statement": "A relative-risk-only statement is the specific defect an absolute figure repairs."
+        }
+      ],
+      "evidence_refs": [
+        "CLM-R2-PHELO-ACCEPTABILITY",
+        "CLM-R4-PHELO-ABSOLUTE",
+        "CLM-R4-PHELO-ACTION-POLICY",
+        "CLM-R4-PHELO-CONSENT-CRITERION",
+        "CLM-R4-PHELO-FALSEPOS"
+      ],
+      "learner_decision_id": "LD-PH07-02",
+      "mcc_relevance": "LD-PH07-02 for MCC objective 74, CORE in PHELO",
+      "nesting_relation": "NONE",
+      "opportunity_label": "G2-PHELO-02",
+      "response_class": "AUTONOMY",
+      "second_key_conditions": [
+        {
+          "conditions": [
+            {
+              "feature_id": "SF-PH07-AUDIENCE-CAN-INTERPRET-TEST-METRICS",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct as programme documentation, where the audience can interpret the figures.'"
         }
       ],
       "shared_features": [],
@@ -8075,6 +7857,102 @@
           "why_unmapped": "The frozen SU-P-147 vocabulary carries no feature for diagnostic uncertainty. Recorded so a NOT_SATISFIED verdict over this incomplete disjunction is never read as a defeat."
         }
       ],
+      "verification_status": "EVIDENCE_VERIFIED"
+    },
+    {
+      "a_supporting_features": [
+        {
+          "clinical_role": "PROGRAMME_CAPACITY",
+          "contrast_role": "MANAGEMENT_ELIGIBILITY",
+          "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT"
+        }
+      ],
+      "anchor_study_unit_id": "SU-PH-07",
+      "b_supporting_features": [
+        {
+          "clinical_role": "PROGRAMME_DOCUMENT",
+          "contrast_role": "INVESTIGATION_FINDING",
+          "feature_id": "SF-PH07-GOALS-AND-EVALUATION-DEFINED"
+        }
+      ],
+      "categorical_exclusion_conditions": [],
+      "concept_a": {
+        "concept": "Defer the launch until diagnostic and treatment capacity is in place",
+        "concept_category": "DEFER_LAUNCH",
+        "concept_id": "CONCEPT-CF-PH07-DEFER-LAUNCH",
+        "member_id": "KEY",
+        "role_in_set": "KEY"
+      },
+      "concept_b": {
+        "concept": "Launch as planned with continuing evaluation against programme goals",
+        "concept_category": "LAUNCH_WITH_EVALUATION",
+        "concept_id": "CONCEPT-R4-SU-PH-07-EVALUATE",
+        "member_id": "SEED-PHELO-T03-EVALUATE",
+        "role_in_set": "COMPETITOR",
+        "seed_id": "SEED-PHELO-T03-EVALUATE"
+      },
+      "confusability": "MODERATE",
+      "contrast_relation_id": "CCR2-fe67c1b1b1b0855252870725",
+      "correctness_conditions_a": {
+        "conditions": [
+          {
+            "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+            "required_state": "PRESENT"
+          }
+        ],
+        "operator": "ALL_OF",
+        "prose_basis": "CLM-GEN-PHELO-ORG-01: a test should not be launched at population scale when the downstream diagnostic and treatment pathway cannot be delivered. CLM-R2-PHELO-FACILITIES and CLM-R4-PHELO-HARM-LABEL supply the harm."
+      },
+      "correctness_conditions_b": {
+        "conditions": [
+          {
+            "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+            "required_state": "ABSENT"
+          },
+          {
+            "feature_id": "SF-PH07-GOALS-AND-EVALUATION-DEFINED",
+            "required_state": "PRESENT"
+          }
+        ],
+        "operator": "ALL_OF",
+        "prose_basis": "Frozen seed: 'Correct as a standing requirement of any programme that does launch.' CLM-R4-PHELO-EVALUATION makes continuing evaluation a requirement of a programme that launches, which presupposes the shortfall is not there."
+      },
+      "decision_granularity": "COMPLETE_PROGRAMME_DECISION",
+      "discovery_sources": [
+        "CURATED_LIBRARY",
+        "FROZEN_EVIDENCE_PACKET"
+      ],
+      "discriminators": [],
+      "evidence_refs": [
+        "CLM-GEN-PHELO-ORG-01",
+        "CLM-R2-PHELO-ACCEPTED-TREATMENT",
+        "CLM-R2-PHELO-FACILITIES",
+        "CLM-R4-PHELO-ECONOMIC",
+        "CLM-R4-PHELO-EVALUATION",
+        "CLM-R4-PHELO-HARM-LABEL"
+      ],
+      "learner_decision_id": "LD-PH07-03",
+      "mcc_relevance": "LD-PH07-03 for MCC objective 74, CORE in PHELO",
+      "nesting_relation": "NONE",
+      "opportunity_label": "G2-PHELO-03",
+      "response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+      "second_key_conditions": [
+        {
+          "conditions": [
+            {
+              "feature_id": "SF-PH07-CONFIRMATORY-CAPACITY-ABSENT",
+              "required_state": "ABSENT"
+            },
+            {
+              "feature_id": "SF-PH07-GOALS-AND-EVALUATION-DEFINED",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct as a standing requirement of any programme that does launch.' CLM-R4-PHELO-EVALUATION makes continuing evaluation a requirement of a programme that launches, which presupposes the shortfall is not there."
+        }
+      ],
+      "shared_features": [],
       "verification_status": "EVIDENCE_VERIFIED"
     }
   ],
