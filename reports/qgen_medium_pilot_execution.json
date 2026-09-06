@@ -1,0 +1,620 @@
+{
+  "MEDIUM_PILOT_N": 6,
+  "PROPOSED_EXTENSIONS_FOR_NEXT_SNAPSHOT": [
+    {
+      "blocked_by": "Growing the frozen stem-feature vocabulary needs an evidence packet for the feature, and is outside this pilot's authorization.",
+      "clinical_role": "SYMPTOM",
+      "eligible_in_this_batch": false,
+      "kind": "NEW_FEATURE",
+      "member_id": "SEED-G2-MED-T01-DISSECTION",
+      "normalized_feature": "severe acute chest pain is the presenting complaint",
+      "opportunity_label": "G2-MED-01",
+      "proposed_feature_id": "SF-C21-SEVERE-ACUTE-CHEST-PAIN",
+      "why": "It is the presentation every competitor in this set shares with the key and the reason a candidate considers an aortic cause at all. Without it dissection is expressible only as its own correctness conditions.",
+      "why_not_eligible": "The wave refused the candidate outright, and the feature it would have needed is not in the frozen vocabulary."
+    },
+    {
+      "contrast_role": "POSITIVE_SUPPORT",
+      "eligible_in_this_batch": false,
+      "evidence_refs": [
+        "CLM-R2-OB-CONTINUE-FEEDING",
+        "CLM-R2-OB-MASTITIS-ANCHOR"
+      ],
+      "kind": "NEW_ANCHOR_RELATION",
+      "member_id": "SEED-OB-T03-DISCARD",
+      "opportunity_label": "G2-OBGYN-03",
+      "proposed_feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+      "s4_limb_b": "CLM-R2-OB-CONTINUE-FEEDING states that bacterial mastitis is not a contraindication to breastfeeding and that women should not be told to express and discard. The claim exists because the presence of bacterial mastitis is the recognized reason clinicians reach for this instruction, and CLM-R2-OB-MASTITIS-ANCHOR states that mastitis as the segmental erythematous, oedematous, painful breast. It is the presentation feature this candidate shares with the key.",
+      "s4_limb_c": "The candidate's correctness condition is that a contraindication to the infant receiving the milk is present. Segmental erythema is not that condition and does not appear in its tree, so the anchor makes the candidate live without making it correct.",
+      "scope_opportunity_labels": [
+        "G2-OBGYN-03"
+      ],
+      "wave_verdict": "APPROVED",
+      "why_not_eligible": "FEATURE_ANCHOR_SNAPSHOT_V2 does not assert this anchor relation for SEED-OB-T03-DISCARD. The pinned snapshot is not rebuilt inside the batch, so the relation is invisible to every item in it and is carried to the next snapshot cycle for independent review."
+    },
+    {
+      "blocked_by": "Growing the frozen stem-feature vocabulary is outside this pilot's authorization.",
+      "clinical_role": "VITAL_SIGN",
+      "eligible_in_this_batch": false,
+      "kind": "NEW_FEATURE",
+      "member_id": "SEED-PED-T03-FLUIDS",
+      "normalized_feature": "the respiratory rate is above sixty breaths per minute",
+      "opportunity_label": "G2-PED-03",
+      "proposed_feature_id": "SF-P147-TACHYPNOEA-ABOVE-60",
+      "why": "CLM-R4-PED-FEEDING names this number as the aspiration-risk threshold. The frozen vocabulary can only say escalating work of breathing, which collapses a measured vital sign into the judgement that non-invasive support is being considered, and that collapse is what makes three competitors share one anchor.",
+      "why_not_eligible": "The wave refused the candidate outright, and the feature it would have needed is not in the frozen vocabulary."
+    },
+    {
+      "contrast_role": "TIMING_FEATURE",
+      "eligible_in_this_batch": false,
+      "evidence_refs": [
+        "CLM-R2-PED-DX-ANCHOR",
+        "CLM-R4-PED-SUCTION"
+      ],
+      "kind": "NEW_ANCHOR_RELATION",
+      "member_id": "SEED-PED-T03-SUCTION",
+      "opportunity_label": "G2-PED-03",
+      "proposed_feature_id": "SF-P147-VIRAL-PRODROME",
+      "s4_limb_b": "CLM-R2-PED-DX-ANCHOR states the bronchiolitis prodrome as two to three days of fever, cough and rhinorrhea. Rhinorrhea is the nasal secretion suctioning addresses, and CLM-R4-PED-SUCTION is a claim about suctioning in exactly that illness. The coryzal prodrome is the presentation feature the candidate shares with the key.",
+      "s4_limb_c": "The candidate's correctness condition is that nasal obstruction is limiting feeding or comfort. A coryzal prodrome is not that condition -- an infant may be coryzal without obstruction limiting feeds -- so the anchor makes the candidate live without making it correct.",
+      "scope_opportunity_labels": [
+        "G2-PED-03"
+      ],
+      "wave_verdict": "APPROVED",
+      "why_not_eligible": "FEATURE_ANCHOR_SNAPSHOT_V2 does not assert this anchor relation for SEED-PED-T03-SUCTION. The pinned snapshot is not rebuilt inside the batch, so the relation is invisible to every item in it and is carried to the next snapshot cycle for independent review."
+    },
+    {
+      "contrast_role": "SHARED_PRESENTATION_FEATURE",
+      "eligible_in_this_batch": false,
+      "evidence_refs": [
+        "CLM-R2-PSY-DDX-MEDICAL"
+      ],
+      "kind": "NEW_ANCHOR_RELATION",
+      "member_id": "SEED-PSY-T01-ANEMIA",
+      "opportunity_label": "G2-PSY-01",
+      "proposed_feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+      "s4_limb_b": "The same claim and the same limb as the hypothyroid competitor: nonpsychiatric medical conditions presenting with depressive symptoms belong in the differential.",
+      "s4_limb_c": "Its correctness condition is an abnormal complete blood count, which the anchor is not.",
+      "scope_opportunity_labels": [
+        "G2-PSY-01"
+      ],
+      "wave_verdict": "APPROVED",
+      "why_not_eligible": "FEATURE_ANCHOR_SNAPSHOT_V2 does not assert this anchor relation for SEED-PSY-T01-ANEMIA. The pinned snapshot is not rebuilt inside the batch, so the relation is invisible to every item in it and is carried to the next snapshot cycle for independent review."
+    },
+    {
+      "contrast_role": "SHARED_PRESENTATION_FEATURE",
+      "eligible_in_this_batch": false,
+      "evidence_refs": [
+        "CLM-R2-PSY-DDX-MEDICAL"
+      ],
+      "kind": "NEW_ANCHOR_RELATION",
+      "member_id": "SEED-PSY-T01-MEDICAL",
+      "opportunity_label": "G2-PSY-01",
+      "proposed_feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+      "s4_limb_b": "CLM-R2-PSY-DDX-MEDICAL states in terms that the differential should include nonpsychiatric medical conditions that present with depressive symptoms. The depressive symptoms are named as the reason to consider the candidate and are shared with the key.",
+      "s4_limb_c": "Its correctness condition is an abnormal thyroid stimulating hormone. A depressive syndrome is not that, so the anchor makes it live without making it correct.",
+      "scope_opportunity_labels": [
+        "G2-PSY-01"
+      ],
+      "wave_verdict": "APPROVED",
+      "why_not_eligible": "FEATURE_ANCHOR_SNAPSHOT_V2 does not assert this anchor relation for SEED-PSY-T01-MEDICAL. The pinned snapshot is not rebuilt inside the batch, so the relation is invisible to every item in it and is carried to the next snapshot cycle for independent review."
+    },
+    {
+      "contrast_role": "SHARED_PRESENTATION_FEATURE",
+      "eligible_in_this_batch": false,
+      "evidence_refs": [
+        "CLM-R2-PSY-PDD"
+      ],
+      "kind": "NEW_ANCHOR_RELATION",
+      "member_id": "SEED-PSY-T01-PDD",
+      "opportunity_label": "G2-PSY-01",
+      "proposed_feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+      "s4_limb_b": "CLM-R2-PSY-PDD characterises persistent depressive disorder by two or more depressive symptoms present for more than two years. The depressive syndrome is the presentation the claim names, and it is the feature this candidate shares with the key.",
+      "s4_limb_c": "Its correctness tree is a chronic two-year course together with an absence of interepisode recovery. A current depressive syndrome is neither conjunct, so the anchor makes it live without making it correct. The anchor is needed because its only frozen anchor, the chronic course, is declared contradictory with the interepisode recovery the key requires, so no stem that keys this item can state it.",
+      "scope_opportunity_labels": [
+        "G2-PSY-01"
+      ],
+      "wave_verdict": "APPROVED",
+      "why_not_eligible": "FEATURE_ANCHOR_SNAPSHOT_V2 does not assert this anchor relation for SEED-PSY-T01-PDD. The pinned snapshot is not rebuilt inside the batch, so the relation is invisible to every item in it and is carried to the next snapshot cycle for independent review."
+    },
+    {
+      "contrast_role": "SHARED_PRESENTATION_FEATURE",
+      "eligible_in_this_batch": false,
+      "evidence_refs": [
+        "CLM-R2-SURG-DRAINAGE",
+        "CLM-R2-SURG-STANDARD"
+      ],
+      "kind": "NEW_ANCHOR_RELATION",
+      "member_id": "SEED-SURG-T03-DRAINAGE",
+      "opportunity_label": "G2-SURG-03",
+      "proposed_feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+      "s4_limb_b": "Every cited claim in this set scopes its strategy to appendicitis: CLM-R2-SURG-STANDARD to adult non-complicated appendicitis, CLM-R2-SURG-NONOP to adult uncomplicated appendicitis, CLM-R2-SURG-DRAINAGE to complicated appendicitis with a phlegmon or walled-off abscess. Central pain migrating to the right lower quadrant is the frozen SU-GS-76 vocabulary's only statement of that presentation, and it is the key's own correctness condition, so it is the presentation feature the candidate shares with the key.",
+      "s4_limb_c": "Its single correctness condition is the walled-off collection, which is also its only frozen anchor -- the anchor-equals-condition shape CS2-6 refuses. Migratory pain is not that condition, so the addition is what makes the competitor admissible.",
+      "scope_opportunity_labels": [
+        "G2-SURG-03"
+      ],
+      "wave_verdict": "APPROVED",
+      "why_not_eligible": "FEATURE_ANCHOR_SNAPSHOT_V2 does not assert this anchor relation for SEED-SURG-T03-DRAINAGE. The pinned snapshot is not rebuilt inside the batch, so the relation is invisible to every item in it and is carried to the next snapshot cycle for independent review."
+    },
+    {
+      "contrast_role": "SHARED_PRESENTATION_FEATURE",
+      "eligible_in_this_batch": false,
+      "evidence_refs": [
+        "CLM-R2-SURG-DRAINAGE",
+        "CLM-R2-SURG-STANDARD"
+      ],
+      "kind": "NEW_ANCHOR_RELATION",
+      "member_id": "SEED-SURG-T03-INTERVAL",
+      "opportunity_label": "G2-SURG-03",
+      "proposed_feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+      "s4_limb_b": "Every cited claim in this set scopes its strategy to appendicitis: CLM-R2-SURG-STANDARD to adult non-complicated appendicitis, CLM-R2-SURG-NONOP to adult uncomplicated appendicitis, CLM-R2-SURG-DRAINAGE to complicated appendicitis with a phlegmon or walled-off abscess. Central pain migrating to the right lower quadrant is the frozen SU-GS-76 vocabulary's only statement of that presentation, and it is the key's own correctness condition, so it is the presentation feature the candidate shares with the key.",
+      "s4_limb_c": "Its correctness tree is a disjunction of an operative contraindication and a walled-off phlegmon or abscess. Migratory right lower quadrant pain is neither disjunct, so the anchor makes it live without making it correct. The anchor is needed because its only presentation-class frozen anchor is the walled-off collection, which is itself a disjunct.",
+      "scope_opportunity_labels": [
+        "G2-SURG-03"
+      ],
+      "wave_verdict": "APPROVED",
+      "why_not_eligible": "FEATURE_ANCHOR_SNAPSHOT_V2 does not assert this anchor relation for SEED-SURG-T03-INTERVAL. The pinned snapshot is not rebuilt inside the batch, so the relation is invisible to every item in it and is carried to the next snapshot cycle for independent review."
+    },
+    {
+      "contrast_role": "SHARED_PRESENTATION_FEATURE",
+      "eligible_in_this_batch": false,
+      "evidence_refs": [
+        "CLM-R2-SURG-NONOP",
+        "CLM-R2-SURG-STANDARD"
+      ],
+      "kind": "NEW_ANCHOR_RELATION",
+      "member_id": "SEED-SURG-T03-NONOP",
+      "opportunity_label": "G2-SURG-03",
+      "proposed_feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+      "s4_limb_b": "Every cited claim in this set scopes its strategy to appendicitis: CLM-R2-SURG-STANDARD to adult non-complicated appendicitis, CLM-R2-SURG-NONOP to adult uncomplicated appendicitis, CLM-R2-SURG-DRAINAGE to complicated appendicitis with a phlegmon or walled-off abscess. Central pain migrating to the right lower quadrant is the frozen SU-GS-76 vocabulary's only statement of that presentation, and it is the key's own correctness condition, so it is the presentation feature the candidate shares with the key.",
+      "s4_limb_c": "Its correctness tree is uncomplicated disease with an accepted recurrence risk together with the absence of perforation. Migratory pain is neither conjunct. The anchor is needed because its only frozen anchor is a clinical judgement, which types BACKGROUND_CONTEXT in a patient decision and cannot carry plausibility at all.",
+      "scope_opportunity_labels": [
+        "G2-SURG-03"
+      ],
+      "wave_verdict": "APPROVED",
+      "why_not_eligible": "FEATURE_ANCHOR_SNAPSHOT_V2 does not assert this anchor relation for SEED-SURG-T03-NONOP. The pinned snapshot is not rebuilt inside the batch, so the relation is invisible to every item in it and is carried to the next snapshot cycle for independent review."
+    }
+  ],
+  "SNAPSHOT_MUTATED_DURING_PILOT": false,
+  "cache_economics": {
+    "CONTRAST_CACHE_HITS_TOTAL": 0,
+    "NEW_RELATIONS_CREATED_TOTAL": 36,
+    "PROPOSED_EXTENSIONS_PER_OPPORTUNITY": 1.67,
+    "amortization_note": "Reuse inside one opportunity is real -- one anchor relation served three members in both the surgical and the psychiatric sets -- and reuse across opportunities was zero, because each opportunity is a different study unit or a different learner decision. Nothing here supports a monetary estimate and none is offered.",
+    "anchor_relations_reused_across_members": {
+      "SF-GS76-MIGRATORY-RLQ-PAIN": 3,
+      "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA": 1,
+      "SF-P147-VIRAL-PRODROME": 1,
+      "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT": 3
+    },
+    "feature_registry_cache_hits": "The pinned snapshot is loaded once per run and its hash verified once; every consumer reads the same in-memory rows. No feature or anchor row was re-derived per opportunity.",
+    "per_opportunity": {
+      "G2-MED-01": {
+        "CONTRAST_CACHE_HITS": 0,
+        "NEW_RELATIONS_CREATED": 6,
+        "TOTAL_RELATION_REQUESTS": 6
+      },
+      "G2-OBGYN-02": {
+        "CONTRAST_CACHE_HITS": 0,
+        "NEW_RELATIONS_CREATED": 3,
+        "TOTAL_RELATION_REQUESTS": 3
+      },
+      "G2-OBGYN-03": {
+        "CONTRAST_CACHE_HITS": 0,
+        "NEW_RELATIONS_CREATED": 1,
+        "TOTAL_RELATION_REQUESTS": 1
+      },
+      "G2-PED-03": {
+        "CONTRAST_CACHE_HITS": 0,
+        "NEW_RELATIONS_CREATED": 10,
+        "TOTAL_RELATION_REQUESTS": 10
+      },
+      "G2-PSY-01": {
+        "CONTRAST_CACHE_HITS": 0,
+        "NEW_RELATIONS_CREATED": 10,
+        "TOTAL_RELATION_REQUESTS": 10
+      },
+      "G2-SURG-03": {
+        "CONTRAST_CACHE_HITS": 0,
+        "NEW_RELATIONS_CREATED": 6,
+        "TOTAL_RELATION_REQUESTS": 6
+      }
+    },
+    "relations_reused_across_disciplines": 0,
+    "relations_reused_across_opportunities": 0
+  },
+  "context_characters": {
+    "NEXT_TOKEN_OPTIMIZATION_TARGET": "SERIALIZED_PAIRWISE_RELATION_PAYLOAD",
+    "SUPPLY_CONTEXT_MEDIAN": 25753,
+    "SUPPLY_CONTEXT_P95": 38181,
+    "candidate_discovery": {
+      "median": 537,
+      "p95": 578
+    },
+    "generation_characters_for_the_one_realized_item": 3824,
+    "per_opportunity": [
+      {
+        "candidate_discovery": 578,
+        "opportunity_label": "G2-MED-01",
+        "relation_acquisition": 22001,
+        "relation_review": 934,
+        "total": 23513
+      },
+      {
+        "candidate_discovery": 506,
+        "opportunity_label": "G2-OBGYN-02",
+        "relation_acquisition": 10544,
+        "relation_review": 1391,
+        "total": 12441
+      },
+      {
+        "candidate_discovery": 493,
+        "opportunity_label": "G2-OBGYN-03",
+        "relation_acquisition": 3948,
+        "relation_review": 2175,
+        "total": 6616
+      },
+      {
+        "candidate_discovery": 571,
+        "opportunity_label": "G2-PED-03",
+        "relation_acquisition": 36009,
+        "relation_review": 1601,
+        "total": 38181
+      },
+      {
+        "candidate_discovery": 521,
+        "opportunity_label": "G2-PSY-01",
+        "relation_acquisition": 34223,
+        "relation_review": 109,
+        "total": 34853
+      },
+      {
+        "candidate_discovery": 553,
+        "opportunity_label": "G2-SURG-03",
+        "relation_acquisition": 27324,
+        "relation_review": 117,
+        "total": 27994
+      }
+    ],
+    "relation_acquisition": {
+      "median": 24662,
+      "p95": 36009
+    },
+    "relation_review": {
+      "median": 1162,
+      "p95": 2175
+    },
+    "tokens_not_reported_because": "No local tokenizer is installed, and characters are not equated with tokens.",
+    "unit": "CHARACTERS",
+    "why": "The serialized pairwise relation payload is again the whole of the supply cost, and it is again unoptimized. The registry gives every anchor relation a stable content-addressed id, which is the precondition for sending a reference instead of re-serializing a competitor's full anchor and condition payload on each of the six to ten pairs an opportunity builds. This pilot measured it and deliberately did not change it."
+  },
+  "counts": {
+    "COUNTERFACTUAL_CONTRAST_READY": 3,
+    "COUNTERFACTUAL_GENERATED": 1,
+    "MEDIUM_GENERATED": 0,
+    "MEDIUM_NO_SAFE_ITEM": 6,
+    "MEDIUM_POST_SUPPLY_CONTRAST_READY": 1,
+    "MEDIUM_PRE_SUPPLY_CONTRAST_READY": 1,
+    "generated_labels": []
+  },
+  "eligibility": {
+    "BELOW_THE_STATED_FLOOR_OF_24": true,
+    "ELIGIBLE_UNCONSUMED_BY_DISCIPLINE": {
+      "MED": 1,
+      "OBGYN": 2,
+      "PED": 1,
+      "PHELO": 0,
+      "PSY": 1,
+      "SURG": 1
+    },
+    "MEDIUM_PILOT_N": 6,
+    "SPECIFIED_PILOT_SIZE": 36,
+    "TOTAL_ELIGIBLE_UNCONSUMED": 6,
+    "eligible_unconsumed_labels": [
+      "G2-MED-01",
+      "G2-OBGYN-02",
+      "G2-OBGYN-03",
+      "G2-PED-03",
+      "G2-PSY-01",
+      "G2-SURG-03"
+    ],
+    "funnel": {
+      "ALREADY_CONSUMED_BY_THIS_V2_REPLAY": 10,
+      "FROZEN_OPPORTUNITY_UNIVERSE": 30,
+      "OF_THOSE_WITH_AT_LEAST_THREE_ADMISSIBLE_CANDIDATES": 16,
+      "OPPORTUNITIES_WITH_AN_AUTHORED_OPTION_SET_CONTRACT": 18,
+      "REMAINING_UNUSED": 6
+    },
+    "limitation": "The batch is 6, against a specified 36 and a stated floor of 24. The shortfall is the canonical opportunity universe, not the selection rule: the whole frozen universe is 30, only 18 carry an authored option-set contract, 16 of those reach three admissible curated candidates, and 10 are consumed by the V2 frozen-ten replay. Reaching 24 would require authoring new opportunities, new seed packs with independent seed review and new evidence packets, which is source-packet research rather than an architecture pilot. No criterion was weakened and no opportunity was invented.",
+    "selection_criteria_unchanged": true
+  },
+  "failure_taxonomy": {
+    "LARGEST_FAILURE_CATEGORY": "NEW_EXTENSION_NOT_IN_PINNED_SNAPSHOT",
+    "LARGEST_FAILURE_CATEGORY_PERCENT": 66.7,
+    "MEDIUM_FAILURE_COUNTS": {
+      "BLUEPRINT_FAILURE": 1,
+      "NEW_EXTENSION_NOT_IN_PINNED_SNAPSHOT": 4,
+      "NO_CONTRAST_SUPPLY": 1
+    },
+    "SYSTEMATIC_DEFECT": "V2_CANNOT_CARRY_A_NEVER_CORRECT_DISTRACTOR",
+    "SYSTEMATIC_DEFECT_GE_20_PERCENT": "YES",
+    "SYSTEMATIC_DEFECT_PERCENT": 33.3,
+    "architectural_defects": {
+      "DENIAL_BUDGET_AGAINST_DENIAL_ONLY_COMPETITORS": 1,
+      "KEY_EVIDENCE_SCOPE_NOT_CHECKED_AGAINST_THE_SETTLEMENT_DEVICE": 1,
+      "MISSING_VOCABULARY_FEATURE_FOR_A_SHARED_PRESENTATION": 1,
+      "ONE_MEMBERS_CORRECTNESS_CONDITION_IS_ANOTHERS_SOLE_ANCHOR": 1,
+      "V2_CANNOT_CARRY_A_NEVER_CORRECT_DISTRACTOR": 2
+    },
+    "not_repaired_here": "Phase 25's own rule: the defect is identified and is not repaired inside the experiment that measured it.",
+    "population": 6
+  },
+  "feature_anchor_registry_hash": "863aee59b5017253614e1d2a24eb6aa93001f29f7481c1cbebf374083cc11a89",
+  "feature_anchor_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2",
+  "llm_api_calls": 0,
+  "per_opportunity": [
+    {
+      "ARCHITECTURAL_DEFECT": "MISSING_VOCABULARY_FEATURE_FOR_A_SHARED_PRESENTATION",
+      "POST_SUPPLY_CONTRAST_READY": false,
+      "POST_SUPPLY_VALID_COMPETITORS": [
+        "SEED-G2-MED-T01-PE",
+        "SEED-G2-MED-T01-PERICARDITIS"
+      ],
+      "PRE_SUPPLY_CONTRAST_READY": false,
+      "PRE_SUPPLY_VALID_COMPETITORS": [
+        "SEED-G2-MED-T01-PE",
+        "SEED-G2-MED-T01-PERICARDITIS"
+      ],
+      "PRIMARY_CAUSE": "NEW_EXTENSION_NOT_IN_PINNED_SNAPSHOT",
+      "counterfactual_if_the_next_snapshot_carried_the_proposals": {
+        "CONTRAST_READY": false,
+        "POST_SUPPLY_VALID_COMPETITORS": [
+          "SEED-G2-MED-T01-PE",
+          "SEED-G2-MED-T01-PERICARDITIS"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "stage_reached": "CONTRAST_SET_ASSEMBLY"
+      },
+      "difficulty_intent": "MEDIUM",
+      "discipline": "MED",
+      "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+      "feature_anchor_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2",
+      "item_archetype": "DIAGNOSIS",
+      "learner_decision_id": "LD-C21-01",
+      "opportunity_label": "G2-MED-01",
+      "stage_reached": "CONTRAST_SET_ASSEMBLY",
+      "terminal_state": "NO_SAFE_ITEM",
+      "wave": {
+        "CANDIDATES_DISCOVERED": 1,
+        "CANDIDATES_SEMANTICALLY_REVIEWED": 1,
+        "CONTRAST_CACHE_HITS": 0,
+        "NEW_RELATIONS_CREATED": 6,
+        "RELATIONS_APPROVED": 0,
+        "RELATIONS_REJECTED": 1,
+        "RELATIONS_UNCERTAIN": 0,
+        "TOTAL_RELATION_REQUESTS": 6
+      }
+    },
+    {
+      "ARCHITECTURAL_DEFECT": "V2_CANNOT_CARRY_A_NEVER_CORRECT_DISTRACTOR",
+      "POST_SUPPLY_CONTRAST_READY": false,
+      "POST_SUPPLY_VALID_COMPETITORS": [
+        "SEED-OB-T02-ASPIRATION",
+        "SEED-OB-T02-MAMMOGRAPHY"
+      ],
+      "PRE_SUPPLY_CONTRAST_READY": false,
+      "PRE_SUPPLY_VALID_COMPETITORS": [],
+      "PRIMARY_CAUSE": "NO_CONTRAST_SUPPLY",
+      "counterfactual_if_the_next_snapshot_carried_the_proposals": {
+        "CONTRAST_READY": false,
+        "POST_SUPPLY_VALID_COMPETITORS": [
+          "SEED-OB-T02-ASPIRATION",
+          "SEED-OB-T02-MAMMOGRAPHY"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "stage_reached": "CONTRAST_SET_ASSEMBLY"
+      },
+      "difficulty_intent": "MEDIUM",
+      "discipline": "OBGYN",
+      "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+      "feature_anchor_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2",
+      "item_archetype": "INVESTIGATION_SELECTION",
+      "learner_decision_id": "LD-OB54-02",
+      "opportunity_label": "G2-OBGYN-02",
+      "stage_reached": "CONTRAST_SET_ASSEMBLY",
+      "terminal_state": "NO_SAFE_ITEM",
+      "wave": {
+        "CANDIDATES_DISCOVERED": 2,
+        "CANDIDATES_SEMANTICALLY_REVIEWED": 2,
+        "CONTRAST_CACHE_HITS": 0,
+        "NEW_RELATIONS_CREATED": 3,
+        "RELATIONS_APPROVED": 0,
+        "RELATIONS_REJECTED": 2,
+        "RELATIONS_UNCERTAIN": 0,
+        "TOTAL_RELATION_REQUESTS": 3
+      }
+    },
+    {
+      "ARCHITECTURAL_DEFECT": "V2_CANNOT_CARRY_A_NEVER_CORRECT_DISTRACTOR",
+      "POST_SUPPLY_CONTRAST_READY": false,
+      "POST_SUPPLY_VALID_COMPETITORS": [
+        "SEED-OB-T03-DISCARD"
+      ],
+      "PRE_SUPPLY_CONTRAST_READY": false,
+      "PRE_SUPPLY_VALID_COMPETITORS": [],
+      "PRIMARY_CAUSE": "NEW_EXTENSION_NOT_IN_PINNED_SNAPSHOT",
+      "counterfactual_if_the_next_snapshot_carried_the_proposals": {
+        "CONTRAST_READY": false,
+        "POST_SUPPLY_VALID_COMPETITORS": [
+          "SEED-OB-T03-DISCARD"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "stage_reached": "CONTRAST_SET_ASSEMBLY"
+      },
+      "difficulty_intent": "HARD",
+      "discipline": "OBGYN",
+      "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+      "feature_anchor_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2",
+      "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+      "learner_decision_id": "LD-OB54-03",
+      "opportunity_label": "G2-OBGYN-03",
+      "stage_reached": "CONTRAST_SET_ASSEMBLY",
+      "terminal_state": "NO_SAFE_ITEM",
+      "wave": {
+        "CANDIDATES_DISCOVERED": 5,
+        "CANDIDATES_SEMANTICALLY_REVIEWED": 5,
+        "CONTRAST_CACHE_HITS": 0,
+        "NEW_RELATIONS_CREATED": 1,
+        "RELATIONS_APPROVED": 0,
+        "RELATIONS_REJECTED": 4,
+        "RELATIONS_UNCERTAIN": 1,
+        "TOTAL_RELATION_REQUESTS": 1
+      }
+    },
+    {
+      "ARCHITECTURAL_DEFECT": "ONE_MEMBERS_CORRECTNESS_CONDITION_IS_ANOTHERS_SOLE_ANCHOR",
+      "POST_SUPPLY_CONTRAST_READY": true,
+      "POST_SUPPLY_VALID_COMPETITORS": [
+        "SEED-PED-T03-EPINEPHRINE",
+        "SEED-PED-T03-FLUIDS",
+        "SEED-PED-T03-HFNC"
+      ],
+      "PRE_SUPPLY_CONTRAST_READY": true,
+      "PRE_SUPPLY_VALID_COMPETITORS": [
+        "SEED-PED-T03-EPINEPHRINE",
+        "SEED-PED-T03-FLUIDS",
+        "SEED-PED-T03-HFNC"
+      ],
+      "PRIMARY_CAUSE": "BLUEPRINT_FAILURE",
+      "counterfactual_if_the_next_snapshot_carried_the_proposals": {
+        "CONTRAST_READY": true,
+        "POST_SUPPLY_VALID_COMPETITORS": [
+          "SEED-PED-T03-EPINEPHRINE",
+          "SEED-PED-T03-FLUIDS",
+          "SEED-PED-T03-HFNC",
+          "SEED-PED-T03-SUCTION"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_NO_USABLE_ANCHOR",
+        "stage_reached": "BLUEPRINT"
+      },
+      "difficulty_intent": "HARD",
+      "discipline": "PED",
+      "fail_closed_reason": "FAIL_CLOSED_NO_USABLE_ANCHOR",
+      "feature_anchor_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2",
+      "item_archetype": "SUPPORTIVE_CARE_CEILING",
+      "learner_decision_id": "LD-P147-03",
+      "opportunity_label": "G2-PED-03",
+      "stage_reached": "BLUEPRINT",
+      "terminal_state": "NO_SAFE_ITEM",
+      "wave": {
+        "CANDIDATES_DISCOVERED": 5,
+        "CANDIDATES_SEMANTICALLY_REVIEWED": 5,
+        "CONTRAST_CACHE_HITS": 0,
+        "NEW_RELATIONS_CREATED": 10,
+        "RELATIONS_APPROVED": 0,
+        "RELATIONS_REJECTED": 4,
+        "RELATIONS_UNCERTAIN": 1,
+        "TOTAL_RELATION_REQUESTS": 10
+      }
+    },
+    {
+      "ARCHITECTURAL_DEFECT": "DENIAL_BUDGET_AGAINST_DENIAL_ONLY_COMPETITORS",
+      "POST_SUPPLY_CONTRAST_READY": false,
+      "POST_SUPPLY_VALID_COMPETITORS": [
+        "SEED-PSY-T01-BD2"
+      ],
+      "PRE_SUPPLY_CONTRAST_READY": false,
+      "PRE_SUPPLY_VALID_COMPETITORS": [],
+      "PRIMARY_CAUSE": "NEW_EXTENSION_NOT_IN_PINNED_SNAPSHOT",
+      "counterfactual_if_the_next_snapshot_carried_the_proposals": {
+        "CONTRAST_READY": true,
+        "POST_SUPPLY_VALID_COMPETITORS": [
+          "SEED-PSY-T01-ANEMIA",
+          "SEED-PSY-T01-BD2",
+          "SEED-PSY-T01-MEDICAL",
+          "SEED-PSY-T01-PDD"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_COMPETITOR_CANNOT_BE_SETTLED",
+        "stage_reached": "BLUEPRINT"
+      },
+      "difficulty_intent": "MEDIUM",
+      "discipline": "PSY",
+      "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+      "feature_anchor_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2",
+      "item_archetype": "LONGITUDINAL_DIFFERENTIAL",
+      "learner_decision_id": "LD-PS12-01",
+      "opportunity_label": "G2-PSY-01",
+      "stage_reached": "CONTRAST_SET_ASSEMBLY",
+      "terminal_state": "NO_SAFE_ITEM",
+      "wave": {
+        "CANDIDATES_DISCOVERED": 3,
+        "CANDIDATES_SEMANTICALLY_REVIEWED": 3,
+        "CONTRAST_CACHE_HITS": 0,
+        "NEW_RELATIONS_CREATED": 10,
+        "RELATIONS_APPROVED": 2,
+        "RELATIONS_REJECTED": 0,
+        "RELATIONS_UNCERTAIN": 1,
+        "TOTAL_RELATION_REQUESTS": 10
+      }
+    },
+    {
+      "ARCHITECTURAL_DEFECT": "KEY_EVIDENCE_SCOPE_NOT_CHECKED_AGAINST_THE_SETTLEMENT_DEVICE",
+      "POST_SUPPLY_CONTRAST_READY": false,
+      "POST_SUPPLY_VALID_COMPETITORS": [],
+      "PRE_SUPPLY_CONTRAST_READY": false,
+      "PRE_SUPPLY_VALID_COMPETITORS": [],
+      "PRIMARY_CAUSE": "NEW_EXTENSION_NOT_IN_PINNED_SNAPSHOT",
+      "counterfactual_if_the_next_snapshot_carried_the_proposals": {
+        "CONTRAST_READY": true,
+        "POST_SUPPLY_VALID_COMPETITORS": [
+          "SEED-SURG-T03-DRAINAGE",
+          "SEED-SURG-T03-INTERVAL",
+          "SEED-SURG-T03-NONOP"
+        ],
+        "fail_closed_reason": null,
+        "stage_reached": "INDEPENDENT_REVIEW"
+      },
+      "difficulty_intent": "HARD",
+      "discipline": "SURG",
+      "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+      "feature_anchor_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2",
+      "item_archetype": "OPERATIVE_VS_NONOPERATIVE",
+      "learner_decision_id": "LD-GS76-03",
+      "opportunity_label": "G2-SURG-03",
+      "stage_reached": "CONTRAST_SET_ASSEMBLY",
+      "terminal_state": "NO_SAFE_ITEM",
+      "wave": {
+        "CANDIDATES_DISCOVERED": 3,
+        "CANDIDATES_SEMANTICALLY_REVIEWED": 3,
+        "CONTRAST_CACHE_HITS": 0,
+        "NEW_RELATIONS_CREATED": 6,
+        "RELATIONS_APPROVED": 1,
+        "RELATIONS_REJECTED": 0,
+        "RELATIONS_UNCERTAIN": 2,
+        "TOTAL_RELATION_REQUESTS": 6
+      }
+    }
+  ],
+  "pilot_id": "medium-pilot-snapshot-v2",
+  "schema_version": "1.0",
+  "scope": "QGEN_MEDIUM_PILOT_EXECUTION",
+  "snapshot_invariant": "One snapshot for the whole batch, pinned by explicit id, never rebuilt inside it. Every anchor relation the wave approved that the snapshot does not already assert was withheld from every item in the batch and recorded for the next snapshot cycle. The counterfactual run beside each opportunity is what those withheld relations would have bought; it is reported, not counted.",
+  "supply_source_value": {
+    "GRAPH_UNIQUE_APPROVED_CONTRIBUTIONS": 0,
+    "NEW_EXTERNAL_EVIDENCE_CONTRIBUTIONS": 0,
+    "TN_FTS_UNIQUE_APPROVED_CONTRIBUTIONS": 0,
+    "approved_and_eligible_in_this_batch_by_source": {
+      "CURATED_LIBRARY": 3
+    },
+    "approved_by_kind_before_the_snapshot_rule": {
+      "ANCHOR_ADDITION": 5,
+      "NEW_MEMBER_WITH_ANCHOR_ADDITION": 3
+    },
+    "approved_by_source_before_the_snapshot_rule": {
+      "APPROVED_V2_RELATION": 5,
+      "CURATED_LIBRARY": 3
+    },
+    "load_bearing_for_accepted_questions": "None, because no question was accepted. The one item the counterfactual realized rested on three anchor relations, all of them read from claims already in the frozen evidence packets and none of them from the graph or the full-text index.",
+    "tn_fts_note": "One bounded full-text query was run for each of five opportunities. Every concept returned was already a frozen curated seed for that decision, so the index contributed no candidate and no relation. That is the second consecutive wave in which it has contributed nothing."
+  }
+}
