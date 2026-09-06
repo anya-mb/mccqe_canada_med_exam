@@ -1025,6 +1025,19 @@ def _command_run_contrast_v2_pilot(arguments: argparse.Namespace) -> None:
     }, indent=2, sort_keys=True))
 
 
+def _command_run_contrast_supply_diagnosis(arguments: argparse.Namespace) -> None:
+    """Diagnose the contrast supply of the five V2 NO_SAFE_ITEM opportunities."""
+    from .contrast_supply import SUPPLY_DIAGNOSIS_PATH, build_supply_diagnosis
+
+    root = canonical_root(getattr(arguments, "root", Path.cwd()))
+    report = build_supply_diagnosis(root)
+    write_json_atomic(resolve_root_path(root, SUPPLY_DIAGNOSIS_PATH), report)
+    print(json.dumps({
+        "FROZEN5_ANALYZED": report["FROZEN5_ANALYZED"],
+        "FROZEN5_PRIMARY_SUPPLY_CAUSES": report["FROZEN5_PRIMARY_SUPPLY_CAUSES"],
+    }, indent=2, sort_keys=True))
+
+
 def _command_run_retrieval_benchmark(arguments: argparse.Namespace) -> None:
     """Run the frozen-G2 four-arm retrieval benchmark."""
     from .retrieval_benchmark import run_benchmark
@@ -1150,6 +1163,11 @@ def _parser() -> argparse.ArgumentParser:
             "run-contrast-v2-pilot",
             "run the V2 replay, verification, comparison and decision",
             _command_run_contrast_v2_pilot,
+        ),
+        (
+            "run-contrast-supply-diagnosis",
+            "diagnose contrast supply for the five V2 NO_SAFE_ITEM opportunities",
+            _command_run_contrast_supply_diagnosis,
         ),
     )
     parsers = {}

@@ -1,0 +1,526 @@
+{
+  "FROZEN5_ANALYZED": 5,
+  "FROZEN5_PRIMARY_SUPPLY_CAUSES": {
+    "H_CURRENT_CONTRAST_LIBRARY_COVERAGE_GAP": [
+      "G2-PED-01",
+      "G2-PED-02"
+    ],
+    "L_OTHER_DIFFICULTY_SETTLEMENT_BUDGET": [
+      "G2-PSY-03"
+    ],
+    "L_OTHER_FROZEN_STEM_FEATURE_VOCABULARY_CEILING": [
+      "G2-SURG-01"
+    ],
+    "L_OTHER_KEY_CONDITION_NOT_OBSERVABLE": [
+      "G2-SURG-02"
+    ]
+  },
+  "cause_vocabulary": [
+    "A_TOO_FEW_CLINICALLY_RELEVANT_COMPETITORS",
+    "B_COMPETITORS_EXIST_BUT_WRONG_LEARNER_DECISION",
+    "C_COMPETITORS_EXIST_BUT_WRONG_RESPONSE_CLASS",
+    "D_COMPETITORS_EXIST_BUT_WRONG_GRANULARITY",
+    "E_COMPETITORS_EXIST_BUT_CATEGORICALLY_EXCLUDED",
+    "F_COMPETITORS_EXIST_BUT_SECOND_KEY_RISK",
+    "G_COMPETITORS_EXIST_BUT_INSUFFICIENT_EVIDENCE",
+    "H_CURRENT_CONTRAST_LIBRARY_COVERAGE_GAP",
+    "I_GRAPH_DISCOVERY_GAP",
+    "J_TN_INDEX_DISCOVERY_GAP",
+    "K_NATURALLY_LOW_CONTRAST_TOPIC",
+    "L_OTHER_FROZEN_STEM_FEATURE_VOCABULARY_CEILING",
+    "L_OTHER_KEY_CONDITION_NOT_OBSERVABLE",
+    "L_OTHER_DIFFICULTY_SETTLEMENT_BUDGET"
+  ],
+  "frozen_before_any_relation_was_acquired": true,
+  "method": "Every count is recomputed from the frozen artifacts through build_v2_contrast_sets and select_admissible_subset. No gate, seed, reading, key, stem or evidence packet is modified or re-read from a narrative.",
+  "opportunities": [
+    {
+      "anchor_study_unit_id": "SU-P-147",
+      "assembly_detail": [
+        {
+          "anchors": [
+            "SF-P147-ABRUPT-ONSET-NO-PRODROME",
+            "SF-P147-FOCAL-ASYMMETRIC-FINDINGS"
+          ],
+          "member_id": "SEED-PED-T01-FOREIGN-BODY",
+          "name": "ANCHOR_EQUALS_CONDITION",
+          "rule": "CS2-6"
+        },
+        {
+          "anchors": [
+            "SF-P147-FAILING-TO-IMPROVE",
+            "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+            "SF-P147-SEVERE-OR-BACTERIAL-CONCERN"
+          ],
+          "member_id": "SEED-PED-T01-PNEUMONIA",
+          "name": "ANCHOR_EQUALS_CONDITION",
+          "rule": "CS2-6"
+        }
+      ],
+      "assembly_violations": [
+        "CS2-6"
+      ],
+      "candidates_in_the_v2_set": [
+        "SEED-PED-T01-ASTHMA",
+        "SEED-PED-T01-FOREIGN-BODY",
+        "SEED-PED-T01-PNEUMONIA"
+      ],
+      "current_candidate_count": 3,
+      "decision_granularity": "SINGLE_DIAGNOSIS",
+      "demanded_response_class": "ACUTE_RESPIRATORY_DISTRESS",
+      "difficulty_intent": "MEDIUM",
+      "discipline": "PED",
+      "dropped_by_rule": {
+        "SEED-PED-T01-FOREIGN-BODY": "CS2-6",
+        "SEED-PED-T01-PNEUMONIA": "CS2-6"
+      },
+      "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+      "item_archetype": "AGE_BANDED_DIAGNOSIS",
+      "key_concept": "VIRAL_LOWER_AIRWAY",
+      "key_correctness_features": [
+        "SF-P147-AGE-UNDER-12M",
+        "SF-P147-FIRST-WHEEZE",
+        "SF-P147-VIRAL-PRODROME"
+      ],
+      "learner_decision": "What is the most likely diagnosis?",
+      "learner_decision_id": "LD-P147-01",
+      "library_eligible_but_unused": [],
+      "library_eligible_candidates": [
+        "SEED-PED-T01-ASTHMA",
+        "SEED-PED-T01-FOREIGN-BODY",
+        "SEED-PED-T01-PNEUMONIA"
+      ],
+      "minimum_missing_supply": "Two admissible competitors. Either two new concepts, or an evidence-cited plausibility anchor for each of the two refused seeds that is a presentation feature shared with the key and is not on its own sufficient for that seed's correctness.",
+      "note": "The T01 pool is exactly three candidates and all three are already in the set, so the library cannot supply a fourth concept. The refusals are a property of the frozen stem-anchor layer, not of the concepts.",
+      "opportunity_id": "QOPP-2ea8ff9d726e2805c09a67c8",
+      "opportunity_label": "G2-PED-01",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "primary_supply_cause": "H_CURRENT_CONTRAST_LIBRARY_COVERAGE_GAP",
+      "priority_class": "CORE",
+      "relations_available": 6,
+      "stage_reached": "CONTRAST_SET_ASSEMBLY",
+      "supply_sources_that_could_close_it": [
+        "EXISTING_LIBRARY",
+        "TN_FTS",
+        "EXTERNAL_EVIDENCE"
+      ],
+      "surviving_competitors": [
+        "SEED-PED-T01-ASTHMA"
+      ],
+      "valid_v2_relation_count_before": 1,
+      "why_each_candidate_failed": {
+        "SEED-PED-T01-ASTHMA": "Admissible. Its usable anchor SF-P147-ATOPY-OR-RECURRENCE leaves the age precondition unresolved, so the anchor does not complete the correctness signature.",
+        "SEED-PED-T01-FOREIGN-BODY": "CS2-6. Its frozen stem-anchor row is {ABRUPT-ONSET-NO-PRODROME, FOCAL-ASYMMETRIC-FINDINGS} and its correctness conditions are the disjunction of the same two features, so every usable anchor also makes it correct.",
+        "SEED-PED-T01-PNEUMONIA": "CS2-6, for the same reason over {FAILING-TO-IMPROVE, FOCAL-ASYMMETRIC-FINDINGS, SEVERE-OR-BACTERIAL-CONCERN}."
+      }
+    },
+    {
+      "anchor_study_unit_id": "SU-P-147",
+      "assembly_detail": [
+        {
+          "anchors": [
+            "SF-P147-HIGH-RISK-EARLY-COURSE"
+          ],
+          "member_id": "SEED-PED-T02-VIRAL",
+          "name": "ANCHOR_EQUALS_CONDITION",
+          "rule": "CS2-6"
+        }
+      ],
+      "assembly_violations": [
+        "CS2-6"
+      ],
+      "candidates_in_the_v2_set": [
+        "SEED-PED-T02-CONTINUOUS",
+        "SEED-PED-T02-CXR",
+        "SEED-PED-T02-VIRAL"
+      ],
+      "current_candidate_count": 3,
+      "decision_granularity": "SINGLE_NEXT_ASSESSMENT",
+      "demanded_response_class": "DIAGNOSTIC_ADVANCEMENT",
+      "difficulty_intent": "EASY",
+      "discipline": "PED",
+      "dropped_by_rule": {
+        "SEED-PED-T02-VIRAL": "CS2-6"
+      },
+      "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+      "item_archetype": "INVESTIGATION_SELECTION",
+      "key_concept": "MONITORING_INTENSITY",
+      "key_correctness_features": [
+        "SF-P147-FAILING-TO-IMPROVE",
+        "SF-P147-HIGH-RISK-EARLY-COURSE",
+        "SF-P147-HYPOXEMIA"
+      ],
+      "learner_decision": "Which assessment is most appropriate for this infant on the ward?",
+      "learner_decision_id": "LD-P147-02",
+      "library_eligible_but_unused": [
+        "SEED-PED-T02-CBC"
+      ],
+      "library_eligible_candidates": [
+        "SEED-PED-T02-CBC",
+        "SEED-PED-T02-CONTINUOUS",
+        "SEED-PED-T02-CXR",
+        "SEED-PED-T02-VIRAL"
+      ],
+      "minimum_missing_supply": "One admissible competitor. SEED-PED-T02-CBC is library-eligible and unused, but as frozen it carries a single anchor that is also its sole correctness condition, so it would be refused by CS2-6 on arrival.",
+      "note": "The one unused library candidate needs an added, evidence-cited plausibility anchor before it is supply at all.",
+      "opportunity_id": "QOPP-846f7185201d4203ab1f30a9",
+      "opportunity_label": "G2-PED-02",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "primary_supply_cause": "H_CURRENT_CONTRAST_LIBRARY_COVERAGE_GAP",
+      "priority_class": "CORE",
+      "relations_available": 6,
+      "stage_reached": "CONTRAST_SET_ASSEMBLY",
+      "supply_sources_that_could_close_it": [
+        "EXISTING_LIBRARY",
+        "TN_FTS"
+      ],
+      "surviving_competitors": [
+        "SEED-PED-T02-CONTINUOUS",
+        "SEED-PED-T02-CXR"
+      ],
+      "valid_v2_relation_count_before": 2,
+      "why_each_candidate_failed": {
+        "SEED-PED-T02-CONTINUOUS": "Admissible.",
+        "SEED-PED-T02-CXR": "Admissible.",
+        "SEED-PED-T02-VIRAL": "CS2-6. Its only usable anchor is SF-P147-HIGH-RISK-EARLY-COURSE, which is also one disjunct of its correctness conditions; its other declared anchor is a SYSTEM_CONSTRAINT and cannot carry plausibility."
+      }
+    },
+    {
+      "anchor_study_unit_id": "SU-PS-12",
+      "assembly_detail": [],
+      "assembly_violations": [],
+      "candidates_in_the_v2_set": [
+        "SEED-PSY-T03-DIGITAL",
+        "SEED-PSY-T03-EXERCISE",
+        "SEED-PSY-T03-PSYCHOTHERAPY"
+      ],
+      "current_candidate_count": 3,
+      "decision_granularity": "INITIAL_TREATMENT_PLAN",
+      "demanded_response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+      "difficulty_intent": "EASY",
+      "discipline": "PSY",
+      "dropped_by_rule": {},
+      "fail_closed_reason": "FAIL_CLOSED_COMPETITOR_CANNOT_BE_SETTLED",
+      "item_archetype": "PHARMACOTHERAPY",
+      "key_concept": "PHARMACOTHERAPY",
+      "key_correctness_features": [
+        "SF-PS12-HIGH-IMMINENT-SUICIDE-RISK",
+        "SF-PS12-MODERATE-SEVERITY"
+      ],
+      "learner_decision": "Which initial treatment should be offered?",
+      "learner_decision_id": "LD-PS12-03",
+      "library_eligible_but_unused": [
+        "SEED-G2-PSY-T03-AD-ALONE",
+        "SEED-G2-PSY-T03-ECT",
+        "SEED-PSY-T03-COMBINED"
+      ],
+      "library_eligible_candidates": [
+        "SEED-G2-PSY-T03-AD-ALONE",
+        "SEED-G2-PSY-T03-ECT",
+        "SEED-PSY-T03-COMBINED",
+        "SEED-PSY-T03-DIGITAL",
+        "SEED-PSY-T03-EXERCISE",
+        "SEED-PSY-T03-PSYCHOTHERAPY"
+      ],
+      "minimum_missing_supply": "At least one further admissible competitor that is settleable by STATED_CONTRARY alone, so that an unsettleable member can be dropped with three still standing.",
+      "note": "This is not a shortage of candidates: three library-eligible candidates are unused. It is a shortage of candidates the difficulty contract can afford to defeat.",
+      "opportunity_id": "QOPP-7d879c81066b549b00107721",
+      "opportunity_label": "G2-PSY-03",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "primary_supply_cause": "L_OTHER_DIFFICULTY_SETTLEMENT_BUDGET",
+      "priority_class": "CORE",
+      "relations_available": 6,
+      "stage_reached": "BLUEPRINT",
+      "supply_sources_that_could_close_it": [
+        "EXISTING_LIBRARY"
+      ],
+      "surviving_competitors": [
+        "SEED-PSY-T03-DIGITAL",
+        "SEED-PSY-T03-EXERCISE",
+        "SEED-PSY-T03-PSYCHOTHERAPY"
+      ],
+      "valid_v2_relation_count_before": 3,
+      "why_each_candidate_failed": {
+        "SEED-PSY-T03-DIGITAL": "Admissible at assembly and unsettleable at blueprint. Its correctness conditions are a conjunction of a stated preference and an access barrier; the stem can defeat it only by denying one of them explicitly, and EASY allows a single explicit denial which the key's own HIGH-IMMINENT-SUICIDE-RISK ABSENT already spends.",
+        "SEED-PSY-T03-EXERCISE": "Admissible and settleable: MILD-SEVERITY is contradicted by the key's MODERATE-SEVERITY.",
+        "SEED-PSY-T03-PSYCHOTHERAPY": "Admissible; its first disjunct rests on the same unstated access barrier."
+      }
+    },
+    {
+      "anchor_study_unit_id": "SU-GS-76",
+      "assembly_detail": [
+        {
+          "evidence_refs": [
+            "CLM-R4-SURG-FEMALE-DDX",
+            "CLM-R4-SURG-PID-CRITERIA",
+            "CLM-R4-SURG-PID-SURGICAL",
+            "CLM-R4-SURG-TOA-ONSET"
+          ],
+          "name": "NESTED_OR_DUPLICATE_CONCEPT",
+          "nesting_relation": "COMPLICATION_OF",
+          "pair": [
+            "SEED-SURG-T01-PID",
+            "SEED-SURG-T01-TOA"
+          ],
+          "rule": "CS2-1"
+        },
+        {
+          "categories": {
+            "GYNAECOLOGIC_CAUSE": [
+              "SEED-SURG-T01-PID",
+              "SEED-SURG-T01-TOA",
+              "SEED-SURG-T01-TORSION"
+            ],
+            "NON_GYNAECOLOGIC_CAUSE": [
+              "KEY"
+            ]
+          },
+          "competitor_category": "GYNAECOLOGIC_CAUSE",
+          "key_category": "NON_GYNAECOLOGIC_CAUSE",
+          "name": "CATEGORY_IMBALANCE",
+          "reason": "LONE_KEY_CATEGORY",
+          "rule": "CS2-5"
+        },
+        {
+          "category": "GYNAECOLOGIC_CAUSE",
+          "members": [
+            "SEED-SURG-T01-PID",
+            "SEED-SURG-T01-TOA",
+            "SEED-SURG-T01-TORSION"
+          ],
+          "name": "CATEGORY_IMBALANCE",
+          "reason": "ONE_BROAD_CATEGORY_BESIDE_NARROW_SUBTYPES",
+          "rule": "CS2-5"
+        }
+      ],
+      "assembly_violations": [
+        "CS2-1",
+        "CS2-5"
+      ],
+      "candidates_in_the_v2_set": [
+        "SEED-SURG-T01-PID",
+        "SEED-SURG-T01-TOA",
+        "SEED-SURG-T01-TORSION"
+      ],
+      "current_candidate_count": 3,
+      "decision_granularity": "SINGLE_DIAGNOSIS",
+      "demanded_response_class": "ACUTE_ABDOMINAL_OR_PELVIC_PAIN",
+      "difficulty_intent": "EASY",
+      "discipline": "SURG",
+      "dropped_by_rule": {
+        "SEED-SURG-T01-TOA": "CS2-1"
+      },
+      "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+      "item_archetype": "RECOGNITION",
+      "key_concept": "NON_GYNAECOLOGIC_CAUSE",
+      "key_correctness_features": [
+        "SF-GS76-MIGRATORY-RLQ-PAIN"
+      ],
+      "learner_decision": "What is the most likely diagnosis?",
+      "learner_decision_id": "LD-GS76-01",
+      "library_eligible_but_unused": [],
+      "library_eligible_candidates": [
+        "SEED-SURG-T01-PID",
+        "SEED-SURG-T01-TOA",
+        "SEED-SURG-T01-TORSION"
+      ],
+      "minimum_missing_supply": "One admissible competitor that is NOT a gynaecologic cause. CS2-5 fires twice on the assembled set: the key is alone in its category and the competitors close ranks in a single category of their own, so a fourth gynaecologic competitor would make the imbalance worse, not better.",
+      "note": "Discovery is not the constraint. CLM-R4-SURG-FEMALE-DDX and CLM-R4-SURG-PID-SURGICAL name further differentials and the Toronto Notes index carries more. The constraint is that the frozen SU-GS-76 vocabulary holds no presentation feature in which a non-gynaecologic differential could state a correctness condition without also being its own sole plausibility anchor, which CS2-6 then refuses.",
+      "opportunity_id": "QOPP-0de5f917778b8e286e41542b",
+      "opportunity_label": "G2-SURG-01",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "primary_supply_cause": "L_OTHER_FROZEN_STEM_FEATURE_VOCABULARY_CEILING",
+      "priority_class": "CORE",
+      "relations_available": 6,
+      "stage_reached": "CONTRAST_SET_ASSEMBLY",
+      "supply_sources_that_could_close_it": [],
+      "surviving_competitors": [
+        "SEED-SURG-T01-PID",
+        "SEED-SURG-T01-TORSION"
+      ],
+      "valid_v2_relation_count_before": 2,
+      "why_each_candidate_failed": {
+        "SEED-SURG-T01-PID": "Admissible.",
+        "SEED-SURG-T01-TOA": "CS2-1. An evidence-backed COMPLICATION_OF nesting in pelvic inflammatory disease, so the pair tests one and the same discrimination.",
+        "SEED-SURG-T01-TORSION": "Admissible."
+      }
+    },
+    {
+      "anchor_study_unit_id": "SU-GS-76",
+      "assembly_detail": [
+        {
+          "key": "KEY",
+          "key_condition_classes": [
+            "NON_DISCRIMINATING"
+          ],
+          "name": "KEY_CONDITION_NOT_OBSERVABLE",
+          "rule": "CS2-9"
+        },
+        {
+          "anchors": [
+            "SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS"
+          ],
+          "member_id": "SEED-SURG-T02-KUB",
+          "name": "ANCHOR_EQUALS_CONDITION",
+          "rule": "CS2-6"
+        },
+        {
+          "members": [
+            "SEED-SURG-T02-US"
+          ],
+          "name": "SET_ANCHOR_DEGENERACY",
+          "reason": "NO_USABLE_ANCHOR",
+          "rule": "CS2-7",
+          "state_map_supplied": false
+        }
+      ],
+      "assembly_violations": [
+        "CS2-6",
+        "CS2-7",
+        "CS2-9"
+      ],
+      "candidates_in_the_v2_set": [
+        "SEED-SURG-T02-KUB",
+        "SEED-SURG-T02-MRI",
+        "SEED-SURG-T02-OBSERVE",
+        "SEED-SURG-T02-US"
+      ],
+      "current_candidate_count": 4,
+      "decision_granularity": "SINGLE_NEXT_DIAGNOSTIC_STEP",
+      "demanded_response_class": "DIAGNOSTIC_ADVANCEMENT",
+      "difficulty_intent": "MEDIUM",
+      "discipline": "SURG",
+      "dropped_by_rule": {
+        "SEED-SURG-T02-KUB": "CS2-6",
+        "SEED-SURG-T02-US": "CS2-7"
+      },
+      "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+      "item_archetype": "IMAGING_SELECTION",
+      "key_concept": "CROSS_SECTIONAL_IMAGING",
+      "key_correctness_features": [
+        "SF-GS76-IMAGING-AVAILABLE-NOW",
+        "SF-GS76-INTERMEDIATE-CLINICAL-SUSPICION"
+      ],
+      "learner_decision": "What is the most appropriate next step in diagnosis?",
+      "learner_decision_id": "LD-GS76-02",
+      "library_eligible_but_unused": [
+        "SEED-SURG-T02-LAPAROSCOPY"
+      ],
+      "library_eligible_candidates": [
+        "SEED-SURG-T02-KUB",
+        "SEED-SURG-T02-LAPAROSCOPY",
+        "SEED-SURG-T02-MRI",
+        "SEED-SURG-T02-OBSERVE",
+        "SEED-SURG-T02-US"
+      ],
+      "minimum_missing_supply": "None that supply can provide. CS2-9 fires on the key itself: both of its correctness conditions are NON_DISCRIMINATING, an Alvarado suspicion band the frozen reading deliberately refuses to retype and a resource clause, so the stem could only declare the answer. Any set built around this key stays incoherent however many competitors it has.",
+      "note": "Recorded as a supply diagnosis result because it is the answer to the supply question for this opportunity: the bottleneck is upstream of supply and the key is frozen.",
+      "opportunity_id": "QOPP-714fa249ef13476662a9c146",
+      "opportunity_label": "G2-SURG-02",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "primary_supply_cause": "L_OTHER_KEY_CONDITION_NOT_OBSERVABLE",
+      "priority_class": "CORE",
+      "relations_available": 10,
+      "stage_reached": "CONTRAST_SET_ASSEMBLY",
+      "supply_sources_that_could_close_it": [],
+      "surviving_competitors": [
+        "SEED-SURG-T02-MRI",
+        "SEED-SURG-T02-OBSERVE"
+      ],
+      "valid_v2_relation_count_before": 2,
+      "why_each_candidate_failed": {
+        "SEED-SURG-T02-KUB": "CS2-6. Its only usable anchor SF-GS76-URETERAL-STONE-LEADING-DIAGNOSIS is also its sole correctness condition.",
+        "SEED-SURG-T02-MRI": "Admissible.",
+        "SEED-SURG-T02-OBSERVE": "Admissible.",
+        "SEED-SURG-T02-US": "CS2-7 NO_USABLE_ANCHOR. Every one of its declared anchors types to PRIOR_ONLY or RESOURCE_AVAILABILITY, so none can carry its plausibility."
+      }
+    }
+  ],
+  "reuse_matrix": [
+    {
+      "component": "clinical_contrast_v2 (feature states, predicates, roles, CS2-1..CS2-9)",
+      "decision": "REUSE",
+      "why": "It is the model this milestone supplies input to. Redesigning it is explicitly out of scope, and every acquired candidate is handed to the unmodified gate."
+    },
+    {
+      "component": "contrast_first_v2_pilot (set build, subset selection, blueprint, replay)",
+      "decision": "REUSE",
+      "why": "The replay path is the canonical V2 pipeline. Supply builds its input; it does not re-implement a stage of it."
+    },
+    {
+      "component": "research/qgen/clinical_contrast_relations_v2.json (68 frozen relations)",
+      "decision": "REUSE",
+      "why": "First place a relation request looks. A cache hit costs nothing and cannot drift from what the counterfactual validated."
+    },
+    {
+      "component": "research/qgen/chapter_global_contrast_library.json (12 curated edges)",
+      "decision": "REUSE",
+      "why": "Second discovery source. Small, independently reviewed, already carries decision_context and excluded_contexts."
+    },
+    {
+      "component": "curated seed packs r4 / g2_targeted / g2_extensions (81 candidates)",
+      "decision": "REUSE",
+      "why": "Third discovery source and the only one that already carries response class tokens, decision granularity and archetype applicability."
+    },
+    {
+      "component": "derived/tn_index/tn_index.sqlite3 chunks_fts (14,909 chunks)",
+      "decision": "REUSE",
+      "why": "Fourth discovery source, used for concept discovery and evidence context only. The four-arm benchmark already showed BM25 cannot produce competitor objects directly, and this milestone does not ask it to."
+    },
+    {
+      "component": "typed clinical graph (4,275 nodes, 5,916 edges)",
+      "decision": "REUSE",
+      "why": "Fifth discovery source and a provenance aid. Measured, not expanded: GRAPH_UNIQUE_USEFUL_CONTRIBUTIONS was 0 in the contrast-first pilot."
+    },
+    {
+      "component": "evidence claim packets and the source registries",
+      "decision": "REUSE",
+      "why": "Phase 13. A relation cites existing claims before any new research is considered, and every acquired relation must cite at least one."
+    },
+    {
+      "component": "research/qgen/safe_yield/g2_stem_feature_vocabulary.json",
+      "decision": "REUSE",
+      "why": "Frozen with a content hash and read-only. Supply may not invent a feature id; where a discovered competitor cannot state its conditions in this vocabulary it is refused, and that refusal is a finding."
+    },
+    {
+      "component": "frozen stem-anchor layer of the curated seed packs",
+      "decision": "EXTEND",
+      "why": "Read and never written. Supply may ADD an evidence-cited plausibility anchor to a candidate in its own acquisition record; it may never remove one, and the frozen pack keeps its bytes."
+    },
+    {
+      "component": "contrast supply cache (new)",
+      "decision": "EXTEND",
+      "why": "New artifact. Keys a relation by concept pair plus learner decision, response class, decision granularity and anchor unit, so a DIAGNOSIS relation can never be reused for a MANAGEMENT decision."
+    },
+    {
+      "component": "profile_contrast_retrieval.retrieve_profile_aware_contrasts",
+      "decision": "REUSE",
+      "why": "The production gate. Recovered items must still clear it unchanged."
+    },
+    {
+      "component": "embeddings",
+      "decision": "DO_NOT_USE",
+      "why": "LOCAL_EMBEDDING_TRIGGER_MET was NO and nothing in this diagnosis moves it: the competitors that are missing are missing because they cannot be expressed, not because they cannot be found."
+    },
+    {
+      "component": "a broad prepopulated Toronto Notes contrast graph",
+      "decision": "DO_NOT_USE",
+      "why": "All-pairs precomputation over 1,595 pages is the combinatorial explosion the V2 design refuses. Sixty-eight relations settled ten opportunities."
+    },
+    {
+      "component": "the production question generator",
+      "decision": "DO_NOT_USE",
+      "why": "Out of scope. PRODUCTION_GENERATOR_REPLACED = NO."
+    }
+  ],
+  "schema_version": "1.0",
+  "scope": "QGEN_V2_CONTRAST_SUPPLY_DIAGNOSIS",
+  "starting_commit": "b591226",
+  "v2_baseline": {
+    "V2_ACCEPTED": "4/10",
+    "V2_NO_SAFE_ITEM": "5/10",
+    "V2_REJECTED": "1/10"
+  },
+  "what_it_does_not_show": "It does not show that adding anchors is safe. An anchor that is not a genuine shared presentation feature would defeat CS2-6 while leaving the competitor exactly as unusable as before. That is what the independent admissibility review in the acquisition wave is for.",
+  "what_the_measurement_shows": "Six competitor refusals across the five opportunities. Four are CS2-6 ANCHOR_EQUALS_CONDITION, one is CS2-7 NO_USABLE_ANCHOR and one is CS2-1 nesting. Every CS2-6 and CS2-7 refusal is a property of the frozen stem-anchor layer -- which features were recorded as making a seed plausible -- and not of the clinical concept. The dominant missing supply is therefore anchor supply, not concept supply."
+}
