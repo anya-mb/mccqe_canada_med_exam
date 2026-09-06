@@ -21,7 +21,7 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `855d4f41fe54335d0ce4d30025869ca0c3c2fa52`.
+- Audited coordinator input commit: `c640ede0f8ad734f4dddb278803bf3dee0075c83`.
 - Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
@@ -1021,6 +1021,97 @@ This section is maintained by hand and sits outside the generated source-researc
   evidence-backed extension of the frozen 102-feature stem-feature vocabulary, which is what
   `G2-SURG-01` and the five refused proposals need -- reopens a frozen layer that this task's own
   authorization explicitly did not cover.
+- **Cross-discipline medium pilot on one pinned snapshot (2026-09-06), from `c640ede`.** Code and tests
+  `c516d60`, pilot artifacts and reports `86445f5`, `e682bc6` and `c47a216`. `MEDIUM_PILOT_TRIGGERED = YES`,
+  `MEDIUM_PILOT_N = 6`. `HISTORICAL_FROZEN_ARTIFACTS_MODIFIED = 0`, `LLM_API_CALLS = 0`,
+  `SNAPSHOT_MUTATED_DURING_PILOT = NO`, no embeddings, no graph or TN FTS expansion, no broad bank,
+  production generator not replaced, `CLAUDE.md` unchanged.
+- **Six, not thirty-six, and the shortfall is the universe rather than the rule.** Frozen universe 30,
+  18 with an authored option-set contract, 16 reaching three admissible curated candidates, 10
+  consumed by the V2 frozen-ten replay, **6 remaining** -- MED 1, PED 1, OBGYN 2, SURG 1, PSY 1,
+  **PHELO 0**. Below the stated floor of 24, reported rather than closed; no criterion was weakened
+  and no opportunity invented. Difficulty mix MEDIUM 3 / HARD 3, no EASY.
+- **The pilot's whole result is one number: `MEDIUM_GENERATED = 0`.** Pre-supply contrast-ready 1/6,
+  post-supply **1/6**, generated 0, accepted 0, `NO_SAFE_ITEM` 6.
+  `MEDIUM_ACCEPTED_ITEM_SAFETY = NO_ACCEPTED_ITEMS`, which is not `PASS` over an empty set and is not
+  a regression either; the two statements are different and both are recorded.
+- **What blocked it is the pinned-snapshot rule doing exactly its job.** The one bounded supply wave
+  approved 8 anchor additions and 3 new members, and **none of the 8 anchor relations is asserted by
+  `FEATURE_ANCHOR_SNAPSHOT_V2`**. Phase 19 withholds them from every item in the batch, so 4 of the 6
+  fail with `NEW_EXTENSION_NOT_IN_PINNED_SNAPSHOT` -- the largest failure category at **66.7%**. This
+  is the invariant, not a defect: the production gate independently refused the same three competitors
+  under `SAF_1` for the same reason, which is the V2-versus-`SAF_1` divergence the registry closed,
+  arriving this time from the supply side and being caught.
+- **Counterfactual, reported and not counted:** had those relations been in the pinned snapshot,
+  contrast-ready would be 3/6 and generated 1 (`G2-SURG-03`). That item was **rejected** on
+  `UNSUPPORTED_CLAIMS = 1`.
+- **`SNAPSHOT_V3` as reviewed unblocks nothing, and that is the most important measurement here.**
+  Extension yield 10 proposals (8 anchor relations, 2 features), independently reviewed:
+  **5 APPROVED, 0 REJECTED, 5 UNCERTAIN**, none activated. Applying only the 5 approved relations
+  takes contrast-ready from 1 to **2** and items reaching a stem to **0**. One turn of the snapshot
+  cycle does not close the batch that fed it.
+- **The extension review overturned three of the wave's own approvals, on downstream evidence.** The
+  wave admitted `SF-GS76-MIGRATORY-RLQ-PAIN` as a shared anchor for all three surgical competitors by
+  substituting the vocabulary's statement of appendicitis for what the claims actually name, which is
+  the disease. The post-stem gate then fired **CS2-7 `SET_LIVES_ON_ONE_FEATURE`** on the counterfactual
+  item -- the set living on one feature is precisely that anchoring's signature. UNCERTAIN fails closed.
+- **Five named architectural defects, one at or above the Phase 25 threshold.**
+  `SYSTEMATIC_DEFECT_GE_20_PERCENT = YES`, `SYSTEMATIC_DEFECT = V2_CANNOT_CARRY_A_NEVER_CORRECT_DISTRACTOR`
+  at **33.3%**: V2 requires every competitor to carry a condition under which it would be right, an
+  empty tree fails validation, and eight frozen seeds across three opportunities are options their own
+  reviewed prose records as never correct. The other four, one opportunity each:
+  `MISSING_VOCABULARY_FEATURE_FOR_A_SHARED_PRESENTATION` (`G2-MED-01`),
+  `ONE_MEMBERS_CORRECTNESS_CONDITION_IS_ANOTHERS_SOLE_ANCHOR` (`G2-PED-03`),
+  `DENIAL_BUDGET_AGAINST_DENIAL_ONLY_COMPETITORS` (`G2-PSY-01`), and
+  `KEY_EVIDENCE_SCOPE_NOT_CHECKED_AGAINST_THE_SETTLEMENT_DEVICE` (`G2-SURG-03`). None repaired here,
+  per Phase 25's own rule.
+- **The last of those is new and has no gate.** At HARD the solver may spend no explicit denial, so it
+  settled three competitors with one stated positive contrary, perforation with generalised peritonitis.
+  Nothing asks whether that contrary carries the patient outside the evidence scope of the **key's own**
+  correctness conditions -- and here it did: the key's tree was read from `CLM-R2-SURG-STANDARD`, whose
+  words are "adult NON-COMPLICATED appendicitis". The rationale could only stand by eliding that
+  qualifier. It is the mirror image of the silence-as-absence defect V2 was built to close.
+- Difficulty: the one realized item was declared **HARD** and read **EASY** on the blind solve, for a
+  structural reason rather than a stylistic one -- a finding strong enough to settle three competitors
+  at once is strong enough to give the answer away. One observation is not a rate; `DIFFICULTY_INTENT`
+  stays authored and separate from a future `EMPIRICAL_DIFFICULTY`, and the six reserved learner-data
+  fields stay unpopulated.
+- `GRAPH_UNIQUE_APPROVED_CONTRIBUTIONS = 0`, `TN_FTS_UNIQUE_APPROVED_CONTRIBUTIONS = 0` over five
+  bounded full-text queries -- the second consecutive wave in which both contributed nothing.
+  `WHOLE_BOOK_TN_DECISION = ON_DEMAND_TN_CONTRAST_SCALING` stands: none of the six failures is a recall
+  problem. `LOCAL_EMBEDDING_TRIGGER_MET = NO`, `EMBEDDINGS_ADDED = NO`.
+- Supply cost, characters, per opportunity: median **25,753** / p95 **38,181**, again almost entirely
+  the serialized pairwise relation payload. `NEXT_TOKEN_OPTIMIZATION_TARGET` unchanged at
+  `SERIALIZED_PAIRWISE_RELATION_PAYLOAD`; measured, deliberately not optimized.
+- **`SNAPSHOT_LIFECYCLE_STATUS = PROMISING`, and `PRODUCTION_SCALEOUT_SPEC_WRITTEN = NO`.** Every
+  mechanical limb of the lifecycle ran and held -- the snapshot did not move, extensions were collected
+  and none applied, an extension proposed mid-batch was invisible to every later item. What it has not
+  shown is a batch that yields an accepted item, which is Phase 30's own precondition for the scale-out
+  design, so no spec was written and no production batch size is recommended: a batch size derived from
+  an acceptance rate of 0/6 would be invented. The measurable quantity the pilot does support is the
+  extension yield, **1.67 proposals per opportunity, 8 of 10 anchor relations rather than features**.
+- `COPYRIGHT_AUDIT = PASS`, longest verbatim Toronto Notes run **0** across 10 tracked artifacts.
+  Focused tests `tests/test_medium_pilot.py` **20/0**; full canonical suite **1417/0** at the final
+  shared-code state. Everything rebuilds with `qbank run-medium-pilot`, and a test asserts all four
+  reports regenerate byte-identically.
+- **Shared-code change, and its blast radius.** `build_v2_contrast_sets`, `run_v2_replay`,
+  `run_acquisition_wave` and `run_frozen5_replay` take optional artifact paths defaulting to the frozen
+  files, and an under-size contrast set is now **reported** rather than raised. Nothing is admitted that
+  was refused before -- the refusal is the same, the reason is now measurable -- and the frozen-ten
+  replay, the frozen-five recovery report and the registry gate replay all still regenerate
+  byte-identically, each asserted by its own test.
+- **Stated limits.** The wave reviewer, the item reviewer and the extension reviewer are separate
+  reasoning passes by the same model instance rather than separate agents, and the item review is not
+  blind. `PHELO` contributes nothing to this pilot because all three of its eligible opportunities were
+  consumed by the frozen-ten replay, so "cross-discipline" here means five disciplines, not six.
+- `NEXT_DOMINANT_BOTTLENECK = SNAPSHOT_EXTENSION_RATE`. Four of six failed on anchor-relation coverage
+  in the pinned snapshot, and the wave could cite every one of those relations from frozen evidence in a
+  single bounded pass: the constraint is the rate at which reviewed relations enter a snapshot, not the
+  rate at which they can be found. Runner-up stays `EVIDENCE_SCOPING`.
+- QGEN_NEXT_STEP = `DIAGNOSE_MEDIUM_PILOT_FAILURE`. The two changes it points at are the systematic
+  defect -- whether a competitor that is never correct can be carried at all, which needs a model
+  decision rather than a snapshot -- and a gate for the key's own evidence scope against the settlement
+  device. Neither was repaired here, per Phase 25.
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 
 ## Research-level policy
