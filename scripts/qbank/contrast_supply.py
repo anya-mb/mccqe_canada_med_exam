@@ -1375,8 +1375,18 @@ ACCEPTED_SAFETY_DIMENSIONS = (
 )
 
 
-def run_frozen5_replay(root, wave: Mapping[str, Any]) -> dict[str, Any]:
-    """Phase 19. One attempt for each opportunity whose supply reached three."""
+def run_frozen5_replay(
+    root,
+    wave: Mapping[str, Any],
+    *,
+    feature_anchor_snapshot: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Phase 19. One attempt for each opportunity whose supply reached three.
+
+    ``feature_anchor_snapshot`` pins which snapshot supplies `SAF_1`'s anchors in
+    the production gate. Unpinned, this replays exactly as it did against the
+    frozen packs, and the committed recovery report still regenerates from it.
+    """
     from .clinical_contrast_v2 import (
         build_feature_state_map,
         classify_competitor,
@@ -1496,7 +1506,8 @@ def run_frozen5_replay(root, wave: Mapping[str, Any]) -> dict[str, Any]:
                 contrast_set, realized, contradiction_pairs=pairs
             ),
             "production_gate": _production_gate(
-                root, baseline[label], solved["selection"], item, frozen[label]
+                root, baseline[label], solved["selection"], item, frozen[label],
+                feature_anchor_snapshot=feature_anchor_snapshot,
             ),
             "options": options,
             "option_realization": validate_option_realization(
@@ -1514,6 +1525,10 @@ def run_frozen5_replay(root, wave: Mapping[str, Any]) -> dict[str, Any]:
         "one_attempt_per_opportunity": True,
         "production_gate": "profile_contrast_retrieval.retrieve_profile_aware_contrasts",
         "production_gate_unchanged": True,
+        **(
+            {} if feature_anchor_snapshot is None
+            else {"feature_anchor_snapshot_id": feature_anchor_snapshot["snapshot_id"]}
+        ),
         "llm_api_calls": 0,
         "results": rows,
     }

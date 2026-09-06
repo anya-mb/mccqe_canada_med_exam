@@ -1069,6 +1069,24 @@ def _command_run_contrast_supply_wave(arguments: argparse.Namespace) -> None:
     }, indent=2, sort_keys=True))
 
 
+def _command_run_feature_anchor_gate_replay(arguments: argparse.Namespace) -> None:
+    """Replay the frozen-five gates under the legacy packs and both snapshots."""
+    from .feature_anchor_registry import GATE_REPLAY_REPORT_PATH, build_gate_replay
+
+    root = canonical_root(getattr(arguments, "root", Path.cwd()))
+    report = build_gate_replay(root)
+    write_json_atomic(resolve_root_path(root, GATE_REPLAY_REPORT_PATH), report)
+    print(json.dumps({
+        "CONTRACT_RECONCILIATION": report["CONTRACT_RECONCILIATION"],
+        "precommitted_limbs": report["precommitted_limbs"],
+        "reconciliation": report["reconciliation"],
+        "positive_control": {
+            key: report["positive_control"][key]
+            for key in ("G2_PED_01_LEGACY_SAF1", "G2_PED_01_NEW_SAF1")
+        },
+    }, indent=2, sort_keys=True))
+
+
 def _command_build_feature_anchor_snapshots(arguments: argparse.Namespace) -> None:
     """Rebuild every canonical feature/anchor snapshot deterministically."""
     from .feature_anchor_registry import SNAPSHOTS_PATH, build_snapshot_store
@@ -1236,6 +1254,11 @@ def _parser() -> argparse.ArgumentParser:
             "run-contrast-supply-diagnosis",
             "diagnose contrast supply for the five V2 NO_SAFE_ITEM opportunities",
             _command_run_contrast_supply_diagnosis,
+        ),
+        (
+            "run-feature-anchor-gate-replay",
+            "replay the frozen-five gates under each feature/anchor snapshot",
+            _command_run_feature_anchor_gate_replay,
         ),
         (
             "build-feature-anchor-snapshots",

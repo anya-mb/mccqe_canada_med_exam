@@ -125,14 +125,28 @@ def _load_typed_rows(root: Path) -> dict[str, dict[str, Any]]:
     return rows
 
 
-def build_current_library_index(root: Path) -> list[dict[str, Any]]:
-    """Arm A. The curated index exactly as the production wave builds it."""
+def build_current_library_index(
+    root: Path,
+    *,
+    feature_anchor_snapshot: dict[str, Any] | None = None,
+    feature_anchor_scope: str | None = None,
+) -> list[dict[str, Any]]:
+    """Arm A. The curated index exactly as the production wave builds it.
+
+    Unpinned this is the benchmark arm and must not move. The pin exists so the
+    same 30 frozen scenarios can be scored against a registry snapshot without a
+    second implementation of the funnel.
+    """
     index: list[dict[str, Any]] = []
     for base in SEED_PACKS:
         pack = _load(root, f"{base}.json")
         enrichment = load_seed_enrichment(root, f"{base}.enrichment.json")
         anchors = load_seed_stem_anchors(root, f"{base}.stem_anchors.json")
-        for row in build_retrieval_index(pack, enrichment, anchors):
+        for row in build_retrieval_index(
+            pack, enrichment, anchors,
+            feature_anchor_snapshot=feature_anchor_snapshot,
+            feature_anchor_scope=feature_anchor_scope,
+        ):
             index.append({**row, "source_pack": f"{base}.json"})
     return sorted(index, key=lambda row: row["seed_id"])
 
@@ -339,18 +353,27 @@ def retrieve_competitors(
     arm: str = "HYBRID",
     root: Path | None = None,
     demanded_response_class: str | None = None,
+    feature_anchor_snapshot: dict[str, Any] | None = None,
+    feature_anchor_scope: str | None = None,
 ) -> dict[str, Any]:
     """Retrieve competitors for one realized scenario under one arm.
 
     Whatever the arm, the rows end up in the same filter. The floor and the
-    ceiling are not parameters of this function and cannot be relaxed by it.
+    ceiling are not parameters of this function and cannot be relaxed by it, and
+    ``feature_anchor_snapshot`` does not change that either: it selects which
+    pinned registry snapshot supplies `SAF_1`'s anchors, and nothing else. Left
+    unpinned, every arm reads the frozen packs and the benchmark is unmoved.
     """
     if arm not in ARMS:
         raise ClinicalRetrievalError(f"unknown retrieval arm: {arm}")
     root = Path(root or Path.cwd()).resolve()
 
     typed_rows = _load_typed_rows(root)
-    library = build_current_library_index(root)
+    library = build_current_library_index(
+        root,
+        feature_anchor_snapshot=feature_anchor_snapshot,
+        feature_anchor_scope=feature_anchor_scope,
+    )
 
     if arm == "CURRENT_LIBRARY":
         index = library

@@ -882,6 +882,14 @@ def contrast_set_retrieval_index(contrast_set: dict[str, Any]) -> list[dict[str,
             "reviewed_strength": _review(candidate).get("reviewed_strength"),
             "discovery_sources": list(candidate.get("discovery_sources") or []),
         })
+        if candidate.get("feature_anchor_snapshot_id") is not None:
+            rows[-1]["feature_anchor_snapshot_id"] = candidate["feature_anchor_snapshot_id"]
+    pinned = {row.get("feature_anchor_snapshot_id") for row in rows}
+    if len(pinned) > 1:
+        raise ContrastFirstError(
+            "this contrast set mixes feature/anchor snapshots "
+            f"({sorted(str(entry) for entry in pinned)}); a gate must run against one"
+        )
     return sorted(rows, key=lambda row: row["seed_id"])
 
 
@@ -1078,12 +1086,25 @@ def load_stem_feature_vocabulary(root) -> dict[str, dict[str, dict[str, Any]]]:
     return vocabulary
 
 
-def load_curated_candidates(root) -> list[dict[str, Any]]:
+def load_curated_candidates(
+    root,
+    *,
+    feature_anchor_snapshot: dict[str, Any] | None = None,
+    feature_anchor_scope: str | None = None,
+) -> list[dict[str, Any]]:
     """Project the frozen curated seed packs into contrast-first candidate rows.
 
     Nothing is authored. Every field is read from a pack, its enrichment or its
     stem-anchor layer, all three of which were frozen before this task.
+
+    With ``feature_anchor_snapshot`` pinned, `plausibility_anchor_feature_ids`
+    comes from that snapshot instead of the frozen anchor row, and the candidate
+    records which snapshot supplied it. Unpinned, this is unchanged, which is
+    what every historical replay depends on.
     """
+    from .feature_anchor_registry import require_snapshot, resolve_seed_anchors
+
+    snapshot = require_snapshot(feature_anchor_snapshot)
     candidates: list[dict[str, Any]] = []
     for base in SEED_PACKS:
         pack = _read(root, f"{base}.json")
@@ -1115,10 +1136,16 @@ def load_curated_candidates(root) -> list[dict[str, Any]]:
                         "conditions_under_which_competitor_would_be_correct"
                     ),
                     "condition_predicates": list(tags.get("condition_predicates") or []),
-                    "plausibility_anchor_feature_ids": sorted({
-                        anchor["stem_feature_id"]
-                        for anchor in (anchor_row.get("plausibility_anchors") or [])
-                    }),
+                    "plausibility_anchor_feature_ids": (
+                        sorted({
+                            anchor["stem_feature_id"]
+                            for anchor in (anchor_row.get("plausibility_anchors") or [])
+                        })
+                        if snapshot is None
+                        else resolve_seed_anchors(
+                            snapshot, seed_id, scope=feature_anchor_scope
+                        )
+                    ),
                     "anchor_study_unit_id": anchor_row.get("anchor_study_unit_id"),
                     "response_class_tokens": list(tags.get("response_class_tokens") or []),
                     "nominal_axis_values": dict(tags.get("nominal_axis_values") or {}),
@@ -1130,6 +1157,10 @@ def load_curated_candidates(root) -> list[dict[str, Any]]:
                     "shared_features_with_key": list(seed.get("shared_features_with_key") or []),
                     "candidate_visible_discriminators": list(
                         seed.get("candidate_visible_discriminators") or []
+                    ),
+                    **(
+                        {"feature_anchor_snapshot_id": snapshot["snapshot_id"]}
+                        if snapshot is not None else {}
                     ),
                     "why_a_minimally_competent_candidate_would_consider_it": seed.get(
                         "why_a_partially_knowledgeable_candidate_might_choose_it"

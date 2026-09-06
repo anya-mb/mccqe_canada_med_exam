@@ -51,6 +51,9 @@
         "ACUTE_RESPIRATORY_DISTRESS",
         "AIRFLOW_OBSTRUCTION"
       ],
+      "scope_opportunity_labels": [
+        "G2-PED-01"
+      ],
       "seed_id": "SEED-PED-T01-FOREIGN-BODY",
       "source_opportunity": "G2-PED-01",
       "supply_acquisition_kind": "ANCHOR_ADDITION",
@@ -110,6 +113,9 @@
         "ACUTE_RESPIRATORY_DISTRESS",
         "SYSTEMIC_INFLAMMATORY_ILLNESS"
       ],
+      "scope_opportunity_labels": [
+        "G2-PED-01"
+      ],
       "seed_id": "SEED-PED-T01-PNEUMONIA",
       "source_opportunity": "G2-PED-01",
       "supply_acquisition_kind": "ANCHOR_ADDITION",
@@ -154,6 +160,7 @@
       },
       "required_state": null,
       "response_class": [],
+      "scope_opportunity_labels": [],
       "seed_id": null,
       "source_opportunity": "G2-PED-01",
       "supply_acquisition_kind": "NEW_CONCEPT",
@@ -198,6 +205,7 @@
       },
       "required_state": null,
       "response_class": [],
+      "scope_opportunity_labels": [],
       "seed_id": null,
       "source_opportunity": "G2-PED-01",
       "supply_acquisition_kind": "NEW_CONCEPT",
@@ -242,6 +250,7 @@
       },
       "required_state": null,
       "response_class": [],
+      "scope_opportunity_labels": [],
       "seed_id": null,
       "source_opportunity": "G2-PED-01",
       "supply_acquisition_kind": "NEW_CONCEPT",
@@ -301,6 +310,9 @@
         "BIOCHEMICAL",
         "MICROBIOLOGIC"
       ],
+      "scope_opportunity_labels": [
+        "G2-PED-02"
+      ],
       "seed_id": "SEED-PED-T02-CBC",
       "source_opportunity": "G2-PED-02",
       "supply_acquisition_kind": "NEW_MEMBER_WITH_ANCHOR_ADDITION",
@@ -345,6 +357,7 @@
       },
       "required_state": null,
       "response_class": [],
+      "scope_opportunity_labels": [],
       "seed_id": null,
       "source_opportunity": "G2-PED-02",
       "supply_acquisition_kind": "NEW_CONCEPT",
@@ -404,6 +417,9 @@
         "COMBINED_TREATMENT",
         "PHARMACOLOGIC_TREATMENT"
       ],
+      "scope_opportunity_labels": [
+        "G2-PSY-03"
+      ],
       "seed_id": "SEED-PSY-T03-COMBINED",
       "source_opportunity": "G2-PSY-03",
       "supply_acquisition_kind": "NEW_MEMBER_WITH_ANCHOR_ADDITION",
@@ -451,6 +467,7 @@
       "response_class": [
         "MANAGEMENT_STRATEGY_FOR_PRESENTATION"
       ],
+      "scope_opportunity_labels": [],
       "seed_id": "SEED-G2-PSY-T03-ECT",
       "source_opportunity": "G2-PSY-03",
       "supply_acquisition_kind": "NEW_MEMBER_WITH_ANCHOR_ADDITION",
@@ -497,6 +514,7 @@
       "response_class": [
         "PHARMACOLOGIC_TREATMENT"
       ],
+      "scope_opportunity_labels": [],
       "seed_id": "SEED-G2-PSY-T03-AD-ALONE",
       "source_opportunity": "G2-PSY-03",
       "supply_acquisition_kind": "NEW_MEMBER",
@@ -541,6 +559,7 @@
       },
       "required_state": null,
       "response_class": [],
+      "scope_opportunity_labels": [],
       "seed_id": null,
       "source_opportunity": "G2-SURG-01",
       "supply_acquisition_kind": "NEW_CONCEPT",
@@ -585,6 +604,7 @@
       },
       "required_state": null,
       "response_class": [],
+      "scope_opportunity_labels": [],
       "seed_id": null,
       "source_opportunity": "G2-SURG-01",
       "supply_acquisition_kind": "NEW_CONCEPT",
@@ -630,6 +650,7 @@
       },
       "required_state": null,
       "response_class": [],
+      "scope_opportunity_labels": [],
       "seed_id": null,
       "source_opportunity": "G2-SURG-01",
       "supply_acquisition_kind": "NEW_CONCEPT",
@@ -676,6 +697,7 @@
       },
       "required_state": null,
       "response_class": [],
+      "scope_opportunity_labels": [],
       "seed_id": null,
       "source_opportunity": "G2-SURG-01",
       "supply_acquisition_kind": "NEW_CONCEPT",
@@ -724,6 +746,7 @@
       "response_class": [
         "STRUCTURAL"
       ],
+      "scope_opportunity_labels": [],
       "seed_id": "SEED-SURG-T02-LAPAROSCOPY",
       "source_opportunity": "G2-SURG-02",
       "supply_acquisition_kind": "NEW_MEMBER",
@@ -744,5 +767,6 @@
   },
   "schema_version": "1.0",
   "scope": "QGEN_FEATURE_ANCHOR_REGISTRY_EXTENSIONS",
+  "scope_rule": "An approved anchor relation applies only in the decision contexts its review actually considered, named in `scope_opportunity_labels`. The strict historical regression caught the reason: SEED-PSY-T03-COMBINED's anchor, approved for G2-PSY-03, also made it admissible in G2-PSY-04, a different learner decision (LD-PS12-05 rather than LD-PS12-03) whose stem states a patient preference for psychotherapy and its inaccessibility in person. No reviewer had considered the combination in that context. Retrieval indexes on discipline, item archetype and option-set archetype and not on the learner decision, so without an explicit scope an approved anchor becomes a universal one -- exactly the failure the two-table design exists to prevent, arriving from the retrieval side.",
   "target_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2"
 }

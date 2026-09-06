@@ -115,13 +115,27 @@ def build_retrieval_index(
     seed_pack: dict[str, Any],
     enrichment: dict[str, Any],
     stem_anchors: dict[str, Any],
+    *,
+    feature_anchor_snapshot: dict[str, Any] | None = None,
+    feature_anchor_scope: str | None = None,
 ) -> list[dict[str, Any]]:
     """Build the deterministic retrieval index over curated seeds.
 
     Retrieval is an index lookup, not a similarity search. Generic medical
     similarity is exactly what admitted the R4 defective distractors, so it is
     not a qualifying signal anywhere in this module.
+
+    ``feature_anchor_snapshot`` is the one seam the registry milestone adds, and
+    it defaults to ``None`` on purpose. Without a pin this function is what it
+    always was and reads the frozen stem-anchor pack, which is what keeps
+    retrieval benchmark arm A and every historical replay bit-for-bit unchanged.
+    With a pin, ``SAF_1``'s anchors come from that snapshot instead, so an
+    independently approved anchor relation is visible to the production gate for
+    the first time. `SAF_1`'s rule is not touched by either path.
     """
+    from .feature_anchor_registry import require_snapshot, resolve_seed_anchors
+
+    snapshot = require_snapshot(feature_anchor_snapshot)
     rows: list[dict[str, Any]] = []
     for target in seed_pack.get("targets", []):
         for seed in target.get("seeds", []):
@@ -147,7 +161,10 @@ def build_retrieval_index(
                     "conditions_under_which_competitor_would_be_correct"
                 ),
                 "condition_predicates": tags["condition_predicates"],
-                "plausibility_anchor_feature_ids": stem_anchors["seeds"][seed_id],
+                "plausibility_anchor_feature_ids": (
+                    stem_anchors["seeds"][seed_id] if snapshot is None
+                    else resolve_seed_anchors(snapshot, seed_id, scope=feature_anchor_scope)
+                ),
                 "response_class_tokens": tags.get("response_class_tokens", []),
                 "nominal_axis_values": tags.get("nominal_axis_values", {}),
                 "applicable_disciplines": tags.get("applicable_disciplines", []),
@@ -159,6 +176,10 @@ def build_retrieval_index(
                     "reviewed_strength"
                 ),
             })
+            if snapshot is not None:
+                # Added only on the pinned path. An unpinned index must stay
+                # byte-identical, because frozen reports serialize these rows.
+                rows[-1]["feature_anchor_snapshot_id"] = snapshot["snapshot_id"]
     return sorted(rows, key=lambda row: row["seed_id"])
 
 

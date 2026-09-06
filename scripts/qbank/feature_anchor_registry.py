@@ -643,6 +643,7 @@ def build_baseline_anchor_relations(
                 "anchor_relation_id": relation_id,
                 **identity,
                 "seed_id": seed_id,
+                "scope_opportunity_labels": None,
                 "response_class": sorted(seed["response_class_tokens"]),
                 "anchor_role_by_decision_domain": feature["supported_roles"],
                 "declared_anchor_role": None,
@@ -761,10 +762,18 @@ def _extension_relation(
         raise FeatureAnchorRegistryError(
             f"{extension['extension_id']}: unknown contrast role {declared}"
         )
+    scope = sorted(extension.get("scope_opportunity_labels") or [])
+    if not scope:
+        raise FeatureAnchorRegistryError(
+            f"{extension['extension_id']}: an approved anchor relation must name the "
+            "decision contexts its review considered; an unscoped anchor is the "
+            "universal-anchor failure this registry exists to prevent"
+        )
     return {
         "anchor_relation_id": anchor_relation_id(identity),
         **identity,
         "seed_id": extension["seed_id"],
+        "scope_opportunity_labels": scope,
         "response_class": sorted(extension.get("response_class") or []),
         "anchor_role_by_decision_domain": feature["supported_roles"],
         "declared_anchor_role": declared,
@@ -918,7 +927,9 @@ def load_snapshot(root, snapshot_id: str) -> dict[str, Any]:
     return snapshot
 
 
-def snapshot_anchor_index(snapshot: Mapping[str, Any]) -> dict[str, list[str]]:
+def snapshot_anchor_index(
+    snapshot: Mapping[str, Any], *, scope: str | None = None
+) -> dict[str, list[str]]:
     """Anchor feature ids per seed, which is the join key retrieval already uses.
 
     The relation's identity is the concept, the learner decision and the
@@ -938,6 +949,12 @@ def snapshot_anchor_index(snapshot: Mapping[str, Any]) -> dict[str, list[str]]:
     }
     for relation in snapshot["anchor_relations"]:
         seed_id = relation["seed_id"]
+        limited_to = relation.get("scope_opportunity_labels")
+        if limited_to is not None and scope not in limited_to:
+            # An anchor relation reviewed for one decision does not anchor the
+            # same competitor in another. Without a named scope it applies
+            # nowhere, which is the fail-closed direction.
+            continue
         identity = (
             relation["target_concept_id"],
             relation["learner_decision"],
@@ -956,6 +973,7 @@ def anchor_feature_ids(
     *,
     target_concept_id: str,
     learner_decision: str,
+    scope: str | None = None,
 ) -> list[str]:
     """The anchors this snapshot asserts for one competitor under one decision.
 
@@ -967,6 +985,10 @@ def anchor_feature_ids(
         for relation in snapshot["anchor_relations"]
         if relation["target_concept_id"] == target_concept_id
         and relation["learner_decision"] == learner_decision
+        and (
+            relation.get("scope_opportunity_labels") is None
+            or scope in relation["scope_opportunity_labels"]
+        )
     })
 
 
@@ -992,3 +1014,438 @@ def registry_state(
     if state not in REGISTRY_FEATURE_STATES:
         raise FeatureAnchorRegistryError(f"{feature_id}: unknown state {state}")
     return state
+
+
+# ------------------------------------------------------------- consumer adapter
+
+
+def resolve_seed_anchors(
+    snapshot: Mapping[str, Any], seed_id: str, *, scope: str | None = None
+) -> list[str]:
+    """The anchors a pinned snapshot asserts for one curated seed.
+
+    A seed the snapshot's scope does not contain is refused rather than silently
+    given the frozen pack's row: falling back is how the two readers drifted in
+    the first place. ``scope`` names the decision context, and an extension
+    relation reviewed for another one does not apply here.
+    """
+    index = snapshot_anchor_index(snapshot, scope=scope)
+    if seed_id not in index:
+        raise FeatureAnchorRegistryError(
+            f"{seed_id} is outside snapshot {snapshot['snapshot_id']}, so its "
+            "plausibility anchors are not pinned; there is no fallback"
+        )
+    return list(index[seed_id])
+
+
+def require_snapshot(snapshot: Mapping[str, Any] | None) -> Mapping[str, Any] | None:
+    """Validate a snapshot pin a consumer passed. `None` means the frozen packs."""
+    if snapshot is None:
+        return None
+    if not isinstance(snapshot, Mapping) or not snapshot.get("snapshot_id"):
+        raise FeatureAnchorRegistryError(
+            "a feature/anchor snapshot must be a loaded snapshot with an id"
+        )
+    if registry_hash(
+        snapshot["features"], snapshot["anchor_relations"]
+    ) != snapshot["registry_hash"]:
+        raise FeatureAnchorRegistryError(
+            f"{snapshot['snapshot_id']}: registry hash does not match its rows"
+        )
+    return snapshot
+
+
+# ------------------------------------- Phases 16, 19, 20 and 21: gate replay
+
+GATE_REPLAY_REPORT_PATH = "reports/qgen_feature_anchor_registry_gate_replay.json"
+
+#: The positive control. An item an independent review scored zero on all eleven
+#: dimensions, refused by the anchor contract alone. Nothing about it is edited.
+POSITIVE_CONTROL_LABEL = "G2-PED-01"
+
+
+def _arm_a_verdicts(root, snapshot: Mapping[str, Any] | None) -> dict[str, Any]:
+    """Run the 30 frozen G2 scenarios through arm A under one anchor pin."""
+    from .clinical_retrieval import retrieve_competitors
+    from .retrieval_benchmark import build_frozen_reference_set, load_scenarios
+
+    reference = build_frozen_reference_set(Path(root).resolve())
+    rows: dict[str, Any] = {}
+    for scenario in load_scenarios(Path(root).resolve()):
+        label = scenario["wave_label"]
+        result = retrieve_competitors(
+            None, scenario, arm="CURRENT_LIBRARY", root=Path(root).resolve(),
+            feature_anchor_snapshot=snapshot, feature_anchor_scope=label,
+        )
+        retrieval = result["retrieval"]
+        ranked = [row["seed_id"] for row in retrieval["ranked_competitors"]]
+        excluded: dict[str, list[str]] = {}
+        for row in retrieval["excluded"]:
+            excluded.setdefault(row["rule"], []).append(row["seed_id"])
+        known_anchorless = set(
+            reference["negative_controls"]["KNOWN_ANCHORLESS"].get(label, [])
+        )
+        known_second_key = set(
+            reference["negative_controls"]["KNOWN_SECOND_KEY"].get(label, [])
+        )
+        rows[label] = {
+            "ranked": ranked,
+            "excluded_by_rule": {
+                rule: sorted(seeds) for rule, seeds in sorted(excluded.items())
+            },
+            "reaches_three_viable": len(ranked) >= 3,
+            "known_anchorless_returned": sorted(known_anchorless & set(ranked)),
+            "known_second_key_returned": sorted(known_second_key & set(ranked)),
+            "known_anchorless_controls": len(known_anchorless),
+            "known_second_key_controls": len(known_second_key),
+            "reference_admitted_preserved": sorted(
+                set(reference["reference_admitted_competitors"].get(label, []))
+                & set(ranked)
+            ),
+            "reference_admitted": sorted(
+                reference["reference_admitted_competitors"].get(label, [])
+            ),
+        }
+    return rows
+
+
+def build_historical_regression(root) -> dict[str, Any]:
+    """Phase 16. The baseline snapshot must reproduce behaviour, not approximate it."""
+    baseline = load_snapshot(root, BASELINE_SNAPSHOT_ID)
+    extended = load_snapshot(root, EXTENDED_SNAPSHOT_ID)
+    unpinned = _arm_a_verdicts(root, None)
+    pinned_v1 = _arm_a_verdicts(root, baseline)
+    pinned_v2 = _arm_a_verdicts(root, extended)
+
+    extension_admissions = {
+        (row["scope"], row["seed_id"])
+        for extension in approved_extensions(load_extensions(root))
+        for row in [
+            {"scope": scope, "seed_id": extension["seed_id"]}
+            for scope in extension["scope_opportunity_labels"]
+        ]
+    }
+
+    def _totals(rows: Mapping[str, Any]) -> dict[str, int]:
+        return {
+            "OPPORTUNITIES_WITH_THREE_VIABLE": sum(
+                1 for row in rows.values() if row["reaches_three_viable"]
+            ),
+            "KNOWN_ANCHORLESS_CONTROLS": sum(
+                row["known_anchorless_controls"] for row in rows.values()
+            ),
+            "KNOWN_ANCHORLESS_RETURNED": sum(
+                len(row["known_anchorless_returned"]) for row in rows.values()
+            ),
+            "KNOWN_ANCHORLESS_RETURNED_BY_AN_APPROVED_EXTENSION": sum(
+                1
+                for label, row in rows.items()
+                for seed_id in row["known_anchorless_returned"]
+                if (label, seed_id) in extension_admissions
+            ),
+            "KNOWN_ANCHORLESS_RETURNED_WITHOUT_AN_APPROVED_EXTENSION": sum(
+                1
+                for label, row in rows.items()
+                for seed_id in row["known_anchorless_returned"]
+                if (label, seed_id) not in extension_admissions
+            ),
+            "KNOWN_SECOND_KEY_CONTROLS": sum(
+                row["known_second_key_controls"] for row in rows.values()
+            ),
+            "KNOWN_SECOND_KEY_RETURNED": sum(
+                len(row["known_second_key_returned"]) for row in rows.values()
+            ),
+            "SECOND_KEY_REFUSALS": sum(
+                len(row["excluded_by_rule"].get("ADM_3", [])) for row in rows.values()
+            ),
+            "ANCHOR_FLOOR_REFUSALS": sum(
+                len(row["excluded_by_rule"].get("SAF_1", [])) for row in rows.values()
+            ),
+            "ACCEPTED_CONTROLS": sum(
+                len(row["reference_admitted"]) for row in rows.values()
+            ),
+            "ACCEPTED_CONTROLS_PRESERVED": sum(
+                len(row["reference_admitted_preserved"]) for row in rows.values()
+            ),
+        }
+
+    v2_differences = sorted(
+        label for label in unpinned
+        if unpinned[label]["ranked"] != pinned_v2[label]["ranked"]
+    )
+    scoped_labels = {
+        scope
+        for extension in approved_extensions(load_extensions(root))
+        for scope in extension["scope_opportunity_labels"]
+    }
+    return {
+        "population": "the 30 frozen G2 opportunities, through retrieval benchmark arm A",
+        "BASELINE_REPRODUCES_LEGACY_EXACTLY": unpinned == pinned_v1,
+        "what_unchanged_means_here": (
+            "Two things, and the strict equality is reported beside them rather "
+            "than replaced by them. First, the baseline snapshot must reproduce the "
+            "legacy frozen packs exactly, on every one of the 30 opportunities: an "
+            "import that quietly reinterpreted the frozen data would fail here. "
+            "Second, under the extended snapshot no opportunity's ranked set may "
+            "move except one an approved extension names in its own reviewed scope. "
+            "An extension that moved nothing anywhere would mean the milestone did "
+            "nothing; an extension that moved an opportunity no reviewer considered "
+            "is the leak the strict rule caught in G2-PSY-04 and the scope fixed."
+        ),
+        "STRICT_EQUALITY_LEGACY_TO_EXTENDED": unpinned == pinned_v2,
+        "EVERY_MOVED_OPPORTUNITY_IS_IN_AN_APPROVED_EXTENSION_SCOPE": all(
+            label in scoped_labels for label in v2_differences
+        ),
+        "approved_extension_scopes": sorted(scoped_labels),
+        "legacy_unpinned": _totals(unpinned),
+        "pinned_baseline_v1": _totals(pinned_v1),
+        "pinned_extended_v2": _totals(pinned_v2),
+        "opportunities_whose_ranked_set_moves_under_v2": v2_differences,
+        "per_opportunity": {
+            label: {
+                "legacy_unpinned": unpinned[label],
+                "pinned_baseline_v1": pinned_v1[label],
+                "pinned_extended_v2": pinned_v2[label],
+            }
+            for label in sorted(unpinned)
+        },
+    }
+
+
+def build_gate_replay(root) -> dict[str, Any]:
+    """Phases 19 to 21. The same frozen-five supply results, three anchor pins."""
+    from .contrast_supply import run_acquisition_wave, run_frozen5_replay
+
+    baseline = load_snapshot(root, BASELINE_SNAPSHOT_ID)
+    extended = load_snapshot(root, EXTENDED_SNAPSHOT_ID)
+    wave = run_acquisition_wave(root)
+
+    replays = {
+        "LEGACY_FROZEN_STEM_ANCHOR_PACK": run_frozen5_replay(root, wave),
+        BASELINE_SNAPSHOT_ID: run_frozen5_replay(
+            root, wave, feature_anchor_snapshot=baseline
+        ),
+        EXTENDED_SNAPSHOT_ID: run_frozen5_replay(
+            root, wave, feature_anchor_snapshot=extended
+        ),
+    }
+
+    def _gates(replay: Mapping[str, Any]) -> dict[str, Any]:
+        return {
+            row["opportunity_label"]: row["production_gate"]
+            for row in replay["results"] if row.get("production_gate")
+        }
+
+    gates = {name: _gates(replay) for name, replay in replays.items()}
+
+    approved = approved_extensions(load_extensions(root))
+    added = {row["anchor_relation_id"] for row in extended["extension_diff"][
+        "added_anchor_relations"
+    ]}
+    added_rows = [
+        row for row in extended["anchor_relations"] if row["anchor_relation_id"] in added
+    ]
+
+    # Visibility, measured at each of the three consumers rather than asserted.
+    visible_to_v2 = [
+        row for row in added_rows
+        if any(
+            row["feature_id"] in snapshot_anchor_index(extended, scope=scope)[
+                row["seed_id"]
+            ]
+            for scope in row["scope_opportunity_labels"]
+        )
+    ]
+    visible_to_retrieval = [
+        row for row in added_rows
+        if any(
+            row["feature_id"] in {
+                entry["seed_id"]: entry
+                for entry in _library_rows(
+                    root, feature_anchor_snapshot=extended, feature_anchor_scope=scope
+                )
+            }[row["seed_id"]]["plausibility_anchor_feature_ids"]
+            for scope in row["scope_opportunity_labels"]
+        )
+    ]
+    visible_to_saf1 = _saf1_visibility(root, added_rows, gates)
+
+    regression = build_historical_regression(root)
+    control = {
+        name: gate.get(POSITIVE_CONTROL_LABEL) for name, gate in gates.items()
+    }
+    legacy_control = control["LEGACY_FROZEN_STEM_ANCHOR_PACK"]
+    new_control = control[EXTENDED_SNAPSHOT_ID]
+
+    reconciliation = {
+        "APPROVED_EXTENSIONS_VISIBLE_TO_V2": f"{len(visible_to_v2)}/{len(added_rows)}",
+        "APPROVED_EXTENSIONS_VISIBLE_TO_SAF1": (
+            f"{len(visible_to_saf1)}/{len(added_rows)}"
+        ),
+        "APPROVED_EXTENSIONS_VISIBLE_TO_PROFILE_RETRIEVAL": (
+            f"{len(visible_to_retrieval)}/{len(added_rows)}"
+        ),
+        "HISTORICAL_CONTROLS_UNCHANGED": (
+            regression["BASELINE_REPRODUCES_LEGACY_EXACTLY"]
+            and regression["EVERY_MOVED_OPPORTUNITY_IS_IN_AN_APPROVED_EXTENSION_SCOPE"]
+            and regression["legacy_unpinned"]["KNOWN_SECOND_KEY_RETURNED"]
+            == regression["pinned_extended_v2"]["KNOWN_SECOND_KEY_RETURNED"]
+            and regression["pinned_extended_v2"][
+                "KNOWN_ANCHORLESS_RETURNED_WITHOUT_AN_APPROVED_EXTENSION"
+            ] == 0
+        ),
+        "NO_REJECTED_OR_UNCERTAIN_EXTENSION_IN_THE_SNAPSHOT": (
+            len(approved) == len(added_rows)
+            and all(
+                row["registry_review"]["verdict"] == "APPROVED" for row in approved
+            )
+        ),
+        "NO_SAFETY_GATE_WEAKENED": _no_gate_weakened(regression),
+    }
+    limbs = {
+        "all_approved_anchors_visible_to_v2": len(visible_to_v2) == len(added_rows),
+        "the_same_anchors_visible_to_saf1": len(visible_to_saf1) == len(added_rows),
+        "the_same_anchors_available_to_profile_retrieval": (
+            len(visible_to_retrieval) == len(added_rows)
+        ),
+        "historical_controls_unchanged": reconciliation["HISTORICAL_CONTROLS_UNCHANGED"],
+        "no_rejected_or_uncertain_extension_entered": reconciliation[
+            "NO_REJECTED_OR_UNCERTAIN_EXTENSION_IN_THE_SNAPSHOT"
+        ],
+        "no_safety_gate_weakened": reconciliation["NO_SAFETY_GATE_WEAKENED"],
+    }
+    return {
+        "schema_version": "1.0",
+        "scope": "QGEN_FEATURE_ANCHOR_REGISTRY_GATE_REPLAY",
+        "starting_commit": "14f4508",
+        "llm_api_calls": 0,
+        "what_varied": (
+            "The feature/anchor snapshot the production gate consumes, and nothing "
+            "else. Same frozen-five supply results, same opportunities, same keys, "
+            "same evidence, same contrast relations, same difficulty, same item."
+        ),
+        "snapshots": {
+            BASELINE_SNAPSHOT_ID: {
+                "registry_hash": baseline["registry_hash"],
+                "features": baseline["feature_count"],
+                "anchor_relations": baseline["anchor_relation_count"],
+            },
+            EXTENDED_SNAPSHOT_ID: {
+                "registry_hash": extended["registry_hash"],
+                "features": extended["feature_count"],
+                "anchor_relations": extended["anchor_relation_count"],
+            },
+        },
+        "historical_regression": regression,
+        "frozen_five_gates": gates,
+        "visibility": {
+            "APPROVED_ANCHOR_RELATIONS": len(added_rows),
+            "visible_to_v2": sorted(row["anchor_relation_id"] for row in visible_to_v2),
+            "visible_to_saf1": sorted(
+                row["anchor_relation_id"] for row in visible_to_saf1
+            ),
+            "visible_to_profile_retrieval": sorted(
+                row["anchor_relation_id"] for row in visible_to_retrieval
+            ),
+            "the_sets_reconcile": (
+                {row["anchor_relation_id"] for row in visible_to_v2}
+                == {row["anchor_relation_id"] for row in visible_to_saf1}
+                == {row["anchor_relation_id"] for row in visible_to_retrieval}
+            ),
+        },
+        "positive_control": {
+            "opportunity_label": POSITIVE_CONTROL_LABEL,
+            "item_unchanged": True,
+            "what_was_not_touched": ["stem", "options", "key", "evidence", "rationale"],
+            "G2_PED_01_LEGACY_SAF1": (
+                "PASS" if legacy_control and legacy_control["post_stem_3_viable"]
+                else "FAIL"
+            ),
+            "G2_PED_01_NEW_SAF1": (
+                "PASS" if new_control and new_control["post_stem_3_viable"] else "FAIL"
+            ),
+            "legacy_gate": legacy_control,
+            "new_gate": new_control,
+        },
+        "CONTRACT_RECONCILIATION": "PASS" if all(limbs.values()) else "FAIL",
+        "precommitted_limbs": limbs,
+        "reconciliation": reconciliation,
+    }
+
+
+def _library_rows(
+    root,
+    *,
+    feature_anchor_snapshot: Mapping[str, Any] | None,
+    feature_anchor_scope: str | None = None,
+):
+    from .contrast_first_pilot import load_curated_candidates
+
+    return load_curated_candidates(
+        root,
+        feature_anchor_snapshot=feature_anchor_snapshot,
+        feature_anchor_scope=feature_anchor_scope,
+    )
+
+
+def _saf1_visibility(
+    root, added_rows: Sequence[Mapping[str, Any]], gates: Mapping[str, Any]
+) -> list[dict[str, Any]]:
+    """An anchor is visible to SAF_1 only if the rule stops refusing its seed.
+
+    Measured from the gate's own verdicts rather than from the index, because an
+    anchor present in a row that `SAF_1` still refuses would not be visible in any
+    sense that matters.
+    """
+    legacy = gates["LEGACY_FROZEN_STEM_ANCHOR_PACK"]
+    extended = gates[EXTENDED_SNAPSHOT_ID]
+    visible: list[dict[str, Any]] = []
+    for row in added_rows:
+        for label, gate in extended.items():
+            refused_before = row["seed_id"] in (
+                legacy.get(label, {}).get("excluded_by_rule", {}).get("SAF_1", [])
+            )
+            refused_now = row["seed_id"] in gate["excluded_by_rule"].get("SAF_1", [])
+            if refused_before and not refused_now:
+                visible.append(row)
+                break
+        else:
+            # The seed reaches no realized stem in this replay, so `SAF_1` never
+            # judged it. Fall back to the index, and say which test was used.
+            snapshot = load_snapshot(root, EXTENDED_SNAPSHOT_ID)
+            reached = any(
+                row["feature_id"] in {
+                    entry["seed_id"]: entry
+                    for entry in _library_rows(
+                        root, feature_anchor_snapshot=snapshot,
+                        feature_anchor_scope=scope,
+                    )
+                }[row["seed_id"]]["plausibility_anchor_feature_ids"]
+                for scope in row["scope_opportunity_labels"]
+            )
+            if reached:
+                visible.append({**row, "measured_by": "INDEX_ROW_NO_REALIZED_STEM"})
+    return visible
+
+
+def _no_gate_weakened(regression: Mapping[str, Any]) -> bool:
+    """No control the gate used to refuse is now admitted, except by an approved
+    extension in the decision context that extension was reviewed for.
+
+    The distinction matters and is not a softening after the fact. The
+    `KNOWN_ANCHORLESS` list is *derived from the old floor's own verdicts*, so for
+    the one competitor an independent review approved an evidence-cited anchor
+    for, "still refused" and "the milestone did nothing" are the same statement.
+    The non-circular part of the control set -- every anchorless control no
+    extension names, and all eight second-key controls -- must stay at zero, and
+    the strict count is reported beside this one rather than replaced by it.
+    """
+    legacy = regression["legacy_unpinned"]
+    extended = regression["pinned_extended_v2"]
+    return (
+        extended["KNOWN_ANCHORLESS_RETURNED_WITHOUT_AN_APPROVED_EXTENSION"] == 0
+        and legacy["KNOWN_ANCHORLESS_RETURNED"] == 0
+        and extended["KNOWN_SECOND_KEY_RETURNED"] == legacy["KNOWN_SECOND_KEY_RETURNED"] == 0
+        and extended["SECOND_KEY_REFUSALS"] == legacy["SECOND_KEY_REFUSALS"]
+        and extended["ACCEPTED_CONTROLS_PRESERVED"] >= legacy["ACCEPTED_CONTROLS_PRESERVED"]
+    )

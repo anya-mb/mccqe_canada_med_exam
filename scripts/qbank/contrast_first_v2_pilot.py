@@ -1545,11 +1545,26 @@ def _production_gate(
     selection: Mapping[str, Any],
     item: Mapping[str, Any],
     opportunity: Mapping[str, Any],
+    *,
+    feature_anchor_snapshot: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Run the V2 stem through the unchanged production retrieval gate."""
+    """Run the V2 stem through the unchanged production retrieval gate.
+
+    The gate is the same function and the same rules either way. What the pin
+    changes is which feature/anchor snapshot supplies `SAF_1`'s anchors, and the
+    result records it, so a replay can never be read as if it had run against a
+    snapshot it did not.
+    """
     from .contrast_first_pilot import revalidate_against_frozen_stem
 
-    pool = {row["seed_id"]: row for row in load_curated_candidates(root)}
+    pool = {
+        row["seed_id"]: row
+        for row in load_curated_candidates(
+            root,
+            feature_anchor_snapshot=feature_anchor_snapshot,
+            feature_anchor_scope=record["opportunity_label"],
+        )
+    }
     contract = load_profile_contract(
         root,
         discipline_profile_id=opportunity["discipline_profile_id"],
@@ -1594,6 +1609,10 @@ def _production_gate(
             row["seed_id"] for row in result["retrieval"]["ranked_competitors"]
         ],
         "gate_is_the_production_gate": result["gate_is_the_production_gate"],
+        **(
+            {} if feature_anchor_snapshot is None
+            else {"feature_anchor_snapshot_id": feature_anchor_snapshot["snapshot_id"]}
+        ),
     }
 
 
