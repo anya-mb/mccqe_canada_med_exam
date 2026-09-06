@@ -21,7 +21,7 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `1a132aa429409c220295eddeb7f1d2b91d0bca58`.
+- Audited coordinator input commit: `cc0e35815a22496b1a5f6e7a3ce7faea654f77c4`.
 - Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
@@ -914,6 +914,113 @@ This section is maintained by hand and sits outside the generated source-researc
   `retrieve_profile_aware_contrasts` read, and deciding whether the frozen stem-feature vocabulary
   may grow -- reopens a frozen layer, which AGENTS.md requires explicit authorization for and this
   task did not carry.
+- **Versioned clinical feature/anchor registry (2026-09-06), from `14f4508`.** Diagnosis `317f965`, design
+  `7a9d828` (`docs/superpowers/specs/2026-09-06-versioned-clinical-feature-anchor-registry-design.md`),
+  registry and snapshots `0f2bea1`, adapters and gate replay `798cac0`, frozen-five replay and milestone
+  `49f153c`, docs `cc0e358`. `FEATURE_ANCHOR_REGISTRY_MILESTONE = COMPLETE`,
+  `CONTRACT_RECONCILIATION = PASS` on all six precommitted limbs.
+  `HISTORICAL_FROZEN_ARTIFACTS_MODIFIED = 0`, `LLM_API_CALLS = 0`, no embeddings, no graph or TN FTS
+  expansion, no broad bank, production generator not replaced, `CLAUDE.md` unchanged.
+- **This is the change the supply milestone's `USER_REVIEW_SUPPLY_MILESTONE` pointed at, and this task
+  carried the authorization the previous one did not.** The frozen 102-feature stem-feature vocabulary was
+  **not** grown; only the plausibility-anchor layer became extendable and shared.
+- Phase 0 (`reports/qgen_feature_anchor_contract_reconciliation.json`) measured the defect rather than
+  restating it: **4 approved anchor additions, 0 visible to `SAF_1`**. It also counted a second mismatch
+  nobody had: of the **87** features the frozen packs already use as anchors, **14 are `CLINICAL_JUDGEMENT`,
+  7 `SYSTEM_CONSTRAINT`, 2 `PROGRAMME_CAPACITY`** -- roles typing outside `ANCHOR_CLASSES` in
+  `PATIENT_CLINICAL`. That is the pilot's anchor-quality finding with a number on it. The registry
+  **reports** it and deliberately does not enforce it, because enforcing it would move historical verdicts.
+- **Two tables, not one, and that is the whole design.** A feature is something the vocabulary can say; an
+  anchor relation is a claim that this feature PRESENT, for this learner decision, gives a candidate a reason
+  to consider that competitor. `FEATURE_REGISTRY_IMPLEMENTED = YES`,
+  `ANCHOR_RELATION_REGISTRY_IMPLEMENTED = YES`, `VERSIONED_SNAPSHOTS_IMPLEMENTED = YES`.
+  `BASELINE_SNAPSHOT_ID = FEATURE_ANCHOR_SNAPSHOT_V1`, **102 features / 153 anchor relations**, hash
+  `e8fa80dcc2d594ad9b7848d4172f154af94bb80fc5d73fb749ee7ecb4e115d5b`.
+  `NEW_SNAPSHOT_ID = FEATURE_ANCHOR_SNAPSHOT_V2`, **102 / 157**, hash
+  `863aee59b5017253614e1d2a24eb6aa93001f29f7481c1cbebf374083cc11a89`. Anchor relation ids are content
+  addressed over the identity tuple alone, so restating evidence does not move an id.
+- Baseline import fidelity is asserted by **set equality per seed on all 81 retrievable seeds**, not by
+  equal counts, including the one deliberately anchorless seed `SEED-PED-T03-HYPERTONIC`.
+- **Frozen-five extension set** (`research/qgen/feature_anchor_extensions.json`), derived from the already-run
+  wave with no new discovery: 15 proposed. `FROZEN5_PROPOSED_NEW_FEATURES = 5`,
+  `FROZEN5_PROPOSED_ANCHOR_RELATIONS = 7`, `INVALID_EXTENSION = 3`.
+  `FROZEN5_APPROVED_NEW_FEATURES = 0`, `FROZEN5_APPROVED_ANCHOR_RELATIONS = 4`,
+  `FROZEN5_REJECTED_EXTENSIONS = 11`, `FROZEN5_UNCERTAIN_EXTENSIONS = 0`. All four approved extensions need
+  **zero** new features: `SF-P147-MODERATE-SEVERE-DISTRESS` and `SF-PS12-MODERATE-SEVERITY` already exist.
+- The registry-level review found a **third identity mismatch nobody had counted**: three of the four approved
+  candidates carry a supply-minted `concept_id` that differs from the curated pack's
+  (`CONCEPT-R2-SU-P-147-FOREIGN-BODY` against `CONCEPT-R4-SU-OT-56-FOREIGN-BODY`, and two more). The registry
+  binds to the registered id and records the alias.
+- **The precommitted historical regression failed on its first run, and it was right to.** Under the
+  extended snapshot `SEED-PSY-T03-COMBINED` became admissible in **`G2-PSY-04`**, a different learner
+  decision (`LD-PS12-05` rather than `LD-PS12-03`) whose stem also states moderate severity and which no
+  reviewer had considered. Retrieval keys on discipline x item archetype x option-set archetype and not on
+  the decision, so an unscoped approved anchor becomes a universal one -- the exact failure the two-table
+  design exists to prevent, arriving from the retrieval side. **Fix:** an approved anchor relation names the
+  decision contexts its review considered in `scope_opportunity_labels` and applies nowhere else; with no
+  scope it applies nowhere at all. `G2-PSY-04`'s verdict is restored and only `G2-PSY-03` moves.
+- **Migration seams: three index builders, not `SAF_1`.** `build_retrieval_index`,
+  `load_curated_candidates` and `build_current_library_index` each take an optional
+  `feature_anchor_snapshot` plus `feature_anchor_scope`. **Unpinned they add no field at all** and read the
+  frozen packs, which is why every frozen report still regenerates byte-identically and retrieval benchmark
+  arm A is unmoved. `SAF_1`'s rule is untouched; only where its anchors come from changed.
+- **Visibility reconciles exactly.** `APPROVED_EXTENSIONS_VISIBLE_TO_V2 = 4/4`, `..._TO_SAF1 = 4/4`,
+  `..._TO_PROFILE_RETRIEVAL = 4/4`, and the three sets are the *same* set. `SAF_1` visibility is measured
+  from the gate's own verdicts, not from an index field.
+- Historical regression over the 30 frozen G2 opportunities through arm A:
+  `BASELINE_REPRODUCES_LEGACY_EXACTLY = True`. Known-anchorless controls 67, returned 0 legacy and **0
+  without an approved extension** under V2; second-key controls 8, returned 0 in both, with `ADM_3` refusals
+  constant at 8; accepted controls preserved 40 -> 41. The `KNOWN_ANCHORLESS` list is derived from the old
+  floor's own verdicts and is therefore circular for exactly the seeds an extension names, so the strict
+  count (1) and the non-circular count (0) are both reported rather than one replacing the other.
+- **`G2_PED_01_LEGACY_SAF1 = FAIL`, `G2_PED_01_NEW_SAF1 = PASS`**, with the stem, options, key, evidence and
+  rationales untouched. Legacy `SAF_1` refused `SEED-PED-T01-FOREIGN-BODY` and `SEED-PED-T01-PNEUMONIA`; the
+  new contract refuses nothing and ranks all three.
+- **Frozen-five replay, one variable.** `FROZEN5_WITH_3_VALID_AFTER_SUPPLY = 3/5` unchanged.
+  `FROZEN5_VISIBLE_TO_LEGACY_SAF1 = 0/5` -> `FROZEN5_VISIBLE_TO_NEW_SAF1 = 1/5`.
+  `GENERATED_BEFORE = 1`, `GENERATED_AFTER = 1`, `ACCEPTED_BEFORE = 0`, **`ACCEPTED_AFTER = 1`**.
+  `ACCEPTED_ITEM_SAFETY = PASS`, zero on all eleven dimensions on a fresh review that reread the cited claims
+  verbatim before consulting the earlier verdict. Two dimensions are argued rather than asserted and both
+  reservations are recorded: escalating work of breathing is a general trigger to widen the differential
+  rather than a pointer specific to aspiration or pneumonia, and the pneumonia second-key objection turns on
+  the frozen vocabulary separating an observation of respiratory effort from a raised bacterial concern.
+- **`NEW_GENERATION_ATTEMPTS_RUN = 0`, and that is the honest number.** No opportunity newly reached a stem:
+  `G2-PED-02` and `G2-PSY-03` still fail closed inside the blueprint solver on settleability and on supply
+  rule S-6, and `G2-SURG-01`/`G2-SURG-02` are unchanged. An anchor snapshot touches none of those. All four
+  non-control opportunities are byte-identical between the legacy and new replays.
+- **`MEDIUM36_TRIGGERED = NO`, and for the first time the reason is only feasibility.** All three Phase 26
+  trigger limbs are now met. `MEDIUM36_OPPORTUNITIES = 0`. The pilot cannot be built: frozen universe 30, 18
+  with an authored option-set contract, 16 reaching three admissible candidates, 10 consumed by the V2
+  replay, **6 remaining**. Reaching 36 is source-packet research, not an architecture pilot.
+- Production lifecycle documented in `reports/qgen_feature_anchor_registry_milestone.json` and
+  `docs/feature-anchor-registry.md`: run N pins `SNAPSHOT_N`, collects proposed extensions without applying
+  any, reviews them independently with `UNCERTAIN` failing closed, builds `SNAPSHOT_N+1`, and runs the next
+  batch. An extension proposed during a batch is invisible to every later question in that batch.
+- Token cost, characters, re-measured and **unmoved**: supply layer median **35,824** / p95 **42,860** per
+  opportunity, V2-comparable median 9,422. The registry added no serialization.
+  `NEXT_TOKEN_OPTIMIZATION_TARGET = SERIALIZED_PAIRWISE_RELATION_PAYLOAD`: stable `anchor_relation_id`s are
+  now the precondition for sending references instead of re-serializing a competitor's full anchor and
+  condition payload on every pairwise relation. Deliberately not done here, per Phase 29's own rule, and no
+  evidence a semantic reviewer needs was removed.
+- `COPYRIGHT_AUDIT = PASS`, longest verbatim Toronto Notes run **0** across all 10 tracked artifacts.
+  Focused tests **55/0** (`tests/test_feature_anchor_registry.py` 31, `tests/test_feature_anchor_adapters.py`
+  24); full canonical suite **1397/0** at the final shared-code state.
+- **Stated limits.** `R-REGISTRY-1` and `R-REGISTRY-REVIEW-1` are separate reasoning passes by the same model
+  instance rather than separate agents, which is weaker than the contrast-first pilot's three fresh
+  reviewers, and the item review is not blind. Every load-bearing claim was rechecked against the frozen
+  artifact rather than the supply layer's summary: correctness trees from the enrichments, the
+  `SF-PS12-MODERATE-SEVERITY` role override from the frozen V2 readings (where it already existed, cited, and
+  predates the supply wave), and all six cited claims from the R2 and R4 evidence packets.
+- `NEXT_DOMINANT_BOTTLENECK = EVIDENCE_SCOPING`. The anchor layer is no longer it. Of the four frozen-five
+  opportunities still refused, two fail inside the blueprint solver and two because `SU-GS-76` carries no
+  feature in which a non-gynaecologic differential could state a correctness condition. All five
+  `NEW_FEATURE_REQUIRED` proposals are the same shape -- a clinically legitimate competitor the vocabulary
+  cannot express -- and the vocabulary cannot grow without an evidence packet for the features it would need.
+  Runner-up stays `DIFFICULTY_CALIBRATION`, on no stronger evidence than before.
+- QGEN_NEXT_STEP = `USER_REVIEW_FEATURE_ANCHOR_REGISTRY`. The change this points at -- authorising an
+  evidence-backed extension of the frozen 102-feature stem-feature vocabulary, which is what
+  `G2-SURG-01` and the five refused proposals need -- reopens a frozen layer that this task's own
+  authorization explicitly did not cover.
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 
 ## Research-level policy
