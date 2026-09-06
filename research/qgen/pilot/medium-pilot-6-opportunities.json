@@ -1,0 +1,226 @@
+{
+  "MEDIUM_PILOT_N": 6,
+  "eligibility": {
+    "BELOW_THE_STATED_FLOOR_OF_24": true,
+    "ELIGIBLE_UNCONSUMED_BY_DISCIPLINE": {
+      "MED": 1,
+      "OBGYN": 2,
+      "PED": 1,
+      "PHELO": 0,
+      "PSY": 1,
+      "SURG": 1
+    },
+    "MEDIUM_PILOT_N": 6,
+    "SPECIFIED_PILOT_SIZE": 36,
+    "TOTAL_ELIGIBLE_UNCONSUMED": 6,
+    "eligible_unconsumed_labels": [
+      "G2-MED-01",
+      "G2-OBGYN-02",
+      "G2-OBGYN-03",
+      "G2-PED-03",
+      "G2-PSY-01",
+      "G2-SURG-03"
+    ],
+    "funnel": {
+      "ALREADY_CONSUMED_BY_THIS_V2_REPLAY": 10,
+      "FROZEN_OPPORTUNITY_UNIVERSE": 30,
+      "OF_THOSE_WITH_AT_LEAST_THREE_ADMISSIBLE_CANDIDATES": 16,
+      "OPPORTUNITIES_WITH_AN_AUTHORED_OPTION_SET_CONTRACT": 18,
+      "REMAINING_UNUSED": 6
+    },
+    "limitation": "The batch is 6, against a specified 36 and a stated floor of 24. The shortfall is the canonical opportunity universe, not the selection rule: the whole frozen universe is 30, only 18 carry an authored option-set contract, 16 of those reach three admissible curated candidates, and 10 are consumed by the V2 frozen-ten replay. Reaching 24 would require authoring new opportunities, new seed packs with independent seed review and new evidence packets, which is source-packet research rather than an architecture pilot. No criterion was weakened and no opportunity was invented.",
+    "selection_criteria_unchanged": true
+  },
+  "feature_anchor_registry_hash": "863aee59b5017253614e1d2a24eb6aa93001f29f7481c1cbebf374083cc11a89",
+  "feature_anchor_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2",
+  "frozen_before_any_supply_or_generation": true,
+  "frozen_sha256": "70eb866077f48c94708dc0b623467912c7c2db6a74edc2592e0cbe4d9c32fd4d",
+  "llm_api_calls": 0,
+  "no_replacement_rule": "A failed opportunity is not replaced. The denominator is the frozen six, whatever happens downstream.",
+  "opportunities": [
+    {
+      "CURRENT_APPROVED_COMPETITOR_COUNT": 3,
+      "anchor_study_unit_id": "SU-C-21",
+      "approved_competitors_at_freeze": [
+        "SEED-G2-MED-T01-DISSECTION",
+        "SEED-G2-MED-T01-PE",
+        "SEED-G2-MED-T01-PERICARDITIS"
+      ],
+      "curated_candidates_in_scope": [
+        "SEED-G2-MED-T01-DISSECTION",
+        "SEED-G2-MED-T01-PE",
+        "SEED-G2-MED-T01-PERICARDITIS"
+      ],
+      "difficulty_intent": "MEDIUM",
+      "discipline": "MED",
+      "excluded_at_freeze": {},
+      "feature_anchor_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2",
+      "item_archetype": "DIAGNOSIS",
+      "key_concept": "Non-ST-elevation acute coronary syndrome",
+      "key_concept_id": "CONCEPT-CF-C21-NSTE-ACS",
+      "learner_decision_id": "LD-C21-01",
+      "mcc_objective_id": "14",
+      "opportunity_id": "QOPP-b9406f2ccad14a0d82adc830",
+      "opportunity_label": "G2-MED-01",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "priority_class": "CORE"
+    },
+    {
+      "CURRENT_APPROVED_COMPETITOR_COUNT": 2,
+      "anchor_study_unit_id": "SU-OB-54",
+      "approved_competitors_at_freeze": [
+        "SEED-OB-T02-ASPIRATION",
+        "SEED-OB-T02-MAMMOGRAPHY"
+      ],
+      "curated_candidates_in_scope": [
+        "SEED-OB-T02-ASPIRATION",
+        "SEED-OB-T02-CRP",
+        "SEED-OB-T02-MAMMOGRAPHY",
+        "SEED-OB-T02-MILK-CULTURE"
+      ],
+      "difficulty_intent": "MEDIUM",
+      "discipline": "OBGYN",
+      "excluded_at_freeze": {
+        "SEED-OB-T02-CRP": "Carries no correctness condition, so the second-key ceiling has nothing to apply to it.",
+        "SEED-OB-T02-MILK-CULTURE": "Its only correctness condition is no improvement after forty-eight hours, which is also its only anchor, so it is live only when it is correct."
+      },
+      "feature_anchor_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2",
+      "item_archetype": "INVESTIGATION_SELECTION",
+      "key_concept": "Targeted breast ultrasonography",
+      "key_concept_id": "CONCEPT-CF-OB54-TARGETED-US",
+      "learner_decision_id": "LD-OB54-02",
+      "mcc_objective_id": "80-2",
+      "opportunity_id": "QOPP-0f1e932afe903ea7a5c53f1b",
+      "opportunity_label": "G2-OBGYN-02",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "priority_class": "IMPORTANT"
+    },
+    {
+      "CURRENT_APPROVED_COMPETITOR_COUNT": 1,
+      "anchor_study_unit_id": "SU-OB-54",
+      "approved_competitors_at_freeze": [
+        "SEED-OB-T03-DISCARD"
+      ],
+      "curated_candidates_in_scope": [
+        "SEED-OB-T03-DANGLE",
+        "SEED-OB-T03-DISCARD",
+        "SEED-OB-T03-EMPTY",
+        "SEED-OB-T03-MASSAGE",
+        "SEED-OB-T03-SHIELD"
+      ],
+      "difficulty_intent": "HARD",
+      "discipline": "OBGYN",
+      "excluded_at_freeze": {
+        "SEED-OB-T03-DANGLE": "Carries no correctness condition in the frozen layer.",
+        "SEED-OB-T03-EMPTY": "Carries no correctness condition in the frozen layer.",
+        "SEED-OB-T03-MASSAGE": "Carries no correctness condition in the frozen layer.",
+        "SEED-OB-T03-SHIELD": "Carries no correctness condition in the frozen layer."
+      },
+      "feature_anchor_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2",
+      "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+      "key_concept": "Continue to feed the infant on demand from the affected breast",
+      "key_concept_id": "CONCEPT-CF-OB54-CONTINUE-FEEDING",
+      "learner_decision_id": "LD-OB54-03",
+      "mcc_objective_id": "80-2",
+      "opportunity_id": "QOPP-3e5c530d7801407e1ad19347",
+      "opportunity_label": "G2-OBGYN-03",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "priority_class": "IMPORTANT"
+    },
+    {
+      "CURRENT_APPROVED_COMPETITOR_COUNT": 4,
+      "anchor_study_unit_id": "SU-P-147",
+      "approved_competitors_at_freeze": [
+        "SEED-PED-T03-EPINEPHRINE",
+        "SEED-PED-T03-FLUIDS",
+        "SEED-PED-T03-HFNC",
+        "SEED-PED-T03-SUCTION"
+      ],
+      "curated_candidates_in_scope": [
+        "SEED-PED-T03-EPINEPHRINE",
+        "SEED-PED-T03-FLUIDS",
+        "SEED-PED-T03-HFNC",
+        "SEED-PED-T03-HYPERTONIC",
+        "SEED-PED-T03-SALBUTAMOL",
+        "SEED-PED-T03-SUCTION"
+      ],
+      "difficulty_intent": "HARD",
+      "discipline": "PED",
+      "excluded_at_freeze": {
+        "SEED-PED-T03-HYPERTONIC": "Carries no plausibility anchor and no correctness condition in the frozen layer, so neither the floor nor the ceiling can be applied to it.",
+        "SEED-PED-T03-SALBUTAMOL": "Carries no correctness condition, so the second-key ceiling has nothing to apply to it."
+      },
+      "feature_anchor_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2",
+      "item_archetype": "SUPPORTIVE_CARE_CEILING",
+      "key_concept": "Begin low-flow supplemental oxygen by nasal prongs",
+      "key_concept_id": "CONCEPT-CF-P147-LOW-FLOW-OXYGEN",
+      "learner_decision_id": "LD-P147-03",
+      "mcc_objective_id": "27-3",
+      "opportunity_id": "QOPP-bd271fcf32333d4dd5756f52",
+      "opportunity_label": "G2-PED-03",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "priority_class": "CORE"
+    },
+    {
+      "CURRENT_APPROVED_COMPETITOR_COUNT": 2,
+      "anchor_study_unit_id": "SU-PS-12",
+      "approved_competitors_at_freeze": [
+        "SEED-PSY-T01-BD2",
+        "SEED-PSY-T01-PDD"
+      ],
+      "curated_candidates_in_scope": [
+        "SEED-PSY-T01-ANEMIA",
+        "SEED-PSY-T01-BD2",
+        "SEED-PSY-T01-MEDICAL",
+        "SEED-PSY-T01-PDD"
+      ],
+      "difficulty_intent": "MEDIUM",
+      "discipline": "PSY",
+      "excluded_at_freeze": {
+        "SEED-PSY-T01-ANEMIA": "Its only anchor, an abnormal complete blood count, is also its only correctness condition.",
+        "SEED-PSY-T01-MEDICAL": "Its only anchor, an abnormal thyroid stimulating hormone, is also its only correctness condition."
+      },
+      "feature_anchor_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2",
+      "item_archetype": "LONGITUDINAL_DIFFERENTIAL",
+      "key_concept": "Major depressive disorder",
+      "key_concept_id": "CONCEPT-CF-PS12-MDD",
+      "learner_decision_id": "LD-PS12-01",
+      "mcc_objective_id": "59-1",
+      "opportunity_id": "QOPP-9aba75caf03d3e2acd64e57b",
+      "opportunity_label": "G2-PSY-01",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "priority_class": "CORE"
+    },
+    {
+      "CURRENT_APPROVED_COMPETITOR_COUNT": 2,
+      "anchor_study_unit_id": "SU-GS-76",
+      "approved_competitors_at_freeze": [
+        "SEED-SURG-T03-INTERVAL",
+        "SEED-SURG-T03-NONOP"
+      ],
+      "curated_candidates_in_scope": [
+        "SEED-SURG-T03-DRAINAGE",
+        "SEED-SURG-T03-INTERVAL",
+        "SEED-SURG-T03-NONOP"
+      ],
+      "difficulty_intent": "HARD",
+      "discipline": "SURG",
+      "excluded_at_freeze": {
+        "SEED-SURG-T03-DRAINAGE": "Its only anchor is a walled-off phlegmon or abscess, which is also its only correctness condition, so it is live only when it is correct."
+      },
+      "feature_anchor_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2",
+      "item_archetype": "OPERATIVE_VS_NONOPERATIVE",
+      "key_concept": "Laparoscopic appendectomy on this admission",
+      "key_concept_id": "CONCEPT-CF-GS76-APPENDECTOMY",
+      "learner_decision_id": "LD-GS76-03",
+      "mcc_objective_id": "3-1",
+      "opportunity_id": "QOPP-262f8cee3718abf497781132",
+      "opportunity_label": "G2-SURG-03",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "priority_class": "CORE"
+    }
+  ],
+  "pilot_id": "medium-pilot-snapshot-v2",
+  "schema_version": "1.0",
+  "scope": "QGEN_MEDIUM_PILOT_OPPORTUNITY_FREEZE"
+}
