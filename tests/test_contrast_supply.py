@@ -346,3 +346,107 @@ def test_the_supply_diagnosis_regenerates_byte_identically():
         (ROOT / "reports/qgen_v2_contrast_supply_diagnosis.json").read_text()
     )
     assert build_supply_diagnosis(ROOT) == committed
+
+
+# ------------------------------------------------------------ acquisition wave
+
+
+def test_the_wave_runs_exactly_one_pass_per_opportunity():
+    from scripts.qbank.contrast_supply import run_acquisition_wave
+
+    wave = run_acquisition_wave(ROOT)
+    assert set(wave["waves"]) == set(frozen_five_labels(ROOT))
+    assert all(entry["waves"] == 1 for entry in wave["waves"].values())
+    assert wave["llm_api_calls"] == 0
+
+
+def test_supply_never_removes_a_frozen_anchor():
+    from scripts.qbank.contrast_first_v2_pilot import build_v2_contrast_sets
+    from scripts.qbank.contrast_supply import run_acquisition_wave
+
+    frozen = {}
+    for row in build_v2_contrast_sets(ROOT)["results"]:
+        for member in row["contrast_set"]["members"]:
+            frozen[(row["opportunity_label"], member["member_id"])] = {
+                entry["feature_id"] for entry in member["supporting_features"]
+            }
+    for record in run_acquisition_wave(ROOT)["results"]:
+        for member in record["contrast_set"]["members"]:
+            key = (record["opportunity_label"], member["member_id"])
+            if key not in frozen:
+                continue
+            after = {entry["feature_id"] for entry in member["supporting_features"]}
+            assert frozen[key] <= after
+
+
+def test_the_two_opportunities_supply_cannot_help_stay_refused():
+    from scripts.qbank.contrast_supply import run_acquisition_wave
+
+    refused = {
+        record["opportunity_label"]: record["selection_after"]["fail_closed_reason"]
+        for record in run_acquisition_wave(ROOT)["results"]
+    }
+    assert refused["G2-SURG-01"] == "FAIL_CLOSED_CONTRAST_SET_SIZE"
+    assert refused["G2-SURG-02"] == "FAIL_CLOSED_CONTRAST_SET_SIZE"
+
+
+def test_a_dropped_candidates_signature_may_not_be_spent():
+    """Rule S-6, on the case that forced it."""
+    from scripts.qbank.contrast_supply import (
+        run_acquisition_wave,
+        run_frozen5_replay,
+    )
+
+    wave = run_acquisition_wave(ROOT)
+    replay = run_frozen5_replay(ROOT, wave)
+    row = next(r for r in replay["results"] if r["opportunity_label"] == "G2-PSY-03")
+    assert row["terminal_state"] == "NO_SAFE_ITEM"
+    assert row["fail_closed_reason"] == "FAIL_CLOSED_DROPPED_CANDIDATE_SIGNATURE_SPENT"
+    assert row["dropped_unsettleable"] == "SEED-PSY-T03-DIGITAL"
+
+
+def test_the_one_realized_stem_realizes_its_blueprint_exactly():
+    from scripts.qbank.contrast_supply import run_acquisition_wave, run_frozen5_replay
+
+    replay = run_frozen5_replay(ROOT, run_acquisition_wave(ROOT))
+    realized = [r for r in replay["results"] if r["stage_reached"] == "INDEPENDENT_REVIEW"]
+    assert [row["opportunity_label"] for row in realized] == ["G2-PED-01"]
+    assert realized[0]["stem_realizes_the_blueprint_exactly"] is True
+    assert realized[0]["post_stem_coherence"]["coherent"] is True
+
+
+def test_the_production_gate_is_the_unchanged_one_and_it_refuses_the_item():
+    """The finding the milestone turns on, pinned so it cannot drift silently."""
+    from scripts.qbank.contrast_supply import run_acquisition_wave, run_frozen5_replay
+
+    replay = run_frozen5_replay(ROOT, run_acquisition_wave(ROOT))
+    row = next(r for r in replay["results"] if r["opportunity_label"] == "G2-PED-01")
+    gate = row["production_gate"]
+    assert gate["gate_is_the_production_gate"].endswith("retrieve_profile_aware_contrasts")
+    assert gate["post_stem_3_viable"] is False
+    assert gate["excluded_by_rule"]["SAF_1"] == [
+        "SEED-PED-T01-FOREIGN-BODY", "SEED-PED-T01-PNEUMONIA"
+    ]
+
+
+def test_the_recovery_report_regenerates_byte_identically():
+    from scripts.qbank.contrast_supply import build_frozen5_recovery_report
+
+    committed = json.loads(
+        (ROOT / "reports/qgen_v2_frozen5_supply_recovery.json").read_text()
+    )
+    assert build_frozen5_recovery_report(ROOT) == committed
+
+
+def test_the_cache_only_holds_approved_evidence_verified_relations():
+    cache = json.loads(
+        (ROOT / "research/qgen/clinical_contrast_supply_cache.json").read_text()
+    )["entries"]
+    assert cache
+    for entry in cache.values():
+        assert entry["review"]["verdict"] == "APPROVED"
+        assert entry["relation"]["verification_status"] == "EVIDENCE_VERIFIED"
+        assert set(entry["context"]) == {
+            "learner_decision_id", "demanded_response_class", "decision_granularity",
+            "anchor_study_unit_id", "decision_domain",
+        }

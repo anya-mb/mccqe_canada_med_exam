@@ -1038,6 +1038,37 @@ def _command_run_contrast_supply_diagnosis(arguments: argparse.Namespace) -> Non
     }, indent=2, sort_keys=True))
 
 
+def _command_run_contrast_supply_wave(arguments: argparse.Namespace) -> None:
+    """Run the one bounded on-demand supply wave over the five frozen refusals."""
+    from .contrast_supply import (
+        FROZEN5_RECOVERY_PATH,
+        SUPPLY_CACHE_PATH,
+        build_frozen5_recovery_report,
+        run_acquisition_wave,
+    )
+
+    root = canonical_root(getattr(arguments, "root", Path.cwd()))
+    wave = run_acquisition_wave(root)
+    write_json_atomic(resolve_root_path(root, SUPPLY_CACHE_PATH), {
+        "schema_version": "1.0",
+        "scope": "QGEN_VALIDATED_CLINICAL_CONTRAST_SUPPLY_CACHE",
+        "acquisition_id": wave["acquisition_id"],
+        "keyed_by": [
+            "concept_pair", "learner_decision_id", "demanded_response_class",
+            "decision_granularity", "anchor_study_unit_id", "decision_domain",
+        ],
+        "entries": wave["cache"],
+    })
+    report = build_frozen5_recovery_report(root)
+    write_json_atomic(resolve_root_path(root, FROZEN5_RECOVERY_PATH), report)
+    print(json.dumps({
+        "SUPPLY_ASSESSMENT": report["decision"]["SUPPLY_ASSESSMENT"],
+        "counts": report["counts"],
+        "MEDIUM36_TRIGGERED": report["decision"]["MEDIUM36_TRIGGERED"],
+        "COPYRIGHT_AUDIT": report["copyright"]["COPYRIGHT_AUDIT"],
+    }, indent=2, sort_keys=True))
+
+
 def _command_run_retrieval_benchmark(arguments: argparse.Namespace) -> None:
     """Run the frozen-G2 four-arm retrieval benchmark."""
     from .retrieval_benchmark import run_benchmark
@@ -1168,6 +1199,11 @@ def _parser() -> argparse.ArgumentParser:
             "run-contrast-supply-diagnosis",
             "diagnose contrast supply for the five V2 NO_SAFE_ITEM opportunities",
             _command_run_contrast_supply_diagnosis,
+        ),
+        (
+            "run-contrast-supply-wave",
+            "run the bounded on-demand contrast supply wave and its recovery report",
+            _command_run_contrast_supply_wave,
         ),
     )
     parsers = {}

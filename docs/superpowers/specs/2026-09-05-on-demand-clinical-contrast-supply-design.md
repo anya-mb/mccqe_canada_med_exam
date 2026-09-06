@@ -115,7 +115,7 @@ MANAGEMENT*. The cache stores the V2 relation object unchanged, plus its
 discovery provenance and its review verdict. `UNCERTAIN` entries are stored and
 never served: they fail closed.
 
-## 8. The five rules that keep this honest
+## 8. The six rules that keep this honest
 
 **S-1 Frozen vocabulary is read-only.** A candidate states its correctness
 conditions and its anchors in `g2_stem_feature_vocabulary.json` feature ids and
@@ -149,6 +149,14 @@ failure mode, and the independent review in section 9 exists to catch it.
 **S-5 One bounded wave.** One acquisition wave per opportunity. If fewer than
 three admissible competitors stand after it, `NO_SAFE_ITEM` is the correct
 answer and is kept. No enrichment until a question becomes possible.
+
+**S-6 Dropped-candidate signature** *(added during the frozen-five wave, before
+any stem was written)*. The blueprint may not assert PRESENT a feature that a
+required-PRESENT leaf of a candidate the supply layer itself discovered, admitted
+and then dropped from the offered set. Supply may not remove an option and then
+spend that option's own condition to defeat its neighbour. It was added because
+the solver's first admissible blueprint for `G2-PSY-03` did exactly that, and it
+changed that opportunity's outcome back to `NO_SAFE_ITEM`.
 
 ## 9. Independent admissibility review
 
@@ -204,6 +212,14 @@ silence-as-absence defects.
 - It cannot invent vocabulary. `G2-SURG-01` needs a non-gynaecologic differential
   and `SU-GS-76` has no feature in which one could state a correctness condition
   without being its own sole anchor.
+- **Measured, after the wave: an anchor S-4 adds is invisible to the production
+  gate.** `retrieve_profile_aware_contrasts` reads plausibility anchors from the
+  frozen stem-anchor pack, which S-2 forbids supply to edit, so `SAF_1`
+  STEM_PLAUSIBILITY_ANCHOR_ABSENT still refuses a competitor the supply layer has
+  made live. Supply can move a competitor in V2's semantics and cannot move it in
+  production's. Making the anchor layer a first-class, extendable, independently
+  reviewed artifact that both readers share is the next step this design does not
+  take.
 - Rule S-4 is the only mechanism by which an already-refused competitor can
   become supply, and it is therefore the mechanism most likely to be abused. Any
   recovery that rests on it should be reported as a weaker result than a recovery

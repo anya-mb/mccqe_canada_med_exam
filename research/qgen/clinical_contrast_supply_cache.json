@@ -1,0 +1,1831 @@
+{
+  "acquisition_id": "on-demand-contrast-supply-frozen-5",
+  "entries": {
+    "CSUPKEY-14c52f7347b46ec37c6b5082": {
+      "cache_key": "CSUPKEY-14c52f7347b46ec37c6b5082",
+      "concept_pair": [
+        "CONCEPT-R4-SU-OT-56-FOREIGN-BODY",
+        "CONCEPT-R4-SU-P-146-ASTHMA"
+      ],
+      "context": {
+        "anchor_study_unit_id": "SU-P-147",
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "SINGLE_DIAGNOSIS",
+        "demanded_response_class": "ACUTE_RESPIRATORY_DISTRESS",
+        "learner_decision_id": "LD-P147-01"
+      },
+      "relation": {
+        "a_supporting_features": [
+          {
+            "clinical_role": "HISTORY",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-ATOPY-OR-RECURRENCE"
+          }
+        ],
+        "anchor_study_unit_id": "SU-P-147",
+        "b_supporting_features": [
+          {
+            "clinical_role": "TIME_COURSE",
+            "contrast_role": "TIMING_FEATURE",
+            "feature_id": "SF-P147-ABRUPT-ONSET-NO-PRODROME"
+          },
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS"
+          },
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+            "role_override_reason": "CLM-R2-PED-DDX-ATYPICAL states that a broad differential should be considered especially in atypical presentations such as severe respiratory distress; CLM-R2-PED-DDX-TABLE is that differential and contains this candidate. Escalating work of breathing is therefore a cited reason to consider it, and it is a presentation feature the key shares."
+          }
+        ],
+        "categorical_exclusion_conditions": [],
+        "concept_a": {
+          "concept": "First presentation of asthma",
+          "concept_category": "REACTIVE_AIRWAY",
+          "concept_id": "CONCEPT-R4-SU-P-146-ASTHMA",
+          "member_id": "SEED-PED-T01-ASTHMA",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PED-T01-ASTHMA"
+        },
+        "concept_b": {
+          "concept": "Foreign body aspiration",
+          "concept_category": "MECHANICAL_OBSTRUCTION",
+          "concept_id": "CONCEPT-R4-SU-OT-56-FOREIGN-BODY",
+          "member_id": "SEED-PED-T01-FOREIGN-BODY",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PED-T01-FOREIGN-BODY"
+        },
+        "confusability": "MODERATE",
+        "contrast_relation_id": "CCR2-44e6e8eaf86e13eb63460e05",
+        "correctness_conditions_a": {
+          "conditions": [
+            {
+              "conditions": [
+                {
+                  "feature_id": "SF-P147-AGE-UNDER-12M",
+                  "required_state": "PRESENT"
+                }
+              ],
+              "operator": "NOT"
+            },
+            {
+              "conditions": [
+                {
+                  "feature_id": "SF-P147-ATOPY-OR-RECURRENCE",
+                  "required_state": "PRESENT"
+                },
+                {
+                  "feature_id": "SF-P147-VIRAL-PRODROME",
+                  "required_state": "ABSENT"
+                }
+              ],
+              "operator": "ANY_OF"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct in an older infant or child with frequent recurrences, atopy, or wheeze without a viral upper respiratory prodrome.' The age clause is a precondition; the three following clauses are joined by 'or'. V1 carried the whole statement as a conjunction of two predicates and omitted the age precondition."
+        },
+        "correctness_conditions_b": {
+          "conditions": [
+            {
+              "feature_id": "SF-P147-ABRUPT-ONSET-NO-PRODROME",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ANY_OF",
+          "prose_basis": "Frozen seed: 'Correct where the onset is abrupt without a viral prodrome, or where findings are focal or asymmetric.' Explicitly disjunctive; V1 carried it as a conjunction."
+        },
+        "decision_granularity": "SINGLE_DIAGNOSIS",
+        "discovery_sources": [
+          "CURATED_LIBRARY",
+          "FROZEN_EVIDENCE_PACKET"
+        ],
+        "discriminators": [],
+        "evidence_refs": [
+          "CLM-R2-PED-DDX-ATYPICAL",
+          "CLM-R2-PED-DDX-TABLE"
+        ],
+        "learner_decision_id": "LD-P147-01",
+        "mcc_relevance": "LD-P147-01 for MCC objective 27-3, CORE in PED",
+        "nesting_relation": "NONE",
+        "opportunity_label": "G2-PED-01",
+        "response_class": "ACUTE_RESPIRATORY_DISTRESS",
+        "second_key_conditions": [
+          {
+            "conditions": [
+              {
+                "feature_id": "SF-P147-ABRUPT-ONSET-NO-PRODROME",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ANY_OF",
+            "prose_basis": "Frozen seed: 'Correct where the onset is abrupt without a viral prodrome, or where findings are focal or asymmetric.' Explicitly disjunctive; V1 carried it as a conjunction."
+          }
+        ],
+        "shared_features": [],
+        "verification_status": "EVIDENCE_VERIFIED"
+      },
+      "review": {
+        "reasons": [],
+        "reviewer_id": "R-SUPPLY-SET",
+        "verdict": "APPROVED"
+      }
+    },
+    "CSUPKEY-1ebd293f43f8a6c687b05037": {
+      "cache_key": "CSUPKEY-1ebd293f43f8a6c687b05037",
+      "concept_pair": [
+        "CONCEPT-R4-SU-PS-12-COMBINED",
+        "CONCEPT-R4-SU-PS-67-EXERCISE"
+      ],
+      "context": {
+        "anchor_study_unit_id": "SU-PS-12",
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "INITIAL_TREATMENT_PLAN",
+        "demanded_response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+        "learner_decision_id": "LD-PS12-03"
+      },
+      "relation": {
+        "a_supporting_features": [
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-PS12-MILD-SEVERITY",
+            "role_override_reason": "CLM-R4-PSY-MILD makes mild severity the operative criterion for preferring psychotherapy, on the same grounds."
+          },
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-PS12-MODERATE-SEVERITY",
+            "role_override_reason": "CLM-R2-PSY-MODERATE-CHOICE makes the severity band the operative criterion for the treatment choice itself, and the band is a clinician's syndromic assessment rather than a score recomputed from other findings the stem also states."
+          }
+        ],
+        "anchor_study_unit_id": "SU-PS-12",
+        "b_supporting_features": [
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-PS12-MODERATE-SEVERITY",
+            "role_override_reason": "CLM-R2-PSY-MODERATE-CHOICE makes the severity band the operative criterion for the treatment choice itself, and the band is a clinician's syndromic assessment rather than a score recomputed from other findings the stem also states."
+          },
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "BACKGROUND_CONTEXT",
+            "feature_id": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS"
+          }
+        ],
+        "categorical_exclusion_conditions": [],
+        "concept_a": {
+          "concept": "A supervised exercise programme as sole initial treatment",
+          "concept_category": "LIFESTYLE_INTERVENTION",
+          "concept_id": "CONCEPT-R4-SU-PS-67-EXERCISE",
+          "member_id": "SEED-PSY-T03-EXERCISE",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PSY-T03-EXERCISE"
+        },
+        "concept_b": {
+          "concept": "Combined antidepressant and psychotherapy from the outset",
+          "concept_category": "COMBINED_TREATMENT",
+          "concept_id": "CONCEPT-R4-SU-PS-12-COMBINED",
+          "member_id": "SEED-PSY-T03-COMBINED",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PSY-T03-COMBINED"
+        },
+        "confusability": "HIGH",
+        "contrast_relation_id": "CCR2-285cea7ec6a02ad41763c6e3",
+        "correctness_conditions_a": {
+          "conditions": [
+            {
+              "feature_id": "SF-PS12-MILD-SEVERITY",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct as first-line monotherapy for mild depression, and as a second-line adjunct at moderate severity.' The second clause is a second-line adjunctive role, not a first-line answer to this lead-in, so only the mild-severity condition is a correctness condition here. CLM-R4-PSY-EXERCISE reads the same way."
+        },
+        "correctness_conditions_b": {
+          "conditions": [
+            {
+              "feature_id": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct in severe episodes with high safety risk and without psychotic features, and where both modalities are available.' CLM-R4-PSY-COMBINED is where the recommendation sits: in severe cases of a major depressive episode with high safety risk and without psychotic features CANMAT recommends the combination. The availability clause is a resource condition rather than a clinical one and is not carried as a correctness condition."
+        },
+        "decision_granularity": "INITIAL_TREATMENT_PLAN",
+        "discovery_sources": [
+          "CURATED_LIBRARY",
+          "FROZEN_EVIDENCE_PACKET"
+        ],
+        "discriminators": [],
+        "evidence_refs": [
+          "CLM-R2-PSY-MODERATE-CHOICE",
+          "CLM-R4-PSY-COMBINED",
+          "CLM-R4-PSY-EXERCISE"
+        ],
+        "learner_decision_id": "LD-PS12-03",
+        "mcc_relevance": "LD-PS12-03 for MCC objective 59-1, CORE in PSY",
+        "nesting_relation": "NONE",
+        "opportunity_label": "G2-PSY-03",
+        "response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+        "second_key_conditions": [
+          {
+            "conditions": [
+              {
+                "feature_id": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct in severe episodes with high safety risk and without psychotic features, and where both modalities are available.' CLM-R4-PSY-COMBINED is where the recommendation sits: in severe cases of a major depressive episode with high safety risk and without psychotic features CANMAT recommends the combination. The availability clause is a resource condition rather than a clinical one and is not carried as a correctness condition."
+          }
+        ],
+        "shared_features": [
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-PS12-MODERATE-SEVERITY",
+            "role_override_reason": "CLM-R2-PSY-MODERATE-CHOICE makes the severity band the operative criterion for the treatment choice itself, and the band is a clinician's syndromic assessment rather than a score recomputed from other findings the stem also states."
+          }
+        ],
+        "verification_status": "EVIDENCE_VERIFIED"
+      },
+      "review": {
+        "reasons": [],
+        "reviewer_id": "R-SUPPLY-SET",
+        "verdict": "APPROVED"
+      }
+    },
+    "CSUPKEY-239178eb7ede58b36a6f1f3a": {
+      "cache_key": "CSUPKEY-239178eb7ede58b36a6f1f3a",
+      "concept_pair": [
+        "CONCEPT-CF-P147-BRONCHIOLITIS",
+        "CONCEPT-R4-SU-OT-56-FOREIGN-BODY"
+      ],
+      "context": {
+        "anchor_study_unit_id": "SU-P-147",
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "SINGLE_DIAGNOSIS",
+        "demanded_response_class": "ACUTE_RESPIRATORY_DISTRESS",
+        "learner_decision_id": "LD-P147-01"
+      },
+      "relation": {
+        "a_supporting_features": [
+          {
+            "clinical_role": "AGE",
+            "contrast_role": "PRIOR_PROBABILITY_FEATURE",
+            "feature_id": "SF-P147-AGE-UNDER-12M"
+          },
+          {
+            "clinical_role": "TIME_COURSE",
+            "contrast_role": "TIMING_FEATURE",
+            "feature_id": "SF-P147-FIRST-WHEEZE"
+          },
+          {
+            "clinical_role": "TIME_COURSE",
+            "contrast_role": "TIMING_FEATURE",
+            "feature_id": "SF-P147-VIRAL-PRODROME"
+          }
+        ],
+        "anchor_study_unit_id": "SU-P-147",
+        "b_supporting_features": [
+          {
+            "clinical_role": "TIME_COURSE",
+            "contrast_role": "TIMING_FEATURE",
+            "feature_id": "SF-P147-ABRUPT-ONSET-NO-PRODROME"
+          },
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS"
+          },
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+            "role_override_reason": "CLM-R2-PED-DDX-ATYPICAL states that a broad differential should be considered especially in atypical presentations such as severe respiratory distress; CLM-R2-PED-DDX-TABLE is that differential and contains this candidate. Escalating work of breathing is therefore a cited reason to consider it, and it is a presentation feature the key shares."
+          }
+        ],
+        "categorical_exclusion_conditions": [],
+        "concept_a": {
+          "concept": "Acute viral bronchiolitis",
+          "concept_category": "VIRAL_LOWER_AIRWAY",
+          "concept_id": "CONCEPT-CF-P147-BRONCHIOLITIS",
+          "member_id": "KEY",
+          "role_in_set": "KEY"
+        },
+        "concept_b": {
+          "concept": "Foreign body aspiration",
+          "concept_category": "MECHANICAL_OBSTRUCTION",
+          "concept_id": "CONCEPT-R4-SU-OT-56-FOREIGN-BODY",
+          "member_id": "SEED-PED-T01-FOREIGN-BODY",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PED-T01-FOREIGN-BODY"
+        },
+        "confusability": "MODERATE",
+        "contrast_relation_id": "CCR2-80e15bffe3d917cf80db720a",
+        "correctness_conditions_a": {
+          "conditions": [
+            {
+              "feature_id": "SF-P147-AGE-UNDER-12M",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-P147-FIRST-WHEEZE",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-P147-VIRAL-PRODROME",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "CLM-R2-PED-DX-ANCHOR: bronchiolitis typically presents with a first episode of wheezing before the age of 12 months, beginning with a two-to-three-day viral prodrome."
+        },
+        "correctness_conditions_b": {
+          "conditions": [
+            {
+              "feature_id": "SF-P147-ABRUPT-ONSET-NO-PRODROME",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ANY_OF",
+          "prose_basis": "Frozen seed: 'Correct where the onset is abrupt without a viral prodrome, or where findings are focal or asymmetric.' Explicitly disjunctive; V1 carried it as a conjunction."
+        },
+        "decision_granularity": "SINGLE_DIAGNOSIS",
+        "discovery_sources": [
+          "CURATED_LIBRARY",
+          "FROZEN_EVIDENCE_PACKET"
+        ],
+        "discriminators": [
+          {
+            "contrast_role": "KEY_DISCRIMINATOR",
+            "evidence_refs": [
+              "CLM-R2-PED-DX-ANCHOR"
+            ],
+            "favours": "A",
+            "feature_id": "SF-P147-VIRAL-PRODROME",
+            "required_state": "PRESENT",
+            "salience": "MODERATE",
+            "statement": "A two-to-three-day coryzal prodrome preceding a first wheeze under twelve months is the bronchiolitis pattern rather than an atypical presentation."
+          }
+        ],
+        "evidence_refs": [
+          "CLM-GEN-PED-DX-01",
+          "CLM-R2-PED-DDX-ATYPICAL",
+          "CLM-R2-PED-DDX-TABLE",
+          "CLM-R2-PED-DX-ANCHOR"
+        ],
+        "learner_decision_id": "LD-P147-01",
+        "mcc_relevance": "LD-P147-01 for MCC objective 27-3, CORE in PED",
+        "nesting_relation": "NONE",
+        "opportunity_label": "G2-PED-01",
+        "response_class": "ACUTE_RESPIRATORY_DISTRESS",
+        "second_key_conditions": [
+          {
+            "conditions": [
+              {
+                "feature_id": "SF-P147-ABRUPT-ONSET-NO-PRODROME",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ANY_OF",
+            "prose_basis": "Frozen seed: 'Correct where the onset is abrupt without a viral prodrome, or where findings are focal or asymmetric.' Explicitly disjunctive; V1 carried it as a conjunction."
+          }
+        ],
+        "shared_features": [],
+        "verification_status": "EVIDENCE_VERIFIED"
+      },
+      "review": {
+        "reasons": [],
+        "reviewer_id": "R-SUPPLY-SET",
+        "verdict": "APPROVED"
+      }
+    },
+    "CSUPKEY-4b61c45d46273a18bc34a3c3": {
+      "cache_key": "CSUPKEY-4b61c45d46273a18bc34a3c3",
+      "concept_pair": [
+        "CONCEPT-R4-SU-PS-03-CBT",
+        "CONCEPT-R4-SU-PS-12-COMBINED"
+      ],
+      "context": {
+        "anchor_study_unit_id": "SU-PS-12",
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "INITIAL_TREATMENT_PLAN",
+        "demanded_response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+        "learner_decision_id": "LD-PS12-03"
+      },
+      "relation": {
+        "a_supporting_features": [
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-PS12-MILD-SEVERITY",
+            "role_override_reason": "CLM-R4-PSY-MILD makes mild severity the operative criterion for preferring psychotherapy, on the same grounds."
+          },
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-PS12-MODERATE-SEVERITY",
+            "role_override_reason": "CLM-R2-PSY-MODERATE-CHOICE makes the severity band the operative criterion for the treatment choice itself, and the band is a clinician's syndromic assessment rather than a score recomputed from other findings the stem also states."
+          },
+          {
+            "clinical_role": "PATIENT_PREFERENCE",
+            "contrast_role": "MANAGEMENT_ELIGIBILITY",
+            "feature_id": "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY"
+          }
+        ],
+        "anchor_study_unit_id": "SU-PS-12",
+        "b_supporting_features": [
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-PS12-MODERATE-SEVERITY",
+            "role_override_reason": "CLM-R2-PSY-MODERATE-CHOICE makes the severity band the operative criterion for the treatment choice itself, and the band is a clinician's syndromic assessment rather than a score recomputed from other findings the stem also states."
+          },
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "BACKGROUND_CONTEXT",
+            "feature_id": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS"
+          }
+        ],
+        "categorical_exclusion_conditions": [],
+        "concept_a": {
+          "concept": "Structured psychotherapy such as cognitive behavioural therapy",
+          "concept_category": "IN_PERSON_PSYCHOTHERAPY",
+          "concept_id": "CONCEPT-R4-SU-PS-03-CBT",
+          "member_id": "SEED-PSY-T03-PSYCHOTHERAPY",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PSY-T03-PSYCHOTHERAPY"
+        },
+        "concept_b": {
+          "concept": "Combined antidepressant and psychotherapy from the outset",
+          "concept_category": "COMBINED_TREATMENT",
+          "concept_id": "CONCEPT-R4-SU-PS-12-COMBINED",
+          "member_id": "SEED-PSY-T03-COMBINED",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PSY-T03-COMBINED"
+        },
+        "confusability": "HIGH",
+        "contrast_relation_id": "CCR2-63be64dd9d4e78ab0f168af3",
+        "correctness_conditions_a": {
+          "conditions": [
+            {
+              "conditions": [
+                {
+                  "feature_id": "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY",
+                  "required_state": "PRESENT"
+                },
+                {
+                  "feature_id": "SF-PS12-PSYCHOTHERAPY-INACCESSIBLE-IN-PERSON",
+                  "required_state": "ABSENT"
+                }
+              ],
+              "operator": "ALL_OF"
+            },
+            {
+              "feature_id": "SF-PS12-MILD-SEVERITY",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ANY_OF",
+          "prose_basis": "Frozen seed: 'Correct where the patient prefers it and it is readily accessible, and preferred at mild severity.' A conjunction of preference and accessibility, or mild severity on its own; CLM-R4-PSY-MILD supplies the second route. V1 carried preference and mild severity as a flat conjunction."
+        },
+        "correctness_conditions_b": {
+          "conditions": [
+            {
+              "feature_id": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct in severe episodes with high safety risk and without psychotic features, and where both modalities are available.' CLM-R4-PSY-COMBINED is where the recommendation sits: in severe cases of a major depressive episode with high safety risk and without psychotic features CANMAT recommends the combination. The availability clause is a resource condition rather than a clinical one and is not carried as a correctness condition."
+        },
+        "decision_granularity": "INITIAL_TREATMENT_PLAN",
+        "discovery_sources": [
+          "CURATED_LIBRARY",
+          "FROZEN_EVIDENCE_PACKET"
+        ],
+        "discriminators": [],
+        "evidence_refs": [
+          "CLM-R2-PSY-MODERATE-CHOICE",
+          "CLM-R4-PSY-COMBINED",
+          "CLM-R4-PSY-MILD",
+          "CLM-R4-PSY-PSYCHOTHERAPY"
+        ],
+        "learner_decision_id": "LD-PS12-03",
+        "mcc_relevance": "LD-PS12-03 for MCC objective 59-1, CORE in PSY",
+        "nesting_relation": "NONE",
+        "opportunity_label": "G2-PSY-03",
+        "response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+        "second_key_conditions": [
+          {
+            "conditions": [
+              {
+                "feature_id": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct in severe episodes with high safety risk and without psychotic features, and where both modalities are available.' CLM-R4-PSY-COMBINED is where the recommendation sits: in severe cases of a major depressive episode with high safety risk and without psychotic features CANMAT recommends the combination. The availability clause is a resource condition rather than a clinical one and is not carried as a correctness condition."
+          }
+        ],
+        "shared_features": [
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-PS12-MODERATE-SEVERITY",
+            "role_override_reason": "CLM-R2-PSY-MODERATE-CHOICE makes the severity band the operative criterion for the treatment choice itself, and the band is a clinician's syndromic assessment rather than a score recomputed from other findings the stem also states."
+          }
+        ],
+        "verification_status": "EVIDENCE_VERIFIED"
+      },
+      "review": {
+        "reasons": [],
+        "reviewer_id": "R-SUPPLY-SET",
+        "verdict": "APPROVED"
+      }
+    },
+    "CSUPKEY-57881584136ac36bea735b8a": {
+      "cache_key": "CSUPKEY-57881584136ac36bea735b8a",
+      "concept_pair": [
+        "CONCEPT-CF-PS12-FIRST-LINE-AD",
+        "CONCEPT-R4-SU-PS-12-COMBINED"
+      ],
+      "context": {
+        "anchor_study_unit_id": "SU-PS-12",
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "INITIAL_TREATMENT_PLAN",
+        "demanded_response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+        "learner_decision_id": "LD-PS12-03"
+      },
+      "relation": {
+        "a_supporting_features": [
+          {
+            "clinical_role": "EXPLICIT_RISK_INVENTORY",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-PS12-HIGH-IMMINENT-SUICIDE-RISK"
+          },
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-PS12-MODERATE-SEVERITY",
+            "role_override_reason": "CLM-R2-PSY-MODERATE-CHOICE makes the severity band the operative criterion for the treatment choice itself, and the band is a clinician's syndromic assessment rather than a score recomputed from other findings the stem also states."
+          }
+        ],
+        "anchor_study_unit_id": "SU-PS-12",
+        "b_supporting_features": [
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-PS12-MODERATE-SEVERITY",
+            "role_override_reason": "CLM-R2-PSY-MODERATE-CHOICE makes the severity band the operative criterion for the treatment choice itself, and the band is a clinician's syndromic assessment rather than a score recomputed from other findings the stem also states."
+          },
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "BACKGROUND_CONTEXT",
+            "feature_id": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS"
+          }
+        ],
+        "categorical_exclusion_conditions": [],
+        "concept_a": {
+          "concept": "A first-line antidepressant",
+          "concept_category": "PHARMACOTHERAPY",
+          "concept_id": "CONCEPT-CF-PS12-FIRST-LINE-AD",
+          "member_id": "KEY",
+          "role_in_set": "KEY"
+        },
+        "concept_b": {
+          "concept": "Combined antidepressant and psychotherapy from the outset",
+          "concept_category": "COMBINED_TREATMENT",
+          "concept_id": "CONCEPT-R4-SU-PS-12-COMBINED",
+          "member_id": "SEED-PSY-T03-COMBINED",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PSY-T03-COMBINED"
+        },
+        "confusability": "HIGH",
+        "contrast_relation_id": "CCR2-465803dc0fa5e2a9ecbdf6e1",
+        "correctness_conditions_a": {
+          "conditions": [
+            {
+              "feature_id": "SF-PS12-MODERATE-SEVERITY",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-PS12-HIGH-IMMINENT-SUICIDE-RISK",
+              "required_state": "ABSENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "CLM-GEN-PSY-TX-01: for moderate major depression with low to moderate safety risk, structured psychotherapy or a first-line antidepressant are evidence-based initial treatments selected collaboratively."
+        },
+        "correctness_conditions_b": {
+          "conditions": [
+            {
+              "feature_id": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct in severe episodes with high safety risk and without psychotic features, and where both modalities are available.' CLM-R4-PSY-COMBINED is where the recommendation sits: in severe cases of a major depressive episode with high safety risk and without psychotic features CANMAT recommends the combination. The availability clause is a resource condition rather than a clinical one and is not carried as a correctness condition."
+        },
+        "decision_granularity": "INITIAL_TREATMENT_PLAN",
+        "discovery_sources": [
+          "CURATED_LIBRARY",
+          "FROZEN_EVIDENCE_PACKET"
+        ],
+        "discriminators": [],
+        "evidence_refs": [
+          "CLM-GEN-PSY-TX-01",
+          "CLM-R2-PSY-FIRST-LINE",
+          "CLM-R2-PSY-MODERATE-CHOICE",
+          "CLM-R4-PSY-COMBINED"
+        ],
+        "learner_decision_id": "LD-PS12-03",
+        "mcc_relevance": "LD-PS12-03 for MCC objective 59-1, CORE in PSY",
+        "nesting_relation": "NONE",
+        "opportunity_label": "G2-PSY-03",
+        "response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+        "second_key_conditions": [
+          {
+            "conditions": [
+              {
+                "feature_id": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct in severe episodes with high safety risk and without psychotic features, and where both modalities are available.' CLM-R4-PSY-COMBINED is where the recommendation sits: in severe cases of a major depressive episode with high safety risk and without psychotic features CANMAT recommends the combination. The availability clause is a resource condition rather than a clinical one and is not carried as a correctness condition."
+          }
+        ],
+        "shared_features": [
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-PS12-MODERATE-SEVERITY",
+            "role_override_reason": "CLM-R2-PSY-MODERATE-CHOICE makes the severity band the operative criterion for the treatment choice itself, and the band is a clinician's syndromic assessment rather than a score recomputed from other findings the stem also states."
+          }
+        ],
+        "verification_status": "EVIDENCE_VERIFIED"
+      },
+      "review": {
+        "reasons": [],
+        "reviewer_id": "R-SUPPLY-SET",
+        "verdict": "APPROVED"
+      }
+    },
+    "CSUPKEY-5a2d66a3e367e820dafd7bc7": {
+      "cache_key": "CSUPKEY-5a2d66a3e367e820dafd7bc7",
+      "concept_pair": [
+        "CONCEPT-R4-SU-P-146-ASTHMA",
+        "CONCEPT-R4-SU-P-149-PNEUMONIA"
+      ],
+      "context": {
+        "anchor_study_unit_id": "SU-P-147",
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "SINGLE_DIAGNOSIS",
+        "demanded_response_class": "ACUTE_RESPIRATORY_DISTRESS",
+        "learner_decision_id": "LD-P147-01"
+      },
+      "relation": {
+        "a_supporting_features": [
+          {
+            "clinical_role": "HISTORY",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-ATOPY-OR-RECURRENCE"
+          }
+        ],
+        "anchor_study_unit_id": "SU-P-147",
+        "b_supporting_features": [
+          {
+            "clinical_role": "TIME_COURSE",
+            "contrast_role": "TIMING_FEATURE",
+            "feature_id": "SF-P147-FAILING-TO-IMPROVE"
+          },
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS"
+          },
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+            "role_override_reason": "CLM-R2-PED-DDX-ATYPICAL states that a broad differential should be considered especially in atypical presentations such as severe respiratory distress; CLM-R2-PED-DDX-TABLE is that differential and contains this candidate. Escalating work of breathing is therefore a cited reason to consider it, and it is a presentation feature the key shares."
+          },
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+            "role_override_reason": "CLM-R2-PED-CXR-INDICATION makes 'the severity of disease raises other diagnostic possibilities such as bacterial pneumonia' the operative criterion itself, and it is a bedside gestalt rather than a score recomputed from other findings the stem also states."
+          }
+        ],
+        "categorical_exclusion_conditions": [],
+        "concept_a": {
+          "concept": "First presentation of asthma",
+          "concept_category": "REACTIVE_AIRWAY",
+          "concept_id": "CONCEPT-R4-SU-P-146-ASTHMA",
+          "member_id": "SEED-PED-T01-ASTHMA",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PED-T01-ASTHMA"
+        },
+        "concept_b": {
+          "concept": "Community-acquired pneumonia",
+          "concept_category": "BACTERIAL_PARENCHYMAL",
+          "concept_id": "CONCEPT-R4-SU-P-149-PNEUMONIA",
+          "member_id": "SEED-PED-T01-PNEUMONIA",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PED-T01-PNEUMONIA"
+        },
+        "confusability": "MODERATE",
+        "contrast_relation_id": "CCR2-e7367a138e28edfa1479ef1a",
+        "correctness_conditions_a": {
+          "conditions": [
+            {
+              "conditions": [
+                {
+                  "feature_id": "SF-P147-AGE-UNDER-12M",
+                  "required_state": "PRESENT"
+                }
+              ],
+              "operator": "NOT"
+            },
+            {
+              "conditions": [
+                {
+                  "feature_id": "SF-P147-ATOPY-OR-RECURRENCE",
+                  "required_state": "PRESENT"
+                },
+                {
+                  "feature_id": "SF-P147-VIRAL-PRODROME",
+                  "required_state": "ABSENT"
+                }
+              ],
+              "operator": "ANY_OF"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct in an older infant or child with frequent recurrences, atopy, or wheeze without a viral upper respiratory prodrome.' The age clause is a precondition; the three following clauses are joined by 'or'. V1 carried the whole statement as a conjunction of two predicates and omitted the age precondition."
+        },
+        "correctness_conditions_b": {
+          "conditions": [
+            {
+              "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ANY_OF",
+          "prose_basis": "Frozen seed: 'Correct where the illness is not improving as expected, where severity raises the possibility of bacterial infection, or where a focal consolidation is demonstrated.' Three disjuncts; V1 carried three conjuncts."
+        },
+        "decision_granularity": "SINGLE_DIAGNOSIS",
+        "discovery_sources": [
+          "CURATED_LIBRARY",
+          "FROZEN_EVIDENCE_PACKET"
+        ],
+        "discriminators": [],
+        "evidence_refs": [
+          "CLM-GEN-PED-INV-01",
+          "CLM-R2-PED-CXR-INDICATION",
+          "CLM-R2-PED-DDX-ATYPICAL",
+          "CLM-R2-PED-DDX-TABLE"
+        ],
+        "learner_decision_id": "LD-P147-01",
+        "mcc_relevance": "LD-P147-01 for MCC objective 27-3, CORE in PED",
+        "nesting_relation": "NONE",
+        "opportunity_label": "G2-PED-01",
+        "response_class": "ACUTE_RESPIRATORY_DISTRESS",
+        "second_key_conditions": [
+          {
+            "conditions": [
+              {
+                "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ANY_OF",
+            "prose_basis": "Frozen seed: 'Correct where the illness is not improving as expected, where severity raises the possibility of bacterial infection, or where a focal consolidation is demonstrated.' Three disjuncts; V1 carried three conjuncts."
+          }
+        ],
+        "shared_features": [],
+        "verification_status": "EVIDENCE_VERIFIED"
+      },
+      "review": {
+        "reasons": [],
+        "reviewer_id": "R-SUPPLY-SET",
+        "verdict": "APPROVED"
+      }
+    },
+    "CSUPKEY-7448bf183a978c8eccb2df6e": {
+      "cache_key": "CSUPKEY-7448bf183a978c8eccb2df6e",
+      "concept_pair": [
+        "CONCEPT-R4-SU-P-147-CBC",
+        "CONCEPT-R4-SU-P-147-CONTINUOUS-MONITORING"
+      ],
+      "context": {
+        "anchor_study_unit_id": "SU-P-147",
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "SINGLE_NEXT_ASSESSMENT",
+        "demanded_response_class": "DIAGNOSTIC_ADVANCEMENT",
+        "learner_decision_id": "LD-P147-02"
+      },
+      "relation": {
+        "a_supporting_features": [
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-P147-HIGH-RISK-EARLY-COURSE",
+            "role_override_reason": "CLM-R4-PED-CONTINUOUS makes 'high-risk patients early in the course of disease' the operative criterion for the monitoring choice itself, and it is a bedside risk judgement rather than a score recomputed from other findings the stem also states."
+          },
+          {
+            "clinical_role": "VITAL_SIGN",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-P147-HYPOXEMIA"
+          }
+        ],
+        "anchor_study_unit_id": "SU-P-147",
+        "b_supporting_features": [
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+            "role_override_reason": "CLM-R2-PED-DDX-ATYPICAL names severe respiratory distress as the atypical presentation in which a broader differential, including bacterial infection, should be considered; CLM-R2-PED-CBC-SBI leaves the decision to order the test to clinical judgement. Escalating work of breathing is therefore a cited reason a candidate might reach for blood tests, and it is a presentation feature the key shares."
+          },
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+            "role_override_reason": "CLM-R2-PED-CXR-INDICATION makes severity raising other diagnostic possibilities the operative criterion for the film."
+          }
+        ],
+        "categorical_exclusion_conditions": [],
+        "concept_a": {
+          "concept": "Continuous pulse oximetry and cardiorespiratory monitoring",
+          "concept_category": "MONITORING_INTENSITY",
+          "concept_id": "CONCEPT-R4-SU-P-147-CONTINUOUS-MONITORING",
+          "member_id": "SEED-PED-T02-CONTINUOUS",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PED-T02-CONTINUOUS"
+        },
+        "concept_b": {
+          "concept": "Complete blood count and blood culture",
+          "concept_category": "BLOOD_TESTING_FOR_BACTERIAL_INFECTION",
+          "concept_id": "CONCEPT-R4-SU-P-147-CBC",
+          "member_id": "SEED-PED-T02-CBC",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PED-T02-CBC"
+        },
+        "confusability": "MODERATE",
+        "contrast_relation_id": "CCR2-734e25e5a9816e3ff2f472e9",
+        "correctness_conditions_a": {
+          "conditions": [
+            {
+              "feature_id": "SF-P147-HIGH-RISK-EARLY-COURSE",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct for a high-risk patient early in the course of the disease.' A single condition."
+        },
+        "correctness_conditions_b": {
+          "conditions": [
+            {
+              "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct where clinical judgement raises a specific concern for serious bacterial infection.' CLM-R2-PED-CBC-SBI reads the same way: routine screening for serious bacterial infection is not indicated but should be performed based on clinical judgement. A single condition."
+        },
+        "decision_granularity": "SINGLE_NEXT_ASSESSMENT",
+        "discovery_sources": [
+          "CURATED_LIBRARY",
+          "FROZEN_EVIDENCE_PACKET"
+        ],
+        "discriminators": [],
+        "evidence_refs": [
+          "CLM-GEN-PED-INV-01",
+          "CLM-R2-PED-CBC-SBI",
+          "CLM-R4-PED-CONTINUOUS"
+        ],
+        "learner_decision_id": "LD-P147-02",
+        "mcc_relevance": "LD-P147-02 for MCC objective 27-3, CORE in PED",
+        "nesting_relation": "NONE",
+        "opportunity_label": "G2-PED-02",
+        "response_class": "DIAGNOSTIC_ADVANCEMENT",
+        "second_key_conditions": [
+          {
+            "conditions": [
+              {
+                "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where clinical judgement raises a specific concern for serious bacterial infection.' CLM-R2-PED-CBC-SBI reads the same way: routine screening for serious bacterial infection is not indicated but should be performed based on clinical judgement. A single condition."
+          }
+        ],
+        "shared_features": [],
+        "verification_status": "EVIDENCE_VERIFIED"
+      },
+      "review": {
+        "reasons": [],
+        "reviewer_id": "R-SUPPLY-SET",
+        "verdict": "APPROVED"
+      }
+    },
+    "CSUPKEY-79b95ade85e853bd3ff3a5c6": {
+      "cache_key": "CSUPKEY-79b95ade85e853bd3ff3a5c6",
+      "concept_pair": [
+        "CONCEPT-R4-SU-PS-03-DIGITAL",
+        "CONCEPT-R4-SU-PS-12-COMBINED"
+      ],
+      "context": {
+        "anchor_study_unit_id": "SU-PS-12",
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "INITIAL_TREATMENT_PLAN",
+        "demanded_response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+        "learner_decision_id": "LD-PS12-03"
+      },
+      "relation": {
+        "a_supporting_features": [
+          {
+            "clinical_role": "PATIENT_PREFERENCE",
+            "contrast_role": "MANAGEMENT_ELIGIBILITY",
+            "feature_id": "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY"
+          },
+          {
+            "clinical_role": "SYSTEM_CONSTRAINT",
+            "contrast_role": "RESOURCE_AVAILABILITY",
+            "feature_id": "SF-PS12-PSYCHOTHERAPY-INACCESSIBLE-IN-PERSON"
+          }
+        ],
+        "anchor_study_unit_id": "SU-PS-12",
+        "b_supporting_features": [
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-PS12-MODERATE-SEVERITY",
+            "role_override_reason": "CLM-R2-PSY-MODERATE-CHOICE makes the severity band the operative criterion for the treatment choice itself, and the band is a clinician's syndromic assessment rather than a score recomputed from other findings the stem also states."
+          },
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "BACKGROUND_CONTEXT",
+            "feature_id": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS"
+          }
+        ],
+        "categorical_exclusion_conditions": [],
+        "concept_a": {
+          "concept": "Digitally delivered cognitive behavioural therapy",
+          "concept_category": "DIGITALLY_DELIVERED_PSYCHOTHERAPY",
+          "concept_id": "CONCEPT-R4-SU-PS-03-DIGITAL",
+          "member_id": "SEED-PSY-T03-DIGITAL",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PSY-T03-DIGITAL"
+        },
+        "concept_b": {
+          "concept": "Combined antidepressant and psychotherapy from the outset",
+          "concept_category": "COMBINED_TREATMENT",
+          "concept_id": "CONCEPT-R4-SU-PS-12-COMBINED",
+          "member_id": "SEED-PSY-T03-COMBINED",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PSY-T03-COMBINED"
+        },
+        "confusability": "MODERATE",
+        "contrast_relation_id": "CCR2-b891830d7b629090bc813258",
+        "correctness_conditions_a": {
+          "conditions": [
+            {
+              "feature_id": "SF-PS12-PATIENT-PREFERS-PSYCHOTHERAPY",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-PS12-PSYCHOTHERAPY-INACCESSIBLE-IN-PERSON",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct where psychotherapy is the chosen modality and in-person delivery is not available.' Two conjuncts joined by 'and'; CLM-R4-PSY-DIGITAL supports delivery by digital format."
+        },
+        "correctness_conditions_b": {
+          "conditions": [
+            {
+              "feature_id": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct in severe episodes with high safety risk and without psychotic features, and where both modalities are available.' CLM-R4-PSY-COMBINED is where the recommendation sits: in severe cases of a major depressive episode with high safety risk and without psychotic features CANMAT recommends the combination. The availability clause is a resource condition rather than a clinical one and is not carried as a correctness condition."
+        },
+        "decision_granularity": "INITIAL_TREATMENT_PLAN",
+        "discovery_sources": [
+          "CURATED_LIBRARY",
+          "FROZEN_EVIDENCE_PACKET"
+        ],
+        "discriminators": [],
+        "evidence_refs": [
+          "CLM-R2-PSY-MODERATE-CHOICE",
+          "CLM-R4-PSY-COMBINED",
+          "CLM-R4-PSY-DIGITAL",
+          "CLM-R4-PSY-PSYCHOTHERAPY"
+        ],
+        "learner_decision_id": "LD-PS12-03",
+        "mcc_relevance": "LD-PS12-03 for MCC objective 59-1, CORE in PSY",
+        "nesting_relation": "NONE",
+        "opportunity_label": "G2-PSY-03",
+        "response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+        "second_key_conditions": [
+          {
+            "conditions": [
+              {
+                "feature_id": "SF-PS12-SEVERE-WITHOUT-PSYCHOSIS",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct in severe episodes with high safety risk and without psychotic features, and where both modalities are available.' CLM-R4-PSY-COMBINED is where the recommendation sits: in severe cases of a major depressive episode with high safety risk and without psychotic features CANMAT recommends the combination. The availability clause is a resource condition rather than a clinical one and is not carried as a correctness condition."
+          }
+        ],
+        "shared_features": [],
+        "verification_status": "EVIDENCE_VERIFIED"
+      },
+      "review": {
+        "reasons": [],
+        "reviewer_id": "R-SUPPLY-SET",
+        "verdict": "APPROVED"
+      }
+    },
+    "CSUPKEY-7c09077a400ef0f2d3015138": {
+      "cache_key": "CSUPKEY-7c09077a400ef0f2d3015138",
+      "concept_pair": [
+        "CONCEPT-R4-SU-P-147-CBC",
+        "CONCEPT-R4-SU-P-147-VIRAL-PANEL"
+      ],
+      "context": {
+        "anchor_study_unit_id": "SU-P-147",
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "SINGLE_NEXT_ASSESSMENT",
+        "demanded_response_class": "DIAGNOSTIC_ADVANCEMENT",
+        "learner_decision_id": "LD-P147-02"
+      },
+      "relation": {
+        "a_supporting_features": [
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-P147-HIGH-RISK-EARLY-COURSE",
+            "role_override_reason": "CLM-R4-PED-CONTINUOUS makes 'high-risk patients early in the course of disease' the operative criterion for the monitoring choice itself, and it is a bedside risk judgement rather than a score recomputed from other findings the stem also states."
+          },
+          {
+            "clinical_role": "SYSTEM_CONSTRAINT",
+            "contrast_role": "RESOURCE_AVAILABILITY",
+            "feature_id": "SF-P147-INFECTION-CONTROL-NEED"
+          }
+        ],
+        "anchor_study_unit_id": "SU-P-147",
+        "b_supporting_features": [
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+            "role_override_reason": "CLM-R2-PED-DDX-ATYPICAL names severe respiratory distress as the atypical presentation in which a broader differential, including bacterial infection, should be considered; CLM-R2-PED-CBC-SBI leaves the decision to order the test to clinical judgement. Escalating work of breathing is therefore a cited reason a candidate might reach for blood tests, and it is a presentation feature the key shares."
+          },
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+            "role_override_reason": "CLM-R2-PED-CXR-INDICATION makes severity raising other diagnostic possibilities the operative criterion for the film."
+          }
+        ],
+        "categorical_exclusion_conditions": [],
+        "concept_a": {
+          "concept": "Nasopharyngeal swab for respiratory viruses",
+          "concept_category": "MICROBIOLOGIC_TESTING",
+          "concept_id": "CONCEPT-R4-SU-P-147-VIRAL-PANEL",
+          "member_id": "SEED-PED-T02-VIRAL",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PED-T02-VIRAL"
+        },
+        "concept_b": {
+          "concept": "Complete blood count and blood culture",
+          "concept_category": "BLOOD_TESTING_FOR_BACTERIAL_INFECTION",
+          "concept_id": "CONCEPT-R4-SU-P-147-CBC",
+          "member_id": "SEED-PED-T02-CBC",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PED-T02-CBC"
+        },
+        "confusability": "MODERATE",
+        "contrast_relation_id": "CCR2-65360e80924c0808e704edef",
+        "correctness_conditions_a": {
+          "conditions": [
+            {
+              "feature_id": "SF-P147-INFECTION-CONTROL-NEED",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-P147-HIGH-RISK-EARLY-COURSE",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ANY_OF",
+          "prose_basis": "Frozen seed: 'Correct where testing is required for infection control purposes, or in a high risk patient where the result will influence treatment.' CLM-R2-PED-VIRAL-INDICATION reads the same way. Explicitly disjunctive; V1 carried two conjuncts."
+        },
+        "correctness_conditions_b": {
+          "conditions": [
+            {
+              "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct where clinical judgement raises a specific concern for serious bacterial infection.' CLM-R2-PED-CBC-SBI reads the same way: routine screening for serious bacterial infection is not indicated but should be performed based on clinical judgement. A single condition."
+        },
+        "decision_granularity": "SINGLE_NEXT_ASSESSMENT",
+        "discovery_sources": [
+          "CURATED_LIBRARY",
+          "FROZEN_EVIDENCE_PACKET"
+        ],
+        "discriminators": [],
+        "evidence_refs": [
+          "CLM-GEN-PED-INV-01",
+          "CLM-R2-PED-CBC-SBI",
+          "CLM-R2-PED-VIRAL-INDICATION",
+          "CLM-R2-PED-VIRAL-NOTHELPFUL"
+        ],
+        "learner_decision_id": "LD-P147-02",
+        "mcc_relevance": "LD-P147-02 for MCC objective 27-3, CORE in PED",
+        "nesting_relation": "NONE",
+        "opportunity_label": "G2-PED-02",
+        "response_class": "DIAGNOSTIC_ADVANCEMENT",
+        "second_key_conditions": [
+          {
+            "conditions": [
+              {
+                "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where clinical judgement raises a specific concern for serious bacterial infection.' CLM-R2-PED-CBC-SBI reads the same way: routine screening for serious bacterial infection is not indicated but should be performed based on clinical judgement. A single condition."
+          }
+        ],
+        "shared_features": [],
+        "verification_status": "EVIDENCE_VERIFIED"
+      },
+      "review": {
+        "reasons": [],
+        "reviewer_id": "R-SUPPLY-SET",
+        "verdict": "APPROVED"
+      }
+    },
+    "CSUPKEY-7ff7f2ba9d2b00c2357f2bff": {
+      "cache_key": "CSUPKEY-7ff7f2ba9d2b00c2357f2bff",
+      "concept_pair": [
+        "CONCEPT-R4-SU-OT-56-FOREIGN-BODY",
+        "CONCEPT-R4-SU-P-149-PNEUMONIA"
+      ],
+      "context": {
+        "anchor_study_unit_id": "SU-P-147",
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "SINGLE_DIAGNOSIS",
+        "demanded_response_class": "ACUTE_RESPIRATORY_DISTRESS",
+        "learner_decision_id": "LD-P147-01"
+      },
+      "relation": {
+        "a_supporting_features": [
+          {
+            "clinical_role": "TIME_COURSE",
+            "contrast_role": "TIMING_FEATURE",
+            "feature_id": "SF-P147-ABRUPT-ONSET-NO-PRODROME"
+          },
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS"
+          },
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+            "role_override_reason": "CLM-R2-PED-DDX-ATYPICAL states that a broad differential should be considered especially in atypical presentations such as severe respiratory distress; CLM-R2-PED-DDX-TABLE is that differential and contains this candidate. Escalating work of breathing is therefore a cited reason to consider it, and it is a presentation feature the key shares."
+          }
+        ],
+        "anchor_study_unit_id": "SU-P-147",
+        "b_supporting_features": [
+          {
+            "clinical_role": "TIME_COURSE",
+            "contrast_role": "TIMING_FEATURE",
+            "feature_id": "SF-P147-FAILING-TO-IMPROVE"
+          },
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS"
+          },
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+            "role_override_reason": "CLM-R2-PED-DDX-ATYPICAL states that a broad differential should be considered especially in atypical presentations such as severe respiratory distress; CLM-R2-PED-DDX-TABLE is that differential and contains this candidate. Escalating work of breathing is therefore a cited reason to consider it, and it is a presentation feature the key shares."
+          },
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+            "role_override_reason": "CLM-R2-PED-CXR-INDICATION makes 'the severity of disease raises other diagnostic possibilities such as bacterial pneumonia' the operative criterion itself, and it is a bedside gestalt rather than a score recomputed from other findings the stem also states."
+          }
+        ],
+        "categorical_exclusion_conditions": [],
+        "concept_a": {
+          "concept": "Foreign body aspiration",
+          "concept_category": "MECHANICAL_OBSTRUCTION",
+          "concept_id": "CONCEPT-R4-SU-OT-56-FOREIGN-BODY",
+          "member_id": "SEED-PED-T01-FOREIGN-BODY",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PED-T01-FOREIGN-BODY"
+        },
+        "concept_b": {
+          "concept": "Community-acquired pneumonia",
+          "concept_category": "BACTERIAL_PARENCHYMAL",
+          "concept_id": "CONCEPT-R4-SU-P-149-PNEUMONIA",
+          "member_id": "SEED-PED-T01-PNEUMONIA",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PED-T01-PNEUMONIA"
+        },
+        "confusability": "HIGH",
+        "contrast_relation_id": "CCR2-597eba9b377076c77a12efed",
+        "correctness_conditions_a": {
+          "conditions": [
+            {
+              "feature_id": "SF-P147-ABRUPT-ONSET-NO-PRODROME",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ANY_OF",
+          "prose_basis": "Frozen seed: 'Correct where the onset is abrupt without a viral prodrome, or where findings are focal or asymmetric.' Explicitly disjunctive; V1 carried it as a conjunction."
+        },
+        "correctness_conditions_b": {
+          "conditions": [
+            {
+              "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ANY_OF",
+          "prose_basis": "Frozen seed: 'Correct where the illness is not improving as expected, where severity raises the possibility of bacterial infection, or where a focal consolidation is demonstrated.' Three disjuncts; V1 carried three conjuncts."
+        },
+        "decision_granularity": "SINGLE_DIAGNOSIS",
+        "discovery_sources": [
+          "CURATED_LIBRARY",
+          "FROZEN_EVIDENCE_PACKET"
+        ],
+        "discriminators": [],
+        "evidence_refs": [
+          "CLM-GEN-PED-INV-01",
+          "CLM-R2-PED-CXR-INDICATION",
+          "CLM-R2-PED-DDX-ATYPICAL",
+          "CLM-R2-PED-DDX-TABLE"
+        ],
+        "learner_decision_id": "LD-P147-01",
+        "mcc_relevance": "LD-P147-01 for MCC objective 27-3, CORE in PED",
+        "nesting_relation": "NONE",
+        "opportunity_label": "G2-PED-01",
+        "response_class": "ACUTE_RESPIRATORY_DISTRESS",
+        "second_key_conditions": [
+          {
+            "conditions": [
+              {
+                "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ANY_OF",
+            "prose_basis": "Frozen seed: 'Correct where the illness is not improving as expected, where severity raises the possibility of bacterial infection, or where a focal consolidation is demonstrated.' Three disjuncts; V1 carried three conjuncts."
+          }
+        ],
+        "shared_features": [
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS"
+          },
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+            "role_override_reason": "CLM-R2-PED-DDX-ATYPICAL states that a broad differential should be considered especially in atypical presentations such as severe respiratory distress; CLM-R2-PED-DDX-TABLE is that differential and contains this candidate. Escalating work of breathing is therefore a cited reason to consider it, and it is a presentation feature the key shares."
+          }
+        ],
+        "verification_status": "EVIDENCE_VERIFIED"
+      },
+      "review": {
+        "reasons": [],
+        "reviewer_id": "R-SUPPLY-SET",
+        "verdict": "APPROVED"
+      }
+    },
+    "CSUPKEY-8a3b465d1bc97885178fd64c": {
+      "cache_key": "CSUPKEY-8a3b465d1bc97885178fd64c",
+      "concept_pair": [
+        "CONCEPT-CF-P147-INTERMITTENT-ASSESSMENT",
+        "CONCEPT-R4-SU-P-147-CBC"
+      ],
+      "context": {
+        "anchor_study_unit_id": "SU-P-147",
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "SINGLE_NEXT_ASSESSMENT",
+        "demanded_response_class": "DIAGNOSTIC_ADVANCEMENT",
+        "learner_decision_id": "LD-P147-02"
+      },
+      "relation": {
+        "a_supporting_features": [
+          {
+            "clinical_role": "TIME_COURSE",
+            "contrast_role": "TIMING_FEATURE",
+            "feature_id": "SF-P147-FAILING-TO-IMPROVE"
+          },
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-P147-HIGH-RISK-EARLY-COURSE",
+            "role_override_reason": "CLM-R4-PED-CONTINUOUS makes 'high-risk patients early in the course of disease' the operative criterion for the monitoring choice itself, and it is a bedside risk judgement rather than a score recomputed from other findings the stem also states."
+          },
+          {
+            "clinical_role": "VITAL_SIGN",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-P147-HYPOXEMIA"
+          }
+        ],
+        "anchor_study_unit_id": "SU-P-147",
+        "b_supporting_features": [
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+            "role_override_reason": "CLM-R2-PED-DDX-ATYPICAL names severe respiratory distress as the atypical presentation in which a broader differential, including bacterial infection, should be considered; CLM-R2-PED-CBC-SBI leaves the decision to order the test to clinical judgement. Escalating work of breathing is therefore a cited reason a candidate might reach for blood tests, and it is a presentation feature the key shares."
+          },
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+            "role_override_reason": "CLM-R2-PED-CXR-INDICATION makes severity raising other diagnostic possibilities the operative criterion for the film."
+          }
+        ],
+        "categorical_exclusion_conditions": [],
+        "concept_a": {
+          "concept": "Regular structured clinical assessment with intermittent oxygen saturation measurement",
+          "concept_category": "MONITORING_INTENSITY",
+          "concept_id": "CONCEPT-CF-P147-INTERMITTENT-ASSESSMENT",
+          "member_id": "KEY",
+          "role_in_set": "KEY"
+        },
+        "concept_b": {
+          "concept": "Complete blood count and blood culture",
+          "concept_category": "BLOOD_TESTING_FOR_BACTERIAL_INFECTION",
+          "concept_id": "CONCEPT-R4-SU-P-147-CBC",
+          "member_id": "SEED-PED-T02-CBC",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PED-T02-CBC"
+        },
+        "confusability": "MODERATE",
+        "contrast_relation_id": "CCR2-122e99b74afbe8940895fac0",
+        "correctness_conditions_a": {
+          "conditions": [
+            {
+              "feature_id": "SF-P147-HIGH-RISK-EARLY-COURSE",
+              "required_state": "ABSENT"
+            },
+            {
+              "conditions": [
+                {
+                  "feature_id": "SF-P147-HYPOXEMIA",
+                  "required_state": "ABSENT"
+                },
+                {
+                  "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+                  "required_state": "ABSENT"
+                }
+              ],
+              "operator": "ALL_OF"
+            }
+          ],
+          "operator": "ANY_OF",
+          "prose_basis": "CLM-R4-PED-CONTINUOUS: 'intermittent monitoring is most appropriate for lower-risk patients and for all patients once they are feeding well, weaning from supplemental oxygen and showing improvement in work of breathing.' Two independent routes to the same recommendation, so a disjunction. The V1 key condition was SF-P147-VIRAL-PRODROME, which is the diagnosis anchor and states nothing about monitoring intensity."
+        },
+        "correctness_conditions_b": {
+          "conditions": [
+            {
+              "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct where clinical judgement raises a specific concern for serious bacterial infection.' CLM-R2-PED-CBC-SBI reads the same way: routine screening for serious bacterial infection is not indicated but should be performed based on clinical judgement. A single condition."
+        },
+        "decision_granularity": "SINGLE_NEXT_ASSESSMENT",
+        "discovery_sources": [
+          "CURATED_LIBRARY",
+          "FROZEN_EVIDENCE_PACKET"
+        ],
+        "discriminators": [],
+        "evidence_refs": [
+          "CLM-GEN-PED-INV-01",
+          "CLM-R2-PED-CBC-SBI",
+          "CLM-R2-PED-INV-ANCHOR",
+          "CLM-R4-PED-CONTINUOUS",
+          "CLM-R4-PED-MONITORING"
+        ],
+        "learner_decision_id": "LD-P147-02",
+        "mcc_relevance": "LD-P147-02 for MCC objective 27-3, CORE in PED",
+        "nesting_relation": "NONE",
+        "opportunity_label": "G2-PED-02",
+        "response_class": "DIAGNOSTIC_ADVANCEMENT",
+        "second_key_conditions": [
+          {
+            "conditions": [
+              {
+                "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where clinical judgement raises a specific concern for serious bacterial infection.' CLM-R2-PED-CBC-SBI reads the same way: routine screening for serious bacterial infection is not indicated but should be performed based on clinical judgement. A single condition."
+          }
+        ],
+        "shared_features": [],
+        "verification_status": "EVIDENCE_VERIFIED"
+      },
+      "review": {
+        "reasons": [],
+        "reviewer_id": "R-SUPPLY-SET",
+        "verdict": "APPROVED"
+      }
+    },
+    "CSUPKEY-ad655875b66d329380e89cae": {
+      "cache_key": "CSUPKEY-ad655875b66d329380e89cae",
+      "concept_pair": [
+        "CONCEPT-R4-SU-P-147-CBC",
+        "CONCEPT-R4-SU-R-05-CXR"
+      ],
+      "context": {
+        "anchor_study_unit_id": "SU-P-147",
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "SINGLE_NEXT_ASSESSMENT",
+        "demanded_response_class": "DIAGNOSTIC_ADVANCEMENT",
+        "learner_decision_id": "LD-P147-02"
+      },
+      "relation": {
+        "a_supporting_features": [
+          {
+            "clinical_role": "TIME_COURSE",
+            "contrast_role": "TIMING_FEATURE",
+            "feature_id": "SF-P147-FAILING-TO-IMPROVE"
+          },
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS"
+          },
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+            "role_override_reason": "CLM-R2-PED-CXR-INDICATION makes severity raising other diagnostic possibilities the operative criterion for the film."
+          }
+        ],
+        "anchor_study_unit_id": "SU-P-147",
+        "b_supporting_features": [
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+            "role_override_reason": "CLM-R2-PED-DDX-ATYPICAL names severe respiratory distress as the atypical presentation in which a broader differential, including bacterial infection, should be considered; CLM-R2-PED-CBC-SBI leaves the decision to order the test to clinical judgement. Escalating work of breathing is therefore a cited reason a candidate might reach for blood tests, and it is a presentation feature the key shares."
+          },
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+            "role_override_reason": "CLM-R2-PED-CXR-INDICATION makes severity raising other diagnostic possibilities the operative criterion for the film."
+          }
+        ],
+        "categorical_exclusion_conditions": [],
+        "concept_a": {
+          "concept": "Chest radiograph",
+          "concept_category": "DIAGNOSTIC_IMAGING",
+          "concept_id": "CONCEPT-R4-SU-R-05-CXR",
+          "member_id": "SEED-PED-T02-CXR",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PED-T02-CXR"
+        },
+        "concept_b": {
+          "concept": "Complete blood count and blood culture",
+          "concept_category": "BLOOD_TESTING_FOR_BACTERIAL_INFECTION",
+          "concept_id": "CONCEPT-R4-SU-P-147-CBC",
+          "member_id": "SEED-PED-T02-CBC",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PED-T02-CBC"
+        },
+        "confusability": "HIGH",
+        "contrast_relation_id": "CCR2-fca0a3189791426d784b4218",
+        "correctness_conditions_a": {
+          "conditions": [
+            {
+              "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ANY_OF",
+          "prose_basis": "Frozen seed: 'Correct where the diagnosis is unclear, improvement is not as expected, or severity raises the possibility of bacterial pneumonia.' Explicitly disjunctive; V1 carried two conjuncts."
+        },
+        "correctness_conditions_b": {
+          "conditions": [
+            {
+              "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "Frozen seed: 'Correct where clinical judgement raises a specific concern for serious bacterial infection.' CLM-R2-PED-CBC-SBI reads the same way: routine screening for serious bacterial infection is not indicated but should be performed based on clinical judgement. A single condition."
+        },
+        "decision_granularity": "SINGLE_NEXT_ASSESSMENT",
+        "discovery_sources": [
+          "CURATED_LIBRARY",
+          "FROZEN_EVIDENCE_PACKET"
+        ],
+        "discriminators": [],
+        "evidence_refs": [
+          "CLM-GEN-PED-INV-01",
+          "CLM-R2-PED-CBC-SBI",
+          "CLM-R2-PED-CXR-INDICATION"
+        ],
+        "learner_decision_id": "LD-P147-02",
+        "mcc_relevance": "LD-P147-02 for MCC objective 27-3, CORE in PED",
+        "nesting_relation": "NONE",
+        "opportunity_label": "G2-PED-02",
+        "response_class": "DIAGNOSTIC_ADVANCEMENT",
+        "second_key_conditions": [
+          {
+            "conditions": [
+              {
+                "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where clinical judgement raises a specific concern for serious bacterial infection.' CLM-R2-PED-CBC-SBI reads the same way: routine screening for serious bacterial infection is not indicated but should be performed based on clinical judgement. A single condition."
+          }
+        ],
+        "shared_features": [
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+            "role_override_reason": "CLM-R2-PED-CXR-INDICATION makes severity raising other diagnostic possibilities the operative criterion for the film."
+          }
+        ],
+        "verification_status": "EVIDENCE_VERIFIED"
+      },
+      "review": {
+        "reasons": [],
+        "reviewer_id": "R-SUPPLY-SET",
+        "verdict": "APPROVED"
+      }
+    },
+    "CSUPKEY-ffad7943aabcf7409b5385d7": {
+      "cache_key": "CSUPKEY-ffad7943aabcf7409b5385d7",
+      "concept_pair": [
+        "CONCEPT-CF-P147-BRONCHIOLITIS",
+        "CONCEPT-R4-SU-P-149-PNEUMONIA"
+      ],
+      "context": {
+        "anchor_study_unit_id": "SU-P-147",
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "SINGLE_DIAGNOSIS",
+        "demanded_response_class": "ACUTE_RESPIRATORY_DISTRESS",
+        "learner_decision_id": "LD-P147-01"
+      },
+      "relation": {
+        "a_supporting_features": [
+          {
+            "clinical_role": "AGE",
+            "contrast_role": "PRIOR_PROBABILITY_FEATURE",
+            "feature_id": "SF-P147-AGE-UNDER-12M"
+          },
+          {
+            "clinical_role": "TIME_COURSE",
+            "contrast_role": "TIMING_FEATURE",
+            "feature_id": "SF-P147-FIRST-WHEEZE"
+          },
+          {
+            "clinical_role": "TIME_COURSE",
+            "contrast_role": "TIMING_FEATURE",
+            "feature_id": "SF-P147-VIRAL-PRODROME"
+          }
+        ],
+        "anchor_study_unit_id": "SU-P-147",
+        "b_supporting_features": [
+          {
+            "clinical_role": "TIME_COURSE",
+            "contrast_role": "TIMING_FEATURE",
+            "feature_id": "SF-P147-FAILING-TO-IMPROVE"
+          },
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS"
+          },
+          {
+            "clinical_role": "EXAMINATION_FINDING",
+            "contrast_role": "POSITIVE_SUPPORT",
+            "feature_id": "SF-P147-MODERATE-SEVERE-DISTRESS",
+            "role_override_reason": "CLM-R2-PED-DDX-ATYPICAL states that a broad differential should be considered especially in atypical presentations such as severe respiratory distress; CLM-R2-PED-DDX-TABLE is that differential and contains this candidate. Escalating work of breathing is therefore a cited reason to consider it, and it is a presentation feature the key shares."
+          },
+          {
+            "clinical_role": "CLINICAL_JUDGEMENT",
+            "contrast_role": "SEVERITY_FEATURE",
+            "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+            "role_override_reason": "CLM-R2-PED-CXR-INDICATION makes 'the severity of disease raises other diagnostic possibilities such as bacterial pneumonia' the operative criterion itself, and it is a bedside gestalt rather than a score recomputed from other findings the stem also states."
+          }
+        ],
+        "categorical_exclusion_conditions": [],
+        "concept_a": {
+          "concept": "Acute viral bronchiolitis",
+          "concept_category": "VIRAL_LOWER_AIRWAY",
+          "concept_id": "CONCEPT-CF-P147-BRONCHIOLITIS",
+          "member_id": "KEY",
+          "role_in_set": "KEY"
+        },
+        "concept_b": {
+          "concept": "Community-acquired pneumonia",
+          "concept_category": "BACTERIAL_PARENCHYMAL",
+          "concept_id": "CONCEPT-R4-SU-P-149-PNEUMONIA",
+          "member_id": "SEED-PED-T01-PNEUMONIA",
+          "role_in_set": "COMPETITOR",
+          "seed_id": "SEED-PED-T01-PNEUMONIA"
+        },
+        "confusability": "MODERATE",
+        "contrast_relation_id": "CCR2-83e8997463ef438d0dde6f2b",
+        "correctness_conditions_a": {
+          "conditions": [
+            {
+              "feature_id": "SF-P147-AGE-UNDER-12M",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-P147-FIRST-WHEEZE",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-P147-VIRAL-PRODROME",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ALL_OF",
+          "prose_basis": "CLM-R2-PED-DX-ANCHOR: bronchiolitis typically presents with a first episode of wheezing before the age of 12 months, beginning with a two-to-three-day viral prodrome."
+        },
+        "correctness_conditions_b": {
+          "conditions": [
+            {
+              "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+              "required_state": "PRESENT"
+            },
+            {
+              "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+              "required_state": "PRESENT"
+            }
+          ],
+          "operator": "ANY_OF",
+          "prose_basis": "Frozen seed: 'Correct where the illness is not improving as expected, where severity raises the possibility of bacterial infection, or where a focal consolidation is demonstrated.' Three disjuncts; V1 carried three conjuncts."
+        },
+        "decision_granularity": "SINGLE_DIAGNOSIS",
+        "discovery_sources": [
+          "CURATED_LIBRARY",
+          "FROZEN_EVIDENCE_PACKET"
+        ],
+        "discriminators": [
+          {
+            "contrast_role": "KEY_DISCRIMINATOR",
+            "evidence_refs": [
+              "CLM-R2-PED-DX-ANCHOR"
+            ],
+            "favours": "A",
+            "feature_id": "SF-P147-VIRAL-PRODROME",
+            "required_state": "PRESENT",
+            "salience": "MODERATE",
+            "statement": "A two-to-three-day coryzal prodrome preceding a first wheeze under twelve months is the bronchiolitis pattern rather than an atypical presentation."
+          }
+        ],
+        "evidence_refs": [
+          "CLM-GEN-PED-DX-01",
+          "CLM-GEN-PED-INV-01",
+          "CLM-R2-PED-CXR-INDICATION",
+          "CLM-R2-PED-DX-ANCHOR"
+        ],
+        "learner_decision_id": "LD-P147-01",
+        "mcc_relevance": "LD-P147-01 for MCC objective 27-3, CORE in PED",
+        "nesting_relation": "NONE",
+        "opportunity_label": "G2-PED-01",
+        "response_class": "ACUTE_RESPIRATORY_DISTRESS",
+        "second_key_conditions": [
+          {
+            "conditions": [
+              {
+                "feature_id": "SF-P147-FAILING-TO-IMPROVE",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-P147-SEVERE-OR-BACTERIAL-CONCERN",
+                "required_state": "PRESENT"
+              },
+              {
+                "feature_id": "SF-P147-FOCAL-ASYMMETRIC-FINDINGS",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ANY_OF",
+            "prose_basis": "Frozen seed: 'Correct where the illness is not improving as expected, where severity raises the possibility of bacterial infection, or where a focal consolidation is demonstrated.' Three disjuncts; V1 carried three conjuncts."
+          }
+        ],
+        "shared_features": [],
+        "verification_status": "EVIDENCE_VERIFIED"
+      },
+      "review": {
+        "reasons": [],
+        "reviewer_id": "R-SUPPLY-SET",
+        "verdict": "APPROVED"
+      }
+    }
+  },
+  "keyed_by": [
+    "concept_pair",
+    "learner_decision_id",
+    "demanded_response_class",
+    "decision_granularity",
+    "anchor_study_unit_id",
+    "decision_domain"
+  ],
+  "schema_version": "1.0",
+  "scope": "QGEN_VALIDATED_CLINICAL_CONTRAST_SUPPLY_CACHE"
+}
