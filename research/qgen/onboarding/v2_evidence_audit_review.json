@@ -1,0 +1,3116 @@
+{
+  "schema_version": "2.0",
+  "scope": "QGEN_ONBOARDING_INDEPENDENT_EVIDENCE_ALIGNMENT_REAUDIT",
+  "review_id": "qgen-onboarding-v2-independent-evidence-audit",
+  "audit_date": "2026-09-07",
+  "input_commit": "60046f9f5cabc1583c9cb30dfa09b065916b44ed",
+  "audit_status": "FROZEN_REVIEW_BEFORE_REPAIR",
+  "review_provenance": {
+    "reviewer": "separate Codex audit subagent /root/audit_evidence",
+    "independent_from": "parent implementation/architecture agent and prior W1 authoring pass",
+    "blinding": "NOT_BLINDED: W1 verdicts read, then independently compared against population claims and canonical competencies",
+    "method": "Deterministic Python joins and counts; bounded semantic coverage judgments by the separate audit agent. No external LLM API, no question generation and no packet repair.",
+    "clinical_scope": "Artifact-to-competency alignment only. No assertion that transcription verification establishes medical correctness, source entailment or current legal/clinical validity.",
+    "llm_api_calls": 0
+  },
+  "state_definitions": {
+    "ALIGNED_COMPLETE": "All declared address competencies have direct evidence at their stated level; does not mean generation-ready or that all possible item facts are supplied.",
+    "ALIGNED_PARTIAL": "Only bounded in-topic decision content or identified prerequisites are supported. Unsupported content remains blocked; PREREQUISITE_ONLY is not an admissible learner decision.",
+    "MISALIGNED": "The actual researched claims target another topic, population or decision, with no supported address decision.",
+    "EVIDENCE_MISSING": "Required packet or usable claim evidence absent.",
+    "OUT_OF_SCOPE": "Canonical allocation excludes address."
+  },
+  "decision_support_policy": "Never promote an entire ALIGNED_PARTIAL address. Only an explicitly scoped learner decision can advance after checking its own required claims, entailment and currentness. PREREQUISITE_ONLY rows cannot advance on this audit alone.",
+  "counts": {
+    "ALIGNED_COMPLETE": 2,
+    "ALIGNED_PARTIAL": 23,
+    "MISALIGNED": 20
+  },
+  "old_counts": {
+    "ALIGNED": 22,
+    "MISALIGNED": 19,
+    "PARTIALLY_ALIGNED": 4
+  },
+  "cause_counts": {
+    "INSUFFICIENT_CLAIM_COVERAGE": 23,
+    "OVERBROAD_PACKET_REUSE": 4,
+    "WRONG_DECISION": 3,
+    "WRONG_TOPIC_PACKET": 13
+  },
+  "original_19_misaligned_reproduced": 19,
+  "corrections": {
+    "old_aligned_to_partial": [
+      "SU-C-35",
+      "SU-D-04",
+      "SU-D-05",
+      "SU-D-07",
+      "SU-D-08",
+      "SU-D-12",
+      "SU-D-21",
+      "SU-D-23",
+      "SU-D-24",
+      "SU-D-26",
+      "SU-D-38",
+      "SU-GY-04",
+      "SU-GY-10",
+      "SU-OB-53",
+      "SU-PH-11",
+      "SU-PH-12",
+      "SU-PH-34",
+      "SU-PH-35",
+      "SU-PH-36",
+      "SU-PM-06"
+    ],
+    "old_partial_to_misaligned": [
+      "SU-PH-37"
+    ],
+    "old_partial_scope_clarified": [
+      "SU-ELOM-11",
+      "SU-PH-09",
+      "SU-PH-10"
+    ],
+    "prior_scope_errors": [
+      "W1 called SU-C-35 recognition/confirmation its declared competency; canonical competency is comparison with restrictive cardiomyopathy.",
+      "W1 described SU-PH-08 as community needs assessment; canonical competencies are Ottawa Charter, behaviour-change models and risk versus harm reduction.",
+      "W1 omitted the mortality-rate competency in SU-PH-10.",
+      "W1 collapsed PH-41 components to parent content; this audit uses the six component scopes, including births/stillbirths and flying safety.",
+      "W1 described PM-06 as ACP/code-status coverage without checking the actual terminology and timing competency text."
+    ]
+  },
+  "uncertainties": [
+    "A partial row can still support a useful narrowly scoped decision; this is not an estimate of safe question yield.",
+    "Completeness is judged at the declared competency level rather than encyclopedic topic completeness.",
+    "No live legal/medical assertions were reverified; high-freshness claims need currentness review before use.",
+    "Canonical competency wording itself is not adjudicated clinical evidence. In particular no recommendation is made from PM-06 CPR/DNR generalizations, PH-11 statistical error wording or PH-10 summary scale wording.",
+    "All 45 addresses currently have populated packet evidence; evidence existence and plan-ID joins do not establish content alignment."
+  ],
+  "input_sha256": {
+    "research/qgen/onboarding/w1_evidence_alignment_review.json": "8ef30561834b9d15a32477565c01aeafeec00572a6219c25c266b32dbc0ebbcc",
+    "research/qgen/source_packet_plan.json": "91e5e8fad1d2fdf30d2e9de591d5cd37bfdeabdb50cd4474e966d8a1de6fc638",
+    "research/qgen/source_packet_population_srb_002.json": "90840a42059fd86565446ba9ddfe0ef4c829f9c0c3c5216e4bd34803ffb5b4fe",
+    "research/qgen/source_packet_population_srb_005.json": "fee997c467f770ed7ba042af5108cbb6240c37ac76822484d6505367d2d0734c",
+    "research/qgen/source_packet_population_srb_006.json": "3ecfa454944e56bb6c69ccbc8ea76e3c7f1cd874d7c2e5fe0696ba2279906530",
+    "research/qgen/source_packet_population_srb_007.json": "4ba99769a699863b3eefe918b9be21d0aeafee14a08b8e2c425d81c58b07eafb",
+    "research/qgen/source_packet_population_srb_089.json": "beb3d116bb541ce6ae8afd19398282f71401354fc6e920067edd4ff1afae6c68",
+    "research/qgen/source_packet_population_srb_114.json": "039d06a0c3c8c807158b40fe18229d3f64b9177771c85c61c67c3004f54f3749",
+    "research/qgen/source_packet_population_srb_117.json": "2ad3e32a8e8c108b3e064e2490e505cd98f80dfcba1223b8c1c254ce44ed6f0e",
+    "research/scope/competency_component_ownership.json": "40c624245421f03738a8ed3540ea9244c6a82b06f43d0deb2d030aea395f09ac",
+    "research/scope/final_question_allocation.json": "288a27c0ef3689c5eec4adea1c3e02bb2af12ce7c57aaf76637f40be2fc37835",
+    "research/scope/master_scope_crosswalk.json": "128ba5e3eb48d5dc2b4cf5a05d803609ce340752a9e7a2cf9a772788652a50f4"
+  },
+  "reviews": [
+    {
+      "allocation_address_id": "SU-C-35",
+      "study_unit_id": "SU-C-35",
+      "mcc_objective_ids": [
+        "27"
+      ],
+      "topic": "Constrictive Pericarditis",
+      "component_scope": null,
+      "discipline": "MED",
+      "priority_class": "SUPPORTING",
+      "canonical_testable_competencies": {
+        "differential": "Differentiate constrictive pericarditis from restrictive cardiomyopathy conceptually."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-MED-028"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_005.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "MED|DIAGNOSIS|NODES=C.S12.T04|MCC=27|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-MED-028-REC-01",
+          "statement": "Consider constrictive pericarditis in otherwise unexplained right-heart-failure features, especially with prior pericardial disease or injury; use Doppler echocardiography and, when required, cross-sectional imaging or hemodynamic assessment to confirm constrictive physiology.",
+          "source_packet_id": "SRC-MED-028",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-005-CCS-HF-2017-CONSTRICTIVE",
+              "locator": "Chapter 7.2.3.2, Constrictive pericarditis; recommendation 111"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-028-EX-01",
+          "statement": "Constrictive pericarditis can mimic other causes of right-heart failure; no single symptom, sign, or imaging finding should be used in isolation.",
+          "source_packet_id": "SRC-MED-028",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-005-CCS-HF-2017-CONSTRICTIVE",
+              "locator": "Chapter 7.2.3.2, clinical presentation and diagnostic evaluation"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-MED-028-REC-01",
+        "SRC-MED-028-EX-01"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Consider constrictive physiology in unexplained right-heart failure and select confirmatory assessment.",
+      "unsupported_content": "No distinguishing features for restrictive cardiomyopathy; the canonical competency is the constriction-versus-restriction comparison.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No distinguishing features for restrictive cardiomyopathy; the canonical competency is the constriction-versus-restriction comparison.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "The CCS packet is about recognising constrictive pericarditis in unexplained right-heart failure and confirming constrictive physiology, which is the address's stated differential competency.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-CP-17",
+      "study_unit_id": "SU-CP-17",
+      "mcc_objective_ids": [
+        "125"
+      ],
+      "topic": "Common Drug Endings (Suffix-to-Class Recognition)",
+      "component_scope": null,
+      "discipline": "MED",
+      "priority_class": "SUPPORTING",
+      "canonical_testable_competencies": {
+        "suffix_recognition": "Infer a drug's pharmacologic class from its name ending (e.g., -olol, -pril, -sartan, -statin, -azole, -caine, -mab) to anticipate its mechanism, indications, and class-typical adverse effects/interactions, while recognizing the chapter's documented exceptions (methimazole, itraconazole, nystatin)."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-MED-032"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_006.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "MED|DIAGNOSIS|NODES=CP.S05|MCC=125|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-MED-032-REC-01",
+          "statement": "Recognize atopic dermatitis as the common hereditary eczema phenotype, typically with pruritic inflamed skin and an age- and site-pattern that commonly involves flexures, face, neck, or hands.",
+          "source_packet_id": "SRC-MED-032",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-006-CDA-ECZEMA-01",
+              "locator": "What is Eczema; Signs & Symptoms; Types of Eczema: Atopic dermatitis"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-032-EX-01",
+          "statement": "Eczema is a descriptive group of inflammatory dermatoses; a pruritic rash should not be labelled atopic dermatitis without considering contact and other eczematous causes.",
+          "source_packet_id": "SRC-MED-032",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-006-CDA-ECZEMA-01",
+              "locator": "What is Eczema; Types of Eczema"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "WRONG_TOPIC_PACKET",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "All declared competencies.",
+      "entire_address_complete": false,
+      "rationale": "Atopic dermatitis recognition and eczema differential are unrelated to drug-name suffix classification.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "The address is suffix-to-drug-class recognition (MCC 125, node CP.S05). The populated packet is a Canadian Dermatology Association statement on atopic dermatitis. No recommendation in it bears on drug nomenclature.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-D-04",
+      "study_unit_id": "SU-D-04",
+      "mcc_objective_ids": [
+        "38"
+      ],
+      "topic": "Cysts (Epidermal, Pilar, Dermoid, Milium)",
+      "component_scope": null,
+      "discipline": "MED",
+      "priority_class": "SUPPORTING",
+      "canonical_testable_competencies": {
+        "cyst_recognition": "Distinguish common benign cutaneous cysts (epidermal, pilar, dermoid, milium) by clinical features and site, and recognize which require no treatment versus elective excision."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-MED-048"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_007.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "MED|DIAGNOSIS|NODES=D.S06|MCC=38|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-MED-048-REC-01",
+          "statement": "Recognize a skin cyst as a sac containing fluid or debris that commonly occurs on the scalp, ears, face, or back; distinguish this superficial lesion pattern from a mobile lipoma or an acute inflammatory mass.",
+          "source_packet_id": "SRC-MED-048",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-007-AB-CYSTS",
+              "locator": "Non-cancerous (benign) growths"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-048-EX-01",
+          "statement": "Tenderness or other concerning change in a cyst-like lesion should prompt assessment for a complication or an alternative diagnosis.",
+          "source_packet_id": "SRC-MED-048",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-007-AB-CYSTS",
+              "locator": "Non-cancerous (benign) growths"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-MED-048-REC-01",
+        "SRC-MED-048-EX-01"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Recognize a generic superficial cyst pattern and assess tenderness or concerning change.",
+      "unsupported_content": "No epidermal/pilar/dermoid/milium discriminators and no observation-versus-elective-excision rule.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No epidermal/pilar/dermoid/milium discriminators and no observation-versus-elective-excision rule.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "The packet recognises a cutaneous cyst by site and pattern and names the lipoma and inflammatory-mass alternatives, which is the address's cyst-recognition competency.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-D-05",
+      "study_unit_id": "SU-D-05",
+      "mcc_objective_ids": [
+        "38"
+      ],
+      "topic": "Benign Fibrous and Hyperkeratotic Skin Lesions (Dermatofibroma, Skin Tags, Seborrheic Keratosis, Corns, Keloids)",
+      "component_scope": null,
+      "discipline": "MED",
+      "priority_class": "SUPPORTING",
+      "canonical_testable_competencies": {
+        "benign_growth_recognition": "Recognize common benign skin growths (dermatofibroma, skin tag, seborrheic keratosis, corn, keloid) by characteristic clinical features and distinguish them from premalignant/malignant mimics (e.g., Leser-Trelat sign as a paraneoplastic clue).",
+        "keloid_vs_scar": "Distinguish keloid from hypertrophic scar based on extension beyond the original injury margin."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-MED-045"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_007.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "MED|DIAGNOSIS|NODES=D.S06.T01,D.S06.T02,D.S06.T03|MCC=38|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-MED-045-REC-01",
+          "statement": "Recognize seborrheic keratosis as a common benign, slowly growing waxy, rough, or bumpy lesion whose appearance can overlap with other skin growths; assess a rapidly changing, symptomatic, or diagnostically uncertain lesion rather than assuming a benign diagnosis.",
+          "source_packet_id": "SRC-MED-045",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-007-HLBC-SK",
+              "locator": "What are seborrheic keratoses?; What are the symptoms?; Should you worry about seborrheic keratoses?"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-045-EX-01",
+          "statement": "Clinical appearance alone may not reliably distinguish a benign keratosis from a mole, wart, skin tag, or melanoma when a lesion is atypical.",
+          "source_packet_id": "SRC-MED-045",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-007-HLBC-SK",
+              "locator": "What are the symptoms?; How are seborrheic keratoses diagnosed?"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-MED-045-REC-01",
+        "SRC-MED-045-EX-01"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Recognize seborrheic keratosis and assess atypical or changing lesions.",
+      "unsupported_content": "No dermatofibroma, corn or keloid recognition; no keloid-versus-hypertrophic-scar boundary; mentioning skin tags as a mimic does not characterize them.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No dermatofibroma, corn or keloid recognition; no keloid-versus-hypertrophic-scar boundary; mentioning skin tags as a mimic does not characterize them.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "Seborrheic keratosis recognition with an explicit warning about atypical or changing lesions matches the benign-growth competency and its malignant-mimic limb.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-D-07",
+      "study_unit_id": "SU-D-07",
+      "mcc_objective_ids": [
+        "38"
+      ],
+      "topic": "Vascular Lesions and Malformations (Hemangioma, Vascular Malformations, Spider/Cherry Angioma, Pyogenic Granuloma)",
+      "component_scope": null,
+      "discipline": "MED",
+      "priority_class": "IMPORTANT",
+      "canonical_testable_competencies": {
+        "hemangioma_recognition": "Recognize infantile hemangioma and its natural history, and identify features warranting early specialist referral (functional impairment, ulceration, high-risk location).",
+        "vascular_lesion_ddx": "Distinguish common benign vascular lesions (spider angioma, cherry angioma, pyogenic granuloma, port-wine stain) by clinical features."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-MED-051"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_007.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "MED|DIAGNOSIS|NODES=D.S07|MCC=38|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-MED-051-REC-01",
+          "statement": "Distinguish proliferative vascular tumours such as infantile hemangioma from vascular malformations; infantile hemangiomas typically grow in the first weeks to months after birth and then involute, while high-risk location, ulceration, functional compromise, or large segmental facial involvement warrants early specialist referral.",
+          "source_packet_id": "SRC-MED-051",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-007-CPS-VASCULAR",
+              "locator": "Background and prevalence; Infantile hemangiomas; When to treat and when to refer"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-051-EX-01",
+          "statement": "Congenital hemangioma is distinct from infantile hemangioma because it is fully developed at birth and does not show the early proliferative phase.",
+          "source_packet_id": "SRC-MED-051",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-007-CPS-VASCULAR",
+              "locator": "Congenital hemangiomas"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-MED-051-REC-01",
+        "SRC-MED-051-EX-01"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Recognize infantile hemangioma natural history, distinguish it from congenital hemangioma or vascular malformation, and identify stated referral flags.",
+      "unsupported_content": "No spider/cherry angioma, pyogenic granuloma or port-wine-stain feature comparisons.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No spider/cherry angioma, pyogenic granuloma or port-wine-stain feature comparisons.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "The CPS packet distinguishes infantile haemangioma from vascular malformation and names the referral triggers, which are both declared competencies.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-D-08",
+      "study_unit_id": "SU-D-08",
+      "mcc_objective_ids": [
+        "38"
+      ],
+      "topic": "Lipoma and Xanthoma",
+      "component_scope": null,
+      "discipline": "MED",
+      "priority_class": "SUPPORTING",
+      "canonical_testable_competencies": {
+        "lipoma_recognition": "Recognize lipoma as a soft, mobile, non-tender subcutaneous mass requiring no treatment unless symptomatic or diagnostically uncertain.",
+        "xanthoma_workup": "Recognize xanthoma variants as potential cutaneous markers of dyslipidemia or hematologic disease and order a fasting lipid panel accordingly."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-MED-049"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_007.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "MED|DIAGNOSIS|NODES=D.S07.T01,D.S07.T02|MCC=38|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-MED-049-REC-01",
+          "statement": "Recognize a lipoma as a smooth, rubbery, mobile benign-appearing lump, and recognize xanthoma or xanthelasma as a physical stigma of dyslipidemia that warrants lipid-focused clinical assessment.",
+          "source_packet_id": "SRC-MED-049",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-007-AB-LIPOMA",
+              "locator": "Non-cancerous (benign) growths"
+            },
+            {
+              "source_id": "AUTH-SRB-007-CCS-LIPIDS",
+              "locator": "Stigmata of dyslipidemia: corneal arcus, xanthelasma or xanthoma"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-049-EX-01",
+          "statement": "A presumed lipoma that is atypical or diagnostically uncertain should not be managed as a routine benign lesion without assessment.",
+          "source_packet_id": "SRC-MED-049",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-007-AB-LIPOMA",
+              "locator": "Swollen Glands, Hernias, and Other Lumps Under the Skin"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-MED-049-REC-01",
+        "SRC-MED-049-EX-01"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Recognize mobile lipoma and lipid-associated xanthoma/xanthelasma; assess diagnostic uncertainty.",
+      "unsupported_content": "No positive no-treatment-unless-symptomatic rule, hematologic associations, xanthoma variant distinctions or specified fasting lipid panel.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No positive no-treatment-unless-symptomatic rule, hematologic associations, xanthoma variant distinctions or specified fasting lipid panel.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "Lipoma recognition and xanthoma as a dyslipidaemia stigma are the two declared competencies.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-D-12",
+      "study_unit_id": "SU-D-12",
+      "mcc_objective_ids": [
+        "38"
+      ],
+      "topic": "Other Eczematous Dermatoses (Contact, Dyshidrotic, Nummular, Seborrheic, Stasis, Asteatotic Dermatitis; Lichen Simplex Chronicus)",
+      "component_scope": null,
+      "discipline": "MED",
+      "priority_class": "IMPORTANT",
+      "canonical_testable_competencies": {
+        "eczema_subtype_ddx": "Distinguish contact (irritant vs. allergic), dyshidrotic, nummular, seborrheic, stasis, and asteatotic dermatitis by distribution and clinical features, and select an appropriate first-line topical therapy.",
+        "irritant_vs_allergic_contact": "Differentiate irritant from allergic contact dermatitis by mechanism, time course, and role of patch testing."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-MED-033"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_006.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "MED|DIAGNOSIS|NODES=D.S02,D.S11,D.S12,D.S12.T01,D.S12.T03,D.S12.T04|MCC=38|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-MED-033-REC-01",
+          "statement": "Differentiate eczematous dermatitis by exposure and morphology: allergic contact dermatitis follows delayed allergen exposure, while irritant contact dermatitis follows repeated chemically damaging exposure; dyshidrotic, nummular, seborrheic, stasis, and lichen simplex chronicus are additional eczema phenotypes.",
+          "source_packet_id": "SRC-MED-033",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-006-CDA-ECZEMA-02",
+              "locator": "Types of Eczema: Contact dermatitis and other types"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-033-EX-01",
+          "statement": "Patch testing is used to diagnose allergic contact dermatitis; it is not a test for all eczematous eruptions.",
+          "source_packet_id": "SRC-MED-033",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-006-CDA-ECZEMA-02",
+              "locator": "Triggers: Allergic contact dermatitis"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-MED-033-REC-01",
+        "SRC-MED-033-EX-01"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Distinguish allergic from irritant contact exposure and identify the role of patch testing.",
+      "unsupported_content": "Other eczema phenotypes are only named; no distinguishing distributions, asteatotic dermatitis or first-line topical treatment rules.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. Other eczema phenotypes are only named; no distinguishing distributions, asteatotic dermatitis or first-line topical treatment rules.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "The CDA packet differentiates the eczema phenotypes by exposure and morphology, which is the address's subtype differential.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-D-21",
+      "study_unit_id": "SU-D-21",
+      "mcc_objective_ids": [
+        "38"
+      ],
+      "topic": "Acute Generalized Exanthematous Pustulosis (AGEP)",
+      "component_scope": null,
+      "discipline": "MED",
+      "priority_class": "SUPPORTING",
+      "canonical_testable_competencies": {
+        "agep_recognition": "Recognize AGEP by rapid onset of extensive sterile pustules with high fever and neutrophilia after a causative drug, and distinguish it from generalized pustular psoriasis and SJS/TEN."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-MED-039"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_006.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "MED|DIAGNOSIS|NODES=D.S04.T03|MCC=38|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-MED-039-REC-01",
+          "statement": "In a new pustular eruption after medication exposure, recognize acute generalized exanthematous pustulosis as a severe delayed T-cell-mediated drug-hypersensitivity phenotype and distinguish it from non-drug pustular disorders through exposure history and urgent clinical assessment.",
+          "source_packet_id": "SRC-MED-039",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-006-CSACI-BL-2020-AGEP",
+              "locator": "Clinical spectrum of beta-lactam hypersensitivity: Type IVd, pustular exanthema; severe reaction history"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-039-EX-01",
+          "statement": "Pustules alone do not establish AGEP; the temporal medication history and alternative infectious or inflammatory diagnoses remain material.",
+          "source_packet_id": "SRC-MED-039",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-006-CSACI-BL-2020-AGEP",
+              "locator": "History elements for suspected drug reaction"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-MED-039-REC-01",
+        "SRC-MED-039-EX-01"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Consider AGEP after a medication-associated pustular eruption and retain alternative diagnoses during urgent assessment.",
+      "unsupported_content": "No rapid latency, sterile pustules, fever/neutrophilia criteria or explicit discriminators against pustular psoriasis and SJS/TEN.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No rapid latency, sterile pustules, fever/neutrophilia criteria or explicit discriminators against pustular psoriasis and SJS/TEN.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "AGEP as a delayed T-cell drug-hypersensitivity phenotype separated from non-drug pustular disorders is the declared competency.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-D-23",
+      "study_unit_id": "SU-D-23",
+      "mcc_objective_ids": [
+        "38"
+      ],
+      "topic": "Fixed Drug Eruption and Photosensitivity Reaction",
+      "component_scope": null,
+      "discipline": "MED",
+      "priority_class": "SUPPORTING",
+      "canonical_testable_competencies": {
+        "fde_recognition": "Recognize fixed drug eruption by its hallmark recurrence at the same anatomic site on re-exposure to the causative drug.",
+        "photosensitivity": "Distinguish phototoxic (exaggerated sunburn, direct injury) from photoallergic (pruritic eczematous, type IV hypersensitivity) drug-induced photosensitivity reactions."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-MED-041"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_006.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "MED|DIAGNOSIS|NODES=D.S04.T05|MCC=38|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-MED-041-REC-01",
+          "statement": "A suspected fixed drug eruption or photosensitivity reaction requires an exposure timeline and lesion morphology assessment; generalized bullous fixed drug eruption belongs in the severe cutaneous adverse-reaction differential and must be distinguished from SJS/TEN.",
+          "source_packet_id": "SRC-MED-041",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-006-CDT-SCAR-2025",
+              "locator": "Abstract: severe cutaneous adverse reactions and generalized bullous fixed drug eruption; references to differential diagnosis"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-041-EX-01",
+          "statement": "Generalized bullous fixed drug eruption can mimic epidermal necrolysis; do not infer a benign fixed eruption when blistering or mucosal disease raises a severe-reaction concern.",
+          "source_packet_id": "SRC-MED-041",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-006-CDT-SCAR-2025",
+              "locator": "Abstract and cited generalized bullous fixed drug eruption differential"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-MED-041-REC-01",
+        "SRC-MED-041-EX-01"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Assess exposure and morphology in suspected drug eruption; avoid assuming bullous fixed eruption is benign when severe-reaction features exist.",
+      "unsupported_content": "No same-site recurrence on re-exposure and no phototoxic-versus-photoallergic mechanism or morphology; severe bullous differential cannot substitute for either declared distinction.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No same-site recurrence on re-exposure and no phototoxic-versus-photoallergic mechanism or morphology; severe bullous differential cannot substitute for either declared distinction.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "Fixed drug eruption and photosensitivity with the bullous-FDE against epidermal-necrolysis boundary matches both declared limbs.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-D-24",
+      "study_unit_id": "SU-D-24",
+      "mcc_objective_ids": [
+        "38"
+      ],
+      "topic": "Heritable Genodermatoses (Ichthyosis Vulgaris, Epidermolysis Bullosa, Oculocutaneous Albinism)",
+      "component_scope": null,
+      "discipline": "MED",
+      "priority_class": "SUPPORTING",
+      "canonical_testable_competencies": {
+        "genodermatosis_recognition": "Recognize ichthyosis vulgaris (fish-scale xerosis, filaggrin gene), epidermolysis bullosa (trauma-induced blistering from birth), and oculocutaneous albinism as classic inherited skin disorders."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-MED-042"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_007.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "MED|DIAGNOSIS|NODES=D.S05.T01,D.S05.T02,D.S05.T04|MCC=38|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-MED-042-REC-01",
+          "statement": "Recognize inherited genodermatoses by their core phenotype: epidermolysis bullosa causes inherited skin fragility and trauma-induced blistering, while oculocutaneous albinism causes reduced pigment involving the eyes, skin, and hair; inherited ichthyosis belongs in the rare-genodermatosis differential rather than the acute blistering differential.",
+          "source_packet_id": "SRC-MED-042",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-007-SICKKIDS-EB",
+              "locator": "About the Clinic; three major EB types; genetically inherited disorders and blistering"
+            },
+            {
+              "source_id": "AUTH-SRB-007-AKH-ALBINISM",
+              "locator": "Key points; What is albinism?; OCA usually has autosomal recessive inheritance"
+            },
+            {
+              "source_id": "AUTH-SRB-007-LIFELABS-SKIN-GENETICS",
+              "locator": "Skin, Bone & Immune System panel list: congenital ichthyosis, epidermolysis bullosa, and oculocutaneous albinism"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-042-EX-01",
+          "statement": "Do not treat congenital trauma-induced blistering as ordinary acquired friction injury; epidermolysis bullosa has distinct inherited subtypes and requires specialist care.",
+          "source_packet_id": "SRC-MED-042",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-007-SICKKIDS-EB",
+              "locator": "About the Clinic; What are the different types of EB?"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-MED-042-REC-01",
+        "SRC-MED-042-EX-01"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Recognize trauma-induced inherited blistering and ocular/cutaneous/hair hypopigmentation.",
+      "unsupported_content": "Ichthyosis is named without fish-scale xerosis or filaggrin characterization; therefore the three-disorder recognition competency is incomplete.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. Ichthyosis is named without fish-scale xerosis or filaggrin characterization; therefore the three-disorder recognition competency is incomplete.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "Epidermolysis bullosa, oculocutaneous albinism and inherited ichthyosis are the three named genodermatoses.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-D-26",
+      "study_unit_id": "SU-D-26",
+      "mcc_objective_ids": [
+        "38"
+      ],
+      "topic": "Vitiligo",
+      "component_scope": null,
+      "discipline": "MED",
+      "priority_class": "IMPORTANT",
+      "canonical_testable_competencies": {
+        "vitiligo_workup": "Recognize vitiligo (depigmented macules, Wood's lamp confirmation) and screen for associated autoimmune disease (thyroid disease, T1DM, Addison's, pernicious anemia)."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-MED-043"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_007.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "MED|DIAGNOSIS|NODES=D.S05.T05|MCC=38|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-MED-043-REC-01",
+          "statement": "Recognize vitiligo as an autoimmune loss of melanocytes producing milky-white irregular patches, and assess for associated autoimmune disease rather than treating depigmentation as a purely cosmetic finding.",
+          "source_packet_id": "SRC-MED-043",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-007-CDA-VITILIGO",
+              "locator": "What is Vitiligo?; Signs & Symptoms; Causes"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-043-EX-01",
+          "statement": "Vitiligo is not contagious, and confirmation or autoimmune investigation should be individualized when the presentation is uncertain.",
+          "source_packet_id": "SRC-MED-043",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-007-CDA-VITILIGO",
+              "locator": "Causes; Take Home Message"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-MED-043-REC-01",
+        "SRC-MED-043-EX-01"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Recognize depigmented vitiligo patches and assess associated autoimmunity individually.",
+      "unsupported_content": "No Wood lamp confirmation or disease-specific autoimmune screening criteria; the broad assessment statement does not license a universal test panel.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No Wood lamp confirmation or disease-specific autoimmune screening criteria; the broad assessment statement does not license a universal test panel.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "Vitiligo recognition plus the autoimmune-association assessment is the declared workup.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-D-29",
+      "study_unit_id": "SU-D-29",
+      "mcc_objective_ids": [
+        "38"
+      ],
+      "topic": "Parasitic and Arthropod Skin Infestations (Scabies, Lice, Bed Bugs, Cutaneous Larva Migrans, Leishmaniasis)",
+      "component_scope": null,
+      "discipline": "MED",
+      "priority_class": "CORE",
+      "canonical_testable_competencies": {
+        "lice_recognition": "Recognize scalp/pubic/body lice by nits and excoriations and select permethrin-based treatment with environmental decontamination.",
+        "scabies_recognition": "Recognize scabies by nocturnal pruritus, burrows in web spaces/flexures, and treat the patient plus close contacts with permethrin."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-MED-035"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_006.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "MED|DIAGNOSIS|NODES=D.S03|MCC=38|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        "EXACT_CANONICAL_SOURCE_NODES_AND_MCC_OBJECTIVES"
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-MED-035-REC-01",
+          "statement": "Recognize dermatophyte infection by site and morphology: tinea corporis presents as a superficial circular lesion on non-hair-bearing skin, while tinea pedis and onychomycosis involve feet and nails; microscopy or culture is useful when diagnosis is uncertain or nail disease requires organism differentiation.",
+          "source_packet_id": "SRC-MED-035",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-006-CPS-ANTIFUNGAL-2024",
+              "locator": "Tinea corporis; Tinea pedis and onychomycosis"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-035-EX-01",
+          "statement": "A clinically suspected nail fungus may be dermatophytic or non-dermatophytic; nail clippings for culture distinguish these possibilities.",
+          "source_packet_id": "SRC-MED-035",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-006-CPS-ANTIFUNGAL-2024",
+              "locator": "Tinea pedis and onychomycosis"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "OVERBROAD_PACKET_REUSE",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "All declared competencies.",
+      "entire_address_complete": false,
+      "rationale": "A D.S03/MCC-38 reuse join supplies dermatophyte recognition; it supplies no scabies/lice recognition or treatment.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "The address is scabies, lice, bed bugs and cutaneous larva migrans. The packet reused across D.S03 speaks only to dermatophyte infection: tinea corporis, tinea pedis and onychomycosis. Sharing a Toronto Notes node and MCC 38 is not sharing a clinical content, and the reuse basis EXACT_CANONICAL_SOURCE_NODES_AND_MCC_OBJECTIVES does not check that.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-D-31",
+      "study_unit_id": "SU-D-31",
+      "mcc_objective_ids": [
+        "38"
+      ],
+      "topic": "Molluscum Contagiosum and Cutaneous HPV (Warts)",
+      "component_scope": null,
+      "discipline": "MED",
+      "priority_class": "IMPORTANT",
+      "canonical_testable_competencies": {
+        "molluscum_recognition": "Recognize molluscum contagiosum as a self-limited viral infection and select observation vs. destructive therapy.",
+        "wart_recognition": "Distinguish verruca vulgaris, plantaris, and condyloma acuminata by site and morphology, and counsel on HPV subtypes associated with cervical/anogenital dysplasia."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-MED-035"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_006.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "MED|DIAGNOSIS|NODES=D.S03|MCC=38|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        "EXACT_CANONICAL_SOURCE_NODES_AND_MCC_OBJECTIVES"
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-MED-035-REC-01",
+          "statement": "Recognize dermatophyte infection by site and morphology: tinea corporis presents as a superficial circular lesion on non-hair-bearing skin, while tinea pedis and onychomycosis involve feet and nails; microscopy or culture is useful when diagnosis is uncertain or nail disease requires organism differentiation.",
+          "source_packet_id": "SRC-MED-035",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-006-CPS-ANTIFUNGAL-2024",
+              "locator": "Tinea corporis; Tinea pedis and onychomycosis"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-035-EX-01",
+          "statement": "A clinically suspected nail fungus may be dermatophytic or non-dermatophytic; nail clippings for culture distinguish these possibilities.",
+          "source_packet_id": "SRC-MED-035",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-006-CPS-ANTIFUNGAL-2024",
+              "locator": "Tinea pedis and onychomycosis"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "OVERBROAD_PACKET_REUSE",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "All declared competencies.",
+      "entire_address_complete": false,
+      "rationale": "The reused dermatophyte packet has no molluscum or HPV recognition, management or counselling claims.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "The address is molluscum contagiosum and cutaneous HPV. The same dermatophyte packet is reused and supports neither.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-D-32",
+      "study_unit_id": "SU-D-32",
+      "mcc_objective_ids": [
+        "38"
+      ],
+      "topic": "Superficial Yeast Infections (Candidiasis, Tinea Versicolor)",
+      "component_scope": null,
+      "discipline": "MED",
+      "priority_class": "IMPORTANT",
+      "canonical_testable_competencies": {
+        "candidal_intertrigo": "Recognize candidal intertrigo by satellite pustules in skin folds and identify predisposing factors (obesity, diabetes, antibiotics, immunosuppression).",
+        "tinea_versicolor": "Recognize pityriasis (tinea) versicolor by hypo-/hyperpigmented scaling macules that fail to tan, and treat with topical/systemic antifungals."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-MED-035"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_006.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "MED|DIAGNOSIS|NODES=D.S03|MCC=38|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        "EXACT_CANONICAL_SOURCE_NODES_AND_MCC_OBJECTIVES"
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-MED-035-REC-01",
+          "statement": "Recognize dermatophyte infection by site and morphology: tinea corporis presents as a superficial circular lesion on non-hair-bearing skin, while tinea pedis and onychomycosis involve feet and nails; microscopy or culture is useful when diagnosis is uncertain or nail disease requires organism differentiation.",
+          "source_packet_id": "SRC-MED-035",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-006-CPS-ANTIFUNGAL-2024",
+              "locator": "Tinea corporis; Tinea pedis and onychomycosis"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-035-EX-01",
+          "statement": "A clinically suspected nail fungus may be dermatophytic or non-dermatophytic; nail clippings for culture distinguish these possibilities.",
+          "source_packet_id": "SRC-MED-035",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-006-CPS-ANTIFUNGAL-2024",
+              "locator": "Tinea pedis and onychomycosis"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "OVERBROAD_PACKET_REUSE",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "All declared competencies.",
+      "entire_address_complete": false,
+      "rationale": "Dermatophyte site/morphology and a non-dermatophytic nail exception do not cover candidal intertrigo or pityriasis versicolor.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "The address is candidiasis and tinea versicolor, both yeasts. The reused packet is explicitly about dermatophytes, and its own exception is about distinguishing dermatophytic from non-dermatophytic nail disease rather than about yeast infection.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-D-38",
+      "study_unit_id": "SU-D-38",
+      "mcc_objective_ids": [
+        "38"
+      ],
+      "topic": "Alopecia (Non-Scarring and Scarring) and Hypertrichosis",
+      "component_scope": null,
+      "discipline": "MED",
+      "priority_class": "IMPORTANT",
+      "canonical_testable_competencies": {
+        "alopecia_ddx": "Distinguish non-scarring alopecia (telogen/anagen effluvium, alopecia areata, androgenic alopecia) from scarring alopecia by history, distribution, and follicular ostia preservation, and recognize scarring alopecia as requiring biopsy/dermatology referral.",
+        "hypertrichosis_recognition": "Recognize hypertrichosis as excessive hair growth independent of androgen effect, distinct from hirsutism."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-MED-050"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_007.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "MED|DIAGNOSIS|NODES=D.S07.T02,D.S07.T03|MCC=38|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-MED-050-REC-01",
+          "statement": "Differentiate common alopecia patterns: androgenetic alopecia produces patterned frontal or crown thinning, alopecia areata produces random round patches, and scarring alopecia causes permanent follicle loss and requires dermatologic assessment.",
+          "source_packet_id": "SRC-MED-050",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-007-CDA-ALOPECIA",
+              "locator": "Types of Hair Loss: Male pattern baldness; Female pattern baldness; Alopecia areata; Scarring alopecias"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-050-EX-01",
+          "statement": "Do not promise regrowth in scarring alopecia: follicles are replaced by scar tissue and the stated goal is to prevent progression.",
+          "source_packet_id": "SRC-MED-050",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-007-CDA-ALOPECIA",
+              "locator": "Types of Hair Loss: Scarring alopecias"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-MED-050-REC-01",
+        "SRC-MED-050-EX-01"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Distinguish the stated androgenetic/areata patterns from permanent follicle loss and refer scarring alopecia.",
+      "unsupported_content": "No telogen/anagen effluvium, follicular ostia discriminator, biopsy indication or hypertrichosis-versus-hirsutism distinction.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No telogen/anagen effluvium, follicular ostia discriminator, biopsy indication or hypertrichosis-versus-hirsutism distinction.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "Androgenetic, areata and scarring alopecia with follicle loss is the declared pattern differential.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-ELOM-11",
+      "study_unit_id": "SU-ELOM-11",
+      "mcc_objective_ids": [
+        "121-2"
+      ],
+      "topic": "Truth-Telling",
+      "component_scope": null,
+      "discipline": "PHELO",
+      "priority_class": "CORE",
+      "canonical_testable_competencies": {
+        "communication": "Honestly and accurately disclose information, including medical error, to patients and families."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-002"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_114.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|COMMUNICATION|NODES=ELOM.S02.T05|MCC=121-2|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "REC-SRC-PHELO-002-01",
+          "statement": "For a serious-illness conversation, first explore what the patient understands, provide information in small plain-language portions, and check understanding; treatment or care recommendations should be aligned with the patient's values and goals.",
+          "source_packet_id": "SRC-PHELO-002",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-114-HC-SERIOUS-ILLNESS-COMM-2023",
+              "locator": "On this page: '1. Is a treatment or care decision needed?' and '2. What do they know?'"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "REC-SRC-PHELO-002-01"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Structure information disclosure during serious illness with exploration, plain language and checks of understanding.",
+      "unsupported_content": "No medical-error disclosure duties or content, handling withheld information or conflict; the packet supports a communication subset, not the full truth-telling competency.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No medical-error disclosure duties or content, handling withheld information or conflict; the packet supports a communication subset, not the full truth-telling competency.",
+      "old_verdict": "PARTIALLY_ALIGNED",
+      "old_reason": "The address is truth-telling and disclosure of medical error. The packet is a Health Canada serious-illness conversation guide: it supports the general disclosure structure of exploring understanding, giving information in portions and checking back, but nothing in it is about disclosing an error, which is the competency's named content.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-GY-03",
+      "study_unit_id": "SU-GY-03",
+      "mcc_objective_ids": [
+        "112"
+      ],
+      "topic": "Gynecologic Imaging and Endometrial Biopsy",
+      "component_scope": null,
+      "discipline": "OBGYN",
+      "priority_class": "SUPPORTING",
+      "canonical_testable_competencies": {
+        "investigation_selection": "Select appropriate first-line imaging (pelvic ultrasound) and endometrial sampling for a patient with suspected structural or endometrial pathology, e.g. abnormal uterine bleeding."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-OBGYN-077"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_089.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "OBGYN|MANAGEMENT|NODES=GY.S03,GY.S03.T01,GY.S03.T02|MCC=112|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-OBGYN-077-REC-01",
+          "statement": "Use ultrasound as first-line imaging when uterine structural pathology such as fibroids is suspected; MRI is reserved for complex cases or surgical planning rather than routine first-line use.",
+          "source_packet_id": "SRC-OBGYN-077",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-089-SOGC-FIBROIDS-2025",
+              "locator": "Recommendations 1–3"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-OBGYN-077-REC-02",
+          "statement": "Perform endometrial biopsy for heavy menstrual bleeding when endometrial cancer or hyperplasia risk factors are present; biopsy samples endometrial cells but does not reliably identify focal endometrial lesions.",
+          "source_packet_id": "SRC-OBGYN-077",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-089-ON-HMB-2024",
+              "locator": "Quality Statement 4: Endometrial Biopsy, pages 15–16"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-OBGYN-077-EX-01",
+          "statement": "Transabdominal pelvic ultrasound alone may be more appropriate when transvaginal imaging is not suitable; further evaluation may use saline-infusion sonography, hysteroscopy, or MRI according to the suspected lesion.",
+          "source_packet_id": "SRC-OBGYN-077",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-089-ON-HMB-2024",
+              "locator": "Quality Statement 5: Imaging, pages 17–18"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-OBGYN-077-REC-01",
+        "SRC-OBGYN-077-REC-02",
+        "SRC-OBGYN-077-EX-01"
+      ],
+      "state": "ALIGNED_COMPLETE",
+      "cause": null,
+      "decision_support_state": "DECLARED_COMPETENCY_COVERED",
+      "supported_scope": "Select ultrasound first for suspected uterine structural pathology, reserve MRI for stated circumstances, and select endometrial sampling for risk factors with its focal-lesion limitation.",
+      "unsupported_content": "None at the declared competency level; concrete item facts, currentness, numeric/legal boundaries and complete option-set entailment remain separate gates.",
+      "entire_address_complete": true,
+      "rationale": "The declared investigation-selection competency is represented by both recommendations and the imaging-suitability exception; item-specific thresholds still require separate evidence.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "Ultrasound as first-line with MRI reserved, and endometrial biopsy indications with its focal-lesion limitation, is exactly the investigation-selection competency.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-GY-04",
+      "study_unit_id": "SU-GY-04",
+      "mcc_objective_ids": [
+        "112"
+      ],
+      "topic": "Hysterectomy",
+      "component_scope": null,
+      "discipline": "OBGYN",
+      "priority_class": "SUPPORTING",
+      "canonical_testable_competencies": {
+        "indications_and_complications": "Recognize the major indications (e.g., refractory AUB, symptomatic fibroids, malignancy, prolapse) and major complications for hysterectomy at a level sufficient to counsel and refer a patient appropriately."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-OBGYN-078"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_089.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "OBGYN|MANAGEMENT|NODES=GY.S03.T03|MCC=112|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-OBGYN-078-REC-01",
+          "statement": "For benign heavy menstrual bleeding, offer hysterectomy only after documented discussion of less invasive medical and surgical alternatives or after other treatments have failed, incorporating the patient's goals and preferences.",
+          "source_packet_id": "SRC-OBGYN-078",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-089-ON-HMB-2024",
+              "locator": "Quality Statement 10: Offering Hysterectomy, pages 27–28"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-OBGYN-078-REC-02",
+          "statement": "When hysterectomy for a benign indication is chosen, vaginal or laparoscopic routes are preferred where feasible; counsel about perioperative risks, ovarian conservation/removal implications, and urinary tract injury.",
+          "source_packet_id": "SRC-OBGYN-078",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-089-SOGC-HYSTERECTOMY-2019",
+              "locator": "Recommendations 1, 2, 5, and 7"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-OBGYN-078-EX-01",
+          "statement": "Correct preoperative anemia when elective hysterectomy is planned; SOGC identifies hemoglobin below 120 g/L as requiring correction to reduce perioperative morbidity and mortality.",
+          "source_packet_id": "SRC-OBGYN-078",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-089-SOGC-HYSTERECTOMY-2019",
+              "locator": "Recommendation 3"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-OBGYN-078-REC-01",
+        "SRC-OBGYN-078-REC-02",
+        "SRC-OBGYN-078-EX-01"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Counsel on hysterectomy for benign heavy menstrual bleeding after alternatives, route preference, selected perioperative risks and anemia preparation.",
+      "unsupported_content": "No complete indication-specific referral framework for malignancy or prolapse; benign-HMB guidance must not be generalized to those populations.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No complete indication-specific referral framework for malignancy or prolapse; benign-HMB guidance must not be generalized to those populations.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "Hysterectomy after documented alternatives, route preference and the preoperative anaemia threshold match the indications-and-complications competency.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-GY-10",
+      "study_unit_id": "SU-GY-10",
+      "mcc_objective_ids": [
+        "17"
+      ],
+      "topic": "Contraception",
+      "component_scope": null,
+      "discipline": "OBGYN",
+      "priority_class": "CORE",
+      "canonical_testable_competencies": {
+        "emergency_contraception": "Recognize indications and time-sensitive window for emergency postcoital contraception.",
+        "method_counselling": "Discuss and select among hormonal methods, intrauterine devices, and emergency postcoital contraception based on patient preference, contraindications, and efficacy."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-OBGYN-081"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_089.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "OBGYN|MANAGEMENT|NODES=GY.S05,GY.S05.T01,GY.S05.T02,GY.S05.T03|MCC=17|VERIFY=CLINICAL_GUIDELINE"
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-OBGYN-081-REC-01",
+          "statement": "Select contraception through patient-centred counselling that weighs effectiveness, medical conditions and contraindications, concurrent medications, side effects, non-contraceptive benefits, access, and the patient's preferences.",
+          "source_packet_id": "SRC-OBGYN-081",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-089-SOGC-CONTRACEPTION-329",
+              "locator": "Consensus summary; Chapters 2, 7, 8, and 9"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-OBGYN-081-REC-02",
+          "statement": "Provide emergency contraception as soon as possible after unprotected intercourse. The copper IUD is the most effective option; ulipristal is more effective than levonorgestrel through 5 days, particularly after 72 hours, while levonorgestrel effectiveness declines with delay.",
+          "source_packet_id": "SRC-OBGYN-081",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-089-SOGC-CONTRACEPTION-329",
+              "locator": "Chapter 3 Emergency Contraception, Summary Statements 12–18 and Recommendations 16–18"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-OBGYN-081-EX-01",
+          "statement": "After ulipristal emergency contraception, delay initiation of hormonal contraception for 5 days and use backup contraception; levonorgestrel emergency contraception permits immediate or next-day hormonal initiation with backup.",
+          "source_packet_id": "SRC-OBGYN-081",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-089-SOGC-CONTRACEPTION-329",
+              "locator": "Chapter 3 Emergency Contraception, Summary Statements 19–20 and Recommendations 19–20"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-OBGYN-081-REC-01",
+        "SRC-OBGYN-081-REC-02",
+        "SRC-OBGYN-081-EX-01"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Use patient-centred contraceptive counselling; select among emergency options by stated efficacy/timing and post-ulipristal initiation constraints.",
+      "unsupported_content": "Routine hormonal versus IUD selection lacks method-specific medical contraindications and comparative efficacy; counselling factors alone do not support a patient-specific routine-method key.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. Routine hormonal versus IUD selection lacks method-specific medical contraindications and comparative efficacy; counselling factors alone do not support a patient-specific routine-method key.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "Contraceptive counselling and the emergency-contraception effectiveness ordering match both declared competencies.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-OB-53",
+      "study_unit_id": "SU-OB-53",
+      "mcc_objective_ids": [
+        "107-1",
+        "80-2"
+      ],
+      "topic": "Postpartum Fever",
+      "component_scope": null,
+      "discipline": "OBGYN",
+      "priority_class": "IMPORTANT",
+      "canonical_testable_competencies": {
+        "postpartum_fever_workup": "Apply a structured differential (the '7 Ws'-type framework) to postpartum fever and identify indications for urgent investigation/treatment."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-OBGYN-071"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_089.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "OBGYN|DIAGNOSIS|NODES=OB.S14.T04|MCC=107-1,80-2|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-OBGYN-071-REC-01",
+          "statement": "In a patient from birth through 6 weeks postpartum, fever or chills with lower abdominal pain, uterine tenderness, tachycardia, or foul-smelling/bloody discharge supports postpartum endometritis and requires prompt clinical assessment and antibiotic treatment.",
+          "source_packet_id": "SRC-OBGYN-071",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-089-PHAC-POSTPARTUM-2024",
+              "locator": "Section 4.3 Infections — Endometritis"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-OBGYN-071-REC-02",
+          "statement": "The postpartum fever differential should be localized by accompanying findings: uterine/lochia findings suggest endometritis or urinary infection, whereas a red, hot, painful breast with systemic symptoms suggests mastitis.",
+          "source_packet_id": "SRC-OBGYN-071",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-089-PHAC-POSTPARTUM-2024",
+              "locator": "Section 3.2 Care of the Mother, Signs and symptoms of concern; Section 4.3 Infections"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-OBGYN-071-EX-01",
+          "statement": "Postpartum endometritis can occur at any time from birth through 6 weeks postpartum; a later presentation is not excluded solely by timing.",
+          "source_packet_id": "SRC-OBGYN-071",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-089-PHAC-POSTPARTUM-2024",
+              "locator": "Section 4.3 Infections — Endometritis"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-OBGYN-071-REC-01",
+        "SRC-OBGYN-071-REC-02",
+        "SRC-OBGYN-071-EX-01"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Recognize endometritis and urgency, distinguish localized uterine versus breast findings, and retain the stated postpartum timing window.",
+      "unsupported_content": "No full structured postpartum-fever differential including wound, thromboembolic and other causes; no comprehensive investigation pathway.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No full structured postpartum-fever differential including wound, thromboembolic and other causes; no comprehensive investigation pathway.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "The PHAC packet gives the endometritis phenotype and the localisation rule for the postpartum fever differential, which is the declared structured-differential competency.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-01",
+      "study_unit_id": "SU-PH-01",
+      "mcc_objective_ids": [
+        "78-4"
+      ],
+      "topic": "Public Health Context: Definitions and Structure of Public Health in Canada",
+      "component_scope": null,
+      "discipline": "PHELO",
+      "priority_class": "SUPPORTING",
+      "canonical_testable_competencies": {
+        "structure": "Describe the federal/provincial/municipal structure of the Canadian public health system, PHAC's mission and core public health functions, and how public health and preventive medicine as a specialty differs from clinical medicine."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-006"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_114.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S01.T01|MCC=78-4|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "REC-SRC-PHELO-006-01",
+          "statement": "Interpret population-health data by identifying the health measure and its denominator: incidence concerns new events over time, whereas prevalence counts existing cases in a population and is useful for estimating chronic-care burden.",
+          "source_packet_id": "SRC-PHELO-006",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-114-AFMC-PRIMER-CH6-2024",
+              "locator": "Chapter 6 > 'Incidence and Prevalence'"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "WRONG_TOPIC_PACKET",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "All declared competencies.",
+      "entire_address_complete": false,
+      "rationale": "The packet is incidence/prevalence, not Canadian public-health structure or functions.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "The address is the federal, provincial and municipal structure of Canadian public health (node PH.S01.T01, MCC 78-4). The packet defines incidence against prevalence.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-02",
+      "study_unit_id": "SU-PH-02",
+      "mcc_objective_ids": [
+        "78-4"
+      ],
+      "topic": "Legislation and Organization of Public Health in Canada",
+      "component_scope": null,
+      "discipline": "PHELO",
+      "priority_class": "SUPPORTING",
+      "canonical_testable_competencies": {
+        "jurisdiction": "Identify which level of government (federal, provincial, municipal) and which named agency is responsible for a given public health function or piece of legislation in Canada."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-007"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_114.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S01.T02|MCC=78-4|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "REC-SRC-PHELO-007-01",
+          "statement": "When appraising a measurement, distinguish reliability (reproducibility) from validity (how closely a measurement corresponds to the state it is intended to measure).",
+          "source_packet_id": "SRC-PHELO-007",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-114-AFMC-PRIMER-CH6-2024",
+              "locator": "Chapter 6 > 'Reliability' and 'Validity'"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "WRONG_TOPIC_PACKET",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "All declared competencies.",
+      "entire_address_complete": false,
+      "rationale": "Reliability/validity do not identify government or agency responsibility.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "The address is which level of government and which named agency owns a public-health function. The packet distinguishes reliability from validity.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-03",
+      "study_unit_id": "SU-PH-03",
+      "mcc_objective_ids": [
+        "127",
+        "78-1"
+      ],
+      "topic": "Concepts of Health, Health Equity, and Cultural Safety",
+      "component_scope": null,
+      "discipline": "PHELO",
+      "priority_class": "CORE",
+      "canonical_testable_competencies": {
+        "cultural_safety": "Distinguish cultural humility, cultural safety, cultural awareness, cultural sensitivity, and cultural competency as a spectrum of approaches to culturally appropriate care.",
+        "definitions": "Distinguish disease, illness, sickness, impairment, disability, and handicap, and health equity from health equality.",
+        "determinants_framework": "Apply the social determinants of health / population health model to explain why two patients with the same disease may have different health outcomes."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-008"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_114.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S02,PH.S02.T01|MCC=127,78-1|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "REC-SRC-PHELO-008-01",
+          "statement": "Critical appraisal should identify the study design because randomized trials, cross-sectional studies, cohort studies, and case-control studies differ in how participants are selected, timed, and compared.",
+          "source_packet_id": "SRC-PHELO-008",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-114-AFMC-PRIMER-CH5-2024",
+              "locator": "Chapter 5 > 'Analytic observational studies'"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "WRONG_TOPIC_PACKET",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "All declared competencies.",
+      "entire_address_complete": false,
+      "rationale": "Study-design identification supports none of health definitions, determinants or cultural-safety distinctions.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "The address is health equity and the cultural-safety spectrum. The packet is about identifying study design in critical appraisal.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-04",
+      "study_unit_id": "SU-PH-04",
+      "mcc_objective_ids": [
+        "127"
+      ],
+      "topic": "Groups Facing Systemic Barriers, Discrimination, and Structural Violence",
+      "component_scope": null,
+      "discipline": "PHELO",
+      "priority_class": "CORE",
+      "canonical_testable_competencies": {
+        "recognition": "For a given equity-seeking group, identify the systemic barriers, discrimination, and structural factors (not innate characteristics) driving that group's poorer health outcomes.",
+        "screening_for_poverty": "Apply the two validated poverty-screening questions and connect patients to appropriate social/financial supports."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-009"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_114.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S02.T02,PH.S02.T03|MCC=127|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "REC-SRC-PHELO-009-01",
+          "statement": "Distinguish random sampling from random allocation: random sampling helps a sample represent a broader population and supports external validity, while random allocation to study groups helps limit confounding and supports internal validity.",
+          "source_packet_id": "SRC-PHELO-009",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-114-AFMC-PRIMER-CH5-2024",
+              "locator": "Chapter 5 > 'Random sampling and random allocation'"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "WRONG_TOPIC_PACKET",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "All declared competencies.",
+      "entire_address_complete": false,
+      "rationale": "Random sampling/allocation supply no structural-barrier recognition or poverty-screening evidence.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "The address is systemic barriers facing equity-seeking groups and poverty screening. The packet distinguishes random sampling from random allocation.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-05",
+      "study_unit_id": "SU-PH-05",
+      "mcc_objective_ids": [
+        "78-9"
+      ],
+      "topic": "Indigenous Health in Canada and the Legacy of Colonization",
+      "component_scope": null,
+      "discipline": "PHELO",
+      "priority_class": "IMPORTANT",
+      "canonical_testable_competencies": {
+        "culturally_safe_care": "Apply a curiosity-based, culturally humble approach (e.g., asking what the patient needs the physician to know) rather than assuming an Indigenous patient's preferences regarding traditional medicine.",
+        "historical_context": "Identify the major historical mechanisms of colonial harm to Indigenous health in Canada (residential schools, coercive nutrition research, forced relocation to TB sanatoriums, coerced sterilization, the Sixties Scoop) and their documented intergenerational health effects."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-010"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_114.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S02.T04|MCC=78-9|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "REC-SRC-PHELO-010-01",
+          "statement": "When interpreting a study, consider bias and confounding: bias is systematic deviation of results or inferences from truth, and study design should address the mechanisms by which selection or measurement can distort findings.",
+          "source_packet_id": "SRC-PHELO-010",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-114-AFMC-PRIMER-CH5-2024",
+              "locator": "Chapter 5 > 'Sources of Error in Studies' > 'Bias'"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "WRONG_TOPIC_PACKET",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "All declared competencies.",
+      "entire_address_complete": false,
+      "rationale": "Bias/confounding appraisal supplies no colonial-harm history or culturally humble clinical approach.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "The address is Indigenous health and the legacy of colonisation. The packet is about bias and confounding.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-06",
+      "study_unit_id": "SU-PH-06",
+      "mcc_objective_ids": [
+        "78-3"
+      ],
+      "topic": "Disease Prevention: Natural History, Surveillance, and Levels of Prevention",
+      "component_scope": null,
+      "discipline": "PHELO",
+      "priority_class": "CORE",
+      "canonical_testable_competencies": {
+        "prevention_levels": "Classify a given intervention as primordial, primary, secondary, or tertiary prevention.",
+        "surveillance_types": "Distinguish passive, active, and sentinel surveillance by resource intensity and appropriate use case."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-012"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_114.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S02.T05|MCC=78-3|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        "EXACT_CANONICAL_SOURCE_NODES_AND_MCC_OBJECTIVES"
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "REC-SRC-PHELO-012-01",
+          "statement": "A population attributable risk estimates the number of cases that would not occur if a causal risk factor were eliminated, and it incorporates both the association and the proportion of the population exposed.",
+          "source_packet_id": "SRC-PHELO-012",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-114-AFMC-PRIMER-CH5-2024",
+              "locator": "Chapter 5 > 'Population attributable risk'"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "WRONG_DECISION",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "All declared competencies.",
+      "entire_address_complete": false,
+      "rationale": "Population-attributable risk is in population prevention broadly but does not classify prevention levels or surveillance types.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "The address is levels of prevention and surveillance types. The packet defines population attributable risk.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-08",
+      "study_unit_id": "SU-PH-08",
+      "mcc_objective_ids": [
+        "78-3"
+      ],
+      "topic": "Health Promotion, Behaviour Change, and Community Needs Assessment",
+      "component_scope": null,
+      "discipline": "PHELO",
+      "priority_class": "CORE",
+      "canonical_testable_competencies": {
+        "behaviour_change": "Apply the Health Belief Model (perceived susceptibility/severity/benefits/barriers, cues to action, self-efficacy) and the Stages of Change Model (precontemplation through maintenance) to a patient behaviour-change scenario.",
+        "ottawa_charter": "Apply the Ottawa Charter's five health-promotion strategies (healthy public policy, supportive environments, community action, personal skills, reoriented health services) to a population-health scenario.",
+        "risk_vs_harm_reduction": "Distinguish risk reduction from harm reduction interventions."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-012"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_114.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S02.T05|MCC=78-3|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        "EXACT_CANONICAL_SOURCE_NODES_AND_MCC_OBJECTIVES"
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "REC-SRC-PHELO-012-01",
+          "statement": "A population attributable risk estimates the number of cases that would not occur if a causal risk factor were eliminated, and it incorporates both the association and the proportion of the population exposed.",
+          "source_packet_id": "SRC-PHELO-012",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-114-AFMC-PRIMER-CH5-2024",
+              "locator": "Chapter 5 > 'Population attributable risk'"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "OVERBROAD_PACKET_REUSE",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "All declared competencies.",
+      "entire_address_complete": false,
+      "rationale": "Reused population-attributable-risk guidance supplies none of Ottawa Charter, behaviour-change models or risk/harm-reduction distinctions.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "The address is the Health Belief Model, stages of change and community needs assessment. The same population-attributable-risk packet is reused and supports none of them.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-09",
+      "study_unit_id": "SU-PH-09",
+      "mcc_objective_ids": [
+        "78-2"
+      ],
+      "topic": "Measures of Disease Occurrence and Age-Standardization",
+      "component_scope": null,
+      "discipline": "PHELO",
+      "priority_class": "CORE",
+      "canonical_testable_competencies": {
+        "incidence_prevalence": "Calculate and distinguish incidence rate from point and period prevalence, and explain why prevalence is a function of both incidence and disease duration.",
+        "standardization": "Explain why age-standardization (direct or indirect) is needed to compare crude rates between populations with different age structures, and calculate/interpret a Standardized Mortality Ratio."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-013"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_114.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S03|MCC=78-2|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        "EXACT_CANONICAL_SOURCE_NODES_AND_MCC_OBJECTIVES"
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "REC-SRC-PHELO-013-01",
+          "statement": "Population-health indicators can aggregate individual counts such as mortality or morbidity into measures for a whole population; interpreting a rate requires its defined population and denominator.",
+          "source_packet_id": "SRC-PHELO-013",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-114-AFMC-PRIMER-CH6-2024",
+              "locator": "Chapter 6 > 'Individual measures and population-level indicators'"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "REC-SRC-PHELO-013-01"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "PREREQUISITE_ONLY",
+      "supported_scope": "Check that a population rate has a defined population and denominator.",
+      "unsupported_content": "No incidence-versus-point/period-prevalence definitions or calculation; no duration relationship, standardization or SMR. Generic denominator advice is prerequisite support only.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No incidence-versus-point/period-prevalence definitions or calculation; no duration relationship, standardization or SMR. Generic denominator advice is prerequisite support only.",
+      "old_verdict": "PARTIALLY_ALIGNED",
+      "old_reason": "The packet's rule that interpreting a rate requires its defined population and denominator supports the incidence-and-prevalence limb. It says nothing about direct or indirect age-standardisation, which is the address's other declared competency.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-10",
+      "study_unit_id": "SU-PH-10",
+      "mcc_objective_ids": [
+        "78-2"
+      ],
+      "topic": "Measures of Mortality and Disease Burden",
+      "component_scope": null,
+      "discipline": "PHELO",
+      "priority_class": "CORE",
+      "canonical_testable_competencies": {
+        "burden_measures": "Distinguish PYLL (weights early death more heavily), DALY (premature death + disability, 0=perfect health/1=death), and QALY (quality-weighted life years, 0=death/1=perfect health, used in economic evaluation) and identify appropriate use cases for each.",
+        "mortality_measures": "Calculate and interpret crude death rate, infant mortality rate, and maternal mortality rate."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-013"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_114.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S03|MCC=78-2|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        "EXACT_CANONICAL_SOURCE_NODES_AND_MCC_OBJECTIVES"
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "REC-SRC-PHELO-013-01",
+          "statement": "Population-health indicators can aggregate individual counts such as mortality or morbidity into measures for a whole population; interpreting a rate requires its defined population and denominator.",
+          "source_packet_id": "SRC-PHELO-013",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-114-AFMC-PRIMER-CH6-2024",
+              "locator": "Chapter 6 > 'Individual measures and population-level indicators'"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "REC-SRC-PHELO-013-01"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "PREREQUISITE_ONLY",
+      "supported_scope": "Recognize mortality counts can be aggregated and rates require defined denominators.",
+      "unsupported_content": "No crude/infant/maternal mortality denominators or formulae and no PYLL/DALY/QALY definitions or use cases. Generic aggregation is prerequisite support only.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No crude/infant/maternal mortality denominators or formulae and no PYLL/DALY/QALY definitions or use cases. Generic aggregation is prerequisite support only.",
+      "old_verdict": "PARTIALLY_ALIGNED",
+      "old_reason": "The same packet supports aggregating mortality into a population measure, but the address's declared competency is telling PYLL, DALY and QALY apart, and the packet does not name or define any of the three.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-11",
+      "study_unit_id": "SU-PH-11",
+      "mcc_objective_ids": [
+        "78-2"
+      ],
+      "topic": "Population, Sampling Methods, and Sample Size",
+      "component_scope": null,
+      "discipline": "PHELO",
+      "priority_class": "SUPPORTING",
+      "canonical_testable_competencies": {
+        "sample_size_effects": "Explain that increasing sample size improves precision (narrower CIs) and reduces Type I/II error probability, but does not reduce bias or confounding.",
+        "sampling_methods": "Distinguish probability sampling methods (simple/systematic/stratified random, cluster) from non-probability methods (convenience, snowball) and identify an appropriate method for a given research scenario."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-014"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_114.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S04,UNCATALOGUED:Population-and-Sample@pdf1431|MCC=78-2|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "REC-SRC-PHELO-014-01",
+          "statement": "To estimate a population parameter from a study sample, define the target population and sampling frame, assess whether the sample is representative, and account for sampling variation and selection bias when generalizing the result.",
+          "source_packet_id": "SRC-PHELO-014",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-114-AFMC-PRIMER-CH5-2024",
+              "locator": "Chapter 5 > 'Inferential Statistics', 'Sampling', and 'Sampling (or selection) bias'"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "REC-SRC-PHELO-014-01"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "PREREQUISITE_ONLY",
+      "supported_scope": "Assess representativeness, sampling frame, sampling variation and selection bias when generalizing a sample.",
+      "unsupported_content": "No probability-versus-nonprobability method distinctions or named method selection; no effect of increasing sample size on precision or error, and no explicit separation from bias/confounding.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No probability-versus-nonprobability method distinctions or named method selection; no effect of increasing sample size on precision or error, and no explicit separation from bias/confounding.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "Defining the target population and sampling frame, judging representativeness and accounting for sampling variation and selection bias is the address's sampling competency.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-12",
+      "study_unit_id": "SU-PH-12",
+      "mcc_objective_ids": [
+        "78-2"
+      ],
+      "topic": "Bias and Confounding in Epidemiologic Studies",
+      "component_scope": null,
+      "discipline": "PHELO",
+      "priority_class": "CORE",
+      "canonical_testable_competencies": {
+        "bias_subtypes": "Given a study description, identify the specific type of selection bias (Berkson's, non-response, loss-to-follow-up) or information bias (recall, interviewer, observer) present.",
+        "confounding": "Distinguish a confounder from a mediator, and identify randomization, stratification, matching, or regression modelling as methods to control confounding."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-043"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_117.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=UNCATALOGUED:Bias-and-Confounder@pdf1432|MCC=78-2|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-PHELO-043-R1",
+          "statement": "When appraising an exposure-outcome association, consider bias and confounding: confounding can occur when a third variable is associated with both the exposure and outcome and is not accounted for in analysis.",
+          "source_packet_id": "SRC-PHELO-043",
+          "source_citations": [
+            {
+              "source_id": "SRC-PHELO-043-AFMC-01",
+              "locator": "Many types of bias; Confounding"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-PHELO-043-R1"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Recognize the stated third-variable exposure/outcome association as a reason to consider confounding.",
+      "unsupported_content": "No confounder-versus-mediator distinction, confounding-control methods or selection/information bias subtypes; association alone is not a complete confounder definition.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No confounder-versus-mediator distinction, confounding-control methods or selection/information bias subtypes; association alone is not a complete confounder definition.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "Confounding as a third variable associated with both exposure and outcome is the address's confounding competency.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-34",
+      "study_unit_id": "SU-PH-34",
+      "mcc_objective_ids": [
+        "78-10"
+      ],
+      "topic": "Disaster Preparedness, Emergency Response, and Recovery",
+      "component_scope": null,
+      "discipline": "PHELO",
+      "priority_class": "CORE",
+      "canonical_testable_competencies": {
+        "hazard_classification": "Classify a disaster's causal hazard as natural, human-system, or multi-level.",
+        "response_framework": "Distinguish prevention, mitigation, preparedness, response, and recovery as sequential phases of disaster management, and identify the role of an Emergency Response Plan, Incident Management System, Emergency Operations Centre, and Continuity of Operations Plan."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-035"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_117.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S10.T09,PH.S10.T10,PH.S10.T11,PH.S10.T12|MCC=78-10|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-PHELO-035-R1",
+          "statement": "For a health emergency, identify the event and participate in the applicable public-health or emergency-management response structure; Canadian pandemic response planning includes federal, provincial and territorial plans rather than a single interchangeable local procedure.",
+          "source_packet_id": "SRC-PHELO-035",
+          "source_citations": [
+            {
+              "source_id": "SRC-PHELO-035-PHAC-01",
+              "locator": "Response planning—Canada; Page details"
+            },
+            {
+              "source_id": "SRC-PHELO-035-AFMC-01",
+              "locator": "The Incident Command System"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-PHELO-035-E1",
+          "statement": "Provincial and territorial plans are individual; local operational instructions require verification before use in a scenario.",
+          "source_packet_id": "SRC-PHELO-035",
+          "source_citations": [
+            {
+              "source_id": "SRC-PHELO-035-PHAC-01",
+              "locator": "Response planning—Canada"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-PHELO-035-R1",
+        "SRC-PHELO-035-E1"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Identify the applicable emergency response structure and avoid interchanging provincial/territorial plans.",
+      "unsupported_content": "No hazard causal classes, five management-phase distinctions or ERP/IMS/EOC/continuity-plan roles.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No hazard causal classes, five management-phase distinctions or ERP/IMS/EOC/continuity-plan roles.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "The PHAC packet places the clinician in the applicable emergency-management structure and states that federal, provincial and territorial plans are not interchangeable, matching the response-framework competency.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-35",
+      "study_unit_id": "SU-PH-35",
+      "mcc_objective_ids": [
+        "78-8"
+      ],
+      "topic": "Occupational Medicine Overview and Occupational History Taking",
+      "component_scope": null,
+      "discipline": "PHELO",
+      "priority_class": "CORE",
+      "canonical_testable_competencies": {
+        "occupational_history": "Take a structured occupational history (current/previous duties, exposure identification and assessment, temporal relationship to symptoms, co-worker symptoms, non-work exposures) to determine whether a presenting condition is work-related.",
+        "occupational_vs_nonoccupational": "Recognize that occupational disease often looks clinically identical to non-occupational disease and may go unrecognized without a deliberate occupational history."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-036"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_117.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S11,PH.S11.T01|MCC=78-8|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-PHELO-036-R1",
+          "statement": "When a patient may have a work-related health problem, obtain a focused work and exposure history, including work performed, how it is performed, exposure concerns, co-worker exposure, and job satisfaction.",
+          "source_packet_id": "SRC-PHELO-036",
+          "source_citations": [
+            {
+              "source_id": "SRC-PHELO-036-AFMC-01",
+              "locator": "Occupational Hazards—WHACS questions"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-PHELO-036-R1"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Take a focused work/exposure history including work process, concerns and co-worker exposure.",
+      "unsupported_content": "No explicit previous-duty or non-work exposure history, symptom timing or clinical-similarity statement; thus the complete attribution competency is not covered.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No explicit previous-duty or non-work exposure history, symptom timing or clinical-similarity statement; thus the complete attribution competency is not covered.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "The focused work and exposure history, including co-worker exposure, is the declared occupational-history competency.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-36",
+      "study_unit_id": "SU-PH-36",
+      "mcc_objective_ids": [
+        "78-8"
+      ],
+      "topic": "Occupational Hazards by Category (Physical, Chemical, Biological, Psychosocial, Ergonomic, Safety)",
+      "component_scope": null,
+      "discipline": "PHELO",
+      "priority_class": "CORE",
+      "canonical_testable_competencies": {
+        "hazard_category_recognition": "Given an occupational exposure and clinical presentation (e.g., noise -> hearing loss, benzene -> AML, asbestos -> mesothelioma, silica -> silicosis), classify the hazard category and identify the associated health effect."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-037"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_117.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S12,UNCATALOGUED:Table13-Occupational-Hazards@pdf1449|MCC=78-8|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-PHELO-037-R1",
+          "statement": "In a possible occupational illness, identify candidate workplace hazards and classify them (biological, chemical, physical, ergonomic, psychosocial, or safety-related) before assessing the exposure-health relationship.",
+          "source_packet_id": "SRC-PHELO-037",
+          "source_citations": [
+            {
+              "source_id": "SRC-PHELO-037-AFMC-01",
+              "locator": "Risk assessment—Hazard identification; Table 10.1"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-PHELO-037-R1"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Classify candidate workplace hazards into six named categories.",
+      "unsupported_content": "No hazard-specific health-effect associations. Category enumeration cannot support noise/hearing-loss, benzene/AML or the other required exposure-effect pairings.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No hazard-specific health-effect associations. Category enumeration cannot support noise/hearing-loss, benzene/AML or the other required exposure-effect pairings.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "Classifying a workplace hazard into the biological, chemical, physical, ergonomic, psychosocial and safety categories is the declared competency verbatim.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-37",
+      "study_unit_id": "SU-PH-37",
+      "mcc_objective_ids": [
+        "121-5",
+        "78-8"
+      ],
+      "topic": "Workplace Legislation and Workers' Compensation",
+      "component_scope": null,
+      "discipline": "PHELO",
+      "priority_class": "SUPPORTING",
+      "canonical_testable_competencies": {
+        "legislative_framework": "Identify the jurisdiction (provincial vs. federally-regulated industry) governing a workplace, and describe the no-fault principle of workers' compensation insurance (WSIB-type boards).",
+        "worker_rights": "Identify a worker's four core rights under Canadian occupational health and safety legislation: to know, to participate, to refuse unsafe work, and (for certified workers) to stop work."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-038"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_117.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S12.T01|MCC=121-5,78-8|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-PHELO-038-R1",
+          "statement": "Recognize that an occupational injury or disease may arise in the course of employment, and consider occupational exposures when evaluating commonly work-related conditions such as dermatitis, asthma, musculoskeletal disorders, or work-related mental-health effects.",
+          "source_packet_id": "SRC-PHELO-038",
+          "source_citations": [
+            {
+              "source_id": "SRC-PHELO-038-AFMC-01",
+              "locator": "Occupational injuries and diseases; The Mad Hatter"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "WRONG_DECISION",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "All declared competencies.",
+      "entire_address_complete": false,
+      "rationale": "Recognizing an occupational disease is not determining governing legislation, no-fault compensation or worker rights; no declared legal decision has support.",
+      "old_verdict": "PARTIALLY_ALIGNED",
+      "old_reason": "The packet establishes that occupational exposures belong in the differential for dermatitis, asthma and musculoskeletal disease. The address's declared competencies are the governing jurisdiction and the no-fault principle of workers' compensation, and the packet reaches neither.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-39",
+      "study_unit_id": "SU-PH-39",
+      "mcc_objective_ids": [
+        "78-8"
+      ],
+      "topic": "Workplace Primary, Secondary, and Tertiary Prevention",
+      "component_scope": null,
+      "discipline": "PHELO",
+      "priority_class": "CORE",
+      "canonical_testable_competencies": {
+        "hierarchy_of_controls": "Apply the hierarchy of controls (elimination > substitution > engineering controls > administrative controls > PPE, most to least effective) to select the best primary-prevention intervention for an occupational hazard.",
+        "medical_surveillance": "Identify an appropriate secondary-prevention medical surveillance test for a given occupational exposure (e.g., audiograms for noise, spirometry for dust exposure, blood lead testing for lead exposure).",
+        "return_to_work": "Apply the restrictions/limitations/abilities/tolerance framework to a tertiary-prevention return-to-work planning scenario."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-039"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_117.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S12.T03,PH.S12.T04,PH.S12.T05|MCC=78-8|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-PHELO-039-R1",
+          "statement": "Assess a suspected occupational exposure by determining the activities, work practices, processes, route, extent, and timing of exposure; include prior work when delayed effects are plausible.",
+          "source_packet_id": "SRC-PHELO-039",
+          "source_citations": [
+            {
+              "source_id": "SRC-PHELO-039-AFMC-01",
+              "locator": "Risk assessment, Step 3: Exposure assessment"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-PHELO-039-E1",
+          "statement": "For hazards with delayed effects, an occupational history may need to trace exposures back twenty years or more.",
+          "source_packet_id": "SRC-PHELO-039",
+          "source_citations": [
+            {
+              "source_id": "SRC-PHELO-039-AFMC-01",
+              "locator": "Risk assessment, Step 3: Exposure assessment"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "WRONG_DECISION",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "All declared competencies.",
+      "entire_address_complete": false,
+      "rationale": "Assessing extent/timing of exposure does not select controls, medical surveillance or return-to-work measures.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "The address is the hierarchy of controls as a primary-prevention selection rule. The packet is about assessing the extent and timing of an exposure, which is assessment rather than control selection.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-40",
+      "study_unit_id": "SU-PH-40",
+      "mcc_objective_ids": [
+        "121-5",
+        "78-2"
+      ],
+      "topic": "Mandatory Reporting: Reportable Diseases",
+      "component_scope": null,
+      "discipline": "PHELO",
+      "priority_class": "CORE",
+      "canonical_testable_competencies": {
+        "reporting_duty": "Recognize that physicians in Canada have a mandatory, provincially-legislated duty to report specified diseases to public health, that failure to report can result in licence suspension, and identify the reasons reporting is required (outbreak control, threat containment, treatable/preventable disease, surveillance)."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-040"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_117.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S13,PH.S13.T01|MCC=121-5,78-2|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-PHELO-040-R1",
+          "statement": "For an occupational health issue in Canada, determine the applicable provincial, territorial, or federal occupational-health and safety authority rather than assuming one uniform legal system.",
+          "source_packet_id": "SRC-PHELO-040",
+          "source_citations": [
+            {
+              "source_id": "SRC-PHELO-040-AFMC-01",
+              "locator": "The Occupational Health and Safety System; Health and safety at work"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "WRONG_TOPIC_PACKET",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "All declared competencies.",
+      "entire_address_complete": false,
+      "rationale": "Occupational-safety authority guidance does not establish disease reporting to public health.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "The address is the mandatory duty to report a reportable disease to public health. The packet is about identifying the applicable occupational-health and safety authority.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-41::C01",
+      "study_unit_id": "SU-PH-41",
+      "mcc_objective_ids": [
+        "121-5"
+      ],
+      "topic": "Other Mandatory Reporting Obligations",
+      "component_scope": "Identify mandatory reporting of suspected child abuse to child protection services.",
+      "discipline": "PHELO",
+      "priority_class": "IMPORTANT",
+      "canonical_testable_competencies": {
+        "reporting_triggers": "For a given clinical scenario (suspected child abuse, a gunshot wound, a patient with a medical condition impairing safe driving or flying, suspected abuse of a long-term-care resident, a death of unclear cause), identify the correct mandatory-reporting trigger and the correct recipient body (CAS, police, Ministry of Transportation, Registrar/Coroner, Retirement Homes Regulatory Authority)."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-041"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_117.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S13.T02|MCC=121-5|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        "EXACT_CANONICAL_SOURCE_NODES_AND_MCC_OBJECTIVES"
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-PHELO-041-R1",
+          "statement": "Recognize that Canadian workplace health and safety commonly includes worker rights to know, participate, and refuse dangerous work, employer duties to provide a safe workplace, and workers’ compensation systems that support injured or ill workers.",
+          "source_packet_id": "SRC-PHELO-041",
+          "source_citations": [
+            {
+              "source_id": "SRC-PHELO-041-AFMC-01",
+              "locator": "Health and safety at work; Workers’ compensation"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "WRONG_TOPIC_PACKET",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "Identify mandatory reporting of suspected child abuse to child protection services.",
+      "entire_address_complete": false,
+      "rationale": "Worker rights and compensation do not establish this component-specific reporting trigger or recipient: Identify mandatory reporting of suspected child abuse to child protection services.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "The address is the reporting triggers for child abuse, gunshot wounds, unsafe drivers and deaths of unclear cause. The packet is about worker rights and workers' compensation.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-41::C02",
+      "study_unit_id": "SU-PH-41",
+      "mcc_objective_ids": [
+        "121-5"
+      ],
+      "topic": "Other Mandatory Reporting Obligations",
+      "component_scope": "Identify mandatory police reporting for a gunshot wound.",
+      "discipline": "PHELO",
+      "priority_class": "IMPORTANT",
+      "canonical_testable_competencies": {
+        "reporting_triggers": "For a given clinical scenario (suspected child abuse, a gunshot wound, a patient with a medical condition impairing safe driving or flying, suspected abuse of a long-term-care resident, a death of unclear cause), identify the correct mandatory-reporting trigger and the correct recipient body (CAS, police, Ministry of Transportation, Registrar/Coroner, Retirement Homes Regulatory Authority)."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-041"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_117.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S13.T02|MCC=121-5|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        "EXACT_CANONICAL_SOURCE_NODES_AND_MCC_OBJECTIVES"
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-PHELO-041-R1",
+          "statement": "Recognize that Canadian workplace health and safety commonly includes worker rights to know, participate, and refuse dangerous work, employer duties to provide a safe workplace, and workers’ compensation systems that support injured or ill workers.",
+          "source_packet_id": "SRC-PHELO-041",
+          "source_citations": [
+            {
+              "source_id": "SRC-PHELO-041-AFMC-01",
+              "locator": "Health and safety at work; Workers’ compensation"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "WRONG_TOPIC_PACKET",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "Identify mandatory police reporting for a gunshot wound.",
+      "entire_address_complete": false,
+      "rationale": "Worker rights and compensation do not establish this component-specific reporting trigger or recipient: Identify mandatory police reporting for a gunshot wound.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "Same address content and same reused worker-rights packet.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-41::C03",
+      "study_unit_id": "SU-PH-41",
+      "mcc_objective_ids": [
+        "121-5"
+      ],
+      "topic": "Other Mandatory Reporting Obligations",
+      "component_scope": "Identify reporting of live births, stillbirths, and deaths to the Registrar General or Coroner, including deaths of unclear cause.",
+      "discipline": "PHELO",
+      "priority_class": "IMPORTANT",
+      "canonical_testable_competencies": {
+        "reporting_triggers": "For a given clinical scenario (suspected child abuse, a gunshot wound, a patient with a medical condition impairing safe driving or flying, suspected abuse of a long-term-care resident, a death of unclear cause), identify the correct mandatory-reporting trigger and the correct recipient body (CAS, police, Ministry of Transportation, Registrar/Coroner, Retirement Homes Regulatory Authority)."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-041"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_117.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S13.T02|MCC=121-5|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        "EXACT_CANONICAL_SOURCE_NODES_AND_MCC_OBJECTIVES"
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-PHELO-041-R1",
+          "statement": "Recognize that Canadian workplace health and safety commonly includes worker rights to know, participate, and refuse dangerous work, employer duties to provide a safe workplace, and workers’ compensation systems that support injured or ill workers.",
+          "source_packet_id": "SRC-PHELO-041",
+          "source_citations": [
+            {
+              "source_id": "SRC-PHELO-041-AFMC-01",
+              "locator": "Health and safety at work; Workers’ compensation"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "WRONG_TOPIC_PACKET",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "Identify reporting of live births, stillbirths, and deaths to the Registrar General or Coroner, including deaths of unclear cause.",
+      "entire_address_complete": false,
+      "rationale": "Worker rights and compensation do not establish this component-specific reporting trigger or recipient: Identify reporting of live births, stillbirths, and deaths to the Registrar General or Coroner, including deaths of unclear cause.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "Same address content and same reused worker-rights packet.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-41::C04",
+      "study_unit_id": "SU-PH-41",
+      "mcc_objective_ids": [
+        "121-5"
+      ],
+      "topic": "Other Mandatory Reporting Obligations",
+      "component_scope": "Identify mandatory reporting of suspected abuse of a long-term-care or retirement-home resident to the applicable oversight authority.",
+      "discipline": "PHELO",
+      "priority_class": "IMPORTANT",
+      "canonical_testable_competencies": {
+        "reporting_triggers": "For a given clinical scenario (suspected child abuse, a gunshot wound, a patient with a medical condition impairing safe driving or flying, suspected abuse of a long-term-care resident, a death of unclear cause), identify the correct mandatory-reporting trigger and the correct recipient body (CAS, police, Ministry of Transportation, Registrar/Coroner, Retirement Homes Regulatory Authority)."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-041"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_117.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S13.T02|MCC=121-5|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        "EXACT_CANONICAL_SOURCE_NODES_AND_MCC_OBJECTIVES"
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-PHELO-041-R1",
+          "statement": "Recognize that Canadian workplace health and safety commonly includes worker rights to know, participate, and refuse dangerous work, employer duties to provide a safe workplace, and workers’ compensation systems that support injured or ill workers.",
+          "source_packet_id": "SRC-PHELO-041",
+          "source_citations": [
+            {
+              "source_id": "SRC-PHELO-041-AFMC-01",
+              "locator": "Health and safety at work; Workers’ compensation"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "WRONG_TOPIC_PACKET",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "Identify mandatory reporting of suspected abuse of a long-term-care or retirement-home resident to the applicable oversight authority.",
+      "entire_address_complete": false,
+      "rationale": "Worker rights and compensation do not establish this component-specific reporting trigger or recipient: Identify mandatory reporting of suspected abuse of a long-term-care or retirement-home resident to the applicable oversight authority.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "Same address content and same reused worker-rights packet.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-41::C05",
+      "study_unit_id": "SU-PH-41",
+      "mcc_objective_ids": [
+        "121-5"
+      ],
+      "topic": "Other Mandatory Reporting Obligations",
+      "component_scope": "Identify mandatory reporting when a medical condition impairs safe driving.",
+      "discipline": "PHELO",
+      "priority_class": "IMPORTANT",
+      "canonical_testable_competencies": {
+        "reporting_triggers": "For a given clinical scenario (suspected child abuse, a gunshot wound, a patient with a medical condition impairing safe driving or flying, suspected abuse of a long-term-care resident, a death of unclear cause), identify the correct mandatory-reporting trigger and the correct recipient body (CAS, police, Ministry of Transportation, Registrar/Coroner, Retirement Homes Regulatory Authority)."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-041"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_117.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S13.T02|MCC=121-5|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        "EXACT_CANONICAL_SOURCE_NODES_AND_MCC_OBJECTIVES"
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-PHELO-041-R1",
+          "statement": "Recognize that Canadian workplace health and safety commonly includes worker rights to know, participate, and refuse dangerous work, employer duties to provide a safe workplace, and workers’ compensation systems that support injured or ill workers.",
+          "source_packet_id": "SRC-PHELO-041",
+          "source_citations": [
+            {
+              "source_id": "SRC-PHELO-041-AFMC-01",
+              "locator": "Health and safety at work; Workers’ compensation"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "WRONG_TOPIC_PACKET",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "Identify mandatory reporting when a medical condition impairs safe driving.",
+      "entire_address_complete": false,
+      "rationale": "Worker rights and compensation do not establish this component-specific reporting trigger or recipient: Identify mandatory reporting when a medical condition impairs safe driving.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "Same address content and same reused worker-rights packet.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PH-41::C06",
+      "study_unit_id": "SU-PH-41",
+      "mcc_objective_ids": [
+        "121-5"
+      ],
+      "topic": "Other Mandatory Reporting Obligations",
+      "component_scope": "Identify reporting or notification obligations when a medical condition impairs safe flying.",
+      "discipline": "PHELO",
+      "priority_class": "IMPORTANT",
+      "canonical_testable_competencies": {
+        "reporting_triggers": "For a given clinical scenario (suspected child abuse, a gunshot wound, a patient with a medical condition impairing safe driving or flying, suspected abuse of a long-term-care resident, a death of unclear cause), identify the correct mandatory-reporting trigger and the correct recipient body (CAS, police, Ministry of Transportation, Registrar/Coroner, Retirement Homes Regulatory Authority)."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-PHELO-041"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_117.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "PHELO|DIAGNOSIS|NODES=PH.S13.T02|MCC=121-5|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        "EXACT_CANONICAL_SOURCE_NODES_AND_MCC_OBJECTIVES"
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-PHELO-041-R1",
+          "statement": "Recognize that Canadian workplace health and safety commonly includes worker rights to know, participate, and refuse dangerous work, employer duties to provide a safe workplace, and workers’ compensation systems that support injured or ill workers.",
+          "source_packet_id": "SRC-PHELO-041",
+          "source_citations": [
+            {
+              "source_id": "SRC-PHELO-041-AFMC-01",
+              "locator": "Health and safety at work; Workers’ compensation"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [],
+      "state": "MISALIGNED",
+      "cause": "WRONG_TOPIC_PACKET",
+      "decision_support_state": "NO_ADDRESS_DECISION_SUPPORTED",
+      "supported_scope": "None for this allocation address.",
+      "unsupported_content": "Identify reporting or notification obligations when a medical condition impairs safe flying.",
+      "entire_address_complete": false,
+      "rationale": "Worker rights and compensation do not establish this component-specific reporting trigger or recipient: Identify reporting or notification obligations when a medical condition impairs safe flying.",
+      "old_verdict": "MISALIGNED",
+      "old_reason": "Same address content and same reused worker-rights packet.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PM-06",
+      "study_unit_id": "SU-PM-06",
+      "mcc_objective_ids": [
+        "25"
+      ],
+      "topic": "End-of-Life Decision Making (Advance Care Planning, Goals of Care, Code Status)",
+      "component_scope": null,
+      "discipline": "MED",
+      "priority_class": "CORE",
+      "canonical_testable_competencies": {
+        "code_status": "Distinguish full code, DNR/comfort measures, and Allow Natural Death (AND) terminology, and recognize that CPR is rarely effective and a DNR order is almost always consistent with palliative goals of care in advanced incurable illness.",
+        "timing": "Recognize the clinical triggers for initiating an EOL care discussion (recent hospitalization for serious illness, severe progressive disease, anticipated death within 6-12 mo, a MAID request)."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-MED-439"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_002.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "MED|LEGAL_ETHICAL|NODES=PM.S03,PM.S03.T01|MCC=25|VERIFY="
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-MED-439-REC-01",
+          "statement": "Advance care planning should identify and communicate a capable patient's values, wishes, and substitute decision-maker for future incapacity, but it does not replace consent for a specific treatment. When significant illness creates foreseeable decisions, conduct a timely goals-of-care discussion covering diagnosis, prognosis, available treatments including resuscitation, realistic outcomes, and the patient's values, then revisit the discussion when circumstances change.",
+          "source_packet_id": "SRC-MED-439",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-002-CMPA-ACP-2023",
+              "locator": "Advance care planning; ACP is not a replacement for consent; ACP versus advance directive"
+            },
+            {
+              "source_id": "AUTH-SRB-002-CPSO-EOL-2023",
+              "locator": "Definitions; policy provisions 1-3, Advance Care Planning and Goals of Care Discussions"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-439-EX-01",
+          "statement": "An advance care plan is not itself contemporaneous consent, and the identity, authority, and decision rules for substitute decision-makers or advance directives depend on provincial or territorial law.",
+          "source_packet_id": "SRC-MED-439",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-002-CMPA-ACP-2023",
+              "locator": "ACP is not a replacement for consent; ACP versus advance directive"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-439-EX-02",
+          "statement": "Ontario's current policy distinguishes withdrawing life-sustaining treatment, which requires patient or substitute-decision-maker consent, from writing an order to withhold resuscitative measures when CPR is outside the standard of care; this Ontario rule must not be generalized without checking the treating jurisdiction.",
+          "source_packet_id": "SRC-MED-439",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-002-CPSO-EOL-2023",
+              "locator": "Policy provisions 4-10; endnotes citing Rasouli and Wawrzyniak"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-MED-439-REC-01",
+        "SRC-MED-439-EX-01",
+        "SRC-MED-439-EX-02"
+      ],
+      "state": "ALIGNED_PARTIAL",
+      "cause": "INSUFFICIENT_CLAIM_COVERAGE",
+      "decision_support_state": "NARROW_DECISION_SUPPORTED",
+      "supported_scope": "Initiate and revisit timely goals-of-care discussion around foreseeable decisions; distinguish advance planning from specific consent; retain stated Ontario-specific boundaries.",
+      "unsupported_content": "No full-code/DNR/comfort/AND definitions or comparative CPR-outcome evidence; no enumerated hospitalization, progressive disease or prognosis triggers. The canonical CPR/DNR wording is a scope statement, not newly validated medical guidance.",
+      "entire_address_complete": false,
+      "rationale": "Direct comparison with the declared competencies supports only the bounded scope below. No full-code/DNR/comfort/AND definitions or comparative CPR-outcome evidence; no enumerated hospitalization, progressive disease or prognosis triggers. The canonical CPR/DNR wording is a scope statement, not newly validated medical guidance.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "The CMPA and CPSO packet covers advance care planning against contemporaneous consent, the goals-of-care discussion and the Ontario withhold-versus-withdraw distinction, matching the code-status and ACP competencies. It is the richest MED packet in the set.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    },
+    {
+      "allocation_address_id": "SU-PM-10",
+      "study_unit_id": "SU-PM-10",
+      "mcc_objective_ids": [
+        "25"
+      ],
+      "topic": "Medical Assistance in Dying (MAID)",
+      "component_scope": null,
+      "discipline": "MED",
+      "priority_class": "CORE",
+      "canonical_testable_competencies": {
+        "eligibility_pathways": "Distinguish MAID Track 1 (natural death reasonably foreseeable) from Track 2 (serious and incurable illness/disease/disability, death not reasonably foreseeable) eligibility pathways.",
+        "response_to_request": "Respond to a patient's MAID request with a compassionate, non-judgmental approach and take appropriate steps toward referral if the patient meets eligibility criteria, recognizing the current mental-illness-sole-criterion exclusion."
+      },
+      "allocation_status": "ELIGIBLE",
+      "source_packet_ids": [
+        "SRC-MED-441"
+      ],
+      "source_packet_population_artifacts": [
+        "research/qgen/source_packet_population_srb_002.json"
+      ],
+      "plan_evidence_requirement_keys": [
+        "MED|LEGAL_ETHICAL|NODES=UNCATALOGUED:Suffering@pdf1305|MCC=25|VERIFY=LEGAL_REGULATORY"
+      ],
+      "cross_address_reuse_basis": [
+        ""
+      ],
+      "reviewed_claims": [
+        {
+          "claim_id": "SRC-MED-441-REC-01",
+          "statement": "Respond to a MAID request without assuming eligibility: clarify that it is a voluntary patient request, assess decision-making capacity and freedom from external pressure, provide the information needed for informed consent including diagnosis, treatments and available means to relieve suffering such as palliative care, and connect the patient with the applicable provincial or territorial assessment pathway.",
+          "source_packet_id": "SRC-MED-441",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-002-CAMAP-CURRICULUM-CURRENT",
+              "locator": "Curriculum topics: Clinical Conversations that Include MAiD; How to do a MAiD assessment; Assessing Capacity and Vulnerability"
+            },
+            {
+              "source_id": "AUTH-SRB-002-HC-MAID-CURRENT",
+              "locator": "Eligibility; Informed consent; Making a request; Role of provinces and territories"
+            },
+            {
+              "source_id": "AUTH-SRB-002-CPSO-MAID-2026",
+              "locator": "MAID Providers and Assessors; capacity, grievous-and-irremediable-condition, and request/reporting guidance"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-441-REC-02",
+          "statement": "Federal eligibility does not require a terminal condition, but every criterion must be met and two independent practitioners must confirm eligibility. When natural death is not reasonably foreseeable, the additional Track 2 safeguards include relevant-condition expertise or consultation, discussion of reasonable available means to relieve suffering, and a minimum 90-day assessment period unless assessments are complete and loss of capacity is imminent.",
+          "source_packet_id": "SRC-MED-441",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-002-HC-MAID-CURRENT",
+              "locator": "Eligibility; Procedural safeguards; Requests where natural death is not reasonably foreseeable"
+            },
+            {
+              "source_id": "AUTH-SRB-002-CPSO-MAID-2026",
+              "locator": "Grievous and irremediable medical condition; 90-day assessment period"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-441-EX-01",
+          "statement": "A person whose sole underlying medical condition is a mental illness is not eligible for MAID before March 17, 2027; a person with mental illness plus another qualifying condition may still be individually assessed under the current criteria.",
+          "source_packet_id": "SRC-MED-441",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-002-HC-MAID-CURRENT",
+              "locator": "Eligibility: mental illness exclusion"
+            },
+            {
+              "source_id": "AUTH-SRB-002-CPSO-MAID-2026",
+              "locator": "Grievous and irremediable medical condition"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-441-EX-02",
+          "statement": "A waiver of final consent is not a general advance request: federally it is available only after eligibility is established and, for clinician-administered MAID, when natural death is reasonably foreseeable and the statutory written arrangement is completed. Quebec separately permits advance requests under its provincial law as of October 30, 2024, creating a jurisdiction-specific situation requiring current local guidance.",
+          "source_packet_id": "SRC-MED-441",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-002-HC-MAID-CURRENT",
+              "locator": "Final consent; waiver of final consent"
+            },
+            {
+              "source_id": "AUTH-SRB-002-CPSO-MAID-2026",
+              "locator": "Waivers of Final Consent"
+            },
+            {
+              "source_id": "AUTH-SRB-002-CMPA-CONSENT-2024",
+              "locator": "Mental incapacity and substitute decision-making: Quebec advance requests and waiver of final consent"
+            }
+          ]
+        },
+        {
+          "claim_id": "SRC-MED-441-EX-03",
+          "statement": "A substitute decision-maker cannot request or consent to MAID on behalf of an incapable patient under the general Canadian framework.",
+          "source_packet_id": "SRC-MED-441",
+          "source_citations": [
+            {
+              "source_id": "AUTH-SRB-002-CMPA-CONSENT-2024",
+              "locator": "Mental incapacity and substitute decision-making"
+            }
+          ]
+        }
+      ],
+      "relevant_claim_ids": [
+        "SRC-MED-441-REC-01",
+        "SRC-MED-441-REC-02",
+        "SRC-MED-441-EX-01",
+        "SRC-MED-441-EX-02",
+        "SRC-MED-441-EX-03"
+      ],
+      "state": "ALIGNED_COMPLETE",
+      "cause": null,
+      "decision_support_state": "DECLARED_COMPETENCY_COVERED",
+      "supported_scope": "Distinguish stated MAID tracks and their additional safeguards and respond to requests via capacity, voluntariness, informed discussion and assessment referral, retaining the mental-illness exclusion and jurisdiction caveats.",
+      "unsupported_content": "None at the declared competency level; concrete item facts, currentness, numeric/legal boundaries and complete option-set entailment remain separate gates.",
+      "entire_address_complete": true,
+      "rationale": "Both declared competencies have direct claim support at their stated level. This is alignment to the frozen researched claims, not a new legal-currentness verification.",
+      "old_verdict": "ALIGNED",
+      "old_reason": "Health Canada, CAMAP, CPSO and CMPA sources cover responding to a request, the two eligibility tracks, the mental-illness exclusion date and the final-consent waiver, matching both declared competencies.",
+      "review_provenance": {
+        "reviewer": "separate Codex audit subagent /root/audit_evidence",
+        "review_type": "INDEPENDENT_AGENT_REAUDIT_NOT_BLINDED_TO_W1",
+        "external_llm_api_calls": 0,
+        "live_guidance_reverified": false
+      }
+    }
+  ]
+}
