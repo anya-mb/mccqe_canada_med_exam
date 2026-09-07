@@ -1,0 +1,450 @@
+{
+  "baseline_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2",
+  "derived_from": {
+    "batch": "medium-pilot-snapshot-v2",
+    "proposals": "research/qgen/pilot/medium-pilot-6-proposed-extensions.json",
+    "starting_commit": "2e90375"
+  },
+  "extension_set_id": "medium-pilot-6-next-snapshot-extensions",
+  "extensions": [
+    {
+      "anchor_study_unit_id": "SU-OB-54",
+      "classification": "ANCHOR_RELATION_ONLY",
+      "concept_id_reconciliation": "REGISTERED_ID_MATCHES_SUPPLY_DECLARED_ID",
+      "context": {
+        "role_override_source": null,
+        "s4_limb_b": "CLM-R2-OB-CONTINUE-FEEDING states that bacterial mastitis is not a contraindication to breastfeeding and that women should not be instructed to express and discard. The claim exists because the presence of bacterial mastitis is the recognised reason clinicians reach for this instruction, and CLM-R2-OB-MASTITIS-ANCHOR states bacterial mastitis as the segmental erythematous, oedematous, painful breast. The claim therefore names the presentation and not merely the disease, which is what limb B requires on the strict reading.",
+        "s4_limb_c": "The candidate's correctness condition is that a contraindication to the infant receiving the milk is present. Segmental erythema is not that condition and does not appear in its tree, so the anchor makes the candidate live without making it correct.",
+        "supply_declared_contrast_role": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA is typed EXAMINATION_FINDING, which yields POSITIVE_SUPPORT and so the PRESENTATION discriminative class in PATIENT_CLINICAL. It is an observation of the patient rather than a resource clause or a judgement about the decider, so it can carry plausibility on its own. No role override is declared.",
+        "supply_rule": "S-4"
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "declared_anchor_role": null,
+      "evidence_refs": [
+        "CLM-R2-OB-CONTINUE-FEEDING",
+        "CLM-R2-OB-MASTITIS-ANCHOR"
+      ],
+      "extension_id": "FAX-V3-001",
+      "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+      "feature_status": "FEATURE_ALREADY_EXISTS",
+      "learner_decision": "QGEN-GEN-OBGYN-T03",
+      "member_id": "SEED-OB-T03-DISCARD",
+      "proposed_by": "cross-discipline medium pilot wave `medium-pilot-snapshot-v2`",
+      "registry_review": {
+        "anchor_strength_and_role": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA is typed EXAMINATION_FINDING, which yields POSITIVE_SUPPORT and so the PRESENTATION discriminative class in PATIENT_CLINICAL. It is an observation of the patient rather than a resource clause or a judgement about the decider, so it can carry plausibility on its own. No role override is declared.",
+        "boolean_semantics": "Verified against the frozen medium-pilot reading rather than the wave summary: the correctness tree is ALL_OF(SF-OB54-INFANT-FEEDING-CONTRAINDICATION PRESENT). SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA is not a conjunct of it, so the anchor cannot complete the correctness signature.",
+        "categorical_exclusion_risk": "NONE. The relation adds no category and does not move the candidate's concept category, so CS2-5 sees the same option-set shape.",
+        "clinically_meaningful": true,
+        "correctly_typed": true,
+        "learner_decision_relevance": "Scoped to G2-OBGYN-03 and to no other decision context. The scope rule the registry milestone added applies: an anchor relation reviewed for one decision anchors nowhere else.",
+        "mcc_level_relevant": true,
+        "medical_correctness": "Expressing and discarding milk is the instruction clinicians historically gave for bacterial mastitis, and CLM-R2-OB-CONTINUE-FEEDING is written to correct exactly that instruction. The erythematous segment is the finding that prompts it.",
+        "minimality_note": "Without the relation the competitor's single frozen anchor is SF-OB54-INFANT-FEEDING-CONTRAINDICATION, which is also its whole correctness condition, so CS2-6 refuses it: it can be made live only by being made correct. That is a defect in the frozen anchor derivation, not a yield argument.",
+        "needed_for_a_validated_contrast_relation": true,
+        "not_a_duplicate": true,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reviewer_id": "R-MP-EXTENSION-REVIEW",
+        "second_key_risk": "NONE, on the Boolean check above.",
+        "source_support": "CLM-R2-OB-CONTINUE-FEEDING, CLM-R2-OB-MASTITIS-ANCHOR, read from the frozen evidence packets.",
+        "state_semantics": "Required state PRESENT. Where the stem is silent the feature is UNKNOWN and the relation does not fire; nothing here reads silence as absence.",
+        "verdict": "APPROVED"
+      },
+      "required_state": "PRESENT",
+      "response_class": [
+        "PATIENT_INSTRUCTION"
+      ],
+      "scope_opportunity_labels": [
+        "G2-OBGYN-03"
+      ],
+      "seed_id": "SEED-OB-T03-DISCARD",
+      "source_opportunity": "G2-OBGYN-03",
+      "supply_acquisition_kind": "ANCHOR_ADDITION",
+      "supply_declared_concept_id": "CONCEPT-R4-SU-OB-54-DISCARD",
+      "supply_discovery_source": "APPROVED_V2_RELATION",
+      "supply_wave_review": {
+        "reviewer_id": "R-MP-SUPPLY-A",
+        "verdict": "APPROVED"
+      },
+      "target_concept_id": "CONCEPT-R4-SU-OB-54-DISCARD"
+    },
+    {
+      "anchor_study_unit_id": "SU-P-147",
+      "classification": "ANCHOR_RELATION_ONLY",
+      "concept_id_reconciliation": "REGISTERED_ID_MATCHES_SUPPLY_DECLARED_ID",
+      "context": {
+        "role_override_source": null,
+        "s4_limb_b": "CLM-R2-PED-DX-ANCHOR states the bronchiolitis prodrome as two to three days of fever, cough and rhinorrhea. Rhinorrhea is the nasal secretion suctioning addresses, and CLM-R4-PED-SUCTION is a claim about suctioning in exactly that illness. The coryzal prodrome is the presentation feature the candidate shares with the key, named in the claim's own words.",
+        "s4_limb_c": "The candidate's correctness condition is that nasal obstruction is limiting feeding or comfort. A coryzal prodrome is not that condition -- an infant may be coryzal without obstruction limiting feeds -- so the anchor makes the candidate live without making it correct.",
+        "supply_declared_contrast_role": "SF-P147-VIRAL-PRODROME is typed TIME_COURSE, which yields TIMING_FEATURE and so the PRESENTATION discriminative class in PATIENT_CLINICAL. It is a stated feature of the illness course rather than a judgement, so it can carry plausibility.",
+        "supply_rule": "S-4"
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "declared_anchor_role": null,
+      "evidence_refs": [
+        "CLM-R2-PED-DX-ANCHOR",
+        "CLM-R4-PED-SUCTION"
+      ],
+      "extension_id": "FAX-V3-002",
+      "feature_id": "SF-P147-VIRAL-PRODROME",
+      "feature_status": "FEATURE_ALREADY_EXISTS",
+      "learner_decision": "QGEN-GEN-PED-T03",
+      "member_id": "SEED-PED-T03-SUCTION",
+      "proposed_by": "cross-discipline medium pilot wave `medium-pilot-snapshot-v2`",
+      "registry_review": {
+        "anchor_strength_and_role": "SF-P147-VIRAL-PRODROME is typed TIME_COURSE, which yields TIMING_FEATURE and so the PRESENTATION discriminative class in PATIENT_CLINICAL. It is a stated feature of the illness course rather than a judgement, so it can carry plausibility.",
+        "boolean_semantics": "Verified against the frozen medium-pilot reading: the correctness tree is ALL_OF(SF-P147-NASAL-OBSTRUCTION-LIMITING-FEEDS PRESENT). SF-P147-VIRAL-PRODROME is not a conjunct of it. It is a conjunct of the *key's* tree, which is a different question and is not second-key risk for this competitor.",
+        "categorical_exclusion_risk": "NONE. The relation adds no category and does not move the candidate's concept category, so CS2-5 sees the same option-set shape.",
+        "clinically_meaningful": true,
+        "correctly_typed": true,
+        "learner_decision_relevance": "Scoped to G2-PED-03 and to no other decision context. The scope rule the registry milestone added applies: an anchor relation reviewed for one decision anchors nowhere else.",
+        "mcc_level_relevant": true,
+        "medical_correctness": "Superficial nasal suctioning is recommended supportive care in bronchiolitis, and the coryzal prodrome is the reason a candidate reaches for it. The distinction from the epinephrine and fluids proposals the same wave refused is real: there the cited claim bore on nothing the option does.",
+        "minimality_note": "Without the relation the competitor's single frozen anchor is SF-P147-NASAL-OBSTRUCTION-LIMITING-FEEDS, which is also its whole correctness condition, so CS2-6 refuses it.",
+        "needed_for_a_validated_contrast_relation": true,
+        "not_a_duplicate": true,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reviewer_id": "R-MP-EXTENSION-REVIEW",
+        "second_key_risk": "NONE for this competitor. The feature is one of the key's three conjuncts, so stating it moves the key towards correctness rather than this competitor, which is the intended direction.",
+        "source_support": "CLM-R2-PED-DX-ANCHOR, CLM-R4-PED-SUCTION, read from the frozen evidence packets.",
+        "state_semantics": "Required state PRESENT. Where the stem is silent the feature is UNKNOWN and the relation does not fire; nothing here reads silence as absence.",
+        "verdict": "APPROVED"
+      },
+      "required_state": "PRESENT",
+      "response_class": [
+        "MINIMAL_SUPPORT"
+      ],
+      "scope_opportunity_labels": [
+        "G2-PED-03"
+      ],
+      "seed_id": "SEED-PED-T03-SUCTION",
+      "source_opportunity": "G2-PED-03",
+      "supply_acquisition_kind": "ANCHOR_ADDITION",
+      "supply_declared_concept_id": "CONCEPT-R4-SU-P-147-SUCTION",
+      "supply_discovery_source": "APPROVED_V2_RELATION",
+      "supply_wave_review": {
+        "reviewer_id": "R-MP-SUPPLY-A",
+        "verdict": "APPROVED"
+      },
+      "target_concept_id": "CONCEPT-R4-SU-P-147-SUCTION"
+    },
+    {
+      "anchor_study_unit_id": "SU-PS-12",
+      "classification": "ANCHOR_RELATION_ONLY",
+      "concept_id_reconciliation": "REGISTERED_ID_MATCHES_SUPPLY_DECLARED_ID",
+      "context": {
+        "role_override_source": null,
+        "s4_limb_b": "CLM-R2-PSY-DDX-MEDICAL states that the differential should include nonpsychiatric medical conditions that present with depressive symptoms; the depressive symptoms are named as the reason to consider the candidate. CLM-R4-PSY-LABS names anaemia as one of the conditions the baseline count is drawn to exclude in this presentation.",
+        "s4_limb_c": "Its correctness condition is an abnormal complete blood count, which the anchor is not, so the anchor makes the candidate live without making it correct.",
+        "supply_declared_contrast_role": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT is typed SYMPTOM, which yields SHARED_PRESENTATION_FEATURE and so the PRESENTATION discriminative class in PATIENT_CLINICAL.",
+        "supply_rule": "S-4"
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": "SINGLE_DIAGNOSIS",
+      "declared_anchor_role": null,
+      "evidence_refs": [
+        "CLM-R2-PSY-DDX-MEDICAL",
+        "CLM-R4-PSY-LABS"
+      ],
+      "extension_id": "FAX-V3-003",
+      "feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+      "feature_status": "FEATURE_ALREADY_EXISTS",
+      "learner_decision": "QGEN-GEN-PSY-T01",
+      "member_id": "SEED-PSY-T01-ANEMIA",
+      "proposed_by": "cross-discipline medium pilot wave `medium-pilot-snapshot-v2`",
+      "registry_review": {
+        "anchor_strength_and_role": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT is typed SYMPTOM, which yields SHARED_PRESENTATION_FEATURE and so the PRESENTATION discriminative class in PATIENT_CLINICAL.",
+        "boolean_semantics": "Verified against the frozen medium-pilot reading: the correctness tree is ALL_OF(SF-PS12-ABNORMAL-CBC PRESENT). The anchor is not a conjunct of it.",
+        "categorical_exclusion_risk": "NONE. The relation adds no category and does not move the candidate's concept category, so CS2-5 sees the same option-set shape.",
+        "clinically_meaningful": true,
+        "correctly_typed": true,
+        "learner_decision_relevance": "Scoped to G2-PSY-01 and to no other decision context. The scope rule the registry milestone added applies: an anchor relation reviewed for one decision anchors nowhere else.",
+        "mcc_level_relevant": true,
+        "medical_correctness": "A depressive syndrome is what brings the patient in, and the recognised teaching is that a nonpsychiatric medical cause belongs in that differential. CLM-R4-PSY-LABS names anaemia specifically.",
+        "minimality_note": "Without the relation the competitor's single frozen anchor is SF-PS12-ABNORMAL-CBC, which is also its whole correctness condition, so CS2-6 refuses it.",
+        "needed_for_a_validated_contrast_relation": true,
+        "not_a_duplicate": true,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reviewer_id": "R-MP-EXTENSION-REVIEW",
+        "second_key_risk": "NONE, on the Boolean check above. The feature is shared with the key by construction, which is what a SHARED_PRESENTATION_FEATURE is; sharing a presentation is not sharing a correctness condition.",
+        "source_support": "CLM-R2-PSY-DDX-MEDICAL, CLM-R4-PSY-LABS, read from the frozen evidence packets.",
+        "state_semantics": "Required state PRESENT. Where the stem is silent the feature is UNKNOWN and the relation does not fire; nothing here reads silence as absence.",
+        "verdict": "APPROVED"
+      },
+      "required_state": "PRESENT",
+      "response_class": [
+        "PERSISTENT_MOOD_DISTURBANCE"
+      ],
+      "scope_opportunity_labels": [
+        "G2-PSY-01"
+      ],
+      "seed_id": "SEED-PSY-T01-ANEMIA",
+      "source_opportunity": "G2-PSY-01",
+      "supply_acquisition_kind": "ANCHOR_ADDITION",
+      "supply_declared_concept_id": "CONCEPT-R4-SU-H-02-ANEMIA",
+      "supply_discovery_source": "APPROVED_V2_RELATION",
+      "supply_wave_review": {
+        "reviewer_id": "R-MP-SUPPLY-A",
+        "verdict": "APPROVED"
+      },
+      "target_concept_id": "CONCEPT-R4-SU-H-02-ANEMIA"
+    },
+    {
+      "anchor_study_unit_id": "SU-PS-12",
+      "classification": "ANCHOR_RELATION_ONLY",
+      "concept_id_reconciliation": "REGISTERED_ID_MATCHES_SUPPLY_DECLARED_ID",
+      "context": {
+        "role_override_source": null,
+        "s4_limb_b": "CLM-R2-PSY-DDX-MEDICAL states in terms that the differential should include nonpsychiatric medical conditions that present with depressive symptoms. The depressive symptoms are named as the reason to consider the candidate and are shared with the key.",
+        "s4_limb_c": "Its correctness condition is an abnormal thyroid stimulating hormone. A depressive syndrome is not that, so the anchor makes it live without making it correct.",
+        "supply_declared_contrast_role": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT is typed SYMPTOM, which yields SHARED_PRESENTATION_FEATURE and so the PRESENTATION discriminative class in PATIENT_CLINICAL.",
+        "supply_rule": "S-4"
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": "SINGLE_DIAGNOSIS",
+      "declared_anchor_role": null,
+      "evidence_refs": [
+        "CLM-R2-PSY-DDX-MEDICAL"
+      ],
+      "extension_id": "FAX-V3-004",
+      "feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+      "feature_status": "FEATURE_ALREADY_EXISTS",
+      "learner_decision": "QGEN-GEN-PSY-T01",
+      "member_id": "SEED-PSY-T01-MEDICAL",
+      "proposed_by": "cross-discipline medium pilot wave `medium-pilot-snapshot-v2`",
+      "registry_review": {
+        "anchor_strength_and_role": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT is typed SYMPTOM, which yields SHARED_PRESENTATION_FEATURE and so the PRESENTATION discriminative class in PATIENT_CLINICAL.",
+        "boolean_semantics": "Verified against the frozen medium-pilot reading: the correctness tree is ALL_OF(SF-PS12-ABNORMAL-TSH PRESENT). The anchor is not a conjunct of it.",
+        "categorical_exclusion_risk": "NONE. The relation adds no category and does not move the candidate's concept category, so CS2-5 sees the same option-set shape.",
+        "clinically_meaningful": true,
+        "correctly_typed": true,
+        "learner_decision_relevance": "Scoped to G2-PSY-01 and to no other decision context. The scope rule the registry milestone added applies: an anchor relation reviewed for one decision anchors nowhere else.",
+        "mcc_level_relevant": true,
+        "medical_correctness": "Hypothyroidism presenting as a depressive syndrome is the canonical example of the claim's own instruction, and it is why thyroid function is checked before a psychiatric diagnosis is settled.",
+        "minimality_note": "Without the relation the competitor's single frozen anchor is SF-PS12-ABNORMAL-TSH, which is also its whole correctness condition, so CS2-6 refuses it.",
+        "needed_for_a_validated_contrast_relation": true,
+        "not_a_duplicate": true,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reviewer_id": "R-MP-EXTENSION-REVIEW",
+        "second_key_risk": "NONE, on the Boolean check above.",
+        "source_support": "CLM-R2-PSY-DDX-MEDICAL, read from the frozen evidence packets.",
+        "state_semantics": "Required state PRESENT. Where the stem is silent the feature is UNKNOWN and the relation does not fire; nothing here reads silence as absence.",
+        "verdict": "APPROVED"
+      },
+      "required_state": "PRESENT",
+      "response_class": [
+        "ACUTE_METABOLIC_DERANGEMENT",
+        "PERSISTENT_MOOD_DISTURBANCE"
+      ],
+      "scope_opportunity_labels": [
+        "G2-PSY-01"
+      ],
+      "seed_id": "SEED-PSY-T01-MEDICAL",
+      "source_opportunity": "G2-PSY-01",
+      "supply_acquisition_kind": "ANCHOR_ADDITION",
+      "supply_declared_concept_id": "CONCEPT-R4-SU-E-30-HYPOTHYROID",
+      "supply_discovery_source": "APPROVED_V2_RELATION",
+      "supply_wave_review": {
+        "reviewer_id": "R-MP-SUPPLY-A",
+        "verdict": "APPROVED"
+      },
+      "target_concept_id": "CONCEPT-R4-SU-E-30-HYPOTHYROID"
+    },
+    {
+      "anchor_study_unit_id": "SU-PS-12",
+      "classification": "ANCHOR_RELATION_ONLY",
+      "concept_id_reconciliation": "REGISTERED_ID_MATCHES_SUPPLY_DECLARED_ID",
+      "context": {
+        "role_override_source": null,
+        "s4_limb_b": "CLM-R2-PSY-PDD characterises persistent depressive disorder by two or more depressive symptoms present for more than two years. The depressive syndrome is the presentation the claim names, and it is the feature this candidate shares with the key.",
+        "s4_limb_c": "Its correctness tree is a chronic two-year course together with an absence of interepisode recovery. A current depressive syndrome is neither conjunct, so the anchor makes it live without making it correct.",
+        "supply_declared_contrast_role": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT is typed SYMPTOM, which yields SHARED_PRESENTATION_FEATURE and so the PRESENTATION discriminative class in PATIENT_CLINICAL.",
+        "supply_rule": "S-4"
+      },
+      "decision_domain": "PATIENT_CLINICAL",
+      "decision_granularity": "SINGLE_DIAGNOSIS",
+      "declared_anchor_role": null,
+      "evidence_refs": [
+        "CLM-R2-PSY-PDD"
+      ],
+      "extension_id": "FAX-V3-005",
+      "feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+      "feature_status": "FEATURE_ALREADY_EXISTS",
+      "learner_decision": "QGEN-GEN-PSY-T01",
+      "member_id": "SEED-PSY-T01-PDD",
+      "proposed_by": "cross-discipline medium pilot wave `medium-pilot-snapshot-v2`",
+      "registry_review": {
+        "anchor_strength_and_role": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT is typed SYMPTOM, which yields SHARED_PRESENTATION_FEATURE and so the PRESENTATION discriminative class in PATIENT_CLINICAL.",
+        "boolean_semantics": "Verified against the frozen medium-pilot reading: the correctness tree is ALL_OF(SF-PS12-CHRONIC-2YR-COURSE PRESENT, SF-PS12-INTEREPISODE-RECOVERY ABSENT). The anchor is neither conjunct.",
+        "categorical_exclusion_risk": "NONE. The relation adds no category and does not move the candidate's concept category, so CS2-5 sees the same option-set shape.",
+        "clinically_meaningful": true,
+        "correctly_typed": true,
+        "learner_decision_relevance": "Scoped to G2-PSY-01 and to no other decision context. The scope rule the registry milestone added applies: an anchor relation reviewed for one decision anchors nowhere else.",
+        "mcc_level_relevant": true,
+        "medical_correctness": "Separating a first major depressive episode from a chronic persistent depressive disorder is the actual discrimination this decision asks for, and the current depressive syndrome is what both share.",
+        "minimality_note": "The relation is needed because the competitor's only frozen anchor, the chronic two-year course, is declared contradictory with the interepisode recovery the key requires, so no stem that keys this item can state it. Without the relation the competitor has no anchor a keying stem may state at all.",
+        "needed_for_a_validated_contrast_relation": true,
+        "not_a_duplicate": true,
+        "question_yield_was_not_treated_as_evidence": true,
+        "reviewer_id": "R-MP-EXTENSION-REVIEW",
+        "second_key_risk": "NONE, on the Boolean check above.",
+        "source_support": "CLM-R2-PSY-PDD, read from the frozen evidence packets.",
+        "state_semantics": "Required state PRESENT. Where the stem is silent the feature is UNKNOWN and the relation does not fire; nothing here reads silence as absence.",
+        "verdict": "APPROVED"
+      },
+      "required_state": "PRESENT",
+      "response_class": [
+        "PERSISTENT_MOOD_DISTURBANCE"
+      ],
+      "scope_opportunity_labels": [
+        "G2-PSY-01"
+      ],
+      "seed_id": "SEED-PSY-T01-PDD",
+      "source_opportunity": "G2-PSY-01",
+      "supply_acquisition_kind": "ANCHOR_ADDITION",
+      "supply_declared_concept_id": "CONCEPT-R4-SU-PS-12-PDD",
+      "supply_discovery_source": "APPROVED_V2_RELATION",
+      "supply_wave_review": {
+        "reviewer_id": "R-MP-SUPPLY-A",
+        "verdict": "APPROVED"
+      },
+      "target_concept_id": "CONCEPT-R4-SU-PS-12-PDD"
+    },
+    {
+      "anchor_study_unit_id": "SU-C-21",
+      "classification": "NEW_FEATURE_REQUIRED",
+      "clinical_role": "SYMPTOM",
+      "evidence_refs": [],
+      "extension_id": "FAX-V3-006",
+      "feature_status": "FEATURE_DOES_NOT_EXIST",
+      "member_id": "SEED-G2-MED-T01-DISSECTION",
+      "normalized_feature": "severe acute chest pain is the presenting complaint",
+      "proposed_feature_id": "SF-C21-SEVERE-ACUTE-CHEST-PAIN",
+      "registry_review": {
+        "reviewer_id": "R-MP-EXTENSION-REVIEW-V3",
+        "reviewer_inconsistency_or_evidence_bug": "NONE. The medium-pilot reviewer and this pass reach the same verdict on the same two grounds.",
+        "revisit_condition": "An authorization to extend the frozen stem-feature vocabulary, together with an evidence packet stating this feature.",
+        "verdict": "UNCERTAIN",
+        "why_it_remained_uncertain": "Two independent blockers, and neither is a reviewer inconsistency. First, admitting it grows the frozen 102-feature stem-feature vocabulary, which reopens a frozen layer this task's authorization does not cover, and `validate_extension` independently refuses to approve anything but an ANCHOR_RELATION_ONLY extension. Second, no cited claim in the current SU-C-21 packets states severe acute chest pain as a normalized feature: CLM-AORTIC-DISSECTION-01 names only the three features that are already the competitor's own correctness disjuncts."
+      },
+      "scope_opportunity_labels": [
+        "G2-MED-01"
+      ],
+      "seed_id": "SEED-G2-MED-T01-DISSECTION",
+      "source_opportunity": "G2-MED-01",
+      "why": "It is the presentation every competitor in this set shares with the key and the reason a candidate considers an aortic cause at all. Without it dissection is expressible only as its own correctness conditions."
+    },
+    {
+      "anchor_study_unit_id": "SU-P-147",
+      "classification": "NEW_FEATURE_REQUIRED",
+      "clinical_role": "VITAL_SIGN",
+      "evidence_refs": [
+        "CLM-R4-PED-FEEDING"
+      ],
+      "extension_id": "FAX-V3-007",
+      "feature_status": "FEATURE_DOES_NOT_EXIST",
+      "member_id": "SEED-PED-T03-FLUIDS",
+      "normalized_feature": "the respiratory rate is above sixty breaths per minute",
+      "proposed_feature_id": "SF-P147-TACHYPNOEA-ABOVE-60",
+      "registry_review": {
+        "reviewer_id": "R-MP-EXTENSION-REVIEW-V3",
+        "reviewer_inconsistency_or_evidence_bug": "NONE. Recorded twice now with the same reasoning; this pass adds only that the blocker is single rather than double.",
+        "revisit_condition": "An authorization to extend the frozen stem-feature vocabulary. No new evidence is needed.",
+        "verdict": "UNCERTAIN",
+        "why_it_remained_uncertain": "One blocker only, and it is authorization rather than evidence: CLM-R4-PED-FEEDING already states the threshold, so unlike FAX-V3-006 the evidence exists. Admitting it still grows the frozen vocabulary, which this task's authorization does not cover, and `validate_extension` refuses on its own account to approve anything but ANCHOR_RELATION_ONLY. It remains the cleanest available repair for G2-PED-03's blueprint failure and is recorded as such rather than quietly dropped."
+      },
+      "scope_opportunity_labels": [
+        "G2-PED-03"
+      ],
+      "seed_id": "SEED-PED-T03-FLUIDS",
+      "source_opportunity": "G2-PED-03",
+      "why": "CLM-R4-PED-FEEDING names this number as the aspiration-risk threshold. The frozen vocabulary can only say escalating work of breathing, which collapses a measured vital sign into the judgement that non-invasive support is being considered, and that collapse is what makes three competitors share one anchor."
+    },
+    {
+      "anchor_study_unit_id": "SU-GS-76",
+      "classification": "ANCHOR_RELATION_ONLY",
+      "evidence_refs": [
+        "CLM-R2-SURG-DRAINAGE",
+        "CLM-R2-SURG-NONOP",
+        "CLM-R2-SURG-STANDARD"
+      ],
+      "extension_id": "FAX-V3-008",
+      "feature_status": "FEATURE_ALREADY_EXISTS",
+      "member_id": "SEED-SURG-T03-DRAINAGE",
+      "proposed_feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+      "registry_review": {
+        "reviewer_id": "R-MP-EXTENSION-REVIEW-V3",
+        "reviewer_inconsistency_or_evidence_bug": "NONE. The medium-pilot extension reviewer overturned the wave's own approval on evidence the wave did not have, which is the reviewing order working rather than an inconsistency. Re-reading the three cited claims reproduces the same reading of their words.",
+        "revisit_condition": "A claim that states the migratory right-lower-quadrant presentation itself rather than the disease, and a set that does not then live on that one feature.",
+        "verdict": "UNCERTAIN",
+        "why_it_remained_uncertain": "S-4 limb B is not met on the strict reading the registry adopted. The cited claims name appendicitis, the disease; they do not name migratory right lower quadrant pain, the feature. The wave admitted the anchor by substituting the vocabulary's statement of the disease for the claim's own words, which is an inference rather than a citation. The downstream evidence agrees and is why this is decided rather than argued: in the counterfactual run the three competitors this anchor served were live on it and on nothing else, and the post-stem coherence gate fired CS2-7 SET_LIVES_ON_ONE_FEATURE, which is the signature degeneracy of an anchor of this kind."
+      },
+      "scope_opportunity_labels": [
+        "G2-SURG-03"
+      ],
+      "seed_id": "SEED-SURG-T03-DRAINAGE",
+      "source_opportunity": "G2-SURG-03",
+      "why": "Central pain migrating to the right lower quadrant is the frozen SU-GS-76 vocabulary's only statement of the presentation this set is about. Its single correctness condition is the walled-off collection, which is also its only frozen anchor."
+    },
+    {
+      "anchor_study_unit_id": "SU-GS-76",
+      "classification": "ANCHOR_RELATION_ONLY",
+      "evidence_refs": [
+        "CLM-R2-SURG-DRAINAGE",
+        "CLM-R2-SURG-NONOP",
+        "CLM-R2-SURG-STANDARD"
+      ],
+      "extension_id": "FAX-V3-009",
+      "feature_status": "FEATURE_ALREADY_EXISTS",
+      "member_id": "SEED-SURG-T03-INTERVAL",
+      "proposed_feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+      "registry_review": {
+        "reviewer_id": "R-MP-EXTENSION-REVIEW-V3",
+        "reviewer_inconsistency_or_evidence_bug": "NONE. The medium-pilot extension reviewer overturned the wave's own approval on evidence the wave did not have, which is the reviewing order working rather than an inconsistency. Re-reading the three cited claims reproduces the same reading of their words.",
+        "revisit_condition": "A claim that states the migratory right-lower-quadrant presentation itself rather than the disease, and a set that does not then live on that one feature.",
+        "verdict": "UNCERTAIN",
+        "why_it_remained_uncertain": "S-4 limb B is not met on the strict reading the registry adopted. The cited claims name appendicitis, the disease; they do not name migratory right lower quadrant pain, the feature. The wave admitted the anchor by substituting the vocabulary's statement of the disease for the claim's own words, which is an inference rather than a citation. The downstream evidence agrees and is why this is decided rather than argued: in the counterfactual run the three competitors this anchor served were live on it and on nothing else, and the post-stem coherence gate fired CS2-7 SET_LIVES_ON_ONE_FEATURE, which is the signature degeneracy of an anchor of this kind."
+      },
+      "scope_opportunity_labels": [
+        "G2-SURG-03"
+      ],
+      "seed_id": "SEED-SURG-T03-INTERVAL",
+      "source_opportunity": "G2-SURG-03",
+      "why": "Central pain migrating to the right lower quadrant is the frozen SU-GS-76 vocabulary's only statement of the presentation this set is about. Its correctness tree is a disjunction of an operative contraindication and a walled-off phlegmon or abscess."
+    },
+    {
+      "anchor_study_unit_id": "SU-GS-76",
+      "classification": "ANCHOR_RELATION_ONLY",
+      "evidence_refs": [
+        "CLM-R2-SURG-DRAINAGE",
+        "CLM-R2-SURG-NONOP",
+        "CLM-R2-SURG-STANDARD"
+      ],
+      "extension_id": "FAX-V3-010",
+      "feature_status": "FEATURE_ALREADY_EXISTS",
+      "member_id": "SEED-SURG-T03-NONOP",
+      "proposed_feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+      "registry_review": {
+        "reviewer_id": "R-MP-EXTENSION-REVIEW-V3",
+        "reviewer_inconsistency_or_evidence_bug": "NONE. The medium-pilot extension reviewer overturned the wave's own approval on evidence the wave did not have, which is the reviewing order working rather than an inconsistency. Re-reading the three cited claims reproduces the same reading of their words.",
+        "revisit_condition": "A claim that states the migratory right-lower-quadrant presentation itself rather than the disease, and a set that does not then live on that one feature.",
+        "verdict": "UNCERTAIN",
+        "why_it_remained_uncertain": "S-4 limb B is not met on the strict reading the registry adopted. The cited claims name appendicitis, the disease; they do not name migratory right lower quadrant pain, the feature. The wave admitted the anchor by substituting the vocabulary's statement of the disease for the claim's own words, which is an inference rather than a citation. The downstream evidence agrees and is why this is decided rather than argued: in the counterfactual run the three competitors this anchor served were live on it and on nothing else, and the post-stem coherence gate fired CS2-7 SET_LIVES_ON_ONE_FEATURE, which is the signature degeneracy of an anchor of this kind."
+      },
+      "scope_opportunity_labels": [
+        "G2-SURG-03"
+      ],
+      "seed_id": "SEED-SURG-T03-NONOP",
+      "source_opportunity": "G2-SURG-03",
+      "why": "Central pain migrating to the right lower quadrant is the frozen SU-GS-76 vocabulary's only statement of the presentation this set is about. Its correctness tree is uncomplicated disease with an accepted recurrence risk together with the absence of perforation, and its only other frozen anchor is a clinical judgement that types BACKGROUND_CONTEXT in a patient decision."
+    }
+  ],
+  "no_new_discovery": "Every row restates a proposal the completed medium pilot already collected and already reviewed. Nothing was rediscovered, no new contrast was researched, no additional anchor was looked for, and no historical snapshot was modified.",
+  "review_independence": "A separate reasoning pass from the wave that proposed the relations, carried out against the frozen readings and the cited claims rather than against the wave's summary. It is not a separate agent, and that limit is stated rather than hidden.",
+  "schema_version": "1.0",
+  "scope": "QGEN_FEATURE_ANCHOR_REGISTRY_EXTENSIONS",
+  "scope_rule": "An approved anchor relation names the decision contexts its review considered in `scope_opportunity_labels` and applies nowhere else. With no scope it applies nowhere at all.",
+  "target_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V3",
+  "uncertain_rule": "UNCERTAIN fails closed exactly as REJECTED does. The five uncertain rows are recorded here so that their exclusion is auditable; `approved_extensions` does not return them, so no snapshot can carry one. They are not revisited for yield: a re-review is warranted only on a concrete reviewer inconsistency or an evidence bug, and this pass found neither."
+}

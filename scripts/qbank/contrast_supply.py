@@ -33,9 +33,12 @@ from .clinical_contrast_v2 import (
     contrast_role_for,
     discriminative_class,
     evaluate_contrast_set_coherence,
+    PLAUSIBLE_BUT_NEVER_BEST,
     evaluate_predicate,
+    is_never_best,
     predicate_feature_ids,
     predicate_leaves,
+    validate_never_best_contract,
     validate_predicate,
 )
 from .contrast_first_pilot import (
@@ -777,7 +780,12 @@ def validate_acquired_relation(
         declared = set()
         for side in ("shared_features", "a_supporting_features", "b_supporting_features"):
             declared.update(row["feature_id"] for row in relation[side])
-        for side in ("correctness_conditions_a", "correctness_conditions_b"):
+        for side, flag in (
+            ("correctness_conditions_a", "never_best_a"),
+            ("correctness_conditions_b", "never_best_b"),
+        ):
+            if relation.get(flag):
+                continue
             declared.update(predicate_feature_ids(relation[side]))
         unknown = sorted(declared - set(vocabulary))
         if unknown:
@@ -798,6 +806,11 @@ def _enforce_anchor_sufficiency(relation: Mapping[str, Any]) -> None:
     anchor added to get past that rule rather than to state a shared finding is
     the exact abuse the design names.
     """
+    if relation.get("never_best_b"):
+        # There is no correctness signature for an anchor to complete, so the
+        # abuse this limb names cannot occur. The never-best contract asks the
+        # candidate for a positive plausibility anchor in its own right instead.
+        return
     anchors = sorted({
         row["feature_id"] for row in relation["b_supporting_features"]
         if discriminative_class(row["contrast_role"]) in ANCHOR_CLASSES
@@ -967,25 +980,42 @@ def apply_supply_to_contrast_set(
                 f"{member_id} is not a curated candidate; a new concept needs a seed row"
             )
         frozen_anchors = set(seed["plausibility_anchor_feature_ids"])
-        validate_predicate(candidate["correctness_conditions"], vocabulary=vocabulary)
-        members.append({
+        never_best = (
+            candidate.get("distractor_semantics") == PLAUSIBLE_BUT_NEVER_BEST
+        )
+        if not never_best:
+            validate_predicate(candidate["correctness_conditions"], vocabulary=vocabulary)
+        member = {
             "member_id": member_id,
             "role_in_set": "COMPETITOR",
             "concept_id": seed["competitor_concept_id"],
             "concept": seed["competitor_concept"],
             "concept_category": candidate["concept_category"],
-            "response_class_tokens": [contrast_set["demanded_response_class"]],
+            # A never-best member keeps the response-class tokens its frozen seed
+            # row carries. Asserting the demanded token on its behalf would make
+            # CS2-3 unable to refuse a candidate that belongs to another question,
+            # which is exactly the failure the class must not import.
+            "response_class_tokens": (
+                sorted(seed["response_class_tokens"]) if never_best
+                else [contrast_set["demanded_response_class"]]
+            ),
             "decision_granularity": seed["competitor_decision_granularity"],
             "supporting_features": typed_supporting_features(
                 sorted(frozen_anchors | set(anchors)),
                 vocabulary=vocabulary, decision_domain=domain, role_overrides=overrides,
             ),
-            "correctness_conditions": candidate["correctness_conditions"],
             "categorical_exclusion_conditions": [],
             "evidence_refs": list(candidate["evidence_refs"]),
             "seed_id": member_id,
             "supplied_on_demand": True,
-        })
+        }
+        if never_best:
+            member["distractor_semantics"] = PLAUSIBLE_BUT_NEVER_BEST
+            member["never_best_contract"] = candidate["never_best_contract"]
+            validate_never_best_contract(member)
+        else:
+            member["correctness_conditions"] = candidate["correctness_conditions"]
+        members.append(member)
         added_members.append(member_id)
         added_anchors[member_id] = sorted(anchors)
 
@@ -1359,6 +1389,10 @@ def out_of_set_second_keys(
     for member in record["contrast_set"]["members"]:
         if member["role_in_set"] != "COMPETITOR" or member["member_id"] in in_set:
             continue
+        if is_never_best(member):
+            # A dropped never-best candidate has no correctness conditions for a
+            # blueprint to satisfy, so it cannot become an out-of-set second key.
+            continue
         if evaluate_predicate(member["correctness_conditions"], state_map) == SATISFIED:
             offending.append({
                 "member_id": member["member_id"],
@@ -1394,6 +1428,10 @@ def dropped_candidate_signature_features(
     spent = []
     for member in record["contrast_set"]["members"]:
         if member["role_in_set"] != "COMPETITOR" or member["member_id"] in in_set:
+            continue
+        if is_never_best(member):
+            # Rule S-6 protects a dropped candidate's own correctness signature.
+            # A never-best candidate has none, so there is nothing to spend.
             continue
         for leaf in predicate_leaves(member["correctness_conditions"]):
             if leaf.get("required_state") != PRESENT_STATE:

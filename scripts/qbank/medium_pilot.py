@@ -266,7 +266,9 @@ def enforce_pinned_snapshot(
                         **extension,
                     })
                 continue
-            pinned = set(resolve_seed_anchors(snapshot, candidate["member_id"]))
+            pinned = set(
+                resolve_seed_anchors(snapshot, candidate["member_id"], scope=label)
+            )
             kept, withheld = [], []
             for anchor in candidate.get("added_anchors") or []:
                 (kept if anchor["feature_id"] in pinned else withheld).append(anchor)
@@ -313,19 +315,30 @@ def enforce_pinned_snapshot(
 # --------------------------------------------------------------- Phases 17 to 22
 
 
-def run_pilot(root, *, snapshot_pinned: bool = True) -> dict[str, Any]:
+def run_pilot(
+    root,
+    *,
+    snapshot_pinned: bool = True,
+    snapshot_id: str = PILOT_SNAPSHOT_ID,
+    acquisition_path: str = ACQUISITION_PATH,
+) -> dict[str, Any]:
     """One bounded wave, then one generation attempt per contrast-ready opportunity.
 
     With ``snapshot_pinned`` the batch runs under Phase 19: only anchor relations
     the pinned snapshot already asserts are available. The unpinned run is the
     counterfactual -- what the *next* snapshot would make possible -- and is
     reported beside the pilot rather than as the pilot.
+
+    ``snapshot_id`` defaults to the snapshot this pilot was run against, so every
+    committed artifact regenerates unchanged. A later cycle replays the same frozen
+    six against its own snapshot by naming it, which is the only variable the
+    snapshot-bootstrap arms move.
     """
     from .contrast_supply import run_acquisition_wave, run_frozen5_replay
     from .feature_anchor_registry import load_snapshot
 
-    snapshot = load_snapshot(root, PILOT_SNAPSHOT_ID)
-    acquisition = _read(root, ACQUISITION_PATH)
+    snapshot = load_snapshot(root, snapshot_id)
+    acquisition = _read(root, acquisition_path)
     eligible, proposed = enforce_pinned_snapshot(root, acquisition, snapshot)
 
     from pathlib import Path
@@ -341,7 +354,7 @@ def run_pilot(root, *, snapshot_pinned: bool = True) -> dict[str, Any]:
             root,
             acquisition_path=(
                 "research/qgen/pilot/.medium-pilot-eligible-acquisition.json"
-                if snapshot_pinned else ACQUISITION_PATH
+                if snapshot_pinned else acquisition_path
             ),
             readings_path=READINGS_PATH,
         )
@@ -356,7 +369,8 @@ def run_pilot(root, *, snapshot_pinned: bool = True) -> dict[str, Any]:
         scratch.unlink(missing_ok=True)
     return {
         "snapshot_pinned": snapshot_pinned,
-        "feature_anchor_snapshot_id": PILOT_SNAPSHOT_ID,
+        "feature_anchor_snapshot_id": snapshot_id,
+        "acquisition_path": acquisition_path,
         "wave": wave,
         "replay": replay,
         "proposed_extensions": proposed,

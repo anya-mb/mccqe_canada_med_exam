@@ -1,0 +1,493 @@
+{
+  "CURRENT_V2_REQUIRES_COUNTERFACTUAL_CORRECTNESS": "YES",
+  "DISTRACTOR_SEMANTIC_EXTENSION_IMPLEMENTED": "YES",
+  "DISTRACTOR_SEMANTIC_EXTENSION_JUSTIFIED": "YES",
+  "bootstrap_id": "medium6-snapshot-bootstrap",
+  "case_file": {
+    "ADMISSIBLE_UNDER_THE_CONTRACT": [
+      "SEED-G2-MED-T03-DEFERRED-ANGIO",
+      "SEED-G2-MED-T03-RESCUE-ONLY",
+      "SEED-OB-T03-DANGLE",
+      "SEED-OB-T03-EMPTY",
+      "SEED-OB-T03-MASSAGE",
+      "SEED-OB-T03-SHIELD",
+      "SEED-PED-T03-SALBUTAMOL"
+    ],
+    "BY_SOURCE": {
+      "MEDIUM6_PILOT": 7,
+      "PRIOR_FROZEN_ACCEPTED_CONTROL": 2
+    },
+    "NEVER_CORRECT_CLASSIFICATION": {
+      "COUNTERFACTUAL_CORRECT": 0,
+      "DEAD_DISTRACTOR": 0,
+      "PLAUSIBLE_BUT_NEVER_BEST": 8,
+      "UNSAFE_OR_AMBIGUOUS": 0,
+      "WRONG_DECISION_CLASS": 1
+    },
+    "NEVER_CORRECT_DISTRACTOR_CASES": 9,
+    "bootstrap_id": "medium6-snapshot-bootstrap",
+    "cases": [
+      {
+        "ADMISSIBLE_UNDER_THE_CONTRACT": true,
+        "CLASSIFICATION": "PLAUSIBLE_BUT_NEVER_BEST",
+        "concept": "Give fibrinolysis now and arrange angiography in three to five days if she remains stable",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "frozen_independent_seed_review_verdict": "PASS",
+        "frozen_prose_no_state_makes_it_correct": "Correct for an elective investigation of stable coronary disease, not for the angiography that follows successful fibrinolysis in an acute infarct.",
+        "frozen_reviewed_strength": "STRONG",
+        "member_id": "SEED-G2-MED-T03-DEFERRED-ANGIO",
+        "never_best_contract": {
+          "inferiority": {
+            "basis": "EVIDENCE_PREFERS_ANOTHER_ACTION",
+            "evidence_refs": [
+              "CLM-ACS-PHARMACOINVASIVE-01"
+            ],
+            "reason": "Correct for an elective investigation of stable coronary disease, not for the angiography that follows successful fibrinolysis in an acute infarct."
+          },
+          "learner_error_mode": "A candidate who knows angiography follows lysis but not the interval will choose a comfortable-sounding delay.",
+          "positive_plausibility": {
+            "evidence_refs": [
+              "CLM-ACS-PHARMACOINVASIVE-01"
+            ],
+            "feature_ids": [
+              "SF-C21-DEVICE-TIME-EXCEEDS-WINDOW",
+              "SF-C21-DIAGNOSTIC-ST-ELEVATION"
+            ],
+            "reason": "It also gives lysis now and also ends in angiography, differing only in when, which is a genuine point of confusion."
+          }
+        },
+        "opportunity_label": "G2-MED-04",
+        "plausibility_anchor_feature_ids": [
+          "SF-C21-DEVICE-TIME-EXCEEDS-WINDOW",
+          "SF-C21-DIAGNOSTIC-ST-ELEVATION"
+        ],
+        "response_class_tokens": [
+          "PHARMACOLOGIC_ACTION"
+        ],
+        "reviewer_note": "Not a pilot case. It is the load-bearing prior example: an option carrying zero condition predicates inside an item four independent reviewers accepted with zero defects on all eleven dimensions. A never-best option is not incompatible with an accepted item, and this is the frozen record saying so before this task existed.",
+        "source": "PRIOR_FROZEN_ACCEPTED_CONTROL",
+        "why_not_admissible": null
+      },
+      {
+        "ADMISSIBLE_UNDER_THE_CONTRACT": true,
+        "CLASSIFICATION": "PLAUSIBLE_BUT_NEVER_BEST",
+        "concept": "Give fibrinolysis now and transfer only if the electrocardiogram fails to show resolution",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "frozen_independent_seed_review_verdict": "PASS",
+        "frozen_prose_no_state_makes_it_correct": "Correct as a description of rescue intervention, which is what happens when reperfusion fails; it is not the whole strategy when reperfusion succeeds.",
+        "frozen_reviewed_strength": "STRONG",
+        "member_id": "SEED-G2-MED-T03-RESCUE-ONLY",
+        "never_best_contract": {
+          "inferiority": {
+            "basis": "EVIDENCE_PREFERS_ANOTHER_ACTION",
+            "evidence_refs": [
+              "CLM-ACS-PHARMACOINVASIVE-01"
+            ],
+            "reason": "Correct as a description of rescue intervention, which is what happens when reperfusion fails; it is not the whole strategy when reperfusion succeeds."
+          },
+          "learner_error_mode": "A candidate who remembers rescue intervention but not the routine transfer that follows successful lysis will make transfer conditional on failure.",
+          "positive_plausibility": {
+            "evidence_refs": [
+              "CLM-ACS-PHARMACOINVASIVE-01"
+            ],
+            "feature_ids": [
+              "SF-C21-DEVICE-TIME-EXCEEDS-WINDOW",
+              "SF-C21-DIAGNOSTIC-ST-ELEVATION"
+            ],
+            "reason": "It selects the correct drug and the correct timing and differs only in the transfer policy, which is the part of the strategy candidates most often omit."
+          }
+        },
+        "opportunity_label": "G2-MED-04",
+        "plausibility_anchor_feature_ids": [
+          "SF-C21-DEVICE-TIME-EXCEEDS-WINDOW",
+          "SF-C21-DIAGNOSTIC-ST-ELEVATION"
+        ],
+        "response_class_tokens": [
+          "PHARMACOLOGIC_ACTION"
+        ],
+        "reviewer_note": "The second zero-predicate option in the same accepted item. Both remain selectable reperfusion routes invited by the geography written into the stem, which is the distinction the G2 root-cause diagnosis drew and declined to turn into a rule.",
+        "source": "PRIOR_FROZEN_ACCEPTED_CONTROL",
+        "why_not_admissible": null
+      },
+      {
+        "ADMISSIBLE_UNDER_THE_CONTRACT": false,
+        "CLASSIFICATION": "WRONG_DECISION_CLASS",
+        "concept": "Serum C-reactive protein and white blood cell count",
+        "decision_granularity": "SINGLE_NEXT_INVESTIGATION",
+        "frozen_independent_seed_review_verdict": "PASS",
+        "frozen_prose_no_state_makes_it_correct": "Not correct for this question: they are markers of inflammation and not specific for infection.",
+        "frozen_reviewed_strength": "ACCEPTABLE",
+        "member_id": "SEED-OB-T02-CRP",
+        "never_best_contract": {
+          "inferiority": {
+            "basis": "ADDRESSES_A_DIFFERENT_PROBLEM_THAN_THE_ONE_ASKED",
+            "evidence_refs": [
+              "CLM-R2-OB-ABSCESS-US",
+              "CLM-R2-OB-INFLAMMATORY-MARKERS"
+            ],
+            "reason": "Not correct for this question: they are markers of inflammation and not specific for infection."
+          },
+          "learner_error_mode": "A candidate who wants an objective marker of ongoing infection before deciding on further treatment.",
+          "positive_plausibility": {
+            "evidence_refs": [
+              "CLM-R2-OB-INFLAMMATORY-MARKERS"
+            ],
+            "feature_ids": [
+              "SF-OB54-NO-IMPROVEMENT-AFTER-48H"
+            ],
+            "reason": "Inflammatory markers are the reflex test for deciding whether infection persists, and they are ordered in this situation in practice."
+          }
+        },
+        "opportunity_label": "G2-OBGYN-02",
+        "plausibility_anchor_feature_ids": [
+          "SF-OB54-NO-IMPROVEMENT-AFTER-48H"
+        ],
+        "response_class_tokens": [
+          "BIOCHEMICAL"
+        ],
+        "reviewer_note": "The pilot recorded this as a never-correct distractor, and it is one, but that is not the earliest thing wrong with it. Its own frozen prose says why a candidate would order it -- 'the reflex test for deciding whether infection persists' -- and that is a different question from the one the lead-in asks, which is how to characterise a palpable mass. The frozen response-class tokens agree without being consulted: the seed carries BIOCHEMICAL and the set demands DIAGNOSTIC_ADVANCEMENT. Its refusal is correct and the never-correct finding is not the reason for it.",
+        "source": "MEDIUM6_PILOT",
+        "why_not_admissible": "Classified WRONG_DECISION_CLASS, which the never-best contract does not admit."
+      },
+      {
+        "ADMISSIBLE_UNDER_THE_CONTRACT": true,
+        "CLASSIFICATION": "PLAUSIBLE_BUT_NEVER_BEST",
+        "concept": "Feed in a dangle position over the infant",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "frozen_independent_seed_review_verdict": "PASS",
+        "frozen_prose_no_state_makes_it_correct": "Not correct: no evidence supports dangle feeding, and it is an unsafe infant position.",
+        "frozen_reviewed_strength": "ACCEPTABLE",
+        "member_id": "SEED-OB-T03-DANGLE",
+        "never_best_contract": {
+          "inferiority": {
+            "basis": "EVIDENCE_STATES_NO_BENEFIT",
+            "evidence_refs": [
+              "CLM-R2-OB-NO-EMPTY",
+              "CLM-R4-OB-DANGLE"
+            ],
+            "reason": "Not correct: no evidence supports dangle feeding, and it is an unsafe infant position."
+          },
+          "learner_error_mode": "A candidate who has absorbed popular lactation advice and treats gravity as the mechanism of drainage.",
+          "positive_plausibility": {
+            "evidence_refs": [
+              "CLM-R4-OB-DANGLE"
+            ],
+            "feature_ids": [
+              "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+            ],
+            "reason": "Dangle feeding is widely recommended in lactation circles for a blocked segment and is exactly the sort of instruction a patient will have read."
+          }
+        },
+        "opportunity_label": "G2-OBGYN-03",
+        "plausibility_anchor_feature_ids": [
+          "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+        ],
+        "response_class_tokens": [
+          "PATIENT_INSTRUCTION"
+        ],
+        "reviewer_note": "Widely recommended in lactation circles for a blocked segment, which is exactly the kind of advice a patient arrives having read. CLM-R4-OB-DANGLE states both that no evidence supports it and that the position is unsafe for the infant; the cited claim leads with the absence of benefit, so that is the declared basis and the safety clause is recorded in the reason.",
+        "source": "MEDIUM6_PILOT",
+        "why_not_admissible": null
+      },
+      {
+        "ADMISSIBLE_UNDER_THE_CONTRACT": true,
+        "CLASSIFICATION": "PLAUSIBLE_BUT_NEVER_BEST",
+        "concept": "Pump to empty the affected breast after every feed",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "frozen_independent_seed_review_verdict": "PASS",
+        "frozen_prose_no_state_makes_it_correct": "Not correct: overfeeding from the affected breast or pumping to empty perpetuates hyperlactation.",
+        "frozen_reviewed_strength": "STRONG",
+        "member_id": "SEED-OB-T03-EMPTY",
+        "never_best_contract": {
+          "inferiority": {
+            "basis": "EVIDENCE_STATES_HARM",
+            "evidence_refs": [
+              "CLM-R2-OB-NO-EMPTY",
+              "CLM-R4-OB-PUMP-MINIMIZE"
+            ],
+            "reason": "Not correct: overfeeding from the affected breast or pumping to empty perpetuates hyperlactation."
+          },
+          "learner_error_mode": "A candidate who applies the milk-stasis model and treats more removal as more treatment.",
+          "positive_plausibility": {
+            "evidence_refs": [
+              "CLM-R2-OB-FEEDBACK"
+            ],
+            "feature_ids": [
+              "SF-OB54-HYPERLACTATION",
+              "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+            ],
+            "reason": "Emptying the breast to relieve milk stasis is the classic instruction and is what many patients are already doing."
+          }
+        },
+        "opportunity_label": "G2-OBGYN-03",
+        "plausibility_anchor_feature_ids": [
+          "SF-OB54-HYPERLACTATION",
+          "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+        ],
+        "response_class_tokens": [
+          "PATIENT_INSTRUCTION"
+        ],
+        "reviewer_note": "Emptying the breast to relieve milk stasis is the classic instruction and is what many patients are already doing, so the temptation is the recognised one. CLM-R2-OB-NO-EMPTY states the harm: pumping to empty perpetuates hyperlactation. No reasonable nearby change to this patient makes it the best answer.",
+        "source": "MEDIUM6_PILOT",
+        "why_not_admissible": null
+      },
+      {
+        "ADMISSIBLE_UNDER_THE_CONTRACT": true,
+        "CLASSIFICATION": "PLAUSIBLE_BUT_NEVER_BEST",
+        "concept": "Apply firm deep massage over the tender area",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "frozen_independent_seed_review_verdict": "PASS",
+        "frozen_prose_no_state_makes_it_correct": "Correct only as light sweeping that approximates manual lymphatic drainage.",
+        "frozen_reviewed_strength": "STRONG",
+        "member_id": "SEED-OB-T03-MASSAGE",
+        "never_best_contract": {
+          "inferiority": {
+            "basis": "EVIDENCE_STATES_HARM",
+            "evidence_refs": [
+              "CLM-R2-OB-DEEP-MASSAGE"
+            ],
+            "reason": "Correct only as light sweeping that approximates manual lymphatic drainage."
+          },
+          "learner_error_mode": "A candidate who does not distinguish lymphatic drainage from deep tissue massage.",
+          "positive_plausibility": {
+            "evidence_refs": [
+              "CLM-R2-OB-LYMPHATIC"
+            ],
+            "feature_ids": [
+              "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+            ],
+            "reason": "A manual technique is genuinely part of recommended care, so the category is right and only the depth of pressure is wrong."
+          }
+        },
+        "opportunity_label": "G2-OBGYN-03",
+        "plausibility_anchor_feature_ids": [
+          "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+        ],
+        "response_class_tokens": [
+          "PATIENT_INSTRUCTION"
+        ],
+        "reviewer_note": "The category is right and only the depth of pressure is wrong, which is a textbook clinical confusion rather than a silly option: a manual technique is genuinely part of recommended care. CLM-R2-OB-DEEP-MASSAGE states that deep massage of an inflamed breast may propagate phlegmon. The one state in which the concept is right -- light sweeping approximating lymphatic drainage -- is a different option from the one this seed states, so it is not a counterfactual correctness condition for this option.",
+        "source": "MEDIUM6_PILOT",
+        "why_not_admissible": null
+      },
+      {
+        "ADMISSIBLE_UNDER_THE_CONTRACT": true,
+        "CLASSIFICATION": "PLAUSIBLE_BUT_NEVER_BEST",
+        "concept": "Use a nipple shield for feeds from the affected breast",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "frozen_independent_seed_review_verdict": "PASS",
+        "frozen_prose_no_state_makes_it_correct": "Not correct: neither safety nor effectiveness has been demonstrated and shields result in inadequate milk extraction.",
+        "frozen_reviewed_strength": "ACCEPTABLE",
+        "member_id": "SEED-OB-T03-SHIELD",
+        "never_best_contract": {
+          "inferiority": {
+            "basis": "EVIDENCE_STATES_NO_BENEFIT",
+            "evidence_refs": [
+              "CLM-R4-OB-NIPPLE-SHIELD"
+            ],
+            "reason": "Not correct: neither safety nor effectiveness has been demonstrated and shields result in inadequate milk extraction."
+          },
+          "learner_error_mode": "A candidate who treats the pain rather than the physiology.",
+          "positive_plausibility": {
+            "evidence_refs": [
+              "CLM-R4-OB-NIPPLE-SHIELD"
+            ],
+            "feature_ids": [
+              "SF-OB54-NEEDLE-LIKE-BURNING-PAIN-BLEBS"
+            ],
+            "reason": "A nipple shield is a standard tool offered for painful feeding, and pain with latch is part of this presentation."
+          }
+        },
+        "opportunity_label": "G2-OBGYN-03",
+        "plausibility_anchor_feature_ids": [
+          "SF-OB54-NEEDLE-LIKE-BURNING-PAIN-BLEBS"
+        ],
+        "response_class_tokens": [
+          "PATIENT_INSTRUCTION"
+        ],
+        "reviewer_note": "A nipple shield is a standard tool offered for painful feeding, and pain with latch is part of this presentation, so it is anchored on something the stem can state. CLM-R4-OB-NIPPLE-SHIELD states that neither safety nor effectiveness has been demonstrated and that shields result in inadequate milk extraction, which is the opposite of what this patient needs.",
+        "source": "MEDIUM6_PILOT",
+        "why_not_admissible": null
+      },
+      {
+        "ADMISSIBLE_UNDER_THE_CONTRACT": false,
+        "CLASSIFICATION": "PLAUSIBLE_BUT_NEVER_BEST",
+        "concept": "Nebulized 3% hypertonic saline",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "frozen_independent_seed_review_verdict": "PASS",
+        "frozen_prose_no_state_makes_it_correct": "Not correct in a typical North American population, where it has no impact on length of stay.",
+        "frozen_reviewed_strength": "ACCEPTABLE",
+        "member_id": "SEED-PED-T03-HYPERTONIC",
+        "never_best_contract": {
+          "inferiority": {
+            "basis": "EVIDENCE_STATES_NO_BENEFIT",
+            "evidence_refs": [
+              "CLM-R4-PED-HYPERTONIC"
+            ],
+            "reason": "Not correct in a typical North American population, where it has no impact on length of stay."
+          },
+          "learner_error_mode": "A candidate who recalls the mucociliary clearance rationale but not the meta-analysis.",
+          "positive_plausibility": {
+            "evidence_refs": [
+              "CLM-R4-PED-HYPERTONIC"
+            ],
+            "feature_ids": [],
+            "reason": "Hypertonic saline has a stated mechanism in this illness and remains in wide use, which is why it is chosen."
+          }
+        },
+        "opportunity_label": "G2-PED-03",
+        "plausibility_anchor_feature_ids": [],
+        "response_class_tokens": [
+          "PHARMACOLOGIC_ACTION"
+        ],
+        "reviewer_note": "Classified by its semantics rather than by whether it can be used. It is genuinely plausible -- a stated mechanism in this illness and still in wide use -- so it is not a dead distractor, and CLM-R4-PED-HYPERTONIC states no impact on length of stay. What it does not have is any plausibility anchor the frozen SU-P-147 vocabulary can state: 'a nebulized supportive measure in the same illness' is not a feature. It is therefore refused by the contract's first limb, and the reason is the missing-vocabulary defect already named for G2-MED-01 rather than the distractor model.",
+        "source": "MEDIUM6_PILOT",
+        "why_not_admissible": "POSITIVE_PLAUSIBILITY_SUPPORT: the frozen study-unit vocabulary carries no feature that states why a candidate would consider it, so no stem can anchor it. The class is right and the admission is not."
+      },
+      {
+        "ADMISSIBLE_UNDER_THE_CONTRACT": true,
+        "CLASSIFICATION": "PLAUSIBLE_BUT_NEVER_BEST",
+        "concept": "Nebulized salbutamol",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "frozen_independent_seed_review_verdict": "PASS",
+        "frozen_prose_no_state_makes_it_correct": "Not correct: bronchodilators do not improve oxygen saturation.",
+        "frozen_reviewed_strength": "ACCEPTABLE",
+        "member_id": "SEED-PED-T03-SALBUTAMOL",
+        "never_best_contract": {
+          "inferiority": {
+            "basis": "EVIDENCE_STATES_NO_BENEFIT",
+            "evidence_refs": [
+              "CLM-R2-PED-SALBUTAMOL"
+            ],
+            "reason": "Not correct: bronchodilators do not improve oxygen saturation."
+          },
+          "learner_error_mode": "A candidate who treats wheeze rather than the illness.",
+          "positive_plausibility": {
+            "evidence_refs": [
+              "CLM-R2-PED-SALBUTAMOL"
+            ],
+            "feature_ids": [
+              "SF-P147-FIRST-WHEEZE"
+            ],
+            "reason": "Wheeze invites a bronchodilator, and small improvements in clinical scores have been shown."
+          }
+        },
+        "opportunity_label": "G2-PED-03",
+        "plausibility_anchor_feature_ids": [
+          "SF-P147-FIRST-WHEEZE"
+        ],
+        "response_class_tokens": [
+          "PHARMACOLOGIC_ACTION"
+        ],
+        "reviewer_note": "Wheeze invites a bronchodilator and small improvements in clinical scores have been shown, so a candidate who treats the wheeze rather than the illness reaches for it. CLM-R2-PED-SALBUTAMOL states in terms that bronchodilators do not improve oxygen saturation, which is the exact quantity this lead-in asks about.",
+        "source": "MEDIUM6_PILOT",
+        "why_not_admissible": null
+      }
+    ],
+    "llm_api_calls": 0,
+    "negative_control": {
+      "CLASSIFICATION": "COUNTERFACTUAL_CORRECT",
+      "concept": "Sterile milk culture and sensitivities",
+      "conditions_under_which_competitor_would_be_correct": "Correct where there is no symptomatic improvement after 48 hours of first-line therapy, or where a resistant organism is suspected.",
+      "member_id": "SEED-OB-T02-MILK-CULTURE",
+      "why_it_is_not_a_never_correct_case": "It carries a state of the world in which it is right -- no symptomatic improvement after forty-eight hours -- so the second class does not apply to it. The wave refused it under CS2-6, because that condition is also its only plausibility anchor, and that refusal is unaffected by anything here. It is listed so the case file cannot be read as sweeping every refused option into one category."
+    },
+    "no_new_evidence": "Every field of every contract is transcribed from the frozen curated seed pack and its enrichment. No claim was looked up, no contrast researched and no option rewritten. The classification and the inferiority basis are the reviewer's and are recorded as such.",
+    "schema_version": "1.0",
+    "scope": "QGEN_NEVER_BEST_DISTRACTOR_OVERLAY"
+  },
+  "contract": {
+    "class": "PLAUSIBLE_BUT_NEVER_BEST",
+    "inferiority_bases": [
+      "EVIDENCE_STATES_NO_BENEFIT",
+      "EVIDENCE_STATES_HARM",
+      "EVIDENCE_PREFERS_ANOTHER_ACTION",
+      "ADDRESSES_A_DIFFERENT_PROBLEM_THAN_THE_ONE_ASKED"
+    ],
+    "limbs": [
+      "POSITIVE_PLAUSIBILITY_SUPPORT",
+      "EXPLICIT_INFERIORITY_REASON",
+      "COMMON_CLINICAL_CONFUSION_OR_ERROR",
+      "SAME_DECISION_CLASS",
+      "NO_SECOND_KEY",
+      "NO_CATEGORY_MISMATCH",
+      "NO_GRANULARITY_MISMATCH"
+    ],
+    "not_a_lower_standard": "A never-best competitor is asked for more than a counterfactual-correct one, not less: positive cited plausibility, a cited inferiority reason, and a named clinical confusion. A candidate that is merely wrong meets none of the three.",
+    "silence_cannot_supply_inferiority": "There is deliberately no basis in the closed set meaning 'the stem does not say so'. The shape cannot be encoded, so it cannot be argued."
+  },
+  "is_the_requirement_necessary_for_one_best_answer_safety": {
+    "answer": "NO",
+    "argument_from_repository_policy": {
+      "citation": "reports/qgen_g2_safe_yield_root_cause_diagnosis.json",
+      "corroborating_case": "G2-MED-04 was accepted with 2 of its 3 competitors carrying zero condition predicates. Zero-predicate seeds are not fatal in themselves. Its never-correct options ('angiography in three to five days', 'transfer only if the electrocardiogram fails to show resolution') are never OPTIMAL yet remain selectable reperfusion routes invited by the geography written into the stem. G2-OBGYN-03's zero-predicate options ('apply firm deep massage', 'use a nipple shield') are never APPROPRIATE. The library does not distinguish the two.",
+      "no_rule_proposed": "Per the task, the empirical distinction is recorded and no new rule is designed here.",
+      "note": "The repository's own prior assessment-design finding drew exactly the distinction this class needs -- never OPTIMAL against never APPROPRIATE -- said 'the library does not distinguish the two', and deliberately proposed no rule. This is that rule, and the disagreement it has to own is that the earlier reviewer put G2-OBGYN-03's deep massage and nipple shield on the never-APPROPRIATE side. The reconciliation is that appropriateness is not what decides admissibility here: both options are defeated by cited clinical evidence a candidate must apply, not by a stated absence, which is the property that earlier finding actually measured."
+    },
+    "argument_from_the_accepted_controls": {
+      "citation": "reports/qgen_g2_safe_yield_root_cause_diagnosis.json",
+      "count": 2,
+      "item": "G2-MED-04",
+      "note": "Two of that item's three competitors carry zero condition predicates, and the item was independently accepted with zero defects. The frozen record already contained a counterexample to the necessity claim before this task existed.",
+      "stated_limit": "G2-MED-04 was accepted under the G2 safe-yield review contract, before Clinical Contrast Model V2 existed, so it is evidence that a never-best option is compatible with an independently accepted item and not evidence that V2's own gates would accept the same item. It is one item, and it is cited as a counterexample to a universal claim rather than as a rate.",
+      "verdict": "ACCEPTED",
+      "zero_predicate_competitors": [
+        "SEED-G2-MED-T03-DEFERRED-ANGIO",
+        "SEED-G2-MED-T03-RESCUE-ONLY"
+      ]
+    },
+    "argument_from_the_model": "One-best-answer safety needs the key correct and every competitor not correct under the realized stem. A competitor with no state of the world in which it is right satisfies the second condition under every stem, unconditionally. It is the safest possible competitor against a second key, not the most dangerous one, and the strict model refused it for a property that makes it safer.",
+    "argument_from_the_rejected_controls": {
+      "discriminating_property": "An accepted distractor remains a LIVE BUT INFERIOR course of action for this patient, defeated by a comparative or threshold judgement. A rejected anchorless distractor is a CATEGORICALLY IMPOSSIBLE course of action, defeated by a stated absence that requires no clinical knowledge to apply.",
+      "note": "The property that separated the accepted controls from the anchorless rejections was never the presence of a correctness condition -- 104 of 111 ranked candidates scored zero in both groups alike -- but HOW the stem defeats the competitor. Thirteen of eighteen rejected competitors died on the stem stating their own precondition absent in words. That is the silence-as-absence and explicit-denial defect, and it is orthogonal to this class."
+    },
+    "where_the_requirement_came_from": "The contrast architecture, inherited rather than derived. The G2 root-cause diagnosis put it plainly: 'the single machine-readable link between a competitor and a stem is its correctness condition'. Making that link universal made it compulsory, and nothing about one-best-answer safety required it to be."
+  },
+  "llm_api_calls": 0,
+  "options_considered": [
+    {
+      "chosen": false,
+      "option": "OPTION_1_COUNTERFACTUAL_CORRECT_ONLY",
+      "why_not": "It does not explain the measured failures. Seven diagnosed candidates across three of the six opportunities are options whose own independently reviewed prose records no state in which they are right, and under this option all seven are unrepresentable."
+    },
+    {
+      "chosen": true,
+      "option": "OPTION_2_COUNTERFACTUAL_CORRECT_PLUS_PLAUSIBLE_BUT_NEVER_BEST",
+      "why": "It is the smallest architecture that explains them. It adds one declared class, one contract of seven limbs, and no scoring; the default is unchanged, so nothing historical moves; and every limb is a positive cited statement the frozen curated seed pack already carried."
+    },
+    {
+      "chosen": false,
+      "option": "OPTION_3_GENERAL_DISTRACTOR_SCORING_MODEL",
+      "why_not": "Not necessary. No measured failure needs a graded score, and a score would replace a fail-closed contract with a threshold, which is the direction this architecture does not go."
+    }
+  ],
+  "schema_version": "1.0",
+  "scope": "QGEN_NEVER_CORRECT_DISTRACTOR_DIAGNOSIS",
+  "what_enforces_it": [
+    {
+      "rule": "A branch operator with no conditions raises: 'an empty branch has no truth value'. An empty correctness tree is therefore not a tree, so 'no state makes this correct' is unrepresentable rather than merely disallowed.",
+      "site": "scripts/qbank/clinical_contrast_v2.py::validate_predicate"
+    },
+    {
+      "rule": "Read `competitor['correctness_conditions']` unconditionally and validated it, so a competitor without one raised before any gate could form a view about it.",
+      "site": "scripts/qbank/clinical_contrast_v2.py::classify_competitor"
+    },
+    {
+      "rule": "`correctness_conditions_a` and `correctness_conditions_b` are required relation fields and both were validated as predicates, so a pair containing such a competitor could not be built either.",
+      "site": "scripts/qbank/clinical_contrast_v2.py::validate_contrast_relation"
+    },
+    {
+      "rule": "A supplied new member's `correctness_conditions` were validated against the study-unit vocabulary before the member was appended.",
+      "site": "scripts/qbank/contrast_supply.py::apply_supply_to_contrast_set"
+    },
+    {
+      "rule": "Both rules are defined over the correctness signature, so both presuppose one exists.",
+      "site": "scripts/qbank/clinical_contrast_v2.py::can_be_live_without_being_correct, CS2-6 and CS2-8"
+    }
+  ],
+  "what_the_contract_refused_in_practice": {
+    "SEED-OB-T02-CRP": "SAME_DECISION_CLASS, and the unchanged coherence gate fired CS2-3 rather than the case file asserting it. Its frozen response class is BIOCHEMICAL and the set demands DIAGNOSTIC_ADVANCEMENT.",
+    "SEED-PED-T03-HYPERTONIC": "POSITIVE_PLAUSIBILITY_SUPPORT. Genuinely plausible in prose and anchorless in the frozen vocabulary, so no stem can give a candidate a stated reason to consider it.",
+    "SEED-PED-T03-SALBUTAMOL": "SAME_DECISION_CLASS, again by CS2-3. Its frozen response class is PHARMACOLOGIC_ACTION where the set demands NEXT_ACTION_FOR_CURRENT_CARE, while the nebulized-epinephrine seed beside it carries both tokens. This one is a frozen response-class-token gap rather than a semantic mismatch, and it is reported rather than repaired: editing a frozen seed row to admit a candidate is the move this architecture refuses."
+  }
+}

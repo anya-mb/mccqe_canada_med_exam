@@ -41,12 +41,25 @@ except where a relation says so.
 .venv/bin/python -m scripts.qbank run-feature-anchor-registry-milestone
 ```
 
+```bash
+.venv/bin/python -m scripts.qbank run-snapshot-bootstrap
+```
+
 ## Snapshots
 
 | snapshot | features | anchor relations | content |
 | --- | --- | --- | --- |
 | `FEATURE_ANCHOR_SNAPSHOT_V1` | 102 | 153 | the frozen vocabulary and the three frozen anchor packs, imported unchanged |
 | `FEATURE_ANCHOR_SNAPSHOT_V2` | 102 | 157 | V1 plus the four independently approved frozen-five anchor relations |
+| `FEATURE_ANCHOR_SNAPSHOT_V3` | 102 | 162 | V2 plus the five independently approved medium-pilot anchor relations |
+
+The store is **append-only**. A snapshot that has run a batch is history: a later
+cycle adds a new id and never rewrites an earlier one, and `build_snapshot_store`
+regenerates every earlier entry byte for byte. Each snapshot is built from the
+baseline plus the whole accumulated approved delta rather than by editing its
+parent, so `V3.extension_diff` reports both `ANCHOR_RELATIONS_ADDED` (9, against
+the baseline) and `ANCHOR_RELATIONS_ADDED_SINCE_PARENT` (5), and names the five
+`UNCERTAIN` proposals it excluded.
 
 `registry_hash` is SHA-256 over the sorted feature and relation rows and nothing
 else, so a rebuild reproduces it. There is no `latest`, and `load_snapshot`

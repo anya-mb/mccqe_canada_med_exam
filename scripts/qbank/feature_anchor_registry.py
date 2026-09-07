@@ -442,8 +442,18 @@ def build_reconciliation(root) -> dict[str, Any]:
 BASELINE_SNAPSHOT_ID = "FEATURE_ANCHOR_SNAPSHOT_V1"
 EXTENDED_SNAPSHOT_ID = "FEATURE_ANCHOR_SNAPSHOT_V2"
 
+#: The snapshot the cross-discipline medium pilot's own approved extensions build.
+#: It is a third id rather than a rewrite of the second: a snapshot already used to
+#: run a batch is history, and history is append-only.
+BOOTSTRAP_SNAPSHOT_ID = "FEATURE_ANCHOR_SNAPSHOT_V3"
+
 SNAPSHOTS_PATH = "research/qgen/feature_anchor_snapshots.json"
 EXTENSIONS_PATH = "research/qgen/feature_anchor_extensions.json"
+
+#: The medium pilot's own proposals, reviewed and carried forward. Its approved rows
+#: are added to V2's, because a snapshot is built from the baseline plus the whole
+#: accumulated approved delta rather than by editing its parent.
+BOOTSTRAP_EXTENSIONS_PATH = "research/qgen/feature_anchor_extensions_v3.json"
 
 #: The registry is a boundary, and this is the whole of what it may say about a
 #: state. V2's four, imported rather than restated.
@@ -718,9 +728,13 @@ def validate_extension(extension: Mapping[str, Any]) -> None:
                 )
 
 
-def load_extensions(root) -> dict[str, Any]:
-    """Load the proposed extension set. Every proposal is validated."""
-    document = _read(root, EXTENSIONS_PATH)
+def load_extensions(root, *, path: str = EXTENSIONS_PATH) -> dict[str, Any]:
+    """Load one proposed extension set. Every proposal is validated.
+
+    ``path`` defaults to the frozen-five set, so every existing caller reads exactly
+    what it always read; a later snapshot cycle passes its own document.
+    """
+    document = _read(root, path)
     for extension in document["extensions"]:
         validate_extension(extension)
     return document
@@ -878,13 +892,43 @@ def build_snapshot(
 
 
 def build_snapshot_store(root) -> dict[str, Any]:
-    """Build every canonical snapshot, in one deterministic pass."""
+    """Build every canonical snapshot, in one deterministic pass.
+
+    Append-only. V1 and V2 are built from exactly the inputs they were built from
+    before, so both regenerate byte for byte; V3 adds the medium pilot's own five
+    approved anchor relations on top of V2's four, and no earlier snapshot moves.
+    """
     extensions = load_extensions(root)
+    bootstrap = load_extensions(root, path=BOOTSTRAP_EXTENSIONS_PATH)
     baseline = build_snapshot(root, snapshot_id=BASELINE_SNAPSHOT_ID)
     extended = build_snapshot(
         root,
         snapshot_id=EXTENDED_SNAPSHOT_ID,
         extensions=approved_extensions(extensions),
+    )
+    bootstrapped = build_snapshot(
+        root,
+        snapshot_id=BOOTSTRAP_SNAPSHOT_ID,
+        extensions=(
+            approved_extensions(extensions) + approved_extensions(bootstrap)
+        ),
+    )
+    bootstrapped["built_from"]["baseline_snapshot_id"] = BASELINE_SNAPSHOT_ID
+    bootstrapped["built_from"]["parent_snapshot_id"] = EXTENDED_SNAPSHOT_ID
+    bootstrapped["extension_diff"]["parent_snapshot_id"] = EXTENDED_SNAPSHOT_ID
+    bootstrapped["extension_diff"]["ANCHOR_RELATIONS_ADDED_SINCE_PARENT"] = (
+        bootstrapped["anchor_relation_count"] - extended["anchor_relation_count"]
+    )
+    bootstrapped["extension_diff"]["FEATURES_ADDED_SINCE_PARENT"] = (
+        bootstrapped["feature_count"] - extended["feature_count"]
+    )
+    bootstrapped["extension_diff"]["extension_set_ids"] = [
+        extensions["extension_set_id"], bootstrap["extension_set_id"],
+    ]
+    bootstrapped["extension_diff"]["UNCERTAIN_EXTENSIONS_ADDED"] = 0
+    bootstrapped["extension_diff"]["excluded_uncertain_extension_ids"] = sorted(
+        row["extension_id"] for row in bootstrap["extensions"]
+        if row["registry_review"]["verdict"] not in ADMISSIBLE_REVIEW_VERDICTS
     )
     return {
         "schema_version": "1.0",
@@ -894,9 +938,18 @@ def build_snapshot_store(root) -> dict[str, Any]:
             "implicitly, and no consumer reads this file's ordering."
         ),
         "extension_set_id": extensions["extension_set_id"],
+        "extension_set_ids": [
+            extensions["extension_set_id"], bootstrap["extension_set_id"],
+        ],
+        "append_only": (
+            "A snapshot that has run a batch is history. A later cycle adds a new id; "
+            "it never rewrites an earlier one, and this file's earlier entries "
+            "regenerate byte for byte."
+        ),
         "snapshots": {
             BASELINE_SNAPSHOT_ID: baseline,
             EXTENDED_SNAPSHOT_ID: extended,
+            BOOTSTRAP_SNAPSHOT_ID: bootstrapped,
         },
     }
 

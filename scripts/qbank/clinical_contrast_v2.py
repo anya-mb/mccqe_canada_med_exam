@@ -566,7 +566,21 @@ def validate_contrast_relation(relation: Mapping[str, Any]) -> None:
     _typed_features(relation["a_supporting_features"], "a_supporting_features")
     _typed_features(relation["b_supporting_features"], "b_supporting_features")
 
-    for side in ("correctness_conditions_a", "correctness_conditions_b"):
+    # A side that declares `PLAUSIBLE_BUT_NEVER_BEST` carries no correctness tree,
+    # and the relation says so explicitly rather than by leaving a field empty.
+    # The flag is written only when it is true, so a relation between two
+    # counterfactual-correct concepts content-addresses exactly as it always did.
+    for side, flag in (
+        ("correctness_conditions_a", "never_best_a"),
+        ("correctness_conditions_b", "never_best_b"),
+    ):
+        if relation.get(flag):
+            if relation[side] is not None:
+                raise ClinicalContrastV2Error(
+                    f"{flag} declares no state of the world in which the concept is "
+                    f"right, so {side} must be null rather than a tree"
+                )
+            continue
         validate_predicate(relation[side])
 
     for exclusion in relation["categorical_exclusion_conditions"]:
@@ -627,6 +641,187 @@ def build_contrast_relation(**fields: Any) -> dict[str, Any]:
     return relation
 
 
+# --------------------------------------------------- distractor semantics
+
+#: A competitor that carries a state of the world in which it becomes the best
+#: answer. This is the only class the model recognised before, and it stays the
+#: default: a member that declares nothing is read exactly as it was.
+COUNTERFACTUAL_CORRECT = "COUNTERFACTUAL_CORRECT"
+
+#: A competitor that is a clinically recognisable temptation in the actual
+#: decision context and is never the best answer under any reasonable nearby
+#: scenario. It carries no correctness tree, which is the whole of its semantics
+#: and also its structural guarantee against a second key.
+PLAUSIBLE_BUT_NEVER_BEST = "PLAUSIBLE_BUT_NEVER_BEST"
+
+DISTRACTOR_SEMANTICS = (COUNTERFACTUAL_CORRECT, PLAUSIBLE_BUT_NEVER_BEST)
+
+#: The bases on which a never-best competitor may be inferior. Every one of them
+#: is a positive, cited statement about the option. There is deliberately no
+#: basis meaning "the stem does not say so": silence defeats nothing here, for
+#: the same reason it defeats nothing in `classify_competitor`.
+NEVER_BEST_INFERIORITY_BASES = (
+    "EVIDENCE_STATES_NO_BENEFIT",
+    "EVIDENCE_STATES_HARM",
+    "EVIDENCE_PREFERS_ANOTHER_ACTION",
+    "ADDRESSES_A_DIFFERENT_PROBLEM_THAN_THE_ONE_ASKED",
+)
+
+#: The seven limbs of the never-best contract, in the order they are reported.
+NEVER_BEST_LIMBS = (
+    "POSITIVE_PLAUSIBILITY_SUPPORT",
+    "EXPLICIT_INFERIORITY_REASON",
+    "COMMON_CLINICAL_CONFUSION_OR_ERROR",
+    "SAME_DECISION_CLASS",
+    "NO_SECOND_KEY",
+    "NO_CATEGORY_MISMATCH",
+    "NO_GRANULARITY_MISMATCH",
+)
+
+
+def distractor_semantics(competitor: Mapping[str, Any]) -> str:
+    """Which semantic class this competitor declares. Absent means the old one."""
+    declared = competitor.get("distractor_semantics") or COUNTERFACTUAL_CORRECT
+    if declared not in DISTRACTOR_SEMANTICS:
+        raise ClinicalContrastV2Error(f"unknown distractor semantics: {declared}")
+    return declared
+
+
+def is_never_best(competitor: Mapping[str, Any]) -> bool:
+    return distractor_semantics(competitor) == PLAUSIBLE_BUT_NEVER_BEST
+
+
+def validate_never_best_contract(competitor: Mapping[str, Any]) -> dict[str, Any]:
+    """Schema and policy for a `PLAUSIBLE_BUT_NEVER_BEST` competitor.
+
+    Stricter than the contract an ordinary counterfactual-correct competitor
+    meets, because the thing that ordinarily disciplines a distractor -- a stated
+    condition under which it would be right -- is exactly what this class does
+    not have. Everything it is asked for instead is a positive, cited statement:
+    why a candidate would consider it, and why it is nonetheless inferior.
+
+    Anything missing raises. This is the fail-closed direction.
+    """
+    member_id = competitor.get("member_id")
+    if competitor.get("correctness_conditions") is not None:
+        raise ClinicalContrastV2Error(
+            f"{member_id}: a never-best competitor may not carry a correctness "
+            "tree; a state of the world in which it would be right is precisely "
+            "what it declares it does not have"
+        )
+    contract = competitor.get("never_best_contract")
+    if not isinstance(contract, Mapping):
+        raise ClinicalContrastV2Error(
+            f"{member_id}: a never-best competitor needs a never-best contract"
+        )
+
+    supporting = {
+        row["feature_id"] for row in competitor.get("supporting_features") or []
+    }
+    plausibility = contract.get("positive_plausibility")
+    if not isinstance(plausibility, Mapping) or not (
+        plausibility.get("feature_ids") or []
+    ):
+        raise ClinicalContrastV2Error(
+            f"{member_id}: a never-best competitor needs positive plausibility "
+            "support naming at least one anchor feature; being wrong is not a "
+            "reason for a candidate to consider it"
+        )
+    if not (plausibility.get("evidence_refs") or []):
+        raise ClinicalContrastV2Error(
+            f"{member_id}: positive plausibility support needs evidence; model "
+            "memory is not evidence"
+        )
+    if not str(plausibility.get("reason") or "").strip():
+        raise ClinicalContrastV2Error(
+            f"{member_id}: positive plausibility support must say why a candidate "
+            "would consider it"
+        )
+    outside = sorted(set(plausibility["feature_ids"]) - supporting)
+    if outside:
+        raise ClinicalContrastV2Error(
+            f"{member_id}: {', '.join(outside)} is not a supporting feature of this "
+            "competitor, so it cannot be its plausibility anchor"
+        )
+
+    inferiority = contract.get("inferiority")
+    if not isinstance(inferiority, Mapping):
+        raise ClinicalContrastV2Error(
+            f"{member_id}: a never-best competitor needs an explicit reason it is "
+            "inferior"
+        )
+    if inferiority.get("basis") not in NEVER_BEST_INFERIORITY_BASES:
+        raise ClinicalContrastV2Error(
+            f"{member_id}: unknown inferiority basis {inferiority.get('basis')}; the "
+            "closed set carries no basis meaning the stem is silent, because "
+            "silence defeats nothing"
+        )
+    if not (inferiority.get("evidence_refs") or []):
+        raise ClinicalContrastV2Error(
+            f"{member_id}: the inferiority reason needs evidence; an uncited "
+            "assertion that an option is worse is an opinion, not a discriminator"
+        )
+    if not str(inferiority.get("reason") or "").strip():
+        raise ClinicalContrastV2Error(
+            f"{member_id}: the inferiority reason must be stated, not implied"
+        )
+
+    if not str(contract.get("learner_error_mode") or "").strip():
+        raise ClinicalContrastV2Error(
+            f"{member_id}: a never-best competitor must name the clinical confusion "
+            "or error that makes it a recognisable temptation"
+        )
+    return dict(contract)
+
+
+def never_best_limbs(
+    competitor: Mapping[str, Any],
+    *,
+    demanded_response_class: str,
+    decision_granularity: str,
+    state_map: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Report each of the seven limbs for one never-best competitor.
+
+    The structural limbs raise from `validate_never_best_contract` before they
+    can be reported, so what remains here is what depends on the set and on the
+    stem. `admissible` is the conjunction, and the failing limb is named.
+    """
+    validate_never_best_contract(competitor)
+    anchors_present = [
+        row["feature_id"]
+        for row in competitor.get("supporting_features") or []
+        if discriminative_class(row.get("contrast_role") or "BACKGROUND_CONTEXT")
+        in ANCHOR_CLASSES
+        and resolve_state(state_map, row["feature_id"])["state"] == PRESENT
+    ]
+    excluded = any(
+        evaluate_predicate(exclusion["predicate"], state_map) == SATISFIED
+        for exclusion in competitor.get("categorical_exclusion_conditions") or []
+    )
+    limbs = {
+        "POSITIVE_PLAUSIBILITY_SUPPORT": "PASS" if anchors_present else "FAIL",
+        "EXPLICIT_INFERIORITY_REASON": "PASS",
+        "COMMON_CLINICAL_CONFUSION_OR_ERROR": "PASS",
+        "SAME_DECISION_CLASS": (
+            "PASS"
+            if demanded_response_class in (competitor.get("response_class_tokens") or [])
+            else "FAIL"
+        ),
+        # Structural rather than measured: the class carries no correctness tree,
+        # so no stem can make it correct.
+        "NO_SECOND_KEY": "PASS",
+        "NO_CATEGORY_MISMATCH": "FAIL" if excluded else "PASS",
+        "NO_GRANULARITY_MISMATCH": (
+            "PASS"
+            if competitor.get("decision_granularity") == decision_granularity
+            else "FAIL"
+        ),
+    }
+    limbs["admissible"] = all(value == "PASS" for value in limbs.values())
+    return limbs
+
+
 # ------------------------------------------------------- competitor states
 
 LIVE_BUT_INFERIOR = "LIVE_BUT_INFERIOR"
@@ -659,9 +854,21 @@ def classify_competitor(
     becomes ``LIVE_BUT_INFERIOR`` only when an evidence-backed discriminator
     favouring the key is *itself satisfied* by the stem. Otherwise the item is
     ``AMBIGUOUS`` and fails closed. Silence alone never defeats anything.
+
+    A ``PLAUSIBLE_BUT_NEVER_BEST`` competitor carries no correctness tree, so its
+    correctness is ``NOT_SATISFIED`` under every stem and its second-key risk is
+    zero by construction. It still has to be anchored: an option nobody would
+    consider is not rescued by being reliably wrong.
     """
-    conditions = competitor["correctness_conditions"]
-    validate_predicate(conditions)
+    semantics = distractor_semantics(competitor)
+    never_best = semantics == PLAUSIBLE_BUT_NEVER_BEST
+    if never_best:
+        contract = validate_never_best_contract(competitor)
+        conditions = None
+    else:
+        contract = None
+        conditions = competitor["correctness_conditions"]
+        validate_predicate(conditions)
 
     excluded_by: list[dict[str, Any]] = []
     for exclusion in competitor.get("categorical_exclusion_conditions") or []:
@@ -688,7 +895,9 @@ def classify_competitor(
         if discriminative_class(role) in ANCHOR_CLASSES:
             presentation_anchors.append(feature_id)
 
-    correctness = evaluate_predicate(conditions, state_map)
+    correctness = (
+        NOT_SATISFIED if never_best else evaluate_predicate(conditions, state_map)
+    )
     satisfied_key_discriminators = sorted({
         row["feature_id"]
         for row in discriminators
@@ -720,18 +929,35 @@ def classify_competitor(
     return {
         "member_id": competitor.get("member_id"),
         "state": state,
+        # Reported only when it is not the default. A competitor that declares
+        # nothing serializes exactly as it did before the second class existed,
+        # which is why every frozen replay still regenerates byte for byte.
+        **({} if not never_best else {"distractor_semantics": semantics}),
         "correctness": correctness,
         "anchors_present": sorted(anchors_present),
         "presentation_anchors_present": sorted(presentation_anchors),
-        "defeated_by": defeating_features(conditions, state_map),
-        "unresolved_features": unresolved_features(conditions, state_map),
+        "defeated_by": [] if never_best else defeating_features(conditions, state_map),
+        "unresolved_features": (
+            [] if never_best else unresolved_features(conditions, state_map)
+        ),
         "decided_by_discriminators": satisfied_key_discriminators,
         "categorically_excluded_by": excluded_by,
+        **({} if contract is None else {"never_best_inferiority": {
+            "basis": contract["inferiority"]["basis"],
+            "evidence_refs": sorted(contract["inferiority"]["evidence_refs"]),
+        }}),
         # True whenever nothing the stem states settles the competitor, whatever
         # the final state. An INSUFFICIENT_SUPPORT competitor carrying this flag
         # is still a competitor a candidate could defend.
         "second_key_risk": second_key_risk,
-        "explanation": explain_predicate(conditions, state_map),
+        "explanation": (
+            {
+                "result": NOT_SATISFIED,
+                "never_best": True,
+                "why": contract["inferiority"]["reason"],
+            }
+            if never_best else explain_predicate(conditions, state_map)
+        ),
         "admissible_as_distractor": state in ADMISSIBLE_COMPETITOR_STATES,
     }
 
@@ -820,7 +1046,13 @@ def can_be_live_without_being_correct(
     signature can be given a reason to be considered only by being made a second
     key. That is a property of the set, fixed before any stem exists, and no stem
     can repair it.
+
+    A never-best competitor has no correctness signature for an anchor to
+    complete, so the defect the rule names cannot arise. The rule must not fire
+    vacuously on it.
     """
+    if is_never_best(competitor):
+        return True
     conditions = competitor["correctness_conditions"]
     for anchor in usable_anchors:
         trial = build_feature_state_map(
@@ -952,6 +1184,13 @@ def evaluate_contrast_set_coherence(
     defeated_by_key: dict[str, frozenset[str]] = {}
     signatures: dict[str, frozenset[tuple[str, str]]] = {}
     for competitor in competitors:
+        # A never-best competitor has no correctness leaves, so it shares no
+        # signature with anything and dies on no proposition of the key's. CS2-2
+        # and CS2-8 both guard on a non-empty set, so an empty one is inert.
+        if is_never_best(competitor):
+            signatures[competitor["member_id"]] = frozenset()
+            defeated_by_key[competitor["member_id"]] = frozenset()
+            continue
         conditions = competitor["correctness_conditions"]
         signatures[competitor["member_id"]] = _leaf_signature(conditions)
         defeated_by_key[competitor["member_id"]] = frozenset(

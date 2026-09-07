@@ -21,7 +21,7 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `c640ede0f8ad734f4dddb278803bf3dee0075c83`.
+- Audited coordinator input commit: `2e903753f523a73aed90c04607a714ea91523172`.
 - Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
@@ -1112,6 +1112,108 @@ This section is maintained by hand and sits outside the generated source-researc
   defect -- whether a competitor that is never correct can be carried at all, which needs a model
   decision rather than a snapshot -- and a gate for the key's own evidence scope against the settlement
   device. Neither was repaired here, per Phase 25.
+- **Snapshot bootstrap and distractor semantics (2026-09-06), from `2e90375`.** `SNAPSHOT_BOOTSTRAP_AND_DISTRACTOR_MILESTONE = COMPLETE`. Design
+  `docs/superpowers/specs/2026-09-06-distractor-semantics-and-snapshot-bootstrap-design.md`.
+  `HISTORICAL_FROZEN_ARTIFACTS_MODIFIED = 0`, `LLM_API_CALLS = 0`, no embeddings, no graph or TN FTS
+  expansion, no broad bank, production generator not replaced, `CLAUDE.md` unchanged. Everything rebuilds
+  with `qbank run-snapshot-bootstrap`, and a test asserts all seven artifacts regenerate byte-identically.
+- **`FEATURE_ANCHOR_SNAPSHOT_V3`, parent V2, 102 features / 162 anchor relations**, hash
+  `93870b56369816533dd234a2af34f6f99a50dc77fd91ed259d0a2cee810e9c70`. It carries the **5** anchor relations
+  the medium pilot's extension review independently approved and **0** of the 5 it left UNCERTAIN.
+  `V3_VISIBILITY_REPLAY = PASS`: 5/5 visible to the snapshot, to the seed-anchor adapter and to profile
+  retrieval, and the three sets are the *same* set; 0/5 uncertain rows visible to any snapshot. The store is
+  **append-only** -- V1 and V2 regenerate byte-identically and their hashes are unmoved.
+- The five UNCERTAIN rows stay excluded, re-read rather than re-reviewed for yield. Three are the surgical
+  `SF-GS76-MIGRATORY-RLQ-PAIN` anchors, which fail S-4 limb B on the strict reading (the claims name
+  appendicitis, the disease, not the migratory pain, the feature) and whose downstream signature is CS2-7
+  `SET_LIVES_ON_ONE_FEATURE`; two would grow the frozen 102-feature vocabulary, which `validate_extension`
+  refuses on its own account. **`REVIEWER_INCONSISTENCY_OR_EVIDENCE_BUG = NONE` on all five.**
+- **Three arms over the same six frozen opportunities, one variable each.** Contrast-ready
+  **1/6 -> 2/6 -> 3/6**; `GENERATED = 0`, `ACCEPTED = 0`, `REJECTED = 0`, `NO_SAFE_ITEM = 6` in every arm.
+  `ALL_ACCEPTED_ITEM_SAFETY = NO_ACCEPTED_ITEMS`, and Part G's independent review ran **zero** times because
+  there was nothing to review; neither is stated as a PASS.
+- **`SNAPSHOT_BOOTSTRAP_ASSESSMENT = VALIDATED`**, on all four precommitted limbs: `G2-PSY-01` converts from
+  a 1-competitor under-size set to a coherent 4-competitor set reaching the blueprint, historical controls are
+  unchanged, no uncertain extension is visible, no gate is weakened. The mechanism is validated and the batch
+  is **not** rescued by it -- one turn of the cycle still does not close the batch that fed it.
+- **`V2_CANNOT_CARRY_A_NEVER_CORRECT_DISTRACTOR` is a real defect, and it is repaired.**
+  `CURRENT_V2_REQUIRES_COUNTERFACTUAL_CORRECTNESS = YES`, structurally rather than by policy:
+  `validate_predicate` refuses an empty branch, so "no state makes this correct" was unrepresentable.
+  It is **not necessary for one-best-answer safety** -- a competitor with no state in which it is right is the
+  safest possible option against a second key -- and the frozen record already held the counterexample:
+  **`G2-MED-04` is an accepted item, zero defects on all eleven dimensions, two of whose three competitors
+  carry zero condition predicates** -- accepted under the G2 safe-yield contract, before V2 existed, so it is a
+  counterexample to a universal claim and not a rate. The G2 root-cause diagnosis drew the never-*optimal* against
+  never-*appropriate* distinction, said the library does not distinguish them, and deliberately proposed no
+  rule. This is that rule, and the disagreement it owns is that the earlier reviewer put G2-OBGYN-03's deep
+  massage and nipple shield on the never-appropriate side.
+- `NEVER_CORRECT_DISTRACTOR_CASES = 9` (7 from the pilot, 2 prior frozen accepted-control examples):
+  `PLAUSIBLE_BUT_NEVER_BEST` 8, `WRONG_DECISION_CLASS` 1 (`SEED-OB-T02-CRP`), and zero each
+  `COUNTERFACTUAL_CORRECT`, `DEAD_DISTRACTOR`, `UNSAFE_OR_AMBIGUOUS`. `SEED-OB-T02-MILK-CULTURE` is carried as
+  a negative control so the case file cannot be read as sweeping every refused option into one class.
+- **OPTION 2 implemented, OPTION 3 refused as unnecessary.** `PLAUSIBLE_BUT_NEVER_BEST` is declared per member;
+  absence means the old class, and a default competitor's verdict serializes **no new key at all**, which is why
+  every frozen replay is still byte-identical. A never-best member carries no correctness tree, so correctness is
+  `NOT_SATISFIED` under every stem, `second_key_risk` is zero by construction, and `_settlement_route` returns
+  `NEVER_BEST_BY_EVIDENCE` costing **no denial budget**. Seven limbs, each a positive cited statement; four
+  inferiority bases, and deliberately **none meaning "the stem does not say so"**, so silence cannot supply
+  inferiority because the shape cannot be encoded.
+- **The contract has teeth, and the gates did the refusing.** `SEED-PED-T03-HYPERTONIC` fails
+  `POSITIVE_PLAUSIBILITY_SUPPORT` -- genuinely plausible in prose, anchorless in the frozen vocabulary -- and
+  the unmodified CS2-3 threw out `SEED-OB-T02-CRP` and `SEED-PED-T03-SALBUTAMOL` on response class. The
+  salbutamol refusal is a frozen response-class-token gap rather than a semantic mismatch (the nebulized
+  epinephrine seed beside it carries both tokens) and is reported rather than repaired: editing a frozen seed
+  row to admit a candidate is the move this architecture refuses.
+- **The bottleneck moved because the previous one was fixed.** Both opportunities the repairs carried
+  downstream stop at `FAIL_CLOSED_COMPETITOR_CANNOT_BE_SETTLED` with the denial budget spent:
+  `MAXIMUM_ABSENT_REQUIRED_FEATURES` is 1 at MEDIUM and **0** at HARD. `G2-OBGYN-03` (HARD) has none to spend;
+  `G2-PSY-01` (MEDIUM) already spent its one denying a past hypomanic period. `SYSTEMATIC_ARCHITECTURE_DEFECT_
+  GE_20_PERCENT = YES` at **33.3%**, defect `DIFFICULTY_DENIAL_BUDGET_AGAINST_DENIAL_ONLY_COMPETITORS`.
+  Measured and left alone, per Phase 25's own rule. No item was realized in any arm, so there is no blind solve
+  and no structural difficulty read; `DIFFICULTY_INTENT` stays authored and `EMPIRICAL_DIFFICULTY` stays absent.
+- **`FRESH_PILOT_TRIGGERED = NO`, and the diagnosis is the opportunity-construction layer's bound rather than
+  its quality.** The canonical universe declares **32** learner decisions across exactly **six** study units --
+  one per discipline, the only six with a frozen stem-feature vocabulary and a curated seed pack -- and **29**
+  are already opportunities. **3** remain, all inside study units Part U's own rule excludes, against a floor of
+  24. `BINDING_LAYER = SOURCE_PACKET_RESEARCH`: a study unit becomes usable to qgen only after its packets are
+  researched and a vocabulary, a seed pack and claim cards are built from them, and that has happened for 6 of
+  1,175 planned allocation addresses. Nothing was invented to reach a number.
+- `TWO_STAGE_SNAPSHOT_LIFECYCLE = PROMISING`. Preflight's load-bearing mechanism is now demonstrated rather than
+  argued, and the no-leakage argument is explicit: preflight conditions on the decision the item is about, never
+  on an outcome, because no item exists yet. **Arm B is deliberately not an instance of that lifecycle** -- its
+  extensions were proposed inside a batch and reviewed with downstream evidence available, which is how three of
+  the wave's approvals were overturned -- so the verdict is not VALIDATED.
+- `SNAPSHOT_EXTENSION_RATE = INSUFFICIENT_DATA`. Proposed 1.67 and approved 0.83 per opportunity, 83.3% of
+  opportunities requiring an extension, **0** reused across opportunities and 0 across disciplines. Two cycles
+  is not a trend, both drew from the same six study units, and reuse across opportunities is structurally 0
+  because the scope rule binds a relation to the decisions its review named.
+- Context unchanged and deliberately not optimized: median **25,753** / p95 **38,181** characters,
+  `NEXT_TOKEN_OPTIMIZATION_TARGET = SERIALIZED_PAIRWISE_RELATION_PAYLOAD`. `GRAPH_UNIQUE_APPROVED_CONTRIBUTIONS`
+  and `TN_FTS_UNIQUE_APPROVED_CONTRIBUTIONS` were not re-measured because no query was run: nothing here is a
+  retrieval problem, since every candidate arm C admitted was already a frozen curated seed.
+- `COPYRIGHT_AUDIT = PASS`, longest verbatim Toronto Notes run **0** across all 12 tracked artifacts.
+  Focused tests `tests/test_distractor_semantics.py` **22/0** and `tests/test_snapshot_bootstrap.py` **28/0**;
+  full canonical suite at the final shared-code state.
+- **Shared-code change and its blast radius.** `load_extensions` and `build_snapshot_store` take a second
+  extension document; `run_pilot` takes a snapshot id and an acquisition path, both defaulting to what the
+  medium pilot used; `enforce_pinned_snapshot` now resolves seed anchors *scoped* to the opportunity, which
+  changes nothing for V2's four extensions because none is scoped to any of the six. In V2 the never-best class
+  is inert unless declared. Every committed medium-pilot, frozen-ten, frozen-five and registry report
+  regenerates byte-identically, each asserted by its own existing test.
+- **Stated limits.** The extension re-review, the classification and the inferiority bases are separate
+  reasoning passes by the same model instance rather than separate agents, and the re-review had this
+  experiment's downstream evidence available to it. Six opportunities is not a sample: the 33.3% difficulty
+  finding rests on two of them and cannot be confirmed or refuted at this size.
+- `PRODUCTION_READINESS = BLOCKED_BY_OPPORTUNITY_CONSTRUCTION`, with `BLOCKED_BY_DIFFICULTY` the runner-up.
+  Two blockers stand and they have different roles: opportunity construction bounds what can be *measured*,
+  difficulty bounds what can be *generated*, and until the first moves no further architecture finding can be
+  measured at a size that would justify acting on it. `PRODUCTION_SCALEOUT_SPEC_WRITTEN = NO`: three of Part
+  AH's four preconditions fail.
+- `NEXT_DOMINANT_BOTTLENECK = DIFFICULTY_CALIBRATION`, runner-up `OPPORTUNITY_CONSTRUCTION`.
+- QGEN_NEXT_STEP = `USER_REVIEW_SNAPSHOT_BOOTSTRAP_AND_DISTRACTOR_SEMANTICS`. The two changes it points at are
+  onboarding further study units to the question-generation layer, which is source-packet research and not an
+  architecture change, and revisiting the difficulty contract's denial budget, which Part Q deliberately
+  withheld authorization for.
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 
 ## Research-level policy

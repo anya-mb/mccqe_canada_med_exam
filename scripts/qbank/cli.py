@@ -1113,6 +1113,62 @@ def _command_run_feature_anchor_gate_replay(arguments: argparse.Namespace) -> No
     }, indent=2, sort_keys=True))
 
 
+def _command_run_snapshot_bootstrap(arguments: argparse.Namespace) -> None:
+    """Rebuild every snapshot-bootstrap artifact from the committed frozen inputs."""
+    from .snapshot_bootstrap import (
+        ARM_C_ACQUISITION_PATH,
+        DISTRACTOR_REPORT_PATH,
+        FRESH_UNIVERSE_REPORT_PATH,
+        MILESTONE_REPORT_PATH as BOOTSTRAP_MILESTONE_PATH,
+        ROOT_CAUSE_REPORT_PATH,
+        THREE_ARM_REPORT_PATH,
+        VISIBILITY_REPORT_PATH,
+        build_arm_c_acquisition,
+        build_distractor_diagnosis,
+        build_fresh_universe_feasibility,
+        build_milestone_report as build_bootstrap_milestone,
+        build_root_cause_report,
+        build_three_arm_report,
+        build_visibility_replay,
+    )
+
+    root = canonical_root(getattr(arguments, "root", Path.cwd()))
+    builders = (
+        (ARM_C_ACQUISITION_PATH, build_arm_c_acquisition),
+        (ROOT_CAUSE_REPORT_PATH, build_root_cause_report),
+        (VISIBILITY_REPORT_PATH, build_visibility_replay),
+        (DISTRACTOR_REPORT_PATH, build_distractor_diagnosis),
+        (THREE_ARM_REPORT_PATH, build_three_arm_report),
+        (FRESH_UNIVERSE_REPORT_PATH, build_fresh_universe_feasibility),
+        (BOOTSTRAP_MILESTONE_PATH, build_bootstrap_milestone),
+    )
+    for relative, builder in builders:
+        write_json_atomic(resolve_root_path(root, relative), builder(root))
+    # The milestone's copyright audit scans its own tracked list, which includes
+    # the milestone. Written once it has scanned a file that did not yet exist, so
+    # it is rebuilt now that every artifact is on disk; from here it is a fixed
+    # point and regenerates byte for byte.
+    write_json_atomic(
+        resolve_root_path(root, BOOTSTRAP_MILESTONE_PATH), build_bootstrap_milestone(root)
+    )
+    milestone = json.loads(
+        resolve_root_path(root, BOOTSTRAP_MILESTONE_PATH).read_text()
+    )
+    print(json.dumps({
+        "SNAPSHOT_V3_ID": milestone["snapshot"]["SNAPSHOT_V3_ID"],
+        "V3_ANCHOR_COUNT": milestone["snapshot"]["V3_ANCHOR_COUNT"],
+        "SNAPSHOT_BOOTSTRAP_ASSESSMENT": milestone["SNAPSHOT_BOOTSTRAP_ASSESSMENT"],
+        "three_arm": milestone["three_arm"],
+        "DISTRACTOR_SEMANTIC_EXTENSION_IMPLEMENTED": milestone[
+            "distractor_semantics"
+        ]["DISTRACTOR_SEMANTIC_EXTENSION_IMPLEMENTED"],
+        "FRESH_PILOT_TRIGGERED": milestone["fresh_pilot"]["FRESH_PILOT_TRIGGERED"],
+        "PRODUCTION_READINESS": milestone["PRODUCTION_READINESS"],
+        "NEXT_DOMINANT_BOTTLENECK": milestone["NEXT_DOMINANT_BOTTLENECK"],
+        "COPYRIGHT_AUDIT": milestone["copyright"]["COPYRIGHT_AUDIT"],
+    }, indent=2, sort_keys=True))
+
+
 def _command_run_medium_pilot(arguments: argparse.Namespace) -> None:
     """Rebuild every medium-pilot artifact from the committed frozen inputs."""
     from .medium_pilot import (
@@ -1347,6 +1403,11 @@ def _parser() -> argparse.ArgumentParser:
             "run-medium-pilot",
             "rebuild the cross-discipline medium pilot against its pinned snapshot",
             _command_run_medium_pilot,
+        ),
+        (
+            "run-snapshot-bootstrap",
+            "replay the frozen six across the three snapshot and distractor arms",
+            _command_run_snapshot_bootstrap,
         ),
     )
     parsers = {}

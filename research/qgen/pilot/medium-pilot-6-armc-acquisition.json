@@ -1,0 +1,989 @@
+{
+  "ARM_C_ADMITTED_AS_NEVER_BEST": [
+    "SEED-OB-T02-CRP",
+    "SEED-OB-T03-DANGLE",
+    "SEED-OB-T03-EMPTY",
+    "SEED-OB-T03-MASSAGE",
+    "SEED-OB-T03-SHIELD",
+    "SEED-PED-T03-SALBUTAMOL"
+  ],
+  "ARM_C_STILL_REFUSED": [
+    "SEED-PED-T03-HYPERTONIC"
+  ],
+  "acquisition_id": "medium-pilot-6-arm-c-never-best",
+  "arm": "ARM_C_V3_PLUS_DISTRACTOR_SEMANTICS",
+  "authorship": {
+    "anchor_addition_rule": "Design rule S-4, unchanged. A plausibility anchor may be added only where the feature is in the frozen vocabulary for that anchor study unit, is named by a cited claim as a presentation feature the candidate shares with the key or as a recognized reason to consider it, and is not on its own sufficient to satisfy that candidate's correctness conditions.",
+    "correctness_reading_rule": "A newly admitted candidate's correctness conditions are a reading of its own frozen seed prose and of the cited claims, under the same disjunction rule the V2 readings use. No new clinical claim is authored.",
+    "no_llm_api": "Discovery ran against the local Toronto Notes FTS5 index. Clinical reading is Claude Code interactive reasoning over retrieved and already admitted evidence.",
+    "refusal_rule": "A candidate whose plausibility could only be asserted, not cited, is refused. So is a candidate that cannot state its correctness conditions in the frozen vocabulary, and so is one whose frozen prose records no state in which it would be correct. Refusals are recorded with their reason.",
+    "reuse_order": "Cache first, then the curated contrast library, then already approved V2 relations, then the typed graph, then one bounded Toronto Notes full-text query, and authoritative evidence only where a claim was needed. Every admitted candidate in this wave came from the curated library or from an already frozen evidence packet; the graph and the full-text index contributed no concept that was not already there.",
+    "snapshot_rule": "The pinned snapshot is FEATURE_ANCHOR_SNAPSHOT_V2 for every opportunity and is not rebuilt inside the pilot. A feature this wave would have needed and could not find is recorded as a proposed extension for the next snapshot and is invisible to every item in this batch.",
+    "what_this_is": "One bounded acquisition wave for the six frozen medium-pilot opportunities. For each it records what discovery returned, the anchor or member acquired for each candidate, and an independent admissibility review of each. Nothing frozen is edited."
+  },
+  "derived_from": "research/qgen/pilot/medium-pilot-6-acquisition.json",
+  "design": "docs/superpowers/specs/2026-09-05-on-demand-clinical-contrast-supply-design.md",
+  "feature_anchor_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V2",
+  "frozen_before_any_generation": true,
+  "llm_api_calls": 0,
+  "only_change": "The distractor semantic class of the candidates the wave refused with V2_CANNOT_CARRY_A_NEVER_CORRECT_DISTRACTOR. No candidate was discovered, no anchor added, no evidence introduced and no other verdict moved.",
+  "opportunities": {
+    "G2-MED-01": {
+      "anchor_study_unit_id": "SU-C-21",
+      "candidates": [
+        {
+          "acquisition_kind": "ANCHOR_ADDITION",
+          "added_anchors": [],
+          "concept": "Acute aortic dissection",
+          "concept_category": "AORTIC_WALL_DISRUPTION",
+          "concept_id": "CONCEPT-G2-AORTIC-DISSECTION",
+          "discovery_source": "CURATED_EVIDENCE",
+          "member_id": "SEED-G2-MED-T01-DISSECTION",
+          "review": {
+            "proposed_extension_for_next_snapshot": {
+              "blocked_by": "Growing the frozen stem-feature vocabulary needs an evidence packet for the feature, and is outside this pilot's authorization.",
+              "clinical_role": "SYMPTOM",
+              "kind": "NEW_FEATURE",
+              "normalized_feature": "severe acute chest pain is the presenting complaint",
+              "proposed_feature_id": "SF-C21-SEVERE-ACUTE-CHEST-PAIN",
+              "why": "It is the presentation every competitor in this set shares with the key and the reason a candidate considers an aortic cause at all. Without it dissection is expressible only as its own correctness conditions."
+            },
+            "reasons": [
+              "S-4 limb B fails. CLM-AORTIC-DISSECTION-01 names exactly three features as reasons to suspect acute aortic syndrome -- abrupt severe pain maximal at onset, pulse or blood-pressure differences, and malperfusion findings -- and all three are disjuncts of the competitor's own correctness tree, so each of them makes it correct rather than merely live.",
+              "No other feature in the frozen SU-C-21 vocabulary is named by any cited claim as a reason to consider dissection. The feature that would do the work is the severe acute chest pain the key and this competitor share, and the frozen 102-feature vocabulary has no feature for it; SU-C-21 states pain quality only as abrupt-maximal, pleuritic-positional or refluxlike.",
+              "Plausibility could only be asserted here, not cited, so the wave refuses rather than manufacturing an anchor."
+            ],
+            "reviewer_id": "R-MP-SUPPLY-A",
+            "verdict": "REJECTED"
+          },
+          "why_it_belongs_to_the_learner_decision": "CLM-AORTIC-DISSECTION-01 makes acute aortic syndrome a diagnosis to be settled in the same acute chest pain presentation, and the frozen seed review already admitted it."
+        }
+      ],
+      "decision_domain": "PATIENT_CLINICAL",
+      "learner_decision": "the diagnosis that best explains acute chest pain with an abnormal tracing",
+      "retrieval": {
+        "authority_role": "TOPIC_DISCOVERY_SOURCE",
+        "chunks_requested": 15,
+        "pages": [
+          95,
+          103,
+          105,
+          121,
+          136,
+          147,
+          155,
+          264,
+          267,
+          397
+        ],
+        "query_terms": [
+          "acute",
+          "chest",
+          "pain",
+          "differential",
+          "aortic",
+          "dissection",
+          "pulmonary",
+          "embolism",
+          "pericarditis",
+          "troponin",
+          "electrocardiogram"
+        ],
+        "source": "TN_FTS",
+        "top_nodes": [
+          "C.S02.T01",
+          "C.S03.T01",
+          "C.S06.T01",
+          "C.S08.T01",
+          "C.S11.T01",
+          "C.S12.T01"
+        ],
+        "what_it_returned": "The cardiology chest-pain and dyspnea differentials the curated seed pack already carries. No concept beyond the three seeds, and no feature the frozen SU-C-21 vocabulary does not already have."
+      },
+      "supply_target": "one anchor that makes aortic dissection live without making it correct"
+    },
+    "G2-OBGYN-02": {
+      "anchor_study_unit_id": "SU-OB-54",
+      "candidates": [
+        {
+          "acquisition_kind": "NEW_MEMBER_WITH_ANCHOR_ADDITION",
+          "added_anchors": [],
+          "concept": "Sterile milk culture and sensitivities",
+          "concept_category": "MICROBIOLOGIC_CHARACTERISATION",
+          "concept_id": "CONCEPT-R4-SU-OB-54-MILK-CULTURE",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-OB54-NO-IMPROVEMENT-AFTER-48H",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where there is no symptomatic improvement after 48 hours of first-line therapy, or where a resistant organism is suspected.' CLM-R2-OB-MILK-CULTURE reads the same way; the resistant-organism clause has no frozen feature and is recorded unmapped."
+          },
+          "discovery_source": "CURATED_LIBRARY",
+          "evidence_refs": [
+            "CLM-R2-OB-MILK-CULTURE"
+          ],
+          "member_id": "SEED-OB-T02-MILK-CULTURE",
+          "review": {
+            "reasons": [
+              "Admitting it requires an anchor, because its single frozen plausibility anchor and its single correctness condition are the same feature: no improvement after forty-eight hours. Under that anchor alone it is live only by being correct, which CS2-6 refuses.",
+              "The only candidate anchor is the systemic illness of the mastitis itself, and S-4 limb B fails on it. CLM-R2-OB-MILK-CULTURE names one trigger and one only -- absence of symptomatic improvement at forty-eight hours of first-line therapy. It does not name the systemic illness as a reason to culture, and reading it as one is an inference rather than a citation."
+            ],
+            "reviewer_id": "R-MP-SUPPLY-A",
+            "verdict": "REJECTED"
+          },
+          "unmapped_disjuncts": [
+            "or where a resistant organism is suspected (CLM-R2-OB-MILK-CULTURE); no frozen SU-OB-54 feature states a suspected resistant organism"
+          ],
+          "why_it_belongs_to_the_learner_decision": "CLM-R2-OB-MILK-CULTURE makes a milk culture the test to consider when mastitis has not improved on first-line therapy, which is the same next-investigation decision."
+        },
+        {
+          "acquisition_kind": "NEW_MEMBER",
+          "added_anchors": [],
+          "concept": "Serum C-reactive protein and white blood cell count",
+          "concept_category": "INFLAMMATORY_MARKER",
+          "concept_id": "CONCEPT-R4-SU-OB-54-CRP",
+          "discovery_source": "CURATED_LIBRARY",
+          "distractor_semantics": "PLAUSIBLE_BUT_NEVER_BEST",
+          "evidence_refs": [
+            "CLM-R2-OB-ABSCESS-US",
+            "CLM-R2-OB-INFLAMMATORY-MARKERS"
+          ],
+          "member_id": "SEED-OB-T02-CRP",
+          "never_best_contract": {
+            "inferiority": {
+              "basis": "ADDRESSES_A_DIFFERENT_PROBLEM_THAN_THE_ONE_ASKED",
+              "evidence_refs": [
+                "CLM-R2-OB-ABSCESS-US",
+                "CLM-R2-OB-INFLAMMATORY-MARKERS"
+              ],
+              "reason": "Not correct for this question: they are markers of inflammation and not specific for infection."
+            },
+            "learner_error_mode": "A candidate who wants an objective marker of ongoing infection before deciding on further treatment.",
+            "positive_plausibility": {
+              "evidence_refs": [
+                "CLM-R2-OB-INFLAMMATORY-MARKERS"
+              ],
+              "feature_ids": [
+                "SF-OB54-NO-IMPROVEMENT-AFTER-48H"
+              ],
+              "reason": "Inflammatory markers are the reflex test for deciding whether infection persists, and they are ordered in this situation in practice."
+            }
+          },
+          "review": {
+            "arm_c_classification": "WRONG_DECISION_CLASS",
+            "arm_c_note": "Admitted as a candidate under the second distractor semantic class. Whether it survives is the coherence contract's decision, not this one: response class, granularity, category and anchors are all still checked by the unchanged gate.",
+            "reasons": [],
+            "reviewer_id": "R-ARMC-DISTRACTOR-SEMANTICS",
+            "verdict": "APPROVED"
+          },
+          "why_it_belongs_to_the_learner_decision": "It is a frozen, independently reviewed seed for this very decision, and CLM-R2-OB-INFLAMMATORY-MARKERS is about ordering it in mastitis."
+        }
+      ],
+      "decision_domain": "PATIENT_CLINICAL",
+      "learner_decision": "the next investigation for a residual breast area after treated mastitis",
+      "retrieval": {
+        "authority_role": "TOPIC_DISCOVERY_SOURCE",
+        "chunks_requested": 15,
+        "pages": [
+          294,
+          328,
+          497,
+          527,
+          528,
+          532,
+          541,
+          559,
+          819,
+          1034
+        ],
+        "query_terms": [
+          "lactational",
+          "mastitis",
+          "breast",
+          "abscess",
+          "ultrasound",
+          "investigation",
+          "phlegmon",
+          "mass",
+          "imaging"
+        ],
+        "source": "TN_FTS",
+        "top_nodes": [
+          "E.S04.T01",
+          "ER.S09.T01",
+          "GS.S02.T01",
+          "GS.S07.T01",
+          "GS.S09.T01",
+          "GS.S12.T01"
+        ],
+        "what_it_returned": "The breastfeeding-problems and breast-mass topics the curated seed pack was drawn from. No investigation concept beyond the four frozen seeds."
+      },
+      "supply_target": "one admissible third competitor"
+    },
+    "G2-OBGYN-03": {
+      "anchor_study_unit_id": "SU-OB-54",
+      "candidates": [
+        {
+          "acquisition_kind": "ANCHOR_ADDITION",
+          "added_anchors": [
+            {
+              "contrast_role": "POSITIVE_SUPPORT",
+              "evidence_refs": [
+                "CLM-R2-OB-CONTINUE-FEEDING",
+                "CLM-R2-OB-MASTITIS-ANCHOR"
+              ],
+              "feature_id": "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA",
+              "s4_limb_b": "CLM-R2-OB-CONTINUE-FEEDING states that bacterial mastitis is not a contraindication to breastfeeding and that women should not be told to express and discard. The claim exists because the presence of bacterial mastitis is the recognized reason clinicians reach for this instruction, and CLM-R2-OB-MASTITIS-ANCHOR states that mastitis as the segmental erythematous, oedematous, painful breast. It is the presentation feature this candidate shares with the key.",
+              "s4_limb_c": "The candidate's correctness condition is that a contraindication to the infant receiving the milk is present. Segmental erythema is not that condition and does not appear in its tree, so the anchor makes the candidate live without making it correct."
+            }
+          ],
+          "concept": "Express milk from the affected breast and feed the infant formula",
+          "concept_category": "MILK_WITHHELD_FROM_INFANT",
+          "concept_id": "CONCEPT-R4-SU-OB-54-DISCARD",
+          "discovery_source": "APPROVED_V2_RELATION",
+          "member_id": "SEED-OB-T03-DISCARD",
+          "review": {
+            "boolean_reading_unchanged": true,
+            "clinical_plausibility": "A woman with an erythematous, systemically unwell breast segment is exactly the patient in whom the question of discarding the milk is raised, and the cited claim exists to answer it.",
+            "reasons": [],
+            "reviewer_id": "R-MP-SUPPLY-A",
+            "same_granularity": true,
+            "same_learner_decision": true,
+            "same_response_class": true,
+            "second_key_risk": "NONE. The added anchor is not the competitor's correctness condition and is not a disjunct of it.",
+            "verdict": "APPROVED"
+          },
+          "why_it_belongs_to_the_learner_decision": "CLM-R2-OB-CONTINUE-FEEDING addresses this instruction by name in this decision: women should not be instructed to express and discard."
+        },
+        {
+          "acquisition_kind": "NEW_MEMBER",
+          "added_anchors": [],
+          "concept": "Pump to empty the affected breast after every feed",
+          "concept_category": "PHYSICALLY_ALTERED_MILK_REMOVAL",
+          "concept_id": "CONCEPT-R4-SU-OB-54-EMPTY",
+          "discovery_source": "CURATED_LIBRARY",
+          "distractor_semantics": "PLAUSIBLE_BUT_NEVER_BEST",
+          "evidence_refs": [
+            "CLM-R2-OB-FEEDBACK",
+            "CLM-R2-OB-NO-EMPTY",
+            "CLM-R4-OB-PUMP-MINIMIZE"
+          ],
+          "member_id": "SEED-OB-T03-EMPTY",
+          "never_best_contract": {
+            "inferiority": {
+              "basis": "EVIDENCE_STATES_HARM",
+              "evidence_refs": [
+                "CLM-R2-OB-NO-EMPTY",
+                "CLM-R4-OB-PUMP-MINIMIZE"
+              ],
+              "reason": "Not correct: overfeeding from the affected breast or pumping to empty perpetuates hyperlactation."
+            },
+            "learner_error_mode": "A candidate who applies the milk-stasis model and treats more removal as more treatment.",
+            "positive_plausibility": {
+              "evidence_refs": [
+                "CLM-R2-OB-FEEDBACK"
+              ],
+              "feature_ids": [
+                "SF-OB54-HYPERLACTATION",
+                "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+              ],
+              "reason": "Emptying the breast to relieve milk stasis is the classic instruction and is what many patients are already doing."
+            }
+          },
+          "review": {
+            "arm_c_classification": "PLAUSIBLE_BUT_NEVER_BEST",
+            "arm_c_note": "Admitted as a candidate under the second distractor semantic class. Whether it survives is the coherence contract's decision, not this one: response class, granularity, category and anchors are all still checked by the unchanged gate.",
+            "reasons": [],
+            "reviewer_id": "R-ARMC-DISTRACTOR-SEMANTICS",
+            "verdict": "APPROVED"
+          },
+          "why_it_belongs_to_the_learner_decision": "A frozen, independently reviewed seed for this decision, each with a cited claim that a candidate's reasoning would run through."
+        },
+        {
+          "acquisition_kind": "NEW_MEMBER",
+          "added_anchors": [],
+          "concept": "Feed in a dangle position over the infant",
+          "concept_category": "PHYSICALLY_ALTERED_MILK_REMOVAL",
+          "concept_id": "CONCEPT-R4-SU-P-005-DANGLE",
+          "discovery_source": "CURATED_LIBRARY",
+          "distractor_semantics": "PLAUSIBLE_BUT_NEVER_BEST",
+          "evidence_refs": [
+            "CLM-R2-OB-NO-EMPTY",
+            "CLM-R4-OB-DANGLE"
+          ],
+          "member_id": "SEED-OB-T03-DANGLE",
+          "never_best_contract": {
+            "inferiority": {
+              "basis": "EVIDENCE_STATES_NO_BENEFIT",
+              "evidence_refs": [
+                "CLM-R2-OB-NO-EMPTY",
+                "CLM-R4-OB-DANGLE"
+              ],
+              "reason": "Not correct: no evidence supports dangle feeding, and it is an unsafe infant position."
+            },
+            "learner_error_mode": "A candidate who has absorbed popular lactation advice and treats gravity as the mechanism of drainage.",
+            "positive_plausibility": {
+              "evidence_refs": [
+                "CLM-R4-OB-DANGLE"
+              ],
+              "feature_ids": [
+                "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+              ],
+              "reason": "Dangle feeding is widely recommended in lactation circles for a blocked segment and is exactly the sort of instruction a patient will have read."
+            }
+          },
+          "review": {
+            "arm_c_classification": "PLAUSIBLE_BUT_NEVER_BEST",
+            "arm_c_note": "Admitted as a candidate under the second distractor semantic class. Whether it survives is the coherence contract's decision, not this one: response class, granularity, category and anchors are all still checked by the unchanged gate.",
+            "reasons": [],
+            "reviewer_id": "R-ARMC-DISTRACTOR-SEMANTICS",
+            "verdict": "APPROVED"
+          },
+          "why_it_belongs_to_the_learner_decision": "A frozen, independently reviewed seed for this decision, each with a cited claim that a candidate's reasoning would run through."
+        },
+        {
+          "acquisition_kind": "NEW_MEMBER",
+          "added_anchors": [],
+          "concept": "Use a nipple shield for feeds from the affected breast",
+          "concept_category": "PHYSICALLY_ALTERED_MILK_REMOVAL",
+          "concept_id": "CONCEPT-R4-SU-OB-56-SHIELD",
+          "discovery_source": "CURATED_LIBRARY",
+          "distractor_semantics": "PLAUSIBLE_BUT_NEVER_BEST",
+          "evidence_refs": [
+            "CLM-R4-OB-NIPPLE-SHIELD"
+          ],
+          "member_id": "SEED-OB-T03-SHIELD",
+          "never_best_contract": {
+            "inferiority": {
+              "basis": "EVIDENCE_STATES_NO_BENEFIT",
+              "evidence_refs": [
+                "CLM-R4-OB-NIPPLE-SHIELD"
+              ],
+              "reason": "Not correct: neither safety nor effectiveness has been demonstrated and shields result in inadequate milk extraction."
+            },
+            "learner_error_mode": "A candidate who treats the pain rather than the physiology.",
+            "positive_plausibility": {
+              "evidence_refs": [
+                "CLM-R4-OB-NIPPLE-SHIELD"
+              ],
+              "feature_ids": [
+                "SF-OB54-NEEDLE-LIKE-BURNING-PAIN-BLEBS"
+              ],
+              "reason": "A nipple shield is a standard tool offered for painful feeding, and pain with latch is part of this presentation."
+            }
+          },
+          "review": {
+            "arm_c_classification": "PLAUSIBLE_BUT_NEVER_BEST",
+            "arm_c_note": "Admitted as a candidate under the second distractor semantic class. Whether it survives is the coherence contract's decision, not this one: response class, granularity, category and anchors are all still checked by the unchanged gate.",
+            "reasons": [],
+            "reviewer_id": "R-ARMC-DISTRACTOR-SEMANTICS",
+            "verdict": "APPROVED"
+          },
+          "why_it_belongs_to_the_learner_decision": "A frozen, independently reviewed seed for this decision, each with a cited claim that a candidate's reasoning would run through."
+        },
+        {
+          "acquisition_kind": "NEW_MEMBER",
+          "added_anchors": [],
+          "concept": "Apply firm deep massage over the tender area",
+          "concept_category": "PHYSICALLY_ALTERED_MILK_REMOVAL",
+          "concept_id": "CONCEPT-R4-SU-OB-54-MASSAGE",
+          "discovery_source": "CURATED_LIBRARY",
+          "distractor_semantics": "PLAUSIBLE_BUT_NEVER_BEST",
+          "evidence_refs": [
+            "CLM-R2-OB-DEEP-MASSAGE",
+            "CLM-R2-OB-LYMPHATIC"
+          ],
+          "member_id": "SEED-OB-T03-MASSAGE",
+          "never_best_contract": {
+            "inferiority": {
+              "basis": "EVIDENCE_STATES_HARM",
+              "evidence_refs": [
+                "CLM-R2-OB-DEEP-MASSAGE"
+              ],
+              "reason": "Correct only as light sweeping that approximates manual lymphatic drainage."
+            },
+            "learner_error_mode": "A candidate who does not distinguish lymphatic drainage from deep tissue massage.",
+            "positive_plausibility": {
+              "evidence_refs": [
+                "CLM-R2-OB-LYMPHATIC"
+              ],
+              "feature_ids": [
+                "SF-OB54-UNILATERAL-SEGMENTAL-ERYTHEMA"
+              ],
+              "reason": "A manual technique is genuinely part of recommended care, so the category is right and only the depth of pressure is wrong."
+            }
+          },
+          "review": {
+            "arm_c_classification": "PLAUSIBLE_BUT_NEVER_BEST",
+            "arm_c_note": "Admitted as a candidate under the second distractor semantic class. Whether it survives is the coherence contract's decision, not this one: response class, granularity, category and anchors are all still checked by the unchanged gate.",
+            "reasons": [],
+            "reviewer_id": "R-ARMC-DISTRACTOR-SEMANTICS",
+            "verdict": "APPROVED"
+          },
+          "why_it_belongs_to_the_learner_decision": "A frozen, independently reviewed seed for this decision, each with a cited claim that a candidate's reasoning would run through."
+        }
+      ],
+      "decision_domain": "PATIENT_CLINICAL",
+      "learner_decision": "the instruction about the affected breast during bacterial mastitis",
+      "retrieval": {
+        "authority_role": "TOPIC_DISCOVERY_SOURCE",
+        "chunks_requested": 15,
+        "pages": [
+          59,
+          379,
+          788,
+          1035,
+          1036,
+          1204,
+          1205,
+          1207,
+          1239,
+          1242
+        ],
+        "query_terms": [
+          "mastitis",
+          "breastfeeding",
+          "continue",
+          "feeding",
+          "milk",
+          "expression",
+          "pump",
+          "instruction",
+          "lactation"
+        ],
+        "source": "TN_FTS",
+        "top_nodes": [
+          "A.S02.T01",
+          "FM.S02.T01",
+          "MG.S03.T01",
+          "OB.S14.T01",
+          "OB.S15.T01",
+          "P.S01"
+        ],
+        "what_it_returned": "Breastfeeding and lactation topics. Every instruction concept returned is already one of the five frozen seeds for this decision."
+      },
+      "supply_target": "two admissible competitors"
+    },
+    "G2-PED-03": {
+      "anchor_study_unit_id": "SU-P-147",
+      "candidates": [
+        {
+          "acquisition_kind": "ANCHOR_ADDITION",
+          "added_anchors": [
+            {
+              "contrast_role": "TIMING_FEATURE",
+              "evidence_refs": [
+                "CLM-R2-PED-DX-ANCHOR",
+                "CLM-R4-PED-SUCTION"
+              ],
+              "feature_id": "SF-P147-VIRAL-PRODROME",
+              "s4_limb_b": "CLM-R2-PED-DX-ANCHOR states the bronchiolitis prodrome as two to three days of fever, cough and rhinorrhea. Rhinorrhea is the nasal secretion suctioning addresses, and CLM-R4-PED-SUCTION is a claim about suctioning in exactly that illness. The coryzal prodrome is the presentation feature the candidate shares with the key.",
+              "s4_limb_c": "The candidate's correctness condition is that nasal obstruction is limiting feeding or comfort. A coryzal prodrome is not that condition -- an infant may be coryzal without obstruction limiting feeds -- so the anchor makes the candidate live without making it correct."
+            }
+          ],
+          "concept": "Superficial nasal suctioning",
+          "concept_category": "AIRWAY_CLEARANCE",
+          "concept_id": "CONCEPT-R4-SU-P-147-SUCTION",
+          "discovery_source": "APPROVED_V2_RELATION",
+          "member_id": "SEED-PED-T03-SUCTION",
+          "review": {
+            "boolean_reading_unchanged": true,
+            "clinical_plausibility": "A coryzal infant with nasal secretions is the presentation in which clearing the nose is considered, and the frozen seed's own account of why a candidate would choose it turns on obligate nasal breathing.",
+            "reasons": [],
+            "reviewer_id": "R-MP-SUPPLY-A",
+            "same_granularity": true,
+            "same_learner_decision": true,
+            "same_response_class": true,
+            "second_key_risk": "NONE. Nasal obstruction limiting feeds remains unstated and is the only thing that would make the option correct.",
+            "verdict": "APPROVED"
+          },
+          "why_it_belongs_to_the_learner_decision": "CLM-R4-PED-SUCTION is a bronchiolitis supportive-care claim about how suctioning should be done, in the same admitted infant."
+        },
+        {
+          "acquisition_kind": "ANCHOR_ADDITION",
+          "added_anchors": [],
+          "concept": "Nebulized epinephrine",
+          "concept_category": "NEBULIZED_PHARMACOTHERAPY",
+          "concept_id": "CONCEPT-R4-SU-P-147-EPINEPHRINE",
+          "discovery_source": "CURATED_EVIDENCE",
+          "member_id": "SEED-PED-T03-EPINEPHRINE",
+          "review": {
+            "reasons": [
+              "S-4 limb B fails on every alternative. CLM-R4-PED-EPINEPHRINE is about admission rates and length of stay; it names no presentation feature at all, and certainly not the viral prodrome or the saturation.",
+              "The reason a candidate reaches for nebulized epinephrine in this infant is escalating work of breathing, which is already its anchor and is simultaneously the whole correctness condition of the high-flow competitor. That collision is a property of the set, not something an anchor can repair."
+            ],
+            "reviewer_id": "R-MP-SUPPLY-A",
+            "verdict": "REJECTED"
+          },
+          "why_it_belongs_to_the_learner_decision": "Already an admitted competitor; the wave was asked for a second anchor because its only presentation anchor is another competitor's whole correctness condition."
+        },
+        {
+          "acquisition_kind": "ANCHOR_ADDITION",
+          "added_anchors": [],
+          "concept": "Nasogastric maintenance fluids",
+          "concept_category": "HYDRATION",
+          "concept_id": "CONCEPT-R4-SU-P-055-NG-FLUIDS",
+          "discovery_source": "CURATED_EVIDENCE",
+          "member_id": "SEED-PED-T03-FLUIDS",
+          "review": {
+            "proposed_extension_for_next_snapshot": {
+              "blocked_by": "Growing the frozen stem-feature vocabulary is outside this pilot's authorization.",
+              "clinical_role": "VITAL_SIGN",
+              "kind": "NEW_FEATURE",
+              "normalized_feature": "the respiratory rate is above sixty breaths per minute",
+              "proposed_feature_id": "SF-P147-TACHYPNOEA-ABOVE-60",
+              "why": "CLM-R4-PED-FEEDING names this number as the aspiration-risk threshold. The frozen vocabulary can only say escalating work of breathing, which collapses a measured vital sign into the judgement that non-invasive support is being considered, and that collapse is what makes three competitors share one anchor."
+            },
+            "reasons": [
+              "S-4 limb B fails. CLM-R4-PED-FEEDING names a respiratory rate above sixty breaths per minute and nasal congestion as what makes oral feeding unsafe; the frozen SU-P-147 vocabulary states the first only as escalating work of breathing, which is again the high-flow competitor's correctness condition, and the second as nasal obstruction limiting feeds, which is the suctioning competitor's.",
+              "A viral prodrome is not a cited reason to give nasogastric fluids."
+            ],
+            "reviewer_id": "R-MP-SUPPLY-A",
+            "verdict": "REJECTED"
+          },
+          "why_it_belongs_to_the_learner_decision": "Already an admitted competitor, and asked for the same reason as the epinephrine competitor."
+        },
+        {
+          "acquisition_kind": "NEW_MEMBER",
+          "added_anchors": [],
+          "concept": "Nebulized salbutamol",
+          "concept_category": "NEBULIZED_PHARMACOTHERAPY",
+          "concept_id": "CONCEPT-R4-SU-P-147-SALBUTAMOL",
+          "discovery_source": "CURATED_LIBRARY",
+          "distractor_semantics": "PLAUSIBLE_BUT_NEVER_BEST",
+          "evidence_refs": [
+            "CLM-R2-PED-SALBUTAMOL"
+          ],
+          "member_id": "SEED-PED-T03-SALBUTAMOL",
+          "never_best_contract": {
+            "inferiority": {
+              "basis": "EVIDENCE_STATES_NO_BENEFIT",
+              "evidence_refs": [
+                "CLM-R2-PED-SALBUTAMOL"
+              ],
+              "reason": "Not correct: bronchodilators do not improve oxygen saturation."
+            },
+            "learner_error_mode": "A candidate who treats wheeze rather than the illness.",
+            "positive_plausibility": {
+              "evidence_refs": [
+                "CLM-R2-PED-SALBUTAMOL"
+              ],
+              "feature_ids": [
+                "SF-P147-FIRST-WHEEZE"
+              ],
+              "reason": "Wheeze invites a bronchodilator, and small improvements in clinical scores have been shown."
+            }
+          },
+          "review": {
+            "arm_c_classification": "PLAUSIBLE_BUT_NEVER_BEST",
+            "arm_c_note": "Admitted as a candidate under the second distractor semantic class. Whether it survives is the coherence contract's decision, not this one: response class, granularity, category and anchors are all still checked by the unchanged gate.",
+            "reasons": [],
+            "reviewer_id": "R-ARMC-DISTRACTOR-SEMANTICS",
+            "verdict": "APPROVED"
+          },
+          "why_it_belongs_to_the_learner_decision": "A frozen seed for this decision, excluded at the contrast-first freeze."
+        },
+        {
+          "acquisition_kind": "NEW_MEMBER",
+          "added_anchors": [],
+          "concept": "Nebulized 3% hypertonic saline",
+          "concept_category": "NEBULIZED_PHARMACOTHERAPY",
+          "concept_id": "CONCEPT-R4-SU-P-147-HYPERTONIC",
+          "discovery_source": "CURATED_LIBRARY",
+          "member_id": "SEED-PED-T03-HYPERTONIC",
+          "review": {
+            "architectural_finding": "V2_CANNOT_CARRY_A_NEVER_CORRECT_DISTRACTOR",
+            "arm_c_note": "POSITIVE_PLAUSIBILITY_SUPPORT: the frozen study-unit vocabulary carries no feature that states why a candidate would consider it, so no stem can anchor it. The class is right and the admission is not.",
+            "reasons": [
+              "No state makes it correct: 'Not correct in a typical North American population, where it has no impact on length of stay' -- and it carries no plausibility anchor at all.",
+              "The same never-correct architectural finding."
+            ],
+            "reviewer_id": "R-MP-SUPPLY-A",
+            "verdict": "REJECTED"
+          },
+          "why_it_belongs_to_the_learner_decision": "A frozen seed for this decision, excluded at the contrast-first freeze."
+        }
+      ],
+      "decision_domain": "PATIENT_CLINICAL",
+      "learner_decision": "the next supportive-care step in an admitted hypoxaemic infant with bronchiolitis",
+      "retrieval": {
+        "authority_role": "TOPIC_DISCOVERY_SOURCE",
+        "chunks_requested": 15,
+        "pages": [
+          95,
+          103,
+          105,
+          121,
+          136,
+          147,
+          155,
+          264,
+          267,
+          397
+        ],
+        "query_terms": [
+          "acute",
+          "chest",
+          "pain",
+          "differential",
+          "aortic",
+          "dissection",
+          "pulmonary",
+          "embolism",
+          "pericarditis",
+          "troponin",
+          "electrocardiogram"
+        ],
+        "source": "TN_FTS",
+        "top_nodes": [
+          "C.S02.T01",
+          "C.S03.T01",
+          "C.S06.T01",
+          "C.S08.T01",
+          "C.S11.T01",
+          "C.S12.T01"
+        ],
+        "what_it_returned": "Not re-run. The frozen-five wave already ran discovery for SU-P-147 and its result is in the cache: the paediatric respiratory differential of CLM-R2-PED-DDX-TABLE and nothing beyond it."
+      },
+      "supply_target": "anchors for the competitors the frozen set cannot make live"
+    },
+    "G2-PSY-01": {
+      "anchor_study_unit_id": "SU-PS-12",
+      "candidates": [
+        {
+          "acquisition_kind": "ANCHOR_ADDITION",
+          "added_anchors": [
+            {
+              "contrast_role": "SHARED_PRESENTATION_FEATURE",
+              "evidence_refs": [
+                "CLM-R2-PSY-PDD"
+              ],
+              "feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+              "s4_limb_b": "CLM-R2-PSY-PDD characterises persistent depressive disorder by two or more depressive symptoms present for more than two years. The depressive syndrome is the presentation the claim names, and it is the feature this candidate shares with the key.",
+              "s4_limb_c": "Its correctness tree is a chronic two-year course together with an absence of interepisode recovery. A current depressive syndrome is neither conjunct, so the anchor makes it live without making it correct. The anchor is needed because its only frozen anchor, the chronic course, is declared contradictory with the interepisode recovery the key requires, so no stem that keys this item can state it."
+            }
+          ],
+          "concept": "Persistent depressive disorder",
+          "concept_category": "CHRONIC_UNIPOLAR_COURSE",
+          "concept_id": "CONCEPT-R4-SU-PS-12-PDD",
+          "discovery_source": "APPROVED_V2_RELATION",
+          "member_id": "SEED-PSY-T01-PDD",
+          "review": {
+            "boolean_reading_unchanged": true,
+            "clinical_plausibility": "A patient with a current impairing depressive syndrome is the patient in whom persistent depressive disorder is considered; that is the whole of its differential position.",
+            "reasons": [],
+            "reviewer_id": "R-MP-SUPPLY-A",
+            "same_granularity": true,
+            "same_learner_decision": true,
+            "same_response_class": true,
+            "second_key_risk": "NONE. The two-year floor is what makes it correct and is untouched.",
+            "verdict": "APPROVED"
+          },
+          "why_it_belongs_to_the_learner_decision": "CLM-R2-PSY-PDD is the claim that separates the chronic course from the episodic one, which is this learner decision."
+        },
+        {
+          "acquisition_kind": "NEW_MEMBER_WITH_ANCHOR_ADDITION",
+          "added_anchors": [
+            {
+              "contrast_role": "SHARED_PRESENTATION_FEATURE",
+              "evidence_refs": [
+                "CLM-R2-PSY-DDX-MEDICAL"
+              ],
+              "feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+              "s4_limb_b": "CLM-R2-PSY-DDX-MEDICAL states in terms that the differential should include nonpsychiatric medical conditions that present with depressive symptoms. The depressive symptoms are named as the reason to consider the candidate and are shared with the key.",
+              "s4_limb_c": "Its correctness condition is an abnormal thyroid stimulating hormone. A depressive syndrome is not that, so the anchor makes it live without making it correct."
+            }
+          ],
+          "concept": "Depressive syndrome due to hypothyroidism",
+          "concept_category": "MEDICAL_CAUSE_OF_DEPRESSIVE_SYNDROME",
+          "concept_id": "CONCEPT-R4-SU-E-30-HYPOTHYROID",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-PS12-ABNORMAL-TSH",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where thyroid stimulating hormone is abnormal, or where somatic features point to an untreated endocrine cause.' The first disjunct has a frozen feature; the second has none and is recorded unmapped. With one mapped disjunct the tree is that condition alone."
+          },
+          "discovery_source": "CURATED_LIBRARY",
+          "evidence_refs": [
+            "CLM-R2-PSY-DDX-MEDICAL",
+            "CLM-R4-PSY-LABS"
+          ],
+          "member_id": "SEED-PSY-T01-MEDICAL",
+          "review": {
+            "boolean_reading_unchanged": true,
+            "clinical_plausibility": "Hypothyroidism presenting as depression is the standard organic competitor in this differential and the frozen seed review passed it on granularity and on cited discrimination.",
+            "reasons": [],
+            "reviewer_id": "R-MP-SUPPLY-A",
+            "same_granularity": true,
+            "same_learner_decision": true,
+            "same_response_class": true,
+            "second_key_risk": "NONE. The abnormal thyroid stimulating hormone is untouched and is the only route to correctness.",
+            "verdict": "APPROVED"
+          },
+          "unmapped_disjuncts": [
+            "or where somatic features point to an untreated endocrine cause (CLM-R2-PSY-DDX-MEDICAL); no frozen SU-PS-12 feature states an endocrine somatic pattern"
+          ],
+          "why_it_belongs_to_the_learner_decision": "CLM-R2-PSY-DDX-MEDICAL requires the differential to include nonpsychiatric medical conditions presenting with depressive symptoms, at the same single-diagnosis granularity."
+        },
+        {
+          "acquisition_kind": "NEW_MEMBER_WITH_ANCHOR_ADDITION",
+          "added_anchors": [
+            {
+              "contrast_role": "SHARED_PRESENTATION_FEATURE",
+              "evidence_refs": [
+                "CLM-R2-PSY-DDX-MEDICAL"
+              ],
+              "feature_id": "SF-PS12-DEPRESSIVE-SYNDROME-CURRENT",
+              "s4_limb_b": "The same claim and the same limb as the hypothyroid competitor: nonpsychiatric medical conditions presenting with depressive symptoms belong in the differential.",
+              "s4_limb_c": "Its correctness condition is an abnormal complete blood count, which the anchor is not."
+            }
+          ],
+          "concept": "Depressive syndrome due to anaemia",
+          "concept_category": "MEDICAL_CAUSE_OF_DEPRESSIVE_SYNDROME",
+          "concept_id": "CONCEPT-R4-SU-H-02-ANEMIA",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-PS12-ABNORMAL-CBC",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where the complete blood count is abnormal and the syndrome is explained by it.' The second conjunct is an attribution rather than an observation and has no frozen feature; it is recorded unmapped."
+          },
+          "discovery_source": "CURATED_LIBRARY",
+          "evidence_refs": [
+            "CLM-R4-PSY-LABS",
+            "CLM-R2-PSY-DDX-MEDICAL"
+          ],
+          "member_id": "SEED-PSY-T01-ANEMIA",
+          "review": {
+            "boolean_reading_unchanged": true,
+            "clinical_plausibility": "Fatigue and reduced activity attributed to anaemia is a recognised trap, though the frozen seed review already downgraded it on selectability against the thyroid and bipolar competitors.",
+            "reasons": [],
+            "recorded_reservation": "Admitting both medical competitors puts two options in one concept category and leaves the item needing an explicit denial for each. The wave supplies what meets S-4 and does not tune the set to the difficulty budget; the blueprint decides.",
+            "reviewer_id": "R-MP-SUPPLY-A",
+            "same_granularity": true,
+            "same_learner_decision": true,
+            "same_response_class": true,
+            "second_key_risk": "NONE. The abnormal count is untouched.",
+            "verdict": "APPROVED"
+          },
+          "unmapped_disjuncts": [
+            "and the syndrome is explained by it (CLM-R4-PSY-LABS); no frozen SU-PS-12 feature states that the count explains the syndrome"
+          ],
+          "why_it_belongs_to_the_learner_decision": "CLM-R4-PSY-LABS names anaemia as one of the two conditions baseline bloodwork is drawn to exclude in this presentation."
+        }
+      ],
+      "decision_domain": "PATIENT_CLINICAL",
+      "learner_decision": "the diagnosis that accounts for a longitudinal depressive presentation",
+      "retrieval": {
+        "authority_role": "TOPIC_DISCOVERY_SOURCE",
+        "chunks_requested": 15,
+        "pages": [
+          400,
+          1225,
+          1360,
+          1361,
+          1364,
+          1368,
+          1369,
+          1373,
+          1398,
+          1399
+        ],
+        "query_terms": [
+          "major",
+          "depressive",
+          "disorder",
+          "differential",
+          "bipolar",
+          "hypomania",
+          "persistent",
+          "depressive",
+          "disorder",
+          "thyroid"
+        ],
+        "source": "TN_FTS",
+        "top_nodes": [
+          "FM.S04.T01",
+          "P.S06.T01",
+          "PS.S02",
+          "PS.S03.T01",
+          "PS.S04.T01",
+          "PS.S06.T01"
+        ],
+        "what_it_returned": "The psychiatry mood-disorder differential and definitions the curated seed pack was drawn from. No diagnosis beyond the four frozen seeds."
+      },
+      "supply_target": "one admissible third competitor and one usable anchor"
+    },
+    "G2-SURG-03": {
+      "anchor_study_unit_id": "SU-GS-76",
+      "candidates": [
+        {
+          "acquisition_kind": "ANCHOR_ADDITION",
+          "added_anchors": [
+            {
+              "contrast_role": "SHARED_PRESENTATION_FEATURE",
+              "evidence_refs": [
+                "CLM-R2-SURG-DRAINAGE",
+                "CLM-R2-SURG-STANDARD"
+              ],
+              "feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+              "s4_limb_b": "Every cited claim in this set scopes its strategy to appendicitis: CLM-R2-SURG-STANDARD to adult non-complicated appendicitis, CLM-R2-SURG-NONOP to adult uncomplicated appendicitis, CLM-R2-SURG-DRAINAGE to complicated appendicitis with a phlegmon or walled-off abscess. Central pain migrating to the right lower quadrant is the frozen SU-GS-76 vocabulary's only statement of that presentation, and it is the key's own correctness condition, so it is the presentation feature the candidate shares with the key.",
+              "s4_limb_c": "Its correctness tree is a disjunction of an operative contraindication and a walled-off phlegmon or abscess. Migratory right lower quadrant pain is neither disjunct, so the anchor makes it live without making it correct. The anchor is needed because its only presentation-class frozen anchor is the walled-off collection, which is itself a disjunct."
+            }
+          ],
+          "concept": "Antibiotics now with interval appendectomy in six to eight weeks",
+          "concept_category": "DEFERRED_OPERATIVE",
+          "concept_id": "CONCEPT-R4-SU-GS-76-INTERVAL",
+          "discovery_source": "APPROVED_V2_RELATION",
+          "member_id": "SEED-SURG-T03-INTERVAL",
+          "review": {
+            "boolean_reading_unchanged": true,
+            "clinical_plausibility": "A patient with appendicitis is the only patient for whom an interval appendectomy is a candidate strategy at all.",
+            "reasons": [],
+            "recorded_reservation": "The cited claims name the disease rather than the symptom. The anchor is admitted because migratory right lower quadrant pain is the frozen vocabulary's only way of stating that disease's presentation, and because it is the key's own condition, so the stem states it regardless; a reviewer who required the claim to name the symptom itself would refuse it.",
+            "reviewer_id": "R-MP-SUPPLY-A",
+            "same_granularity": true,
+            "same_learner_decision": true,
+            "same_response_class": true,
+            "second_key_risk": "NONE. Neither disjunct of its tree is touched.",
+            "verdict": "APPROVED"
+          },
+          "why_it_belongs_to_the_learner_decision": "A frozen competitor already admitted at the same complete-strategy granularity."
+        },
+        {
+          "acquisition_kind": "ANCHOR_ADDITION",
+          "added_anchors": [
+            {
+              "contrast_role": "SHARED_PRESENTATION_FEATURE",
+              "evidence_refs": [
+                "CLM-R2-SURG-NONOP",
+                "CLM-R2-SURG-STANDARD"
+              ],
+              "feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+              "s4_limb_b": "Every cited claim in this set scopes its strategy to appendicitis: CLM-R2-SURG-STANDARD to adult non-complicated appendicitis, CLM-R2-SURG-NONOP to adult uncomplicated appendicitis, CLM-R2-SURG-DRAINAGE to complicated appendicitis with a phlegmon or walled-off abscess. Central pain migrating to the right lower quadrant is the frozen SU-GS-76 vocabulary's only statement of that presentation, and it is the key's own correctness condition, so it is the presentation feature the candidate shares with the key.",
+              "s4_limb_c": "Its correctness tree is uncomplicated disease with an accepted recurrence risk together with the absence of perforation. Migratory pain is neither conjunct. The anchor is needed because its only frozen anchor is a clinical judgement, which types BACKGROUND_CONTEXT in a patient decision and cannot carry plausibility at all."
+            }
+          ],
+          "concept": "Intravenous antibiotics alone with planned reassessment",
+          "concept_category": "ANTIBIOTIC_ONLY",
+          "concept_id": "CONCEPT-R4-SU-GS-76-NONOP",
+          "discovery_source": "APPROVED_V2_RELATION",
+          "member_id": "SEED-SURG-T03-NONOP",
+          "review": {
+            "boolean_reading_unchanged": true,
+            "clinical_plausibility": "Antibiotics-first is a strategy for appendicitis and for nothing else.",
+            "reasons": [],
+            "recorded_reservation": "The same reservation as the interval competitor.",
+            "reviewer_id": "R-MP-SUPPLY-A",
+            "same_granularity": true,
+            "same_learner_decision": true,
+            "same_response_class": true,
+            "second_key_risk": "NONE. The selection judgement that makes it correct is untouched.",
+            "verdict": "APPROVED"
+          },
+          "why_it_belongs_to_the_learner_decision": "A frozen competitor already admitted at the same granularity."
+        },
+        {
+          "acquisition_kind": "NEW_MEMBER_WITH_ANCHOR_ADDITION",
+          "added_anchors": [
+            {
+              "contrast_role": "SHARED_PRESENTATION_FEATURE",
+              "evidence_refs": [
+                "CLM-R2-SURG-DRAINAGE",
+                "CLM-R2-SURG-STANDARD"
+              ],
+              "feature_id": "SF-GS76-MIGRATORY-RLQ-PAIN",
+              "s4_limb_b": "Every cited claim in this set scopes its strategy to appendicitis: CLM-R2-SURG-STANDARD to adult non-complicated appendicitis, CLM-R2-SURG-NONOP to adult uncomplicated appendicitis, CLM-R2-SURG-DRAINAGE to complicated appendicitis with a phlegmon or walled-off abscess. Central pain migrating to the right lower quadrant is the frozen SU-GS-76 vocabulary's only statement of that presentation, and it is the key's own correctness condition, so it is the presentation feature the candidate shares with the key.",
+              "s4_limb_c": "Its single correctness condition is the walled-off collection, which is also its only frozen anchor -- the anchor-equals-condition shape CS2-6 refuses. Migratory pain is not that condition, so the addition is what makes the competitor admissible."
+            }
+          ],
+          "concept": "Image-guided percutaneous drainage with antibiotics",
+          "concept_category": "PERCUTANEOUS_SOURCE_CONTROL",
+          "concept_id": "CONCEPT-R4-SU-MI-13-DRAINAGE",
+          "correctness_conditions": {
+            "conditions": [
+              {
+                "feature_id": "SF-GS76-WALLED-OFF-PHLEGMON-OR-ABSCESS",
+                "required_state": "PRESENT"
+              }
+            ],
+            "operator": "ALL_OF",
+            "prose_basis": "Frozen seed: 'Correct where there is a phlegmon or a walled-off abscess at presentation.' CLM-R2-SURG-DRAINAGE reads the same way. One condition."
+          },
+          "discovery_source": "CURATED_LIBRARY",
+          "evidence_refs": [
+            "CLM-R2-SURG-DRAINAGE"
+          ],
+          "member_id": "SEED-SURG-T03-DRAINAGE",
+          "review": {
+            "boolean_reading_unchanged": true,
+            "clinical_plausibility": "A candidate who recalls that complicated appendicitis can be managed without an operation, and who does not separate contained disease from free perforation, is the candidate this option is for.",
+            "reasons": [],
+            "recorded_reservation": "The same reservation as the interval competitor.",
+            "reviewer_id": "R-MP-SUPPLY-A",
+            "same_granularity": true,
+            "same_learner_decision": true,
+            "same_response_class": true,
+            "second_key_risk": "NONE. The walled-off collection is untouched and is the only route to correctness.",
+            "verdict": "APPROVED"
+          },
+          "why_it_belongs_to_the_learner_decision": "CLM-R2-SURG-DRAINAGE makes percutaneous drainage a recommended strategy in complicated appendicitis, at the same complete-strategy granularity, and the frozen seed review passed it."
+        }
+      ],
+      "decision_domain": "PATIENT_CLINICAL",
+      "learner_decision": "the management strategy for acute appendicitis",
+      "retrieval": {
+        "authority_role": "TOPIC_DISCOVERY_SOURCE",
+        "chunks_requested": 15,
+        "pages": [
+          264,
+          514,
+          528,
+          532,
+          544,
+          549,
+          553,
+          626,
+          805,
+          806
+        ],
+        "query_terms": [
+          "appendicitis",
+          "management",
+          "appendectomy",
+          "antibiotics",
+          "interval",
+          "percutaneous",
+          "drainage",
+          "abscess",
+          "peritonitis"
+        ],
+        "source": "TN_FTS",
+        "top_nodes": [
+          "ER.S03.T01",
+          "GS.S05.T01",
+          "GS.S07.T01",
+          "GS.S09.T01",
+          "GS.S12.T01",
+          "GS.S13.T01"
+        ],
+        "what_it_returned": "The acute appendicitis topic and the antibiotics-versus-appendectomy trial material the curated seed pack was drawn from. No strategy concept beyond the three frozen seeds."
+      },
+      "supply_target": "usable anchors for two frozen competitors and one admissible third"
+    }
+  },
+  "pilot_id": "medium-pilot-snapshot-v2",
+  "schema_version": "1.0",
+  "scope": "QGEN_MEDIUM_PILOT_ARM_C_ACQUISITION",
+  "waves_per_opportunity": 1
+}

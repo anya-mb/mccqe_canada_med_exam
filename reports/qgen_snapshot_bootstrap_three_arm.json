@@ -1,0 +1,363 @@
+{
+  "ALL_ACCEPTED_ITEM_SAFETY": "NO_ACCEPTED_ITEMS",
+  "accepted_item_safety_dimensions": [
+    "FACTUAL_ERRORS",
+    "NUMERIC_ERRORS",
+    "UNSUPPORTED_CLAIMS",
+    "AMBIGUOUS_BEST_ANSWERS",
+    "CRITICAL_FACT_SAFETY_FAILURES",
+    "MATERIAL_REDUNDANCY",
+    "COMPETITOR_WITHOUT_STEM_ANCHOR",
+    "SECOND_KEY_RISK",
+    "UNNATURAL_STEM_ENGINEERING",
+    "SILENCE_AS_ABSENCE_DEFECT",
+    "BOOLEAN_LOGIC_DEFECT"
+  ],
+  "accepted_item_safety_note": "No arm generated an item, so no independent review ran and the eleven dimensions were not exercised. PASS over an empty set would be a claim about nothing; NO_ACCEPTED_ITEMS is the honest value, and it is also not a regression, because arm A generated nothing either.",
+  "arms": {
+    "ARM_A_ORIGINAL_MEDIUM6": "FEATURE_ANCHOR_SNAPSHOT_V2, the frozen wave, the frozen readings. This arm reproduces the committed medium pilot.",
+    "ARM_B_V3_SNAPSHOT": "FEATURE_ANCHOR_SNAPSHOT_V3. The only change from arm A is the pinned snapshot: five independently approved anchor relations become visible and five uncertain ones stay invisible.",
+    "ARM_C_V3_PLUS_SEMANTICS": "Arm B plus the second distractor semantic class. The only change from arm B is how six already-discovered candidates are typed; no candidate, anchor, claim or option text is new, and the snapshot does not move."
+  },
+  "bootstrap_id": "medium6-snapshot-bootstrap",
+  "breakdown": {
+    "ARM_A_ORIGINAL_MEDIUM6": {
+      "CONTRAST_READY_BY_DIFFICULTY": {
+        "HARD": 1
+      },
+      "CONTRAST_READY_BY_DISCIPLINE": {
+        "PED": 1
+      },
+      "CONTRAST_READY_BY_ITEM_ARCHETYPE": {
+        "SUPPORTIVE_CARE_CEILING": 1
+      }
+    },
+    "ARM_B_V3_SNAPSHOT": {
+      "CONTRAST_READY_BY_DIFFICULTY": {
+        "HARD": 1,
+        "MEDIUM": 1
+      },
+      "CONTRAST_READY_BY_DISCIPLINE": {
+        "PED": 1,
+        "PSY": 1
+      },
+      "CONTRAST_READY_BY_ITEM_ARCHETYPE": {
+        "LONGITUDINAL_DIFFERENTIAL": 1,
+        "SUPPORTIVE_CARE_CEILING": 1
+      }
+    },
+    "ARM_C_V3_PLUS_SEMANTICS": {
+      "CONTRAST_READY_BY_DIFFICULTY": {
+        "HARD": 2,
+        "MEDIUM": 1
+      },
+      "CONTRAST_READY_BY_DISCIPLINE": {
+        "OBGYN": 1,
+        "PED": 1,
+        "PSY": 1
+      },
+      "CONTRAST_READY_BY_ITEM_ARCHETYPE": {
+        "LONGITUDINAL_DIFFERENTIAL": 1,
+        "POSTPARTUM_LACTATION_MANAGEMENT": 1,
+        "SUPPORTIVE_CARE_CEILING": 1
+      }
+    }
+  },
+  "difficulty": {
+    "DENIAL_BUDGET_EXHAUSTED_IN_ARM_C": [
+      "G2-OBGYN-03",
+      "G2-PSY-01"
+    ],
+    "DIFFICULTY_IS_THE_LARGEST_REMAINING_FAILURE_SOURCE": true,
+    "MAXIMUM_ABSENT_REQUIRED_FEATURES": {
+      "EASY": 1,
+      "HARD": 0,
+      "MEDIUM": 1
+    },
+    "SHARE_OF_OPPORTUNITIES": 33.3,
+    "detail": "G2-OBGYN-03 is authored HARD, whose budget is zero explicit denials, and its one counterfactual-correct competitor has a single correctness condition with no stated positive contrary and no key discriminator, so it can be settled only by a denial the contract forbids. G2-PSY-01 is authored MEDIUM, whose budget is one, and that one is already spent denying a past hypomanic period to settle the bipolar competitor. Both sets are otherwise coherent and both reach the solver.",
+    "structural_difficulty_not_measured": "No item was realized in any arm, so no blind solve was possible and no independent structural difficulty read exists for this experiment. DIFFICULTY_INTENT stays authored, EMPIRICAL_DIFFICULTY stays absent, and the six reserved learner-data fields stay unpopulated.",
+    "tracked_not_fixed": "Per Part Q, no difficulty parameter was changed. What is recorded is that once the snapshot and the distractor model stop being the binding constraint, the difficulty contract becomes it."
+  },
+  "llm_api_calls": 0,
+  "no_retries": true,
+  "one_attempt_per_opportunity": true,
+  "per_opportunity": [
+    {
+      "ARM_A_ORIGINAL_MEDIUM6": {
+        "CONTRAST_READY": false,
+        "GENERATED": false,
+        "TERMINAL_STATE": "NO_SAFE_ITEM",
+        "VALID_COMPETITORS": [
+          "SEED-G2-MED-T01-PE",
+          "SEED-G2-MED-T01-PERICARDITIS"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "stage_reached": "CONTRAST_SET_ASSEMBLY"
+      },
+      "ARM_B_V3_SNAPSHOT": {
+        "CONTRAST_READY": false,
+        "GENERATED": false,
+        "TERMINAL_STATE": "NO_SAFE_ITEM",
+        "VALID_COMPETITORS": [
+          "SEED-G2-MED-T01-PE",
+          "SEED-G2-MED-T01-PERICARDITIS"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "stage_reached": "CONTRAST_SET_ASSEMBLY"
+      },
+      "ARM_C_V3_PLUS_SEMANTICS": {
+        "CONTRAST_READY": false,
+        "GENERATED": false,
+        "TERMINAL_STATE": "NO_SAFE_ITEM",
+        "VALID_COMPETITORS": [
+          "SEED-G2-MED-T01-PE",
+          "SEED-G2-MED-T01-PERICARDITIS"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "stage_reached": "CONTRAST_SET_ASSEMBLY"
+      },
+      "difficulty_intent": "MEDIUM",
+      "discipline": "MED",
+      "item_archetype": "DIAGNOSIS",
+      "opportunity_label": "G2-MED-01"
+    },
+    {
+      "ARM_A_ORIGINAL_MEDIUM6": {
+        "CONTRAST_READY": false,
+        "GENERATED": false,
+        "TERMINAL_STATE": "NO_SAFE_ITEM",
+        "VALID_COMPETITORS": [
+          "SEED-OB-T02-ASPIRATION",
+          "SEED-OB-T02-MAMMOGRAPHY"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "stage_reached": "CONTRAST_SET_ASSEMBLY"
+      },
+      "ARM_B_V3_SNAPSHOT": {
+        "CONTRAST_READY": false,
+        "GENERATED": false,
+        "TERMINAL_STATE": "NO_SAFE_ITEM",
+        "VALID_COMPETITORS": [
+          "SEED-OB-T02-ASPIRATION",
+          "SEED-OB-T02-MAMMOGRAPHY"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "stage_reached": "CONTRAST_SET_ASSEMBLY"
+      },
+      "ARM_C_V3_PLUS_SEMANTICS": {
+        "CONTRAST_READY": false,
+        "GENERATED": false,
+        "TERMINAL_STATE": "NO_SAFE_ITEM",
+        "VALID_COMPETITORS": [
+          "SEED-OB-T02-ASPIRATION",
+          "SEED-OB-T02-MAMMOGRAPHY"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "stage_reached": "CONTRAST_SET_ASSEMBLY"
+      },
+      "difficulty_intent": "MEDIUM",
+      "discipline": "OBGYN",
+      "item_archetype": "INVESTIGATION_SELECTION",
+      "opportunity_label": "G2-OBGYN-02"
+    },
+    {
+      "ARM_A_ORIGINAL_MEDIUM6": {
+        "CONTRAST_READY": false,
+        "GENERATED": false,
+        "TERMINAL_STATE": "NO_SAFE_ITEM",
+        "VALID_COMPETITORS": [
+          "SEED-OB-T03-DISCARD"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "stage_reached": "CONTRAST_SET_ASSEMBLY"
+      },
+      "ARM_B_V3_SNAPSHOT": {
+        "CONTRAST_READY": false,
+        "GENERATED": false,
+        "TERMINAL_STATE": "NO_SAFE_ITEM",
+        "VALID_COMPETITORS": [
+          "SEED-OB-T03-DISCARD"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "stage_reached": "CONTRAST_SET_ASSEMBLY"
+      },
+      "ARM_C_V3_PLUS_SEMANTICS": {
+        "CONTRAST_READY": true,
+        "GENERATED": false,
+        "TERMINAL_STATE": "NO_SAFE_ITEM",
+        "VALID_COMPETITORS": [
+          "SEED-OB-T03-DANGLE",
+          "SEED-OB-T03-DISCARD",
+          "SEED-OB-T03-EMPTY",
+          "SEED-OB-T03-MASSAGE",
+          "SEED-OB-T03-SHIELD"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_COMPETITOR_CANNOT_BE_SETTLED",
+        "stage_reached": "BLUEPRINT"
+      },
+      "difficulty_intent": "HARD",
+      "discipline": "OBGYN",
+      "item_archetype": "POSTPARTUM_LACTATION_MANAGEMENT",
+      "opportunity_label": "G2-OBGYN-03"
+    },
+    {
+      "ARM_A_ORIGINAL_MEDIUM6": {
+        "CONTRAST_READY": true,
+        "GENERATED": false,
+        "TERMINAL_STATE": "NO_SAFE_ITEM",
+        "VALID_COMPETITORS": [
+          "SEED-PED-T03-EPINEPHRINE",
+          "SEED-PED-T03-FLUIDS",
+          "SEED-PED-T03-HFNC"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_NO_USABLE_ANCHOR",
+        "stage_reached": "BLUEPRINT"
+      },
+      "ARM_B_V3_SNAPSHOT": {
+        "CONTRAST_READY": true,
+        "GENERATED": false,
+        "TERMINAL_STATE": "NO_SAFE_ITEM",
+        "VALID_COMPETITORS": [
+          "SEED-PED-T03-EPINEPHRINE",
+          "SEED-PED-T03-FLUIDS",
+          "SEED-PED-T03-HFNC",
+          "SEED-PED-T03-SUCTION"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_NO_USABLE_ANCHOR",
+        "stage_reached": "BLUEPRINT"
+      },
+      "ARM_C_V3_PLUS_SEMANTICS": {
+        "CONTRAST_READY": true,
+        "GENERATED": false,
+        "TERMINAL_STATE": "NO_SAFE_ITEM",
+        "VALID_COMPETITORS": [
+          "SEED-PED-T03-EPINEPHRINE",
+          "SEED-PED-T03-FLUIDS",
+          "SEED-PED-T03-HFNC",
+          "SEED-PED-T03-SUCTION"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_NO_USABLE_ANCHOR",
+        "stage_reached": "BLUEPRINT"
+      },
+      "difficulty_intent": "HARD",
+      "discipline": "PED",
+      "item_archetype": "SUPPORTIVE_CARE_CEILING",
+      "opportunity_label": "G2-PED-03"
+    },
+    {
+      "ARM_A_ORIGINAL_MEDIUM6": {
+        "CONTRAST_READY": false,
+        "GENERATED": false,
+        "TERMINAL_STATE": "NO_SAFE_ITEM",
+        "VALID_COMPETITORS": [
+          "SEED-PSY-T01-BD2"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "stage_reached": "CONTRAST_SET_ASSEMBLY"
+      },
+      "ARM_B_V3_SNAPSHOT": {
+        "CONTRAST_READY": true,
+        "GENERATED": false,
+        "TERMINAL_STATE": "NO_SAFE_ITEM",
+        "VALID_COMPETITORS": [
+          "SEED-PSY-T01-ANEMIA",
+          "SEED-PSY-T01-BD2",
+          "SEED-PSY-T01-MEDICAL",
+          "SEED-PSY-T01-PDD"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_COMPETITOR_CANNOT_BE_SETTLED",
+        "stage_reached": "BLUEPRINT"
+      },
+      "ARM_C_V3_PLUS_SEMANTICS": {
+        "CONTRAST_READY": true,
+        "GENERATED": false,
+        "TERMINAL_STATE": "NO_SAFE_ITEM",
+        "VALID_COMPETITORS": [
+          "SEED-PSY-T01-ANEMIA",
+          "SEED-PSY-T01-BD2",
+          "SEED-PSY-T01-MEDICAL",
+          "SEED-PSY-T01-PDD"
+        ],
+        "fail_closed_reason": "FAIL_CLOSED_COMPETITOR_CANNOT_BE_SETTLED",
+        "stage_reached": "BLUEPRINT"
+      },
+      "difficulty_intent": "MEDIUM",
+      "discipline": "PSY",
+      "item_archetype": "LONGITUDINAL_DIFFERENTIAL",
+      "opportunity_label": "G2-PSY-01"
+    },
+    {
+      "ARM_A_ORIGINAL_MEDIUM6": {
+        "CONTRAST_READY": false,
+        "GENERATED": false,
+        "TERMINAL_STATE": "NO_SAFE_ITEM",
+        "VALID_COMPETITORS": [],
+        "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "stage_reached": "CONTRAST_SET_ASSEMBLY"
+      },
+      "ARM_B_V3_SNAPSHOT": {
+        "CONTRAST_READY": false,
+        "GENERATED": false,
+        "TERMINAL_STATE": "NO_SAFE_ITEM",
+        "VALID_COMPETITORS": [],
+        "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "stage_reached": "CONTRAST_SET_ASSEMBLY"
+      },
+      "ARM_C_V3_PLUS_SEMANTICS": {
+        "CONTRAST_READY": false,
+        "GENERATED": false,
+        "TERMINAL_STATE": "NO_SAFE_ITEM",
+        "VALID_COMPETITORS": [],
+        "fail_closed_reason": "FAIL_CLOSED_CONTRAST_SET_SIZE",
+        "stage_reached": "CONTRAST_SET_ASSEMBLY"
+      },
+      "difficulty_intent": "HARD",
+      "discipline": "SURG",
+      "item_archetype": "OPERATIVE_VS_NONOPERATIVE",
+      "opportunity_label": "G2-SURG-03"
+    }
+  ],
+  "schema_version": "1.0",
+  "scope": "QGEN_SNAPSHOT_BOOTSTRAP_THREE_ARM",
+  "totals": {
+    "ARM_A_ORIGINAL_MEDIUM6": {
+      "ACCEPTED": 0,
+      "CONTRAST_READY": 1,
+      "GENERATED": 0,
+      "NO_SAFE_ITEM": 6,
+      "OPPORTUNITIES": 6,
+      "REJECTED": 0,
+      "fail_closed_reasons": {
+        "FAIL_CLOSED_CONTRAST_SET_SIZE": 5,
+        "FAIL_CLOSED_NO_USABLE_ANCHOR": 1
+      }
+    },
+    "ARM_B_V3_SNAPSHOT": {
+      "ACCEPTED": 0,
+      "CONTRAST_READY": 2,
+      "GENERATED": 0,
+      "NO_SAFE_ITEM": 6,
+      "OPPORTUNITIES": 6,
+      "REJECTED": 0,
+      "fail_closed_reasons": {
+        "FAIL_CLOSED_COMPETITOR_CANNOT_BE_SETTLED": 1,
+        "FAIL_CLOSED_CONTRAST_SET_SIZE": 4,
+        "FAIL_CLOSED_NO_USABLE_ANCHOR": 1
+      }
+    },
+    "ARM_C_V3_PLUS_SEMANTICS": {
+      "ACCEPTED": 0,
+      "CONTRAST_READY": 3,
+      "GENERATED": 0,
+      "NO_SAFE_ITEM": 6,
+      "OPPORTUNITIES": 6,
+      "REJECTED": 0,
+      "fail_closed_reasons": {
+        "FAIL_CLOSED_COMPETITOR_CANNOT_BE_SETTLED": 2,
+        "FAIL_CLOSED_CONTRAST_SET_SIZE": 3,
+        "FAIL_CLOSED_NO_USABLE_ANCHOR": 1
+      }
+    }
+  }
+}

@@ -42,6 +42,7 @@ from .clinical_contrast_v2 import (
     evaluate_predicate,
     explain_predicate,
     feature_assertion,
+    is_never_best,
     predicate_feature_ids,
     predicate_leaves,
     resolve_state,
@@ -354,9 +355,14 @@ def _build_relations(
                 "a_supporting_features": list(left["supporting_features"]),
                 "b_supporting_features": list(right["supporting_features"]),
                 "discriminators": discriminators,
-                "correctness_conditions_a": left["correctness_conditions"],
-                "correctness_conditions_b": right["correctness_conditions"],
-                "second_key_conditions": [right["correctness_conditions"]],
+                "correctness_conditions_a": left.get("correctness_conditions"),
+                "correctness_conditions_b": right.get("correctness_conditions"),
+                "second_key_conditions": (
+                    [] if is_never_best(right)
+                    else [right["correctness_conditions"]]
+                ),
+                **({"never_best_a": True} if is_never_best(left) else {}),
+                **({"never_best_b": True} if is_never_best(right) else {}),
                 "categorical_exclusion_conditions": list(
                     right.get("categorical_exclusion_conditions") or []
                 ),
@@ -1247,7 +1253,7 @@ def _any_satisfied(
     state_map = _state_map_of(assignment, contradiction_pairs=pairs)
     return any(
         evaluate_predicate(row["correctness_conditions"], state_map) == SATISFIED
-        for row in competitors
+        for row in competitors if not is_never_best(row)
     )
 
 
@@ -1265,6 +1271,19 @@ def _settlement_route(
     )
     if verdict["state"] != LIVE_BUT_INFERIOR:
         return None
+    if is_never_best(competitor):
+        # Settled by construction and by cited evidence rather than by anything
+        # the stem has to spend. This is the whole practical gain of the second
+        # class: a never-best competitor costs no denial budget, because there is
+        # no condition of its own left open for silence to be mistaken for.
+        inferiority = competitor["never_best_contract"]["inferiority"]
+        return {
+            "route": "NEVER_BEST_BY_EVIDENCE",
+            "features": [],
+            "explicitly_denied": [],
+            "inferiority_basis": inferiority["basis"],
+            "evidence_refs": sorted(inferiority["evidence_refs"]),
+        }
     if verdict["correctness"] == NOT_SATISFIED:
         explicit = [
             feature_id for feature_id in verdict["defeated_by"]
@@ -1341,7 +1360,7 @@ def _v2_blueprint(
         }),
         "SECOND_KEY_RISK_FEATURES": sorted({
             feature_id
-            for competitor in competitors
+            for competitor in competitors if not is_never_best(competitor)
             for feature_id in unresolved_features(
                 competitor["correctness_conditions"], state_map
             )

@@ -1,0 +1,67 @@
+{
+  "FRESH_BY_DISCIPLINE_CEILING": {
+    "MED": 1,
+    "OBGYN": 1,
+    "PED": 0,
+    "PHELO": 0,
+    "PSY": 1,
+    "SURG": 0
+  },
+  "FRESH_PILOT_FLOOR": 24,
+  "FRESH_PILOT_TARGET": 36,
+  "FRESH_PILOT_TRIGGERED": false,
+  "MAXIMUM_FRESH_OPPORTUNITIES_WITHOUT_LOWERING_STANDARDS": 3,
+  "OPPORTUNITY_CONSTRUCTION_DIAGNOSIS": {
+    "ALLOCATION_ADDRESSES_WITH_PLANNED_PACKETS": 1175,
+    "BINDING_LAYER": "SOURCE_PACKET_RESEARCH",
+    "SOURCE_PACKETS_PLANNED": 1524,
+    "STUDY_UNITS_ONBOARDED_TO_QGEN": 6,
+    "note": "The opportunity-construction layer is not itself defective. It produced 30 well-formed opportunities from the six study units it has, and the selection rule that reduced 30 to 6 was never weakened. What bounds it is upstream: a study unit becomes usable to question generation only after its source packets are researched and a stem-feature vocabulary, a seed pack and claim cards are built from them, and that has happened for six of the planned addresses.",
+    "what_would_unblock_it": "Onboarding further study units to the question-generation layer -- one per discipline is enough to double the universe -- which is the SOURCE_PACKET_RESEARCH stage the repository is already in, not a change to any architecture measured here."
+  },
+  "bootstrap_id": "medium6-snapshot-bootstrap",
+  "funnel": {
+    "CANONICAL_STUDY_UNITS_WITH_A_CURATED_SEED_PACK": 6,
+    "CANONICAL_STUDY_UNITS_WITH_A_FROZEN_STEM_FEATURE_VOCABULARY": 6,
+    "DECLARED_LEARNER_DECISIONS": 32,
+    "DECLARED_LEARNER_DECISIONS_NOT_YET_AN_OPPORTUNITY": 3,
+    "FROZEN_OPPORTUNITY_UNIVERSE": 30,
+    "LEARNER_DECISIONS_ALREADY_AN_OPPORTUNITY": 29,
+    "curated_seeds_by_study_unit": {
+      "SU-C-21": 14,
+      "SU-GS-76": 11,
+      "SU-OB-54": 16,
+      "SU-P-147": 13,
+      "SU-PH-07": 13,
+      "SU-PS-12": 14
+    },
+    "study_unit_ids": [
+      "SU-C-21",
+      "SU-GS-76",
+      "SU-OB-54",
+      "SU-P-147",
+      "SU-PH-07",
+      "SU-PS-12"
+    ],
+    "unused_learner_decisions_by_study_unit": {
+      "SU-C-21": [
+        "LD-C21-03"
+      ],
+      "SU-GS-76": [],
+      "SU-OB-54": [
+        "LD-OB54-04"
+      ],
+      "SU-P-147": [],
+      "SU-PH-07": [],
+      "SU-PS-12": [
+        "LD-PS12-04"
+      ]
+    },
+    "vocabulary_artifact": "research/qgen/safe_yield/g2_stem_feature_vocabulary.json"
+  },
+  "llm_api_calls": 0,
+  "not_called_a_medium_scale_validation": "The six-opportunity replay in this milestone is a controlled three-arm comparison on one frozen batch. It is not a validation sample, it is not called one anywhere in these reports, and no acceptance rate is derived from it.",
+  "schema_version": "1.0",
+  "scope": "QGEN_FRESH_VALIDATION_UNIVERSE_FEASIBILITY",
+  "why": "A fresh opportunity needs four things that do not exist outside six study units: a declared learner decision, a frozen stem-feature vocabulary for its study unit, a curated competitive-contrast seed pack with independent seed review, and an evidence packet its claims can be read from. The canonical universe declares 32 learner decisions across exactly those six units -- one per discipline -- and 29 are already opportunities. That leaves 3, every one of them inside a study unit G1, G2, V1 and V2 have already optimized, which Part U's own selection rule excludes. Building 24 would mean authoring new study-unit vocabularies, new seed packs and new evidence packets: source-packet research, not an architecture pilot."
+}
