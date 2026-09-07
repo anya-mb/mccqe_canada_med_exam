@@ -1113,6 +1113,24 @@ def _command_run_feature_anchor_gate_replay(arguments: argparse.Namespace) -> No
     }, indent=2, sort_keys=True))
 
 
+def _command_build_fresh_universe_inventory(arguments: argparse.Namespace) -> None:
+    """Classify every allocation address by the earliest qgen layer it fails."""
+    from .fresh_universe_inventory import REPORT_PATH, build_inventory
+
+    root = canonical_root(getattr(arguments, "root", Path.cwd()))
+    report = build_inventory(root)
+    write_json_atomic(resolve_root_path(root, REPORT_PATH), report)
+    print(json.dumps({
+        "STUDY_UNITS_INVENTORIED": report["STUDY_UNITS_INVENTORIED"],
+        "READINESS_CLASS_COUNTS": report["READINESS_CLASS_COUNTS"],
+        "SOURCE_READY_NOT_ONBOARDED_BY_DISCIPLINE": report[
+            "SOURCE_READY_NOT_ONBOARDED_BY_DISCIPLINE"
+        ],
+        "STUDY_UNITS_ONBOARDED_TO_QGEN": report["STUDY_UNITS_ONBOARDED_TO_QGEN"],
+        "UNCONSUMED_LEARNER_DECISIONS": report["UNCONSUMED_LEARNER_DECISIONS"],
+    }, indent=2, sort_keys=True))
+
+
 def _command_run_snapshot_bootstrap(arguments: argparse.Namespace) -> None:
     """Rebuild every snapshot-bootstrap artifact from the committed frozen inputs."""
     from .snapshot_bootstrap import (
@@ -1403,6 +1421,11 @@ def _parser() -> argparse.ArgumentParser:
             "run-medium-pilot",
             "rebuild the cross-discipline medium pilot against its pinned snapshot",
             _command_run_medium_pilot,
+        ),
+        (
+            "build-fresh-universe-inventory",
+            "classify every allocation address by the earliest qgen layer it fails",
+            _command_build_fresh_universe_inventory,
         ),
         (
             "run-snapshot-bootstrap",

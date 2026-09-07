@@ -21,7 +21,7 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `2e903753f523a73aed90c04607a714ea91523172`.
+- Audited coordinator input commit: `0c8c82e8e45f91226578cc111df9702376b3a237`.
 - Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
