@@ -1,0 +1,106 @@
+{
+  "boundaries": [
+    {
+      "consumer": "fresh_universe_inventory.collect_source_packet_state",
+      "current_key": "source_packet_id; allocation_address_source_packet_ids",
+      "from": "SOURCE_PACKET",
+      "known_failure_mode": "READY is technical evidence verification; reuse key does not entail topic relevance",
+      "producer": "source_packet_population_srb_*.json; source_packet_plan.json",
+      "semantics_assumed": true,
+      "to": "ALLOCATION_ADDRESS",
+      "versioned": false
+    },
+    {
+      "consumer": "coverage_priority.derive_priority_classes",
+      "current_key": "allocation_address_id; study_unit_id",
+      "from": "ALLOCATION_ADDRESS",
+      "known_failure_mode": "Component addresses must not collapse into parent",
+      "producer": "scope/final_question_allocation.json",
+      "semantics_assumed": false,
+      "to": "STUDY_UNIT",
+      "versioned": true
+    },
+    {
+      "consumer": "coverage_priority.build_coverage_priority_model",
+      "current_key": "study_unit_id; mcc_objective_ids",
+      "from": "STUDY_UNIT",
+      "known_failure_mode": "MCC overlap does not imply shared clinical content",
+      "producer": "scope/master_scope_crosswalk.json; scope/final_question_allocation.json",
+      "semantics_assumed": true,
+      "to": "MCC_OBJECTIVE",
+      "versioned": true
+    },
+    {
+      "consumer": "fresh_universe_onboarding.build_fresh_opportunities",
+      "current_key": "allocation_address_id; learner_decision_id; evidence_refs",
+      "from": "MCC_OBJECTIVE",
+      "known_failure_mode": "Claim existence is checked; complete entailment remains authored",
+      "producer": "onboarding/w1_declared_learner_decisions.json",
+      "semantics_assumed": true,
+      "to": "LEARNER_DECISION",
+      "versioned": true
+    },
+    {
+      "consumer": "fresh_universe_onboarding.validate_decision_against_profile",
+      "current_key": "discipline_profile_id; item_archetype; decision_granularity; option_set_archetype",
+      "from": "LEARNER_DECISION",
+      "known_failure_mode": "Medicine excludes legal decisions; OBGYN globally requires pregnancy timing; PHELO excludes clinical history",
+      "producer": "profiles/*.profile.json",
+      "semantics_assumed": true,
+      "to": "DISCIPLINE_PROFILE",
+      "versioned": true
+    },
+    {
+      "consumer": "contrast_first_pilot.load_stem_feature_vocabulary",
+      "current_key": "anchor_study_unit_id; stem_feature_id",
+      "from": "DISCIPLINE_PROFILE",
+      "known_failure_mode": "Only six anchor units represented",
+      "producer": "safe_yield/g2_stem_feature_vocabulary.json",
+      "semantics_assumed": true,
+      "to": "FEATURE_VOCABULARY",
+      "versioned": false
+    },
+    {
+      "consumer": "feature_anchor_registry.load_snapshot",
+      "current_key": "snapshot_id; feature_id; registry_hash",
+      "from": "FEATURE_VOCABULARY",
+      "known_failure_mode": "validate_extension admits only ANCHOR_RELATION_ONLY; new features always refused",
+      "producer": "feature_anchor_registry.build_snapshot_store",
+      "semantics_assumed": false,
+      "to": "FEATURE_ANCHOR_SNAPSHOT",
+      "versioned": true
+    },
+    {
+      "consumer": "clinical_contrast_v2; medium_pilot.enforce_pinned_snapshot",
+      "current_key": "seed_id; target_concept_id; scope_opportunity_labels; feature_id",
+      "from": "FEATURE_ANCHOR_SNAPSHOT",
+      "known_failure_mode": "Unscoped anchors can become universal; new seeds also need supported correctness relations",
+      "producer": "feature_anchor_registry.resolve_seed_anchors; clinical_contrast_relations_v2.json",
+      "semantics_assumed": true,
+      "to": "CONTRAST_SET",
+      "versioned": true
+    },
+    {
+      "consumer": "contrast blueprint solver; post-stem retrieval; reviewed item realization",
+      "current_key": "opportunity_id/label; decision context; pinned snapshot; seed_id",
+      "from": "CONTRAST_SET",
+      "known_failure_mode": "Fresh profile/vocabulary must reach same safety gates; difficulty denial budget remains fixed",
+      "producer": "clinical_contrast_v2; contrast_supply; medium_pilot",
+      "semantics_assumed": true,
+      "to": "GENERATOR",
+      "versioned": true
+    }
+  ],
+  "historical_paths_default_unchanged": true,
+  "input_sha256": {
+    "reports/qgen_fresh_universe_gate.json": "afba47b9a3370fed0975217f0cb2fbbaf95d4728d2c2fc491ea4ee3132030cb8",
+    "scripts/qbank/feature_anchor_registry.py": "5a9134d443d336601abaf5fa67058ba75c2d7da6611abb2b43717a5ec8c28802",
+    "scripts/qbank/fresh_universe_inventory.py": "817e3e65d974f51a00690436e9c52b7b19ae1d669f51a69c0872574c1a13b316",
+    "scripts/qbank/fresh_universe_onboarding.py": "9bf87cdd76e7cdd0df0e3dc4ac4b02588b8b598eab57c442295f0a6f533d8967",
+    "scripts/qbank/medium_pilot.py": "76f397ebd315ed8ff2d3b73c8a4d16254abb0e855e79c032b14d2622747b26c4",
+    "scripts/qbank/qgen_profiles.py": "708e14a8b45e5972cc3b5a90b5ee9bb0bb375fafc5c72a4966be53ee42976c54"
+  },
+  "schema_version": "1.0",
+  "scope": "QGEN_GENERALIZED_ONBOARDING_CONTRACT_MAP",
+  "starting_commit": "1262883ed704baefef0333b6687dad9f5527e0ce"
+}
