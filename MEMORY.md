@@ -21,7 +21,7 @@
 - Generation queue jobs: 11.
 - Worker states: `SRB-114` = INTEGRATED; `SRB-117` = INTEGRATED.
 - Canonical checkpoint: current Git HEAD.
-- Audited coordinator input commit: `0c8c82e8e45f91226578cc111df9702376b3a237`.
+- Audited coordinator input commit: `6327efe1b5ac5f05f6a7905597ef48b117e00205`.
 - Current next action: `PLAN_SOURCE_READY_GENERATION`.
 
 ## Frozen layers
@@ -1214,6 +1214,90 @@ This section is maintained by hand and sits outside the generated source-researc
   onboarding further study units to the question-generation layer, which is source-packet research and not an
   architecture change, and revisiting the difficulty contract's denial budget, which Part Q deliberately
   withheld authorization for.
+- **Fresh-universe onboarding wave W1 (2026-09-06), from `0c8c82e`.** `FRESH_QGEN_UNIVERSE_MILESTONE = PARTIAL`.
+  Code, tests and artifacts at `6327efe` (inventory) and the wave commit that follows it. No item was generated,
+  no snapshot was built or mutated, no profile or frozen artifact was edited, no research was redone.
+  `HISTORICAL_FROZEN_ARTIFACTS_MODIFIED = 0`, `LLM_API_CALLS = 0`, no embeddings, no graph or TN FTS expansion,
+  no broad bank, production generator not replaced, `CLAUDE.md` unchanged. Everything rebuilds with
+  `qbank build-fresh-universe-inventory` and `qbank run-fresh-universe-onboarding`, and tests assert all four
+  artifacts regenerate byte-identically.
+- **`STUDY_UNITS_INVENTORIED = 1507`, classified by the *earliest* qgen layer each one fails**, so the classes
+  partition the address set: `OUT_OF_SCOPE` 332, `SOURCE_PACKET_INCOMPLETE` 1088, `SOURCE_READY_BUT_NOT_
+  OPPORTUNITY_READY` **45** (MED 17, OBGYN 4, PHELO 24), `MCC_SCOPE_INCOMPLETE` 41,
+  `ALREADY_CONSUMED_BY_PRIOR_PILOT` 1, `GENERATION_READY` **0**. PED, SURG and PSY hold no source-ready address
+  outside their single existing anchor, so the onboarding pool is three disciplines, not six.
+- **`UNCONSUMED_LEARNER_DECISIONS` is empty, not 3.** `LD-C21-03`, `LD-OB54-04` and `LD-PS12-04` were each
+  already an opportunity in the G1 micro pilot; the earlier feasibility report compared against the G2 universe
+  alone. Both counts are correct under their own rule and `PRIOR_FEASIBILITY_RECONCILIATION` records the
+  difference rather than overwriting it. The stricter rule is the one a fresh pilot needs, so the pre-wave fresh
+  ceiling was **0**.
+- **`ONBOARDED_UNIT_SOURCE_PACKET_STATE` puts the two evidence routes side by side.** Five of the six onboarded
+  units are `SOURCE_PACKET_INCOMPLETE` under the canonical plan, because their qgen evidence came from targeted
+  pilot research rather than from completing their planned packets. Only `SU-PH-07` arrived by both routes.
+- **First new blocker: `SOURCE_PACKET_READY` does not mean the evidence is about the address.** An independent
+  alignment review of all 45 source-ready addresses returned **ALIGNED 22, PARTIALLY_ALIGNED 4, MISALIGNED 19**
+  -- 42.2% of the queue. Two shapes. A packet populated with a different topic entirely: `SRC-PHELO-006` is
+  planned for PH.S01.T01, the structure of Canadian public health, and holds incidence against prevalence;
+  `SRC-MED-032` is planned for CP.S05, drug-suffix recognition, and holds atopic dermatitis. And a packet reused
+  across addresses on `EXACT_CANONICAL_SOURCE_NODES_AND_MCC_OBJECTIVES`: `SRC-MED-035` covers `SU-D-28` through
+  `SU-D-33` with one dermatophyte recommendation, which supports neither the scabies address nor the molluscum
+  address nor the yeast address. Sharing a Toronto Notes node and an MCC objective is not sharing a clinical
+  content, and nothing in the reuse basis checks that. **Reported, not repaired**: repairing it is source-packet
+  research, and 19 packets are `PREVIOUS_READY` and immutable without a validated defect record.
+- **Second new blocker: the frozen discipline profiles cannot express the decisions the richest new evidence
+  supports.** Six ALIGNED addresses yield nothing, and `permitted_archetype_exceptions` is empty in all six
+  profiles. `MEDICINE` admits DIAGNOSIS, INVESTIGATION_SELECTION, PHARMACOTHERAPY, RISK_STRATIFICATION and
+  INTERPRETATION only, so **`SU-PM-06` (end-of-life decision making) and `SU-PM-10` (MAID)** -- both CORE, both
+  carrying the richest packets in the whole source-ready set, CMPA, CPSO, Health Canada and CAMAP with three
+  exceptions apiece -- have no archetype to sit in. Every `OBGYN` archetype requires
+  `GESTATIONAL_AGE_OR_POSTPARTUM_DAY`, so **no gynaecologic address can be expressed at all**, including CORE
+  contraception (`SU-GY-10`), gynaecologic imaging (`SU-GY-03`) and hysterectomy (`SU-GY-04`). `PHELO` has no
+  single-clinical-next-action granularity, which costs `SU-PH-35`. The profiles were derived from what six anchor
+  units needed and do not generalise. **No profile was edited and no decision was restated into a permitted
+  archetype**, because restating a legal duty as a diagnosis is how an unsafe item gets built.
+- **`FRESH_OPPORTUNITIES_CREATED = 26` across 16 new study units, MED 17 / OBGYN 3 / PHELO 6, all FRESH.**
+  Each is checked in code against its own frozen discipline profile -- archetype, granularity and option-set
+  archetype -- and against a recommendation or exception that actually exists in a researched packet for its own
+  address; a fabricated reference and an empty reference list are both refused by test. Difficulty intents
+  MEDIUM 16, EASY 6, HARD 4. Nothing was invented to reach a number and no criterion was weakened.
+- **`FRESH_UNIVERSE_READY = NO` even though 26 clears the floor of 24, and the reason is a measurement.**
+  `PREFLIGHT_CONTRAST_READY = 0/26` across 16 study units with **zero** features in the frozen vocabulary:
+  contrast retrieval joins on the 102-feature vocabulary and the curated seed pool and on nothing else, and both
+  cover the six anchor units only. The extension that would move it was **probed rather than quoted** --
+  `validate_extension` refuses a `NEW_FEATURE_REQUIRED` proposal on its own account, saying a new feature reopens
+  the frozen vocabulary and needs its own authorization. `SYSTEMATIC_DEFECT_GE_20_PERCENT = YES` at **100%**,
+  defect `FROZEN_VOCABULARY_REFUSES_A_NEW_STUDY_UNIT`. Freezing a 26-opportunity pilot here would spend the whole
+  batch, under the no-replacement rule, rediscovering a refusal visible before it started.
+- **`BINDING_LAYER` is no longer `SOURCE_PACKET_RESEARCH` alone.** The wave shows three layers between a
+  researched packet and a fresh opportunity, and research moves only the first: evidence-decision alignment
+  (42.2% of the queue), profile expressibility (13.3%, including three CORE addresses), and the vocabulary
+  refusal (100% of what survives). The last is a code-level refusal, so no amount of research moves it.
+- `ACCEPTED_ITEM_SAFETY = NO_ACCEPTED_ITEMS`, which is not a PASS over an empty set. `GENERATED`, `ACCEPTED`,
+  `REJECTED` and `NO_SAFE_ITEM` are all 0 because no pilot was frozen; `SAFE_YIELD` and `GENERATION_ACCEPTANCE`
+  are undefined rather than zero. Context cost, snapshot extension rate, contrast cache economics and
+  graph/FTS contributions were **not re-measured**: no wave ran, so the medium-pilot figures stand unchanged.
+- `COPYRIGHT_AUDIT = PASS`, longest verbatim Toronto Notes run **0** across all 5 tracked artifacts. Focused
+  tests `tests/test_fresh_universe_inventory.py` **23/0** and `tests/test_fresh_universe_onboarding.py` **24/0**;
+  full canonical suite **1514/0** at the final shared-code state.
+- **Shared-code change and its blast radius.** Two new modules and one new CLI command each; `cli.py` gains two
+  handlers and two table rows. Nothing existing was edited, no frozen artifact was touched, and the full suite
+  is unchanged apart from the 47 new tests.
+- **Stated limits.** The alignment review, the decision authoring and the profile-refusal reasoning are separate
+  reasoning passes by the same model instance rather than separate agents. The 26 decisions are authored, not
+  independently re-derived, and their difficulty intents are declarations. The alignment verdicts are semantic
+  judgements about 45 addresses and the four PARTIALLY_ALIGNED calls are the ones most open to disagreement;
+  they were excluded from the wave rather than argued either way.
+- `PRODUCTION_READINESS = BLOCKED_BY_OPPORTUNITY_CONSTRUCTION`, unchanged, but the diagnosis under it has moved
+  from "research more packets" to three named layers, two of which are architecture rather than research.
+  `PRODUCTION_SCALEOUT_SPEC_WRITTEN = NO`.
+- `NEXT_DOMINANT_BOTTLENECK = FROZEN_VOCABULARY_REFUSES_A_NEW_STUDY_UNIT`, runner-up
+  `EVIDENCE_DECISION_MISALIGNMENT`. `DIFFICULTY_CALIBRATION` drops to third: it bounds what can be generated
+  inside six study units, and nothing can leave those six until the vocabulary refusal is authorised either way.
+- QGEN_NEXT_STEP = `USER_REVIEW_FRESH_UNIVERSE_ONBOARDING_BLOCKERS`. The three decisions it points at are
+  authorising an append-only stem-feature vocabulary for a new study unit (which `validate_extension` refuses
+  under the current authorization and which no other work can proceed without), authorising discipline-profile
+  archetype extensions for legal, ethical and gynaecologic decisions, and opening a defect record against the
+  19 misaligned READY packets so source-packet research can repair them. None was done here.
 <!-- QGEN_ARCHITECTURE_RESUME:END -->
 
 ## Research-level policy

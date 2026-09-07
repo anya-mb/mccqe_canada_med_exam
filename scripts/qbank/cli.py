@@ -1131,6 +1131,33 @@ def _command_build_fresh_universe_inventory(arguments: argparse.Namespace) -> No
     }, indent=2, sort_keys=True))
 
 
+def _command_run_fresh_universe_onboarding(arguments: argparse.Namespace) -> None:
+    """Rebuild the W1 onboarding wave's opportunity candidates and its gate."""
+    from .fresh_universe_onboarding import (
+        GATE_REPORT_PATH,
+        OPPORTUNITIES_PATH,
+        build_fresh_opportunities,
+        build_gate_report,
+    )
+
+    root = canonical_root(getattr(arguments, "root", Path.cwd()))
+    for relative, builder in (
+        (OPPORTUNITIES_PATH, build_fresh_opportunities),
+        (GATE_REPORT_PATH, build_gate_report),
+    ):
+        write_json_atomic(resolve_root_path(root, relative), builder(root))
+    gate = json.loads(resolve_root_path(root, GATE_REPORT_PATH).read_text())
+    print(json.dumps({
+        "FRESH_OPPORTUNITIES_VALIDATED": gate["FRESH_OPPORTUNITIES_VALIDATED"],
+        "FRESH_OPPORTUNITIES_BY_DISCIPLINE": gate["FRESH_OPPORTUNITIES_BY_DISCIPLINE"],
+        "PREFLIGHT_CONTRAST_READY": gate["PREFLIGHT_CONTRAST_READY"],
+        "FRESH_UNIVERSE_READY": gate["FRESH_UNIVERSE_READY"],
+        "FRESH_PILOT_N": gate["FRESH_PILOT_N"],
+        "SYSTEMATIC_DEFECT": gate["SYSTEMATIC_DEFECT"],
+        "funnel": gate["funnel"],
+    }, indent=2, sort_keys=True))
+
+
 def _command_run_snapshot_bootstrap(arguments: argparse.Namespace) -> None:
     """Rebuild every snapshot-bootstrap artifact from the committed frozen inputs."""
     from .snapshot_bootstrap import (
@@ -1426,6 +1453,11 @@ def _parser() -> argparse.ArgumentParser:
             "build-fresh-universe-inventory",
             "classify every allocation address by the earliest qgen layer it fails",
             _command_build_fresh_universe_inventory,
+        ),
+        (
+            "run-fresh-universe-onboarding",
+            "rebuild the W1 onboarding wave and its fresh-universe gate",
+            _command_run_fresh_universe_onboarding,
         ),
         (
             "run-snapshot-bootstrap",
