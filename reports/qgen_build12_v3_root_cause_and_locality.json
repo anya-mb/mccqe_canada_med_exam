@@ -1,0 +1,49 @@
+{
+  "schema_version": "BUILD12_V3_ROOT_CAUSE_LOCALITY_V1",
+  "scope": "BUILD_12_ONLY",
+  "v2_rejection_counts": {
+    "WRONG_RESPONSE_CLASS": 6,
+    "WRONG_GRANULARITY": 0,
+    "KEY_DUPLICATE": 4,
+    "DUPLICATE_OR_ALIAS": 1,
+    "PARENT_SUBTYPE_COLLISION": 2,
+    "WRONG_STAGE": 1,
+    "KNOWN_SECOND_KEY_OR_COKEY": 0,
+    "SCOPE_CONTRADICTION": 0,
+    "CANONICALIZATION_FAILURE": 4,
+    "OTHER": 1
+  },
+  "diagnosis": {
+    "A_CANDIDATE_SOURCE_TOO_LOCAL": "MAJOR -- V2 SQL hard-filters chunk_study_units to the opportunity study unit.",
+    "B_WEAK_CANDIDATE_SEMANTIC_TYPING": "CONTRIBUTING -- structural identities frequently lacked closed response/granularity typing.",
+    "C_RANKING_BEFORE_RESPONSE_CLASS_FILTERING": "CONTRIBUTING -- V2 FTS ranking spent its bounded budget on hits later rejected for class/stage.",
+    "D_INSUFFICIENT_GLOBAL_CANDIDATE_UNIVERSE": "MAJOR -- approved cross-unit seeds were invisible to local-only retrieval.",
+    "E_CANONICALIZATION_DEFECTS": "CONTRIBUTING -- 4/19 rejections were unnameable structural labels.",
+    "classification": "F_MULTIPLE_COMPARABLE_CAUSES"
+  },
+  "locality_trace": [
+    {
+      "control": "AOM approved seeds",
+      "origin": "SAME_STUDY_UNIT",
+      "discoverable_under_v2_locality": true
+    },
+    {
+      "control": "HbA1c",
+      "origin": "SAME_STUDY_UNIT_OR_CHAPTER",
+      "discoverable_under_v2_locality": true
+    },
+    {
+      "control": "TTE for pneumothorax",
+      "origin": "DIFFERENT_STUDY_UNIT_DIFFERENT_CHAPTER_DIFFERENT_DISCIPLINE",
+      "discoverable_under_v2_locality": false
+    },
+    {
+      "control": "R4/G2 approved contrast relations",
+      "origin": "MIXED_CROSS_UNIT_AND_CROSS_CHAPTER",
+      "discoverable_under_v2_locality": false
+    }
+  ],
+  "v2_hard_locality_evidence": "retrieve_targeted_tn_chunks joins chunk_study_units and requires su.study_unit_id = opportunity study_unit_id.",
+  "locality_ceiling": "LOCALITY_CEILING_PROVEN",
+  "content_sha256": "26e89cb325a52cbb559dcc4f6e5d171b61efd0e5cd506ddb19ccdcc6ac5a7cc2"
+}

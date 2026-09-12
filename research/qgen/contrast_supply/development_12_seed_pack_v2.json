@@ -1,0 +1,370 @@
+{
+  "build12_clinical_screening": {
+    "excluded_before_relation_authoring": [],
+    "method": "22 unique Build-12 Discovery-V2 identity-resolved candidates (qgen_candidate_identity_resolution_build12.json) passed through deterministic cheap filtering first (qgen_build12_candidate_cheap_filter.json): 19 rejected (6 WRONG_RESPONSE_CLASS, 4 KEY_DUPLICATE, 1 DUPLICATE_OR_ALIAS, 2 PARENT_SUBTYPE_COLLISION, 1 WRONG_STAGE, 4 CANONICALIZATION_FAILURE, 1 OTHER [re-discovery of a standing UNCERTAIN candidate]), 3 SURVIVES_TO_SEMANTIC. All 3 semantic survivors were clinically reviewed CLINICALLY_PLAUSIBLE (0 CLEARLY_DEAD, 0 WRONG_DECISION, 0 POTENTIAL_SECOND_KEY, 0 UNCERTAIN).",
+    "verdicts": {
+      "RDY-OBGYN-01__physiologic_discharge": "CLINICALLY_PLAUSIBLE",
+      "RDY-PED-04__adh": "CLINICALLY_PLAUSIBLE",
+      "RDY-PHELO-08__bill_c14_maid": "CLINICALLY_PLAUSIBLE"
+    }
+  },
+  "clinical_screening": {
+    "excluded_before_relation_authoring": [
+      {
+        "candidate": "RDY-PSY-03__organic_seizure_psychosis",
+        "reason": "Complex partial (focal) status epilepticus / postictal psychosis is a standard first-line organic differential that clinical workflow requires ruling out before diagnosing a primary psychotic disorder; without stem-level evidence excluding it, it carries meaningful risk of being an equally-or-more-defensible answer rather than a clean inferior distractor. Fails closed per project policy; not authored as a relation this wave."
+      }
+    ],
+    "method": "Single-pass clinical plausibility review of all 4 SURVIVES_TO_SEMANTIC candidates against learner decision, key, response class, granularity, and TN structural-metadata anchor (subheading/tn_node_id/page only, no chapter prose loaded).",
+    "verdicts": {
+      "RDY-PED-04__hba1c_diagnostic_criteria": "CLINICALLY_PLAUSIBLE",
+      "RDY-PSY-03__brief_or_schizophreniform": "CLINICALLY_PLAUSIBLE",
+      "RDY-PSY-03__organic_seizure_psychosis": "POTENTIAL_SECOND_KEY",
+      "RDY-SURG-03__tte": "CLINICALLY_PLAUSIBLE"
+    }
+  },
+  "content_sha256": "afdf226266fdd17da614e7d471c807e2beeac3b79327f56bab0a2d86a2a84c90",
+  "creation_scope": "BUILD12_CANDIDATE_ADJUDICATION_RELATION_REVIEW_CACHE_V1",
+  "frozen": true,
+  "independent_review": {
+    "results": [
+      {
+        "primary_reason": "HbA1c is a chronic-average glycemic marker, not a same-day emergency test, and cannot rule DKA in or out; discriminator is medically sound and no plausible stem reading makes it correct.",
+        "relation_id": "CCR2-DEV12-PED04-HBA1C",
+        "verdict": "APPROVED"
+      },
+      {
+        "primary_reason": "TTE cannot demonstrate lung sliding/A-lines/lung point and is medically inferior for pneumothorax detection; reviewer noted the tamponade-scope caveat is correctly disclosed and does not apply under current scope text.",
+        "relation_id": "CCR2-DEV12-SURG03-TTE",
+        "verdict": "APPROVED"
+      },
+      {
+        "primary_reason": "Duration/course differentiation is DSM-5-correct, but schizophreniform disorder shares identical diagnostic criteria with schizophrenia except the <6-month cutoff, and exam stems often under-specify or mis-time the single duration data point this distinction depends on. Reviewer could not confirm the (not-yet-drafted) stem would state duration unambiguously enough to foreclose this as a competing answer.",
+        "relation_id": "CCR2-DEV12-PSY03-BRIEF-SCHIZOPHRENIFORM",
+        "verdict": "UNCERTAIN"
+      },
+      {
+        "primary_reason": "Anchor is genuinely positive (PRESENT feature that invites the candidate, not merely one that excludes it). Discriminator is specific and does not depend on an unguaranteed future stem feature. No second-key risk identified.",
+        "relation_id": "CCR2-DEV12-PED04-ADH",
+        "verdict": "APPROVED"
+      },
+      {
+        "primary_reason": "Anchor is genuinely positive. The discriminator's supporting stem features are not an unguaranteed future risk: they are the opportunity's own defining precondition (clinically suspected PID), so this seed is scope-restricted to that precondition rather than uncertain.",
+        "relation_id": "CCR2-DEV12-OBGYN01-PHYSIOLOGIC-DISCHARGE",
+        "verdict": "APPROVED"
+      },
+      {
+        "primary_reason": "Anchor is genuinely positive. Second-key risk is real but is addressed by a mandatory population/context restriction carried into the seed and cache entry (not usable when the stem's decision is literally a MAID request), consistent with this project's established treatment of scope-dependent relations (cf. CCR2-DEV12-SURG03-TTE's cardiac-tamponade caveat).",
+        "relation_id": "CCR2-DEV12-PHELO08-BILLC14-MAID",
+        "verdict": "APPROVED"
+      }
+    ],
+    "reviewer": "single fresh independent reviewer, blinded to desired contrast count / question yield / discipline targets"
+  },
+  "input_hashes": {
+    "cheap_filter_content_sha256": "2a0174717557586736aa9519c79c4c1d58b8d37d52a17751667ece76d6133de6",
+    "development_12_ids_sha256": "a20732467b62428dd2388f9bb21820c8ee501e9b3457dbcb0a8d28f6931a6509",
+    "identity_resolution_content_sha256": "c01230d54646adaf603bb033ef2c2a51d3b86c8c002b97b71132739a524e9e00",
+    "official_discovery_content_sha256": "1d17394dead1f3323ae3e9c507eac9ef86114a9f9d7fc5aa550868513f072f77",
+    "relation_authoring_and_review_content_sha256": "6e299d646b10a0417f1fa9d38e19adae2812c758a2a1cfc0e3af96f2f142de4d",
+    "targeted_discovery_v2_content_sha256": "1c1d726e4633347b9a830c043e40b66416fd4c539d47d3972ea1b5896bb59515"
+  },
+  "note_on_contrast_readiness": "Even with all 5 approved seeds counted, no Development-12 prerequisite-ready opportunity reaches the >=3-safe-competitor CONTRAST_READY floor: RDY-PED-04 reaches 2 (HbA1c + ADH), RDY-SURG-03 reaches 1 (TTE), RDY-OBGYN-01 reaches 1 (physiologic discharge), RDY-PHELO-08 reaches 1 (Bill C-14/MAID), all others remain at 0. This is a structural, deterministic ceiling from two bounded discovery waves, not a defect in this seed pack. Per project policy, no additional discovery is performed to close this gap within this milestone.",
+  "pack_id": "qgen_development_12_seed_pack_v2",
+  "pack_version": "2.0.0",
+  "parent_content_sha256": "a4b4fc760e8c3da78d29ac7b4b98eb44a292082311b3fe9cf09fecd4a9c07be5",
+  "parent_pack_id": "qgen_development_12_seed_pack_v1",
+  "rejected_or_uncertain_excluded_from_seeds": [
+    "RDY-PSY-03__brief_or_schizophreniform (UNCERTAIN, independent review)",
+    "RDY-PSY-03__organic_seizure_psychosis (POTENTIAL_SECOND_KEY, excluded before relation authoring)",
+    "RDY-PSY-03__shorter_course_psychotic_disorder_rediscovery (OTHER/cheap-filter: re-discovery of the standing UNCERTAIN CCR2-DEV12-PSY03-BRIEF-SCHIZOPHRENIFORM candidate; must remain unavailable)",
+    "RDY-PHELO-08__four_basic_requirements_of_valid_consent (PARENT_SUBTYPE_COLLISION/cheap-filter: candidate is the key's own superset; standing independent-review verdict UNCERTAIN; must remain unavailable)"
+  ],
+  "relations_authored": [
+    {
+      "candidate_canonical_identity": "Confirm diagnosis via formal HbA1c / standard DM diagnostic criteria",
+      "classification": "PLAUSIBLE_BUT_NEVER_BEST",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "inferiority_discriminator": "HbA1c reflects roughly 3 months of average glycemia and cannot detect or exclude an acute, potentially life-threatening complication (DKA); it is a non-emergent confirmatory test, not a time-critical point-of-care action.",
+      "key": "Point-of-care glucose + ketone testing (urgent)",
+      "learner_decision": "In a child with polyuria, polydipsia, and weight loss, immediately check point-of-care glucose and ketones and urgently assess for diabetic ketoacidosis (DKA).",
+      "opportunity_id": "RDY-PED-04",
+      "positive_candidate_anchor": {
+        "chunk_id": "TNC-3e811c1c0c7eea561dbf86eb",
+        "pdf_page": 1228,
+        "subheading": "Diagnostic Criteria for DM (Types 1 and 2)",
+        "tn_node_id": "P.S07.T01"
+      },
+      "positive_plausibility_proposition": "Formal HbA1c-based DM diagnostic criteria is a real, guideline-recognized way to confirm a diabetes diagnosis in a child with classic hyperglycemic symptoms.",
+      "relation_id": "CCR2-DEV12-PED04-HBA1C",
+      "required_evidence_propositions": [
+        {
+          "basis": "standard emergency pediatrics",
+          "confidence": "HIGH",
+          "proposition": "Point-of-care glucose/ketone testing is the recommended immediate step in suspected pediatric new-onset DM/DKA."
+        },
+        {
+          "basis": "HbA1c physiology",
+          "confidence": "HIGH",
+          "proposition": "HbA1c is not used to diagnose or exclude DKA acutely."
+        }
+      ],
+      "response_class": "DIAGNOSTIC_ORDER",
+      "second_key_analysis": "No plausible reading of the stem makes HbA1c the single best next action; the teaching point (urgent DKA risk) has no substitute. Second-key risk assessed LOW.",
+      "targeted_relation_research_requests": 0,
+      "why_anchor_supports_candidate": "The anchor is a dedicated diagnostic-criteria subsection for DM in the same chapter as the key, confirming HbA1c-based diagnosis is a real, curriculum-recognized clinical action for this disease process, not an invented or off-topic action.",
+      "why_key_remains_superior": "The vignette demands urgent assessment for a possible acute life-threatening complication; only immediate glucose/ketone testing gives time-critical information needed to triage and treat within minutes. HbA1c results are not immediately actionable for acute DKA risk."
+    },
+    {
+      "candidate_canonical_identity": "Obtain transthoracic echocardiography (TTE)",
+      "classification": "PLAUSIBLE_BUT_NEVER_BEST",
+      "decision_granularity": "DIAGNOSTIC_TEST",
+      "inferiority_discriminator": "TTE images the heart/pericardium, not the pleural space; it cannot demonstrate the sonographic signs of pneumothorax (absent lung sliding, A-lines, lung point), which are lung-ultrasound findings.",
+      "key": "Thoracic (lung) point-of-care ultrasound",
+      "learner_decision": "Use thoracic (lung) point-of-care ultrasound, integrated with clinical assessment, to evaluate suspected pneumothorax in an emergency presentation.",
+      "opportunity_id": "RDY-SURG-03",
+      "positive_candidate_anchor": {
+        "chunk_id": "TNC-a08342e8675a1c2ba929b631",
+        "pdf_page": 103,
+        "subheading": "Transthoracic Echocardiography",
+        "tn_node_id": "C.S03.T01"
+      },
+      "positive_plausibility_proposition": "TTE is a real, commonly-used bedside structural ultrasound modality in acute presentations, giving it surface legitimacy as a point-of-care structural test.",
+      "relation_id": "CCR2-DEV12-SURG03-TTE",
+      "required_evidence_propositions": [
+        {
+          "basis": "BLUE protocol / point-of-care ultrasound teaching",
+          "confidence": "HIGH",
+          "proposition": "Lung POCUS (not TTE) is the correct point-of-care test for suspected pneumothorax."
+        },
+        {
+          "basis": "cardiac ultrasound anatomy",
+          "confidence": "HIGH",
+          "proposition": "TTE does not visualize the pleural space."
+        }
+      ],
+      "response_class": "STRUCTURAL",
+      "second_key_analysis": "TTE would only become clinically relevant if the eventual stem explicitly raises cardiac tamponade as a competing cause of hemodynamic instability. No such language exists in this opportunity's frozen discovery_query scope. Second-key risk assessed LOW under current scope text; MUST be re-confirmed against the actual authored stem if this seed is ever generated into an item, since the independent reviewer flagged this as scope-dependent.",
+      "targeted_relation_research_requests": 0,
+      "why_anchor_supports_candidate": "The anchor confirms TTE is a genuine, curriculum-recognized bedside cardiac ultrasound modality used in acute care, not an invented option.",
+      "why_key_remains_superior": "Lung POCUS is the only modality of the two that directly interrogates the pleural space for the specific diagnostic question asked; TTE targets a different organ and would not answer it."
+    },
+    {
+      "candidate_canonical_identity": "A shorter-course primary psychotic disorder from the DDx for psychosis (brief psychotic disorder [<1 month] or schizophreniform disorder [1-6 months])",
+      "classification": "COUNTERFACTUAL_CORRECT",
+      "decision_granularity": "DIAGNOSIS",
+      "inferiority_discriminator": "DSM-5 duration criteria (brief <1 month, schizophreniform 1-6 months, schizophrenia >=6 months) are the sole discriminator among these otherwise symptom-identical diagnoses; if stem duration is unambiguously >=6 months, both shorter-course diagnoses are excluded on duration alone.",
+      "key": "Schizophrenia (DSM-5 duration >= 6 months, with functional decline)",
+      "learner_decision": "Recognize schizophrenia from persistent psychotic symptoms with functional decline and distinguish shorter psychotic disorders by course.",
+      "opportunity_id": "RDY-PSY-03",
+      "positive_candidate_anchor": {
+        "chunk_id": "TNC-928728bb9a58e0c47c300ac1",
+        "pdf_page": 1361,
+        "subheading": "DDx for Psychosis",
+        "tn_node_id": "PS.S03.T01"
+      },
+      "positive_plausibility_proposition": "Brief psychotic disorder and schizophreniform disorder are real DSM-5 primary psychotic disorders with symptom content identical to schizophrenia, distinguished from it purely by duration of illness.",
+      "relation_id": "CCR2-DEV12-PSY03-BRIEF-SCHIZOPHRENIFORM",
+      "required_evidence_propositions": [
+        {
+          "basis": "standard psychiatric nosology",
+          "confidence": "HIGH",
+          "proposition": "DSM-5 duration criteria distinguish brief psychotic disorder (<1mo), schizophreniform disorder (1-6mo), and schizophrenia (>=6mo)."
+        }
+      ],
+      "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+      "second_key_analysis": "Second-key risk is entirely a function of the exact duration stated in the eventual stem. Schizophreniform disorder is diagnosed identically to schizophrenia except for the <6-month cutoff, so this relation is only safe if the authored stem states an unambiguous duration with no room for a <6-month reading, and separately states or implies functional decline is not itself a required schizophreniform criterion under DSM-5. Flagged by independent review as unresolved without a drafted stem to inspect.",
+      "targeted_relation_research_requests": 0,
+      "why_anchor_supports_candidate": "The anchor is the same duration-stratified DDx-for-psychosis table the learner decision itself is built from, and explicitly enumerates brief psychotic disorder/schizophreniform disorder alongside schizophrenia as the standard course-based differential -- confirming genuine clinical relevance, not mere topical proximity.",
+      "why_key_remains_superior": "Duration/course is the defining DSM-5 criterion separating these three diagnoses; a stem stating >=6 months makes schizophrenia the only diagnosis whose duration criterion is met."
+    },
+    {
+      "candidate_canonical_identity": "Check serum ADH / evaluate for central diabetes insipidus",
+      "classification": "COUNTERFACTUAL_CORRECT",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "inferiority_discriminator": "Weight loss, present in the stem, is not explained by diabetes insipidus (a renal-concentrating defect) and instead signals a catabolic, ketotic, potentially life-threatening process; DI's own confirmatory workup (water-deprivation testing, serum/urine osmolality) is a non-emergent, multi-hour-to-multi-day pathway, not an urgent action.",
+      "key": "Point-of-care glucose + ketone testing (urgent)",
+      "learner_decision": "In a child with polyuria, polydipsia, and weight loss, immediately check glucose and ketones and urgently assess for diabetic ketoacidosis.",
+      "opportunity_id": "RDY-PED-04",
+      "positive_candidate_anchor": {
+        "chunk_id": "TNC-3526ef2779d479b2f1fa8580",
+        "pdf_page": 1228,
+        "section_path_identity": "Antidiuretic Hormone",
+        "subheading": "Management",
+        "tn_node_id": "P.S07.T01"
+      },
+      "positive_plausibility_proposition": "Polyuria and polydipsia are the cardinal presentation of diabetes insipidus, and ADH/water-deprivation-pathway workup is a standard, real investigation for that presentation.",
+      "relation_id": "CCR2-DEV12-PED04-ADH",
+      "required_evidence_propositions": [
+        {
+          "basis": "standard pediatric endocrine emergency medicine",
+          "confidence": "HIGH",
+          "proposition": "DKA is diagnosed by hyperglycemia plus ketosis/acidosis and is a medical emergency requiring immediate recognition and treatment."
+        },
+        {
+          "basis": "standard endocrine physiology",
+          "confidence": "HIGH",
+          "proposition": "Diabetes insipidus presents with polyuria/polydipsia but, unlike DKA, is not associated with acute weight loss or ketoacidosis, and its definitive workup (water-deprivation test) is not an emergency investigation."
+        }
+      ],
+      "response_class": "DIAGNOSTIC_ORDER",
+      "second_key_analysis": "Not a second key: diabetes insipidus does not explain the stem's weight loss, and the decision explicitly demands the *urgent* action, which an elective DI workup fails regardless of whether DI is eventually part of the differential. Second-key risk assessed LOW.",
+      "targeted_relation_research_requests": 0,
+      "why_anchor_supports_candidate": "Polyuria+polydipsia is the textbook shared presentation of both DKA and central/nephrogenic diabetes insipidus; a learner weighing only that pair of features (and not weight loss) could plausibly reach for an ADH-related workup as the next action.",
+      "why_key_remains_superior": "DKA is immediately life-threatening (risk of severe acidosis, cerebral edema) and point-of-care glucose/ketone testing is the rapid bedside test that confirms or excludes it within minutes; an ADH/DI workup cannot answer the urgent question the vignette demands."
+    },
+    {
+      "candidate_canonical_identity": "Reassure as physiologic discharge; no antibiotic treatment",
+      "classification": "PLAUSIBLE_BUT_NEVER_BEST",
+      "decision_granularity": "TREATMENT_BUNDLE",
+      "inferiority_discriminator": "The opportunity's own learner decision requires clinically suspected PID as a precondition (e.g. pelvic/adnexal tenderness, cervical motion tenderness, fever, or risk-factor history), which is definitionally not explained by physiologic discharge and specifically indicates an infectious/inflammatory process requiring treatment.",
+      "key": "Empiric broad-spectrum antibiotic treatment bundle",
+      "learner_decision": "When pelvic inflammatory disease is clinically suspected, test for pregnancy and relevant infections and begin empiric broad-spectrum treatment without waiting for perfect diagnostic certainty.",
+      "opportunity_id": "RDY-OBGYN-01",
+      "positive_candidate_anchor": {
+        "chunk_id": "TNC-6fcd85fe560c0d9aa9055995",
+        "pdf_page": 622,
+        "section_path_identity": "Physiologic Discharge",
+        "subheading": "Treatment",
+        "tn_node_id": "GY.S11.T01"
+      },
+      "positive_plausibility_proposition": "Vaginal discharge is a common, usually benign physiologic finding, and normal physiologic leukorrhea is part of the differential for a patient presenting with discharge.",
+      "relation_id": "CCR2-DEV12-OBGYN01-PHYSIOLOGIC-DISCHARGE",
+      "required_evidence_propositions": [
+        {
+          "basis": "standard gynecologic teaching",
+          "confidence": "HIGH",
+          "proposition": "Physiologic (leukorrhea) discharge is a normal, non-infectious finding not associated with pelvic tenderness or fever."
+        },
+        {
+          "basis": "standard obstetric/gynecologic (SOGC-consistent) teaching",
+          "confidence": "HIGH",
+          "proposition": "Empiric antibiotic treatment for clinically suspected PID should begin promptly and should not be delayed for definitive microbiologic confirmation, given the risk of long-term reproductive complications."
+        }
+      ],
+      "response_class": "NO_ACTIVE_TREATMENT",
+      "second_key_analysis": "Not a second key: the opportunity is scoped to clinically-suspected-PID stems only, and 'reassure as physiologic' is never correct once that precondition holds. This is a population/context restriction on the seed, not a residual risk -- the restriction is guaranteed by the opportunity definition itself.",
+      "targeted_relation_research_requests": 0,
+      "why_anchor_supports_candidate": "Because physiologic discharge is a common and often correct explanation for isolated discharge complaints, a learner focused only on the discharge symptom (rather than the opportunity's defining precondition of clinically suspected PID) could plausibly conclude reassurance is sufficient.",
+      "why_key_remains_superior": "Untreated or under-treated PID carries serious, time-sensitive sequelae (tubo-ovarian abscess, infertility, ectopic-pregnancy risk, chronic pelvic pain); standard Canadian obstetric/gynecologic guidance directs prompt empiric broad-spectrum treatment on clinical suspicion, without waiting for microbiologic confirmation, precisely because of this risk-benefit asymmetry."
+    },
+    {
+      "candidate_canonical_identity": "Apply Bill C-14 / MAID eligibility criteria",
+      "classification": "COUNTERFACTUAL_CORRECT",
+      "decision_granularity": "ETHICAL_ACTION",
+      "inferiority_discriminator": "The opportunity's decision is a general capacity assessment for 'the specific proposed decision' (unspecified/generic), not a request for medical assistance in dying; nothing in the opportunity invokes a MAID request, a grievous-and-irremediable-condition determination, or Bill C-14's specific procedural safeguards.",
+      "key": "General two-part capacity assessment (understanding + appreciation of consequences)",
+      "learner_decision": "Assess capacity for the specific proposed decision by determining whether the patient understands relevant information and foreseeable consequences.",
+      "opportunity_id": "RDY-PHELO-08",
+      "positive_candidate_anchor": {
+        "chunk_id": "TNC-a6fe91d7fcec6142dbb5232b",
+        "pdf_page": 40,
+        "section_path_identity": "Bill C-14 Criteria for MAID",
+        "subheading": "Bill C-14 Criteria for MAID",
+        "tn_node_id": "ELOM.S02.T01"
+      },
+      "positive_plausibility_proposition": "Both capacity assessment and MAID-eligibility assessment are autonomy-serving legal/ethical frameworks used in serious or end-of-life-adjacent decisions, and MAID eligibility explicitly requires the patient to have decision-making capacity, so the two topics are clinically and legally adjacent.",
+      "relation_id": "CCR2-DEV12-PHELO08-BILLC14-MAID",
+      "required_evidence_propositions": [
+        {
+          "basis": "standard Canadian medical ethics/legal curriculum",
+          "confidence": "HIGH",
+          "proposition": "Capacity to consent is assessed using a general two-part test (understanding information, appreciating consequences) applicable to any medical decision, per standard Canadian medical-legal/ethics teaching."
+        },
+        {
+          "basis": "standard Canadian medical ethics/legal curriculum",
+          "confidence": "HIGH",
+          "proposition": "Bill C-14 (medical assistance in dying) has its own specific eligibility criteria distinct from and narrower than general capacity assessment, applicable only when MAID is the decision being made."
+        }
+      ],
+      "response_class": "AUTONOMY",
+      "second_key_analysis": "Second-key risk is real and must be controlled by scope, not dismissed: if a future stem's proposed decision were itself a MAID request, Bill C-14 criteria would become directly relevant and this candidate could become a co-key. This seed therefore carries a mandatory population/context restriction: NOT usable when the stem's proposed decision is a request for medical assistance in dying.",
+      "targeted_relation_research_requests": 0,
+      "why_anchor_supports_candidate": "MAID is a heavily emphasized, specific legal topic in Canadian medical curricula, and its criteria explicitly include a capacity requirement, so a learner could plausibly conflate 'assess capacity for a decision' with 'apply MAID eligibility criteria' whenever the scenario involves a grave or life-ending choice.",
+      "why_key_remains_superior": "The generic two-part capacity test applies to any medical decision and is the legally correct framework whenever the scenario is not specifically a MAID request; Bill C-14 criteria are a narrower, decision-specific overlay that only applies once MAID is actually the decision in question."
+    }
+  ],
+  "schema_version": "DEVELOPMENT_12_SEED_PACK_V1",
+  "scope": "Development-12 contrast-supply continuation, Build-12 candidate-adjudication + relation review + reusable-contrast-cache-V1 milestone. Additive over development_12_seed_pack_v1.json: its 3 authored relations (2 APPROVED, 1 UNCERTAIN) and 2 approved seeds are reproduced byte-identically, plus 3 newly authored and independently reviewed relations (all APPROVED) from the Build-12 Discovery-V2 identity-resolved candidate set, after deterministic cheap filtering (19/22 rejected) and clinical plausibility review (3/3 survivors CLINICALLY_PLAUSIBLE).",
+  "seeds": [
+    {
+      "anchor_id": "TNC-3e811c1c0c7eea561dbf86eb",
+      "candidate_id": "RDY-PED-04__hba1c_diagnostic_criteria",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "evidence_refs": [
+        "required_evidence_propositions:CCR2-DEV12-PED04-HBA1C"
+      ],
+      "opportunity_id": "RDY-PED-04",
+      "relation_id": "CCR2-DEV12-PED04-HBA1C",
+      "response_class": "DIAGNOSTIC_ORDER",
+      "review_status": "APPROVED",
+      "scope": "DEVELOPMENT_12_CONTINUATION",
+      "seed_id": "SEED-DEV12-PED04-HBA1C"
+    },
+    {
+      "anchor_id": "TNC-a08342e8675a1c2ba929b631",
+      "candidate_id": "RDY-SURG-03__tte",
+      "decision_granularity": "DIAGNOSTIC_TEST",
+      "evidence_refs": [
+        "required_evidence_propositions:CCR2-DEV12-SURG03-TTE"
+      ],
+      "opportunity_id": "RDY-SURG-03",
+      "relation_id": "CCR2-DEV12-SURG03-TTE",
+      "response_class": "STRUCTURAL",
+      "review_status": "APPROVED",
+      "scope": "DEVELOPMENT_12_CONTINUATION",
+      "seed_id": "SEED-DEV12-SURG03-TTE"
+    },
+    {
+      "anchor_id": "TNC-3526ef2779d479b2f1fa8580",
+      "candidate_id": "RDY-PED-04__adh",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "evidence_refs": [
+        "required_evidence_propositions:CCR2-DEV12-PED04-ADH"
+      ],
+      "opportunity_id": "RDY-PED-04",
+      "relation_id": "CCR2-DEV12-PED04-ADH",
+      "response_class": "DIAGNOSTIC_ORDER",
+      "review_status": "APPROVED",
+      "scope": "DEVELOPMENT_12_CONTINUATION",
+      "seed_id": "SEED-DEV12-PED04-ADH"
+    },
+    {
+      "anchor_id": "TNC-6fcd85fe560c0d9aa9055995",
+      "candidate_id": "RDY-OBGYN-01__physiologic_discharge",
+      "decision_granularity": "TREATMENT_BUNDLE",
+      "evidence_refs": [
+        "required_evidence_propositions:CCR2-DEV12-OBGYN01-PHYSIOLOGIC-DISCHARGE"
+      ],
+      "opportunity_id": "RDY-OBGYN-01",
+      "relation_id": "CCR2-DEV12-OBGYN01-PHYSIOLOGIC-DISCHARGE",
+      "response_class": "NO_ACTIVE_TREATMENT",
+      "review_status": "APPROVED",
+      "scope": "DEVELOPMENT_12_CONTINUATION",
+      "seed_id": "SEED-DEV12-OBGYN01-PHYSIOLOGIC-DISCHARGE"
+    },
+    {
+      "anchor_id": "TNC-a6fe91d7fcec6142dbb5232b",
+      "candidate_id": "RDY-PHELO-08__bill_c14_maid",
+      "decision_granularity": "ETHICAL_ACTION",
+      "evidence_refs": [
+        "required_evidence_propositions:CCR2-DEV12-PHELO08-BILLC14-MAID"
+      ],
+      "opportunity_id": "RDY-PHELO-08",
+      "population_context_restriction": "NOT usable when the stem's proposed decision is itself a request for medical assistance in dying (MAID); safe only as a distractor for a generic/non-MAID capacity-assessment decision.",
+      "population_context_restriction_rule": {
+        "forbidden_if_context": {
+          "proposed_decision_is_maid_request": true
+        }
+      },
+      "relation_id": "CCR2-DEV12-PHELO08-BILLC14-MAID",
+      "response_class": "AUTONOMY",
+      "review_status": "APPROVED",
+      "scope": "DEVELOPMENT_12_CONTINUATION",
+      "seed_id": "SEED-DEV12-PHELO08-BILLC14-MAID"
+    }
+  ],
+  "seeds_approved": 5,
+  "seeds_rejected": 0,
+  "seeds_uncertain": 1
+}

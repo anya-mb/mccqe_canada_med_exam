@@ -20,7 +20,9 @@ Design: docs/superpowers/specs/2026-09-05-on-demand-clinical-contrast-supply-des
 from __future__ import annotations
 
 import json
+import re
 import sqlite3
+from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
 from .clinical_contrast_v2 import (
@@ -527,6 +529,104 @@ REUSE_MATRIX = [
 ]
 
 
+# --------------------------------------------------- opportunity semantics
+
+
+def load_opportunity_semantics(
+    path, development_ids: Sequence[str]
+) -> list[dict[str, Any]]:
+    """Load the frozen Development-12 demanded_response_class/decision_granularity
+    sidecar and return only the rows independently APPROVED on both axes.
+
+    Fails closed (raises) on anything that would let an unsafe or unreviewed
+    row reach candidate filtering: a missing field, a value outside the
+    closed RESPONSE_CLASS_AXES / DECISION_GRANULARITIES vocabularies, a
+    tampered learner-decision hash, a duplicate row, or a Development-12 id
+    with no row at all. An UNCERTAIN or REJECTED review verdict is not an
+    error -- the row is simply excluded, the same way a fail-closed
+    NO_SAFE_ITEM opportunity is excluded rather than raised.
+    """
+    from .chapter_staged_generation import DECISION_GRANULARITIES
+
+    data = json.loads(Path(path).read_text())
+    rows = data.get("opportunities")
+    if not rows:
+        raise ContrastSupplyError("opportunity semantics artifact has no opportunities")
+
+    required_ids = set(development_ids)
+    seen_ids: set[str] = set()
+    approved: list[dict[str, Any]] = []
+
+    for row in rows:
+        dev_id = row.get("development_id")
+        if not dev_id:
+            raise ContrastSupplyError("an opportunity-semantics row has no development_id")
+        if dev_id not in required_ids:
+            continue
+        if dev_id in seen_ids:
+            raise ContrastSupplyError(
+                f"duplicate opportunity-semantics row for {dev_id}; identity fails closed"
+            )
+        seen_ids.add(dev_id)
+
+        for field in ("demanded_response_class", "decision_granularity",
+                      "learner_decision", "learner_decision_content_sha256",
+                      "learner_decision_id", "response_class_axis"):
+            if not row.get(field):
+                raise ContrastSupplyError(
+                    f"{dev_id} is missing required field {field}; fails closed"
+                )
+
+        response_class = row["demanded_response_class"]
+        axis = row["response_class_axis"]
+        axis_def = RESPONSE_CLASS_AXES.get(axis)
+        if axis_def is None:
+            raise ContrastSupplyError(f"{dev_id} names an unknown response_class_axis {axis!r}")
+        permitted = set(axis_def["tokens"]) | {axis_def["generic_token"]}
+        if response_class not in permitted:
+            raise ContrastSupplyError(
+                f"{dev_id} demanded_response_class {response_class!r} is not in the "
+                f"closed vocabulary for axis {axis!r}"
+            )
+
+        granularity = row["decision_granularity"]
+        if granularity not in DECISION_GRANULARITIES:
+            raise ContrastSupplyError(
+                f"{dev_id} decision_granularity {granularity!r} is not in the closed "
+                "DECISION_GRANULARITIES vocabulary"
+            )
+
+        import hashlib as _hashlib
+        plain_digest = _hashlib.sha256(row["learner_decision"].encode()).hexdigest()
+        if plain_digest != row["learner_decision_content_sha256"]:
+            raise ContrastSupplyError(
+                f"{dev_id} learner_decision text does not match its recorded hash; "
+                "fails closed rather than trusting tampered or drifted text"
+            )
+
+        review = row.get("independent_review") or {}
+        rc_verdict = review.get("response_class_verdict")
+        gr_verdict = review.get("decision_granularity_verdict")
+        if rc_verdict is None or gr_verdict is None:
+            raise ContrastSupplyError(f"{dev_id} has no independent review recorded")
+        if rc_verdict != "APPROVED" or gr_verdict != "APPROVED":
+            continue
+
+        approved_row = dict(row)
+        approved_row.setdefault("anchor_study_unit_id", row.get("study_unit_id"))
+        if not approved_row.get("anchor_study_unit_id"):
+            raise ContrastSupplyError(f"{dev_id} has no anchor_study_unit_id or study_unit_id")
+        approved.append(approved_row)
+
+    missing = required_ids - seen_ids
+    if missing:
+        raise ContrastSupplyError(
+            f"opportunity semantics artifact is missing rows for {sorted(missing)}"
+        )
+
+    return approved
+
+
 # ------------------------------------------------------------------- identity
 
 
@@ -607,6 +707,71 @@ def filter_candidates(
             continue
         kept.append(dict(candidate))
     return kept, refused
+
+
+#: Reasons `filter_candidates` (or an equivalent bounded-discovery cheap filter)
+#: may legitimately produce before any relation, anchor, or evidence has been
+#: authored for a candidate. Each names a fact knowable about the raw candidate
+#: itself, not the absence of a downstream-authored object.
+AUTHORIZED_PRE_SEMANTIC_REJECTION_REASONS = frozenset({
+    "RESPONSE_CLASS_MISMATCH",
+    "GRANULARITY_MISMATCH",
+    "DUPLICATE_CONCEPT_ID",
+    "PARENT_SUBTYPE_COLLISION",
+})
+
+#: Reasons that name a downstream-authored object the *next* stage exists to
+#: build (relation authoring, evidence verification, anchor review). Rejecting a
+#: candidate for lacking one of these before it has even reached that stage is
+#: the exact conflation the anti-hallucination contract forbids: a candidate is
+#: not disqualified from *entering* semantic authoring merely because the thing
+#: authoring produces does not exist yet. UNKNOWN != ABSENT.
+PREMATURE_AUTHORING_REJECTION_REASONS = frozenset({
+    "MISSING_EVIDENCE_BINDING",
+    "MISSING_POSITIVE_ANCHOR",
+    "MISSING_RELATION",
+    "MISSING_CANONICAL_IDENTITY",
+})
+
+#: Human-readable synonyms a bounded-discovery funnel report has used for the
+#: same `filter_candidates` reason codes. Normalized before classification so a
+#: report author's wording does not change the verdict.
+_REASON_ALIASES = {
+    "WRONG_RESPONSE_CLASS": "RESPONSE_CLASS_MISMATCH",
+    "WRONG_GRANULARITY": "GRANULARITY_MISMATCH",
+    "DUPLICATE_OR_ALIAS": "DUPLICATE_CONCEPT_ID",
+}
+
+
+def reclassify_premature_authoring_rejections(
+    rejections: Mapping[str, str],
+) -> tuple[dict[str, str], dict[str, str]]:
+    """Split a cheap-filter rejection ledger into legitimate and premature.
+
+    `rejections` maps a candidate/member id to the reason a bounded-discovery
+    wave (or `filter_candidates`) rejected it before semantic review. A reason in
+    `PREMATURE_AUTHORING_REJECTION_REASONS` did not belong at this stage -- the
+    candidate should instead have reached semantic authoring, where the missing
+    evidence/anchor/relation/identity is exactly what gets built and then
+    independently reviewed; only a later, genuine review or admission gate may
+    turn that absence into a rejection. A reason outside both known sets fails
+    closed as unauthorized, so a future wave cannot invent another premature gate
+    (as `MISSING_EVIDENCE_BINDING` was) without the contract being extended here
+    deliberately.
+    """
+    legitimate: dict[str, str] = {}
+    premature: dict[str, str] = {}
+    for member_id, raw_reason in rejections.items():
+        reason = _REASON_ALIASES.get(raw_reason, raw_reason)
+        if reason in PREMATURE_AUTHORING_REJECTION_REASONS:
+            premature[member_id] = raw_reason
+        elif reason in AUTHORIZED_PRE_SEMANTIC_REJECTION_REASONS:
+            legitimate[member_id] = raw_reason
+        else:
+            raise ContrastSupplyError(
+                f"unauthorized cheap-filter rejection reason for {member_id}: {raw_reason}"
+            )
+    return legitimate, premature
 
 
 # --------------------------------------------------------------- deduplication
@@ -708,6 +873,356 @@ def retrieve_tn_chunks(
         }
         for chunk_id, pdf_page, tn_node_id, subheading, score in rows
     ]
+
+
+#: Phase 4 targeted-discovery V2. Structural TN section-heading families, one per
+#: `RESPONSE_CLASS_AXES` key, reused from the exact same generic navigation-heading
+#: convention `clinical_graph._project_toronto_notes_discovery` already uses for
+#: `DIFFERENTIAL_HEADINGS`/`PRESENTATION_HEADINGS` -- these are TN's own universal
+#: topic-template section names (present in essentially every chapter), never a
+#: disease-specific term, so naming them here is not the per-disease authoring the
+#: anti-hallucination contract forbids. An axis absent from this mapping (the two
+#: ethics/legal axes, which TN does not organize under a dedicated heading family)
+#: simply gets no heading narrowing and falls back to study-unit scope alone.
+RESPONSE_CLASS_HEADING_FAMILIES: dict[str, tuple[str, ...]] = {
+    "cardinal_syndrome_capability": ("differential",),
+    "explained_phenomenon_class": ("differential", "etiology", "pathophysiology"),
+    "investigation_purpose": ("investigations", "workup", "diagnosis"),
+    "next_action_class": ("treatment", "management", "approach"),
+    "management_capability": ("treatment", "management"),
+    "safety_securing_class": ("disposition", "management"),
+}
+
+
+def retrieve_targeted_tn_chunks(
+    connection: sqlite3.Connection,
+    *,
+    study_unit_id: str,
+    response_class_axis: str,
+    query: str,
+    limit: int,
+) -> list[dict[str, Any]]:
+    """Phase 4 targeted discovery V2: same study unit, response-class-shaped heading.
+
+    Root cause (already diagnosed, see MEMORY.md): `retrieve_tn_chunks` ORs every
+    word of the raw learner-decision sentence across the *entire* corpus, so it
+    returns chapter-sibling noise from anywhere in Toronto Notes that happens to
+    share a word. This targets discovery to (a) chunks the deterministic
+    `chunk_study_units` crosswalk already binds to the opportunity's own study
+    unit -- encoding "SAME learner decision" -- and, where the axis has one, (b) a
+    generic structural heading family shaped like the demanded response class
+    (a differential list for a diagnosis decision, a treatment/management section
+    for a next-action or management decision, and so on) -- encoding "compatible
+    response class". Both signals are the same TN structural metadata already
+    trusted by the committed graph builder and the H18/H24 discovery mechanism;
+    no clinical fact, disease name, or per-candidate list is introduced.
+
+    Still bounded exactly like `retrieve_tn_chunks`; still text-only metadata.
+    """
+    if not (TN_CHUNK_FLOOR <= limit <= TN_CHUNK_CEILING):
+        raise ContrastSupplyError(
+            f"a discovery retrieval takes between {TN_CHUNK_FLOOR} and "
+            f"{TN_CHUNK_CEILING} chunks, not {limit}"
+        )
+    if response_class_axis not in RESPONSE_CLASS_AXES:
+        raise ContrastSupplyError(
+            f"unknown response_class_axis {response_class_axis!r}"
+        )
+    unit_row = connection.execute(
+        "SELECT 1 FROM study_units WHERE study_unit_id = ?", (study_unit_id,)
+    ).fetchone()
+    if unit_row is None:
+        raise ContrastSupplyError(f"unknown study_unit_id {study_unit_id!r}")
+
+    terms = [term for term in _tokenize(query) if term]
+    if not terms:
+        raise ContrastSupplyError("a retrieval request needs at least one usable term")
+    expression = " OR ".join(f'"{term}"' for term in terms)
+
+    heading_family = RESPONSE_CLASS_HEADING_FAMILIES.get(response_class_axis, ())
+
+    def _run(heading_clause: str, params: list[Any]) -> list[tuple[Any, ...]]:
+        try:
+            return connection.execute(
+                "SELECT c.chunk_id, c.pdf_page, c.tn_node_id, c.subheading, "
+                "c.section_path, bm25(chunks_fts) FROM chunks_fts "
+                "JOIN chunks c ON c.rowid = chunks_fts.rowid "
+                "JOIN chunk_study_units su ON su.chunk_id = c.chunk_id "
+                f"WHERE su.study_unit_id = ?{heading_clause} "
+                "AND chunks_fts MATCH ? "
+                "ORDER BY bm25(chunks_fts) LIMIT ?",
+                params,
+            ).fetchall()
+        except sqlite3.OperationalError as exc:
+            raise ContrastSupplyError(f"text query is unusable: {exc}") from exc
+
+    discovery_source = "TARGETED_STUDY_UNIT_HEADING_FAMILY"
+    rows: list[tuple[Any, ...]] = []
+    if heading_family:
+        heading_clause = " AND (" + " OR ".join(
+            "lower(c.subheading) LIKE ?" for _ in heading_family
+        ) + ")"
+        params = [study_unit_id, *(f"%{token}%" for token in heading_family), expression, limit]
+        rows = _run(heading_clause, params)
+
+    if not rows:
+        # Either the axis has no heading family, or (measured, not assumed) this
+        # unit's own TN structure has zero chunks in that family -- fall back to
+        # study-unit scope alone rather than silently returning nothing, so V2
+        # never has strictly worse recall than the whole-corpus V1 baseline for a
+        # unit it can legitimately reach.
+        discovery_source = (
+            "TARGETED_STUDY_UNIT_SCOPE_ONLY_FALLBACK" if heading_family
+            else "TARGETED_STUDY_UNIT_SCOPE_ONLY"
+        )
+        rows = _run("", [study_unit_id, expression, limit])
+
+    return [
+        {
+            "chunk_id": chunk_id,
+            "pdf_page": pdf_page,
+            "tn_node_id": tn_node_id,
+            "subheading": subheading,
+            "section_path": section_path,
+            "bm25": score,
+            "authority_role": "TOPIC_DISCOVERY_SOURCE",
+            "discovery_source": discovery_source,
+            "study_unit_id": study_unit_id,
+        }
+        for chunk_id, pdf_page, tn_node_id, subheading, section_path, score in rows
+    ]
+
+
+#: Phase 4/anti-hallucination contract: structural-only TN section labels that
+#: never by themselves name a candidate-level concept, no matter where they
+#: appear (a subheading, or the terminal component of a `section_path`
+#: breadcrumb). Every entry is normalized (lowercased, whitespace-collapsed)
+#: before comparison. This is deliberately a short, closed set of TN's own
+#: generic topic-template section names -- not a growing heuristic dictionary.
+GENERIC_STRUCTURAL_TOKENS = frozenset({
+    "treatment",
+    "management",
+    "investigations",
+    "diagnosis",
+    "differential diagnosis",
+    "complications",
+    "overview",
+    "approach",
+    "principles",
+})
+
+#: Substrings that mark a label as naming more than one candidate concept at
+#: once (e.g. a section heading like "Croup vs Epiglottitis"). Any match fails
+#: the label closed as ambiguous rather than guessing which named concept is
+#: the actual candidate.
+_AMBIGUOUS_LABEL_MARKERS = (" vs ", " vs. ", " versus ", " and ", " or ", "/")
+
+#: Measured against the real Discovery-V2 replay (57 hits over the 8
+#: prerequisite-ready Build-12 opportunities): a chunk's `subheading`/
+#: `section_path` terminal field is sometimes not a heading at all but a
+#: figure/table caption or a raw sentence fragment captured by PDF text
+#: extraction (e.g. "Figure 10. Guidelines for COPD management", "Outcome:
+#: Treatment failure, risk of relapse, timeto", "This is a nonavalent HPV
+#: vaccine covering"). These are purely structural/typographic signals --
+#: a caption prefix, a label:continuation colon pattern, a sentence-opening
+#: phrase, a truncated trailing stopword or possessive -- never a read of
+#: clinical content, so detecting them is not the prose-parsing the
+#: anti-hallucination contract forbids.
+_CAPTION_PREFIX_RE = re.compile(r"^(figure|table|box)\s+\d+[.:]", re.IGNORECASE)
+_SENTENCE_START_RE = re.compile(
+    r"^(this is|these are|it is|there is|there are|no treatment)\b", re.IGNORECASE
+)
+_TRUNCATION_STOPWORD_ENDINGS = frozenset({
+    "and", "or", "with", "the", "a", "an", "of", "for", "to", "if", "without",
+    "on", "in", "that", "this", "from", "as", "by", "at", "its", "reasonably",
+})
+
+
+def _normalize_label(label: str) -> str:
+    return " ".join(label.strip().lower().split())
+
+
+def _is_generic_label(label: str) -> bool:
+    return _normalize_label(label) in GENERIC_STRUCTURAL_TOKENS
+
+
+def _is_ambiguous_label(label: str) -> bool:
+    normalized = _normalize_label(label)
+    return any(marker in normalized for marker in _AMBIGUOUS_LABEL_MARKERS)
+
+
+def _is_extraction_artifact(label: str) -> bool:
+    normalized = label.strip()
+    if not normalized:
+        return True
+    lower = normalized.lower()
+    if _CAPTION_PREFIX_RE.match(lower):
+        return True
+    if _SENTENCE_START_RE.match(lower):
+        return True
+    if ":" in normalized or normalized.endswith(("|", ",")):
+        return True
+    words = lower.split()
+    if not words:
+        return True
+    last_word = words[-1].strip(".,;")
+    if last_word in _TRUNCATION_STOPWORD_ENDINGS or last_word.endswith("'s"):
+        return True
+    return False
+
+
+def _identity_resolution(
+    *,
+    identity: str | None,
+    resolution_method: str,
+    source_field: str | None,
+    source_value: str | None,
+    resolvable: bool,
+) -> dict[str, Any]:
+    return {
+        "identity": identity,
+        "resolution_method": resolution_method,
+        "source_field": source_field,
+        "source_value": source_value,
+        "resolvable": resolvable,
+    }
+
+
+def resolve_candidate_identity(
+    hit: Mapping[str, Any],
+    *,
+    existing_reviewed_identities: Mapping[str, str] | None = None,
+) -> dict[str, Any]:
+    """Resolve a retrieval hit to a candidate identity, or fail closed.
+
+    Deterministic priority order (see AGENTS.md's anti-hallucination contract
+    and MEMORY.md's `QGEN_NEXT_STEP` design):
+
+    1. an existing independently reviewed identity mapping, keyed by chunk_id
+       -- takes precedence over any heuristic re-derivation of the same hit;
+    2. an explicit, trusted canonical concept label already joined onto the
+       hit (e.g. from `concept_mentions`/`concepts`);
+    3. a specific (non-generic, non-ambiguous) `subheading`;
+    4. the terminal component of a `section_path` breadcrumb, when it is
+       itself specific and non-ambiguous;
+    5. fail closed: `GENERIC_HEADING_ONLY`, `AMBIGUOUS_STRUCTURAL_IDENTITY`,
+       or `NO_IDENTITY_METADATA`.
+
+    A `section_path` is a TN table-of-contents breadcrumb such as
+    "Medicine > Cardiology > Management" -- structural navigation, not a
+    disease-specific fact. Only its own terminal component is ever used; nodes
+    higher in the breadcrumb (chapter/topic names) are never treated as
+    competing candidates, and chunk prose is never parsed.
+    """
+    chunk_id = hit.get("chunk_id")
+    if existing_reviewed_identities and chunk_id in existing_reviewed_identities:
+        identity = existing_reviewed_identities[chunk_id]
+        return _identity_resolution(
+            identity=identity,
+            resolution_method="EXISTING_REVIEWED_IDENTITY",
+            source_field="existing_reviewed_identities",
+            source_value=identity,
+            resolvable=True,
+        )
+
+    canonical = hit.get("canonical_concept_label")
+    if canonical:
+        if _is_ambiguous_label(canonical):
+            return _identity_resolution(
+                identity=None,
+                resolution_method="AMBIGUOUS_STRUCTURAL_IDENTITY",
+                source_field="canonical_concept_label",
+                source_value=canonical,
+                resolvable=False,
+            )
+        return _identity_resolution(
+            identity=canonical,
+            resolution_method="EXPLICIT_CANONICAL_IDENTITY",
+            source_field="canonical_concept_label",
+            source_value=canonical,
+            resolvable=True,
+        )
+
+    subheading = (hit.get("subheading") or "").strip()
+    if subheading:
+        if _is_ambiguous_label(subheading):
+            return _identity_resolution(
+                identity=None,
+                resolution_method="AMBIGUOUS_STRUCTURAL_IDENTITY",
+                source_field="subheading",
+                source_value=subheading,
+                resolvable=False,
+            )
+        if _is_extraction_artifact(subheading):
+            return _identity_resolution(
+                identity=None,
+                resolution_method="OTHER",
+                source_field="subheading",
+                source_value=subheading,
+                resolvable=False,
+            )
+        if not _is_generic_label(subheading):
+            return _identity_resolution(
+                identity=subheading,
+                resolution_method="SPECIFIC_HEADING_IDENTITY",
+                source_field="subheading",
+                source_value=subheading,
+                resolvable=True,
+            )
+
+    section_path = (hit.get("section_path") or "").strip()
+    if section_path:
+        components = [c.strip() for c in section_path.split(">") if c.strip()]
+        if components:
+            terminal = components[-1]
+            if _is_ambiguous_label(terminal):
+                return _identity_resolution(
+                    identity=None,
+                    resolution_method="AMBIGUOUS_STRUCTURAL_IDENTITY",
+                    source_field="section_path",
+                    source_value=section_path,
+                    resolvable=False,
+                )
+            if _is_extraction_artifact(terminal):
+                return _identity_resolution(
+                    identity=None,
+                    resolution_method="OTHER",
+                    source_field="section_path",
+                    source_value=section_path,
+                    resolvable=False,
+                )
+            if not _is_generic_label(terminal):
+                return _identity_resolution(
+                    identity=terminal,
+                    resolution_method="SECTION_PATH_IDENTITY",
+                    source_field="section_path",
+                    source_value=section_path,
+                    resolvable=True,
+                )
+        return _identity_resolution(
+            identity=None,
+            resolution_method="GENERIC_HEADING_ONLY",
+            source_field="section_path",
+            source_value=section_path,
+            resolvable=False,
+        )
+
+    if subheading:
+        return _identity_resolution(
+            identity=None,
+            resolution_method="GENERIC_HEADING_ONLY",
+            source_field="subheading",
+            source_value=subheading,
+            resolvable=False,
+        )
+
+    return _identity_resolution(
+        identity=None,
+        resolution_method="NO_IDENTITY_METADATA",
+        source_field=None,
+        source_value=None,
+        resolvable=False,
+    )
 
 
 def _tokenize(text: str) -> list[str]:
@@ -2054,3 +2569,72 @@ FINAL_ANALYSIS = {
         "requires explicit authorization for that, and this task did not carry it."
     ),
 }
+
+
+# --------------------------------------------------- reusable contrast cache v1
+
+def _reusable_cache_key(
+    opportunity_id: str, candidate_id_: str, response_class: str, decision_granularity: str
+) -> str:
+    return "|".join((opportunity_id, candidate_id_, response_class, decision_granularity))
+
+
+def build_reusable_contrast_cache_v1(seed_pack: Mapping[str, Any]) -> dict[str, dict[str, Any]]:
+    """Phase 14. Build a reusable cache from a seed pack's APPROVED seeds only.
+
+    Fails closed by construction: a seed pack only ever stores REJECTED/UNCERTAIN
+    relations outside its `seeds` list (see `rejected_or_uncertain_excluded_from_seeds`),
+    so nothing not already independently APPROVED can enter the cache. A seed
+    missing its anchor is refused explicitly rather than admitted with a hole.
+    """
+    cache: dict[str, dict[str, Any]] = {}
+    for seed in seed_pack.get("seeds", []):
+        if seed.get("review_status") != "APPROVED":
+            raise ContrastSupplyError(
+                f"{seed.get('seed_id')}: only APPROVED seeds may enter the reusable cache"
+            )
+        if not seed.get("anchor_id"):
+            raise ContrastSupplyError(
+                f"{seed.get('seed_id')}: a seed without an approved anchor is not cache-admissible"
+            )
+        key = _reusable_cache_key(
+            seed["opportunity_id"], seed["candidate_id"], seed["response_class"],
+            seed["decision_granularity"],
+        )
+        cache[key] = dict(seed)
+    return cache
+
+
+def lookup_reusable_cache_entry(
+    cache: Mapping[str, Mapping[str, Any]],
+    *,
+    opportunity_id: str,
+    candidate_id_: str,
+    response_class: str,
+    decision_granularity: str,
+    stem_context: Mapping[str, Any] | None = None,
+) -> dict[str, Any] | None:
+    """A cache hit under an exact scope match, or None. No near-miss, no fallback.
+
+    Wrong opportunity, candidate, response class, or granularity misses the key
+    entirely (exact-scope match). A seed carrying a
+    `population_context_restriction_rule.forbidden_if_context` mapping is refused
+    (returns None) whenever `stem_context` matches every named field, and requires
+    `stem_context` to be supplied at all before it can be returned as a hit --
+    silently ignoring an unevaluated restriction is not an option.
+    """
+    key = _reusable_cache_key(opportunity_id, candidate_id_, response_class, decision_granularity)
+    entry = cache.get(key)
+    if entry is None:
+        return None
+    restriction = entry.get("population_context_restriction_rule")
+    if restriction:
+        forbidden_if = restriction.get("forbidden_if_context", {})
+        if stem_context is None:
+            raise ContrastSupplyError(
+                f"{entry['seed_id']} carries a population/context restriction; "
+                "stem_context must be supplied to look it up"
+            )
+        if all(stem_context.get(field) == value for field, value in forbidden_if.items()):
+            return None
+    return dict(entry)

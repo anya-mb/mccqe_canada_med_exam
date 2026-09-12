@@ -1,0 +1,63 @@
+{
+  "broad_row_policy": "REQUIRES_DECOMPOSITION_UNTIL_ONE_DECISION_RULE_IS_EXPLICIT",
+  "compound_policy": "ONE_ROW_CANNOT_REQUIRE_TWO_INDEPENDENTLY_SCOREABLE_RESPONSES",
+  "containment_policy": "DIAGNOSTIC_UNTIL_BROADER_ENDPOINT_IS_ADJUDICATED_ATOMIC",
+  "content_sha256": "c250e20c3da4e109c06c856c573e0e0006ab959ffd26faeccd2c55ebf3237e9a",
+  "definition": "Given one clinically material state, the learner must produce one response whose correctness turns on one coherent reasoning target.",
+  "distinct_opportunity_contract": "A distinction is a new opportunity only when it materially changes the correct answer or action, principal learner decision, required clinical knowledge, clinical-stage decision, management or investigation pathway, recognized complication, legal or ethical duty, or decision-changing population context.",
+  "do_not_split_when": [
+    "ALTERNATE_EVIDENCE_PATH_TO_SAME_DECISION",
+    "SYNONYMOUS_ACTION_VERB",
+    "ITEM_FORM_OR_STEM_WRAPPER",
+    "DIFFICULTY_OR_DISTRACTOR_CHANGE",
+    "COSMETIC_DEMOGRAPHIC_VARIANT"
+  ],
+  "identity_dimensions": [
+    "clinical_topic_or_concept",
+    "response_class",
+    "learner_decision_or_intent",
+    "key_concept_or_action",
+    "clinical_stage_only_when_decision_changing",
+    "population_context_only_when_decision_changing",
+    "severity_only_when_decision_changing",
+    "material_decision_changing_state",
+    "MCC_physician_activity_and_objective_mapping"
+  ],
+  "item_variant_contract": "A distinction remains an item variant when it changes only patient identity, incidental demographics, wording, symptom order, non-load-bearing values, surface history, option order, or an equivalent presentation without changing the tested learner decision.",
+  "lineage_invariant": "PRESERVED_ROWS_INHERIT_PRIOR_EDGES_UNTIL_VERSIONED_READJUDICATION",
+  "monotonicity_invariant": "ADDING_REGISTRY_CANDIDATES_CANNOT_LOWER_BEST_RELATION_RANK",
+  "pairwise_relations": [
+    "EQUIVALENT",
+    "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+    "REGISTRY_NARROWER_THAN_BENCHMARK",
+    "VARIANT_OF_SAME_DECISION",
+    "RELATED_BUT_DISTINCT",
+    "NEAR_DUPLICATE",
+    "DUPLICATE",
+    "UNRELATED",
+    "UNCERTAIN"
+  ],
+  "precision_policy": "SAME_EQUIVALENCE_EDGE_GRAPH_AS_RECALL",
+  "question_seed_boundary": "Evidence-path, vignette-form, difficulty, distractor, and cosmetic presentation choices belong in the Question Seed or item variant layer, not opportunity identity.",
+  "relationship_taxonomy": [
+    "EQUIVALENT",
+    "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+    "REGISTRY_NARROWER_THAN_BENCHMARK",
+    "VARIANT_OF_SAME_DECISION",
+    "RELATED_BUT_DISTINCT",
+    "NEAR_DUPLICATE",
+    "DUPLICATE",
+    "UNRELATED",
+    "UNCERTAIN"
+  ],
+  "schema_version": "1.0",
+  "scope": "ATOMIC_MCCQE_QUESTION_OPPORTUNITY_CONTRACT_V1",
+  "split_when": [
+    "DIFFERENT_RESPONSE_CLASS",
+    "INDEPENDENTLY_SCOREABLE_DECISION",
+    "MATERIAL_CONTEXT_CHANGES_CORRECT_RESPONSE",
+    "SEQUENTIAL_DECISION_WITH_DISTINCT_OUTCOME"
+  ],
+  "strict_match_relation": "EQUIVALENT",
+  "topic_support_policy": "REPORT_SEPARATELY_NEVER_CALL_PRECISION"
+}

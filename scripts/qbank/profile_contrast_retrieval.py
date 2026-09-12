@@ -118,6 +118,7 @@ def build_retrieval_index(
     *,
     feature_anchor_snapshot: dict[str, Any] | None = None,
     feature_anchor_scope: str | None = None,
+    approved_additional_packs: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     """Build the deterministic retrieval index over curated seeds.
 
@@ -180,6 +181,42 @@ def build_retrieval_index(
                 # Added only on the pinned path. An unpinned index must stay
                 # byte-identical, because frozen reports serialize these rows.
                 rows[-1]["feature_anchor_snapshot_id"] = snapshot["snapshot_id"]
+    if approved_additional_packs:
+        from .seed_pack_onboarding import approved_seed_scope
+
+        seen = {row["seed_id"] for row in rows}
+        for bundle in approved_additional_packs:
+            additional_pack = bundle.get("seed_pack")
+            if not isinstance(additional_pack, dict):
+                raise ContrastRetrievalError("additional seed bundle needs a seed_pack")
+            scopes = approved_seed_scope(additional_pack)
+            filtered_pack = {
+                **additional_pack,
+                "targets": [
+                    {
+                        **target,
+                        "seeds": [
+                            seed for seed in target.get("seeds", [])
+                            if seed.get("seed_id") in scopes
+                        ],
+                    }
+                    for target in additional_pack["targets"]
+                ],
+            }
+            new_rows = build_retrieval_index(
+                filtered_pack,
+                bundle.get("enrichment") or {},
+                bundle.get("stem_anchors") or {},
+                feature_anchor_snapshot=feature_anchor_snapshot,
+                feature_anchor_scope=feature_anchor_scope,
+            )
+            for row in new_rows:
+                if row["seed_id"] in seen:
+                    raise ContrastRetrievalError(
+                        f"seed appears in more than one explicit pack: {row['seed_id']}"
+                    )
+                seen.add(row["seed_id"])
+                rows.append({**row, **scopes[row["seed_id"]]})
     return sorted(rows, key=lambda row: row["seed_id"])
 
 
@@ -197,6 +234,27 @@ def _satisfied_predicate_count(
     return satisfied, len(predicates)
 
 
+def _retrieval_scope_matches(
+    row: dict[str, Any],
+    *,
+    learner_decision_id: str | None,
+    anchor_study_unit_id: str | None,
+) -> bool:
+    """Apply an onboarding row's reviewed scope; historical rows are unchanged."""
+    scope = row.get("retrieval_scope")
+    if scope is None:
+        return True
+    # A caller that omits context cannot safely consume a scoped new seed.
+    if learner_decision_id is None or anchor_study_unit_id is None:
+        return False
+    learner_decisions = scope.get("learner_decision_ids") or []
+    study_units = scope.get("study_unit_ids") or []
+    return (
+        learner_decision_id in learner_decisions
+        and anchor_study_unit_id in study_units
+    )
+
+
 def retrieve_profile_aware_contrasts(
     *,
     index: list[dict[str, Any]],
@@ -208,6 +266,8 @@ def retrieve_profile_aware_contrasts(
     generic_token: str,
     stem_feature_map: dict[str, Any],
     ranking_preference: list[str],
+    learner_decision_id: str | None = None,
+    anchor_study_unit_id: str | None = None,
 ) -> dict[str, Any]:
     """Retrieve, filter and rank competitors for one realized scenario."""
     from .option_set_admissibility import expand_response_tokens
@@ -223,6 +283,11 @@ def retrieve_profile_aware_contrasts(
         if discipline_profile_id in row["applicable_disciplines"]
         and item_archetype in row["applicable_item_archetypes"]
         and option_set_archetype in row["option_set_archetypes"]
+        and _retrieval_scope_matches(
+            row,
+            learner_decision_id=learner_decision_id,
+            anchor_study_unit_id=anchor_study_unit_id,
+        )
     ]
     admissible: list[dict[str, Any]] = []
     excluded: list[dict[str, Any]] = []

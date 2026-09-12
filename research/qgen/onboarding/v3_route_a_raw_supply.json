@@ -1,0 +1,118 @@
+{
+  "candidates": [
+    {
+      "author_note": "Both feature ids already exist in V4, already unrestricted by non_anchor_in_decision_domains; only a new anchor relation is proposed, no new feature.",
+      "candidate_concept": "Acute pericarditis",
+      "cheap_filter_outcome": "SURVIVED_RESPONSE_CLASS_AND_GRANULARITY_GATE",
+      "discovery_location": "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json#CONCEPT-G2-PERICARDITIS",
+      "discovery_source": "CURATED_LIBRARY",
+      "feature_extension_proposed": false,
+      "key_concept": "Constrictive pericarditis",
+      "opportunity_id": "LD-C35-01",
+      "proposed_relation": {
+        "anchor_role": "NEGATIVE_DISCRIMINATOR",
+        "decision_granularity": "DIAGNOSIS",
+        "distractor_class": "COUNTERFACTUAL_CORRECT",
+        "evidence_claim_ids": [
+          "CLM-PERICARDITIS-01",
+          "SRC-MED-028-REC-01",
+          "SRC-MED-028-EX-01"
+        ],
+        "feature_ids": [
+          "SF-C21-PLEURITIC-POSITIONAL-PAIN",
+          "SF-C21-WIDESPREAD-ST-ELEVATION-PR-DEPRESSION"
+        ],
+        "learner_decision_id": "LD-C35-01",
+        "required_feature_state": "ABSENT",
+        "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "scope": "LD-C35-01_ONLY"
+      }
+    },
+    {
+      "author_note": "CLM-PE-DIAGNOSIS-01 discriminators (dyspnea, pleuritic pain, hemoptysis, hypoxemia, VTE risk factors) do not connect to LD-C35-01's load-bearing PERICARDIAL-HISTORY feature.",
+      "candidate_concept": "Pulmonary embolism",
+      "cheap_filter_outcome": "REJECTED_NO_SHARED_ANCHOR_FEATURE",
+      "discovery_location": "research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json#CONCEPT-G2-PE",
+      "discovery_source": "CURATED_LIBRARY",
+      "feature_extension_proposed": false,
+      "key_concept": "Constrictive pericarditis",
+      "opportunity_id": "LD-C35-01",
+      "proposed_relation": null
+    },
+    {
+      "author_note": "Healthy-screenee bias is the same phenomenon class as the likely key (second-key risk); length-time bias and overdiagnosis judge a different variable (screen-detected survival statistics, not sample representativeness).",
+      "candidate_concept": null,
+      "cheap_filter_outcome": "NO_SAFE_ITEM",
+      "discovery_location": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json#target-12-SU-PH-07 (length-time bias, overdiagnosis, healthy-screenee bias)",
+      "discovery_source": "CURATED_LIBRARY",
+      "feature_extension_proposed": false,
+      "key_concept": "Sample generalisation / representativeness",
+      "opportunity_id": "LD-PH11-01",
+      "proposed_relation": null
+    },
+    {
+      "author_note": "SF-ONB2-THIRD-VARIABLE is already bound to SU-PH-12 in V4; the curated library's own concept_id (CONCEPT-R4-SU-PH-12-HEALTHY-SCREENEE) already tags this bias to SU-PH-12, just never anchored to this learner decision.",
+      "candidate_concept": "Healthy screenee (selection) bias",
+      "cheap_filter_outcome": "SURVIVED_RESPONSE_CLASS_AND_GRANULARITY_GATE",
+      "discovery_location": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json#CONCEPT-R4-SU-PH-12-HEALTHY-SCREENEE",
+      "discovery_source": "CURATED_LIBRARY",
+      "feature_extension_proposed": false,
+      "key_concept": "Confounding",
+      "opportunity_id": "LD-PH12-01",
+      "proposed_relation": {
+        "anchor_role": "NEGATIVE_DISCRIMINATOR",
+        "decision_granularity": "EPIDEMIOLOGIC_EXPLANATION",
+        "distractor_class": "COUNTERFACTUAL_CORRECT",
+        "evidence_claim_ids": [
+          "SRC-PHELO-043-R1",
+          "CLM-R2-PHELO-HEALTHY-VOLUNTEER"
+        ],
+        "feature_ids": [
+          "SF-ONB2-THIRD-VARIABLE"
+        ],
+        "learner_decision_id": "LD-PH12-01",
+        "required_feature_state": "PRESENT",
+        "response_class": "EXPLANATION_OF_OBSERVED_PHENOMENON",
+        "scope": "LD-PH12-01_ONLY"
+      }
+    },
+    {
+      "author_note": "Screening-detection-timing artifact, not a third-variable mechanism; no grounded conceptual overlap with confounding.",
+      "candidate_concept": "Length-time bias",
+      "cheap_filter_outcome": "REJECTED_WRONG_MECHANISM_CLASS",
+      "discovery_location": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json#target-12-SU-PH-07",
+      "discovery_source": "CURATED_LIBRARY",
+      "feature_extension_proposed": false,
+      "key_concept": "Confounding",
+      "opportunity_id": "LD-PH12-01",
+      "proposed_relation": null
+    },
+    {
+      "author_note": "Same rejection reason as length-time bias.",
+      "candidate_concept": "Overdiagnosis",
+      "cheap_filter_outcome": "REJECTED_WRONG_MECHANISM_CLASS",
+      "discovery_location": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json#target-12-SU-PH-07",
+      "discovery_source": "CURATED_LIBRARY",
+      "feature_extension_proposed": false,
+      "key_concept": "Confounding",
+      "opportunity_id": "LD-PH12-01",
+      "proposed_relation": null
+    },
+    {
+      "author_note": "Response-class/category mismatch: all 6 historical candidates are breast-care technique instructions for an already-diagnosed mastitis patient, not infection-management next actions comparable to antibiotic initiation for endometritis. The diagnostic discriminator (SF-ONB2-PAINFUL-RED-BREAST) transfers cleanly but the candidate action set does not.",
+      "candidate_concept": null,
+      "cheap_filter_outcome": "NO_SAFE_ITEM",
+      "discovery_location": "research/qgen/generalization/competitive_contrast_seed_pack_r4.json#target-5-SU-OB-54 (breastfeeding/breast-care technique instructions)",
+      "discovery_source": "CURATED_LIBRARY",
+      "feature_extension_proposed": false,
+      "key_concept": "Initial management of postpartum endometritis",
+      "opportunity_id": "LD-OB53-02",
+      "proposed_relation": null
+    }
+  ],
+  "manifest_ref": "research/qgen/onboarding/v3_fresh36_supply_input_manifest.json",
+  "raw_supply_sha256_before_review": "49ba6055559ee18a7eee23b643e678b43ec964ad3cd8e2bfd7be377dfc14bf9e",
+  "schema_version": "1.0",
+  "scope": "QGEN_FRESH36_ROUTE_A_RAW_SUPPLY_V1",
+  "wave": "ONE_BOUNDED_ROUTE_A_WAVE"
+}

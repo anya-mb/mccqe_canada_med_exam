@@ -1,0 +1,31 @@
+{
+  "raw_supply_ref": "research/qgen/onboarding/v3_route_a_raw_supply.json",
+  "raw_supply_sha256_reviewed": "49ba6055559ee18a7eee23b643e678b43ec964ad3cd8e2bfd7be377dfc14bf9e",
+  "review_content_sha256": "1eaf351aceb3e5cf0d102b5274cfa86af9ea2a8d25c946b4f0b777776e50c783",
+  "reviewer": "independent_sonnet_subagent_no_authorship_stake",
+  "reviews": [
+    {
+      "candidate_concept": "Acute pericarditis",
+      "opportunity_id": "LD-C35-01",
+      "reason": "SF-C21-PLEURITIC-POSITIONAL-PAIN and SF-C21-WIDESPREAD-ST-ELEVATION-PR-DEPRESSION are FROZEN_CANONICAL features hard-scoped to a different learner decision (QGEN-G2-MED-T01 / SU-C-21 / response_class LOCALIZED_INFLAMMATION), not LD-C35-01/SU-C-35/PLAUSIBLE_DIAGNOSTIC_ENTITY. Repurposing them with a flipped required state has no repository authorization. CLM-PERICARDITIS-01's own exact_reason scopes it to an acute-pericarditis-vs-ACS contrast, not constrictive pericarditis. v2_evidence_audit_review.json identifies the canonical near-miss for this study unit as restrictive cardiomyopathy, not acute pericarditis; w1_declared_learner_decisions.json records zero proposed anchor relations for either SU-C-35 feature. This is exactly the FEATURE_BOUND_TO_DIFFERENT_STUDY_UNIT failure mode the milestone targets, now confirmed unresolved rather than repaired.",
+      "verdict": "REJECTED"
+    },
+    {
+      "candidate_concept": "Healthy screenee (selection) bias",
+      "opportunity_id": "LD-PH12-01",
+      "reason": "SRC-PHELO-043-R1's own unsupported_content note explicitly disclaims covering selection-bias subtypes or a confounder-vs-mediator distinction. The claimed corroborating library tag (CONCEPT-R4-SU-PH-12-HEALTHY-SCREENEE) is actually scoped to a different learner decision (lead-time bias / SU-PH-07) and states a different, allocation-based discriminator, not a third-variable-presence discriminator -- it contradicts rather than corroborates the proposal. Medically, healthy-screenee bias is itself commonly explained via an uncontrolled third variable (baseline health) correlated with exposure and outcome, so 'third variable present' does not cleanly rule it out -- unresolved second-key risk.",
+      "verdict": "REJECTED"
+    }
+  ],
+  "route_a_approved_count": 0,
+  "route_a_final": {
+    "LD-C35-01": "NO_SAFE_ITEM",
+    "LD-OB53-02": "NO_SAFE_ITEM",
+    "LD-PH11-01": "NO_SAFE_ITEM",
+    "LD-PH12-01": "NO_SAFE_ITEM"
+  },
+  "route_a_no_candidate_count": 2,
+  "route_a_rejected_count": 2,
+  "schema_version": "1.0",
+  "scope": "QGEN_FRESH36_ROUTE_A_INDEPENDENT_REVIEW_V1"
+}

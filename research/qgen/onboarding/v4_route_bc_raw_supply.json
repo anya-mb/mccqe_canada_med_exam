@@ -1,0 +1,197 @@
+{
+  "raw_supply_sha256_before_review": "337ec522e10cf37fdf886f8cecd0925ef2372726d38ae0c76702768b3ee60bc1",
+  "schema_version": "1.0",
+  "scope": "QGEN_FRESH36_ROUTE_BC_RAW_SUPPLY_V1",
+  "wave": "ONE_BOUNDED_ROUTE_BC_WAVE_DERMATOLOGY_CLUSTER",
+  "wave_selection_rationale": "Bounded sub-wave of the 30 ROUTE_B / 2 ROUTE_C opportunities, not the full set. Selected the 8 opportunities anchored on SU-D-04/SU-D-05/SU-D-07/SU-D-08/SU-D-12 (7 ROUTE_B: LD-D04-01, LD-D05-01, LD-D05-02, LD-D07-01, LD-D07-02, LD-D08-01, LD-D12-01; 1 ROUTE_C: LD-D12-02) because their own source packets (SRC-MED-048, SRC-MED-045, SRC-MED-051, SRC-MED-049, SRC-MED-033, in research/qgen/source_packet_population_srb_006.json) explicitly name candidate differential concepts inside the cited recommendation/exception text itself (e.g. SRC-MED-048-REC-01 names 'a mobile lipoma' and 'an acute inflammatory mass'; SRC-MED-051-REC-01 names 'vascular malformations'; SRC-MED-033-REC-01 states the allergic-vs-irritant discriminator directly), which lets discovery stay existing-evidence-first per the milestone contract rather than requiring new external research. The remaining 22 ROUTE_B and 1 ROUTE_C opportunities (OBGYN, PED, PHELO, PSY, SURG, remaining MED) were NOT attempted this session.",
+  "manifest_ref": "research/qgen/onboarding/v3_fresh36_supply_input_manifest.json",
+  "source_packets_used": [
+    "SRC-MED-048 (SU-D-04)",
+    "SRC-MED-045 (SU-D-05)",
+    "SRC-MED-051 (SU-D-07)",
+    "SRC-MED-049 (SU-D-08)",
+    "SRC-MED-033 (SU-D-12)"
+  ],
+  "candidates": [
+    {
+      "opportunity_id": "LD-D04-01",
+      "key_concept": "Epidermal cyst",
+      "candidate_concept": "Mobile subcutaneous lipoma",
+      "discovery_source": "EXISTING_EVIDENCE_NAMED_DIFFERENTIAL",
+      "discovery_location": "research/qgen/source_packet_population_srb_006.json#SRC-MED-048-REC-01",
+      "cheap_filter_outcome": "SURVIVED_RESPONSE_CLASS_AND_GRANULARITY_GATE",
+      "feature_extension_proposed": true,
+      "proposed_feature": {
+        "feature_id": "SF-D04-MOBILE-MASS",
+        "preferred_label": "Freely mobile subcutaneous mass on palpation",
+        "feature_type": "EXAMINATION_FINDING",
+        "identity_type": "FINDING",
+        "study_unit_id": "SU-D-04",
+        "learner_decision_ids": ["LD-D04-01"],
+        "evidence_refs": ["SRC-MED-048-REC-01"],
+        "grounding": "REC-01's own text names the contrast lesion as 'a mobile subcutaneous lipoma'; the discriminating attribute (free mobility of the mass, vs. a superficial cyst that is not described that way) is asserted verbatim by the claim, not inferred from outside dermatology knowledge."
+      },
+      "proposed_relation": {
+        "learner_decision_id": "LD-D04-01",
+        "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "anchor_role": "NEGATIVE_DISCRIMINATOR",
+        "distractor_class": "COUNTERFACTUAL_CORRECT",
+        "feature_ids": ["SF-D04-MOBILE-MASS"],
+        "required_feature_state": "ABSENT",
+        "scope": "LD-D04-01_ONLY",
+        "evidence_claim_ids": ["SRC-MED-048-REC-01"]
+      },
+      "author_note": "New feature required (no existing V4 feature captures lipoma mobility); reused evidence text verbatim, no external research performed. required_feature_state=ABSENT because this opportunity's own frozen state (SF-ONB2-SUPERFICIAL-CYST=PRESENT, SF-ONB2-CYST-SITE=PRESENT) already describes a superficial, site-typical cyst, not a mobile mass -- the two states are mutually exclusive by construction of the frozen stem."
+    },
+    {
+      "opportunity_id": "LD-D04-01",
+      "key_concept": "Epidermal cyst",
+      "candidate_concept": "Acute inflammatory mass (e.g. furuncle/abscess)",
+      "discovery_source": "EXISTING_EVIDENCE_NAMED_DIFFERENTIAL",
+      "discovery_location": "research/qgen/source_packet_population_srb_006.json#SRC-MED-048-REC-01 / SRC-MED-048-EX-01",
+      "cheap_filter_outcome": "NO_SAFE_ITEM",
+      "feature_extension_proposed": false,
+      "proposed_relation": null,
+      "author_note": "EX-01 only says tenderness/change 'should prompt assessment for a complication or an alternative diagnosis' -- it does not give a clean rule separating an acute inflammatory mass from a common and genuinely overlapping alternative, an INFLAMED epidermal cyst (still the same diagnosis, not a different one). Building a required-state discriminator here risks exactly the ambiguous-best-answer / second-key failure the milestone's own anti-hallucination contract prohibits. Fail closed: REJECTED as a candidate, not approved."
+    },
+    {
+      "opportunity_id": "LD-D05-01",
+      "key_concept": "Seborrheic keratosis",
+      "candidate_concept": "Melanocytic nevus (mole) / wart / skin tag",
+      "discovery_source": "EXISTING_EVIDENCE_NAMED_DIFFERENTIAL",
+      "discovery_location": "research/qgen/source_packet_population_srb_006.json#SRC-MED-045-EX-01",
+      "cheap_filter_outcome": "NO_SAFE_ITEM",
+      "feature_extension_proposed": false,
+      "proposed_relation": null,
+      "author_note": "EX-01 itself states 'Clinical appearance alone may not reliably distinguish a benign keratosis from a mole, wart, skin tag, or melanoma when a lesion is atypical.' The source evidence explicitly disclaims the reliability of the exact discrimination this opportunity would need, and the packet gives no species-specific discriminating morphology (e.g. 'stuck-on' verrucous surface, comedo-like openings) that would let a safe feature be built without importing outside dermatology knowledge not present in the repository -- prohibited by AGENTS.md ('Do not reconstruct missing source evidence from medical knowledge'). Fail closed: NO_SAFE_ITEM, honestly, not patched with invented morphology."
+    },
+    {
+      "opportunity_id": "LD-D05-02",
+      "key_concept": "Biopsy/further assessment of a changing or diagnostically uncertain keratosis",
+      "candidate_concept": "Continue managing as benign keratosis without further assessment (reassurance only)",
+      "discovery_source": "EXISTING_EVIDENCE_NAMED_DIFFERENTIAL",
+      "discovery_location": "research/qgen/source_packet_population_srb_006.json#SRC-MED-045-EX-01",
+      "cheap_filter_outcome": "SURVIVED_RESPONSE_CLASS_AND_GRANULARITY_GATE",
+      "feature_extension_proposed": false,
+      "proposed_relation": {
+        "learner_decision_id": "LD-D05-02",
+        "response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "anchor_role": "NEGATIVE_DISCRIMINATOR",
+        "distractor_class": "DEAD_DISTRACTOR",
+        "feature_ids": ["SF-ONB2-CHANGING-LESION"],
+        "required_feature_state": "PRESENT",
+        "scope": "LD-D05-02_ONLY",
+        "evidence_claim_ids": ["SRC-MED-045-EX-01"]
+      },
+      "author_note": "No new feature: reuses the already-frozen anchor feature SF-ONB2-CHANGING-LESION, which this opportunity's own manifest row already sets PRESENT. EX-01 directly states to 'assess a rapidly changing, symptomatic, or diagnostically uncertain lesion rather than assuming a benign diagnosis' -- 'continue as benign, no action' is therefore a dead distractor precisely when this feature is PRESENT, which is this opportunity's own frozen condition."
+    },
+    {
+      "opportunity_id": "LD-D07-01",
+      "key_concept": "Infantile haemangioma",
+      "candidate_concept": "Vascular malformation",
+      "discovery_source": "EXISTING_EVIDENCE_NAMED_DIFFERENTIAL",
+      "discovery_location": "research/qgen/source_packet_population_srb_006.json#SRC-MED-051-REC-01",
+      "cheap_filter_outcome": "SURVIVED_RESPONSE_CLASS_AND_GRANULARITY_GATE",
+      "feature_extension_proposed": false,
+      "proposed_relation": {
+        "learner_decision_id": "LD-D07-01",
+        "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "anchor_role": "NEGATIVE_DISCRIMINATOR",
+        "distractor_class": "COUNTERFACTUAL_CORRECT",
+        "feature_ids": ["SF-ONB2-INFANTILE-COURSE"],
+        "required_feature_state": "PRESENT",
+        "scope": "LD-D07-01_ONLY",
+        "evidence_claim_ids": ["SRC-MED-051-REC-01"]
+      },
+      "author_note": "No new feature: reuses the already-frozen anchor feature SF-ONB2-INFANTILE-COURSE ('grows after birth then involutes'), already PRESENT in this opportunity's frozen state. REC-01 explicitly names 'vascular malformations' as the contrast category to infantile haemangioma and ties the discrimination to exactly this postnatal growth-then-involution course, so no new feature or outside knowledge is needed -- the growth pattern is definitionally what a vascular malformation lacks (malformations are structural anomalies present from birth that grow proportionately with the child rather than proliferating then involuting), which is the direct negation of the already-cited claim text, not a separately invented fact."
+    },
+    {
+      "opportunity_id": "LD-D07-02",
+      "key_concept": "Early specialist referral for infantile haemangioma",
+      "candidate_concept": "Continue observation without early specialist referral",
+      "discovery_source": "EXISTING_EVIDENCE_NAMED_DIFFERENTIAL",
+      "discovery_location": "research/qgen/source_packet_population_srb_006.json#SRC-MED-051-REC-01",
+      "cheap_filter_outcome": "SURVIVED_RESPONSE_CLASS_AND_GRANULARITY_GATE",
+      "feature_extension_proposed": false,
+      "proposed_relation": {
+        "learner_decision_id": "LD-D07-02",
+        "response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "anchor_role": "NEGATIVE_DISCRIMINATOR",
+        "distractor_class": "DEAD_DISTRACTOR",
+        "feature_ids": ["SF-ONB2-ULCERATED-VASCULAR-LESION"],
+        "required_feature_state": "PRESENT",
+        "scope": "LD-D07-02_ONLY",
+        "evidence_claim_ids": ["SRC-MED-051-REC-01"]
+      },
+      "author_note": "No new feature: reuses the already-frozen anchor feature SF-ONB2-ULCERATED-VASCULAR-LESION, already PRESENT in this opportunity's frozen state. REC-01 lists ulceration as one of the named referral triggers ('high-risk location, ulceration, functional compromise, or large segmental facial involvement warrants early specialist referral'); the manifest's own extension_requirements flags the OTHER three triggers as NEW_FEATURE needed, but per the milestone's anti-bulk-import instruction those are NOT proposed here since ulceration alone is sufficient to construct one safe, load-bearing contrast for this specific opportunity. 'Continue observation' is a dead distractor exactly when ulceration is present, which is this opportunity's own frozen condition."
+    },
+    {
+      "opportunity_id": "LD-D08-01",
+      "key_concept": "Lipid-focused clinical assessment for xanthelasma/xanthoma",
+      "candidate_concept": "No further assessment needed (reassure as cosmetic finding only)",
+      "discovery_source": "EXISTING_EVIDENCE_NAMED_DIFFERENTIAL",
+      "discovery_location": "research/qgen/source_packet_population_srb_006.json#SRC-MED-049-REC-01",
+      "cheap_filter_outcome": "SURVIVED_RESPONSE_CLASS_AND_GRANULARITY_GATE",
+      "feature_extension_proposed": false,
+      "proposed_relation": {
+        "learner_decision_id": "LD-D08-01",
+        "response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "anchor_role": "NEGATIVE_DISCRIMINATOR",
+        "distractor_class": "DEAD_DISTRACTOR",
+        "feature_ids": ["SF-ONB2-XANTHELASMA"],
+        "required_feature_state": "PRESENT",
+        "scope": "LD-D08-01_ONLY",
+        "evidence_claim_ids": ["SRC-MED-049-REC-01"]
+      },
+      "author_note": "No new feature: reuses the already-frozen anchor feature SF-ONB2-XANTHELASMA, already PRESENT in this opportunity's frozen state. REC-01 states xanthelasma/xanthoma is a stigma of dyslipidaemia that 'warrants lipid-focused clinical assessment' -- a categorical claim, so 'no action, reassure only' is a dead distractor whenever the finding is present, without needing an additional conditioning feature."
+    },
+    {
+      "opportunity_id": "LD-D12-01",
+      "key_concept": "Allergic contact dermatitis",
+      "candidate_concept": "Irritant contact dermatitis",
+      "discovery_source": "EXISTING_EVIDENCE_NAMED_DIFFERENTIAL",
+      "discovery_location": "research/qgen/source_packet_population_srb_006.json#SRC-MED-033-REC-01",
+      "cheap_filter_outcome": "SURVIVED_RESPONSE_CLASS_AND_GRANULARITY_GATE",
+      "feature_extension_proposed": false,
+      "proposed_relation": {
+        "learner_decision_id": "LD-D12-01",
+        "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "anchor_role": "NEGATIVE_DISCRIMINATOR",
+        "distractor_class": "COUNTERFACTUAL_CORRECT",
+        "feature_ids": ["SF-ONB2-REPEATED-IRRITANT"],
+        "required_feature_state": "ABSENT",
+        "scope": "LD-D12-01_ONLY",
+        "evidence_claim_ids": ["SRC-MED-033-REC-01"]
+      },
+      "author_note": "No new feature: reuses the already-frozen anchor feature SF-ONB2-REPEATED-IRRITANT, already ABSENT in this opportunity's frozen state (companion feature SF-ONB2-DELAYED-ALLERGEN is PRESENT). REC-01 states the mechanism split directly: 'allergic contact dermatitis follows delayed allergen exposure, while irritant contact dermatitis follows repeated chemically damaging exposure' -- the two frozen feature states already encode the discriminator; this candidate only adds the explicit anchor relation tying 'irritant contact dermatitis' to that feature as a genuinely plausible, counterfactually-correct alternative."
+    },
+    {
+      "opportunity_id": "LD-D12-01",
+      "key_concept": "Allergic contact dermatitis",
+      "candidate_concept": "Dyshidrotic / nummular / seborrheic / stasis dermatitis / lichen simplex chronicus",
+      "discovery_source": "EXISTING_EVIDENCE_NAMED_DIFFERENTIAL",
+      "discovery_location": "research/qgen/source_packet_population_srb_006.json#SRC-MED-033-REC-01",
+      "cheap_filter_outcome": "NO_SAFE_ITEM",
+      "feature_extension_proposed": false,
+      "proposed_relation": null,
+      "author_note": "REC-01 names these as 'additional eczema phenotypes' but does not characterize any distinguishing morphology or exposure pattern for them -- they are named, not evidenced. Building a discriminating feature would require importing dermatology knowledge (e.g. dyshidrotic = vesicles on palms/soles, stasis = lower-leg venous-insufficiency setting) not present in the cited claim. Fail closed: NO_SAFE_ITEM for these five candidates specifically; only the irritant-vs-allergic contrast (which the claim does characterize) is proposed."
+    },
+    {
+      "opportunity_id": "LD-D12-02",
+      "key_concept": "Patch testing",
+      "candidate_concept": "No specific investigation needed (clinical diagnosis alone)",
+      "discovery_source": "EXISTING_EVIDENCE_NAMED_DIFFERENTIAL",
+      "discovery_location": "research/qgen/source_packet_population_srb_006.json#SRC-MED-033-EX-01",
+      "cheap_filter_outcome": "NO_SAFE_ITEM",
+      "feature_extension_proposed": false,
+      "proposed_relation": null,
+      "author_note": "Considered: EX-01 ('Patch testing is used to diagnose allergic contact dermatitis; it is not a test for all eczematous eruptions') would cleanly rule out 'no investigation needed' as a dead distractor, and is within LD-D12-02's own cited claim scope. However, per the manifest's own extension_requirements entry for this opportunity (class EXISTING_FEATURE_NOT_BOUND_TO_UNIT), no feature establishing 'clinical suspicion of allergic (vs irritant) contact dermatitis is present' is bound to LD-D12-02's own citation scope -- only EX-01 is cited here, and EX-01 talks about the test, not the precondition that a case is suspected ACD in the first place. Borrowing SF-ONB2-DELAYED-ALLERGEN or REC-01 from the sibling decision LD-D12-01 to supply that precondition would repeat the exact FEATURE_BOUND_TO_DIFFERENT_STUDY_UNIT / citation-scope-violation failure mode the Route-A independent reviewer caught. Fail closed: NO_SAFE_ITEM, honestly, matching this opportunity's ROUTE_C (feature_maps_with_zero_grounded_features) classification -- no anchor floor is possible within its own citation scope without a citation-scope violation."
+    }
+  ]
+}

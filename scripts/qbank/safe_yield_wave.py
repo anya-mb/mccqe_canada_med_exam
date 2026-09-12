@@ -119,7 +119,18 @@ def build_contrast_index(root: Path, library: dict[str, Any]) -> list[dict[str, 
         pack = _read(root, pack_relative)
         enrichment = load_seed_enrichment(root, enrichment_relative)
         anchors = load_seed_stem_anchors(root, anchors_relative)
-        for row in build_retrieval_index(pack, enrichment, anchors):
+        if pack.get("schema_version") == "2.0":
+            pack_rows = build_retrieval_index(
+                {"targets": []}, {"seeds": {}}, {"seeds": {}},
+                approved_additional_packs=[{
+                    "seed_pack": pack,
+                    "enrichment": enrichment,
+                    "stem_anchors": anchors,
+                }],
+            )
+        else:
+            pack_rows = build_retrieval_index(pack, enrichment, anchors)
+        for row in pack_rows:
             if row["seed_id"] in seen:
                 raise SafeYieldWaveError(f"seed appears in two packs: {row['seed_id']}")
             seen.add(row["seed_id"])
@@ -466,6 +477,8 @@ def run_safe_yield_wave(
                 generic_token=RESPONSE_CLASS_AXES[axis]["generic_token"],
                 stem_feature_map={"features": plan_features},
                 ranking_preference=profile["competitor_ranking_preference"],
+                learner_decision_id=opportunity["learner_decision_id"],
+                anchor_study_unit_id=opportunity["anchor_study_unit_id"],
             )
             anchor_refused_texts = set(retrieval["anchor_floor_refused_texts"])
             gate_verdicts.setdefault("PROFILE_AWARE_CONTRAST_RETRIEVAL", []).append(

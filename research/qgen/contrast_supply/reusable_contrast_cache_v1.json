@@ -1,0 +1,99 @@
+{
+  "approved_entry_count": 5,
+  "content_sha256": "f848045e18123da6128ebf05e085f572d74f25cb055a75d0c47ab2b73cc6e780",
+  "entries": {
+    "RDY-OBGYN-01|RDY-OBGYN-01__physiologic_discharge|NO_ACTIVE_TREATMENT|TREATMENT_BUNDLE": {
+      "anchor_id": "TNC-6fcd85fe560c0d9aa9055995",
+      "candidate_id": "RDY-OBGYN-01__physiologic_discharge",
+      "decision_granularity": "TREATMENT_BUNDLE",
+      "evidence_refs": [
+        "required_evidence_propositions:CCR2-DEV12-OBGYN01-PHYSIOLOGIC-DISCHARGE"
+      ],
+      "opportunity_id": "RDY-OBGYN-01",
+      "relation_id": "CCR2-DEV12-OBGYN01-PHYSIOLOGIC-DISCHARGE",
+      "response_class": "NO_ACTIVE_TREATMENT",
+      "review_status": "APPROVED",
+      "scope": "DEVELOPMENT_12_CONTINUATION",
+      "seed_id": "SEED-DEV12-OBGYN01-PHYSIOLOGIC-DISCHARGE"
+    },
+    "RDY-PED-04|RDY-PED-04__adh|DIAGNOSTIC_ORDER|SINGLE_NEXT_ACTION": {
+      "anchor_id": "TNC-3526ef2779d479b2f1fa8580",
+      "candidate_id": "RDY-PED-04__adh",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "evidence_refs": [
+        "required_evidence_propositions:CCR2-DEV12-PED04-ADH"
+      ],
+      "opportunity_id": "RDY-PED-04",
+      "relation_id": "CCR2-DEV12-PED04-ADH",
+      "response_class": "DIAGNOSTIC_ORDER",
+      "review_status": "APPROVED",
+      "scope": "DEVELOPMENT_12_CONTINUATION",
+      "seed_id": "SEED-DEV12-PED04-ADH"
+    },
+    "RDY-PED-04|RDY-PED-04__hba1c_diagnostic_criteria|DIAGNOSTIC_ORDER|SINGLE_NEXT_ACTION": {
+      "anchor_id": "TNC-3e811c1c0c7eea561dbf86eb",
+      "candidate_id": "RDY-PED-04__hba1c_diagnostic_criteria",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "evidence_refs": [
+        "required_evidence_propositions:CCR2-DEV12-PED04-HBA1C"
+      ],
+      "opportunity_id": "RDY-PED-04",
+      "relation_id": "CCR2-DEV12-PED04-HBA1C",
+      "response_class": "DIAGNOSTIC_ORDER",
+      "review_status": "APPROVED",
+      "scope": "DEVELOPMENT_12_CONTINUATION",
+      "seed_id": "SEED-DEV12-PED04-HBA1C"
+    },
+    "RDY-PHELO-08|RDY-PHELO-08__bill_c14_maid|AUTONOMY|ETHICAL_ACTION": {
+      "anchor_id": "TNC-a6fe91d7fcec6142dbb5232b",
+      "candidate_id": "RDY-PHELO-08__bill_c14_maid",
+      "decision_granularity": "ETHICAL_ACTION",
+      "evidence_refs": [
+        "required_evidence_propositions:CCR2-DEV12-PHELO08-BILLC14-MAID"
+      ],
+      "opportunity_id": "RDY-PHELO-08",
+      "population_context_restriction": "NOT usable when the stem's proposed decision is itself a request for medical assistance in dying (MAID); safe only as a distractor for a generic/non-MAID capacity-assessment decision.",
+      "population_context_restriction_rule": {
+        "forbidden_if_context": {
+          "proposed_decision_is_maid_request": true
+        }
+      },
+      "relation_id": "CCR2-DEV12-PHELO08-BILLC14-MAID",
+      "response_class": "AUTONOMY",
+      "review_status": "APPROVED",
+      "scope": "DEVELOPMENT_12_CONTINUATION",
+      "seed_id": "SEED-DEV12-PHELO08-BILLC14-MAID"
+    },
+    "RDY-SURG-03|RDY-SURG-03__tte|STRUCTURAL|DIAGNOSTIC_TEST": {
+      "anchor_id": "TNC-a08342e8675a1c2ba929b631",
+      "candidate_id": "RDY-SURG-03__tte",
+      "decision_granularity": "DIAGNOSTIC_TEST",
+      "evidence_refs": [
+        "required_evidence_propositions:CCR2-DEV12-SURG03-TTE"
+      ],
+      "opportunity_id": "RDY-SURG-03",
+      "relation_id": "CCR2-DEV12-SURG03-TTE",
+      "response_class": "STRUCTURAL",
+      "review_status": "APPROVED",
+      "scope": "DEVELOPMENT_12_CONTINUATION",
+      "seed_id": "SEED-DEV12-SURG03-TTE"
+    }
+  },
+  "input_hashes": {
+    "development_12_ids_sha256": "a20732467b62428dd2388f9bb21820c8ee501e9b3457dbcb0a8d28f6931a6509",
+    "seed_pack_v2_content_sha256": "afdf226266fdd17da614e7d471c807e2beeac3b79327f56bab0a2d86a2a84c90"
+  },
+  "reuse_scope": "DEVELOPMENT_12_CONTINUATION",
+  "safety_checks": {
+    "exact_compatible_scope_allowed": true,
+    "no_implicit_latest_cache_lookup": true,
+    "population_mismatch_rejected_where_material": true,
+    "rejected_uncertain_second_key_relations_structurally_unavailable": true,
+    "scope_narrowing_preserved": true,
+    "wrong_granularity_rejected": true,
+    "wrong_learner_decision_rejected": true,
+    "wrong_response_class_rejected": true
+  },
+  "schema_version": "REUSABLE_CONTRAST_CACHE_V1",
+  "scope": "Phase 14-15: reusable cache built from development_12_seed_pack_v2.json's 5 APPROVED seeds only, via the production build_reusable_contrast_cache_v1 function (scripts/qbank/contrast_supply.py), covered by 10 focused TDD tests in tests/test_contrast_supply.py."
+}

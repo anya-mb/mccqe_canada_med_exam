@@ -1,0 +1,1429 @@
+{
+  "schema_version": "STEM_FEATURE_MAP_V1",
+  "scope": "FRESH36_QGEN_VALIDATION_BASELINE_MILESTONE_PHASE9",
+  "frozen_pilot_sha256": "14c8491f3fb66c7e78c0f78f4692debb558229c36296f12ff09e5c200daa27fe",
+  "frozen_pilot_n": 36,
+  "feature_anchor_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V4",
+  "feature_anchor_registry_hash": "2e58529f0b4b799a77891af246774c6a18235ca6c99a1b25a3d89f414a11410b",
+  "profile_snapshot_id": "QGEN_PROFILE_SNAPSHOT_V2",
+  "profile_content_sha256": "36a6405b6faa9f4434cc04d75bb70fdc277b5b02b8d5ab5584fa2d5b7313d4bf",
+  "independent_review_execution_id": "sonnet5-independent-review-2026-09-07-fresh36-feature-maps",
+  "independent_review_input_sha256": "4d2ccf03d444cad4d2ddea3c413398cb548330a2d90d080512a48852d577f439",
+  "role_vocabulary_note": "V4 uses SHARED_PRESENTATION_FEATURE as the canonical equivalent of this milestone's SHARED_PLAUSIBILITY_FEATURE token; both are recorded where used. No FEATURE_ROLE_SCHEMA_GAP was found: every role used already exists in V4 supported_roles or the milestone's suggested vocabulary.",
+  "feature_maps_attempted": 36,
+  "feature_maps_approved_outright": 26,
+  "feature_maps_revised_then_approved": 9,
+  "feature_maps_uncertain_then_approved": 1,
+  "feature_maps_unsafe": 0,
+  "feature_maps_with_zero_grounded_features": [
+    "LD-D12-02",
+    "LD-ONB2-PSY-AUD-INTERVIEW"
+  ],
+  "opportunities": [
+    {
+      "learner_decision_id": "LD-C35-01",
+      "allocation_address_id": "SU-C-35",
+      "discipline": "MED",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Recognise constrictive pericarditis as the explanation for otherwise unexplained right-heart-failure features in a patient with prior pericardial disease or injury.",
+      "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+      "decision_granularity": "DIAGNOSIS",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "evidence_claim_ids": [
+        "SRC-MED-028-REC-01",
+        "SRC-MED-028-EX-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-PERICARDIAL-HISTORY",
+          "state": "PRESENT",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "note": null
+        },
+        {
+          "feature_id": "SF-ONB2-RIGHT-HF",
+          "state": "PRESENT",
+          "clinical_role": "SHARED_PLAUSIBILITY_FEATURE",
+          "note": "V4 role token SHARED_PRESENTATION_FEATURE"
+        }
+      ],
+      "load_bearing_feature_count": 2,
+      "extension_requirements": [
+        {
+          "concept": "confirmatory echocardiographic/hemodynamic evidence of constrictive physiology",
+          "claim_id": "SRC-MED-028-REC-01",
+          "class": "NEW_FEATURE"
+        }
+      ],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "PERICARDIAL-HISTORY and RIGHT-HF are both directly entailed by REC-01, and the confirmatory-imaging gap is correctly flagged as an extension rather than silently dropped.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-D04-01",
+      "allocation_address_id": "SU-D-04",
+      "discipline": "MED",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Identify a superficial cystic lesion at a characteristic site as an epidermal cyst rather than a mobile subcutaneous lipoma or an acute inflammatory mass.",
+      "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+      "decision_granularity": "DIAGNOSIS",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "evidence_claim_ids": [
+        "SRC-MED-048-REC-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-CYST-SITE",
+          "state": "PRESENT",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "note": null
+        },
+        {
+          "feature_id": "SF-ONB2-SUPERFICIAL-CYST",
+          "state": "PRESENT",
+          "clinical_role": "KEY_DISCRIMINATOR",
+          "note": "distinguishes from mobile lipoma / acute inflammatory mass per the claim's own contrast"
+        }
+      ],
+      "load_bearing_feature_count": 2,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "REVISE",
+        "rationale": "The cited claim frames the whole decision as distinguishing this superficial lesion pattern from a mobile lipoma or acute inflammatory mass, but no feature captures that contrast (no ABSENT/EXCLUSIONARY feature for mobility or inflammatory signs) and SUPERFICIAL-CYST is only marked POSITIVE_SUPPORT rather than the actual discriminator.",
+        "revision_needed": "Either re-role SUPERFICIAL-CYST/CYST-SITE as the key discriminator against the named competitors, or add an exclusionary feature (e.g., non-mobile, non-inflamed) so the map actually performs the distinction the claim names.",
+        "final_status": "APPROVED_AFTER_REVISION"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-D05-01",
+      "allocation_address_id": "SU-D-05",
+      "discipline": "MED",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Recognise seborrheic keratosis among the common benign hyperkeratotic and fibrous skin growths.",
+      "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+      "decision_granularity": "DIAGNOSIS",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "evidence_claim_ids": [
+        "SRC-MED-045-REC-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-WAXY-GROWTH",
+          "state": "PRESENT",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "note": null
+        },
+        {
+          "feature_id": "SF-ONB2-CHANGING-LESION",
+          "state": "ABSENT",
+          "clinical_role": "EXCLUSIONARY_FEATURE",
+          "note": "typical/recognizable case is not rapidly changing"
+        }
+      ],
+      "load_bearing_feature_count": 2,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "WAXY-GROWTH is directly entailed; CHANGING-LESION ABSENT is a defensible reading of the claim's own contrast between the typical benign-recognition case and the atypical case addressed in the paired decision (LD-D05-02).",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-D05-02",
+      "allocation_address_id": "SU-D-05",
+      "discipline": "MED",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Decide the next action for a presumed benign keratosis that is changing rapidly or is diagnostically uncertain.",
+      "response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "evidence_claim_ids": [
+        "SRC-MED-045-REC-01",
+        "SRC-MED-045-EX-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-CHANGING-LESION",
+          "state": "PRESENT",
+          "clinical_role": "TIMING_FEATURE",
+          "note": null
+        },
+        {
+          "feature_id": "SF-ONB2-WAXY-GROWTH",
+          "state": "PRESENT",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "note": "background presumed-benign morphology"
+        }
+      ],
+      "load_bearing_feature_count": 2,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "Both features trace cleanly to REC-01/EX-01 and roles are sensible for the follow-on action decision.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-D07-01",
+      "allocation_address_id": "SU-D-07",
+      "discipline": "MED",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Distinguish an infantile haemangioma from a vascular malformation using the postnatal growth-then-involution course.",
+      "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+      "decision_granularity": "DIAGNOSIS",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "evidence_claim_ids": [
+        "SRC-MED-051-REC-01",
+        "SRC-MED-051-EX-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-INFANTILE-COURSE",
+          "state": "PRESENT",
+          "clinical_role": "TIMING_FEATURE",
+          "note": null
+        },
+        {
+          "feature_id": "SF-ONB2-ULCERATED-VASCULAR-LESION",
+          "state": "NOT_APPLICABLE",
+          "clinical_role": null,
+          "note": "belongs to LD-D07-02's referral scope, not this diagnostic-course decision"
+        }
+      ],
+      "load_bearing_feature_count": 1,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "INFANTILE-COURSE is entailed by REC-01 and the ulceration feature is appropriately scoped out (NOT_APPLICABLE) to the referral decision.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-D07-02",
+      "allocation_address_id": "SU-D-07",
+      "discipline": "MED",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Decide which infant with a haemangioma needs early specialist referral rather than observation.",
+      "response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "evidence_claim_ids": [
+        "SRC-MED-051-REC-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-INFANTILE-COURSE",
+          "state": "PRESENT",
+          "clinical_role": "TIMING_FEATURE",
+          "note": "background, diagnosis established"
+        },
+        {
+          "feature_id": "SF-ONB2-ULCERATED-VASCULAR-LESION",
+          "state": "PRESENT",
+          "clinical_role": "MANAGEMENT_ELIGIBILITY",
+          "note": "the referral trigger"
+        }
+      ],
+      "load_bearing_feature_count": 2,
+      "extension_requirements": [
+        {
+          "concept": "high-risk location, functional compromise, or large segmental facial involvement (alternative referral triggers)",
+          "claim_id": "SRC-MED-051-REC-01",
+          "class": "NEW_FEATURE"
+        }
+      ],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "Both features are entailed by the cited REC-01, and the alternative referral triggers (location, functional compromise, facial involvement) are correctly flagged as a missing extension rather than dropped.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-D08-01",
+      "allocation_address_id": "SU-D-08",
+      "discipline": "MED",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Decide the assessment a xanthelasma or xanthoma warrants as a cutaneous stigma of dyslipidaemia.",
+      "response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "evidence_claim_ids": [
+        "SRC-MED-049-REC-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-XANTHELASMA",
+          "state": "PRESENT",
+          "clinical_role": "MANAGEMENT_ELIGIBILITY",
+          "note": "triggers lipid-focused assessment"
+        }
+      ],
+      "load_bearing_feature_count": 1,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "XANTHELASMA PRESENT / MANAGEMENT_ELIGIBILITY is directly entailed by the single cited claim.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-D12-01",
+      "allocation_address_id": "SU-D-12",
+      "discipline": "MED",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Separate allergic from irritant contact dermatitis using the exposure history and the morphology.",
+      "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+      "decision_granularity": "DIAGNOSIS",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "evidence_claim_ids": [
+        "SRC-MED-033-REC-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-DELAYED-ALLERGEN",
+          "state": "PRESENT",
+          "clinical_role": "KEY_DISCRIMINATOR",
+          "note": null
+        },
+        {
+          "feature_id": "SF-ONB2-REPEATED-IRRITANT",
+          "state": "ABSENT",
+          "clinical_role": "KEY_DISCRIMINATOR",
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 2,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "DELAYED-ALLERGEN and REPEATED-IRRITANT map exactly onto the allergic-vs-irritant contrast stated in REC-01, with correct KEY_DISCRIMINATOR roles.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-D12-02",
+      "allocation_address_id": "SU-D-12",
+      "discipline": "MED",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Choose the investigation that confirms an allergic contact dermatitis.",
+      "response_class": "DIAGNOSTIC_ADVANCEMENT",
+      "decision_granularity": "DIAGNOSTIC_TEST",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "evidence_claim_ids": [
+        "SRC-MED-033-EX-01"
+      ],
+      "features": [],
+      "load_bearing_feature_count": 0,
+      "extension_requirements": [
+        {
+          "concept": "clinical suspicion of allergic (vs irritant) contact dermatitis is not entailed by this decision's own cited claim (EX-01 is patch-testing scope only); REC-01 grounds it but is not cited here",
+          "claim_id": "SRC-MED-033-EX-01",
+          "class": "EXISTING_FEATURE_NOT_BOUND_TO_UNIT"
+        }
+      ],
+      "independent_review": {
+        "original_verdict": "REVISE",
+        "rationale": "This item cites only EX-01 (which is solely about patch testing's diagnostic scope), but both DELAYED-ALLERGEN and REPEATED-IRRITANT states are not entailed by that claim's text -- they were imported from REC-01, which is not cited here.",
+        "revision_needed": "Add SRC-MED-033-REC-01 to this item's claims (or otherwise re-source), or remove/re-justify DELAYED-ALLERGEN and REPEATED-IRRITANT.",
+        "final_status": "APPROVED_AFTER_REVISION"
+      },
+      "map_status_note": "no feature is grounded within this decision's own citation scope after bounded revision",
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-D21-01",
+      "allocation_address_id": "SU-D-21",
+      "discipline": "MED",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Recognise acute generalized exanthematous pustulosis in a new pustular eruption that follows a medication exposure.",
+      "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+      "decision_granularity": "DIAGNOSIS",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "evidence_claim_ids": [
+        "SRC-MED-039-REC-01",
+        "SRC-MED-039-EX-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-DRUG-PUSTULES",
+          "state": "PRESENT",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 1,
+      "extension_requirements": [
+        {
+          "concept": "temporal medication-exposure interval as a discrete timing datum (currently bundled inside the finding feature)",
+          "claim_id": "SRC-MED-039-EX-01",
+          "class": "NORMALIZATION_MISS"
+        },
+        {
+          "concept": "alternative infectious or inflammatory diagnoses considered and excluded",
+          "claim_id": "SRC-MED-039-EX-01",
+          "class": "NEW_FEATURE"
+        }
+      ],
+      "independent_review": {
+        "original_verdict": "REVISE",
+        "rationale": "EX-01 names two materiality points -- temporal medication history and 'alternative infectious or inflammatory diagnoses' -- but only the timing concept was captured in proposed_extensions; the alternative-diagnosis-exclusion concept, equally central to the claim, was silently dropped.",
+        "revision_needed": "Add a proposed_extensions entry for the alternative infectious/inflammatory diagnosis exclusion named in SRC-MED-039-EX-01.",
+        "final_status": "APPROVED_AFTER_REVISION"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-D23-02",
+      "allocation_address_id": "SU-D-23",
+      "discipline": "MED",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Place a generalized bullous drug eruption in the severe cutaneous adverse-reaction differential rather than treating it as a benign fixed eruption.",
+      "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+      "decision_granularity": "DIAGNOSIS",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "evidence_claim_ids": [
+        "SRC-MED-041-REC-01",
+        "SRC-MED-041-EX-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-BULLOUS-DRUG",
+          "state": "PRESENT",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 1,
+      "extension_requirements": [
+        {
+          "concept": "mucosal involvement (material to the SJS/TEN distinction named in EX-01)",
+          "claim_id": "SRC-MED-041-EX-01",
+          "class": "NEW_FEATURE"
+        }
+      ],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "BULLOUS-DRUG is entailed by REC-01, and mucosal involvement (the SJS/TEN discriminator from EX-01) is correctly flagged as a missing extension.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-D24-01",
+      "allocation_address_id": "SU-D-24",
+      "discipline": "MED",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Recognise epidermolysis bullosa as the cause of trauma-induced blistering present from birth rather than an acquired blistering disorder.",
+      "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+      "decision_granularity": "DIAGNOSIS",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "evidence_claim_ids": [
+        "SRC-MED-042-REC-01",
+        "SRC-MED-042-EX-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-CONGENITAL-BLISTERING",
+          "state": "PRESENT",
+          "clinical_role": "TIMING_FEATURE",
+          "note": null
+        },
+        {
+          "feature_id": "SF-ONB2-SKIN-FRAGILITY",
+          "state": "PRESENT",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 2,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "CONGENITAL-BLISTERING and SKIN-FRAGILITY are both directly entailed by the cited claims.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-D26-01",
+      "allocation_address_id": "SU-D-26",
+      "discipline": "MED",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Recognise vitiligo among the causes of acquired depigmentation.",
+      "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+      "decision_granularity": "DIAGNOSIS",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "evidence_claim_ids": [
+        "SRC-MED-043-REC-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-WHITE-PATCHES",
+          "state": "PRESENT",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 1,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "WHITE-PATCHES PRESENT is directly entailed by the single cited claim for this recognition-only decision.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-D38-01",
+      "allocation_address_id": "SU-D-38",
+      "discipline": "MED",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Distinguish a scarring from a non-scarring pattern of hair loss on the distribution and the state of the follicular ostia.",
+      "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+      "decision_granularity": "DIAGNOSIS",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "evidence_claim_ids": [
+        "SRC-MED-050-REC-01",
+        "SRC-MED-050-EX-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-FOLLICLE-LOSS",
+          "state": "PRESENT",
+          "clinical_role": "KEY_DISCRIMINATOR",
+          "note": "scarring pattern"
+        },
+        {
+          "feature_id": "SF-ONB2-PATCHY-ALOPECIA",
+          "state": "ABSENT",
+          "clinical_role": "KEY_DISCRIMINATOR",
+          "note": "excludes the non-scarring alopecia-areata competitor"
+        }
+      ],
+      "load_bearing_feature_count": 2,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "FOLLICLE-LOSS and PATCHY-ALOPECIA are entailed by REC-01, and FOLLICLE-LOSS alone is sufficient (per the claim) to exclude both non-scarring competitors, so no hidden second correct answer.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-OB53-01",
+      "allocation_address_id": "SU-OB-53",
+      "discipline": "OBGYN",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Identify the source of a postpartum fever from the findings that localise it.",
+      "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+      "decision_granularity": "DIAGNOSIS",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "evidence_claim_ids": [
+        "SRC-OBGYN-071-REC-01",
+        "SRC-OBGYN-071-REC-02"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-POSTPARTUM-FEVER",
+          "state": "PRESENT",
+          "clinical_role": "SHARED_PLAUSIBILITY_FEATURE",
+          "note": null
+        },
+        {
+          "feature_id": "SF-ONB2-UTERINE-TENDERNESS",
+          "state": "PRESENT",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "note": "REC-02 groups uterine/lochia findings with endometritis OR urinary infection; not decisive alone"
+        },
+        {
+          "feature_id": "SF-ONB2-PAINFUL-RED-BREAST",
+          "state": "ABSENT",
+          "clinical_role": "EXCLUSIONARY_FEATURE",
+          "note": "excludes mastitis localization"
+        }
+      ],
+      "load_bearing_feature_count": 3,
+      "extension_requirements": [
+        {
+          "concept": "a finding that distinguishes endometritis specifically from urinary tract infection (e.g., dysuria, urinalysis)",
+          "claim_id": "SRC-OBGYN-071-REC-02",
+          "class": "NEW_FEATURE"
+        }
+      ],
+      "independent_review": {
+        "original_verdict": "UNCERTAIN",
+        "rationale": "REC-02 groups 'uterine/lochia findings' as suggestive of endometritis OR urinary infection collectively, without cleanly separating the two; marking UTERINE-TENDERNESS as a KEY_DISCRIMINATOR that 'localizes to endometritis' may overstate what the claim text actually supports, and no feature excludes UTI as an equally live alternative.",
+        "revision_needed": "Clarify whether uterine tenderness specifically (vs. lochia/discharge generally) is meant to separate endometritis from UTI, or add a feature addressing the UTI alternative so it isn't left as an unaddressed second correct answer.",
+        "final_status": "APPROVED_AFTER_REVISION"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-OB53-02",
+      "allocation_address_id": "SU-OB-53",
+      "discipline": "OBGYN",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Decide the initial action for a postpartum patient whose findings support endometritis.",
+      "response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "evidence_claim_ids": [
+        "SRC-OBGYN-071-REC-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-POSTPARTUM-FEVER",
+          "state": "PRESENT",
+          "clinical_role": "SHARED_PLAUSIBILITY_FEATURE",
+          "note": null
+        },
+        {
+          "feature_id": "SF-ONB2-UTERINE-TENDERNESS",
+          "state": "PRESENT",
+          "clinical_role": "MANAGEMENT_ELIGIBILITY",
+          "note": "findings support endometritis, triggering treatment"
+        }
+      ],
+      "load_bearing_feature_count": 2,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "REVISE",
+        "rationale": "This item cites only REC-01 (which never mentions breast findings), but PAINFUL-RED-BREAST (ABSENT) is grounded only in REC-02's mastitis differential, which is not cited here.",
+        "revision_needed": "Add SRC-OBGYN-071-REC-02 to this item's claims, or remove/re-source the PAINFUL-RED-BREAST feature.",
+        "final_status": "APPROVED_AFTER_REVISION"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-OB53-03",
+      "allocation_address_id": "SU-OB-53",
+      "discipline": "OBGYN",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Decide whether a fever arising several weeks after birth can be excluded as endometritis on timing alone.",
+      "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+      "decision_granularity": "DIAGNOSIS",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "evidence_claim_ids": [
+        "SRC-OBGYN-071-EX-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-POSTPARTUM-FEVER",
+          "state": "PRESENT",
+          "clinical_role": "SHARED_PLAUSIBILITY_FEATURE",
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 1,
+      "extension_requirements": [
+        {
+          "concept": "postpartum fever onset timing (late in the 6-week window), the decision's own discriminating datum",
+          "claim_id": "SRC-OBGYN-071-EX-01",
+          "class": "NEW_FEATURE"
+        }
+      ],
+      "independent_review": {
+        "original_verdict": "REVISE",
+        "rationale": "This item cites only EX-01, which addresses timing alone; UTERINE-TENDERNESS (PRESENT) is not mentioned or entailed by that claim's text.",
+        "revision_needed": "Cite SRC-OBGYN-071-REC-01 (or REC-02) to support UTERINE-TENDERNESS, or remove the feature from this item's map.",
+        "final_status": "APPROVED_AFTER_REVISION"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-ONB2-GY-EC",
+      "allocation_address_id": "SU-GY-10",
+      "discipline": "OBGYN",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Choose the most effective emergency contraception after unprotected intercourse when options are medically suitable and available.",
+      "response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "evidence_claim_ids": [
+        "SRC-OBGYN-081-REC-02"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-GY-EC",
+          "state": "PRESENT",
+          "clinical_role": "BACKGROUND_CONTEXT",
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 1,
+      "extension_requirements": [
+        {
+          "concept": "time elapsed since unprotected intercourse relative to the 72-hour/5-day thresholds",
+          "claim_id": "SRC-OBGYN-081-REC-02",
+          "class": "NEW_FEATURE"
+        }
+      ],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "The generic background feature is benign, and the time-elapsed-since-intercourse concept -- the actual discriminator among the EC options -- is correctly flagged as a missing extension.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-ONB2-GY-HYSTERECTOMY",
+      "allocation_address_id": "SU-GY-04",
+      "discipline": "OBGYN",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Identify the prerequisite counselling before offering hysterectomy for benign heavy menstrual bleeding.",
+      "response_class": "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+      "decision_granularity": "MANAGEMENT_STRATEGY",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "evidence_claim_ids": [
+        "SRC-OBGYN-078-REC-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-GY-HYSTERECTOMY",
+          "state": "PRESENT",
+          "clinical_role": "BACKGROUND_CONTEXT",
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 1,
+      "extension_requirements": [
+        {
+          "concept": "documented discussion of less invasive alternatives / patient goals and preferences (the decision's own correctness condition)",
+          "claim_id": "SRC-OBGYN-078-REC-01",
+          "class": "NEW_FEATURE"
+        }
+      ],
+      "independent_review": {
+        "original_verdict": "REVISE",
+        "rationale": "The decision statement itself is 'identify the prerequisite counselling,' and the cited claim's central content -- documented discussion of alternatives/failed treatments plus patient goals and preferences -- is not represented by any feature and was not flagged in proposed_extensions, unlike comparable items in this batch (e.g., LD-ONB2-GY-IMAGING).",
+        "revision_needed": "Add a proposed_extensions entry for the documented-discussion-of-alternatives/patient-goals concept from SRC-OBGYN-078-REC-01.",
+        "final_status": "APPROVED_AFTER_REVISION"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-ONB2-GY-IMAGING",
+      "allocation_address_id": "SU-GY-03",
+      "discipline": "OBGYN",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Choose first-line imaging when uterine structural pathology is suspected.",
+      "response_class": "DIAGNOSTIC_ADVANCEMENT",
+      "decision_granularity": "DIAGNOSTIC_TEST",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "evidence_claim_ids": [
+        "SRC-OBGYN-077-REC-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-GY-IMAGING",
+          "state": "PRESENT",
+          "clinical_role": "BACKGROUND_CONTEXT",
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 1,
+      "extension_requirements": [
+        {
+          "concept": "case complexity / surgical-planning need (the axis that reserves MRI over ultrasound)",
+          "claim_id": "SRC-OBGYN-077-REC-01",
+          "class": "AMBIGUOUS_FEATURE"
+        }
+      ],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "The complexity/surgical-planning axis that reserves MRI over ultrasound is correctly flagged as an ambiguous/missing feature rather than silently omitted.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-ONB2-PED-AOM-DX",
+      "allocation_address_id": "SU-P-099",
+      "discipline": "PED",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Diagnose AOM using acute symptoms and inflammatory otoscopy.",
+      "response_class": "LOCALIZED_INFLAMMATION",
+      "decision_granularity": "DIAGNOSIS",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "evidence_claim_ids": [
+        "CLM-ONB2-AOM-DX",
+        "CLM-ONB2-AOM-SIGNS"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-P099-ACUTE-OTALGIA",
+          "state": "PRESENT",
+          "clinical_role": "SHARED_PLAUSIBILITY_FEATURE",
+          "note": null
+        },
+        {
+          "feature_id": "SF-ONB2-P099-BULGING-TM",
+          "state": "PRESENT",
+          "clinical_role": "KEY_DISCRIMINATOR",
+          "note": "inflammatory sign distinguishing AOM from effusion alone"
+        },
+        {
+          "feature_id": "SF-ONB2-P099-REDUCED-TM-MOBILITY",
+          "state": "PRESENT",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "note": "supports effusion component; insufficient alone per claim"
+        }
+      ],
+      "load_bearing_feature_count": 3,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "ACUTE-OTALGIA, BULGING-TM, and REDUCED-TM-MOBILITY are all entailed by the two cited claims, with sensible KEY_DISCRIMINATOR/POSITIVE_SUPPORT roles matching the claims' own emphasis.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-ONB2-PED-AOM-OBSERVE",
+      "allocation_address_id": "SU-P-099",
+      "discipline": "PED",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Select observation with analgesia and reassessment for mild eligible AOM.",
+      "response_class": "OBSERVATION",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "evidence_claim_ids": [
+        "CLM-ONB2-AOM-OBSERVE"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-P099-ACUTE-OTALGIA",
+          "state": "PRESENT",
+          "clinical_role": "SHARED_PLAUSIBILITY_FEATURE",
+          "note": "background, diagnosis established"
+        }
+      ],
+      "load_bearing_feature_count": 1,
+      "extension_requirements": [
+        {
+          "concept": "AOM severity grade (mild vs moderate/severe: high fever, severe otalgia, or otorrhea)",
+          "claim_id": "CLM-ONB2-AOM-OBSERVE",
+          "class": "NEW_FEATURE"
+        }
+      ],
+      "independent_review": {
+        "original_verdict": "REVISE",
+        "rationale": "This item cites only CLM-ONB2-AOM-OBSERVE, which never mentions bulging TM or reduced pneumatic mobility; those two 'background' features are only entailed by CLM-ONB2-AOM-SIGNS, which is not cited here.",
+        "revision_needed": "Cite CLM-ONB2-AOM-SIGNS (or CLM-ONB2-AOM-DX) to ground BULGING-TM and REDUCED-TM-MOBILITY, or remove them from this item's map.",
+        "final_status": "APPROVED_AFTER_REVISION"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-ONB2-PH-WORK-HISTORY",
+      "allocation_address_id": "SU-PH-35",
+      "discipline": "PHELO",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Choose a focused work and exposure history when a work-related health problem is suspected.",
+      "response_class": "NEXT_ACTION_FOR_CURRENT_CARE",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "evidence_claim_ids": [
+        "SRC-PHELO-036-R1"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-PH-WORK-HISTORY",
+          "state": "PRESENT",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 1,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "Single feature directly entailed by the single cited claim.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-ONB2-PM-CONSENT",
+      "allocation_address_id": "SU-PM-06",
+      "discipline": "MED",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Determine whether an advance care plan substitutes for consent to a specific current treatment.",
+      "response_class": "TREATING_CLINICIAN_DUTY",
+      "decision_granularity": "LEGAL_DUTY",
+      "option_set_archetype": "LEGAL_ACTION_SET",
+      "evidence_claim_ids": [
+        "SRC-MED-439-REC-01",
+        "SRC-MED-439-EX-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-PM-CONSENT",
+          "state": "PRESENT",
+          "clinical_role": "BACKGROUND_CONTEXT",
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 1,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "Generic background feature is a reasonable, non-overclaiming representation of the cited claims.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-ONB2-PM-MAID-CONSENT",
+      "allocation_address_id": "SU-PM-10",
+      "discipline": "MED",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Determine whether a substitute decision-maker can request or consent to MAID for an incapable patient under the general Canadian framework.",
+      "response_class": "TREATING_CLINICIAN_DUTY",
+      "decision_granularity": "LEGAL_DUTY",
+      "option_set_archetype": "LEGAL_ACTION_SET",
+      "evidence_claim_ids": [
+        "SRC-MED-441-EX-03"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-PM-MAID-CONSENT",
+          "state": "PRESENT",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 1,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "Generic feature directly reflects the single cited claim about substitute decision-makers and MAID.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-ONB2-PSY-AUD-ABSTINENCE",
+      "allocation_address_id": "SU-PS-29",
+      "discipline": "PSY",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Select acamprosate for abstinence when ongoing prescribed opioids preclude naltrexone.",
+      "response_class": "PHARMACOLOGIC_ACTION",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "evidence_claim_ids": [
+        "CLM-ONB2-AUD-GOAL",
+        "CLM-ONB2-AUD-OPIOIDS"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-PS29-ABSTINENCE-GOAL",
+          "state": "PRESENT",
+          "clinical_role": "MANAGEMENT_ELIGIBILITY",
+          "note": null
+        },
+        {
+          "feature_id": "SF-ONB2-PS29-CURRENT-OPIOID",
+          "state": "PRESENT",
+          "clinical_role": "CONTRAINDICATION",
+          "note": "drives the choice away from naltrexone"
+        },
+        {
+          "feature_id": "SF-ONB2-PS29-REDUCTION-GOAL",
+          "state": "NOT_APPLICABLE",
+          "clinical_role": null,
+          "note": null
+        },
+        {
+          "feature_id": "SF-ONB2-PS29-PAST-WITHDRAWAL-SEIZURE",
+          "state": "UNKNOWN",
+          "clinical_role": null,
+          "note": "not addressed by the cited claims"
+        }
+      ],
+      "load_bearing_feature_count": 3,
+      "extension_requirements": [
+        {
+          "concept": "renal impairment severity (the acamprosate-specific contraindication named in the same claim)",
+          "claim_id": "CLM-ONB2-AUD-OPIOIDS",
+          "class": "NEW_FEATURE"
+        }
+      ],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "All PRESENT/ABSENT/NOT_APPLICABLE states trace to the two cited claims, PAST-WITHDRAWAL-SEIZURE is correctly left UNKNOWN rather than smuggled to ABSENT, and the renal-impairment contraindication gap is correctly flagged as an extension.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-ONB2-PSY-AUD-INTERVIEW",
+      "allocation_address_id": "SU-PS-29",
+      "discipline": "PSY",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Follow high-risk alcohol screening with a diagnostic interview.",
+      "response_class": "CLINICAL_OBSERVATION",
+      "decision_granularity": "DIAGNOSTIC_TEST",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "evidence_claim_ids": [
+        "CLM-ONB2-AUD-INTERVIEW"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-PS29-ABSTINENCE-GOAL",
+          "state": "NOT_APPLICABLE",
+          "clinical_role": null,
+          "note": "belongs to the medication-selection decisions, not this screening step"
+        },
+        {
+          "feature_id": "SF-ONB2-PS29-CURRENT-OPIOID",
+          "state": "NOT_APPLICABLE",
+          "clinical_role": null,
+          "note": null
+        },
+        {
+          "feature_id": "SF-ONB2-PS29-PAST-WITHDRAWAL-SEIZURE",
+          "state": "NOT_APPLICABLE",
+          "clinical_role": null,
+          "note": null
+        },
+        {
+          "feature_id": "SF-ONB2-PS29-REDUCTION-GOAL",
+          "state": "NOT_APPLICABLE",
+          "clinical_role": null,
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 0,
+      "extension_requirements": [
+        {
+          "concept": "high-risk positive alcohol screening result (e.g., AUDIT-C/AUDIT) -- the decision's own anchor, absent from V4",
+          "claim_id": "CLM-ONB2-AUD-INTERVIEW",
+          "class": "NEW_FEATURE"
+        }
+      ],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "All features are correctly marked NOT_APPLICABLE (scoped to other decisions), and the screening-result anchor missing from the vocabulary is correctly flagged as an extension.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": "no existing V4 feature is load-bearing for this exact decision; the map has no positive anchor without the extension",
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-ONB2-PSY-AUD-REDUCTION",
+      "allocation_address_id": "SU-PS-29",
+      "discipline": "PSY",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Select naltrexone for an eligible adult seeking reduced drinking.",
+      "response_class": "PHARMACOLOGIC_ACTION",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "evidence_claim_ids": [
+        "CLM-ONB2-AUD-GOAL",
+        "CLM-ONB2-AUD-OPIOIDS"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-PS29-REDUCTION-GOAL",
+          "state": "PRESENT",
+          "clinical_role": "MANAGEMENT_ELIGIBILITY",
+          "note": null
+        },
+        {
+          "feature_id": "SF-ONB2-PS29-CURRENT-OPIOID",
+          "state": "ABSENT",
+          "clinical_role": "CONTRAINDICATION",
+          "note": null
+        },
+        {
+          "feature_id": "SF-ONB2-PS29-ABSTINENCE-GOAL",
+          "state": "NOT_APPLICABLE",
+          "clinical_role": null,
+          "note": "mutually exclusive goal, not this patient's"
+        },
+        {
+          "feature_id": "SF-ONB2-PS29-PAST-WITHDRAWAL-SEIZURE",
+          "state": "UNKNOWN",
+          "clinical_role": null,
+          "note": "not addressed by the cited claims; silence is not absence"
+        }
+      ],
+      "load_bearing_feature_count": 3,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "REDUCTION-GOAL and CURRENT-OPIOID states are both entailed by the two cited claims, and PAST-WITHDRAWAL-SEIZURE is correctly left UNKNOWN.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-ONB2-SURG-CROUP-DISCHARGE",
+      "allocation_address_id": "SU-OT-52",
+      "discipline": "SURG",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Determine discharge readiness after sustained post-treatment observation.",
+      "response_class": "NONE",
+      "decision_granularity": "DISPOSITION",
+      "option_set_archetype": "DISPOSITION_SET",
+      "evidence_claim_ids": [
+        "CLM-ONB2-CROUP-DISCHARGE",
+        "CLM-ONB2-CROUP-EPINEPHRINE"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-OT52-REST-INDRAWING",
+          "state": "ABSENT",
+          "clinical_role": "SEVERITY_FEATURE",
+          "note": "post-treatment, symptoms have not recurred"
+        },
+        {
+          "feature_id": "SF-ONB2-OT52-REST-STRIDOR",
+          "state": "ABSENT",
+          "clinical_role": "SEVERITY_FEATURE",
+          "note": "post-treatment, symptoms have not recurred"
+        }
+      ],
+      "load_bearing_feature_count": 2,
+      "extension_requirements": [
+        {
+          "concept": "duration of post-treatment observation relative to the 2-hour nebulized-epinephrine rebound window",
+          "claim_id": "CLM-ONB2-CROUP-EPINEPHRINE",
+          "class": "NEW_FEATURE"
+        }
+      ],
+      "independent_review": {
+        "original_verdict": "REVISE",
+        "rationale": "This item cites CLM-ONB2-CROUP-DISCHARGE and CLM-ONB2-CROUP-EPINEPHRINE, neither of which mentions barking cough or hoarseness; those background features are only entailed by CLM-ONB2-CROUP-DX, which is not cited here.",
+        "revision_needed": "Cite CLM-ONB2-CROUP-DX to ground BARKING-COUGH and HOARSENESS, or remove them from this item's map.",
+        "final_status": "APPROVED_AFTER_REVISION"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-ONB2-SURG-CROUP-DX",
+      "allocation_address_id": "SU-OT-52",
+      "discipline": "SURG",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Recognize croup from its upper-airway presentation.",
+      "response_class": "ACUTE_RESPIRATORY_DISTRESS",
+      "decision_granularity": "DIAGNOSIS",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "evidence_claim_ids": [
+        "CLM-ONB2-CROUP-DX",
+        "CLM-ONB2-CROUP-RED-FLAGS"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-OT52-BARKING-COUGH",
+          "state": "PRESENT",
+          "clinical_role": "SHARED_PLAUSIBILITY_FEATURE",
+          "note": null
+        },
+        {
+          "feature_id": "SF-ONB2-OT52-HOARSENESS",
+          "state": "PRESENT",
+          "clinical_role": "SHARED_PLAUSIBILITY_FEATURE",
+          "note": null
+        },
+        {
+          "feature_id": "SF-ONB2-OT52-REST-STRIDOR",
+          "state": "NOT_APPLICABLE",
+          "clinical_role": null,
+          "note": "at-rest severity grading belongs to the two management decisions, not basic recognition"
+        },
+        {
+          "feature_id": "SF-ONB2-OT52-REST-INDRAWING",
+          "state": "NOT_APPLICABLE",
+          "clinical_role": null,
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 2,
+      "extension_requirements": [
+        {
+          "concept": "plain inspiratory stridor (any severity), distinct from the vocabulary's severity-graded at-rest stridor",
+          "claim_id": "CLM-ONB2-CROUP-DX",
+          "class": "NORMALIZATION_MISS"
+        },
+        {
+          "concept": "toxic appearance / drooling / dysphagia (red flags for an alternative airway diagnosis, e.g. epiglottitis)",
+          "claim_id": "CLM-ONB2-CROUP-RED-FLAGS",
+          "class": "NEW_FEATURE"
+        }
+      ],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "BARKING-COUGH and HOARSENESS are entailed by CLM-ONB2-CROUP-DX; the plain-stridor vocabulary gap and the red-flag findings are both correctly flagged as extensions rather than silently dropped or misassigned to the severity-graded stridor feature.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-ONB2-SURG-CROUP-STEROID",
+      "allocation_address_id": "SU-OT-52",
+      "discipline": "SURG",
+      "decision_domain": "PATIENT_CLINICAL",
+      "statement": "Select oral dexamethasone even for mild croup.",
+      "response_class": "PHARMACOLOGIC_ACTION",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "evidence_claim_ids": [
+        "CLM-ONB2-CROUP-STEROID"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-OT52-REST-INDRAWING",
+          "state": "ABSENT",
+          "clinical_role": "SEVERITY_FEATURE",
+          "note": "defines mild croup"
+        },
+        {
+          "feature_id": "SF-ONB2-OT52-REST-STRIDOR",
+          "state": "ABSENT",
+          "clinical_role": "SEVERITY_FEATURE",
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 2,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "REVISE",
+        "rationale": "This item cites only CLM-ONB2-CROUP-STEROID, which says nothing about barking cough or hoarseness; those background features are only entailed by the uncited CLM-ONB2-CROUP-DX.",
+        "revision_needed": "Cite CLM-ONB2-CROUP-DX to ground BARKING-COUGH and HOARSENESS, or remove them from this item's map.",
+        "final_status": "APPROVED_AFTER_REVISION"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-PH11-01",
+      "allocation_address_id": "SU-PH-11",
+      "discipline": "PHELO",
+      "decision_domain": "EVIDENCE_INTERPRETATION",
+      "statement": "Judge whether a study's sample supports generalisation to the target population the question asks about.",
+      "response_class": "EXPLANATION_OF_OBSERVED_PHENOMENON",
+      "decision_granularity": "EPIDEMIOLOGIC_EXPLANATION",
+      "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+      "evidence_claim_ids": [
+        "REC-SRC-PHELO-014-01"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-SAMPLING-FRAME",
+          "state": "PRESENT",
+          "clinical_role": "INVESTIGATION_FINDING",
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 1,
+      "extension_requirements": [
+        {
+          "concept": "sample representativeness of the defined frame (the actual judged variable, distinct from frame definition alone)",
+          "claim_id": "REC-SRC-PHELO-014-01",
+          "class": "NORMALIZATION_MISS"
+        }
+      ],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "SAMPLING-FRAME is entailed by the cited claim, and sample representativeness (the actual judged variable) is correctly flagged as a missing/normalization extension rather than conflated with frame definition.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-PH12-01",
+      "allocation_address_id": "SU-PH-12",
+      "discipline": "PHELO",
+      "decision_domain": "EVIDENCE_INTERPRETATION",
+      "statement": "Identify confounding as the explanation for an observed exposure-outcome association.",
+      "response_class": "EXPLANATION_OF_OBSERVED_PHENOMENON",
+      "decision_granularity": "EPIDEMIOLOGIC_EXPLANATION",
+      "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+      "evidence_claim_ids": [
+        "SRC-PHELO-043-R1"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-THIRD-VARIABLE",
+          "state": "PRESENT",
+          "clinical_role": "INVESTIGATION_FINDING",
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 1,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "THIRD-VARIABLE is directly entailed by the single cited claim's definition of confounding.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-PH34-01",
+      "allocation_address_id": "SU-PH-34",
+      "discipline": "PHELO",
+      "decision_domain": "POPULATION_PROGRAMME",
+      "statement": "Decide which response structure a physician works within once a health emergency is identified.",
+      "response_class": "PROGRAMME_ACTION",
+      "decision_granularity": "PROGRAMME_ACTION",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "evidence_claim_ids": [
+        "SRC-PHELO-035-R1"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-JURISDICTIONAL-PLAN",
+          "state": "PRESENT",
+          "clinical_role": "INVESTIGATION_FINDING",
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 1,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "JURISDICTIONAL-PLAN is a reasonable, non-overclaiming reflection of the cited claim.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-PH34-02",
+      "allocation_address_id": "SU-PH-34",
+      "discipline": "PHELO",
+      "decision_domain": "POPULATION_PROGRAMME",
+      "statement": "Decide whether a national pandemic plan can be applied as the local operational procedure.",
+      "response_class": "PROGRAMME_ACTION",
+      "decision_granularity": "PROGRAMME_ACTION",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "evidence_claim_ids": [
+        "SRC-PHELO-035-R1",
+        "SRC-PHELO-035-E1"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-JURISDICTIONAL-PLAN",
+          "state": "PRESENT",
+          "clinical_role": "INVESTIGATION_FINDING",
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 1,
+      "extension_requirements": [],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "Feature is directly entailed by the cited claims and the decision (national plan cannot substitute for local procedure) is consistent with EX-01's verification requirement.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    },
+    {
+      "learner_decision_id": "LD-PH36-01",
+      "allocation_address_id": "SU-PH-36",
+      "discipline": "PHELO",
+      "decision_domain": "EVIDENCE_INTERPRETATION",
+      "statement": "Classify the workplace hazard category that explains a worker's presentation before assessing the exposure-health relationship.",
+      "response_class": "EXPLANATION_OF_OBSERVED_PHENOMENON",
+      "decision_granularity": "EPIDEMIOLOGIC_EXPLANATION",
+      "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+      "evidence_claim_ids": [
+        "SRC-PHELO-037-R1"
+      ],
+      "features": [
+        {
+          "feature_id": "SF-ONB2-WORKPLACE-HAZARD",
+          "state": "PRESENT",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "note": null
+        }
+      ],
+      "load_bearing_feature_count": 1,
+      "extension_requirements": [
+        {
+          "concept": "the specific hazard sub-category (biological/chemical/physical/ergonomic/psychosocial/safety) distinguishing the six-way classification",
+          "claim_id": "SRC-PHELO-037-R1",
+          "class": "AMBIGUOUS_FEATURE"
+        }
+      ],
+      "independent_review": {
+        "original_verdict": "APPROVED",
+        "rationale": "WORKPLACE-HAZARD is entailed by the cited claim, and the specific hazard sub-category is correctly flagged as an ambiguous/missing extension.",
+        "revision_needed": null,
+        "final_status": "APPROVED"
+      },
+      "map_status_note": null,
+      "authored_before_retrieval": true
+    }
+  ],
+  "frozen": true
+}

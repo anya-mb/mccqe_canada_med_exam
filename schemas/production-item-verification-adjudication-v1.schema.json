@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Production Item Verification Adjudication V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "item_id", "author_session_id", "verifier_session_id", "adjudicator_session_id", "outcome", "source_evidence_hashes", "content_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.0"}, "item_id": {"type": "string"}, "author_session_id": {"type": "string"},
+    "verifier_session_id": {"type": "string"}, "adjudicator_session_id": {"type": "string"},
+    "outcome": {"enum": ["AUTHOR_CORRECT", "VERIFIER_CORRECT", "BOTH_INCOMPLETE", "ITEM_AMBIGUOUS", "SOURCE_CONFLICT", "REJECT"]},
+    "source_evidence_hashes": {"type": "array", "items": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

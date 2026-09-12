@@ -1,0 +1,839 @@
+{
+  "schema_version": "BUILD_12_DISCOVERY_V4_WAVE_V1",
+  "scope": "BUILD_12",
+  "discovery_v4_version": "GLOBAL_DECISION_COMPATIBLE_DISCOVERY_V4_1",
+  "discovery_v4_implementation_file_sha256": "00d79f38f8de5efd22416cbb3057a8cd1f76835415be48d3e31347b2b1394ca4",
+  "catalogue_v2_content_sha256": "ab2ff3ab8a9732f3b11edaaba5adbff00f0258902539a066bc36cd74d4b35ea2",
+  "decision_signature_content_sha256": "9264ec971023ff79b33140e8d550cb71e9ede6860a2ca7a0ff82368d8cd3354a",
+  "candidate_budget_per_opportunity": 10,
+  "waves_per_opportunity": 1,
+  "frozen_before_semantic_review": true,
+  "opportunities": [
+    {
+      "development_id": "RDY-MED-01",
+      "discipline": "MED",
+      "study_unit_id": "SU-R-09",
+      "learner_decision_id": "LD-RDY-MED-01",
+      "learner_decision": "Recognize a severe COPD exacerbation with acute respiratory failure and urgently escalate care.",
+      "demanded_response_class": "ESCALATION_TO_CRITICAL_CARE",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "decision_signature": {
+        "decision_intent": "SELECT_ESCALATION_OR_DISPOSITION",
+        "target_domain": "CARDIOPULMONARY",
+        "clinical_stage": "ESCALATION_OR_DISPOSITION"
+      },
+      "candidate_count": 0,
+      "discovery_v4_version": "GLOBAL_DECISION_COMPATIBLE_DISCOVERY_V4_1",
+      "candidate_budget": 10,
+      "catalogue_rows_scanned": 1834,
+      "cheap_rejection_counts": {
+        "WRONG_RESPONSE_CLASS": 1834
+      },
+      "signature_rejection_counts": {},
+      "signature_rejections": [],
+      "compatible_before_budget_count": 0,
+      "candidates": []
+    },
+    {
+      "development_id": "RDY-PED-04",
+      "discipline": "PED",
+      "study_unit_id": "SU-P-050",
+      "learner_decision_id": "LD-RDY-PED-04",
+      "learner_decision": "In a child with polyuria, polydipsia, and weight loss, immediately check glucose and ketones and urgently assess for diabetic ketoacidosis.",
+      "demanded_response_class": "DIAGNOSTIC_ORDER",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "decision_signature": {
+        "decision_intent": "SELECT_DIAGNOSTIC_ACTION",
+        "target_domain": "ENDOCRINE_METABOLIC",
+        "clinical_stage": "DIAGNOSTIC_WORKUP"
+      },
+      "candidate_count": 2,
+      "discovery_v4_version": "GLOBAL_DECISION_COMPATIBLE_DISCOVERY_V4_1",
+      "candidate_budget": 10,
+      "catalogue_rows_scanned": 1834,
+      "cheap_rejection_counts": {
+        "WRONG_RESPONSE_CLASS": 1832
+      },
+      "signature_rejection_counts": {},
+      "signature_rejections": [],
+      "compatible_before_budget_count": 2,
+      "candidates": [
+        {
+          "canonical_candidate_id": "RDY-PED-04__adh",
+          "normalized_label": "Check serum ADH / evaluate for central diabetes insipidus",
+          "aliases": [],
+          "source_ids": [
+            "TNC-3526ef2779d479b2f1fa8580"
+          ],
+          "chapters": [],
+          "study_unit_ids": [
+            "SU-P-050"
+          ],
+          "section_paths": [],
+          "graph_identity": null,
+          "semantic_families": [
+            "DIAGNOSTIC_ORDER"
+          ],
+          "response_classes": [
+            "DIAGNOSTIC_ORDER"
+          ],
+          "decision_granularities": [
+            "SINGLE_NEXT_ACTION"
+          ],
+          "provenance": [
+            {
+              "source": "REUSABLE_CONTRAST_CACHE_V1",
+              "seed_id": "SEED-DEV12-PED04-ADH",
+              "relation_id": "CCR2-DEV12-PED04-ADH"
+            }
+          ],
+          "cross_study_unit": false,
+          "cross_chapter": true,
+          "decision_signature": {
+            "decision_intent": "SELECT_DIAGNOSTIC_ACTION",
+            "target_domain": "ENDOCRINE_METABOLIC",
+            "clinical_stage": "DIAGNOSTIC_WORKUP"
+          },
+          "ranking_signals": {
+            "response_class_match": true,
+            "granularity_match": true,
+            "decision_signature_match": true,
+            "semantic_family_match": false,
+            "same_study_unit": true,
+            "same_chapter": false
+          }
+        },
+        {
+          "canonical_candidate_id": "RDY-PED-04__hba1c_diagnostic_criteria",
+          "normalized_label": "Confirm diagnosis via formal HbA1c / standard DM diagnostic criteria",
+          "aliases": [],
+          "source_ids": [
+            "TNC-3e811c1c0c7eea561dbf86eb"
+          ],
+          "chapters": [],
+          "study_unit_ids": [
+            "SU-P-050"
+          ],
+          "section_paths": [],
+          "graph_identity": null,
+          "semantic_families": [
+            "DIAGNOSTIC_ORDER"
+          ],
+          "response_classes": [
+            "DIAGNOSTIC_ORDER"
+          ],
+          "decision_granularities": [
+            "SINGLE_NEXT_ACTION"
+          ],
+          "provenance": [
+            {
+              "source": "REUSABLE_CONTRAST_CACHE_V1",
+              "seed_id": "SEED-DEV12-PED04-HBA1C",
+              "relation_id": "CCR2-DEV12-PED04-HBA1C"
+            }
+          ],
+          "cross_study_unit": false,
+          "cross_chapter": true,
+          "decision_signature": {
+            "decision_intent": "SELECT_DIAGNOSTIC_ACTION",
+            "target_domain": "ENDOCRINE_METABOLIC",
+            "clinical_stage": "DIAGNOSTIC_WORKUP"
+          },
+          "ranking_signals": {
+            "response_class_match": true,
+            "granularity_match": true,
+            "decision_signature_match": true,
+            "semantic_family_match": false,
+            "same_study_unit": true,
+            "same_chapter": false
+          }
+        }
+      ]
+    },
+    {
+      "development_id": "RDY-OBGYN-01",
+      "discipline": "OBGYN",
+      "study_unit_id": "SU-GY-19",
+      "learner_decision_id": "LD-RDY-OBGYN-01",
+      "learner_decision": "When pelvic inflammatory disease is clinically suspected, test for pregnancy and relevant infections and begin empiric broad-spectrum treatment without waiting for perfect diagnostic certainty.",
+      "demanded_response_class": "PHARMACOLOGIC_TREATMENT",
+      "decision_granularity": "TREATMENT_BUNDLE",
+      "decision_signature": {
+        "decision_intent": "SELECT_TREATMENT",
+        "target_domain": "REPRODUCTIVE_AND_BREAST",
+        "clinical_stage": "ACUTE_MANAGEMENT"
+      },
+      "candidate_count": 0,
+      "discovery_v4_version": "GLOBAL_DECISION_COMPATIBLE_DISCOVERY_V4_1",
+      "candidate_budget": 10,
+      "catalogue_rows_scanned": 1834,
+      "cheap_rejection_counts": {
+        "WRONG_GRANULARITY": 2,
+        "WRONG_RESPONSE_CLASS": 1832
+      },
+      "signature_rejection_counts": {},
+      "signature_rejections": [],
+      "compatible_before_budget_count": 0,
+      "candidates": []
+    },
+    {
+      "development_id": "RDY-SURG-03",
+      "discipline": "SURG",
+      "study_unit_id": "SU-GS-19",
+      "learner_decision_id": "LD-RDY-SURG-03",
+      "learner_decision": "Use thoracic point-of-care ultrasound, integrated with the clinical assessment, to evaluate suspected pneumothorax in an emergency presentation.",
+      "demanded_response_class": "STRUCTURAL",
+      "decision_granularity": "DIAGNOSTIC_TEST",
+      "decision_signature": {
+        "decision_intent": "SELECT_DIAGNOSTIC_ACTION",
+        "target_domain": "CARDIOPULMONARY",
+        "clinical_stage": "DIAGNOSTIC_WORKUP"
+      },
+      "candidate_count": 2,
+      "discovery_v4_version": "GLOBAL_DECISION_COMPATIBLE_DISCOVERY_V4_1",
+      "candidate_budget": 10,
+      "catalogue_rows_scanned": 1834,
+      "cheap_rejection_counts": {
+        "WRONG_RESPONSE_CLASS": 1826
+      },
+      "signature_rejection_counts": {
+        "WRONG_TARGET_DOMAIN": 6
+      },
+      "signature_rejections": [
+        {
+          "candidate_id": "CONCEPT-R4-SU-GS-76-LAPAROSCOPY",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-R4-SU-MI-13-MRI",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-R4-SU-MI-13-US",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-R4-SU-MI-15-KUB",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-R4-SU-MI-31-MAMMOGRAPHY",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-R4-SU-MI-32-ASPIRATION",
+          "reason": "WRONG_TARGET_DOMAIN"
+        }
+      ],
+      "compatible_before_budget_count": 2,
+      "candidates": [
+        {
+          "canonical_candidate_id": "RDY-SURG-03__tte",
+          "normalized_label": "Obtain transthoracic echocardiography (TTE)",
+          "aliases": [],
+          "source_ids": [
+            "TNC-a08342e8675a1c2ba929b631"
+          ],
+          "chapters": [],
+          "study_unit_ids": [
+            "SU-GS-19"
+          ],
+          "section_paths": [],
+          "graph_identity": null,
+          "semantic_families": [
+            "STRUCTURAL"
+          ],
+          "response_classes": [
+            "STRUCTURAL"
+          ],
+          "decision_granularities": [
+            "DIAGNOSTIC_TEST"
+          ],
+          "provenance": [
+            {
+              "source": "REUSABLE_CONTRAST_CACHE_V1",
+              "seed_id": "SEED-DEV12-SURG03-TTE",
+              "relation_id": "CCR2-DEV12-SURG03-TTE"
+            }
+          ],
+          "cross_study_unit": false,
+          "cross_chapter": true,
+          "decision_signature": {
+            "decision_intent": "SELECT_DIAGNOSTIC_ACTION",
+            "target_domain": "CARDIOPULMONARY",
+            "clinical_stage": "DIAGNOSTIC_WORKUP"
+          },
+          "ranking_signals": {
+            "response_class_match": true,
+            "granularity_match": true,
+            "decision_signature_match": true,
+            "semantic_family_match": false,
+            "same_study_unit": true,
+            "same_chapter": false
+          }
+        },
+        {
+          "canonical_candidate_id": "CONCEPT-R4-SU-R-05-CXR",
+          "normalized_label": "Chest radiograph",
+          "aliases": [],
+          "source_ids": [],
+          "chapters": [],
+          "study_unit_ids": [
+            "SU-R-05"
+          ],
+          "section_paths": [],
+          "graph_identity": {
+            "concept_type": "ACTION",
+            "vocabulary_source": "CURATED_CONTRAST_SEED"
+          },
+          "semantic_families": [
+            "action",
+            "ASSESSMENT_OR_TESTING_ACTION_ORDERED_FOR_THIS_INFANT"
+          ],
+          "response_classes": [
+            "STRUCTURAL"
+          ],
+          "decision_granularities": [
+            "DIAGNOSTIC_TEST"
+          ],
+          "provenance": [
+            {
+              "source": "INDEPENDENTLY_APPROVED_SEED",
+              "pack_id": "competitive_contrast_seed_pack_r4",
+              "seed_id": "SEED-PED-T02-CXR"
+            }
+          ],
+          "cross_study_unit": true,
+          "cross_chapter": true,
+          "decision_signature": {
+            "decision_intent": "SELECT_DIAGNOSTIC_ACTION",
+            "target_domain": "CARDIOPULMONARY",
+            "clinical_stage": "DIAGNOSTIC_WORKUP"
+          },
+          "ranking_signals": {
+            "response_class_match": true,
+            "granularity_match": true,
+            "decision_signature_match": true,
+            "semantic_family_match": false,
+            "same_study_unit": false,
+            "same_chapter": false
+          }
+        }
+      ]
+    },
+    {
+      "development_id": "RDY-SURG-05",
+      "discipline": "SURG",
+      "study_unit_id": "SU-GS-58",
+      "learner_decision_id": "LD-RDY-SURG-05",
+      "learner_decision": "Recognize resolved episodic biliary pain as biliary colic and refer appropriate symptomatic patients for elective laparoscopic cholecystectomy.",
+      "demanded_response_class": "DISPOSITION_ACTION",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "decision_signature": {
+        "decision_intent": "SELECT_ESCALATION_OR_DISPOSITION",
+        "target_domain": "ABDOMINAL_SURGICAL",
+        "clinical_stage": "LONGITUDINAL_MANAGEMENT"
+      },
+      "candidate_count": 0,
+      "discovery_v4_version": "GLOBAL_DECISION_COMPATIBLE_DISCOVERY_V4_1",
+      "candidate_budget": 10,
+      "catalogue_rows_scanned": 1834,
+      "cheap_rejection_counts": {
+        "WRONG_RESPONSE_CLASS": 1831
+      },
+      "signature_rejection_counts": {
+        "WRONG_TARGET_DOMAIN": 3
+      },
+      "signature_rejections": [
+        {
+          "candidate_id": "CONCEPT-G2-ADMIT-STRESS-FIRST",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-G2-OUTPATIENT-STRESS",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-G2-RAPID-CLINIC",
+          "reason": "WRONG_TARGET_DOMAIN"
+        }
+      ],
+      "compatible_before_budget_count": 0,
+      "candidates": []
+    },
+    {
+      "development_id": "RDY-PSY-03",
+      "discipline": "PSY",
+      "study_unit_id": "SU-PS-06",
+      "learner_decision_id": "LD-RDY-PSY-03",
+      "learner_decision": "Recognize schizophrenia from persistent psychotic symptoms with functional decline and distinguish shorter psychotic disorders by course.",
+      "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+      "decision_granularity": "DIAGNOSIS",
+      "decision_signature": {
+        "decision_intent": "IDENTIFY_DIAGNOSIS",
+        "target_domain": "MENTAL_HEALTH",
+        "clinical_stage": "INITIAL_RECOGNITION"
+      },
+      "candidate_count": 4,
+      "discovery_v4_version": "GLOBAL_DECISION_COMPATIBLE_DISCOVERY_V4_1",
+      "candidate_budget": 10,
+      "catalogue_rows_scanned": 1834,
+      "cheap_rejection_counts": {
+        "KEY_ALIAS": 1,
+        "WRONG_RESPONSE_CLASS": 1809
+      },
+      "signature_rejection_counts": {
+        "WRONG_TARGET_DOMAIN": 20
+      },
+      "signature_rejections": [
+        {
+          "candidate_id": "CONCEPT-G2-AORTIC-DISSECTION",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-G2-PE",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-G2-PERICARDITIS",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-R4-SU-ER-09-TORSION",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-R4-SU-GY-19-PID",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-R4-SU-GY-19-TOA",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-R4-SU-MI-31-IBC",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-R4-SU-OB-54-ABSCESS",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-R4-SU-OB-54-DUCTAL",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-R4-SU-OB-54-ENGORGEMENT",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-R4-SU-OB-54-GALACTOCELE",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-R4-SU-OB-54-PHLEGMON",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-R4-SU-OB-54-SUBACUTE",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-R4-SU-OT-56-FOREIGN-BODY",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-R4-SU-P-146-ASTHMA",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-R4-SU-P-149-PNEUMONIA",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-V6-AOM-ETD",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-V6-AOM-MYRINGITIS",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-V6-AOM-OME",
+          "reason": "WRONG_TARGET_DOMAIN"
+        },
+        {
+          "candidate_id": "CONCEPT-V6-AOM-OTITIS-EXTERNA",
+          "reason": "WRONG_TARGET_DOMAIN"
+        }
+      ],
+      "compatible_before_budget_count": 4,
+      "candidates": [
+        {
+          "canonical_candidate_id": "CONCEPT-R4-SU-E-30-HYPOTHYROID",
+          "normalized_label": "Depressive syndrome due to hypothyroidism",
+          "aliases": [],
+          "source_ids": [],
+          "chapters": [],
+          "study_unit_ids": [
+            "SU-E-30"
+          ],
+          "section_paths": [],
+          "graph_identity": {
+            "concept_type": "CONDITION",
+            "vocabulary_source": "CURATED_CONTRAST_SEED"
+          },
+          "semantic_families": [
+            "condition",
+            "NAMED_PSYCHIATRIC_OR_MEDICAL_DIAGNOSIS_ACCOUNTING_FOR_A_DEPRESSIVE_SYNDROME"
+          ],
+          "response_classes": [
+            "ACUTE_METABOLIC_DERANGEMENT",
+            "PERSISTENT_MOOD_DISTURBANCE"
+          ],
+          "decision_granularities": [
+            "DIAGNOSIS"
+          ],
+          "provenance": [
+            {
+              "source": "INDEPENDENTLY_APPROVED_SEED",
+              "pack_id": "competitive_contrast_seed_pack_r4",
+              "seed_id": "SEED-PSY-T01-MEDICAL"
+            }
+          ],
+          "cross_study_unit": true,
+          "cross_chapter": true,
+          "decision_signature": {
+            "decision_intent": "IDENTIFY_DIAGNOSIS",
+            "target_domain": "MENTAL_HEALTH",
+            "clinical_stage": "INITIAL_RECOGNITION"
+          },
+          "ranking_signals": {
+            "response_class_match": true,
+            "granularity_match": true,
+            "decision_signature_match": true,
+            "semantic_family_match": false,
+            "same_study_unit": false,
+            "same_chapter": false
+          }
+        },
+        {
+          "canonical_candidate_id": "CONCEPT-R4-SU-H-02-ANEMIA",
+          "normalized_label": "Depressive syndrome due to anaemia",
+          "aliases": [],
+          "source_ids": [],
+          "chapters": [],
+          "study_unit_ids": [
+            "SU-H-02"
+          ],
+          "section_paths": [],
+          "graph_identity": {
+            "concept_type": "CONDITION",
+            "vocabulary_source": "CURATED_CONTRAST_SEED"
+          },
+          "semantic_families": [
+            "condition",
+            "NAMED_PSYCHIATRIC_OR_MEDICAL_DIAGNOSIS_ACCOUNTING_FOR_A_DEPRESSIVE_SYNDROME"
+          ],
+          "response_classes": [
+            "PERSISTENT_MOOD_DISTURBANCE"
+          ],
+          "decision_granularities": [
+            "DIAGNOSIS"
+          ],
+          "provenance": [
+            {
+              "source": "INDEPENDENTLY_APPROVED_SEED",
+              "pack_id": "competitive_contrast_seed_pack_r4",
+              "seed_id": "SEED-PSY-T01-ANEMIA"
+            }
+          ],
+          "cross_study_unit": true,
+          "cross_chapter": true,
+          "decision_signature": {
+            "decision_intent": "IDENTIFY_DIAGNOSIS",
+            "target_domain": "MENTAL_HEALTH",
+            "clinical_stage": "INITIAL_RECOGNITION"
+          },
+          "ranking_signals": {
+            "response_class_match": true,
+            "granularity_match": true,
+            "decision_signature_match": true,
+            "semantic_family_match": false,
+            "same_study_unit": false,
+            "same_chapter": false
+          }
+        },
+        {
+          "canonical_candidate_id": "CONCEPT-R4-SU-PS-12-PDD",
+          "normalized_label": "Persistent depressive disorder",
+          "aliases": [],
+          "source_ids": [],
+          "chapters": [],
+          "study_unit_ids": [
+            "SU-PS-12"
+          ],
+          "section_paths": [],
+          "graph_identity": {
+            "concept_type": "CONDITION",
+            "vocabulary_source": "CURATED_CONTRAST_SEED"
+          },
+          "semantic_families": [
+            "condition",
+            "NAMED_PSYCHIATRIC_OR_MEDICAL_DIAGNOSIS_ACCOUNTING_FOR_A_DEPRESSIVE_SYNDROME"
+          ],
+          "response_classes": [
+            "PERSISTENT_MOOD_DISTURBANCE"
+          ],
+          "decision_granularities": [
+            "DIAGNOSIS"
+          ],
+          "provenance": [
+            {
+              "source": "INDEPENDENTLY_APPROVED_SEED",
+              "pack_id": "competitive_contrast_seed_pack_r4",
+              "seed_id": "SEED-PSY-T01-PDD"
+            }
+          ],
+          "cross_study_unit": true,
+          "cross_chapter": true,
+          "decision_signature": {
+            "decision_intent": "IDENTIFY_DIAGNOSIS",
+            "target_domain": "MENTAL_HEALTH",
+            "clinical_stage": "INITIAL_RECOGNITION"
+          },
+          "ranking_signals": {
+            "response_class_match": true,
+            "granularity_match": true,
+            "decision_signature_match": true,
+            "semantic_family_match": false,
+            "same_study_unit": false,
+            "same_chapter": false
+          }
+        },
+        {
+          "canonical_candidate_id": "CONCEPT-R4-SU-PS-14-BD2",
+          "normalized_label": "Bipolar II disorder",
+          "aliases": [],
+          "source_ids": [],
+          "chapters": [],
+          "study_unit_ids": [
+            "SU-PS-14"
+          ],
+          "section_paths": [],
+          "graph_identity": {
+            "concept_type": "CONDITION",
+            "vocabulary_source": "CURATED_CONTRAST_SEED"
+          },
+          "semantic_families": [
+            "condition",
+            "NAMED_PSYCHIATRIC_OR_MEDICAL_DIAGNOSIS_ACCOUNTING_FOR_A_DEPRESSIVE_SYNDROME"
+          ],
+          "response_classes": [
+            "EPISODIC_MOOD_ELEVATION",
+            "PERSISTENT_MOOD_DISTURBANCE"
+          ],
+          "decision_granularities": [
+            "DIAGNOSIS"
+          ],
+          "provenance": [
+            {
+              "source": "INDEPENDENTLY_APPROVED_SEED",
+              "pack_id": "competitive_contrast_seed_pack_r4",
+              "seed_id": "SEED-PSY-T01-BD2"
+            }
+          ],
+          "cross_study_unit": true,
+          "cross_chapter": true,
+          "decision_signature": {
+            "decision_intent": "IDENTIFY_DIAGNOSIS",
+            "target_domain": "MENTAL_HEALTH",
+            "clinical_stage": "INITIAL_RECOGNITION"
+          },
+          "ranking_signals": {
+            "response_class_match": true,
+            "granularity_match": true,
+            "decision_signature_match": true,
+            "semantic_family_match": false,
+            "same_study_unit": false,
+            "same_chapter": false
+          }
+        }
+      ]
+    },
+    {
+      "development_id": "RDY-PHELO-02",
+      "discipline": "PHELO",
+      "study_unit_id": "SU-PH-06",
+      "learner_decision_id": "LD-RDY-PHELO-02",
+      "learner_decision": "Classify risk-factor reduction before disease occurs as primary prevention, early detection as secondary prevention, and limitation of established disease effects as tertiary prevention.",
+      "demanded_response_class": "EXPLANATION_OF_OBSERVED_PHENOMENON",
+      "decision_granularity": "EPIDEMIOLOGIC_EXPLANATION",
+      "decision_signature": {
+        "decision_intent": "CLASSIFY_PREVENTION_STAGE",
+        "target_domain": "PUBLIC_HEALTH",
+        "clinical_stage": "PREVENTION_OR_SCREENING"
+      },
+      "candidate_count": 0,
+      "discovery_v4_version": "GLOBAL_DECISION_COMPATIBLE_DISCOVERY_V4_1",
+      "candidate_budget": 10,
+      "catalogue_rows_scanned": 1834,
+      "cheap_rejection_counts": {
+        "WRONG_GRANULARITY": 4,
+        "WRONG_RESPONSE_CLASS": 1830
+      },
+      "signature_rejection_counts": {},
+      "signature_rejections": [],
+      "compatible_before_budget_count": 0,
+      "candidates": []
+    },
+    {
+      "development_id": "RDY-PHELO-08",
+      "discipline": "PHELO",
+      "study_unit_id": "SU-ELOM-09",
+      "learner_decision_id": "LD-RDY-PHELO-08",
+      "learner_decision": "Assess capacity for the specific proposed decision by determining whether the patient understands relevant information and foreseeable consequences.",
+      "demanded_response_class": "AUTONOMY",
+      "decision_granularity": "ETHICAL_ACTION",
+      "decision_signature": {
+        "decision_intent": "ASSESS_ETHICAL_CRITERIA",
+        "target_domain": "CLINICAL_DECISION_ETHICS",
+        "clinical_stage": "ETHICAL_LEGAL_REVIEW"
+      },
+      "candidate_count": 1,
+      "discovery_v4_version": "GLOBAL_DECISION_COMPATIBLE_DISCOVERY_V4_1",
+      "candidate_budget": 10,
+      "catalogue_rows_scanned": 1834,
+      "cheap_rejection_counts": {
+        "WRONG_GRANULARITY": 3,
+        "WRONG_RESPONSE_CLASS": 1830
+      },
+      "signature_rejection_counts": {},
+      "signature_rejections": [],
+      "compatible_before_budget_count": 1,
+      "candidates": [
+        {
+          "canonical_candidate_id": "RDY-PHELO-08__bill_c14_maid",
+          "normalized_label": "Apply Bill C-14 / MAID eligibility criteria",
+          "aliases": [],
+          "source_ids": [
+            "TNC-a6fe91d7fcec6142dbb5232b"
+          ],
+          "chapters": [],
+          "study_unit_ids": [
+            "SU-ELOM-09"
+          ],
+          "section_paths": [],
+          "graph_identity": null,
+          "semantic_families": [
+            "AUTONOMY"
+          ],
+          "response_classes": [
+            "AUTONOMY"
+          ],
+          "decision_granularities": [
+            "ETHICAL_ACTION"
+          ],
+          "provenance": [
+            {
+              "source": "REUSABLE_CONTRAST_CACHE_V1",
+              "seed_id": "SEED-DEV12-PHELO08-BILLC14-MAID",
+              "relation_id": "CCR2-DEV12-PHELO08-BILLC14-MAID"
+            }
+          ],
+          "cross_study_unit": false,
+          "cross_chapter": true,
+          "decision_signature": {
+            "decision_intent": "ASSESS_ETHICAL_CRITERIA",
+            "target_domain": "CLINICAL_DECISION_ETHICS",
+            "clinical_stage": "ETHICAL_LEGAL_REVIEW"
+          },
+          "ranking_signals": {
+            "response_class_match": true,
+            "granularity_match": true,
+            "decision_signature_match": true,
+            "semantic_family_match": false,
+            "same_study_unit": true,
+            "same_chapter": false
+          }
+        }
+      ]
+    }
+  ],
+  "unique_candidate_count": 9,
+  "semantic_verdicts": [
+    {
+      "development_id": "RDY-PED-04",
+      "canonical_candidate_id": "RDY-PED-04__adh",
+      "candidate_context_sha256": "8a3fcd627383d3f15ff8f946914a64239422edf7aa91ec61e51d11f39c5bc4d6",
+      "verdict_reused": true,
+      "classification": "CLINICALLY_PLAUSIBLE",
+      "reason": "Exact-scope previously approved candidate and relation reused."
+    },
+    {
+      "development_id": "RDY-PED-04",
+      "canonical_candidate_id": "RDY-PED-04__hba1c_diagnostic_criteria",
+      "candidate_context_sha256": "f0ce78d25688281d51bae588a81a1b3c7f071d13eb7d8f45c449683a60c77b93",
+      "verdict_reused": true,
+      "classification": "CLINICALLY_PLAUSIBLE",
+      "reason": "Exact-scope previously approved candidate and relation reused."
+    },
+    {
+      "development_id": "RDY-SURG-03",
+      "canonical_candidate_id": "RDY-SURG-03__tte",
+      "candidate_context_sha256": "02f25e3a1550e15c77e5c2721bd13a50c6a006f3964451a9157fbcadc356177b",
+      "verdict_reused": true,
+      "classification": "CLINICALLY_PLAUSIBLE",
+      "reason": "Exact-scope previously approved candidate and relation reused."
+    },
+    {
+      "development_id": "RDY-SURG-03",
+      "canonical_candidate_id": "CONCEPT-R4-SU-R-05-CXR",
+      "candidate_context_sha256": "5c4dc79bd37ee1a37d94a4ed92666820cec66129a0853457cf15f3813a1033f8",
+      "verdict_reused": true,
+      "classification": "CLINICALLY_PLAUSIBLE",
+      "reason": "Chest radiography is a real structural comparator for suspected pneumothorax; Canadian emergency-ultrasound guidance supports thoracic POCUS as a core rapid diagnostic application and directly compares it favourably with chest radiography."
+    },
+    {
+      "development_id": "RDY-PSY-03",
+      "canonical_candidate_id": "CONCEPT-R4-SU-E-30-HYPOTHYROID",
+      "candidate_context_sha256": "c4abef6f117c87ae318034b202d260aca8fda6757f78ef5b39c7547a6f407b55",
+      "verdict_reused": true,
+      "classification": "WRONG_DECISION",
+      "reason": "The canonical concept is on the same coarse response/granularity axis but does not compete for this learner decision in the stated organ system, presentation, or action context."
+    },
+    {
+      "development_id": "RDY-PSY-03",
+      "canonical_candidate_id": "CONCEPT-R4-SU-H-02-ANEMIA",
+      "candidate_context_sha256": "8815ca7fbbd8af702d5084f9064adc51fdfb2921b3b3d61a6c3b77e45d2a629e",
+      "verdict_reused": true,
+      "classification": "WRONG_DECISION",
+      "reason": "The canonical concept is on the same coarse response/granularity axis but does not compete for this learner decision in the stated organ system, presentation, or action context."
+    },
+    {
+      "development_id": "RDY-PSY-03",
+      "canonical_candidate_id": "CONCEPT-R4-SU-PS-12-PDD",
+      "candidate_context_sha256": "2c35c3440b3d7763041ddbd6b87baa933c963714c34ad092f26027cd500bce94",
+      "verdict_reused": false,
+      "classification": "WRONG_DECISION",
+      "reason": "Persistent depressive disorder is a mood diagnosis and does not compete in the course-based differentiation of primary psychotic disorders."
+    },
+    {
+      "development_id": "RDY-PSY-03",
+      "canonical_candidate_id": "CONCEPT-R4-SU-PS-14-BD2",
+      "candidate_context_sha256": "6c960af69a4508be97fe38bad6a8259204836a967b00d035ece809f22336ade0",
+      "verdict_reused": false,
+      "classification": "WRONG_DECISION",
+      "reason": "Bipolar II disorder is a mood diagnosis and does not compete in the course-based differentiation of primary psychotic disorders."
+    },
+    {
+      "development_id": "RDY-PHELO-08",
+      "canonical_candidate_id": "RDY-PHELO-08__bill_c14_maid",
+      "candidate_context_sha256": "ed33030df99ffbed1608a6abb9451ff04c28c15793926787a867d024d8c32f07",
+      "verdict_reused": true,
+      "classification": "CLINICALLY_PLAUSIBLE",
+      "reason": "Exact-scope previously approved candidate with its MAID-context restriction preserved."
+    }
+  ],
+  "content_sha256": "53f8c0b0009a4151f830d159beba0d8390f9c5d3faf1b36005c39d4996246f0a"
+}

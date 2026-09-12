@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mccqe.local/schemas/clinical-contrast-bundle-v1.schema.json",
+  "title": "Clinical Contrast Bundle V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "bundle_id", "learner_decision_family", "opportunity_ids",
+    "key", "response_class", "decision_granularity", "decision_signature_v2",
+    "population_context_restrictions", "clinical_stage", "target_domain",
+    "target_subdomain", "clinical_state_entities", "evidence",
+    "option_candidates", "feature_matrix", "pairwise_review", "bundle_review"
+  ],
+  "properties": {
+    "schema_version": {"const": "CLINICAL_CONTRAST_BUNDLE_V1"},
+    "bundle_id": {"type": "string", "minLength": 1},
+    "learner_decision_family": {"type": "string", "minLength": 1},
+    "opportunity_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "key": {
+      "type": "object", "additionalProperties": false,
+      "required": ["canonical_identity", "label"],
+      "properties": {"canonical_identity": {"type": "string", "minLength": 1}, "label": {"type": "string", "minLength": 1}}
+    },
+    "response_class": {"type": "string", "minLength": 1},
+    "decision_granularity": {"type": "string", "minLength": 1},
+    "decision_signature_v2": {"$ref": "#/$defs/signature"},
+    "population_context_restrictions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "clinical_stage": {"type": "string", "minLength": 1},
+    "target_domain": {"type": "string", "minLength": 1},
+    "target_subdomain": {"type": "string", "minLength": 1},
+    "clinical_state_entities": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidence"}},
+    "option_candidates": {"type": "array", "maxItems": 6, "items": {"$ref": "#/$defs/candidate"}},
+    "feature_matrix": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/feature"}},
+    "pairwise_review": {"type": "array", "items": {"type": "object"}},
+    "bundle_review": {
+      "type": "object", "additionalProperties": false,
+      "required": ["verdict", "coherent_option_class", "granularity_consistency", "candidate_diversity", "no_second_keys", "educational_usefulness"],
+      "properties": {
+        "verdict": {"enum": ["APPROVED", "REJECTED", "UNCERTAIN"]},
+        "coherent_option_class": {"enum": ["PASS", "FAIL"]},
+        "granularity_consistency": {"enum": ["PASS", "FAIL"]},
+        "candidate_diversity": {"enum": ["PASS", "FAIL"]},
+        "no_second_keys": {"enum": ["PASS", "FAIL"]},
+        "educational_usefulness": {"enum": ["PASS", "FAIL"]}
+      }
+    }
+  },
+  "$defs": {
+    "signature": {
+      "type": "object", "additionalProperties": false,
+      "required": ["decision_intent", "target_domain", "clinical_stage", "target_subdomain", "semantic_containment_role"],
+      "properties": {
+        "decision_intent": {"type": "string", "minLength": 1},
+        "target_domain": {"type": "string", "minLength": 1},
+        "clinical_stage": {"type": "string", "minLength": 1},
+        "target_subdomain": {"type": "string", "minLength": 1},
+        "semantic_containment_role": {"type": "string", "minLength": 1}
+      }
+    },
+    "evidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["ref_id", "source_title", "url", "authority", "verification_status"],
+      "properties": {
+        "ref_id": {"type": "string", "minLength": 1},
+        "source_title": {"type": "string", "minLength": 1},
+        "url": {"type": "string", "format": "uri"},
+        "authority": {"type": "string", "minLength": 1},
+        "verification_status": {"const": "VERIFIED"}
+      }
+    },
+    "candidate": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "candidate_id", "canonical_identity", "label", "response_class", "granularity",
+        "decision_signature_v2", "applicability_context", "positive_candidate_anchor_ids",
+        "shared_plausibility_feature_ids", "candidate_supporting_feature_ids",
+        "key_vs_candidate_discriminator_ids", "candidate_vs_other_candidate_discriminator_ids",
+        "high_discriminative_feature_ids", "action_changing_feature_ids",
+        "features_making_candidate_correct", "features_making_candidate_inferior",
+        "second_key_risks", "containment_parent_subtype_risks", "next_step_if_correct",
+        "evidence_refs", "review_status"
+      ],
+      "properties": {
+        "candidate_id": {"type": "string", "minLength": 1},
+        "canonical_identity": {"type": "string", "minLength": 1},
+        "label": {"type": "string", "minLength": 1},
+        "response_class": {"type": "string", "minLength": 1},
+        "granularity": {"type": "string", "minLength": 1},
+        "decision_signature_v2": {"$ref": "#/$defs/signature"},
+        "applicability_context": {"type": "string", "minLength": 1},
+        "positive_candidate_anchor_ids": {"$ref": "#/$defs/nonemptyStringArray"},
+        "shared_plausibility_feature_ids": {"$ref": "#/$defs/stringArray"},
+        "candidate_supporting_feature_ids": {"$ref": "#/$defs/stringArray"},
+        "key_vs_candidate_discriminator_ids": {"$ref": "#/$defs/nonemptyStringArray"},
+        "candidate_vs_other_candidate_discriminator_ids": {"$ref": "#/$defs/stringArray"},
+        "high_discriminative_feature_ids": {"$ref": "#/$defs/stringArray"},
+        "action_changing_feature_ids": {"$ref": "#/$defs/stringArray"},
+        "features_making_candidate_correct": {"$ref": "#/$defs/nonemptyStringArray"},
+        "features_making_candidate_inferior": {"$ref": "#/$defs/nonemptyStringArray"},
+        "second_key_risks": {"$ref": "#/$defs/stringArray"},
+        "containment_parent_subtype_risks": {"$ref": "#/$defs/stringArray"},
+        "next_step_if_correct": {"type": "string", "minLength": 1},
+        "evidence_refs": {"$ref": "#/$defs/nonemptyStringArray"},
+        "review_status": {"enum": ["APPROVED_FOR_BUNDLE", "REJECTED", "UNCERTAIN"]}
+      }
+    },
+    "feature": {
+      "type": "object", "additionalProperties": false,
+      "required": ["feature_id", "category", "normalized_proposition", "type_tags", "visibility", "evidence_refs", "states"],
+      "properties": {
+        "feature_id": {"type": "string", "minLength": 1},
+        "category": {"enum": ["symptoms", "signs", "history", "risk_factors", "labs", "imaging", "timing", "severity", "anatomic_location", "clinical_stage", "response_to_treatment", "red_flags", "other"]},
+        "normalized_proposition": {"type": "string", "minLength": 1},
+        "type_tags": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["SHARED_PLAUSIBILITY", "KEY_SUPPORTING", "CANDIDATE_SUPPORTING", "PAIRWISE_DISCRIMINATOR", "HIGH_DISCRIMINATIVE", "ACTION_CHANGING", "EXCLUSIONARY", "RATIONALE_ONLY", "STEM_ELIGIBLE"]}},
+        "visibility": {"enum": ["STEM_ELIGIBLE", "RATIONALE_ONLY", "CONDITIONAL"]},
+        "evidence_refs": {"$ref": "#/$defs/nonemptyStringArray"},
+        "states": {"type": "object", "minProperties": 1, "additionalProperties": {"enum": ["PRESENT", "ABSENT", "UNKNOWN", "NOT_APPLICABLE"]}}
+      }
+    },
+    "stringArray": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "nonemptyStringArray": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+  }
+}

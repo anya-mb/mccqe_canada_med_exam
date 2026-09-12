@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Production Item Verification Ledger V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scope", "status", "entries", "content_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.0"}, "scope": {"const": "PRODUCTION_ITEM_VERIFICATION_LEDGER_V1"},
+    "status": {"type": "string"}, "entries": {"type": "array", "items": {"type": "object"}},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

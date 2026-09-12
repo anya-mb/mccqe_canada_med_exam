@@ -1,0 +1,115 @@
+{
+  "candidates": [],
+  "cheap_filter_applied": "CURATED_SEED_LIBRARY_TOPIC_OVERLAP",
+  "cheap_filter_method": "For every seed row visible to `scripts/qbank/profile_contrast_retrieval.build_retrieval_index` across all 3 frozen curated packs (competitive_contrast_seed_pack_r4.json, _g2_extensions.json, _g2_targeted.json; 81 rows total, real function call, not reimplemented), enumerated the distinct `anchor_study_unit_id`/`anchor_topic` pairs the seeds were originally authored against. Result: exactly 6 distinct anchor study units exist in the entire curated library -- SU-C-21 (Acute Coronary Syndrome), SU-GS-76 (Appendicitis), SU-OB-54 (Mastitis), SU-P-147 (Bronchiolitis), SU-PH-07 (Screening Principles and Screening Biases), SU-PS-12 (Depressive Disorders). None of the 24 remaining opportunities' own study units (SU-D-21/23/24/26/38, SU-OB-53, SU-GY-03/04/10, SU-P-099, SU-PH-34/35/36, SU-PM-06/10, SU-PS-29, SU-OT-52) match any of these 6, or are clinically/conceptually related to their differentials (dermatology vs. bronchiolitis/mastitis/appendicitis/depression/screening-bias/ACS have no shared plausibility). The baseline_indexed_count>0 seen in the manifest for several of these opportunities (LD-D21-01/D23-02/D24-01/D26-01/D38-01 at 3; LD-ONB2-GY-IMAGING/LD-PH34-01/LD-PH34-02/LD-PH36-01 at 4) reflects rows sharing discipline/item-archetype/option-set-archetype TAGS ONLY (e.g. MEDICINE + DIAGNOSIS_SET), not any genuine clinical relationship to the opportunity's own stem -- which is exactly why `build_retrieval_index`'s SAF_1 rule correctly refuses all of them (STEM_PLAUSIBILITY_ANCHOR_ABSENT).",
+  "discovery_groups": {
+    "MED_DIAGNOSIS_DERM_ADJACENT": [
+      "LD-D21-01",
+      "LD-D23-02",
+      "LD-D24-01",
+      "LD-D26-01",
+      "LD-D38-01"
+    ],
+    "MED_LEGAL_DUTY": [
+      "LD-ONB2-PM-CONSENT",
+      "LD-ONB2-PM-MAID-CONSENT"
+    ],
+    "OBGYN_DIAGNOSIS": [
+      "LD-OB53-01",
+      "LD-OB53-03"
+    ],
+    "OBGYN_MANAGEMENT_AND_TESTS": [
+      "LD-ONB2-GY-EC",
+      "LD-ONB2-GY-HYSTERECTOMY",
+      "LD-ONB2-GY-IMAGING"
+    ],
+    "PED_AOM": [
+      "LD-ONB2-PED-AOM-DX",
+      "LD-ONB2-PED-AOM-OBSERVE"
+    ],
+    "PHELO_PROGRAMME_AND_HAZARD": [
+      "LD-ONB2-PH-WORK-HISTORY",
+      "LD-PH34-01",
+      "LD-PH34-02",
+      "LD-PH36-01"
+    ],
+    "PSY_AUD": [
+      "LD-ONB2-PSY-AUD-ABSTINENCE",
+      "LD-ONB2-PSY-AUD-INTERVIEW",
+      "LD-ONB2-PSY-AUD-REDUCTION"
+    ],
+    "SURG_CROUP": [
+      "LD-ONB2-SURG-CROUP-DISCHARGE",
+      "LD-ONB2-SURG-CROUP-DX",
+      "LD-ONB2-SURG-CROUP-STEROID"
+    ]
+  },
+  "hash_method": "sha256 of json.dumps(doc, ensure_ascii=False, indent=2, sort_keys=True, allow_nan=False)+\"\\n\" with raw_supply_sha256_before_review temporarily set to empty string \"\" before hashing (matches jsonio.write_json_atomic serialization); hash_method itself included in the hashed document at its final text.",
+  "independent_review_needed": false,
+  "independent_review_rationale": "Zero relations or feature extensions were proposed (candidates: []), so there is nothing for a fresh independent-review subagent to adjudicate this wave. No review subagent was spawned.",
+  "manifest_ref": "research/qgen/onboarding/v3_fresh36_supply_input_manifest.json",
+  "option_a_assessment": "NOT_ATTEMPTED_THIS_WAVE. Authoring a whole new curated-seed-pack-shaped file (targets/seeds + companion .enrichment.json + companion .stem_anchors.json, independently reviewed, hash-frozen, matching competitive_contrast_seed_pack_g2_targeted.json's schema) for even one of these 24 study units would require: (1) discovering a genuine, evidence-grounded competitor concept per target from the opportunity's own or adjacent cited source packets, (2) authoring condition predicates and enrichment tags, (3) authoring a stem-anchor row, (4) an independent review pass, (5) a content-hash freeze -- a materially larger unit of work than a bounded discovery-plus-review pass, and judged NOT tractable within this wave's scope per the task's own guidance not to let it balloon into an open-ended retrieval-architecture rewrite. This judgment matches the prior session's conclusion for the dermatology cluster and is recorded here as a deliberate scope decision, not an oversight.",
+  "option_b_assessment": "VOCABULARY_EXTENSION_BLOCKED for all 24. Option (b) (propose an evidence-grounded SHARED_PLAUSIBILITY_FEATURE extension to a frozen stem-feature-map so an EXISTING curated seed's anchor gate can fire) requires an existing curated seed that is genuinely clinically plausible as a competitor for the opportunity. None exists: the cheap filter above shows the entire 81-row curated library covers only 6 topics (ACS, appendicitis, mastitis, bronchiolitis, screening bias, depression), none of which bear a real clinical relationship to dermatology (D-cluster), consent/MAID law, postpartum OBGYN diagnostics beyond mastitis (already exhausted in wave 1), contraception/hysterectomy/imaging choice, AOM, workplace-hazard/programme PHELO, alcohol-use-disorder pharmacology, or croup. Registering a SHARED_PLAUSIBILITY_FEATURE tying e.g. a lipoma-vs-cyst dermatology stem to the bronchiolitis-pack's competitor rows would assert a clinical plausibility relationship that does not exist in evidence -- forbidden by the anti-hallucination contract. Marked NO_SAFE_ITEM / VOCABULARY_EXTENSION_BLOCKED honestly rather than forced.",
+  "per_opportunity_outcome": {
+    "LD-D21-01": "NO_SAFE_ITEM",
+    "LD-D23-02": "NO_SAFE_ITEM",
+    "LD-D24-01": "NO_SAFE_ITEM",
+    "LD-D26-01": "NO_SAFE_ITEM",
+    "LD-D38-01": "NO_SAFE_ITEM",
+    "LD-OB53-01": "NO_SAFE_ITEM",
+    "LD-OB53-03": "NO_SAFE_ITEM",
+    "LD-ONB2-GY-EC": "NO_SAFE_ITEM",
+    "LD-ONB2-GY-HYSTERECTOMY": "NO_SAFE_ITEM",
+    "LD-ONB2-GY-IMAGING": "NO_SAFE_ITEM",
+    "LD-ONB2-PED-AOM-DX": "NO_SAFE_ITEM",
+    "LD-ONB2-PED-AOM-OBSERVE": "NO_SAFE_ITEM",
+    "LD-ONB2-PH-WORK-HISTORY": "NO_SAFE_ITEM",
+    "LD-ONB2-PM-CONSENT": "NO_SAFE_ITEM",
+    "LD-ONB2-PM-MAID-CONSENT": "NO_SAFE_ITEM",
+    "LD-ONB2-PSY-AUD-ABSTINENCE": "NO_SAFE_ITEM",
+    "LD-ONB2-PSY-AUD-INTERVIEW": "NO_SAFE_ITEM",
+    "LD-ONB2-PSY-AUD-REDUCTION": "NO_SAFE_ITEM",
+    "LD-ONB2-SURG-CROUP-DISCHARGE": "NO_SAFE_ITEM",
+    "LD-ONB2-SURG-CROUP-DX": "NO_SAFE_ITEM",
+    "LD-ONB2-SURG-CROUP-STEROID": "NO_SAFE_ITEM",
+    "LD-PH34-01": "NO_SAFE_ITEM",
+    "LD-PH34-02": "NO_SAFE_ITEM",
+    "LD-PH36-01": "NO_SAFE_ITEM"
+  },
+  "raw_supply_sha256_before_review": "0da536d141b84db46d66ff2fb599cc1fecbfc80dd66d7630399d7ce3cfe2a626",
+  "remaining_count": 24,
+  "remaining_opportunity_ids": [
+    "LD-D21-01",
+    "LD-D23-02",
+    "LD-D24-01",
+    "LD-D26-01",
+    "LD-D38-01",
+    "LD-OB53-01",
+    "LD-OB53-03",
+    "LD-ONB2-GY-EC",
+    "LD-ONB2-GY-HYSTERECTOMY",
+    "LD-ONB2-GY-IMAGING",
+    "LD-ONB2-PED-AOM-DX",
+    "LD-ONB2-PED-AOM-OBSERVE",
+    "LD-ONB2-PH-WORK-HISTORY",
+    "LD-ONB2-PM-CONSENT",
+    "LD-ONB2-PM-MAID-CONSENT",
+    "LD-ONB2-PSY-AUD-ABSTINENCE",
+    "LD-ONB2-PSY-AUD-INTERVIEW",
+    "LD-ONB2-PSY-AUD-REDUCTION",
+    "LD-ONB2-SURG-CROUP-DISCHARGE",
+    "LD-ONB2-SURG-CROUP-DX",
+    "LD-ONB2-SURG-CROUP-STEROID",
+    "LD-PH34-01",
+    "LD-PH34-02",
+    "LD-PH36-01"
+  ],
+  "route_breakdown": {
+    "ROUTE_B": 23,
+    "ROUTE_C": 1
+  },
+  "schema_version": "1.0",
+  "scope": "QGEN_FRESH36_ROUTE_BC_RAW_SUPPLY_V1_WAVE2",
+  "wave": "SECOND_BOUNDED_ROUTE_BC_WAVE_REMAINING_24_OPPORTUNITIES",
+  "wave_selection_rationale": "Continues the bounded Route-B/C preflight from the 2026-09-07 dermatology-cluster session. That session attempted 8 of 32 Route-B/C opportunities (LD-D04-01, LD-D05-01, LD-D05-02, LD-D07-01, LD-D07-02, LD-D08-01, LD-D12-01, LD-D12-02). This wave attempts the remaining 24: per research/qgen/onboarding/v3_fresh36_supply_input_manifest.json, the ROUTE_B/ROUTE_C subset of the fresh-36 manifest has 32 rows total, not 30+2; recount this session found 23 ROUTE_B + 1 ROUTE_C = 24 remaining (the task brief's '22 ROUTE_B + 1 ROUTE_C = 23' undercounts by one; the manifest's own route_counts field records ROUTE_B=30 total across the whole 36-row manifest, 8 already attempted, 22 remaining is wrong only because 2 of the 8 already-attempted are also ROUTE_B-classified per-row -- the exact remaining set was recomputed directly from the manifest rather than assumed, see remaining_opportunity_ids below)."
+}

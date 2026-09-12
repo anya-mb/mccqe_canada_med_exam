@@ -1,0 +1,742 @@
+{
+  "common_core": [
+    "SINGLE_BEST_ANSWER",
+    "POSITIVE_ANCHORING",
+    "DECISION_SCOPED_EVIDENCE",
+    "FOUR_STATE_SEMANTICS",
+    "PAIRWISE_COHERENCE",
+    "OPTION_PARITY",
+    "INDEPENDENT_FINAL_REVIEW"
+  ],
+  "competitor_ranking_preference": [
+    "NEAREST_UNSATISFIED_CORRECTNESS_CONDITION",
+    "SHARED_FEATURE_COUNT",
+    "REVIEWED_SEED_STRENGTH"
+  ],
+  "content_sha256": "36a6405b6faa9f4434cc04d75bb70fdc277b5b02b8d5ab5584fa2d5b7313d4bf",
+  "context_flag_fields": {
+    "capacity_relevant": "capacity_context",
+    "legal_duty_relevant": "jurisdiction",
+    "operative_relevant": "operative_context",
+    "pregnancy_postpartum_relevant": "gestational_age_or_postpartum_day",
+    "risk_relevant": "risk_context"
+  },
+  "context_interpretation": "REVIEWED_ELIGIBILITY_REQUIREMENTS_NOT_STEM_OBSERVATIONS",
+  "decision_contracts": {
+    "COMMUNICATION": [
+      {
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "required_context_flags": [],
+        "response_class_axis": "next_action_class",
+        "response_classes": [
+          "COMMUNICATION_ACTION",
+          "PATIENT_INSTRUCTION"
+        ]
+      },
+      {
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "ETHICAL_ACTION",
+        "option_set_archetype": "ETHICAL_ACTION_SET",
+        "required_context_flags": [],
+        "response_class_axis": "value_served",
+        "response_classes": [
+          "AUTONOMY",
+          "CONFIDENTIALITY",
+          "ETHICAL_ACTION"
+        ]
+      }
+    ],
+    "DIAGNOSIS": [
+      {
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "DIAGNOSIS",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "required_context_flags": [],
+        "response_class_axis": "cardinal_syndrome_capability",
+        "response_classes": [
+          "ABNORMAL_BLEEDING",
+          "ABNORMAL_GROWTH_OR_DEVELOPMENT",
+          "ACUTE_ABDOMINAL_OR_PELVIC_PAIN",
+          "ACUTE_METABOLIC_DERANGEMENT",
+          "ACUTE_RESPIRATORY_DISTRESS",
+          "AIRFLOW_OBSTRUCTION",
+          "EPISODIC_MOOD_ELEVATION",
+          "FOCAL_NEUROLOGIC_DEFICIT",
+          "HEMODYNAMIC_INSTABILITY",
+          "LOCALIZED_INFLAMMATION",
+          "PALPABLE_MASS_OR_FLUID_COLLECTION",
+          "PERSISTENT_MOOD_DISTURBANCE",
+          "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+          "SYSTEMIC_INFLAMMATORY_ILLNESS"
+        ]
+      }
+    ],
+    "EMERGENCY_STABILIZATION": [
+      {
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "required_context_flags": [
+          "risk_relevant"
+        ],
+        "response_class_axis": "next_action_class",
+        "response_classes": [
+          "ESCALATION_TO_CRITICAL_CARE",
+          "HIGH_FLOW_SUPPORT",
+          "LOW_FLOW_SUPPORT",
+          "NEXT_ACTION_FOR_CURRENT_CARE",
+          "PHARMACOLOGIC_ACTION",
+          "PROCEDURAL_INTERVENTION"
+        ]
+      },
+      {
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "DISPOSITION",
+        "option_set_archetype": "DISPOSITION_SET",
+        "required_context_flags": [
+          "risk_relevant"
+        ],
+        "response_class_axis": "safety_securing_class",
+        "response_classes": [
+          "ASSESSMENT_ONLY",
+          "COMMUNITY_SAFETY_MEASURE",
+          "DISPOSITION_DECISION",
+          "INTENSIVE_COMMUNITY",
+          "INVOLUNTARY_OR_INPATIENT",
+          "NONE",
+          "SECURES_IMMEDIATE_SAFETY"
+        ]
+      }
+    ],
+    "ETHICAL_LEGAL_ACTION": [
+      {
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "ETHICAL_ACTION",
+        "option_set_archetype": "ETHICAL_ACTION_SET",
+        "required_context_flags": [],
+        "response_class_axis": "value_served",
+        "response_classes": [
+          "AUTONOMY",
+          "BENEFICENCE",
+          "CONFIDENTIALITY",
+          "ETHICAL_ACTION",
+          "JUSTICE",
+          "NON_MALEFICENCE",
+          "PROGRAMME_UPTAKE"
+        ]
+      },
+      {
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "LEGAL_DUTY",
+        "option_set_archetype": "LEGAL_ACTION_SET",
+        "required_context_flags": [
+          "legal_duty_relevant"
+        ],
+        "response_class_axis": "duty_holder_class",
+        "response_classes": [
+          "COURT_ORDERED_DUTY",
+          "INSTITUTIONAL_DUTY",
+          "LEGAL_DUTY_ACTION",
+          "PUBLIC_HEALTH_AUTHORITY_DUTY",
+          "REGULATORY_BODY_DUTY",
+          "TREATING_CLINICIAN_DUTY"
+        ]
+      }
+    ],
+    "INITIAL_MANAGEMENT": [
+      {
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "required_context_flags": [],
+        "response_class_axis": "next_action_class",
+        "response_classes": [
+          "DIAGNOSTIC_ORDER",
+          "DISPOSITION_ACTION",
+          "ESCALATION_TO_CRITICAL_CARE",
+          "HIGH_FLOW_SUPPORT",
+          "LOW_FLOW_SUPPORT",
+          "MINIMAL_SUPPORT",
+          "MONITORING_ORDER",
+          "NEXT_ACTION_FOR_CURRENT_CARE",
+          "OBSERVATION",
+          "PATIENT_INSTRUCTION",
+          "PHARMACOLOGIC_ACTION",
+          "PROCEDURAL_INTERVENTION"
+        ]
+      },
+      {
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "MANAGEMENT_STRATEGY",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "required_context_flags": [],
+        "response_class_axis": "management_capability",
+        "response_classes": [
+          "COMBINED_TREATMENT",
+          "DELAYED_OPERATIVE_SOURCE_CONTROL",
+          "IMMEDIATE_OPERATIVE_SOURCE_CONTROL",
+          "LIFESTYLE_INTERVENTION",
+          "MANAGEMENT_STRATEGY_FOR_PRESENTATION",
+          "NO_ACTIVE_TREATMENT",
+          "PERCUTANEOUS_SOURCE_CONTROL",
+          "PHARMACOLOGIC_ONLY",
+          "PHARMACOLOGIC_TREATMENT",
+          "PROVIDES_SOURCE_CONTROL",
+          "PSYCHOLOGICAL_TREATMENT"
+        ]
+      },
+      {
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "DISPOSITION",
+        "option_set_archetype": "DISPOSITION_SET",
+        "required_context_flags": [
+          "risk_relevant"
+        ],
+        "response_class_axis": "safety_securing_class",
+        "response_classes": [
+          "ASSESSMENT_ONLY",
+          "COMMUNITY_SAFETY_MEASURE",
+          "DISPOSITION_DECISION",
+          "INTENSIVE_COMMUNITY",
+          "INVOLUNTARY_OR_INPATIENT",
+          "NONE",
+          "SECURES_IMMEDIATE_SAFETY"
+        ]
+      }
+    ],
+    "INTERPRETATION": [
+      {
+        "decision_domain": "EVIDENCE_INTERPRETATION",
+        "decision_granularity": "EPIDEMIOLOGIC_EXPLANATION",
+        "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+        "required_context_flags": [],
+        "response_class_axis": "explained_phenomenon_class",
+        "response_classes": [
+          "CHANCE_VARIATION",
+          "CONFOUNDING",
+          "EXPLANATION_OF_OBSERVED_PHENOMENON",
+          "MEASUREMENT_ERROR",
+          "SCREENING_MEASUREMENT_ARTEFACT",
+          "SELECTION_EFFECT",
+          "TRUE_EFFECT"
+        ]
+      },
+      {
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "DIAGNOSIS",
+        "option_set_archetype": "DIAGNOSIS_SET",
+        "required_context_flags": [],
+        "response_class_axis": "cardinal_syndrome_capability",
+        "response_classes": [
+          "ABNORMAL_BLEEDING",
+          "ABNORMAL_GROWTH_OR_DEVELOPMENT",
+          "ACUTE_ABDOMINAL_OR_PELVIC_PAIN",
+          "ACUTE_METABOLIC_DERANGEMENT",
+          "ACUTE_RESPIRATORY_DISTRESS",
+          "AIRFLOW_OBSTRUCTION",
+          "EPISODIC_MOOD_ELEVATION",
+          "FOCAL_NEUROLOGIC_DEFICIT",
+          "HEMODYNAMIC_INSTABILITY",
+          "LOCALIZED_INFLAMMATION",
+          "PALPABLE_MASS_OR_FLUID_COLLECTION",
+          "PERSISTENT_MOOD_DISTURBANCE",
+          "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+          "SYSTEMIC_INFLAMMATORY_ILLNESS"
+        ]
+      }
+    ],
+    "MEDICATION_SELECTION": [
+      {
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "required_context_flags": [],
+        "response_class_axis": "next_action_class",
+        "response_classes": [
+          "PHARMACOLOGIC_ACTION"
+        ]
+      },
+      {
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "MANAGEMENT_STRATEGY",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "required_context_flags": [],
+        "response_class_axis": "management_capability",
+        "response_classes": [
+          "PHARMACOLOGIC_ONLY",
+          "PHARMACOLOGIC_TREATMENT"
+        ]
+      }
+    ],
+    "NEXT_INVESTIGATION": [
+      {
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "DIAGNOSTIC_TEST",
+        "option_set_archetype": "INVESTIGATION_SET",
+        "required_context_flags": [],
+        "response_class_axis": "investigation_purpose",
+        "response_classes": [
+          "BIOCHEMICAL",
+          "CLINICAL_OBSERVATION",
+          "DIAGNOSTIC_ADVANCEMENT",
+          "FUNCTIONAL",
+          "MICROBIOLOGIC",
+          "MONITORING",
+          "STAGING",
+          "STRUCTURAL"
+        ]
+      }
+    ],
+    "PROFESSIONAL_ORGANIZATIONAL_ACTION": [
+      {
+        "decision_domain": "POPULATION_PROGRAMME",
+        "decision_granularity": "PROGRAMME_ACTION",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "required_context_flags": [],
+        "response_class_axis": "management_capability",
+        "response_classes": [
+          "PROGRAMME_ACTION"
+        ]
+      },
+      {
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "LEGAL_DUTY",
+        "option_set_archetype": "LEGAL_ACTION_SET",
+        "required_context_flags": [
+          "legal_duty_relevant"
+        ],
+        "response_class_axis": "duty_holder_class",
+        "response_classes": [
+          "COURT_ORDERED_DUTY",
+          "INSTITUTIONAL_DUTY",
+          "LEGAL_DUTY_ACTION",
+          "PUBLIC_HEALTH_AUTHORITY_DUTY",
+          "REGULATORY_BODY_DUTY",
+          "TREATING_CLINICIAN_DUTY"
+        ]
+      },
+      {
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "ETHICAL_ACTION",
+        "option_set_archetype": "ETHICAL_ACTION_SET",
+        "required_context_flags": [],
+        "response_class_axis": "value_served",
+        "response_classes": [
+          "AUTONOMY",
+          "BENEFICENCE",
+          "CONFIDENTIALITY",
+          "ETHICAL_ACTION",
+          "JUSTICE",
+          "NON_MALEFICENCE",
+          "PROGRAMME_UPTAKE"
+        ]
+      }
+    ],
+    "SCREENING_PREVENTION": [
+      {
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "DIAGNOSTIC_TEST",
+        "option_set_archetype": "INVESTIGATION_SET",
+        "required_context_flags": [],
+        "response_class_axis": "investigation_purpose",
+        "response_classes": [
+          "BIOCHEMICAL",
+          "CLINICAL_OBSERVATION",
+          "DIAGNOSTIC_ADVANCEMENT",
+          "FUNCTIONAL",
+          "MICROBIOLOGIC",
+          "MONITORING",
+          "STAGING",
+          "STRUCTURAL"
+        ]
+      },
+      {
+        "decision_domain": "PATIENT_CLINICAL",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "option_set_archetype": "NEXT_ACTION_SET",
+        "required_context_flags": [],
+        "response_class_axis": "next_action_class",
+        "response_classes": [
+          "DIAGNOSTIC_ORDER",
+          "MONITORING_ORDER",
+          "NEXT_ACTION_FOR_CURRENT_CARE",
+          "PATIENT_INSTRUCTION",
+          "PHARMACOLOGIC_ACTION"
+        ]
+      },
+      {
+        "decision_domain": "POPULATION_PROGRAMME",
+        "decision_granularity": "PROGRAMME_ACTION",
+        "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+        "required_context_flags": [],
+        "response_class_axis": "management_capability",
+        "response_classes": [
+          "PROGRAMME_ACTION"
+        ]
+      }
+    ]
+  },
+  "evidence_readiness": "NOT_ASSESSED",
+  "option_set_contracts": {
+    "DIAGNOSIS_SET": {
+      "nominal_parity_axes": [],
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "response_class_axis": "cardinal_syndrome_capability",
+      "token_implications": {
+        "ABNORMAL_BLEEDING": [
+          "PLAUSIBLE_DIAGNOSTIC_ENTITY"
+        ],
+        "ABNORMAL_GROWTH_OR_DEVELOPMENT": [
+          "PLAUSIBLE_DIAGNOSTIC_ENTITY"
+        ],
+        "ACUTE_ABDOMINAL_OR_PELVIC_PAIN": [
+          "PLAUSIBLE_DIAGNOSTIC_ENTITY"
+        ],
+        "ACUTE_METABOLIC_DERANGEMENT": [
+          "PLAUSIBLE_DIAGNOSTIC_ENTITY"
+        ],
+        "ACUTE_RESPIRATORY_DISTRESS": [
+          "PLAUSIBLE_DIAGNOSTIC_ENTITY"
+        ],
+        "AIRFLOW_OBSTRUCTION": [
+          "PLAUSIBLE_DIAGNOSTIC_ENTITY"
+        ],
+        "EPISODIC_MOOD_ELEVATION": [
+          "PLAUSIBLE_DIAGNOSTIC_ENTITY"
+        ],
+        "FOCAL_NEUROLOGIC_DEFICIT": [
+          "PLAUSIBLE_DIAGNOSTIC_ENTITY"
+        ],
+        "HEMODYNAMIC_INSTABILITY": [
+          "PLAUSIBLE_DIAGNOSTIC_ENTITY"
+        ],
+        "LOCALIZED_INFLAMMATION": [
+          "PLAUSIBLE_DIAGNOSTIC_ENTITY"
+        ],
+        "PALPABLE_MASS_OR_FLUID_COLLECTION": [
+          "PLAUSIBLE_DIAGNOSTIC_ENTITY"
+        ],
+        "PERSISTENT_MOOD_DISTURBANCE": [
+          "PLAUSIBLE_DIAGNOSTIC_ENTITY"
+        ],
+        "SYSTEMIC_INFLAMMATORY_ILLNESS": [
+          "PLAUSIBLE_DIAGNOSTIC_ENTITY"
+        ]
+      }
+    },
+    "DISPOSITION_SET": {
+      "nominal_parity_axes": [],
+      "option_set_archetype": "DISPOSITION_SET",
+      "response_class_axis": "safety_securing_class",
+      "token_implications": {
+        "ASSESSMENT_ONLY": [
+          "DISPOSITION_DECISION"
+        ],
+        "COMMUNITY_SAFETY_MEASURE": [
+          "DISPOSITION_DECISION"
+        ],
+        "INTENSIVE_COMMUNITY": [
+          "DISPOSITION_DECISION"
+        ],
+        "INVOLUNTARY_OR_INPATIENT": [
+          "DISPOSITION_DECISION"
+        ],
+        "NONE": [
+          "DISPOSITION_DECISION"
+        ],
+        "SECURES_IMMEDIATE_SAFETY": [
+          "DISPOSITION_DECISION"
+        ]
+      }
+    },
+    "ETHICAL_ACTION_SET": {
+      "nominal_parity_axes": [],
+      "option_set_archetype": "ETHICAL_ACTION_SET",
+      "response_class_axis": "value_served",
+      "token_implications": {
+        "AUTONOMY": [
+          "ETHICAL_ACTION"
+        ],
+        "BENEFICENCE": [
+          "ETHICAL_ACTION"
+        ],
+        "CONFIDENTIALITY": [
+          "ETHICAL_ACTION"
+        ],
+        "JUSTICE": [
+          "ETHICAL_ACTION"
+        ],
+        "NON_MALEFICENCE": [
+          "ETHICAL_ACTION"
+        ],
+        "PROGRAMME_UPTAKE": [
+          "ETHICAL_ACTION"
+        ]
+      }
+    },
+    "INVESTIGATION_SET": {
+      "nominal_parity_axes": [],
+      "option_set_archetype": "INVESTIGATION_SET",
+      "response_class_axis": "investigation_purpose",
+      "token_implications": {
+        "BIOCHEMICAL": [
+          "DIAGNOSTIC_ADVANCEMENT"
+        ],
+        "CLINICAL_OBSERVATION": [
+          "DIAGNOSTIC_ADVANCEMENT"
+        ],
+        "FUNCTIONAL": [
+          "DIAGNOSTIC_ADVANCEMENT"
+        ],
+        "MICROBIOLOGIC": [
+          "DIAGNOSTIC_ADVANCEMENT"
+        ],
+        "MONITORING": [
+          "DIAGNOSTIC_ADVANCEMENT"
+        ],
+        "STAGING": [
+          "DIAGNOSTIC_ADVANCEMENT"
+        ],
+        "STRUCTURAL": [
+          "DIAGNOSTIC_ADVANCEMENT"
+        ]
+      }
+    },
+    "LEGAL_ACTION_SET": {
+      "nominal_parity_axes": [],
+      "option_set_archetype": "LEGAL_ACTION_SET",
+      "response_class_axis": "duty_holder_class",
+      "token_implications": {
+        "COURT_ORDERED_DUTY": [
+          "LEGAL_DUTY_ACTION"
+        ],
+        "INSTITUTIONAL_DUTY": [
+          "LEGAL_DUTY_ACTION"
+        ],
+        "PUBLIC_HEALTH_AUTHORITY_DUTY": [
+          "LEGAL_DUTY_ACTION"
+        ],
+        "REGULATORY_BODY_DUTY": [
+          "LEGAL_DUTY_ACTION"
+        ],
+        "TREATING_CLINICIAN_DUTY": [
+          "LEGAL_DUTY_ACTION"
+        ]
+      }
+    },
+    "MANAGEMENT_STRATEGY_SET": {
+      "nominal_parity_axes": [],
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "response_class_axis": "management_capability",
+      "token_implications": {
+        "COMBINED_TREATMENT": [
+          "MANAGEMENT_STRATEGY_FOR_PRESENTATION"
+        ],
+        "DELAYED_OPERATIVE_SOURCE_CONTROL": [
+          "MANAGEMENT_STRATEGY_FOR_PRESENTATION"
+        ],
+        "IMMEDIATE_OPERATIVE_SOURCE_CONTROL": [
+          "MANAGEMENT_STRATEGY_FOR_PRESENTATION"
+        ],
+        "LIFESTYLE_INTERVENTION": [
+          "MANAGEMENT_STRATEGY_FOR_PRESENTATION"
+        ],
+        "NO_ACTIVE_TREATMENT": [
+          "MANAGEMENT_STRATEGY_FOR_PRESENTATION"
+        ],
+        "PERCUTANEOUS_SOURCE_CONTROL": [
+          "MANAGEMENT_STRATEGY_FOR_PRESENTATION"
+        ],
+        "PHARMACOLOGIC_ONLY": [
+          "MANAGEMENT_STRATEGY_FOR_PRESENTATION"
+        ],
+        "PHARMACOLOGIC_TREATMENT": [
+          "MANAGEMENT_STRATEGY_FOR_PRESENTATION"
+        ],
+        "PROGRAMME_ACTION": [
+          "MANAGEMENT_STRATEGY_FOR_PRESENTATION"
+        ],
+        "PROVIDES_SOURCE_CONTROL": [
+          "MANAGEMENT_STRATEGY_FOR_PRESENTATION"
+        ],
+        "PSYCHOLOGICAL_TREATMENT": [
+          "MANAGEMENT_STRATEGY_FOR_PRESENTATION"
+        ]
+      }
+    },
+    "NEXT_ACTION_SET": {
+      "nominal_parity_axes": [],
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "response_class_axis": "next_action_class",
+      "token_implications": {
+        "COMMUNICATION_ACTION": [
+          "NEXT_ACTION_FOR_CURRENT_CARE"
+        ],
+        "DIAGNOSTIC_ORDER": [
+          "NEXT_ACTION_FOR_CURRENT_CARE"
+        ],
+        "DISPOSITION_ACTION": [
+          "NEXT_ACTION_FOR_CURRENT_CARE"
+        ],
+        "ESCALATION_TO_CRITICAL_CARE": [
+          "NEXT_ACTION_FOR_CURRENT_CARE"
+        ],
+        "HIGH_FLOW_SUPPORT": [
+          "NEXT_ACTION_FOR_CURRENT_CARE"
+        ],
+        "LOW_FLOW_SUPPORT": [
+          "NEXT_ACTION_FOR_CURRENT_CARE"
+        ],
+        "MINIMAL_SUPPORT": [
+          "NEXT_ACTION_FOR_CURRENT_CARE"
+        ],
+        "MONITORING_ORDER": [
+          "NEXT_ACTION_FOR_CURRENT_CARE"
+        ],
+        "OBSERVATION": [
+          "NEXT_ACTION_FOR_CURRENT_CARE"
+        ],
+        "PATIENT_INSTRUCTION": [
+          "NEXT_ACTION_FOR_CURRENT_CARE"
+        ],
+        "PHARMACOLOGIC_ACTION": [
+          "NEXT_ACTION_FOR_CURRENT_CARE"
+        ],
+        "PROCEDURAL_INTERVENTION": [
+          "NEXT_ACTION_FOR_CURRENT_CARE"
+        ]
+      }
+    },
+    "STATISTICAL_INTERPRETATION_SET": {
+      "nominal_parity_axes": [],
+      "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+      "response_class_axis": "explained_phenomenon_class",
+      "token_implications": {
+        "CHANCE_VARIATION": [
+          "EXPLANATION_OF_OBSERVED_PHENOMENON"
+        ],
+        "CONFOUNDING": [
+          "EXPLANATION_OF_OBSERVED_PHENOMENON"
+        ],
+        "MEASUREMENT_ERROR": [
+          "EXPLANATION_OF_OBSERVED_PHENOMENON"
+        ],
+        "SCREENING_MEASUREMENT_ARTEFACT": [
+          "EXPLANATION_OF_OBSERVED_PHENOMENON"
+        ],
+        "SELECTION_EFFECT": [
+          "EXPLANATION_OF_OBSERVED_PHENOMENON"
+        ],
+        "TRUE_EFFECT": [
+          "EXPLANATION_OF_OBSERVED_PHENOMENON"
+        ]
+      }
+    }
+  },
+  "overlays": {
+    "MED": {
+      "always_required": [],
+      "discipline_profile_id": "MEDICINE",
+      "nominal_parity_by_archetype": {
+        "DIAGNOSIS_SET": [
+          "organ_system"
+        ],
+        "INVESTIGATION_SET": [
+          "organ_system"
+        ],
+        "MANAGEMENT_STRATEGY_SET": [
+          "drug_class"
+        ],
+        "NEXT_ACTION_SET": [
+          "organ_system"
+        ]
+      }
+    },
+    "OBGYN": {
+      "always_required": [],
+      "discipline_profile_id": "OBGYN",
+      "nominal_parity_by_archetype": {
+        "DIAGNOSIS_SET": [
+          "inflammatory_state",
+          "gestational_applicability"
+        ],
+        "INVESTIGATION_SET": [
+          "gestational_applicability"
+        ],
+        "MANAGEMENT_STRATEGY_SET": [
+          "gestational_applicability"
+        ],
+        "NEXT_ACTION_SET": [
+          "gestational_applicability"
+        ]
+      }
+    },
+    "PED": {
+      "always_required": [
+        "age"
+      ],
+      "discipline_profile_id": "PEDIATRICS",
+      "nominal_parity_by_archetype": {
+        "DIAGNOSIS_SET": [
+          "age_appropriateness"
+        ],
+        "INVESTIGATION_SET": [
+          "age_appropriateness"
+        ],
+        "MANAGEMENT_STRATEGY_SET": [
+          "age_appropriateness"
+        ],
+        "NEXT_ACTION_SET": [
+          "age_appropriateness"
+        ]
+      }
+    },
+    "PHELO": {
+      "always_required": [],
+      "discipline_profile_id": "PHELO",
+      "nominal_parity_by_archetype": {}
+    },
+    "PSY": {
+      "always_required": [],
+      "discipline_profile_id": "PSYCHIATRY",
+      "nominal_parity_by_archetype": {
+        "DISPOSITION_SET": [
+          "care_setting"
+        ],
+        "MANAGEMENT_STRATEGY_SET": [
+          "care_setting"
+        ],
+        "NEXT_ACTION_SET": [
+          "care_setting"
+        ]
+      }
+    },
+    "SURG": {
+      "always_required": [],
+      "discipline_profile_id": "SURGERY",
+      "nominal_parity_by_archetype": {
+        "DIAGNOSIS_SET": [
+          "organ_system"
+        ],
+        "DISPOSITION_SET": [
+          "care_setting"
+        ],
+        "INVESTIGATION_SET": [
+          "organ_system"
+        ],
+        "MANAGEMENT_STRATEGY_SET": [
+          "organ_system"
+        ],
+        "NEXT_ACTION_SET": [
+          "organ_system"
+        ]
+      }
+    }
+  },
+  "schema_version": "PROFILE_SCHEMA_V2",
+  "scope": "QGEN_COMPOSITIONAL_PROFILE_SNAPSHOT",
+  "snapshot_id": "QGEN_PROFILE_SNAPSHOT_V2",
+  "study_unit_specific_exceptions": []
+}

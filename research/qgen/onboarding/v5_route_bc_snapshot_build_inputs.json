@@ -1,0 +1,146 @@
+{
+  "anchor_proposals": [
+    {
+      "anchor_study_unit_id": "SU-D-04",
+      "author_execution_id": "root-route-bc-2026-09-07-author",
+      "context": {
+        "derivation": "SRC-MED-048-REC-01 names 'a mobile lipoma' as the contrast; SF-D04-MOBILE-MASS PRESENT is what would make lipoma a genuinely tempting alternative to an epidermal cyst.",
+        "derivation_rule": "R2",
+        "source_artifact": "research/qgen/onboarding/v4_route_bc_raw_supply.json"
+      },
+      "decision_granularity": "DIAGNOSIS",
+      "declared_anchor_role": "KEY_DISCRIMINATOR",
+      "evidence_refs": [
+        "SRC-MED-048-REC-01"
+      ],
+      "extension_id": "AX-D04-MOBILE-MASS-LIPOMA",
+      "feature_id": "SF-D04-MOBILE-MASS",
+      "learner_decision": "LD-D04-01",
+      "required_state": "PRESENT",
+      "response_class": [
+        "PLAUSIBLE_DIAGNOSTIC_ENTITY"
+      ],
+      "scope_opportunity_labels": [
+        "LD-D04-01"
+      ],
+      "seed_id": "SEED-ROUTEBC-D04-LIPOMA",
+      "target_concept_id": "CONCEPT-ROUTEBC-D04-LIPOMA"
+    },
+    {
+      "anchor_study_unit_id": "SU-D-12",
+      "author_execution_id": "root-route-bc-2026-09-07-author",
+      "context": {
+        "derivation": "SRC-MED-033-REC-01: 'irritant contact dermatitis follows repeated chemically damaging exposure' -- SF-ONB2-REPEATED-IRRITANT PRESENT is what would make irritant CD a genuinely tempting alternative to allergic CD.",
+        "derivation_rule": "R1",
+        "source_artifact": "research/qgen/onboarding/v4_route_bc_raw_supply.json"
+      },
+      "decision_granularity": "DIAGNOSIS",
+      "declared_anchor_role": "KEY_DISCRIMINATOR",
+      "evidence_refs": [
+        "SRC-MED-033-REC-01"
+      ],
+      "extension_id": "AX-D12-REPEATED-IRRITANT-ICD",
+      "feature_id": "SF-ONB2-REPEATED-IRRITANT",
+      "learner_decision": "LD-D12-01",
+      "required_state": "PRESENT",
+      "response_class": [
+        "PLAUSIBLE_DIAGNOSTIC_ENTITY"
+      ],
+      "scope_opportunity_labels": [
+        "LD-D12-01"
+      ],
+      "seed_id": "SEED-ROUTEBC-D12-IRRITANT-CD",
+      "target_concept_id": "CONCEPT-ROUTEBC-D12-IRRITANT-CD"
+    }
+  ],
+  "anchor_reviews": {
+    "AX-D04-MOBILE-MASS-LIPOMA": {
+      "author_execution_id": "root-route-bc-2026-09-07-author",
+      "claim_sha256": {
+        "SRC-MED-048-REC-01": "58bc1f8ad74c7a22aab0f203284189067d98119e7509db6b596ba2e133e4dc2d"
+      },
+      "evidence_refs_checked": [
+        "SRC-MED-048-REC-01"
+      ],
+      "independent_context": true,
+      "rationale": "Independent review approved \"mobile subcutaneous lipoma\" as COUNTERFACTUAL_CORRECT for LD-D04-01; feature is genuinely new, correctly scoped, PRESENT-direction is semantically sound (mobile-mass present -> lipoma legitimately tempting; this opportunity own frozen stem does not have this feature present, so the relation will not admit lipoma for LD-D04-01 itself, consistent with the epidermal-cyst key).",
+      "reviewer_execution_id": "independent-sonnet-subagent-route-bc-2026-09-07",
+      "subject_sha256": "92620ad9685d60075d75138a1772cdfbc8bb5d40616c328f6c2f409834ca6db3",
+      "verdict": "APPROVED"
+    },
+    "AX-D12-REPEATED-IRRITANT-ICD": {
+      "author_execution_id": "root-route-bc-2026-09-07-author",
+      "claim_sha256": {
+        "SRC-MED-033-REC-01": "1e1ec33c3f57bd0121c44b9895f312d6b20dbbbf403c27603cfd7f853fc6d5a7"
+      },
+      "evidence_refs_checked": [
+        "SRC-MED-033-REC-01"
+      ],
+      "independent_context": true,
+      "rationale": "Independent review approved \"irritant contact dermatitis\" as COUNTERFACTUAL_CORRECT for LD-D12-01; feature SF-ONB2-REPEATED-IRRITANT is already bound to SU-D-12/LD-D12-01 in V4, PRESENT-direction is semantically sound (repeated irritant exposure present -> irritant CD legitimately tempting); this opportunity own frozen stem has this feature ABSENT, so the relation will not admit irritant CD for LD-D12-01 itself, consistent with the allergic-CD key.",
+      "reviewer_execution_id": "independent-sonnet-subagent-route-bc-2026-09-07",
+      "subject_sha256": "86bbda4e2499baa9133a18e070b80b8cfebeca73b36d3c5889b385a79841bbca",
+      "verdict": "APPROVED"
+    }
+  },
+  "built_snapshot_content_sha256": "7d0952df5554634f5dacb6a928258a4593c4a817ee897e888d68b6bacaffe273",
+  "feature_proposals": [
+    {
+      "author_execution_id": "root-route-bc-2026-09-07-author",
+      "classification": "NEW_CANONICAL_FEATURE",
+      "evidence_refs": [
+        "SRC-MED-048-REC-01"
+      ],
+      "feature_id": "SF-D04-MOBILE-MASS",
+      "feature_type": "EXAMINATION_FINDING",
+      "identity_type": "FINDING",
+      "learner_decision_ids": [
+        "LD-D04-01"
+      ],
+      "preferred_label": "Freely mobile subcutaneous mass on palpation",
+      "proposal_id": "FP-D04-MOBILE-MASS",
+      "proposed_anchor_relations": [],
+      "purpose": "Distinguish a mobile subcutaneous lipoma from a superficial, site-typical epidermal cyst per SRC-MED-048-REC-01.",
+      "study_unit_id": "SU-D-04"
+    }
+  ],
+  "feature_reviews": {
+    "FP-D04-MOBILE-MASS": {
+      "author_execution_id": "root-route-bc-2026-09-07-author",
+      "claim_sha256": {
+        "SRC-MED-048-REC-01": "58bc1f8ad74c7a22aab0f203284189067d98119e7509db6b596ba2e133e4dc2d"
+      },
+      "evidence_refs_checked": [
+        "SRC-MED-048-REC-01"
+      ],
+      "independent_context": true,
+      "rationale": "Independent review (v4_route_bc_independent_review.json) verified SRC-MED-048-REC-01 verbatim names \"a mobile lipoma\" as the contrast to the epidermal cyst; the feature is genuinely new (absent from V4), scoped only to SU-D-04/LD-D04-01, no collision.",
+      "reviewer_execution_id": "independent-sonnet-subagent-route-bc-2026-09-07",
+      "subject_sha256": "8463d9a2e109a782c18cc5510eae6f242f57c8bcf8a43d12d2387679bec29c89",
+      "verdict": "APPROVED"
+    }
+  },
+  "independent_review_ref": "research/qgen/onboarding/v4_route_bc_independent_review.json",
+  "not_promoted_to_v5": [
+    {
+      "candidate_concept": "Vascular malformation",
+      "opportunity_id": "LD-D07-01",
+      "reason": "Independently APPROVED on clinical/citation grounds (v4_route_bc_independent_review.json), but NOT promoted into V5: the only available reused feature (SF-ONB2-INFANTILE-COURSE) is diagnostic OF THE KEY (infantile haemangioma growth-then-involution), not of the candidate (vascular malformation). The registry's new-anchor-relation mechanism (vocabulary_onboarding.build_extended_snapshot) requires required_state=PRESENT and only makes semantic sense when the anchored feature is characteristic of the TARGET (candidate) concept. Registering this feature at PRESENT to anchor vascular malformation would assert the medically backwards claim that a growth-then-involution course suggests malformation. Fixing this needs a new feature characterizing malformations own defining trait (e.g. present-at-birth, non-involuting, proportionate growth), not evidenced in the cited claim beyond naming the contrast category, and out of scope for this bounded wave."
+    },
+    {
+      "candidate_concept": "Continue observation without early specialist referral",
+      "opportunity_id": "LD-D07-02",
+      "reason": "Same structural issue: the reused feature (SF-ONB2-ULCERATED-VASCULAR-LESION, PRESENT) is what makes REFERRAL correct, not what makes \"continue observation\" plausible. Registering it at PRESENT to anchor the observation candidate would be backwards. Not promoted."
+    },
+    {
+      "candidate_concept": "No further assessment needed (reassure as cosmetic finding only)",
+      "opportunity_id": "LD-D08-01",
+      "reason": "Same structural issue: SF-ONB2-XANTHELASMA PRESENT is what makes lipid-focused assessment correct, not what makes \"no action\" plausible. Registering it at PRESENT to anchor the no-action candidate would be backwards. Not promoted."
+    }
+  ],
+  "parent_content_sha256": "4b69c5208119e0b0176750367c459cb03df6dbfa14fe3aa86dfb4e7c841e28fd",
+  "parent_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V4",
+  "raw_supply_ref": "research/qgen/onboarding/v4_route_bc_raw_supply.json",
+  "schema_version": "1.0",
+  "scope": "QGEN_FRESH36_ROUTE_BC_V5_BUILD_INPUTS"
+}

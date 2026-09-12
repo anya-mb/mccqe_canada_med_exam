@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "anchor-candidate-universe-v1.schema.json",
+  "title": "Anchor Candidate Universe V1",
+  "type": "object",
+  "required": ["schema_version", "anchors", "content_sha256"],
+  "properties": {
+    "schema_version": {"const": "ANCHOR_CANDIDATE_UNIVERSE_V1"},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "anchors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["anchor_id", "learner_decision", "key", "response_class", "granularity", "decision_signature", "clinical_context", "candidates"],
+        "properties": {
+          "candidates": {
+            "type": "array",
+            "maxItems": 24,
+            "items": {
+              "type": "object",
+              "required": ["canonical_candidate_id", "normalized_candidate_text", "candidate_concept", "origins", "source_kind", "response_class", "granularity", "applicability_context", "proposal_stage", "review_stage_1", "evidence_status", "review_stage_2", "second_key_status", "pairwise_distinctness", "final_admission_state"]
+            }
+          }
+        }
+      }
+    }
+  }
+}

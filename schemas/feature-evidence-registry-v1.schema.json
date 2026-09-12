@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "feature-evidence-registry-v1.schema.json",
+  "title": "Feature Evidence Registry V1",
+  "type": "object",
+  "required": ["schema_version", "cohort_sha256", "sources", "facts", "content_sha256"],
+  "properties": {
+    "schema_version": {"const": "FEATURE_EVIDENCE_REGISTRY_V1"},
+    "cohort_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "sources": {"type": "array", "items": {"type": "object", "required": ["source_id", "title", "issuing_organization", "authority", "date_or_version", "url", "locator"]}},
+    "facts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["evidence_fact_id", "canonical_subject_id", "canonical_subject_name", "normalized_clinical_proposition", "feature_roles", "response_class_relevance", "population_context", "clinical_stage", "target_subdomain", "source_refs", "source_authority", "source_date_or_version", "entailment_review_status", "reuse_scope", "content_sha256"],
+        "properties": {
+          "entailment_review_status": {"enum": ["ENTAILED", "PARTIALLY_ENTAILED", "NOT_ENTAILED", "CONFLICTING", "UNCERTAIN"]},
+          "feature_roles": {"type": "array", "minItems": 1, "uniqueItems": true},
+          "source_refs": {"type": "array", "minItems": 1, "uniqueItems": true},
+          "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "additionalProperties": false
+}

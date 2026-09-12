@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0",
+  "scope": "QGEN_FRESH36_ROUTE_BC_PREFLIGHT_WAVE2",
+  "starting_commit": "01eff40",
+  "continuation_of": "reports/qgen_route_bc_preflight_wave_report.json",
+  "llm_api_calls": 0,
+  "commits_created": 0,
+  "phase0_frozen_sha256_reverification": {
+    "v2_frozen_pilot_opportunities_json": {
+      "expected": "14c8491f3fb66c7e78c0f78f4692debb558229c36296f12ff09e5c200daa27fe",
+      "measured": "14c8491f3fb66c7e78c0f78f4692debb558229c36296f12ff09e5c200daa27fe",
+      "match": true
+    },
+    "v2_frozen_pilot_stem_feature_maps_json": {
+      "expected": "dcf569fe325c2ec5de1a7b22667f54d36d666f05b83707b014b6424c8641924a",
+      "measured": "dcf569fe325c2ec5de1a7b22667f54d36d666f05b83707b014b6424c8641924a",
+      "match": true
+    },
+    "outcome": "NO_MISMATCH_PROCEED"
+  },
+  "scope_recount": {
+    "task_brief_said": "22 ROUTE_B + 1 ROUTE_C = 23 remaining",
+    "manifest_measured": "23 ROUTE_B + 1 ROUTE_C = 24 remaining",
+    "reconciliation": "Recomputed directly from research/qgen/onboarding/v3_fresh36_supply_input_manifest.json by excluding the 8 opportunity_ids already attempted in the prior session from the 32-row ROUTE_B/ROUTE_C subset. Result is 24, one more than the brief's arithmetic; used the measured 24, listed explicitly in research/qgen/onboarding/v4_route_bc_wave2_raw_supply.json#remaining_opportunity_ids."
+  },
+  "opportunities_attempted_this_wave": 24,
+  "opportunities_attempted_ids": [
+    "LD-D21-01", "LD-D23-02", "LD-D24-01", "LD-D26-01", "LD-D38-01",
+    "LD-OB53-01", "LD-OB53-03",
+    "LD-ONB2-GY-EC", "LD-ONB2-GY-HYSTERECTOMY", "LD-ONB2-GY-IMAGING",
+    "LD-ONB2-PED-AOM-DX", "LD-ONB2-PED-AOM-OBSERVE",
+    "LD-ONB2-PH-WORK-HISTORY",
+    "LD-ONB2-PM-CONSENT", "LD-ONB2-PM-MAID-CONSENT",
+    "LD-ONB2-PSY-AUD-ABSTINENCE", "LD-ONB2-PSY-AUD-INTERVIEW", "LD-ONB2-PSY-AUD-REDUCTION",
+    "LD-ONB2-SURG-CROUP-DISCHARGE", "LD-ONB2-SURG-CROUP-DX", "LD-ONB2-SURG-CROUP-STEROID",
+    "LD-PH34-01", "LD-PH34-02", "LD-PH36-01"
+  ],
+  "discovery_method": "Reused scripts/qbank/profile_contrast_retrieval.build_retrieval_index (real function call, not reimplemented) over all 3 frozen curated seed packs (competitive_contrast_seed_pack_r4.json, _g2_extensions.json, _g2_targeted.json) to enumerate the full 81-row curated library's distinct anchor_study_unit_id/anchor_topic pairs, as a cheap filter applied before any clinical adjudication.",
+  "cheap_filter_finding": "The entire curated library covers only 6 topics: SU-C-21 (Acute Coronary Syndrome), SU-GS-76 (Appendicitis), SU-OB-54 (Mastitis), SU-P-147 (Bronchiolitis), SU-PH-07 (Screening Principles and Screening Biases), SU-PS-12 (Depressive Disorders). None of the 24 remaining opportunities' study units overlap with, or are clinically related to, any of these 6.",
+  "raw_supply_artifact": {
+    "path": "research/qgen/onboarding/v4_route_bc_wave2_raw_supply.json",
+    "raw_supply_sha256_before_review": "0da536d141b84db46d66ff2fb599cc1fecbfc80dd66d7630399d7ce3cfe2a626",
+    "candidates_proposed": 0,
+    "frozen_before_review": true
+  },
+  "independent_review": {
+    "run": false,
+    "reason": "Zero relations or feature extensions were proposed this wave, so there was nothing for a fresh, no-authorship-stake review subagent to adjudicate. MAXIMUM_SEMANTIC_SUBAGENT_CONCURRENCY=1 policy remains available but unused."
+  },
+  "option_b_shared_plausibility_feature_extension": {
+    "attempted": true,
+    "outcome": "VOCABULARY_EXTENSION_BLOCKED_FOR_ALL_24",
+    "rationale": "Option (b) requires an existing curated seed that is genuinely clinically plausible as a competitor for the opportunity, so a real evidence-grounded feature can be added to make its (already-defined) anchor gate fire. No such seed exists for any of the 24 remaining opportunities -- the cheap filter above is decisive and was verified via the real retrieval-index-building code, not assumed. Forcing a SHARED_PLAUSIBILITY_FEATURE between e.g. a dermatology stem and an appendicitis-pack competitor row would fabricate a clinical relationship not present in evidence, which the anti-hallucination contract forbids."
+  },
+  "option_a_new_curated_seed_pack": {
+    "attempted": false,
+    "judgment": "NOT_TRACTABLE_WITHIN_THIS_BOUNDED_WAVE",
+    "rationale": "Authoring a new curated-seed-pack-shaped file (targets/seeds + .enrichment.json + .stem_anchors.json, independently reviewed, hash-frozen) for even one of the 24 study units is a materially larger unit of work (competitor discovery, condition predicates, enrichment tags, stem-anchor authoring, independent review, hash freeze) than fits a bounded discovery-plus-review pass. Consistent with the prior session's judgment for the dermatology cluster; a deliberate scope decision, not an oversight."
+  },
+  "v5_v6_registry": {
+    "extended_this_wave": false,
+    "reason": "No candidate survived to APPROVED status (none were proposed), so there is nothing to promote. FEATURE_ANCHOR_SNAPSHOT_V5 (research/qgen/onboarding/feature_anchor_snapshot_v5.json) is unchanged; no V6 was created."
+  },
+  "replay_gate_status": {
+    "post_preflight_contrast_ready": "0/36 (NOT_REACHED, unchanged from baseline and from the prior wave)",
+    "note": "Consistent with the prior session's architectural finding: build_retrieval_index only iterates seed_id rows already present in the 3 frozen curated seed packs, and this wave found no genuinely admissible path (neither option a nor b) to add a new retrievable, clinically-grounded competitor for any of the 24 opportunities attempted."
+  },
+  "generation_phase23_plus": "NOT_REACHED. Gate (contrast-ready > 0 after this wave) not met, so no stem, blind-solve, or final-review output was attempted or fabricated.",
+  "frozen_files_touched": {
+    "v2_frozen_pilot_opportunities_json": false,
+    "v2_frozen_pilot_stem_feature_maps_json": false,
+    "feature_anchor_snapshot_v4_json": false
+  },
+  "tests_run": {
+    "command": ".venv/bin/python -m pytest tests/test_onboarding_v2_build.py tests/test_qgen_profiles_v2.py tests/test_vocabulary_onboarding.py tests/test_profile_contrast_retrieval.py tests/test_stem_anchor_floor.py",
+    "result": "98 passed, 0 failed",
+    "full_suite_run": false,
+    "full_suite_rationale": "No shared code under scripts/ or tests/ was changed this wave (only new research JSON and this report), so per policy the full suite was not rerun."
+  },
+  "git": {
+    "commits_created": 0,
+    "resets_or_cleans": 0,
+    "notes": "No commits, resets, cleans, stashes, or pushes performed."
+  },
+  "supply_assessment": "STRUCTURALLY_BLOCKED_ACROSS_THE_FULL_REMAINING_SET. Unlike the dermatology cluster (which had genuine clinically-related indexed competitors that failed only on citation-scope precision), none of these 24 opportunities have ANY curated seed that is even topically related to their own clinical content. The milestone's supply problem for Route B/C is not fixable by feature-map or registry extension alone for this remaining set; it requires new curated-seed-pack authoring (option a), which was judged out of scope for a single bounded wave.",
+  "production_readiness": "NOT_READY_FOR_SCALEOUT",
+  "next_step": "QGEN_NEXT_STEP = AUTHOR_ONE_NEW_CURATED_SEED_PACK_SHAPED_FILE_TARGETS_SEEDS_PLUS_ENRICHMENT_PLUS_STEM_ANCHORS_FOR_ONE_STUDY_UNIT_FROM_THE_REMAINING_24_AS_ITS_OWN_BOUNDED_TASK_INDEPENDENTLY_REVIEWED_AND_HASH_FROZEN_BEFORE_ATTEMPTING_ANY_FURTHER_DISCOVERY_WAVE_SINCE_OPTION_B_IS_NOW_SHOWN_EXHAUSTED_FOR_ALL_32_ROUTE_BC_OPPORTUNITIES_ACROSS_BOTH_SESSIONS"
+}

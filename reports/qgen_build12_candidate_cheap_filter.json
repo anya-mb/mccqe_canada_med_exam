@@ -1,0 +1,228 @@
+{
+  "candidates": [
+    {
+      "cheap_filter_reason": "Heading names a generic report subsection ('Treatment Details'), not a nameable next-action option; no next_action_class token can be assigned from the label alone.",
+      "cheap_filter_verdict": "CANONICALIZATION_FAILURE",
+      "chunk_id": "TNC-6f949b978a4e9449c9ea1353",
+      "development_id": "RDY-MED-01",
+      "identity": "Treatment Details",
+      "resolution_method": "SPECIFIC_HEADING_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "Heading names a guideline document ('Guidelines for Asthma Management'), not a specific action; also names asthma, not the COPD study unit's own escalation action.",
+      "cheap_filter_verdict": "CANONICALIZATION_FAILURE",
+      "chunk_id": "TNC-aae1bdfa8eeb2be83dd7cbf7",
+      "development_id": "RDY-MED-01",
+      "identity": "Guidelines for Asthma Management",
+      "resolution_method": "SPECIFIC_HEADING_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "Heading names a guideline section ('Emergency Management of Asthma'), not a single nameable next action; asthma-specific, not the COPD escalation decision.",
+      "cheap_filter_verdict": "CANONICALIZATION_FAILURE",
+      "chunk_id": "TNC-6d949bc42e0c4179ce9752cf",
+      "development_id": "RDY-MED-01",
+      "identity": "Emergency Management of Asthma",
+      "resolution_method": "SPECIFIC_HEADING_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "Names a specific diagnostic-order-shaped concept (ADH / diabetes-insipidus workup) on the same next_action_class axis (DIAGNOSTIC_ORDER) as the key, distinct from the key's own glucose/ketone order.",
+      "cheap_filter_verdict": "SURVIVES_TO_SEMANTIC",
+      "chunk_id": "TNC-3526ef2779d479b2f1fa8580",
+      "development_id": "RDY-PED-04",
+      "identity": "Antidiuretic Hormone",
+      "resolution_method": "SECTION_PATH_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "Names a specific management-strategy-shaped concept (reassure/no treatment for physiologic discharge) mapping to the management_capability axis's NO_ACTIVE_TREATMENT token, on-axis and distinct from the key's PHARMACOLOGIC_TREATMENT token.",
+      "cheap_filter_verdict": "SURVIVES_TO_SEMANTIC",
+      "chunk_id": "TNC-6fcd85fe560c0d9aa9055995",
+      "development_id": "RDY-OBGYN-01",
+      "identity": "Physiologic Discharge",
+      "resolution_method": "SECTION_PATH_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "Solitary pulmonary nodule workup is an elective incidental-finding investigation pathway (STRUCTURAL token, same coarse axis as the key), but addresses a different clinical stage/presentation than an acute emergency-department pneumothorax evaluation.",
+      "cheap_filter_verdict": "WRONG_STAGE",
+      "chunk_id": "TNC-68c6c2148892e9cf205fd0fb",
+      "development_id": "RDY-SURG-03",
+      "identity": "Approach to the Solitary Pulmonary Nodule",
+      "resolution_method": "SECTION_PATH_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "'Cholelithiasis' is the parent diagnosis of which biliary colic (the opportunity's own scenario) is a subtype/presentation; it is not itself a nameable disposition action and collides with the key's own diagnosis.",
+      "cheap_filter_verdict": "PARENT_SUBTYPE_COLLISION",
+      "chunk_id": "TNC-d10a5a890da03cc636eacf6b",
+      "development_id": "RDY-SURG-05",
+      "identity": "Cholelithiasis",
+      "resolution_method": "SECTION_PATH_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "Heading names a differential-diagnosis section title, not a specific plausible diagnostic entity.",
+      "cheap_filter_verdict": "CANONICALIZATION_FAILURE",
+      "chunk_id": "TNC-a6145d7fbd61213cff0ba190",
+      "development_id": "RDY-PSY-03",
+      "identity": "Differential Diagnosis of Psychosis",
+      "resolution_method": "SECTION_PATH_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "Duplicate/alias of TNC-a6145d7fbd61213cff0ba190 ('Differential Diagnosis of Psychosis'); same generic DDx-section heading under a different label.",
+      "cheap_filter_verdict": "DUPLICATE_OR_ALIAS",
+      "chunk_id": "TNC-928728bb9a58e0c47c300ac1",
+      "development_id": "RDY-PSY-03",
+      "identity": "DDx for Psychosis",
+      "resolution_method": "SPECIFIC_HEADING_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "Re-discovery of the shorter-course/schizophreniform psychotic-disorder candidate already independently reviewed UNCERTAIN in development_12_seed_pack_v1.json (RDY-PSY-03__brief_or_schizophreniform); per this milestone's standing instruction the UNCERTAIN candidate must remain unavailable, so it is excluded here rather than re-reviewed for a different result.",
+      "cheap_filter_verdict": "OTHER",
+      "chunk_id": "TNC-8152b0d84d1adca4e77a8d3e",
+      "development_id": "RDY-PSY-03",
+      "identity": "Disorder Psychotic Symptoms Duration",
+      "resolution_method": "SPECIFIC_HEADING_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "'Schizophrenia Criterion 4 >6mo' is literally the key diagnosis's own defining DSM-5 duration criterion, not a competing candidate.",
+      "cheap_filter_verdict": "KEY_DUPLICATE",
+      "chunk_id": "TNC-b6b478212605b1d5a33f22fd",
+      "development_id": "RDY-PSY-03",
+      "identity": "Schizophrenia Criterion 4 >6mo",
+      "resolution_method": "SPECIFIC_HEADING_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "'DSM-5 Diagnostic Criteria for Schizophrenia' is the key diagnosis itself.",
+      "cheap_filter_verdict": "KEY_DUPLICATE",
+      "chunk_id": "TNC-22409e1d95144f0d22bebd63",
+      "development_id": "RDY-PSY-03",
+      "identity": "DSM-5 DIAGNOSTIC CRITERIA FOR SCHIZOPHRENIA",
+      "resolution_method": "SPECIFIC_HEADING_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "'Seatbelt use' is a concrete prevention example, not one of explained_phenomenon_class's statistical-artefact tokens (SCREENING_MEASUREMENT_ARTEFACT/SELECTION_EFFECT/MEASUREMENT_ERROR/CONFOUNDING/CHANCE_VARIATION/TRUE_EFFECT); it names a prevention-level instance, not a phenomenon explanation.",
+      "cheap_filter_verdict": "WRONG_RESPONSE_CLASS",
+      "chunk_id": "TNC-fb8f469ede345faddff121d0",
+      "development_id": "RDY-PHELO-02",
+      "identity": "Seatbelt use",
+      "resolution_method": "SPECIFIC_HEADING_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "'Disease Prevention Strategies' is a generic overview heading, not a statistical-phenomenon-explanation token.",
+      "cheap_filter_verdict": "WRONG_RESPONSE_CLASS",
+      "chunk_id": "TNC-96b7ee682aea60b6eee2ff5e",
+      "development_id": "RDY-PHELO-02",
+      "identity": "Disease Prevention Strategies",
+      "resolution_method": "SPECIFIC_HEADING_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "'Level of Prevention Goal Examples' is an examples-table heading, not a statistical-phenomenon-explanation token.",
+      "cheap_filter_verdict": "WRONG_RESPONSE_CLASS",
+      "chunk_id": "TNC-f75cfb625225a9e3971768a0",
+      "development_id": "RDY-PHELO-02",
+      "identity": "Level of Prevention Goal Examples",
+      "resolution_method": "SPECIFIC_HEADING_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "'Screening (Secondary Prevention)' names a prevention-level instance, not a statistical-phenomenon-explanation token on the explained_phenomenon_class axis.",
+      "cheap_filter_verdict": "WRONG_RESPONSE_CLASS",
+      "chunk_id": "TNC-01fdc2ff01b871a9e29803c3",
+      "development_id": "RDY-PHELO-02",
+      "identity": "Screening (Secondary Prevention)",
+      "resolution_method": "SPECIFIC_HEADING_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "'Natural History of Disease' is a generic epidemiology concept, not a statistical-phenomenon-explanation token.",
+      "cheap_filter_verdict": "WRONG_RESPONSE_CLASS",
+      "chunk_id": "TNC-477825f89b69d70071ce5a5a",
+      "development_id": "RDY-PHELO-02",
+      "identity": "Natural History of Disease",
+      "resolution_method": "SPECIFIC_HEADING_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "'Surveillance' names a public-health activity, not a statistical-phenomenon-explanation token on the explained_phenomenon_class axis.",
+      "cheap_filter_verdict": "WRONG_RESPONSE_CLASS",
+      "chunk_id": "TNC-4b62df2e7e311833679bd3b7",
+      "development_id": "RDY-PHELO-02",
+      "identity": "Surveillance",
+      "resolution_method": "SPECIFIC_HEADING_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "'Overview of Capacity' restates the key concept (capacity assessment) itself.",
+      "cheap_filter_verdict": "KEY_DUPLICATE",
+      "chunk_id": "TNC-35a6545f85c376b2d7b7c6b9",
+      "development_id": "RDY-PHELO-08",
+      "identity": "Overview of Capacity",
+      "resolution_method": "SPECIFIC_HEADING_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "'Assessment of Capacity' restates the key concept (capacity assessment) itself.",
+      "cheap_filter_verdict": "KEY_DUPLICATE",
+      "chunk_id": "TNC-b6064c6e16951b49c736aeae",
+      "development_id": "RDY-PHELO-08",
+      "identity": "Assessment of Capacity",
+      "resolution_method": "SPECIFIC_HEADING_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "Names a specific, distinct legal/ethical action (Bill C-14 MAID eligibility criteria) on the same value_served axis token (AUTONOMY) as the key, not a duplicate or superset of capacity assessment; already independently reviewed APPROVED for candidate identity/plausibility in the prior session.",
+      "cheap_filter_verdict": "SURVIVES_TO_SEMANTIC",
+      "chunk_id": "TNC-a6fe91d7fcec6142dbb5232b",
+      "development_id": "RDY-PHELO-08",
+      "identity": "Bill C-14 Criteria for MAID",
+      "resolution_method": "SPECIFIC_HEADING_IDENTITY"
+    },
+    {
+      "cheap_filter_reason": "'Four Basic Requirements of Valid Consent' names a framework of which capacity (the key) is itself one of the four requirements -- the candidate is the key's own superset/parent, not an independent competitor; already independently reviewed UNCERTAIN in the prior session and must remain unavailable per this milestone's standing instruction.",
+      "cheap_filter_verdict": "PARENT_SUBTYPE_COLLISION",
+      "chunk_id": "TNC-9ec371ab7ae8d7988d8aabae",
+      "development_id": "RDY-PHELO-08",
+      "identity": "Four Basic Requirements of Valid Consent",
+      "resolution_method": "SPECIFIC_HEADING_IDENTITY"
+    }
+  ],
+  "cheap_filter_rejections": 19,
+  "cheap_filter_survivors": 3,
+  "cheap_filter_survivors_by_opportunity": {
+    "RDY-OBGYN-01": 1,
+    "RDY-PED-04": 1,
+    "RDY-PHELO-08": 1
+  },
+  "cheap_rejection_counts": {
+    "CANONICALIZATION_FAILURE": 4,
+    "DUPLICATE_OR_ALIAS": 1,
+    "KEY_DUPLICATE": 4,
+    "KNOWN_SECOND_KEY_OR_COKEY": 0,
+    "OTHER_DETERMINISTIC_REJECTION": 1,
+    "PARENT_SUBTYPE_COLLISION": 2,
+    "SCOPE_CONTRADICTION": 0,
+    "WRONG_GRANULARITY": 0,
+    "WRONG_RESPONSE_CLASS": 6,
+    "WRONG_STAGE": 1
+  },
+  "content_sha256": "2a0174717557586736aa9519c79c4c1d58b8d37d52a17751667ece76d6133de6",
+  "existing_approved_competitors_by_opportunity": {
+    "RDY-MED-01": 0,
+    "RDY-OBGYN-01": 0,
+    "RDY-PED-04": 1,
+    "RDY-PHELO-02": 0,
+    "RDY-PHELO-08": 0,
+    "RDY-PSY-03": 0,
+    "RDY-SURG-03": 1,
+    "RDY-SURG-05": 0
+  },
+  "input_hashes": {
+    "development_12_ids_sha256": "a20732467b62428dd2388f9bb21820c8ee501e9b3457dbcb0a8d28f6931a6509",
+    "identity_resolution_content_sha256": "c01230d54646adaf603bb033ef2c2a51d3b86c8c002b97b71132739a524e9e00"
+  },
+  "opportunities_capable_of_reaching_3_pre_review": "0/8",
+  "schema_version": "BUILD12_CANDIDATE_CHEAP_FILTER_V1",
+  "scope": "Phase 2-4: deterministic cheap filtering of all 22 unique resolved Build-12 candidates from qgen_candidate_identity_resolution_build12.json, before any clinical review.",
+  "theoretical_max_if_all_survivors_approved": {
+    "RDY-MED-01": 0,
+    "RDY-OBGYN-01": 1,
+    "RDY-PED-04": 2,
+    "RDY-PHELO-02": 0,
+    "RDY-PHELO-08": 1,
+    "RDY-PSY-03": 0,
+    "RDY-SURG-03": 1,
+    "RDY-SURG-05": 0
+  },
+  "unique_resolved_candidate_count": 22
+}

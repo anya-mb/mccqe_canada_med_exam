@@ -1,0 +1,166 @@
+{
+  "content_sha256": "6e299d646b10a0417f1fa9d38e19adae2812c758a2a1cfc0e3af96f2f142de4d",
+  "input_hashes": {
+    "cheap_filter_content_sha256": "2a0174717557586736aa9519c79c4c1d58b8d37d52a17751667ece76d6133de6",
+    "development_12_ids_sha256": "a20732467b62428dd2388f9bb21820c8ee501e9b3457dbcb0a8d28f6931a6509"
+  },
+  "plausibility_metrics": {
+    "clearly_dead": 0,
+    "clinically_plausible": 3,
+    "discovery_precision": "NOISY_BUT_USABLE",
+    "potential_second_key": 0,
+    "resolved_to_plausible_rate": 0.1364,
+    "resolved_to_semantic_rate": 0.1364,
+    "semantic_to_plausible_rate": 1.0,
+    "uncertain": 0,
+    "wrong_decision": 0
+  },
+  "plausibility_review": {
+    "RDY-OBGYN-01__physiologic_discharge": {
+      "rationale": "Vaginal discharge is commonly physiologic, and reassurance-without-treatment is the real, guideline-relevant failure mode this opportunity's own learner decision is designed to guard against (treating on clinical suspicion rather than waiting for certainty). It is a genuine, clinically dangerous wrong answer, not an invented one.",
+      "verdict": "CLINICALLY_PLAUSIBLE"
+    },
+    "RDY-PED-04__adh": {
+      "rationale": "Polyuria and polydipsia are the shared cardinal presentation of both DKA and central/nephrogenic diabetes insipidus, so a learner pattern-matching on those two features alone could plausibly reach for an ADH/diabetes-insipidus workup. It is a real, on-axis diagnostic-order candidate, not a fabricated or off-topic one.",
+      "verdict": "CLINICALLY_PLAUSIBLE"
+    },
+    "RDY-PHELO-08__bill_c14_maid": {
+      "rationale": "MAID eligibility explicitly requires patient capacity, so the two frameworks are adjacent in a way that could plausibly be conflated by a learner when a stem involves a grave or life-ending decision. Already independently reviewed APPROVED for candidate identity/plausibility in the prior session; re-affirmed here at the plausibility-review stage.",
+      "verdict": "CLINICALLY_PLAUSIBLE"
+    }
+  },
+  "relation_metrics": {
+    "relations_approved": 3,
+    "relations_proposed": 3,
+    "relations_rejected": 0,
+    "relations_uncertain": 0,
+    "targeted_relation_research_requests": 0
+  },
+  "relations_authored": [
+    {
+      "candidate_canonical_identity": "Check serum ADH / evaluate for central diabetes insipidus",
+      "classification": "COUNTERFACTUAL_CORRECT",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "inferiority_discriminator": "Weight loss, present in the stem, is not explained by diabetes insipidus (a renal-concentrating defect) and instead signals a catabolic, ketotic, potentially life-threatening process; DI's own confirmatory workup (water-deprivation testing, serum/urine osmolality) is a non-emergent, multi-hour-to-multi-day pathway, not an urgent action.",
+      "key": "Point-of-care glucose + ketone testing (urgent)",
+      "learner_decision": "In a child with polyuria, polydipsia, and weight loss, immediately check glucose and ketones and urgently assess for diabetic ketoacidosis.",
+      "opportunity_id": "RDY-PED-04",
+      "positive_candidate_anchor": {
+        "chunk_id": "TNC-3526ef2779d479b2f1fa8580",
+        "pdf_page": 1228,
+        "section_path_identity": "Antidiuretic Hormone",
+        "subheading": "Management",
+        "tn_node_id": "P.S07.T01"
+      },
+      "positive_plausibility_proposition": "Polyuria and polydipsia are the cardinal presentation of diabetes insipidus, and ADH/water-deprivation-pathway workup is a standard, real investigation for that presentation.",
+      "relation_id": "CCR2-DEV12-PED04-ADH",
+      "required_evidence_propositions": [
+        {
+          "basis": "standard pediatric endocrine emergency medicine",
+          "confidence": "HIGH",
+          "proposition": "DKA is diagnosed by hyperglycemia plus ketosis/acidosis and is a medical emergency requiring immediate recognition and treatment."
+        },
+        {
+          "basis": "standard endocrine physiology",
+          "confidence": "HIGH",
+          "proposition": "Diabetes insipidus presents with polyuria/polydipsia but, unlike DKA, is not associated with acute weight loss or ketoacidosis, and its definitive workup (water-deprivation test) is not an emergency investigation."
+        }
+      ],
+      "response_class": "DIAGNOSTIC_ORDER",
+      "review": {
+        "notes": "Anchor is genuinely positive (PRESENT feature that invites the candidate, not merely one that excludes it). Discriminator is specific and does not depend on an unguaranteed future stem feature. No second-key risk identified.",
+        "primary_reason": null,
+        "reviewer_execution_id": "sonnet5-independent-review-2026-09-08-build12-cache-v1",
+        "verdict": "APPROVED"
+      },
+      "second_key_analysis": "Not a second key: diabetes insipidus does not explain the stem's weight loss, and the decision explicitly demands the *urgent* action, which an elective DI workup fails regardless of whether DI is eventually part of the differential. Second-key risk assessed LOW.",
+      "targeted_relation_research_requests": 0,
+      "why_anchor_supports_candidate": "Polyuria+polydipsia is the textbook shared presentation of both DKA and central/nephrogenic diabetes insipidus; a learner weighing only that pair of features (and not weight loss) could plausibly reach for an ADH-related workup as the next action.",
+      "why_key_remains_superior": "DKA is immediately life-threatening (risk of severe acidosis, cerebral edema) and point-of-care glucose/ketone testing is the rapid bedside test that confirms or excludes it within minutes; an ADH/DI workup cannot answer the urgent question the vignette demands."
+    },
+    {
+      "candidate_canonical_identity": "Reassure as physiologic discharge; no antibiotic treatment",
+      "classification": "PLAUSIBLE_BUT_NEVER_BEST",
+      "decision_granularity": "TREATMENT_BUNDLE",
+      "inferiority_discriminator": "The opportunity's own learner decision requires clinically suspected PID as a precondition (e.g. pelvic/adnexal tenderness, cervical motion tenderness, fever, or risk-factor history), which is definitionally not explained by physiologic discharge and specifically indicates an infectious/inflammatory process requiring treatment.",
+      "key": "Empiric broad-spectrum antibiotic treatment bundle",
+      "learner_decision": "When pelvic inflammatory disease is clinically suspected, test for pregnancy and relevant infections and begin empiric broad-spectrum treatment without waiting for perfect diagnostic certainty.",
+      "opportunity_id": "RDY-OBGYN-01",
+      "positive_candidate_anchor": {
+        "chunk_id": "TNC-6fcd85fe560c0d9aa9055995",
+        "pdf_page": 622,
+        "section_path_identity": "Physiologic Discharge",
+        "subheading": "Treatment",
+        "tn_node_id": "GY.S11.T01"
+      },
+      "positive_plausibility_proposition": "Vaginal discharge is a common, usually benign physiologic finding, and normal physiologic leukorrhea is part of the differential for a patient presenting with discharge.",
+      "relation_id": "CCR2-DEV12-OBGYN01-PHYSIOLOGIC-DISCHARGE",
+      "required_evidence_propositions": [
+        {
+          "basis": "standard gynecologic teaching",
+          "confidence": "HIGH",
+          "proposition": "Physiologic (leukorrhea) discharge is a normal, non-infectious finding not associated with pelvic tenderness or fever."
+        },
+        {
+          "basis": "standard obstetric/gynecologic (SOGC-consistent) teaching",
+          "confidence": "HIGH",
+          "proposition": "Empiric antibiotic treatment for clinically suspected PID should begin promptly and should not be delayed for definitive microbiologic confirmation, given the risk of long-term reproductive complications."
+        }
+      ],
+      "response_class": "NO_ACTIVE_TREATMENT",
+      "review": {
+        "notes": "Anchor is genuinely positive. The discriminator's supporting stem features are not an unguaranteed future risk: they are the opportunity's own defining precondition (clinically suspected PID), so this seed is scope-restricted to that precondition rather than uncertain.",
+        "primary_reason": null,
+        "reviewer_execution_id": "sonnet5-independent-review-2026-09-08-build12-cache-v1",
+        "verdict": "APPROVED"
+      },
+      "second_key_analysis": "Not a second key: the opportunity is scoped to clinically-suspected-PID stems only, and 'reassure as physiologic' is never correct once that precondition holds. This is a population/context restriction on the seed, not a residual risk -- the restriction is guaranteed by the opportunity definition itself.",
+      "targeted_relation_research_requests": 0,
+      "why_anchor_supports_candidate": "Because physiologic discharge is a common and often correct explanation for isolated discharge complaints, a learner focused only on the discharge symptom (rather than the opportunity's defining precondition of clinically suspected PID) could plausibly conclude reassurance is sufficient.",
+      "why_key_remains_superior": "Untreated or under-treated PID carries serious, time-sensitive sequelae (tubo-ovarian abscess, infertility, ectopic-pregnancy risk, chronic pelvic pain); standard Canadian obstetric/gynecologic guidance directs prompt empiric broad-spectrum treatment on clinical suspicion, without waiting for microbiologic confirmation, precisely because of this risk-benefit asymmetry."
+    },
+    {
+      "candidate_canonical_identity": "Apply Bill C-14 / MAID eligibility criteria",
+      "classification": "COUNTERFACTUAL_CORRECT",
+      "decision_granularity": "ETHICAL_ACTION",
+      "inferiority_discriminator": "The opportunity's decision is a general capacity assessment for 'the specific proposed decision' (unspecified/generic), not a request for medical assistance in dying; nothing in the opportunity invokes a MAID request, a grievous-and-irremediable-condition determination, or Bill C-14's specific procedural safeguards.",
+      "key": "General two-part capacity assessment (understanding + appreciation of consequences)",
+      "learner_decision": "Assess capacity for the specific proposed decision by determining whether the patient understands relevant information and foreseeable consequences.",
+      "opportunity_id": "RDY-PHELO-08",
+      "positive_candidate_anchor": {
+        "chunk_id": "TNC-a6fe91d7fcec6142dbb5232b",
+        "pdf_page": 40,
+        "section_path_identity": "Bill C-14 Criteria for MAID",
+        "subheading": "Bill C-14 Criteria for MAID",
+        "tn_node_id": "ELOM.S02.T01"
+      },
+      "positive_plausibility_proposition": "Both capacity assessment and MAID-eligibility assessment are autonomy-serving legal/ethical frameworks used in serious or end-of-life-adjacent decisions, and MAID eligibility explicitly requires the patient to have decision-making capacity, so the two topics are clinically and legally adjacent.",
+      "relation_id": "CCR2-DEV12-PHELO08-BILLC14-MAID",
+      "required_evidence_propositions": [
+        {
+          "basis": "standard Canadian medical ethics/legal curriculum",
+          "confidence": "HIGH",
+          "proposition": "Capacity to consent is assessed using a general two-part test (understanding information, appreciating consequences) applicable to any medical decision, per standard Canadian medical-legal/ethics teaching."
+        },
+        {
+          "basis": "standard Canadian medical ethics/legal curriculum",
+          "confidence": "HIGH",
+          "proposition": "Bill C-14 (medical assistance in dying) has its own specific eligibility criteria distinct from and narrower than general capacity assessment, applicable only when MAID is the decision being made."
+        }
+      ],
+      "response_class": "AUTONOMY",
+      "review": {
+        "notes": "Anchor is genuinely positive. Second-key risk is real but is addressed by a mandatory population/context restriction carried into the seed and cache entry (not usable when the stem's decision is literally a MAID request), consistent with this project's established treatment of scope-dependent relations (cf. CCR2-DEV12-SURG03-TTE's cardiac-tamponade caveat).",
+        "primary_reason": null,
+        "reviewer_execution_id": "sonnet5-independent-review-2026-09-08-build12-cache-v1",
+        "verdict": "APPROVED"
+      },
+      "second_key_analysis": "Second-key risk is real and must be controlled by scope, not dismissed: if a future stem's proposed decision were itself a MAID request, Bill C-14 criteria would become directly relevant and this candidate could become a co-key. This seed therefore carries a mandatory population/context restriction: NOT usable when the stem's proposed decision is a request for medical assistance in dying.",
+      "targeted_relation_research_requests": 0,
+      "why_anchor_supports_candidate": "MAID is a heavily emphasized, specific legal topic in Canadian medical curricula, and its criteria explicitly include a capacity requirement, so a learner could plausibly conflate 'assess capacity for a decision' with 'apply MAID eligibility criteria' whenever the scenario involves a grave or life-ending choice.",
+      "why_key_remains_superior": "The generic two-part capacity test applies to any medical decision and is the legally correct framework whenever the scenario is not specifically a MAID request; Bill C-14 criteria are a narrower, decision-specific overlay that only applies once MAID is actually the decision in question."
+    }
+  ],
+  "schema_version": "BUILD12_CLINICAL_PLAUSIBILITY_AND_RELATION_REVIEW_V1",
+  "scope": "Phases 6-12: clinical plausibility review of the 3 cheap-filter survivors, relation authoring (Clinical Contrast Relation V2 prose schema, same shape as development_12_seed_pack_v1.json), and independent relation/anchor review."
+}

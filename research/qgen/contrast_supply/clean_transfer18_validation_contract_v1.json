@@ -1,0 +1,111 @@
+{
+  "schema_version": "CLEAN_TRANSFER18_VALIDATION_CONTRACT_V1",
+  "transfer18_sha256": "4227403aae3940b8c78a5ec3aeddaaa1fb5bb34342df5a4bc9a0a9a80eabab7b",
+  "frozen_before_candidate_supply_inspection": true,
+  "selection_metadata_snapshot": {
+    "schema_version": "NEW_CLEAN_TRANSFER_18_SELECTION_V2",
+    "content_sha256": "4227403aae3940b8c78a5ec3aeddaaa1fb5bb34342df5a4bc9a0a9a80eabab7b",
+    "execution_status": "FROZEN_NOT_RUN",
+    "holdout_consumed": false,
+    "selection_rule": "THREE_PER_DISCIPLINE; PRIORITY_THEN_SOURCE_READINESS_THEN_STUDY_UNIT_ID",
+    "selection_visibility": "METADATA_ONLY_NO_CONTRAST_OR_CLINICAL_ARTIFACT_INSPECTION",
+    "source_inventory_content_sha256": "4b7cc2663d1d86e90ade55e30073a9bff4fec1aa05608dcae74279f68f0b48d9"
+  },
+  "semantic_input_sha256": {
+    "schemas/anchor-candidate-universe-v1.schema.json": "5dea49d2a8c17f2651f9a1a377a137e21907996fdc72b92a0552b76771762a38",
+    "schemas/concept-feature-card-v1.schema.json": "bd02faf469925832478e610f29ac04e06f8d56a73de0f2867190ee6a5cc983c2",
+    "schemas/candidate-compatibility-graph-v1.schema.json": "4c6dff878dbac927c7dc87ff86c752ff5e8fb7b51b2c1f3b51cb78ce2f6a6b92",
+    "schemas/clinical-contrast-bundle-v1.schema.json": "3bfb05c87715ea8db37cd1c5cf7b28d25364e2b7941bad747fd4b285e299bb8b",
+    "schemas/question-seed-v1.schema.json": "5941db04e4e535462013f41bff638a1d8cd27abbf80a06f34bd21100f98c6224",
+    "scripts/qbank/candidate_universe.py": "33e0e5a63af290d5f7bbddd134b6254ab69c476e09488a41a95bc2c18dbcf7d8",
+    "scripts/qbank/contrast_supply_v6.py": "20ba89b4d5dfc5c58e8f2af431138d2ca7fee6d17fe0d3cd8cdf2f73e97257df",
+    "scripts/qbank/candidate_evidence_v2.py": "6bdd5d00185b4b975f91ca1bf5bc7918f0d8e9b0ca69acb8ab173c70907f9a8c",
+    "scripts/qbank/question_seed.py": "08c93225a238e7fa7720ea830fef4bcc30eff1c95dd235996308174d0be5b62b",
+    "scripts/qbank/generation_lifecycle.py": "e46f0be040baf3ff5ee59df42063085c7a2aa9c94faea5f04ae4dfbaf9aa80df",
+    "research/qgen/contrast_supply/model_candidate_review_inputs_v1.json": "b7be6551d361155dd6a716802d89c9da584fb0b0acbbcbe2799b964a8e60ddb4",
+    "research/qgen/contrast_supply/anchor_candidate_universe_v2.json": "adacea05099c08b03d14e5e3d895fb50347e4ca0f55dc07c754535515689665f",
+    "research/qgen/contrast_supply/global_candidate_concept_catalogue_v3.json": "c15a3e1f2e41c01c0c596237bcec112d97a18c4789b1abc1399f187a5a59117e",
+    "research/qgen/contrast_supply/candidate_role_registry_v1.json": "f3f3fc9c0eabb2fa2eb801156775fd0ce6ff42822d0ae4983f6c8a27e754c1d5",
+    "research/qgen/contrast_supply/candidate_role_registry_v1_review.json": "ce2a79a5e104990afb750c77ec73e774ffcd0cb30324b5a1c51e3f03b520a0e8",
+    "research/qgen/contrast_supply/concept_feature_library_v2.json": "958cfa6893cfbb5e77f0b775ddde602571371eaefeb4cfc94a4d6f5fae34a92d",
+    "research/qgen/contrast_supply/conditional_next_action_v1.json": "a17f86cb393d49bbc95ed40643a3052570c8ac8c7e36d65f9ea6d71439c922cb",
+    "research/qgen/contrast_supply/candidate_compatibility_graph_v2.json": "f896d033463975621e7db781516853a7c6a656a5d53fdf642eb0bcf993100484",
+    "research/qgen/contrast_supply/clinical_contrast_bundles_v4_expanded.json": "123eb89f5c45faa1247c4ade96c985ccb6a6bdee82bc689c09247ddd013217cc",
+    "research/qgen/contrast_supply/question_seed_v1.json": "4c195d9dc39185c93eee1c384fa52c51eb0870bbb1db14e5c0fcf5afcd4bdebf"
+  },
+  "candidate_acquisition_order": [
+    "EXISTING_APPROVED_UNIVERSE",
+    "CANDIDATE_ROLE_REGISTRY",
+    "CATALOGUE_V3",
+    "CONCEPT_FEATURE_LIBRARY_V2",
+    "CONDITIONAL_NEXT_ACTION_V1",
+    "COMPATIBILITY_GRAPH_V2",
+    "EXISTING_EVIDENCE",
+    "TORONTO_NOTES_STRUCTURAL",
+    "EXISTING_GUIDELINE_IDENTITIES",
+    "MODEL_PROPOSAL",
+    "NEW_EVIDENCE_FOR_REMAINING_GAPS"
+  ],
+  "semantic_concurrency": 1,
+  "discovery_v6_candidate_budget": 8,
+  "saturation_policy": {
+    "stop_rule": "TWO_CONSECUTIVE_BOUNDED_PASSES_ZERO_NEW_POTENTIALLY_ADMISSIBLE",
+    "all_proposals_require_terminal_stage2_before_pass_completion": true,
+    "hard_review_ceiling_per_anchor": 24
+  },
+  "model_proposal_contract": {
+    "output": "CANDIDATE_CONCEPTS_ONLY",
+    "same_response_class": true,
+    "same_granularity": true,
+    "clinical_plausibility": true,
+    "educational_distinctness": true,
+    "model_output_is_evidence": false
+  },
+  "review_contract": {
+    "stage1": [
+      "PLAUSIBLE",
+      "REJECTED",
+      "UNCERTAIN"
+    ],
+    "entailment": [
+      "ENTAILED",
+      "PARTIALLY_ENTAILED",
+      "NOT_ENTAILED",
+      "CONFLICTING",
+      "UNCERTAIN"
+    ],
+    "stage2": [
+      "APPROVED",
+      "REJECTED",
+      "UNCERTAIN"
+    ],
+    "uncertain_fails_closed": true,
+    "provenance_hidden_from_medical_judgment_where_practical": true
+  },
+  "source_policy": {
+    "toronto_notes_use": "STRUCTURAL_AND_CANONICAL_DISCOVERY_ONLY",
+    "model_proposals_are_evidence": false,
+    "model_candidates_require_stronger_evidence": true,
+    "single_authoritative_source_requires_exception_and_independent_review": true
+  },
+  "bundle_policy": {
+    "approved_candidates_only": true,
+    "preserve_full_universe": true,
+    "tiers": [
+      "TIER_A_STRONG_DISTRACTOR",
+      "TIER_B_GOOD_DISTRACTOR",
+      "TIER_C_CONTEXT_DEPENDENT_RESERVE"
+    ],
+    "contrast_ready_minimum": 3,
+    "strong_choice_ready_minimum": 5
+  },
+  "question_generation_policy": {
+    "maximum_questions": 18,
+    "maximum_initial_questions_per_anchor": 1,
+    "attempts_per_seed": 1,
+    "retries": 0,
+    "post_generation_candidate_discovery": false
+  },
+  "architecture_mutation_after_unblinding": "PROHIBITED",
+  "content_sha256": "a2f6be5f59e06bc46a27ce97ce712b04dea10abbfbc2f46342851ecf4d7ec761"
+}

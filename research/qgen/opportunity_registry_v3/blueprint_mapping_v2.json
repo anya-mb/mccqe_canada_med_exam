@@ -1,0 +1,2733 @@
+{
+  "ambiguous_mapping_policy": "REVIEW_REQUIRED_NO_ALLOCATION_AUTHORITY",
+  "audit_input_sha256": "c8fc487551f809c960d8e9331c8c1177a704346e5ed7ef1d07d471fda0fe5ce0",
+  "audit_rows": 120,
+  "calibration": {
+    "activity_confusion_matrix": {
+      "Assessment/Diagnosis": {
+        "Assessment/Diagnosis": 17,
+        "Management": 3
+      },
+      "Management": {
+        "Management": 2
+      },
+      "Professional Behaviours": {
+        "Professional Behaviours": 1
+      }
+    },
+    "activity_high_confidence_accuracy": 0.869565,
+    "activity_high_confidence_coverage": 0.2875,
+    "activity_high_confidence_rows": 23,
+    "dimension_confusion_matrix": {
+      "Health Promotion & Illness Prevention": {
+        "Health Promotion & Illness Prevention": 6,
+        "Psychosocial Aspects": 1
+      },
+      "Psychosocial Aspects": {
+        "Health Promotion & Illness Prevention": 1,
+        "Psychosocial Aspects": 6
+      }
+    },
+    "dimension_high_confidence_accuracy": 0.857143,
+    "dimension_high_confidence_coverage": 0.175,
+    "dimension_high_confidence_rows": 14
+  },
+  "calibration_rows": 80,
+  "content_sha256": "ebb020641933e3766b95648dbfb68fa48ac32b18a33c787aab85393d907e4b87",
+  "holdout": {
+    "activity_confusion_matrix": {
+      "Assessment/Diagnosis": {
+        "Assessment/Diagnosis": 14,
+        "Management": 1,
+        "Professional Behaviours": 1
+      },
+      "Management": {
+        "Management": 1
+      }
+    },
+    "activity_high_confidence_accuracy": 0.882353,
+    "activity_high_confidence_coverage": 0.425,
+    "activity_high_confidence_rows": 17,
+    "dimension_confusion_matrix": {
+      "Health Promotion & Illness Prevention": {
+        "Health Promotion & Illness Prevention": 6
+      },
+      "Psychosocial Aspects": {
+        "Acute": 1,
+        "Psychosocial Aspects": 5
+      }
+    },
+    "dimension_high_confidence_accuracy": 0.916667,
+    "dimension_high_confidence_coverage": 0.3,
+    "dimension_high_confidence_rows": 12
+  },
+  "holdout_rows": 40,
+  "partition_contract": "SHA256_BLUEPRINT_V2_ORDER_EVERY_THIRD_ROW_HOLDOUT",
+  "production_allocation_authority": false,
+  "rules": [
+    {
+      "basis": "preventive purpose plus preventive stage",
+      "rule_id": "DIM_PREVENTIVE_PURPOSE"
+    },
+    {
+      "basis": "communication, consent, confidentiality, professionalism, or legal context",
+      "rule_id": "DIM_PSYCHOSOCIAL_LEGAL_CONTEXT"
+    },
+    {
+      "basis": "longitudinal stage requires case-level review",
+      "rule_id": "DIM_LONGITUDINAL_CONTEXT_AMBIGUOUS"
+    },
+    {
+      "basis": "family alone does not determine care dimension",
+      "rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS"
+    },
+    {
+      "basis": "diagnostic, differential, adverse-effect recognition, or screening response",
+      "rule_id": "ACT_ASSESSMENT_RESPONSE"
+    },
+    {
+      "basis": "explicit initial management response",
+      "rule_id": "ACT_INITIAL_MANAGEMENT_RESPONSE"
+    },
+    {
+      "basis": "confidentiality duty",
+      "rule_id": "ACT_CONFIDENTIALITY_DUTY"
+    },
+    {
+      "basis": "communication action can serve several MCC activity domains",
+      "rule_id": "ACT_COMMUNICATION_CONTEXT_AMBIGUOUS"
+    },
+    {
+      "basis": "professional context requires case-level review",
+      "rule_id": "ACT_PROFESSIONAL_CONTEXT_AMBIGUOUS"
+    },
+    {
+      "basis": "action family alone does not establish MCC activity",
+      "rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS"
+    },
+    {
+      "basis": "clinical response requires case-level review",
+      "rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS"
+    }
+  ],
+  "sample_assignments": [
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "103"
+      ],
+      "opportunity_id": "QOP-CURR-59169DC885D2",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "38"
+      ],
+      "opportunity_id": "QOP-CURR-19204DACA827",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "112",
+        "56-2"
+      ],
+      "opportunity_id": "QOP-CURR-01F8A7991F30",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Health Promotion & Illness Prevention",
+      "dimension_rule_id": "DIM_PREVENTIVE_PURPOSE",
+      "objective_context_ids": [
+        "15-2"
+      ],
+      "opportunity_id": "QOP-CURR-AA4EB65DD414",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_COMMUNICATION_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Psychosocial Aspects",
+      "dimension_rule_id": "DIM_PSYCHOSOCIAL_LEGAL_CONTEXT",
+      "objective_context_ids": [
+        "21-1"
+      ],
+      "opportunity_id": "QOP-CURR-55503EB5FFA6",
+      "physician_activity": "Communication"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Acute",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Chronic",
+      "dimension_rule_id": "DIM_LONGITUDINAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "78-2"
+      ],
+      "opportunity_id": "QOP-CURR-35B8BB41FF9B",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "54"
+      ],
+      "opportunity_id": "QOP-CURR-D9E8E3048038",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "78-3"
+      ],
+      "opportunity_id": "QOP-CURR-4C50D29E96EC",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Health Promotion & Illness Prevention",
+      "dimension_rule_id": "DIM_PREVENTIVE_PURPOSE",
+      "objective_context_ids": [
+        "123"
+      ],
+      "opportunity_id": "QOP-CURR-FB2875508B75",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "112",
+        "2"
+      ],
+      "opportunity_id": "QOP-CURR-DF36F8CEE3C1",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "80-2"
+      ],
+      "opportunity_id": "QOP-CURR-57EE4ABA1B73",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_INITIAL_MANAGEMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "130"
+      ],
+      "opportunity_id": "QOP-CURR-8F608E94A5C3",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "53"
+      ],
+      "opportunity_id": "QOP-CURR-15231E61563D",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "15-2"
+      ],
+      "opportunity_id": "QOP-CURR-83DBFBD42B52",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Acute",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Chronic",
+      "dimension_rule_id": "DIM_LONGITUDINAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "109"
+      ],
+      "opportunity_id": "QOP-CURR-4BAFA0C06DCE",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_PROFESSIONAL_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Communication"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "127",
+        "78-9"
+      ],
+      "opportunity_id": "QOP-CURR-F80480EA3EC0",
+      "physician_activity": "Professional Behaviours"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_PROFESSIONAL_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Communication"
+      ],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Psychosocial Aspects",
+      "dimension_rule_id": "DIM_PSYCHOSOCIAL_LEGAL_CONTEXT",
+      "objective_context_ids": [
+        "121-1"
+      ],
+      "opportunity_id": "QOP-CURR-89D360ABD2E5",
+      "physician_activity": "Professional Behaviours"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "106"
+      ],
+      "opportunity_id": "QOP-CURR-E6C6E0668129",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "100"
+      ],
+      "opportunity_id": "QOP-CURR-2582ED4DA76E",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [],
+      "opportunity_id": "QOP-CURR-54D8CE7A73DC",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "38"
+      ],
+      "opportunity_id": "QOP-CURR-319AA92B6B72",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": true,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Health Promotion & Illness Prevention",
+      "dimension_rule_id": "DIM_PREVENTIVE_PURPOSE",
+      "objective_context_ids": [
+        "102"
+      ],
+      "opportunity_id": "QOP-CURR-5A0B7A6B1A7C",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "15-1"
+      ],
+      "opportunity_id": "QOP-CURR-235D64ACE7DF",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "78-2"
+      ],
+      "opportunity_id": "QOP-CURR-D819745EEF6B",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_PROFESSIONAL_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Communication"
+      ],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Psychosocial Aspects",
+      "dimension_rule_id": "DIM_PSYCHOSOCIAL_LEGAL_CONTEXT",
+      "objective_context_ids": [
+        "121-1",
+        "81"
+      ],
+      "opportunity_id": "QOP-CURR-B280E0F1BCF1",
+      "physician_activity": "Professional Behaviours"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "94"
+      ],
+      "opportunity_id": "QOP-CURR-41EDDD947552",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "98"
+      ],
+      "opportunity_id": "QOP-CURR-13992929DDB5",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "78-2"
+      ],
+      "opportunity_id": "QOP-CURR-0BA77FBA771E",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "58-2"
+      ],
+      "opportunity_id": "QOP-CURR-688F513A8D8B",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "113"
+      ],
+      "opportunity_id": "QOP-CURR-0130B81BE46F",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_PROFESSIONAL_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Communication"
+      ],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Psychosocial Aspects",
+      "dimension_rule_id": "DIM_PSYCHOSOCIAL_LEGAL_CONTEXT",
+      "objective_context_ids": [],
+      "opportunity_id": "QOP-CURR-6EEAB6D8FD84",
+      "physician_activity": "Professional Behaviours"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_COMMUNICATION_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "121-1",
+        "74"
+      ],
+      "opportunity_id": "QOP-CURR-46628489B33B",
+      "physician_activity": "Communication"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_PROFESSIONAL_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Communication"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "114-1"
+      ],
+      "opportunity_id": "QOP-CURR-5DA335EBBE02",
+      "physician_activity": "Professional Behaviours"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [],
+      "opportunity_id": "QOP-CURR-E9B218B86B22",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_PROFESSIONAL_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Communication"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "114-1"
+      ],
+      "opportunity_id": "QOP-CURR-7390EE52F5F5",
+      "physician_activity": "Professional Behaviours"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Acute",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Chronic",
+      "dimension_rule_id": "DIM_LONGITUDINAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "27"
+      ],
+      "opportunity_id": "QOP-CURR-4381E828A6F5",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "89-1"
+      ],
+      "opportunity_id": "QOP-CURR-23281E3417B2",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "80-2"
+      ],
+      "opportunity_id": "QOP-CURR-4F591EEAF484",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_COMMUNICATION_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "94-1"
+      ],
+      "opportunity_id": "QOP-CURR-DC41B82EE703",
+      "physician_activity": "Communication"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "128"
+      ],
+      "opportunity_id": "QOP-CURR-894710EC07A6",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "118-3",
+        "64"
+      ],
+      "opportunity_id": "QOP-CURR-88E2852DC3DE",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "78-2",
+        "78-5"
+      ],
+      "opportunity_id": "QOP-CURR-4CDF51FCE159",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_PROFESSIONAL_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Communication"
+      ],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Psychosocial Aspects",
+      "dimension_rule_id": "DIM_PSYCHOSOCIAL_LEGAL_CONTEXT",
+      "objective_context_ids": [
+        "121-5"
+      ],
+      "opportunity_id": "QOP-CURR-D0EB53BED859",
+      "physician_activity": "Professional Behaviours"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "64"
+      ],
+      "opportunity_id": "QOP-CURR-41AD8F9B0971",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Health Promotion & Illness Prevention",
+      "dimension_rule_id": "DIM_PREVENTIVE_PURPOSE",
+      "objective_context_ids": [
+        "62"
+      ],
+      "opportunity_id": "QOP-CURR-6F6598989AD0",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "86"
+      ],
+      "opportunity_id": "QOP-CURR-6BD9E90812D6",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "114-3"
+      ],
+      "opportunity_id": "QOP-CURR-29E53B6C4FD9",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Acute",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Chronic",
+      "dimension_rule_id": "DIM_LONGITUDINAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "21",
+        "74-5"
+      ],
+      "opportunity_id": "QOP-CURR-198AE17F4714",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [],
+      "opportunity_id": "QOP-CURR-6D1801509B39",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_PROFESSIONAL_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Communication"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "36-2"
+      ],
+      "opportunity_id": "QOP-CURR-41A06A294F71",
+      "physician_activity": "Professional Behaviours"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "109-3",
+        "20"
+      ],
+      "opportunity_id": "QOP-CURR-86A10EF3324B",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Acute",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Chronic",
+      "dimension_rule_id": "DIM_LONGITUDINAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "124"
+      ],
+      "opportunity_id": "QOP-CURR-F63EBB3A8F8C",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "2"
+      ],
+      "opportunity_id": "QOP-CURR-698BEF352400",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "71-1"
+      ],
+      "opportunity_id": "QOP-CURR-5FD94DE3286D",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Acute",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Chronic",
+      "dimension_rule_id": "DIM_LONGITUDINAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "59-1",
+        "74-5"
+      ],
+      "opportunity_id": "QOP-CURR-11A9FBE82395",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "92"
+      ],
+      "opportunity_id": "QOP-CURR-38FB25C5D99C",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_PROFESSIONAL_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Communication"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [],
+      "opportunity_id": "QOP-CURR-F68E7D175BA7",
+      "physician_activity": "Professional Behaviours"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "39"
+      ],
+      "opportunity_id": "QOP-CURR-1D7CEAFCE304",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_INITIAL_MANAGEMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Acute",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Chronic",
+      "dimension_rule_id": "DIM_LONGITUDINAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "86"
+      ],
+      "opportunity_id": "QOP-CURR-267A10B52E8F",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_PROFESSIONAL_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Communication"
+      ],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Psychosocial Aspects",
+      "dimension_rule_id": "DIM_PSYCHOSOCIAL_LEGAL_CONTEXT",
+      "objective_context_ids": [
+        "121-1"
+      ],
+      "opportunity_id": "QOP-CURR-E54EC7D3247F",
+      "physician_activity": "Professional Behaviours"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": true,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Health Promotion & Illness Prevention",
+      "dimension_rule_id": "DIM_PREVENTIVE_PURPOSE",
+      "objective_context_ids": [
+        "6-2"
+      ],
+      "opportunity_id": "QOP-CURR-B74EF817F2E0",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "112"
+      ],
+      "opportunity_id": "QOP-CURR-246A2D7C9853",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [],
+      "opportunity_id": "QOP-CURR-A524829E026F",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": true,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Health Promotion & Illness Prevention",
+      "dimension_rule_id": "DIM_PREVENTIVE_PURPOSE",
+      "objective_context_ids": [
+        "74"
+      ],
+      "opportunity_id": "QOP-CURR-D69532A8F452",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "78-2"
+      ],
+      "opportunity_id": "QOP-CURR-B0257DA3DA48",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "124"
+      ],
+      "opportunity_id": "QOP-CURR-DB9F49D8A4C0",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_PROFESSIONAL_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Communication"
+      ],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Psychosocial Aspects",
+      "dimension_rule_id": "DIM_PSYCHOSOCIAL_LEGAL_CONTEXT",
+      "objective_context_ids": [
+        "121-1"
+      ],
+      "opportunity_id": "QOP-CURR-044A3456BB1F",
+      "physician_activity": "Professional Behaviours"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_CONFIDENTIALITY_DUTY",
+      "allocation_authority": true,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Psychosocial Aspects",
+      "dimension_rule_id": "DIM_PSYCHOSOCIAL_LEGAL_CONTEXT",
+      "objective_context_ids": [
+        "126"
+      ],
+      "opportunity_id": "QOP-CURR-D91954987AFF",
+      "physician_activity": "Professional Behaviours"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "103",
+        "103-1"
+      ],
+      "opportunity_id": "QOP-CURR-694FC7E6376B",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": true,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Health Promotion & Illness Prevention",
+      "dimension_rule_id": "DIM_PREVENTIVE_PURPOSE",
+      "objective_context_ids": [],
+      "opportunity_id": "QOP-CURR-7465EB28D5DE",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "13",
+        "92"
+      ],
+      "opportunity_id": "QOP-CURR-BADCD0FF64DD",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "94"
+      ],
+      "opportunity_id": "QOP-CURR-5FD877D4E080",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "118-3"
+      ],
+      "opportunity_id": "QOP-CURR-BD86F6D4E54F",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": true,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Health Promotion & Illness Prevention",
+      "dimension_rule_id": "DIM_PREVENTIVE_PURPOSE",
+      "objective_context_ids": [
+        "80-1",
+        "80-2"
+      ],
+      "opportunity_id": "QOP-CURR-CA31AA0E7166",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "94"
+      ],
+      "opportunity_id": "QOP-CURR-EE0248381304",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [],
+      "opportunity_id": "QOP-CURR-751FA409A771",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "80-2"
+      ],
+      "opportunity_id": "QOP-CURR-5DD7E0986D4E",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "101",
+        "63"
+      ],
+      "opportunity_id": "QOP-CURR-C7FA0AADE9E0",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [],
+      "opportunity_id": "QOP-CURR-43B036043721",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Acute",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Chronic",
+      "dimension_rule_id": "DIM_LONGITUDINAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "49"
+      ],
+      "opportunity_id": "QOP-CURR-943784F8E5C1",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "112"
+      ],
+      "opportunity_id": "QOP-CURR-B78D6A7CBB03",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_INITIAL_MANAGEMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "83"
+      ],
+      "opportunity_id": "QOP-CURR-48656F11788C",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "116"
+      ],
+      "opportunity_id": "QOP-CURR-43FD8F005330",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "19",
+        "27"
+      ],
+      "opportunity_id": "QOP-CURR-475CFCDAADB5",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_COMMUNICATION_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "57"
+      ],
+      "opportunity_id": "QOP-CURR-1F337DAC65AA",
+      "physician_activity": "Communication"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "109-11",
+        "117"
+      ],
+      "opportunity_id": "QOP-CURR-CEE32F971F1B",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": true,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Health Promotion & Illness Prevention",
+      "dimension_rule_id": "DIM_PREVENTIVE_PURPOSE",
+      "objective_context_ids": [
+        "78-3"
+      ],
+      "opportunity_id": "QOP-CURR-0084DF430FD8",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": true,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Health Promotion & Illness Prevention",
+      "dimension_rule_id": "DIM_PREVENTIVE_PURPOSE",
+      "objective_context_ids": [
+        "118-1"
+      ],
+      "opportunity_id": "QOP-CURR-6D502C217E70",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "78-11"
+      ],
+      "opportunity_id": "QOP-CURR-376AABC97980",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_PROFESSIONAL_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Communication"
+      ],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Psychosocial Aspects",
+      "dimension_rule_id": "DIM_PSYCHOSOCIAL_LEGAL_CONTEXT",
+      "objective_context_ids": [],
+      "opportunity_id": "QOP-CURR-3BF210F0EB3F",
+      "physician_activity": "Professional Behaviours"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "10-1"
+      ],
+      "opportunity_id": "QOP-CURR-3F059BB6CD25",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "109-3"
+      ],
+      "opportunity_id": "QOP-CURR-B5E6093B78DD",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "109-15",
+        "15-2"
+      ],
+      "opportunity_id": "QOP-CURR-8492DD9DCF84",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Acute",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Chronic",
+      "dimension_rule_id": "DIM_LONGITUDINAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "118-3"
+      ],
+      "opportunity_id": "QOP-CURR-073D39533A43",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_COMMUNICATION_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "94-1"
+      ],
+      "opportunity_id": "QOP-CURR-079A37752281",
+      "physician_activity": "Communication"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "78-2"
+      ],
+      "opportunity_id": "QOP-CURR-913883075224",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Acute",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Chronic",
+      "dimension_rule_id": "DIM_LONGITUDINAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "78-3"
+      ],
+      "opportunity_id": "QOP-CURR-D27D8A14129E",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_COMMUNICATION_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "31-2",
+        "74-5"
+      ],
+      "opportunity_id": "QOP-CURR-9EE06AF41DA7",
+      "physician_activity": "Communication"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "109-3",
+        "32"
+      ],
+      "opportunity_id": "QOP-CURR-A6535B9CBF2F",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "42-1"
+      ],
+      "opportunity_id": "QOP-CURR-6F92CF0DA50A",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "100",
+        "107-1"
+      ],
+      "opportunity_id": "QOP-CURR-72169FFCB62B",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_COMMUNICATION_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "5"
+      ],
+      "opportunity_id": "QOP-CURR-B0076E206E15",
+      "physician_activity": "Communication"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "50-4"
+      ],
+      "opportunity_id": "QOP-CURR-B72E282500F1",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_PROFESSIONAL_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Communication"
+      ],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Psychosocial Aspects",
+      "dimension_rule_id": "DIM_PSYCHOSOCIAL_LEGAL_CONTEXT",
+      "objective_context_ids": [
+        "31-1"
+      ],
+      "opportunity_id": "QOP-CURR-A64F7F6FDBAA",
+      "physician_activity": "Professional Behaviours"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "59-1"
+      ],
+      "opportunity_id": "QOP-CURR-E63ED5A71D49",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "HIGH",
+      "activity_rule_id": "ACT_ASSESSMENT_RESPONSE",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [],
+      "allowed_secondary_dimensions": [
+        "Acute",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Chronic",
+      "dimension_rule_id": "DIM_LONGITUDINAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "50-1"
+      ],
+      "opportunity_id": "QOP-CURR-9E7F8A8DAA82",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Health Promotion & Illness Prevention",
+      "dimension_rule_id": "DIM_PREVENTIVE_PURPOSE",
+      "objective_context_ids": [
+        "57"
+      ],
+      "opportunity_id": "QOP-CURR-2B8449944F7F",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "27-3"
+      ],
+      "opportunity_id": "QOP-CURR-65C6A9559AA7",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_COMMUNICATION_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Psychosocial Aspects",
+      "dimension_rule_id": "DIM_PSYCHOSOCIAL_LEGAL_CONTEXT",
+      "objective_context_ids": [
+        "121-2"
+      ],
+      "opportunity_id": "QOP-CURR-FCD785D7FB30",
+      "physician_activity": "Communication"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Acute",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Chronic",
+      "dimension_rule_id": "DIM_LONGITUDINAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "127"
+      ],
+      "opportunity_id": "QOP-CURR-43FB2E05A351",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "69"
+      ],
+      "opportunity_id": "QOP-CURR-88C4D9C46B78",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_PROFESSIONAL_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Communication"
+      ],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Psychosocial Aspects",
+      "dimension_rule_id": "DIM_PSYCHOSOCIAL_LEGAL_CONTEXT",
+      "objective_context_ids": [
+        "114-3"
+      ],
+      "opportunity_id": "QOP-CURR-872937B047FB",
+      "physician_activity": "Professional Behaviours"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "125"
+      ],
+      "opportunity_id": "QOP-CURR-21F86973AFB4",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_CLINICAL_RESPONSE_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Management",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "80-2"
+      ],
+      "opportunity_id": "QOP-CURR-1E64DA68C96E",
+      "physician_activity": "Assessment/Diagnosis"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_PROFESSIONAL_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Communication"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "78-9"
+      ],
+      "opportunity_id": "QOP-CURR-C5DF10B65C13",
+      "physician_activity": "Professional Behaviours"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_PROFESSIONAL_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Communication"
+      ],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Psychosocial Aspects",
+      "dimension_rule_id": "DIM_PSYCHOSOCIAL_LEGAL_CONTEXT",
+      "objective_context_ids": [
+        "94"
+      ],
+      "opportunity_id": "QOP-CURR-74201B51AD34",
+      "physician_activity": "Professional Behaviours"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_COMMUNICATION_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Management",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "115-2"
+      ],
+      "opportunity_id": "QOP-CURR-06E4FAF17A1D",
+      "physician_activity": "Communication"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [
+        "Chronic",
+        "Health Promotion & Illness Prevention",
+        "Psychosocial Aspects"
+      ],
+      "audit_partition": "HOLDOUT",
+      "dimension_confidence": "REVIEW_REQUIRED",
+      "dimension_of_care": "Acute",
+      "dimension_rule_id": "DIM_CLINICAL_CONTEXT_AMBIGUOUS",
+      "objective_context_ids": [
+        "3-2"
+      ],
+      "opportunity_id": "QOP-CURR-E0721AC10B42",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Health Promotion & Illness Prevention",
+      "dimension_rule_id": "DIM_PREVENTIVE_PURPOSE",
+      "objective_context_ids": [
+        "78-4"
+      ],
+      "opportunity_id": "QOP-CURR-16D6E3DC000C",
+      "physician_activity": "Management"
+    },
+    {
+      "activity_confidence": "REVIEW_REQUIRED",
+      "activity_rule_id": "ACT_MANAGEMENT_CONTEXT_AMBIGUOUS",
+      "allocation_authority": false,
+      "allowed_secondary_activities": [
+        "Assessment/Diagnosis",
+        "Communication",
+        "Professional Behaviours"
+      ],
+      "allowed_secondary_dimensions": [],
+      "audit_partition": "CALIBRATION",
+      "dimension_confidence": "HIGH",
+      "dimension_of_care": "Health Promotion & Illness Prevention",
+      "dimension_rule_id": "DIM_PREVENTIVE_PURPOSE",
+      "objective_context_ids": [
+        "74-2"
+      ],
+      "opportunity_id": "QOP-CURR-F7CCE64613FA",
+      "physician_activity": "Management"
+    }
+  ],
+  "schema_version": "2.0",
+  "scope": "MCC_BLUEPRINT_MAPPING_V2_CALIBRATION"
+}

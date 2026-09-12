@@ -445,6 +445,8 @@ def retrieve_competitors(
         generic_token=RESPONSE_CLASS_AXES[axis]["generic_token"],
         stem_feature_map=scenario["stem_feature_map"],
         ranking_preference=profile["competitor_ranking_preference"],
+        learner_decision_id=scenario.get("learner_decision_id"),
+        anchor_study_unit_id=scenario.get("anchor_study_unit_id"),
     )
     for competitor in retrieval["ranked_competitors"]:
         competitor["component_scores"] = _component_scores(competitor, scenario)

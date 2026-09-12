@@ -1,0 +1,136 @@
+{
+  "schema_version": "1.0",
+  "scope": "QGEN_HOLDOUT_CONTAMINATION_DIAGNOSIS",
+  "classification": "CONTAMINATED_DEVELOPMENT_REGRESSION_SET",
+  "root_cause_reproduced": true,
+  "dominant_root_cause": "GATE_EXECUTED_TOO_LATE",
+  "secondary_causes": [
+    "PROVISIONAL_OBJECT_ADMITTED",
+    "REPORTING_STATE_MISMATCH",
+    "REVIEW_CONTRACT_MISMATCH",
+    "AUTHORING_CONTRACT_MISMATCH"
+  ],
+  "root_cause_evidence": {
+    "authoring_path": "fresh_holdout_24._seed_pack creates embedded APPROVED reviews and frozen packs.",
+    "consumer_path": "compose_execution_artifacts retrieves those rows and constructs twelve items.",
+    "late_review_path": "_apply_independent_holdout_audit runs only after item construction and invalidates all provisional rows."
+  },
+  "original_reported_metrics": {
+    "feature_maps_approved": 0,
+    "seeds_approved": 0,
+    "contrast_ready": 0,
+    "stems_generated": 12
+  },
+  "canonical_metric_definitions": {
+    "feature_maps_approved": "Distinct maps with a final independent APPROVED verdict and a pinned reviewed hash.",
+    "seeds_approved": "Distinct proposals with a final independent APPROVED verdict; authored or embedded provisional statuses do not count.",
+    "contrast_ready": "Frozen coherent contrast sets whose key, seeds, relations, anchors, and second-key checks all passed.",
+    "stems_generated": "Actual generator callback executions after assert_generation_ready returned PASS.",
+    "final_reviewed": "Generated items from a valid generation path that received final review.",
+    "rejected": "Validly generated and final-reviewed items with a REJECTED verdict.",
+    "no_safe_item": "Attempted opportunities terminated before valid generation."
+  },
+  "recomputed_canonical_metrics": {
+    "feature_maps_approved": 0,
+    "seeds_approved": 0,
+    "contrast_ready": 0,
+    "stems_generated": 0
+  },
+  "generated_12_forensic_classification": {
+    "VALID_GENERATION_PATH": 0,
+    "PREMATURE_GENERATION": 12,
+    "DIAGNOSTIC_DRAFT_MISCOUNTED_AS_GENERATED": 0,
+    "REPORTING_ERROR": 0,
+    "OTHER": 0
+  },
+  "physical_draft_reclassification": {
+    "VALID_HISTORICAL_GENERATION": 0,
+    "PREMATURE_DIAGNOSTIC_DRAFT": 12,
+    "INVALID_PIPELINE_OUTPUT": 12,
+    "REPORTING_ONLY_ARTIFACT": 0
+  },
+  "valid_accepted_denominator": 0,
+  "valid_generated_denominator": 0,
+  "can_contaminated_run_estimate_safe_yield": false,
+  "seed_rejection_taxonomy": {
+    "NO_POSITIVE_CANDIDATE_ANCHOR": 0,
+    "BACKWARDS_ANCHOR_SUPPORTS_KEY": 0,
+    "EVIDENCE_DOES_NOT_ENTAIL_ANCHOR": 0,
+    "EVIDENCE_SCOPE_MISMATCH": 0,
+    "WRONG_LEARNER_DECISION": 0,
+    "WRONG_RESPONSE_CLASS": 0,
+    "WRONG_GRANULARITY": 0,
+    "SECOND_KEY_RISK": 0,
+    "DEAD_DISTRACTOR": 0,
+    "DUPLICATE_OR_ALIAS": 12,
+    "POPULATION_CONTEXT_MISMATCH": 0,
+    "INSUFFICIENT_INFORMATION": 36,
+    "OTHER": 0
+  },
+  "taxonomy_provenance_limit": "The 12 pre-pack rejections explicitly record co-key/alias. The later review serialized only 33 REJECTED and 3 UNCERTAIN seed IDs, not per-seed reasons; those 36 fail closed as INSUFFICIENT_INFORMATION.",
+  "author_review_contract_gaps": {
+    "EXPECTED_REVIEWER_ONLY_JUDGMENT": 0,
+    "AUTHORING_GATE_MISSING": 36,
+    "AUTHORING_GATE_TOO_WEAK": 0,
+    "EVIDENCE_BINDING_BUG": 0,
+    "REVIEWER_CONTRACT_STRICTER_THAN_AUTHOR_CONTRACT": 0,
+    "OTHER": 12
+  },
+  "contract_gap_notes": {
+    "AUTHORING_GATE_MISSING": "Thirty-six packed rows received author-embedded approval without a separately identified independent reviewer.",
+    "OTHER": "Twelve co-key/alias proposals were already removed by the author-side pre-pack filter."
+  },
+  "previous_48_proposals": 48,
+  "previous_review_rejections": 45,
+  "rejections_now_catchable_pre_review": 12,
+  "semantic_review_reduction_percent": 26.7,
+  "remaining_reviewer_only_judgments": 36,
+  "context_characters": {
+    "unit": "SERIALIZED_UTF8_CONTEXT_CHARACTERS",
+    "by_stage": {
+      "candidate_discovery_review": {
+        "median": 3434,
+        "p95": 3547
+      },
+      "seed_review": {
+        "median": 1141,
+        "p95": 1196
+      },
+      "blueprint": {
+        "median": 2602,
+        "p95": 2723
+      },
+      "stem_author": {
+        "median": 2026,
+        "p95": 2097
+      },
+      "blind_solve": {
+        "median": 262,
+        "p95": 294
+      },
+      "final_review": {
+        "median": 1347,
+        "p95": 1450
+      }
+    },
+    "overall_median": 1935,
+    "overall_p95": 3496,
+    "token_or_dollar_cost": "UNAVAILABLE_NOT_FABRICATED"
+  },
+  "generation_precondition_centralized": true,
+  "regression_metrics": {
+    "attempted": 24,
+    "feature_ready": 0,
+    "seed_ready": 0,
+    "contrast_ready": 0,
+    "stems_generated": 0,
+    "final_reviewed": 0,
+    "accepted": 0,
+    "rejected": 0,
+    "no_safe_item": 24
+  },
+  "lifecycle_invariant": "PASS",
+  "next_holdout_recommended_n": 18,
+  "next_holdout_consumed": false,
+  "content_sha256": "95719ee23ebc9a2e7b2906c2cf91adadd7a05ff11b8ab915a92172f1ff72e7e2"
+}

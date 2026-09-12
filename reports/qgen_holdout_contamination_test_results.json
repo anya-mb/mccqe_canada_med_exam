@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "scope": "QGEN_HOLDOUT_CONTAMINATION_VERIFICATION",
+  "verification_date": "2026-09-08",
+  "focused_tests": {
+    "passed": 190,
+    "failed": 0,
+    "command": ".venv/bin/python -m pytest tests/test_generation_lifecycle.py tests/test_fresh_holdout_24.py tests/test_seed_pack_onboarding_milestone.py tests/test_profile_contrast_retrieval.py tests/test_stem_anchor_floor.py tests/test_clinical_retrieval.py tests/test_profile_retrieval_wave.py tests/test_qgen_profiles_v2.py tests/test_safe_yield_wave.py -q"
+  },
+  "full_suite": {
+    "passed": 1646,
+    "failed": 1,
+    "known_preexisting_failures": 1,
+    "new_test_failures": 0,
+    "failure": "tests/test_source_research_coordinator.py::test_discovery_classifies_dirty_worktree_retry_and_committed_branch_awaiting_integration",
+    "observed": "INTEGRATED",
+    "expected": "AWAITING_INTEGRATION"
+  },
+  "historical_safety_regression": "PASS",
+  "aom_development_control": "PASS",
+  "copyright_audit": {
+    "verdict": "PASS",
+    "artifacts_scanned": 5,
+    "longest_verbatim_toronto_notes_run_words": 0
+  },
+  "holdout_readiness": {
+    "root_cause_proven": true,
+    "generation_precondition_centralized": true,
+    "impossible_state_tests": "PASS",
+    "reporting_contract_tests": "PASS",
+    "regression_24_lifecycle_consistent": true,
+    "historical_safety_regression": "PASS",
+    "new_test_failures": 0,
+    "ready_to_freeze_new_holdout": true
+  }
+}

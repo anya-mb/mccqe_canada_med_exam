@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0",
+  "scope": "QGEN_SEED_ONBOARDING_DEVELOPMENT_ITEMS",
+  "classification": "DEVELOPMENT_VALIDATION",
+  "items": [
+    {
+      "item_id": "QGEN-V6-PED-AOM-01",
+      "learner_decision_id": "LD-ONB2-PED-AOM-DX",
+      "stem": "An otherwise healthy 18-month-old child has had new ear pain for 24 hours. Otoscopy shows a bulging tympanic membrane with markedly reduced mobility.",
+      "lead_in": "Which diagnosis best explains this presentation?",
+      "classification": "DEVELOPMENT_VALIDATION",
+      "contrast_set_id": "CS-V6-AOM-DX-01",
+      "options": [
+        {
+          "option_id": "A",
+          "text": "Eustachian-tube dysfunction",
+          "role": "DISTRACTOR"
+        },
+        {
+          "option_id": "B",
+          "text": "Viral myringitis",
+          "role": "DISTRACTOR"
+        },
+        {
+          "option_id": "C",
+          "text": "Otitis media with effusion",
+          "role": "DISTRACTOR"
+        },
+        {
+          "option_id": "D",
+          "text": "Acute otitis media",
+          "role": "KEY"
+        }
+      ],
+      "correct_option_id": "D",
+      "stem_feature_map": {
+        "features": [
+          {
+            "feature_id": "SF-ONB2-P099-ACUTE-OTALGIA",
+            "polarity": "PRESENT",
+            "inference_type": "EXPLICIT_FINDING",
+            "source_span": "new ear pain for 24 hours"
+          },
+          {
+            "feature_id": "SF-ONB2-P099-BULGING-TM",
+            "polarity": "PRESENT",
+            "inference_type": "EXPLICIT_FINDING",
+            "source_span": "bulging tympanic membrane"
+          },
+          {
+            "feature_id": "SF-ONB2-P099-REDUCED-TM-MOBILITY",
+            "polarity": "PRESENT",
+            "inference_type": "EXPLICIT_FINDING",
+            "source_span": "markedly reduced mobility"
+          }
+        ]
+      },
+      "rationales": {
+        "D": {
+          "text": "The acute ear pain, reduced tympanic-membrane mobility, and bulging membrane jointly support acute otitis media; bulging supplies the acute inflammatory discriminator.",
+          "evidence_refs": [
+            "CLM-V6-AOM-CORE"
+          ]
+        },
+        "A": {
+          "text": "Eustachian-tube dysfunction can cause ear pain, but it does not account for the bulging inflammatory membrane in this stem.",
+          "evidence_refs": [
+            "CLM-V6-AOM-MYRINGITIS-ETD",
+            "CLM-V6-AOM-CORE"
+          ]
+        },
+        "B": {
+          "text": "Viral myringitis can cause ear pain, but it does not account for the bulging inflammatory membrane in this stem.",
+          "evidence_refs": [
+            "CLM-V6-AOM-MYRINGITIS-ETD",
+            "CLM-V6-AOM-CORE"
+          ]
+        },
+        "C": {
+          "text": "Otitis media with effusion can explain reduced mobility, but it lacks acute middle-ear inflammation; the bulging membrane favours acute otitis media.",
+          "evidence_refs": [
+            "CLM-V6-AOM-OME",
+            "CLM-V6-AOM-CORE"
+          ]
+        }
+      }
+    }
+  ]
+}

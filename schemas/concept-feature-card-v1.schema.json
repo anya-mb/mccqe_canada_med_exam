@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "concept-feature-card-v1.schema.json",
+  "title": "Concept Feature Card V1",
+  "type": "object",
+  "required": ["schema_version", "cards", "content_sha256"],
+  "properties": {
+    "schema_version": {"const": "CONCEPT_FEATURE_CARD_V1"},
+    "cards": {"type": "array", "items": {"type": "object", "required": ["concept_id", "evidence_fact_ids", "applicability_scope", "reuse_scope", "multi_source_verification", "next_step_status"]}},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

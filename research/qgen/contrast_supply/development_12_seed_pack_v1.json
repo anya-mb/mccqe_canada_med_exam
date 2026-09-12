@@ -1,0 +1,186 @@
+{
+  "schema_version": "DEVELOPMENT_12_SEED_PACK_V1",
+  "scope": "Development-12 contrast-supply frozen-wave continuation: independently APPROVED seeds only, derived from development_12_official_discovery_v1.json's 4 SURVIVES_TO_SEMANTIC candidates. Two of four were clinically screened out before independent review (see source_reviews); this pack persists only the seeds that survived both clinical plausibility screening and independent blinded review.",
+  "pack_id": "qgen_development_12_seed_pack_v1",
+  "pack_version": "1.0.0",
+  "parent_pack_id": null,
+  "creation_scope": "DEVELOPMENT_12_CONTRAST_SUPPLY_CONTINUATION",
+  "input_hashes": {
+    "development_12_ids_sha256": "a20732467b62428dd2388f9bb21820c8ee501e9b3457dbcb0a8d28f6931a6509",
+    "official_discovery_content_sha256": "1d17394dead1f3323ae3e9c507eac9ef86114a9f9d7fc5aa550868513f072f77"
+  },
+  "clinical_screening": {
+    "method": "Single-pass clinical plausibility review of all 4 SURVIVES_TO_SEMANTIC candidates against learner decision, key, response class, granularity, and TN structural-metadata anchor (subheading/tn_node_id/page only, no chapter prose loaded).",
+    "verdicts": {
+      "RDY-PED-04__hba1c_diagnostic_criteria": "CLINICALLY_PLAUSIBLE",
+      "RDY-SURG-03__tte": "CLINICALLY_PLAUSIBLE",
+      "RDY-PSY-03__brief_or_schizophreniform": "CLINICALLY_PLAUSIBLE",
+      "RDY-PSY-03__organic_seizure_psychosis": "POTENTIAL_SECOND_KEY"
+    },
+    "excluded_before_relation_authoring": [
+      {
+        "candidate": "RDY-PSY-03__organic_seizure_psychosis",
+        "reason": "Complex partial (focal) status epilepticus / postictal psychosis is a standard first-line organic differential that clinical workflow requires ruling out before diagnosing a primary psychotic disorder; without stem-level evidence excluding it, it carries meaningful risk of being an equally-or-more-defensible answer rather than a clean inferior distractor. Fails closed per project policy; not authored as a relation this wave."
+      }
+    ]
+  },
+  "relations_authored": [
+    {
+      "relation_id": "CCR2-DEV12-PED04-HBA1C",
+      "opportunity_id": "RDY-PED-04",
+      "candidate_canonical_identity": "Confirm diagnosis via formal HbA1c / standard DM diagnostic criteria",
+      "learner_decision": "In a child with polyuria, polydipsia, and weight loss, immediately check point-of-care glucose and ketones and urgently assess for diabetic ketoacidosis (DKA).",
+      "key": "Point-of-care glucose + ketone testing (urgent)",
+      "response_class": "DIAGNOSTIC_ORDER",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "positive_plausibility_proposition": "Formal HbA1c-based DM diagnostic criteria is a real, guideline-recognized way to confirm a diabetes diagnosis in a child with classic hyperglycemic symptoms.",
+      "positive_candidate_anchor": {
+        "chunk_id": "TNC-3e811c1c0c7eea561dbf86eb",
+        "tn_node_id": "P.S07.T01",
+        "subheading": "Diagnostic Criteria for DM (Types 1 and 2)",
+        "pdf_page": 1228
+      },
+      "why_anchor_supports_candidate": "The anchor is a dedicated diagnostic-criteria subsection for DM in the same chapter as the key, confirming HbA1c-based diagnosis is a real, curriculum-recognized clinical action for this disease process, not an invented or off-topic action.",
+      "inferiority_discriminator": "HbA1c reflects roughly 3 months of average glycemia and cannot detect or exclude an acute, potentially life-threatening complication (DKA); it is a non-emergent confirmatory test, not a time-critical point-of-care action.",
+      "why_key_remains_superior": "The vignette demands urgent assessment for a possible acute life-threatening complication; only immediate glucose/ketone testing gives time-critical information needed to triage and treat within minutes. HbA1c results are not immediately actionable for acute DKA risk.",
+      "classification": "PLAUSIBLE_BUT_NEVER_BEST",
+      "second_key_analysis": "No plausible reading of the stem makes HbA1c the single best next action; the teaching point (urgent DKA risk) has no substitute. Second-key risk assessed LOW.",
+      "required_evidence_propositions": [
+        {
+          "proposition": "Point-of-care glucose/ketone testing is the recommended immediate step in suspected pediatric new-onset DM/DKA.",
+          "confidence": "HIGH",
+          "basis": "standard emergency pediatrics"
+        },
+        {
+          "proposition": "HbA1c is not used to diagnose or exclude DKA acutely.",
+          "confidence": "HIGH",
+          "basis": "HbA1c physiology"
+        }
+      ],
+      "targeted_relation_research_requests": 0
+    },
+    {
+      "relation_id": "CCR2-DEV12-SURG03-TTE",
+      "opportunity_id": "RDY-SURG-03",
+      "candidate_canonical_identity": "Obtain transthoracic echocardiography (TTE)",
+      "learner_decision": "Use thoracic (lung) point-of-care ultrasound, integrated with clinical assessment, to evaluate suspected pneumothorax in an emergency presentation.",
+      "key": "Thoracic (lung) point-of-care ultrasound",
+      "response_class": "STRUCTURAL",
+      "decision_granularity": "DIAGNOSTIC_TEST",
+      "positive_plausibility_proposition": "TTE is a real, commonly-used bedside structural ultrasound modality in acute presentations, giving it surface legitimacy as a point-of-care structural test.",
+      "positive_candidate_anchor": {
+        "chunk_id": "TNC-a08342e8675a1c2ba929b631",
+        "tn_node_id": "C.S03.T01",
+        "subheading": "Transthoracic Echocardiography",
+        "pdf_page": 103
+      },
+      "why_anchor_supports_candidate": "The anchor confirms TTE is a genuine, curriculum-recognized bedside cardiac ultrasound modality used in acute care, not an invented option.",
+      "inferiority_discriminator": "TTE images the heart/pericardium, not the pleural space; it cannot demonstrate the sonographic signs of pneumothorax (absent lung sliding, A-lines, lung point), which are lung-ultrasound findings.",
+      "why_key_remains_superior": "Lung POCUS is the only modality of the two that directly interrogates the pleural space for the specific diagnostic question asked; TTE targets a different organ and would not answer it.",
+      "classification": "PLAUSIBLE_BUT_NEVER_BEST",
+      "second_key_analysis": "TTE would only become clinically relevant if the eventual stem explicitly raises cardiac tamponade as a competing cause of hemodynamic instability. No such language exists in this opportunity's frozen discovery_query scope. Second-key risk assessed LOW under current scope text; MUST be re-confirmed against the actual authored stem if this seed is ever generated into an item, since the independent reviewer flagged this as scope-dependent.",
+      "required_evidence_propositions": [
+        {
+          "proposition": "Lung POCUS (not TTE) is the correct point-of-care test for suspected pneumothorax.",
+          "confidence": "HIGH",
+          "basis": "BLUE protocol / point-of-care ultrasound teaching"
+        },
+        {
+          "proposition": "TTE does not visualize the pleural space.",
+          "confidence": "HIGH",
+          "basis": "cardiac ultrasound anatomy"
+        }
+      ],
+      "targeted_relation_research_requests": 0
+    },
+    {
+      "relation_id": "CCR2-DEV12-PSY03-BRIEF-SCHIZOPHRENIFORM",
+      "opportunity_id": "RDY-PSY-03",
+      "candidate_canonical_identity": "A shorter-course primary psychotic disorder from the DDx for psychosis (brief psychotic disorder [<1 month] or schizophreniform disorder [1-6 months])",
+      "learner_decision": "Recognize schizophrenia from persistent psychotic symptoms with functional decline and distinguish shorter psychotic disorders by course.",
+      "key": "Schizophrenia (DSM-5 duration >= 6 months, with functional decline)",
+      "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+      "decision_granularity": "DIAGNOSIS",
+      "positive_plausibility_proposition": "Brief psychotic disorder and schizophreniform disorder are real DSM-5 primary psychotic disorders with symptom content identical to schizophrenia, distinguished from it purely by duration of illness.",
+      "positive_candidate_anchor": {
+        "chunk_id": "TNC-928728bb9a58e0c47c300ac1",
+        "tn_node_id": "PS.S03.T01",
+        "subheading": "DDx for Psychosis",
+        "pdf_page": 1361
+      },
+      "why_anchor_supports_candidate": "The anchor is the same duration-stratified DDx-for-psychosis table the learner decision itself is built from, and explicitly enumerates brief psychotic disorder/schizophreniform disorder alongside schizophrenia as the standard course-based differential -- confirming genuine clinical relevance, not mere topical proximity.",
+      "inferiority_discriminator": "DSM-5 duration criteria (brief <1 month, schizophreniform 1-6 months, schizophrenia >=6 months) are the sole discriminator among these otherwise symptom-identical diagnoses; if stem duration is unambiguously >=6 months, both shorter-course diagnoses are excluded on duration alone.",
+      "why_key_remains_superior": "Duration/course is the defining DSM-5 criterion separating these three diagnoses; a stem stating >=6 months makes schizophrenia the only diagnosis whose duration criterion is met.",
+      "classification": "COUNTERFACTUAL_CORRECT",
+      "second_key_analysis": "Second-key risk is entirely a function of the exact duration stated in the eventual stem. Schizophreniform disorder is diagnosed identically to schizophrenia except for the <6-month cutoff, so this relation is only safe if the authored stem states an unambiguous duration with no room for a <6-month reading, and separately states or implies functional decline is not itself a required schizophreniform criterion under DSM-5. Flagged by independent review as unresolved without a drafted stem to inspect.",
+      "required_evidence_propositions": [
+        {
+          "proposition": "DSM-5 duration criteria distinguish brief psychotic disorder (<1mo), schizophreniform disorder (1-6mo), and schizophrenia (>=6mo).",
+          "confidence": "HIGH",
+          "basis": "standard psychiatric nosology"
+        }
+      ],
+      "targeted_relation_research_requests": 0
+    }
+  ],
+  "independent_review": {
+    "reviewer": "single fresh independent reviewer, blinded to desired contrast count / question yield / discipline targets",
+    "results": [
+      {
+        "relation_id": "CCR2-DEV12-PED04-HBA1C",
+        "verdict": "APPROVED",
+        "primary_reason": "HbA1c is a chronic-average glycemic marker, not a same-day emergency test, and cannot rule DKA in or out; discriminator is medically sound and no plausible stem reading makes it correct."
+      },
+      {
+        "relation_id": "CCR2-DEV12-SURG03-TTE",
+        "verdict": "APPROVED",
+        "primary_reason": "TTE cannot demonstrate lung sliding/A-lines/lung point and is medically inferior for pneumothorax detection; reviewer noted the tamponade-scope caveat is correctly disclosed and does not apply under current scope text."
+      },
+      {
+        "relation_id": "CCR2-DEV12-PSY03-BRIEF-SCHIZOPHRENIFORM",
+        "verdict": "UNCERTAIN",
+        "primary_reason": "Duration/course differentiation is DSM-5-correct, but schizophreniform disorder shares identical diagnostic criteria with schizophrenia except the <6-month cutoff, and exam stems often under-specify or mis-time the single duration data point this distinction depends on. Reviewer could not confirm the (not-yet-drafted) stem would state duration unambiguously enough to foreclose this as a competing answer."
+      }
+    ]
+  },
+  "seeds": [
+    {
+      "seed_id": "SEED-DEV12-PED04-HBA1C",
+      "candidate_id": "RDY-PED-04__hba1c_diagnostic_criteria",
+      "opportunity_id": "RDY-PED-04",
+      "response_class": "DIAGNOSTIC_ORDER",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "relation_id": "CCR2-DEV12-PED04-HBA1C",
+      "anchor_id": "TNC-3e811c1c0c7eea561dbf86eb",
+      "evidence_refs": [
+        "required_evidence_propositions:CCR2-DEV12-PED04-HBA1C"
+      ],
+      "review_status": "APPROVED",
+      "scope": "DEVELOPMENT_12_CONTINUATION"
+    },
+    {
+      "seed_id": "SEED-DEV12-SURG03-TTE",
+      "candidate_id": "RDY-SURG-03__tte",
+      "opportunity_id": "RDY-SURG-03",
+      "response_class": "STRUCTURAL",
+      "decision_granularity": "DIAGNOSTIC_TEST",
+      "relation_id": "CCR2-DEV12-SURG03-TTE",
+      "anchor_id": "TNC-a08342e8675a1c2ba929b631",
+      "evidence_refs": [
+        "required_evidence_propositions:CCR2-DEV12-SURG03-TTE"
+      ],
+      "review_status": "APPROVED",
+      "scope": "DEVELOPMENT_12_CONTINUATION"
+    }
+  ],
+  "rejected_or_uncertain_excluded_from_seeds": [
+    "RDY-PSY-03__brief_or_schizophreniform (UNCERTAIN, independent review)",
+    "RDY-PSY-03__organic_seizure_psychosis (POTENTIAL_SECOND_KEY, excluded before relation authoring)"
+  ],
+  "seeds_approved": 2,
+  "seeds_rejected": 0,
+  "seeds_uncertain": 1,
+  "frozen": true,
+  "note_on_contrast_readiness": "Even with both approved seeds counted, no Development-12 prerequisite-ready opportunity reaches the >=3-safe-competitor CONTRAST_READY floor this wave (existing viable competitors = 0/8 per MEMORY.md DEVELOPMENT_EXISTING_SEED_READY=0/12, unchanged; RDY-PED-04 reaches 1, RDY-SURG-03 reaches 1). This is a structural, deterministic ceiling from the single bounded discovery wave (max 2 semantic survivors on any one opportunity), not a defect in this seed pack. Per experiment rule, no additional discovery is performed to close this gap.",
+  "content_sha256": "a4b4fc760e8c3da78d29ac7b4b98eb44a292082311b3fe9cf09fecd4a9c07be5"
+}

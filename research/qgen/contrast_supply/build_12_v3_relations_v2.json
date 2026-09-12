@@ -1,0 +1,57 @@
+{
+  "schema_version": "CLINICAL_CONTRAST_RELATIONS_V2_BUILD12_V3",
+  "scope": "BUILD_12_ONLY",
+  "semantic_review_sha256": "20f05822ff87d15dba3ce38c8cb2808c498e10781e5abf7ecfc10bf7ca4737fc",
+  "existing_exact_scope_relations_reused": 4,
+  "relations_proposed": 1,
+  "relations_approved": 1,
+  "relations_rejected": 0,
+  "relations_uncertain": 0,
+  "relations": [
+    {
+      "relation_id": "CCR2-BUILD12-V3-SURG03-CXR",
+      "opportunity_id": "RDY-SURG-03",
+      "candidate_id": "CONCEPT-R4-SU-R-05-CXR",
+      "candidate_canonical_identity": "Obtain a chest radiograph",
+      "learner_decision": "Use thoracic point-of-care ultrasound, integrated with the clinical assessment, to evaluate suspected pneumothorax in an emergency presentation.",
+      "response_class": "STRUCTURAL",
+      "decision_granularity": "DIAGNOSTIC_TEST",
+      "classification": "PLAUSIBLE_BUT_NEVER_BEST",
+      "positive_candidate_anchor": {
+        "anchor_id": "CAEP-EDTU-PTX-CXR-COMPARATOR",
+        "statement": "Chest radiography is an established comparator imaging test for pneumothorax."
+      },
+      "why_anchor_supports_candidate": "The Canadian emergency-ultrasound teaching manual directly compares ultrasound with chest radiography for pneumothorax detection, establishing chest radiography as a real diagnostic alternative rather than an invented option.",
+      "inferiority_discriminator": "In the emergency setting with trained POCUS available, thoracic ultrasound is immediately bedside, a core Canadian emergency application, and is described as outperforming chest radiography for pneumothorax detection.",
+      "why_key_wins": "The frozen learner decision specifically requires thoracic POCUS integrated with the clinical assessment; the Canadian position statement identifies thoracic ultrasound for pneumothorax as a core emergent application.",
+      "second_key_analysis": "Chest radiography remains clinically plausible but is not the keyed best answer under the explicit trained-emergency-POCUS context. A stem omitting that context would fail closed.",
+      "evidence_propositions": [
+        {
+          "source": "Canadian Association of Emergency Physicians POCUS position statement",
+          "url": "https://www.caep.ca/position-statements/recommendations-for-the-use-of-point-of-care-ultrasound-%28pocus%29-by-emergency-physicians-in-canada",
+          "proposition": "Thoracic ultrasound including pneumothorax identification is a core, potentially life-saving emergency POCUS application."
+        },
+        {
+          "source": "CAEP Emergency Department Targeted Ultrasound manual",
+          "url": "https://caep.ca/wp-content/uploads/2018/05/EDTU-Manual.pdf",
+          "proposition": "The manual directly states that ultrasound outperforms chest radiography and rivals CT for pneumothorax detection."
+        }
+      ],
+      "targeted_relation_research_requests": 1,
+      "independent_review": {
+        "reviewer_execution_id": "independent-build12-v3-relation-review-20260908",
+        "verdict": "APPROVED",
+        "learner_decision_compatibility": "PASS",
+        "response_class_compatibility": "PASS",
+        "granularity_compatibility": "PASS",
+        "positive_plausibility_support": "PASS",
+        "positive_anchor": "PASS",
+        "inferiority_to_key": "PASS",
+        "second_key_safety": "PASS_WITH_EXPLICIT_TRAINED_POCUS_CONTEXT",
+        "evidence_entailment": "PASS",
+        "comment": "The sources support both comparator reality and key superiority; scope must retain trained emergency POCUS availability."
+      }
+    }
+  ],
+  "content_sha256": "e4e3089453118ee60cf89041a18738c57bbceec8814dcb67caaea2a990f26a14"
+}

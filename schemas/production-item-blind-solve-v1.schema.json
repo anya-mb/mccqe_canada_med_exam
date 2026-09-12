@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Production Item Blind Solve V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "item_id", "blind_packet_sha256", "reviewer_session_id", "chosen_best_answer", "confidence", "possible_second_key", "ambiguity", "missing_information", "mccqe_realism", "frozen", "content_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.0"}, "item_id": {"type": "string"},
+    "blind_packet_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "reviewer_session_id": {"type": "string", "minLength": 1}, "chosen_best_answer": {"type": "string"},
+    "confidence": {"enum": ["LOW", "MODERATE", "HIGH"]},
+    "possible_second_key": {"type": ["string", "null"]}, "ambiguity": {"type": "string"},
+    "missing_information": {"type": "string"}, "mccqe_realism": {"enum": ["PASS", "FAIL", "UNCERTAIN"]},
+    "frozen": {"const": true}, "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

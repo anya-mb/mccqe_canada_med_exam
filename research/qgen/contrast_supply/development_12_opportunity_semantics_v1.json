@@ -1,0 +1,364 @@
+{
+  "schema_version": "OPPORTUNITY_SEMANTICS_V1",
+  "scope": "Development-12 opportunity-layer demanded_response_class + decision_granularity",
+  "development_12_ids_sha256": "a20732467b62428dd2388f9bb21820c8ee501e9b3457dbcb0a8d28f6931a6509",
+  "derivation_source": "scripts.qbank.option_set_admissibility.RESPONSE_CLASS_AXES + scripts.qbank.chapter_staged_generation.DECISION_GRANULARITIES (both pre-existing closed vocabularies; no new tokens invented)",
+  "root_cause": "SEMANTICS_EXIST_BUT_NOT_ON_OPPORTUNITY_LAYER (response_class axis closed and code-enforced in scripts/qbank/contrast_supply.py::library_eligible_candidates; decision_granularity closed enum exists in a different, unwired module -- chapter_staged_generation.DECISION_GRANULARITIES -- and was never bridged to the Development-12 opportunity records)",
+  "candidate_discovery_visibility": "NONE -- authored from learner_decision text only, before any candidate/distractor supply was consulted",
+  "opportunities": [
+    {
+      "development_id": "RDY-MED-01",
+      "discipline": "MED",
+      "study_unit_id": "SU-R-09",
+      "learner_decision_id": "LD-RDY-MED-01",
+      "learner_decision": "Recognize a severe COPD exacerbation with acute respiratory failure and urgently escalate care.",
+      "learner_decision_content_sha256": "26c0240d851b5c260c61a83dac39888361d9b7a8351bb191414320eaf6c8b8f8",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "response_class_axis": "next_action_class",
+      "demanded_response_class": "ESCALATION_TO_CRITICAL_CARE",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "justification": "The decision is a single immediate action -- urgently escalate care for respiratory failure -- not a choice among diagnoses or a full management plan.",
+      "derivation_source": "RESPONSE_CLASS_AXES+DECISION_GRANULARITIES (pre-existing closed vocabularies)",
+      "independent_review": {
+        "reviewer_execution_id": "sonnet5-independent-review-2026-09-08-opportunity-semantics-dev12",
+        "response_class_verdict": "APPROVED",
+        "response_class_reason": null,
+        "decision_granularity_verdict": "APPROVED",
+        "decision_granularity_reason": null,
+        "reviewer_saw_only": [
+          "development_id",
+          "learner_decision",
+          "option_set_archetype",
+          "demanded_response_class",
+          "decision_granularity"
+        ]
+      },
+      "prerequisite_ready": true
+    },
+    {
+      "development_id": "RDY-MED-02",
+      "discipline": "MED",
+      "study_unit_id": "SU-C-07",
+      "learner_decision_id": "LD-RDY-MED-02",
+      "learner_decision": "For intermittent palpitations, seek ECG documentation or symptom-rhythm correlation rather than diagnosing an arrhythmia from symptoms alone.",
+      "learner_decision_content_sha256": "8d32703d61a76bee8230f741d6a631dbc5cc0887abc2747abf1c0ba3290a6c98",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "response_class_axis": "investigation_purpose",
+      "demanded_response_class": "MONITORING",
+      "decision_granularity": "DIAGNOSTIC_TEST",
+      "justification": "ECG/symptom-rhythm correlation for intermittent palpitations is rhythm documentation over time (ambulatory/event monitoring), not a one-off structural or biochemical test; the decision is which single diagnostic step to pursue next.",
+      "derivation_source": "RESPONSE_CLASS_AXES+DECISION_GRANULARITIES (pre-existing closed vocabularies)",
+      "independent_review": {
+        "reviewer_execution_id": "sonnet5-independent-review-2026-09-08-opportunity-semantics-dev12",
+        "response_class_verdict": "UNCERTAIN",
+        "response_class_reason": "ECG documentation and prolonged rhythm correlation are two textually offered paths of different investigation_purpose character (FUNCTIONAL vs MONITORING); MONITORING is defensible but not uniquely forced by the decision text.",
+        "decision_granularity_verdict": "APPROVED",
+        "decision_granularity_reason": null,
+        "reviewer_saw_only": [
+          "development_id",
+          "learner_decision",
+          "option_set_archetype",
+          "demanded_response_class",
+          "decision_granularity"
+        ]
+      },
+      "prerequisite_ready": false
+    },
+    {
+      "development_id": "RDY-PED-01",
+      "discipline": "PED",
+      "study_unit_id": "SU-P-062",
+      "learner_decision_id": "LD-RDY-PED-01",
+      "learner_decision": "In a child with acute gastroenteritis and mild-to-moderate dehydration, use oral rehydration solution as initial rehydration when oral intake is safe.",
+      "learner_decision_content_sha256": "f352ef68ea13077bab9df965636f624339de4f6b6399bbfff8918dbf9835ac78",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "response_class_axis": "next_action_class",
+      "demanded_response_class": "MINIMAL_SUPPORT",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "justification": "Choosing oral rehydration over IV fluids is a step on the least-invasive end of the same support-escalation ladder next_action_class already uses for respiratory support (LOW_FLOW/HIGH_FLOW); no dedicated rehydration token exists so MINIMAL_SUPPORT is the closest textually-supported fit. FLAGGED_FOR_REVIEW: weakest mapping in this set.",
+      "derivation_source": "RESPONSE_CLASS_AXES+DECISION_GRANULARITIES (pre-existing closed vocabularies)",
+      "independent_review": {
+        "reviewer_execution_id": "sonnet5-independent-review-2026-09-08-opportunity-semantics-dev12",
+        "response_class_verdict": "REJECTED",
+        "response_class_reason": "MINIMAL_SUPPORT is a token from the respiratory support-escalation ladder (paired with LOW_FLOW_SUPPORT/HIGH_FLOW_SUPPORT); reusing it for enteral-vs-parenteral rehydration route selection overloads it outside its evident physiological domain. No existing token in any axis covers fluid-route selection; this is a genuine vocabulary gap, not a reviewer-resolvable ambiguity.",
+        "decision_granularity_verdict": "APPROVED",
+        "decision_granularity_reason": null,
+        "reviewer_saw_only": [
+          "development_id",
+          "learner_decision",
+          "option_set_archetype",
+          "demanded_response_class",
+          "decision_granularity"
+        ]
+      },
+      "prerequisite_ready": false
+    },
+    {
+      "development_id": "RDY-PED-04",
+      "discipline": "PED",
+      "study_unit_id": "SU-P-050",
+      "learner_decision_id": "LD-RDY-PED-04",
+      "learner_decision": "In a child with polyuria, polydipsia, and weight loss, immediately check glucose and ketones and urgently assess for diabetic ketoacidosis.",
+      "learner_decision_content_sha256": "14c60a96af19ddeb0fc055f66d99d0cd75f2d4d2adb0e28d982a2072a7dcf110",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "response_class_axis": "next_action_class",
+      "demanded_response_class": "DIAGNOSTIC_ORDER",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "justification": "The stated decision is the immediate order to check glucose/ketones, not the eventual DKA management plan.",
+      "derivation_source": "RESPONSE_CLASS_AXES+DECISION_GRANULARITIES (pre-existing closed vocabularies)",
+      "independent_review": {
+        "reviewer_execution_id": "sonnet5-independent-review-2026-09-08-opportunity-semantics-dev12",
+        "response_class_verdict": "APPROVED",
+        "response_class_reason": null,
+        "decision_granularity_verdict": "APPROVED",
+        "decision_granularity_reason": null,
+        "reviewer_saw_only": [
+          "development_id",
+          "learner_decision",
+          "option_set_archetype",
+          "demanded_response_class",
+          "decision_granularity"
+        ]
+      },
+      "prerequisite_ready": true
+    },
+    {
+      "development_id": "RDY-OBGYN-01",
+      "discipline": "OBGYN",
+      "study_unit_id": "SU-GY-19",
+      "learner_decision_id": "LD-RDY-OBGYN-01",
+      "learner_decision": "When pelvic inflammatory disease is clinically suspected, test for pregnancy and relevant infections and begin empiric broad-spectrum treatment without waiting for perfect diagnostic certainty.",
+      "learner_decision_content_sha256": "f7e27890899a413e68bf290c3305e878ba7403715ede0128bbc14755072a1e4a",
+      "option_set_archetype": "MANAGEMENT_STRATEGY_SET",
+      "response_class_axis": "management_capability",
+      "demanded_response_class": "PHARMACOLOGIC_TREATMENT",
+      "decision_granularity": "TREATMENT_BUNDLE",
+      "justification": "Empiric broad-spectrum antibiotic coverage for suspected PID is definitionally a multi-agent treatment bundle started pending further workup, not a single-drug order.",
+      "derivation_source": "RESPONSE_CLASS_AXES+DECISION_GRANULARITIES (pre-existing closed vocabularies)",
+      "independent_review": {
+        "reviewer_execution_id": "sonnet5-independent-review-2026-09-08-opportunity-semantics-dev12",
+        "response_class_verdict": "APPROVED",
+        "response_class_reason": null,
+        "decision_granularity_verdict": "APPROVED",
+        "decision_granularity_reason": null,
+        "reviewer_saw_only": [
+          "development_id",
+          "learner_decision",
+          "option_set_archetype",
+          "demanded_response_class",
+          "decision_granularity"
+        ]
+      },
+      "prerequisite_ready": true
+    },
+    {
+      "development_id": "RDY-OBGYN-02",
+      "discipline": "OBGYN",
+      "study_unit_id": "SU-GY-13",
+      "learner_decision_id": "LD-RDY-OBGYN-02",
+      "learner_decision": "For pain or bleeding in early pregnancy, obtain transvaginal ultrasound and serum beta-hCG and continue follow-up until pregnancy location is established.",
+      "learner_decision_content_sha256": "efe508776ab37bbd09b1e73741a6fde0d1eaf7bc6101f2fb70e079c29bd8f679",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "response_class_axis": "investigation_purpose",
+      "demanded_response_class": "STRUCTURAL",
+      "decision_granularity": "DIAGNOSTIC_TEST",
+      "justification": "The decision's own end-state is anatomic pregnancy localization (transvaginal ultrasound); serial beta-hCG is adjunctive to that structural question rather than the primary purpose.",
+      "derivation_source": "RESPONSE_CLASS_AXES+DECISION_GRANULARITIES (pre-existing closed vocabularies)",
+      "independent_review": {
+        "reviewer_execution_id": "sonnet5-independent-review-2026-09-08-opportunity-semantics-dev12",
+        "response_class_verdict": "APPROVED",
+        "response_class_reason": null,
+        "decision_granularity_verdict": "UNCERTAIN",
+        "decision_granularity_reason": "The decision names two investigations plus ongoing follow-up until resolution, not a single discrete test; DECISION_GRANULARITIES has no multi-step diagnostic-pathway token, so forcing DIAGNOSTIC_TEST understates the decision's compound nature.",
+        "reviewer_saw_only": [
+          "development_id",
+          "learner_decision",
+          "option_set_archetype",
+          "demanded_response_class",
+          "decision_granularity"
+        ]
+      },
+      "prerequisite_ready": false
+    },
+    {
+      "development_id": "RDY-SURG-03",
+      "discipline": "SURG",
+      "study_unit_id": "SU-GS-19",
+      "learner_decision_id": "LD-RDY-SURG-03",
+      "learner_decision": "Use thoracic point-of-care ultrasound, integrated with the clinical assessment, to evaluate suspected pneumothorax in an emergency presentation.",
+      "learner_decision_content_sha256": "df738fe5fc56a0427e6c3028480ecb1c156034f9b53bff81af2f8c074faf2272",
+      "option_set_archetype": "INVESTIGATION_SET",
+      "response_class_axis": "investigation_purpose",
+      "demanded_response_class": "STRUCTURAL",
+      "decision_granularity": "DIAGNOSTIC_TEST",
+      "justification": "Point-of-care ultrasound for pneumothorax is a structural/anatomic imaging test (pleural sliding), directly on-axis.",
+      "derivation_source": "RESPONSE_CLASS_AXES+DECISION_GRANULARITIES (pre-existing closed vocabularies)",
+      "independent_review": {
+        "reviewer_execution_id": "sonnet5-independent-review-2026-09-08-opportunity-semantics-dev12",
+        "response_class_verdict": "APPROVED",
+        "response_class_reason": null,
+        "decision_granularity_verdict": "APPROVED",
+        "decision_granularity_reason": null,
+        "reviewer_saw_only": [
+          "development_id",
+          "learner_decision",
+          "option_set_archetype",
+          "demanded_response_class",
+          "decision_granularity"
+        ]
+      },
+      "prerequisite_ready": true
+    },
+    {
+      "development_id": "RDY-SURG-05",
+      "discipline": "SURG",
+      "study_unit_id": "SU-GS-58",
+      "learner_decision_id": "LD-RDY-SURG-05",
+      "learner_decision": "Recognize resolved episodic biliary pain as biliary colic and refer appropriate symptomatic patients for elective laparoscopic cholecystectomy.",
+      "learner_decision_content_sha256": "8df3b268bd807b518774f59f7902640dad066d71d7fb338bf4c44d2c92fd37dd",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "response_class_axis": "next_action_class",
+      "demanded_response_class": "DISPOSITION_ACTION",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "justification": "Referral for elective surgery is a disposition/referral decision, not acute operative source control (which the management_capability axis's operative tokens are built for); this is the single next step after diagnosis is recognized.",
+      "derivation_source": "RESPONSE_CLASS_AXES+DECISION_GRANULARITIES (pre-existing closed vocabularies)",
+      "independent_review": {
+        "reviewer_execution_id": "sonnet5-independent-review-2026-09-08-opportunity-semantics-dev12",
+        "response_class_verdict": "APPROVED",
+        "response_class_reason": null,
+        "decision_granularity_verdict": "APPROVED",
+        "decision_granularity_reason": null,
+        "reviewer_saw_only": [
+          "development_id",
+          "learner_decision",
+          "option_set_archetype",
+          "demanded_response_class",
+          "decision_granularity"
+        ]
+      },
+      "prerequisite_ready": true
+    },
+    {
+      "development_id": "RDY-PSY-01",
+      "discipline": "PSY",
+      "study_unit_id": "SU-PS-13",
+      "learner_decision_id": "LD-RDY-PSY-01",
+      "learner_decision": "Recognize postpartum psychosis as a psychiatric emergency and arrange urgent assessment to protect mother and infant.",
+      "learner_decision_content_sha256": "a4e0fd64c3cd443d7a739afb8b853c21cae36edb43632e708d5e0243b8558015",
+      "option_set_archetype": "NEXT_ACTION_SET",
+      "response_class_axis": "next_action_class",
+      "demanded_response_class": "ESCALATION_TO_CRITICAL_CARE",
+      "decision_granularity": "SINGLE_NEXT_ACTION",
+      "justification": "Arranging urgent psychiatric assessment for a psychiatric emergency is the same escalation-of-care action class as RDY-MED-01, applied to a psychiatric rather than respiratory emergency.",
+      "derivation_source": "RESPONSE_CLASS_AXES+DECISION_GRANULARITIES (pre-existing closed vocabularies)",
+      "independent_review": {
+        "reviewer_execution_id": "sonnet5-independent-review-2026-09-08-opportunity-semantics-dev12",
+        "response_class_verdict": "UNCERTAIN",
+        "response_class_reason": "ESCALATION_TO_CRITICAL_CARE literally denotes escalation to a medical critical-care unit; arranging urgent psychiatric assessment is urgent but not a critical-care-unit escalation. The axis's own generic token (NEXT_ACTION_FOR_CURRENT_CARE) may be the textually safer choice.",
+        "decision_granularity_verdict": "APPROVED",
+        "decision_granularity_reason": null,
+        "reviewer_saw_only": [
+          "development_id",
+          "learner_decision",
+          "option_set_archetype",
+          "demanded_response_class",
+          "decision_granularity"
+        ]
+      },
+      "prerequisite_ready": false
+    },
+    {
+      "development_id": "RDY-PSY-03",
+      "discipline": "PSY",
+      "study_unit_id": "SU-PS-06",
+      "learner_decision_id": "LD-RDY-PSY-03",
+      "learner_decision": "Recognize schizophrenia from persistent psychotic symptoms with functional decline and distinguish shorter psychotic disorders by course.",
+      "learner_decision_content_sha256": "3a5ae5ec7a92316ce0aab924f2366cdc890708ee8a6d0a1f3f3845c4fc146419",
+      "option_set_archetype": "DIAGNOSIS_SET",
+      "response_class_axis": "cardinal_syndrome_capability",
+      "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+      "decision_granularity": "DIAGNOSIS",
+      "justification": "cardinal_syndrome_capability has no token for primary psychotic disorders (its tokens are mood/systemic/structural syndromes); forcing PERSISTENT_MOOD_DISTURBANCE would be factually wrong since schizophrenia is not a mood disorder. Falls back honestly to the axis's own generic token (PLAUSIBLE_DIAGNOSTIC_ENTITY) rather than inventing a new one-off label, per the anti-hallucination contract.",
+      "derivation_source": "RESPONSE_CLASS_AXES+DECISION_GRANULARITIES (pre-existing closed vocabularies)",
+      "independent_review": {
+        "reviewer_execution_id": "sonnet5-independent-review-2026-09-08-opportunity-semantics-dev12",
+        "response_class_verdict": "APPROVED",
+        "response_class_reason": null,
+        "decision_granularity_verdict": "APPROVED",
+        "decision_granularity_reason": null,
+        "reviewer_saw_only": [
+          "development_id",
+          "learner_decision",
+          "option_set_archetype",
+          "demanded_response_class",
+          "decision_granularity"
+        ]
+      },
+      "prerequisite_ready": true
+    },
+    {
+      "development_id": "RDY-PHELO-02",
+      "discipline": "PHELO",
+      "study_unit_id": "SU-PH-06",
+      "learner_decision_id": "LD-RDY-PHELO-02",
+      "learner_decision": "Classify risk-factor reduction before disease occurs as primary prevention, early detection as secondary prevention, and limitation of established disease effects as tertiary prevention.",
+      "learner_decision_content_sha256": "35426130599c4028bdcf8fe08eed3dbca6bb9940b3e0dbbf3b8db85de4dc98c4",
+      "option_set_archetype": "STATISTICAL_INTERPRETATION_SET",
+      "response_class_axis": "explained_phenomenon_class",
+      "demanded_response_class": "EXPLANATION_OF_OBSERVED_PHENOMENON",
+      "decision_granularity": "EPIDEMIOLOGIC_EXPLANATION",
+      "justification": "Classifying an action into primary/secondary/tertiary prevention is a conceptual/epidemiologic classification, not a diagnosis, investigation, management, disposition, ethical or legal action; none of the 8 archetypes has a dedicated 'taxonomic classification' axis, so this falls back to the closest archetype (STATISTICAL_INTERPRETATION_SET) at its generic token. decision_granularity=EPIDEMIOLOGIC_EXPLANATION is an exact pre-existing match (this token was added to DECISION_GRANULARITIES specifically for population-health explanation decisions).",
+      "derivation_source": "RESPONSE_CLASS_AXES+DECISION_GRANULARITIES (pre-existing closed vocabularies)",
+      "independent_review": {
+        "reviewer_execution_id": "sonnet5-independent-review-2026-09-08-opportunity-semantics-dev12",
+        "response_class_verdict": "APPROVED",
+        "response_class_reason": null,
+        "decision_granularity_verdict": "APPROVED",
+        "decision_granularity_reason": null,
+        "reviewer_saw_only": [
+          "development_id",
+          "learner_decision",
+          "option_set_archetype",
+          "demanded_response_class",
+          "decision_granularity"
+        ]
+      },
+      "prerequisite_ready": true
+    },
+    {
+      "development_id": "RDY-PHELO-08",
+      "discipline": "PHELO",
+      "study_unit_id": "SU-ELOM-09",
+      "learner_decision_id": "LD-RDY-PHELO-08",
+      "learner_decision": "Assess capacity for the specific proposed decision by determining whether the patient understands relevant information and foreseeable consequences.",
+      "learner_decision_content_sha256": "f46d8523aa2693e7e7a2bce0ed05bb8950d617887e3812fe9ec772d3a9386f96",
+      "option_set_archetype": "ETHICAL_ACTION_SET",
+      "response_class_axis": "value_served",
+      "demanded_response_class": "AUTONOMY",
+      "decision_granularity": "ETHICAL_ACTION",
+      "justification": "Capacity assessment exists to determine whether a patient may exercise autonomous decision-making; AUTONOMY is the on-axis value served.",
+      "derivation_source": "RESPONSE_CLASS_AXES+DECISION_GRANULARITIES (pre-existing closed vocabularies)",
+      "independent_review": {
+        "reviewer_execution_id": "sonnet5-independent-review-2026-09-08-opportunity-semantics-dev12",
+        "response_class_verdict": "APPROVED",
+        "response_class_reason": null,
+        "decision_granularity_verdict": "APPROVED",
+        "decision_granularity_reason": null,
+        "reviewer_saw_only": [
+          "development_id",
+          "learner_decision",
+          "option_set_archetype",
+          "demanded_response_class",
+          "decision_granularity"
+        ]
+      },
+      "prerequisite_ready": true
+    }
+  ],
+  "response_class_value_count": 10,
+  "granularity_value_count": 6,
+  "development12_response_class_approved": 9,
+  "development12_granularity_approved": 11,
+  "development12_prerequisite_ready": 8,
+  "content_sha256": "05d5f345246c80f8e4e1edb85f77af203e8db3376342872801c265db6684dbe8"
+}

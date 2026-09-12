@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.0",
+  "scope": "QGEN_FRESH36_ROUTE_BC_PREFLIGHT_WAVE_REPORT",
+  "session_date": "2026-09-07",
+  "wave_bound": "8 of 32 ROUTE_B/ROUTE_C opportunities attempted (LD-D04-01, LD-D05-01, LD-D05-02, LD-D07-01, LD-D07-02, LD-D08-01, LD-D12-01 [ROUTE_B]; LD-D12-02 [ROUTE_C]) -- the dermatology cluster on SU-D-04/05/07/08/12, chosen because their own cited evidence claims explicitly name the candidate differential concepts. 22 ROUTE_B and 1 ROUTE_C opportunity were NOT attempted this session.",
+  "hard_stop_hit": false,
+  "frozen_input_integrity": {
+    "v2_frozen_pilot_opportunities_sha256_verified": "14c8491f3fb66c7e78c0f78f4692debb558229c36296f12ff09e5c200daa27fe",
+    "v2_frozen_pilot_stem_feature_maps_sha256_verified": "dcf569fe325c2ec5de1a7b22667f54d36d666f05b83707b014b6424c8641924a",
+    "feature_anchor_snapshot_v4_content_sha256_after_session": "88284420501d347659916dbe70ce743f162748be7c90309e253ed1ed858039b5",
+    "note": "V4 was only read (via load into memory), never written; its content_sha256 was not captured at session start (only the two files the orchestrating instructions named), but its file mtime (09:05:15) predates every write this session made and no Write/Edit tool call ever targeted its path."
+  },
+  "raw_supply": {
+    "artifact": "research/qgen/onboarding/v4_route_bc_raw_supply.json",
+    "raw_supply_sha256_before_review": "337ec522e10cf37fdf886f8cecd0925ef2372726d38ae0c76702768b3ee60bc1",
+    "candidates_drafted": 10,
+    "candidates_with_proposed_relation": 6,
+    "candidates_self_rejected_no_safe_item": 4
+  },
+  "independent_review": {
+    "artifact": "research/qgen/onboarding/v4_route_bc_independent_review.json",
+    "reviewer": "independent_sonnet_subagent_no_authorship_stake (single fresh subagent, run once, sequential, no authorship stake)",
+    "candidates_reviewed": 6,
+    "approved": 5,
+    "rejected": 1,
+    "rejection_reason": "LD-D05-02 candidate cited SRC-MED-045-EX-01 for an operative quote that is actually in SRC-MED-045-REC-01 -- a genuine citation-scope error caught by the reviewer, matching the Route-A failure mode."
+  },
+  "v5_snapshot_build": {
+    "built": true,
+    "artifact": "research/qgen/onboarding/feature_anchor_snapshot_v5.json",
+    "build_inputs_artifact": "research/qgen/onboarding/v5_route_bc_snapshot_build_inputs.json",
+    "built_via": "scripts/qbank/vocabulary_onboarding.build_extended_snapshot (the real, deterministic, self-validating script; no hand-authored snapshot rows)",
+    "parent_snapshot_id": "FEATURE_ANCHOR_SNAPSHOT_V4",
+    "content_sha256": "7d0952df5554634f5dacb6a928258a4593c4a817ee897e888d68b6bacaffe273",
+    "feature_count": 145,
+    "anchor_relation_count": 164,
+    "new_features_added": 1,
+    "new_anchor_relations_added": 2,
+    "relations_approved_by_independent_review_but_not_promoted": 3,
+    "not_promoted_reason": "For LD-D07-01, LD-D07-02 and LD-D08-01, the independent reviewer approved the clinical/citation soundness of the candidate, but the only available reused V4 feature in each case is diagnostic OF THE KEY (the correct answer), not of the candidate. build_extended_snapshot's anchor_proposals mechanism requires required_state=PRESENT, which only has correct registry semantics when the anchored feature is characteristic of the TARGET (candidate) concept -- registering these three at PRESENT would assert a medically backwards claim (e.g. that infantile-haemangioma's growth-then-involution course anchors 'vascular malformation'). This is a self-caught modeling error, not a rejection of the underlying clinical facts; see v5_route_bc_snapshot_build_inputs.json.not_promoted_to_v5 for the per-candidate reasoning.",
+    "verification": "vocabulary_onboarding.verify_snapshot(snapshot_v5, snapshot_v5['content_sha256']) passed; unit_bindings and registry_hash internally consistent (validated by the build function's own asserts, which would have raised on any inconsistency)."
+  },
+  "replay_phase_19": {
+    "attempted": true,
+    "method": "Code-path verification against the real profile_contrast_retrieval.build_retrieval_index and feature_anchor_registry.snapshot_anchor_index/resolve_seed_anchors functions (read in full, not simulated), rather than a literal re-execution of the full 36-opportunity retrieval call.",
+    "finding": "build_retrieval_index (scripts/qbank/profile_contrast_retrieval.py:140-141) iterates ONLY seed_id rows already present in the frozen curated seed packs (competitive_contrast_seed_pack_r4/g2_extensions/g2_targeted, 81 rows total). Pinning FEATURE_ANCHOR_SNAPSHOT_V5 changes SAF_1's anchor resolution ONLY for seed_ids that already exist in those packs (this is Route A's mechanism: re-binding an EXISTING seed's anchor to a new study unit). Both new V5 anchor relations built this session use brand-new seed_ids (SEED-ROUTEBC-D04-LIPOMA, SEED-ROUTEBC-D12-IRRITANT-CD) that do not exist as rows in any of the 3 curated packs, so build_retrieval_index never visits them regardless of pinning -- a pinned replay against the existing 81-row library is therefore provably byte-identical to the 0/36 baseline for these two opportunities specifically, and unaffected for every other opportunity (no V5 change touches their seeds either). This is a genuine architectural finding, not a shortcut: introducing a truly NEW competitor candidate (never previously a seed) requires authoring a new curated-seed-pack-shaped file (targets/seeds + a companion .enrichment.json + a companion .stem_anchors.json, each independently reviewed and content-hash-frozen, matching the schema in research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json), not just a V4/V5 registry extension -- and even that path was independently shown (via the frozen per-opportunity stem-feature-maps' clinical_role tags in v2_frozen_pilot_stem_feature_maps.json) to have no available SHARED_PLAUSIBILITY_FEATURE-role anchor for any of these 8 opportunities without either inventing evidence outside the cited claims or extending the frozen per-opportunity feature maps themselves (out of scope, read-only this session)."
+  },
+  "POST_PREFLIGHT_CONTRAST_READY": "0/36 (unchanged from baseline; code-path-verified, see replay_phase_19)",
+  "ROUTE_B_READY": "0/30",
+  "ROUTE_C_READY": "0/2",
+  "NEW_RELATIONS_PROPOSED": 6,
+  "NEW_RELATIONS_APPROVED_BY_INDEPENDENT_REVIEW": 5,
+  "NEW_RELATIONS_PROMOTED_TO_V5": 2,
+  "NEW_FEATURES_PROPOSED": 1,
+  "NEW_FEATURES_APPROVED": 1,
+  "SUPPLY_ASSESSMENT": "PROMISING_BUT_STRUCTURALLY_BLOCKED -- the first session in this milestone's history where independent clinical review approved Route-B candidates (5 of 6, on citation-scope and clinical-soundness grounds) and a V5 snapshot extension was genuinely built and verified. However, POST_PREFLIGHT_CONTRAST_READY did not move off 0/36 because the retrieval pipeline's anchor-floor gate (SAF_1) requires a competitor to have a distinct, evidence-grounded, already-PRESENT-in-the-frozen-stem plausibility feature that is NOT also the sole feature defining the KEY -- and none of these 8 opportunities' frozen stem-feature-maps (authored to establish only the key diagnosis, tagged POSITIVE_SUPPORT/KEY_DISCRIMINATOR/TIMING_FEATURE/MANAGEMENT_ELIGIBILITY, zero SHARED_PLAUSIBILITY_FEATURE entries) carry such a feature for any candidate considered. This is not NO_BETTER (real clinical progress was made and verified) and not VALIDATED (nothing became contrast-ready); PROMISING_BUT_STRUCTURALLY_BLOCKED is the honest label.",
+  "PRODUCTION_READINESS": "NOT_READY_FOR_SCALEOUT",
+  "generation_phase_23_plus": "NOT_ATTEMPTED -- gate not met (POST_PREFLIGHT_CONTRAST_READY = 0). No stems, blind solves, option sets, rationales, or final reviews were authored or simulated for any opportunity.",
+  "testing": {
+    "shared_code_changed": false,
+    "focused_tests_run": [
+      "tests/test_onboarding_v2_build.py",
+      "tests/test_qgen_profiles_v2.py",
+      "tests/test_vocabulary_onboarding.py",
+      "tests/test_profile_contrast_retrieval.py",
+      "tests/test_stem_anchor_floor.py"
+    ],
+    "focused_tests_result": "98 passed, 0 failed",
+    "full_suite_run": false,
+    "full_suite_reason": "Per CLAUDE.md/AGENTS.md policy: full suite required only after final production/canonical changes or when shared executable code under scripts/ or tests/ changes. This session added only new research JSON artifacts (raw supply, independent review, V5 snapshot, build-inputs provenance) and one report; no file under scripts/ or tests/ was modified.",
+    "known_preexisting_failures": "not evaluated this session (full suite not run); prior sessions noted test_source_research_coordinator.py as a known preexisting unrelated failure"
+  },
+  "git_state": {
+    "commits_created": 0,
+    "files_reset_cleaned_or_discarded": 0,
+    "frozen_36_and_stem_feature_map_files_touched": false,
+    "curated_seed_pack_files_touched": false
+  },
+  "corrections_noted": [
+    "The raw supply artifact's own wave_selection_rationale/source_packets_used field mislabels SRC-MED-048/045/051/049 as living in source_packet_population_srb_006.json; the independent reviewer confirmed they actually live in source_packet_population_srb_007.json. The raw supply file was not edited post-freeze (per the no-modification-after-review-begins rule); this correction is recorded here and in MEMORY.md instead."
+  ],
+  "single_most_useful_next_step": "Either (a) author a genuinely new curated-seed-pack file (targets/seeds + enrichment + stem_anchors, independently reviewed, hash-frozen, matching competitive_contrast_seed_pack_g2_targeted.json's schema) for the 2 promoted V5 candidates plus new candidates for the other 24 unattempted Route-B/C opportunities -- the only way to introduce genuinely new competitors into the retrieval index at all; or (b) if a real, evidence-grounded SHARED_PLAUSIBILITY_FEATURE can be found for a given opportunity within its own citation scope, propose it as an explicit, independently-reviewed extension to that opportunity's frozen stem-feature-map (a new, separate review artifact, not an edit to the frozen file), which would let an anchor genuinely fire at replay time. Both are Phase-12+-sized units of work per opportunity, matching MEMORY.md's repeated observation that this is a larger unit of work than a single bounded wave can cover in full."
+}

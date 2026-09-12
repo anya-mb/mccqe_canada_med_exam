@@ -1,0 +1,93 @@
+{
+  "schema_version": "1.0",
+  "scope": "MATCHER_V4_AND_INDEPENDENT_ITEM_VERIFICATION_V1_MILESTONE",
+  "status": "BLOCKED",
+  "starting_head": "01eff40984bee76418c7fab82a1ded9fbfa2d9e5",
+  "failed_matcher_v3_baseline": {
+    "heldout_pairs": 86,
+    "correct": 2,
+    "accuracy": 0.023256,
+    "meaning": "OPPORTUNITY_RELATION_CLASSIFICATION_NOT_MEDICAL_QUESTION_ACCURACY"
+  },
+  "relation_gold_v2": {
+    "content_sha256": "7bff03312c9023244054f8760d75f1e706c0d13526cd2a9f3e600d4ce4b49cc3",
+    "pairs": 81,
+    "inter_reviewer_agreement": 0.901235,
+    "disagreements": 8,
+    "disagreements_adjudicated": 8,
+    "counts": {
+      "EQUIVALENT": 4,
+      "REGISTRY_BROADER_CONTAINS_BENCHMARK": 0,
+      "REGISTRY_NARROWER_THAN_BENCHMARK": 0,
+      "VARIANT_OF_SAME_DECISION": 0,
+      "RELATED_BUT_DISTINCT": 42,
+      "NEAR_DUPLICATE": 0,
+      "DUPLICATE": 0,
+      "UNRELATED": 0,
+      "UNCERTAIN": 35
+    },
+    "quality_gate": "FAIL_INSUFFICIENT_CLASS_SUPPORT",
+    "frozen_partitions_sha256": "94f6ca616eda062d5256816f09f9577c45034c9839d89472d26286c512849a35"
+  },
+  "matcher_v4": {
+    "architecture": "HYBRID",
+    "contract_sha256": "41f48e744e51e910f621c448a33cc8d2666ac6b0e9810b18accd70bceec24335",
+    "approach_investigation": {
+      "deterministic": "REJECTED_AS_SOLE_MATCHER_AFTER_V3_REAL_PAIR_GENERALIZATION_FAILURE",
+      "semantic": "RETAINED_AS_CONSTRAINED_RELATION_CLASSIFIER",
+      "hybrid": "SELECTED_ARCHITECTURALLY_DETERMINISTIC_RECALL_PREFILTER_PLUS_CONSTRAINED_SEMANTIC_CLASSIFIER"
+    },
+    "calibration": {"status": "NOT_RUN_INSUFFICIENT_CLASS_SUPPORT"},
+    "validation": {"status": "NOT_RUN_INSUFFICIENT_CLASS_SUPPORT"},
+    "final_heldout": {"status": "NOT_RUN_INSUFFICIENT_CLASS_SUPPORT"},
+    "variant_relation_heldout_support": 0,
+    "gate": "FAIL"
+  },
+  "normalized_metrics": {
+    "v1": "NOT_AUTHORIZED",
+    "v2": "NOT_AUTHORIZED"
+  },
+  "registry_v3_status": "NOT_CREATED_MATCHER_GATE_FAILED",
+  "independent_item_verification_v1": {
+    "status": "IMPLEMENTED",
+    "validation_items_tested": 6,
+    "validation_package_sha256": "57cd1b43af43f1544b0aac4848fadcf0cc6c82224a520e9157c28d5579d344e5",
+    "verification_package_schema_file_sha256": "a6d222bde3224983ef219d4e753f79a37e1ff521dd6d6ed64c4ff11825497e86",
+    "verification_ledger_content_sha256": "5647678da319d896afe03e2291f361b3a6e00d85e67b8663975c4818d0e5a40b",
+    "verification_ledger_file_sha256": "28bf5dcb49cc942a4ea9176bc1f0f2aab0e6a4996936c8127441154da8a13cb5",
+    "external_verifier_prompt_file_sha256": "d08b68006221dbb2a205b4ffe05aca00a843517fc3d2a1152764be2f351770f6",
+    "blind_solve_protocol": "FROZEN_BEFORE_AUTHOR_KEY_OR_RATIONALE_REVEAL",
+    "evidence_audit_protocol": "SEPARATE_SESSION_CLAIM_BY_CLAIM_DIRECT_SOURCE_TRACE",
+    "toronto_notes_conflict_policy": "MATERIAL_TN_CONTRADICTION_REJECTS_OR_REQUIRES_ADJUDICATION",
+    "canadian_guideline_conflict_policy": "CURRENT_AUTHORITATIVE_CANADIAN_GUIDANCE_CONTROLS_CURRENT_MANAGEMENT; MATERIAL_CONFLICT_REJECTS_OR_REQUIRES_ADJUDICATION",
+    "mutation_tests": {
+      "wrong_key_detected": true,
+      "second_key_detected": true,
+      "unsupported_claim_detected": true,
+      "false_citation_detected": true,
+      "outdated_guidance_detected": true,
+      "tn_conflict_detected": true,
+      "canadian_guideline_conflict_detected": true
+    },
+    "acceptance_contract": "PASS"
+  },
+  "copyright_audit": "PASS",
+  "verification": {
+    "focused_tests_passed": 137,
+    "focused_tests_failed": 0,
+    "full_suite_passed": 2057,
+    "full_suite_failed": 1,
+    "known_preexisting_failures": 1,
+    "new_test_failures": 0,
+    "historical_safety_regression": "PASS",
+    "aom_development_control": "PASS",
+    "lifecycle_invariant": "PASS"
+  },
+  "ready_for_independently_verified_production_pilot": "NO",
+  "production_questions_generated": 0,
+  "commits_created": 0,
+  "historical_frozen_artifacts_modified": 0,
+  "claude_md_changed": false,
+  "next_dominant_bottleneck": "REPRESENTATIVE_RARE_RELATION_CLASS_GOLD_AND_VARIANT_HOLDOUT_SUPPORT",
+  "next_step": "EXPAND_RELATION_GOLD"
+}

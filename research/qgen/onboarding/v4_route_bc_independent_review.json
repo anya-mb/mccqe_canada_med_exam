@@ -1,0 +1,51 @@
+{
+  "raw_supply_ref": "research/qgen/onboarding/v4_route_bc_raw_supply.json",
+  "raw_supply_sha256_reviewed": "337ec522e10cf37fdf886f8cecd0925ef2372726d38ae0c76702768b3ee60bc1",
+  "reviewer": "independent_sonnet_subagent_no_authorship_stake",
+  "reviews": [
+    {
+      "opportunity_id": "LD-D04-01",
+      "candidate_concept": "Mobile subcutaneous lipoma",
+      "verdict": "APPROVED",
+      "reason": "SRC-MED-048-REC-01 (in research/qgen/source_packet_population_srb_007.json, the packet that actually contains SRC-MED-048 -- note it is NOT in srb_006.json despite the source_packets_used label, see general observation below) states verbatim: 'Recognize a skin cyst as a sac containing fluid or debris that commonly occurs on the scalp, ears, face, or back; distinguish this superficial lesion pattern from a mobile lipoma or an acute inflammatory mass.' This exactly mirrors the manifest's own LD-D04-01 learner_decision_statement ('...rather than a mobile subcutaneous lipoma or an acute inflammatory mass'), so the candidate is in-scope for this exact study unit/decision, not borrowed from a sibling. The new feature SF-D04-MOBILE-MASS is genuinely new (absent from feature_anchor_snapshot_v4.json's 144 features, no ID collision), correctly scoped to study_unit_id SU-D-04/LD-D04-01 only, and its mutual-exclusivity claim with the already-frozen SF-ONB2-SUPERFICIAL-CYST=PRESENT/SF-ONB2-CYST-SITE=PRESENT state is a standard, safe clinical distinction (a fixed superficial sac vs. a freely mobile subcutaneous lipoma), not an invented fact beyond the cited contrast. COUNTERFACTUAL_CORRECT is the right distractor_class for a NEGATIVE_DISCRIMINATOR with required_feature_state=ABSENT. No second-key risk identified."
+    },
+    {
+      "opportunity_id": "LD-D05-02",
+      "candidate_concept": "Continue managing as benign keratosis without further assessment (reassurance only)",
+      "verdict": "REJECTED",
+      "reason": "Citation-scope violation: proposed_relation.evidence_claim_ids cites only SRC-MED-045-EX-01, and the author_note attributes the quote 'assess a rapidly changing, symptomatic, or diagnostically uncertain lesion rather than assuming a benign diagnosis' to EX-01 ('EX-01 directly states...'). That sentence does not appear in EX-01. EX-01's actual, full text (per SRC-MED-045 in source_packet_population_srb_007.json) is: 'Clinical appearance alone may not reliably distinguish a benign keratosis from a mole, wart, skin tag, or melanoma when a lesion is atypical' -- a claim about diagnostic uncertainty between lesion types, not about what action to take for a changing lesion. The 'assess rather than assume benign' language the candidate actually needs is in SRC-MED-045-REC-01, which is in-scope for LD-D05-02 per the manifest (evidence_claim_ids includes both REC-01 and EX-01) but was not the claim_id cited in the relation object. As submitted, the cited evidence_claim_id does not verifiably say what the candidate's grounding claims it says -- the same failure mode (a claim_id that does not actually support the proposed contrast) the Route-A independent review flagged. This is a fixable mislabeling (citing REC-01 instead would likely be sound), but the candidate as constructed must be rejected."
+    },
+    {
+      "opportunity_id": "LD-D07-01",
+      "candidate_concept": "Vascular malformation",
+      "verdict": "APPROVED",
+      "reason": "SRC-MED-051-REC-01 states: 'Distinguish proliferative vascular tumours such as infantile hemangioma from vascular malformations; infantile hemangiomas typically grow in the first weeks to months after birth and then involute...' This sentence's own structure ('distinguish A from B; [A's defining course]') directly supports using the postnatal growth-then-involution course as the discriminator, and the reused feature SF-ONB2-INFANTILE-COURSE is confirmed bound to SU-D-07/LD-D07-01 in feature_anchor_snapshot_v4.json's unit_bindings with provenance evidence_refs=[SRC-MED-051-REC-01], matching how it is used here. Manifest's frozen state for LD-D07-01 (SF-ONB2-INFANTILE-COURSE=PRESENT) matches the required_feature_state. distractor_class COUNTERFACTUAL_CORRECT is appropriate. CAVEAT noted but not disqualifying: the author_note adds an elaboration not present in the citation ('malformations are structural anomalies present from birth that grow proportionately with the child') -- this extra clinical detail is not traceable to SRC-MED-051-REC-01's text and should not be treated as cited evidence; however it is not encoded in the machine-readable proposed_relation object itself (which cites only the growth-then-involute claim), so it does not corrupt the anchor. Future authoring should drop that unsupported elaboration."
+    },
+    {
+      "opportunity_id": "LD-D07-02",
+      "candidate_concept": "Continue observation without early specialist referral",
+      "verdict": "APPROVED",
+      "reason": "SRC-MED-051-REC-01 states directly and unambiguously: '...high-risk location, ulceration, functional compromise, or large segmental facial involvement warrants early specialist referral.' Ulceration is named explicitly as a referral trigger, so 'continue observation' is a clean DEAD_DISTRACTOR when SF-ONB2-ULCERATED-VASCULAR-LESION=PRESENT, which is exactly LD-D07-02's own frozen state per the manifest. The feature is confirmed bound to SU-D-07/LD-D07-02 in feature_anchor_snapshot_v4.json with matching provenance. No inference or outside knowledge required; no ambiguity."
+    },
+    {
+      "opportunity_id": "LD-D08-01",
+      "candidate_concept": "No further assessment needed (reassure as cosmetic finding only)",
+      "verdict": "APPROVED",
+      "reason": "SRC-MED-049-REC-01 states directly: 'recognize xanthoma or xanthelasma as a physical stigma of dyslipidemia that warrants lipid-focused clinical assessment.' This is a categorical claim, so 'no action, reassure only' is a clean DEAD_DISTRACTOR whenever SF-ONB2-XANTHELASMA=PRESENT, which is LD-D08-01's own frozen state per the manifest. Feature confirmed bound to SU-D-08/LD-D08-01 in feature_anchor_snapshot_v4.json with matching provenance (evidence_refs=[SRC-MED-049-REC-01]). No ambiguity or invented content."
+    },
+    {
+      "opportunity_id": "LD-D12-01",
+      "candidate_concept": "Irritant contact dermatitis",
+      "verdict": "APPROVED",
+      "reason": "SRC-MED-033-REC-01 gives a clean, explicitly two-sided contrast: 'allergic contact dermatitis follows delayed allergen exposure, while irritant contact dermatitis follows repeated chemically damaging exposure.' The reused feature SF-ONB2-REPEATED-IRRITANT is confirmed bound to SU-D-12/LD-D12-01 in feature_anchor_snapshot_v4.json with matching provenance (evidence_refs=[SRC-MED-033-REC-01]), and the manifest's frozen states for LD-D12-01 (SF-ONB2-DELAYED-ALLERGEN=PRESENT, SF-ONB2-REPEATED-IRRITANT=ABSENT) match the required_feature_state=ABSENT used here. COUNTERFACTUAL_CORRECT is the right label -- irritant CD would become correct if the exposure pattern flipped. No invented content; both diagnoses and their discriminator are named directly in the same sentence of the cited claim."
+    }
+  ],
+  "route_bc_approved_count": 5,
+  "route_bc_rejected_or_uncertain_count": 1,
+  "schema_version": "1.0",
+  "scope": "QGEN_FRESH36_ROUTE_BC_INDEPENDENT_REVIEW_V1",
+  "general_observations": [
+    "The raw supply's own wave_selection_rationale and source_packets_used list claim SRC-MED-048, SRC-MED-045, SRC-MED-051, and SRC-MED-049 live in research/qgen/source_packet_population_srb_006.json alongside SRC-MED-033. That file (checked directly) only contains SRC-MED-032 through SRC-MED-041 -- the other four packet IDs actually live in research/qgen/source_packet_population_srb_007.json. This did not block verification (all claim text was located and checked in srb_007.json) but the raw supply's own provenance labeling for its source packet locations is inaccurate and should be corrected.",
+    "Not part of the primary review (author already self-rejected as NO_SAFE_ITEM with proposed_relation:null, so not scored above), but worth flagging: for LD-D12-02 ('Patch testing' / 'No specific investigation needed'), the author's stated reason for NO_SAFE_ITEM was that no feature establishing clinical suspicion of allergic (vs irritant) contact dermatitis is bound to LD-D12-02's own citation scope. However, feature_anchor_snapshot_v4.json's unit_bindings for SU-D-12 shows LD-D12-02 IS listed as bound to both SF-ONB2-DELAYED-ALLERGEN and SF-ONB2-REPEATED-IRRITANT (identical to LD-D12-01's binding). This appears to contradict the author's stated basis for rejection, though the author's underlying caution (EX-01 alone, the only claim actually cited for LD-D12-02 in the manifest, does not itself establish the ACD-suspicion precondition) may still be correct on narrower citation-scope grounds. This is noted as an observation only, not a basis for approving the candidate, since resolving it would require citing REC-01 for LD-D12-02, and REC-01 is not listed in this opportunity's own manifest evidence_claim_ids -- a citation-scope question the original author correctly flagged as unresolved."
+  ]
+}

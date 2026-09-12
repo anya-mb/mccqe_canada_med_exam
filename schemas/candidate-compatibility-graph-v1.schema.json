@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "candidate-compatibility-graph-v1.schema.json",
+  "title": "Candidate Compatibility Graph V1",
+  "type": "object",
+  "required": ["schema_version", "nodes", "edges", "content_sha256"],
+  "properties": {
+    "schema_version": {"const": "CANDIDATE_COMPATIBILITY_GRAPH_V1"},
+    "nodes": {"type": "array"},
+    "edges": {"type": "array"},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

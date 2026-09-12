@@ -1,0 +1,420 @@
+{
+  "schema_version": "2.0",
+  "scope": "CLINICAL_CONTRAST_RELATIONS_V2",
+  "relation_set_id": "qgen_development_seed_pack_v6_relations",
+  "derived_from": "research/qgen/onboarding/v6_development_seed_candidates.json",
+  "decision_domain": "PATIENT_CLINICAL",
+  "frozen": true,
+  "relations": [
+    {
+      "learner_decision_id": "LD-ONB2-PED-AOM-DX",
+      "response_class": "LOCALIZED_INFLAMMATION",
+      "decision_granularity": "DIAGNOSIS",
+      "concept_a": {
+        "concept": "Otitis media with effusion",
+        "concept_category": "LOCALIZED_EAR_DIAGNOSIS",
+        "concept_id": "CONCEPT-V6-AOM-OME",
+        "member_id": "SEED-V6-AOM-OME",
+        "role_in_set": "COMPETITOR",
+        "seed_id": "SEED-V6-AOM-OME"
+      },
+      "concept_b": {
+        "concept": "Acute otitis media",
+        "concept_category": "LOCALIZED_EAR_DIAGNOSIS",
+        "concept_id": "CONCEPT-V6-ACUTE-OTITIS-MEDIA",
+        "member_id": "KEY-LD-ONB2-PED-AOM-DX",
+        "role_in_set": "KEY",
+        "seed_id": null
+      },
+      "shared_features": [
+        {
+          "feature_id": "SF-ONB2-P099-REDUCED-TM-MOBILITY",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "contrast_role": "POSITIVE_SUPPORT"
+        }
+      ],
+      "a_supporting_features": [
+        {
+          "feature_id": "SF-ONB2-P099-REDUCED-TM-MOBILITY",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "contrast_role": "POSITIVE_SUPPORT"
+        }
+      ],
+      "b_supporting_features": [
+        {
+          "feature_id": "SF-ONB2-P099-BULGING-TM",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "contrast_role": "POSITIVE_SUPPORT"
+        }
+      ],
+      "discriminators": [
+        {
+          "feature_id": "SF-ONB2-P099-BULGING-TM",
+          "favours": "B",
+          "required_state": "PRESENT",
+          "contrast_role": "POSITIVE_SUPPORT",
+          "salience": "SALIENT",
+          "evidence_refs": [
+            "CLM-ONB2-AOM-SIGNS",
+            "CLM-V6-AOM-CORE"
+          ]
+        }
+      ],
+      "correctness_conditions_a": {
+        "operator": "ALL_OF",
+        "conditions": [
+          {
+            "feature_id": "SF-ONB2-P099-BULGING-TM",
+            "required_state": "ABSENT"
+          }
+        ],
+        "prose_basis": "Conservative boundary for this decision-scoped seed: it is never admitted when the frozen AOM discriminator is present."
+      },
+      "correctness_conditions_b": {
+        "operator": "ALL_OF",
+        "conditions": [
+          {
+            "feature_id": "SF-ONB2-P099-BULGING-TM",
+            "required_state": "PRESENT"
+          }
+        ],
+        "prose_basis": "The reviewed evidence identifies a bulging membrane as the acute inflammatory discriminator."
+      },
+      "second_key_conditions": [
+        {
+          "operator": "ALL_OF",
+          "conditions": [
+            {
+              "feature_id": "SF-ONB2-P099-BULGING-TM",
+              "required_state": "ABSENT"
+            }
+          ],
+          "prose_basis": "Conservative boundary for this decision-scoped seed: it is never admitted when the frozen AOM discriminator is present."
+        }
+      ],
+      "categorical_exclusion_conditions": [],
+      "nesting_relation": "NONE",
+      "confusability": "HIGH",
+      "mcc_relevance": "Frozen CORE learner decision LD-ONB2-PED-AOM-DX for MCC objective 28.",
+      "evidence_refs": [
+        "CLM-ONB2-AOM-DX",
+        "CLM-ONB2-AOM-SIGNS",
+        "CLM-V6-AOM-OME"
+      ],
+      "verification_status": "EVIDENCE_VERIFIED",
+      "opportunity_label": "LD-ONB2-PED-AOM-DX",
+      "anchor_study_unit_id": "SU-P-099",
+      "discovery_sources": [
+        "CURRENT_CANADIAN_AUTHORITATIVE_GUIDANCE"
+      ],
+      "contrast_relation_id": "CCR2-411bb63dc77733d666f9b263"
+    },
+    {
+      "learner_decision_id": "LD-ONB2-PED-AOM-DX",
+      "response_class": "LOCALIZED_INFLAMMATION",
+      "decision_granularity": "DIAGNOSIS",
+      "concept_a": {
+        "concept": "Viral myringitis",
+        "concept_category": "LOCALIZED_EAR_DIAGNOSIS",
+        "concept_id": "CONCEPT-V6-AOM-MYRINGITIS",
+        "member_id": "SEED-V6-AOM-MYRINGITIS",
+        "role_in_set": "COMPETITOR",
+        "seed_id": "SEED-V6-AOM-MYRINGITIS"
+      },
+      "concept_b": {
+        "concept": "Acute otitis media",
+        "concept_category": "LOCALIZED_EAR_DIAGNOSIS",
+        "concept_id": "CONCEPT-V6-ACUTE-OTITIS-MEDIA",
+        "member_id": "KEY-LD-ONB2-PED-AOM-DX",
+        "role_in_set": "KEY",
+        "seed_id": null
+      },
+      "shared_features": [
+        {
+          "feature_id": "SF-ONB2-P099-ACUTE-OTALGIA",
+          "clinical_role": "SHARED_PRESENTATION_FEATURE",
+          "contrast_role": "SHARED_PRESENTATION_FEATURE"
+        }
+      ],
+      "a_supporting_features": [
+        {
+          "feature_id": "SF-ONB2-P099-ACUTE-OTALGIA",
+          "clinical_role": "SHARED_PRESENTATION_FEATURE",
+          "contrast_role": "SHARED_PRESENTATION_FEATURE"
+        }
+      ],
+      "b_supporting_features": [
+        {
+          "feature_id": "SF-ONB2-P099-BULGING-TM",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "contrast_role": "POSITIVE_SUPPORT"
+        }
+      ],
+      "discriminators": [
+        {
+          "feature_id": "SF-ONB2-P099-BULGING-TM",
+          "favours": "B",
+          "required_state": "PRESENT",
+          "contrast_role": "POSITIVE_SUPPORT",
+          "salience": "SALIENT",
+          "evidence_refs": [
+            "CLM-ONB2-AOM-SIGNS",
+            "CLM-V6-AOM-CORE"
+          ]
+        }
+      ],
+      "correctness_conditions_a": {
+        "operator": "ALL_OF",
+        "conditions": [
+          {
+            "feature_id": "SF-ONB2-P099-BULGING-TM",
+            "required_state": "ABSENT"
+          }
+        ],
+        "prose_basis": "Conservative boundary for this decision-scoped seed: it is never admitted when the frozen AOM discriminator is present."
+      },
+      "correctness_conditions_b": {
+        "operator": "ALL_OF",
+        "conditions": [
+          {
+            "feature_id": "SF-ONB2-P099-BULGING-TM",
+            "required_state": "PRESENT"
+          }
+        ],
+        "prose_basis": "The reviewed evidence identifies a bulging membrane as the acute inflammatory discriminator."
+      },
+      "second_key_conditions": [
+        {
+          "operator": "ALL_OF",
+          "conditions": [
+            {
+              "feature_id": "SF-ONB2-P099-BULGING-TM",
+              "required_state": "ABSENT"
+            }
+          ],
+          "prose_basis": "Conservative boundary for this decision-scoped seed: it is never admitted when the frozen AOM discriminator is present."
+        }
+      ],
+      "categorical_exclusion_conditions": [],
+      "nesting_relation": "NONE",
+      "confusability": "HIGH",
+      "mcc_relevance": "Frozen CORE learner decision LD-ONB2-PED-AOM-DX for MCC objective 28.",
+      "evidence_refs": [
+        "CLM-V6-AOM-MYRINGITIS-ETD",
+        "CLM-V6-AOM-CORE"
+      ],
+      "verification_status": "EVIDENCE_VERIFIED",
+      "opportunity_label": "LD-ONB2-PED-AOM-DX",
+      "anchor_study_unit_id": "SU-P-099",
+      "discovery_sources": [
+        "CURRENT_CANADIAN_AUTHORITATIVE_GUIDANCE"
+      ],
+      "contrast_relation_id": "CCR2-5a1580546cba44cbf018f5b5"
+    },
+    {
+      "learner_decision_id": "LD-ONB2-PED-AOM-DX",
+      "response_class": "LOCALIZED_INFLAMMATION",
+      "decision_granularity": "DIAGNOSIS",
+      "concept_a": {
+        "concept": "Eustachian-tube dysfunction",
+        "concept_category": "LOCALIZED_EAR_DIAGNOSIS",
+        "concept_id": "CONCEPT-V6-AOM-ETD",
+        "member_id": "SEED-V6-AOM-ETD",
+        "role_in_set": "COMPETITOR",
+        "seed_id": "SEED-V6-AOM-ETD"
+      },
+      "concept_b": {
+        "concept": "Acute otitis media",
+        "concept_category": "LOCALIZED_EAR_DIAGNOSIS",
+        "concept_id": "CONCEPT-V6-ACUTE-OTITIS-MEDIA",
+        "member_id": "KEY-LD-ONB2-PED-AOM-DX",
+        "role_in_set": "KEY",
+        "seed_id": null
+      },
+      "shared_features": [
+        {
+          "feature_id": "SF-ONB2-P099-ACUTE-OTALGIA",
+          "clinical_role": "SHARED_PRESENTATION_FEATURE",
+          "contrast_role": "SHARED_PRESENTATION_FEATURE"
+        }
+      ],
+      "a_supporting_features": [
+        {
+          "feature_id": "SF-ONB2-P099-ACUTE-OTALGIA",
+          "clinical_role": "SHARED_PRESENTATION_FEATURE",
+          "contrast_role": "SHARED_PRESENTATION_FEATURE"
+        }
+      ],
+      "b_supporting_features": [
+        {
+          "feature_id": "SF-ONB2-P099-BULGING-TM",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "contrast_role": "POSITIVE_SUPPORT"
+        }
+      ],
+      "discriminators": [
+        {
+          "feature_id": "SF-ONB2-P099-BULGING-TM",
+          "favours": "B",
+          "required_state": "PRESENT",
+          "contrast_role": "POSITIVE_SUPPORT",
+          "salience": "SALIENT",
+          "evidence_refs": [
+            "CLM-ONB2-AOM-SIGNS",
+            "CLM-V6-AOM-CORE"
+          ]
+        }
+      ],
+      "correctness_conditions_a": {
+        "operator": "ALL_OF",
+        "conditions": [
+          {
+            "feature_id": "SF-ONB2-P099-BULGING-TM",
+            "required_state": "ABSENT"
+          }
+        ],
+        "prose_basis": "Conservative boundary for this decision-scoped seed: it is never admitted when the frozen AOM discriminator is present."
+      },
+      "correctness_conditions_b": {
+        "operator": "ALL_OF",
+        "conditions": [
+          {
+            "feature_id": "SF-ONB2-P099-BULGING-TM",
+            "required_state": "PRESENT"
+          }
+        ],
+        "prose_basis": "The reviewed evidence identifies a bulging membrane as the acute inflammatory discriminator."
+      },
+      "second_key_conditions": [
+        {
+          "operator": "ALL_OF",
+          "conditions": [
+            {
+              "feature_id": "SF-ONB2-P099-BULGING-TM",
+              "required_state": "ABSENT"
+            }
+          ],
+          "prose_basis": "Conservative boundary for this decision-scoped seed: it is never admitted when the frozen AOM discriminator is present."
+        }
+      ],
+      "categorical_exclusion_conditions": [],
+      "nesting_relation": "NONE",
+      "confusability": "HIGH",
+      "mcc_relevance": "Frozen CORE learner decision LD-ONB2-PED-AOM-DX for MCC objective 28.",
+      "evidence_refs": [
+        "CLM-V6-AOM-MYRINGITIS-ETD",
+        "CLM-V6-AOM-CORE"
+      ],
+      "verification_status": "EVIDENCE_VERIFIED",
+      "opportunity_label": "LD-ONB2-PED-AOM-DX",
+      "anchor_study_unit_id": "SU-P-099",
+      "discovery_sources": [
+        "CURRENT_CANADIAN_AUTHORITATIVE_GUIDANCE"
+      ],
+      "contrast_relation_id": "CCR2-24a90ef496092f784ddd5167"
+    },
+    {
+      "learner_decision_id": "LD-ONB2-PED-AOM-DX",
+      "response_class": "LOCALIZED_INFLAMMATION",
+      "decision_granularity": "DIAGNOSIS",
+      "concept_a": {
+        "concept": "Otitis externa",
+        "concept_category": "LOCALIZED_EAR_DIAGNOSIS",
+        "concept_id": "CONCEPT-V6-AOM-OTITIS-EXTERNA",
+        "member_id": "SEED-V6-AOM-OTITIS-EXTERNA",
+        "role_in_set": "COMPETITOR",
+        "seed_id": "SEED-V6-AOM-OTITIS-EXTERNA"
+      },
+      "concept_b": {
+        "concept": "Acute otitis media",
+        "concept_category": "LOCALIZED_EAR_DIAGNOSIS",
+        "concept_id": "CONCEPT-V6-ACUTE-OTITIS-MEDIA",
+        "member_id": "KEY-LD-ONB2-PED-AOM-DX",
+        "role_in_set": "KEY",
+        "seed_id": null
+      },
+      "shared_features": [
+        {
+          "feature_id": "SF-ONB2-P099-ACUTE-OTALGIA",
+          "clinical_role": "SHARED_PRESENTATION_FEATURE",
+          "contrast_role": "SHARED_PRESENTATION_FEATURE"
+        }
+      ],
+      "a_supporting_features": [
+        {
+          "feature_id": "SF-ONB2-P099-ACUTE-OTALGIA",
+          "clinical_role": "SHARED_PRESENTATION_FEATURE",
+          "contrast_role": "SHARED_PRESENTATION_FEATURE"
+        }
+      ],
+      "b_supporting_features": [
+        {
+          "feature_id": "SF-ONB2-P099-BULGING-TM",
+          "clinical_role": "POSITIVE_SUPPORT",
+          "contrast_role": "POSITIVE_SUPPORT"
+        }
+      ],
+      "discriminators": [
+        {
+          "feature_id": "SF-ONB2-P099-BULGING-TM",
+          "favours": "B",
+          "required_state": "PRESENT",
+          "contrast_role": "POSITIVE_SUPPORT",
+          "salience": "SALIENT",
+          "evidence_refs": [
+            "CLM-ONB2-AOM-SIGNS",
+            "CLM-V6-AOM-CORE"
+          ]
+        }
+      ],
+      "correctness_conditions_a": {
+        "operator": "ALL_OF",
+        "conditions": [
+          {
+            "feature_id": "SF-ONB2-P099-BULGING-TM",
+            "required_state": "ABSENT"
+          }
+        ],
+        "prose_basis": "Conservative boundary for this decision-scoped seed: it is never admitted when the frozen AOM discriminator is present."
+      },
+      "correctness_conditions_b": {
+        "operator": "ALL_OF",
+        "conditions": [
+          {
+            "feature_id": "SF-ONB2-P099-BULGING-TM",
+            "required_state": "PRESENT"
+          }
+        ],
+        "prose_basis": "The reviewed evidence identifies a bulging membrane as the acute inflammatory discriminator."
+      },
+      "second_key_conditions": [
+        {
+          "operator": "ALL_OF",
+          "conditions": [
+            {
+              "feature_id": "SF-ONB2-P099-BULGING-TM",
+              "required_state": "ABSENT"
+            }
+          ],
+          "prose_basis": "Conservative boundary for this decision-scoped seed: it is never admitted when the frozen AOM discriminator is present."
+        }
+      ],
+      "categorical_exclusion_conditions": [],
+      "nesting_relation": "NONE",
+      "confusability": "HIGH",
+      "mcc_relevance": "Frozen CORE learner decision LD-ONB2-PED-AOM-DX for MCC objective 28.",
+      "evidence_refs": [
+        "CLM-V6-AOM-OTITIS-EXTERNA",
+        "CLM-V6-AOM-CORE"
+      ],
+      "verification_status": "EVIDENCE_VERIFIED",
+      "opportunity_label": "LD-ONB2-PED-AOM-DX",
+      "anchor_study_unit_id": "SU-P-099",
+      "discovery_sources": [
+        "CURRENT_CANADIAN_AUTHORITATIVE_GUIDANCE"
+      ],
+      "contrast_relation_id": "CCR2-a59a070cd3c739b864dfc88e"
+    }
+  ],
+  "content_sha256": "0447f368d203df97cb648acba1478eb5e1e04168b0fccf9756f6a48a32ae0f33"
+}

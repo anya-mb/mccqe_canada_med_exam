@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mccqe.local/schemas/generalized-competitive-contrast-seed-pack.schema.json",
+  "title": "Generalized competitive contrast seed pack",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "scope", "pack_id", "pack_version", "parent_pack_id",
+    "creation_scope", "opportunity_scope", "study_unit_scope", "input_hashes",
+    "review_hashes", "frozen", "targets", "content_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": "2.0"},
+    "scope": {"const": "GENERALIZED_COMPETITIVE_CONTRAST_SEED_PACK"},
+    "pack_id": {"type": "string", "minLength": 1},
+    "pack_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "parent_pack_id": {"type": ["string", "null"]},
+    "creation_scope": {"type": "string", "minLength": 1},
+    "opportunity_scope": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+    "study_unit_scope": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+    "input_hashes": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
+    "review_hashes": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
+    "frozen": {"const": true},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "targets": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/target"}}
+  },
+  "$defs": {
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_id", "discipline", "anchor_study_unit_id", "learner_decision_id", "seeds"],
+      "properties": {
+        "target_id": {"type": "string"},
+        "discipline": {"type": "string"},
+        "anchor_study_unit_id": {"type": "string"},
+        "learner_decision_id": {"type": "string"},
+        "seeds": {"type": "array", "items": {"$ref": "#/$defs/seed"}}
+      }
+    },
+    "seed": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "seed_id", "competitor_concept_id", "competitor_concept", "preferred_label",
+        "competitor_study_unit_id", "discipline", "learner_decision_id",
+        "response_class", "competitor_decision_granularity", "option_set_archetype",
+        "candidate_classification", "relation_ids", "anchor_relation_ids",
+        "evidence_refs", "author_provenance", "independent_seed_review",
+        "onboarding_status", "retrieval_scope"
+      ],
+      "properties": {
+        "seed_id": {"type": "string"},
+        "competitor_concept_id": {"type": "string"},
+        "competitor_concept": {"type": "string"},
+        "preferred_label": {"type": "string"},
+        "competitor_study_unit_id": {"type": "string"},
+        "discipline": {"type": "string"},
+        "learner_decision_id": {"type": "string"},
+        "response_class": {"type": "string"},
+        "competitor_decision_granularity": {"type": "string"},
+        "option_set_archetype": {"type": "string"},
+        "candidate_classification": {"type": "string"},
+        "relation_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+        "anchor_relation_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+        "evidence_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+        "author_provenance": {"type": "object", "minProperties": 1},
+        "onboarding_status": {"enum": ["APPROVED", "REJECTED", "UNCERTAIN"]},
+        "independent_seed_review": {"type": "object", "minProperties": 1},
+        "retrieval_scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["scope_type", "study_unit_ids", "learner_decision_ids"],
+          "properties": {
+            "scope_type": {"enum": ["STUDY_UNIT", "LEARNER_DECISION_FAMILY", "DISCIPLINE_ARCHETYPE", "JUSTIFIED_REUSABLE_CONTEXT"]},
+            "study_unit_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+            "learner_decision_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}
+          }
+        }
+      }
+    }
+  }
+}

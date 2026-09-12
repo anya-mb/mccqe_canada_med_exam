@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Production Item Evidence Audit V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "item_id", "verifier_session_id", "frozen_blind_solve_sha256", "claims", "tn_status", "canadian_guidance_status", "source_conflict_status", "hallucination_flags", "blind_answer_matches_key", "one_best_answer", "possible_second_key", "plausible_inferior_distractor_count", "same_response_class", "compatible_granularity", "rationale_quality", "final_verdict", "content_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.0"}, "item_id": {"type": "string"}, "verifier_session_id": {"type": "string"},
+    "frozen_blind_solve_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "claims": {"type": "array", "items": {"type": "object"}},
+    "tn_status": {"enum": ["TN_CONSISTENT", "TN_MORE_GENERAL", "TN_MORE_DETAILED", "TN_DIFFERENT_SCOPE", "CURRENT_GUIDANCE_UPDATES_TN", "MATERIAL_TN_CONTRADICTION", "TN_SOURCE_NOT_FOUND"]},
+    "canadian_guidance_status": {"type": "string"}, "source_conflict_status": {"enum": ["NO_CONFLICT", "CURRENT_GUIDANCE_CLARIFIES_TN", "CURRENT_GUIDANCE_UPDATES_TN", "MATERIAL_CONFLICT", "UNCERTAIN"]},
+    "hallucination_flags": {"type": "array", "items": {"type": "string"}}, "blind_answer_matches_key": {"type": "boolean"},
+    "one_best_answer": {"type": "boolean"}, "possible_second_key": {"type": "boolean"},
+    "plausible_inferior_distractor_count": {"type": "integer", "minimum": 0}, "same_response_class": {"type": "boolean"},
+    "compatible_granularity": {"type": "boolean"}, "rationale_quality": {"enum": ["PASS", "FAIL"]},
+    "final_verdict": {"type": "string"}, "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

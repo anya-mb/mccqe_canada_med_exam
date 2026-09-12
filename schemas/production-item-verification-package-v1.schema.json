@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Production Item Verification Package V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "item_id", "opportunity_id", "question_seed_id", "author_session_id",
+    "discipline", "topic", "learner_decision", "difficulty_intent", "stem", "lead_in",
+    "answer_choices", "author_proposed_key", "author_rationale", "per_distractor_rationales",
+    "conditional_next_action_information", "evidence_fact_ids", "toronto_notes_source_refs",
+    "canadian_source_refs", "author_confidence", "non_production_validation_item",
+    "verified_content_sha256", "content_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "item_id": {"type": "string", "minLength": 1},
+    "opportunity_id": {"type": "string", "minLength": 1},
+    "question_seed_id": {"type": "string", "minLength": 1},
+    "author_session_id": {"type": "string", "minLength": 1},
+    "discipline": {"enum": ["MED", "PED", "OBGYN", "SURG", "PSY", "PHELO"]},
+    "topic": {"type": "string", "minLength": 1},
+    "learner_decision": {"type": "string", "minLength": 1},
+    "difficulty_intent": {"type": "string", "minLength": 1},
+    "stem": {"type": "string", "minLength": 1},
+    "lead_in": {"type": "string", "minLength": 1},
+    "answer_choices": {"type": "array", "minItems": 4, "uniqueItems": true, "items": {"type": "string"}},
+    "author_proposed_key": {"type": "string", "minLength": 1},
+    "author_rationale": {"type": "string", "minLength": 1},
+    "per_distractor_rationales": {
+      "type": "array", "minItems": 3,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["choice", "why_plausible", "why_inferior_here", "what_would_make_correct"],
+        "properties": {
+          "choice": {"type": "string"}, "why_plausible": {"type": "string", "minLength": 1},
+          "why_inferior_here": {"type": "string", "minLength": 1},
+          "what_would_make_correct": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "conditional_next_action_information": {"type": "string", "minLength": 1},
+    "evidence_fact_ids": {"type": "array", "items": {"type": "string"}},
+    "toronto_notes_source_refs": {"type": "array", "items": {"type": "string"}},
+    "canadian_source_refs": {
+      "type": "array", "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["source_id", "organization", "date_or_version", "locator"],
+        "properties": {
+          "source_id": {"type": "string"}, "organization": {"type": "string"},
+          "date_or_version": {"type": "string"}, "locator": {"type": "string"}
+        }
+      }
+    },
+    "author_confidence": {"type": "string"},
+    "non_production_validation_item": {"type": "boolean"},
+    "verified_content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "question-seed-v1.schema.json",
+  "title": "Question Seed V1",
+  "type": "object",
+  "required": ["schema_version", "seeds", "content_sha256"],
+  "properties": {
+    "schema_version": {"const": "QUESTION_SEED_V1"},
+    "seeds": {"type": "array", "items": {"type": "object", "required": ["seed_id", "discipline", "toronto_notes_chapter_topic", "study_unit_id", "clinical_concept", "learner_decision", "response_class", "clinical_stage", "population", "key", "mcc_blueprint_dimensions", "difficulty_target", "primary_discriminator", "candidate_universe_id", "candidate_subset_strategy", "generation_family", "decision_granularity", "question_seed_fingerprint"]}},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

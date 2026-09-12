@@ -1,0 +1,49 @@
+{
+  "schema_version": "4.0",
+  "scope": "MATCHER_V4_CALIBRATION_ERROR_ANALYSIS",
+  "reviewer_id": "ISOLATED_MATCHER_V4_CALIBRATION_ERROR_ADJUDICATOR",
+  "source_input_sha256": "36e60f9e24e8164cba3bd9f238a698b31909938d4293a181e99dd0143377bbe2",
+  "errors_reviewed": 24,
+  "root_causes": [
+    {
+      "name": "NEAR_DUPLICATE_BOUNDARY_MISAPPLIED",
+      "count": 9,
+      "description": "The matcher used NEAR_DUPLICATE for resolvable breadth or independently scoreable decision differences, while treating identical decision wording with a conflicting response-class or family signal as automatically distinct. NEAR_DUPLICATE instead fits materially redundant identity whose small semantic conflict remains unresolved; clear containment or clear separate decisions take precedence."
+    },
+    {
+      "name": "METADATA_CONFLICT_OVERRULED_SEMANTIC_CONTAINMENT",
+      "count": 7,
+      "description": "Differences in response class, opportunity family, physician activity, or clinical stage were treated as dispositive even when the represented registry decision was a specified subset of a broader benchmark decision, or the registry scope clearly contained the benchmark decision."
+    },
+    {
+      "name": "TOPICAL_OR_WORKFLOW_ASSOCIATION_MISTAKEN_FOR_CONTAINMENT",
+      "count": 4,
+      "description": "The matcher inferred a proper subset from topic membership, workflow sequence, or a loose component relationship even though the endpoints required different independently scoreable actions, such as assessment versus legal action, test selection versus result interpretation, or outbreak execution versus curve interpretation."
+    },
+    {
+      "name": "SPECIFIED_SUBDECISION_COLLAPSED_TO_EQUIVALENCE",
+      "count": 2,
+      "description": "A registry endpoint that restricted a generic benchmark decision to a particular emergency subset or etiologic classification was treated as a synonymous operationalization rather than a directional proper subset."
+    },
+    {
+      "name": "NONINDEPENDENT_ELABORATION_TREATED_AS_ADDED_SCOPE",
+      "count": 1,
+      "description": "Explicit comparators and supporting descriptors were counted as additional independently scoreable scope even though they only made the same duration-based differential decision more explicit."
+    },
+    {
+      "name": "WRAPPER_ONLY_DIFFERENCE_COLLAPSED_TO_EQUIVALENCE",
+      "count": 1,
+      "description": "The matcher selected EQUIVALENT where the learner decision and correct response were unchanged but stage and family wrappers differed, which is the defined VARIANT_OF_SAME_DECISION case."
+    }
+  ],
+  "prompt_clarifications": [
+    "Apply a decision-first precedence rule: compare the independently scoreable learner decision and material state before categorical metadata. Response class, family, physician activity, and stage are evidence, but a conflict in those fields alone does not prove RELATED_BUT_DISTINCT; when the core decision wording is materially identical and the conflict leaves only a small unresolved identity distinction, use NEAR_DUPLICATE.",
+    "Use directional containment only when both endpoints express the same kind of decision and one decision scope logically includes the other. A shared topic, a workflow dependency, or the fact that one action can occur within a broader clinical process is not containment when the endpoints remain independently scoreable; classify those as RELATED_BUT_DISTINCT. If B is the specified proper subset of A, use REGISTRY_NARROWER_THAN_BENCHMARK; if B contains A plus additional independently scoreable scope, use REGISTRY_BROADER_CONTAINS_BENCHMARK. A clear direction must not be downgraded to NEAR_DUPLICATE merely because the broad endpoint is generic.",
+    "Distinguish restriction from elaboration: named subtypes, complications, or subdecisions that limit a generic endpoint create a proper subset, while named comparators, evidence, or descriptors that only make the same decision explicit do not add independently scoreable scope and may remain EQUIVALENT.",
+    "Apply VARIANT_OF_SAME_DECISION rather than EQUIVALENT when the learner decision and correct response are unchanged but only a non-decision-changing stage, family, evidence path, wrapper, difficulty, distractor, or cosmetic presentation differs."
+  ],
+  "semantic_contract_changed": false,
+  "architecture_change_required": false,
+  "id_specific_rules": false,
+  "conclusion": "All 24 calibration errors are explainable by prompt-level boundary and precedence ambiguity, chiefly NEAR_DUPLICATE misuse and failure to separate true directional scope containment from metadata conflicts or merely adjacent decisions. The frozen Atomic Opportunity Contract and relation taxonomy remain sufficient; a small decision-first clarification is enough, with no semantic-contract or architecture change."
+}

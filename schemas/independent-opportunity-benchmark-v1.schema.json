@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mccqe.local/schemas/independent-opportunity-benchmark-v1.schema.json",
+  "title": "INDEPENDENT_OPPORTUNITY_BENCHMARK_V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scope", "blind_input_sha256", "opportunities", "content_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "scope": {"const": "INDEPENDENT_OPPORTUNITY_BENCHMARK_V1"},
+    "blind_input_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "opportunities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "benchmark_opportunity_id", "study_unit_id", "discipline", "principal_decision",
+          "decision_code", "opportunity_family", "response_class", "clinical_stage",
+          "population_context", "primary_reasoning_target", "atomicity_verdict",
+          "mccqe_level_review", "source_anchor_refs", "reviewer_rationale",
+          "opportunity_fingerprint"
+        ],
+        "properties": {
+          "benchmark_opportunity_id": {"type": "string", "pattern": "^BOP-SU-[A-Z0-9-]+-[0-9]{2}$"},
+          "study_unit_id": {"type": "string", "pattern": "^SU-[A-Z0-9-]+$"},
+          "discipline": {"enum": ["MED", "PED", "OBGYN", "SURG", "PSY", "PHELO"]},
+          "principal_decision": {"type": "string", "minLength": 8},
+          "decision_code": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+          "opportunity_family": {"type": "string", "minLength": 1},
+          "response_class": {"type": "string", "minLength": 1},
+          "clinical_stage": {"type": "string", "minLength": 1},
+          "population_context": {"type": "string", "minLength": 1},
+          "primary_reasoning_target": {"type": "string", "minLength": 8},
+          "atomicity_verdict": {"const": "ATOMIC"},
+          "mccqe_level_review": {"const": "IN_SCOPE_GENERALIST"},
+          "source_anchor_refs": {"type": "array", "minItems": 2, "items": {"type": "string"}},
+          "reviewer_rationale": {"type": "string", "minLength": 12},
+          "opportunity_fingerprint": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    }
+  }
+}

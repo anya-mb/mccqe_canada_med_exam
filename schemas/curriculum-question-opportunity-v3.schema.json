@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Curriculum Question Opportunity Registry V3",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "scope",
+    "registry_v2_sha256",
+    "atomic_contract_sha256",
+    "canonicalization_policy",
+    "canonicalization_authorized",
+    "blocked_by",
+    "atomicity_status_counts",
+    "allocatable_atomic_opportunities",
+    "opportunities",
+    "content_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": "3.0"},
+    "scope": {"const": "PROVISIONAL_CURRICULUM_QUESTION_OPPORTUNITY_REGISTRY_V3_SCAFFOLD"},
+    "registry_v2_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "atomic_contract_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "canonicalization_policy": {"const": "V2_LINEAGE_SCAFFOLD_NO_ENUMERATION"},
+    "canonicalization_authorized": {"const": false},
+    "blocked_by": {"const": "MATCHER_V3_HELDOUT_VALIDATION_GATE"},
+    "atomicity_status_counts": {"type": "object"},
+    "allocatable_atomic_opportunities": {"type": "integer", "minimum": 0},
+    "content_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "opportunities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "opportunity_id",
+          "source_v2_opportunity_id",
+          "atomic_signature_v1",
+          "atomic_signature_sha256",
+          "atomicity_status",
+          "atomicity_basis",
+          "recommended_item_capacity",
+          "generation_readiness",
+          "blueprint_mapping_v2"
+        ],
+        "properties": {
+          "opportunity_id": {"type": "string", "pattern": "^QOP-V3-[A-F0-9]{12}$"},
+          "source_v2_opportunity_id": {"type": "string", "pattern": "^QOP-V2-[A-F0-9]{12}$"},
+          "atomic_signature_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "atomicity_status": {"enum": ["CANONICAL_ATOMIC", "REQUIRES_ATOMICITY_REVIEW"]},
+          "atomicity_basis": {"type": "string"},
+          "recommended_item_capacity": {"type": "integer", "minimum": 0},
+          "generation_readiness": {"type": "string"},
+          "atomic_signature_v1": {
+            "type": "object",
+            "required": ["scope_unit", "response_class", "decision_operator", "decision_object", "material_state", "material_population"]
+          },
+          "blueprint_mapping_v2": {
+            "type": "object",
+            "required": ["dimension_of_care", "dimension_confidence", "dimension_rule_id", "allowed_secondary_dimensions", "physician_activity", "activity_confidence", "activity_rule_id", "allowed_secondary_activities", "objective_context_ids", "allocation_authority"],
+            "properties": {
+              "dimension_of_care": {"enum": ["Acute", "Chronic", "Health Promotion & Illness Prevention", "Psychosocial Aspects"]},
+              "dimension_confidence": {"enum": ["HIGH", "REVIEW_REQUIRED"]},
+              "dimension_rule_id": {"type": "string"},
+              "allowed_secondary_dimensions": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+              "physician_activity": {"enum": ["Assessment/Diagnosis", "Management", "Communication", "Professional Behaviours"]},
+              "activity_confidence": {"enum": ["HIGH", "REVIEW_REQUIRED"]},
+              "activity_rule_id": {"type": "string"},
+              "allowed_secondary_activities": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+              "objective_context_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+              "allocation_authority": {"type": "boolean"}
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": {"properties": {"atomicity_status": {"const": "REQUIRES_ATOMICITY_REVIEW"}}},
+            "then": {
+              "properties": {
+                "recommended_item_capacity": {"const": 0},
+                "generation_readiness": {"const": "ATOMICITY_REVIEW_REQUIRED"},
+                "blueprint_mapping_v2": {"properties": {"allocation_authority": {"const": false}}}
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "schema_version": "1.0",
+  "scope": "QGEN_DEVELOPMENT_12_SEED_CANDIDATE_DISCOVERY",
+  "development_12_ref": "research/qgen/onboarding/v6_development_12_selection.json",
+  "targeted_evidence_ref": "research/qgen/onboarding/v6_targeted_authoritative_evidence.json",
+  "discovery_policy": "Existing reviewed artifacts and graph/FTS first; targeted current Canadian evidence only for a specific candidate pair; no quota and no inferred absent feature.",
+  "opportunities": [
+    {
+      "learner_decision_id": "LD-D04-01",
+      "raw_candidates": ["Mobile subcutaneous lipoma", "Acute inflammatory mass"],
+      "proposals": [
+        {
+          "proposal_id": "SP-V6-D04-LIPOMA",
+          "seed_id": "SEED-V6-D04-LIPOMA",
+          "candidate_concept_id": "CONCEPT-ROUTEBC-D04-LIPOMA",
+          "candidate": "Mobile subcutaneous lipoma",
+          "key": "Epidermal cyst",
+          "learner_decision": "Identify a superficial cystic lesion at a characteristic site.",
+          "response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+          "decision_granularity": "DIAGNOSIS",
+          "option_set_archetype": "DIAGNOSIS_SET",
+          "candidate_classification": "COUNTERFACTUAL_CORRECT",
+          "frozen_relevant_features": ["SF-ONB2-CYST-SITE=PRESENT", "SF-ONB2-SUPERFICIAL-CYST=PRESENT"],
+          "proposed_anchor": "SF-ONB2-SUPERFICIAL-CYST is shared superficial-lesion plausibility, but the existing V5 relation's new mobility feature is absent from the frozen map.",
+          "proposed_relation": "A mobile subcutaneous lipoma is a named differential but is inferior to the site-typical superficial cyst pattern.",
+          "evidence_refs": ["SRC-MED-048-REC-01"],
+          "author_verdict": "UNCERTAIN",
+          "author_reason": "The named differential is sound, but the frozen feature map may not provide a positive lipoma-specific anchor."
+        }
+      ],
+      "filtered_candidates": [{"candidate": "Acute inflammatory mass", "reason": "No cited feature safely separates it from an inflamed epidermal cyst; second-key risk."}]
+    },
+    {
+      "learner_decision_id": "LD-D05-01",
+      "raw_candidates": ["Melanocytic nevus", "Viral wart", "Skin tag", "Melanoma"],
+      "proposals": [],
+      "filtered_candidates": [{"candidate": "All four named alternatives", "reason": "The cited claim says clinical appearance may not reliably distinguish them and supplies no candidate-specific discriminator."}]
+    },
+    {
+      "learner_decision_id": "LD-OB53-01",
+      "raw_candidates": ["Urinary infection", "Mastitis"],
+      "proposals": [],
+      "filtered_candidates": [{"candidate": "Urinary infection", "reason": "The frozen map does not separate it from endometritis; unresolved second-key risk."}, {"candidate": "Mastitis", "reason": "The painful red breast feature is explicitly absent, leaving no positive mastitis anchor."}]
+    },
+    {
+      "learner_decision_id": "LD-OB53-03",
+      "raw_candidates": ["Exclude endometritis solely because fever arose several weeks postpartum"],
+      "proposals": [],
+      "filtered_candidates": [{"candidate": "Timing-only exclusion", "reason": "Wrong response class for a diagnosis set and no candidate diagnosis is supported by the claim."}]
+    },
+    {
+      "learner_decision_id": "LD-ONB2-PED-AOM-DX",
+      "raw_candidates": ["Otitis media with effusion", "Viral myringitis", "Eustachian-tube dysfunction", "Otitis externa"],
+      "proposals": [
+        {
+          "proposal_id": "SP-V6-AOM-OME", "seed_id": "SEED-V6-AOM-OME", "candidate_concept_id": "CONCEPT-V6-AOM-OME", "candidate": "Otitis media with effusion", "key": "Acute otitis media", "learner_decision": "Diagnose AOM using acute symptoms and inflammatory otoscopy.", "response_class": "LOCALIZED_INFLAMMATION", "decision_granularity": "DIAGNOSIS", "option_set_archetype": "DIAGNOSIS_SET", "candidate_classification": "COUNTERFACTUAL_CORRECT", "frozen_relevant_features": ["SF-ONB2-P099-ACUTE-OTALGIA=PRESENT", "SF-ONB2-P099-BULGING-TM=PRESENT", "SF-ONB2-P099-REDUCED-TM-MOBILITY=PRESENT"], "proposed_anchor": "SF-ONB2-P099-REDUCED-TM-MOBILITY positively supports middle-ear effusion.", "proposed_relation": "OME shares effusion but lacks the acute inflammatory bulging required for AOM.", "evidence_refs": ["CLM-ONB2-AOM-DX", "CLM-ONB2-AOM-SIGNS", "CLM-V6-AOM-OME"], "author_verdict": "PROPOSED"
+        },
+        {
+          "proposal_id": "SP-V6-AOM-MYRINGITIS", "seed_id": "SEED-V6-AOM-MYRINGITIS", "candidate_concept_id": "CONCEPT-V6-AOM-MYRINGITIS", "candidate": "Viral myringitis", "key": "Acute otitis media", "learner_decision": "Diagnose AOM using acute symptoms and inflammatory otoscopy.", "response_class": "LOCALIZED_INFLAMMATION", "decision_granularity": "DIAGNOSIS", "option_set_archetype": "DIAGNOSIS_SET", "candidate_classification": "NEAR_MISS_DIAGNOSIS", "frozen_relevant_features": ["SF-ONB2-P099-ACUTE-OTALGIA=PRESENT", "SF-ONB2-P099-BULGING-TM=PRESENT"], "proposed_anchor": "SF-ONB2-P099-ACUTE-OTALGIA positively supports viral myringitis.", "proposed_relation": "Viral myringitis can explain ear pain but not the combined middle-ear effusion and bulging inflammatory membrane.", "evidence_refs": ["CLM-V6-AOM-MYRINGITIS-ETD", "CLM-V6-AOM-CORE"], "author_verdict": "PROPOSED"
+        },
+        {
+          "proposal_id": "SP-V6-AOM-ETD", "seed_id": "SEED-V6-AOM-ETD", "candidate_concept_id": "CONCEPT-V6-AOM-ETD", "candidate": "Eustachian-tube dysfunction", "key": "Acute otitis media", "learner_decision": "Diagnose AOM using acute symptoms and inflammatory otoscopy.", "response_class": "LOCALIZED_INFLAMMATION", "decision_granularity": "DIAGNOSIS", "option_set_archetype": "DIAGNOSIS_SET", "candidate_classification": "NEAR_MISS_DIAGNOSIS", "frozen_relevant_features": ["SF-ONB2-P099-ACUTE-OTALGIA=PRESENT", "SF-ONB2-P099-BULGING-TM=PRESENT"], "proposed_anchor": "SF-ONB2-P099-ACUTE-OTALGIA positively supports eustachian-tube dysfunction as a source of ear pain.", "proposed_relation": "ET dysfunction may cause ear pain and decreased hearing but does not explain the source-defined acute inflammatory bulging membrane.", "evidence_refs": ["CLM-V6-AOM-MYRINGITIS-ETD", "CLM-V6-AOM-CORE"], "author_verdict": "PROPOSED"
+        },
+        {
+          "proposal_id": "SP-V6-AOM-OE", "seed_id": "SEED-V6-AOM-OTITIS-EXTERNA", "candidate_concept_id": "CONCEPT-V6-AOM-OTITIS-EXTERNA", "candidate": "Otitis externa", "key": "Acute otitis media", "learner_decision": "Diagnose AOM using acute symptoms and inflammatory otoscopy.", "response_class": "LOCALIZED_INFLAMMATION", "decision_granularity": "DIAGNOSIS", "option_set_archetype": "DIAGNOSIS_SET", "candidate_classification": "NEAR_MISS_DIAGNOSIS", "frozen_relevant_features": ["SF-ONB2-P099-ACUTE-OTALGIA=PRESENT", "SF-ONB2-P099-BULGING-TM=PRESENT"], "proposed_anchor": "SF-ONB2-P099-ACUTE-OTALGIA positively supports otitis externa as a painful ear condition.", "proposed_relation": "Otitis externa is localized to the canal and tragal movement rather than a bulging inflamed middle-ear membrane.", "evidence_refs": ["CLM-V6-AOM-OTITIS-EXTERNA", "CLM-V6-AOM-CORE"], "author_verdict": "PROPOSED"
+        }
+      ],
+      "filtered_candidates": []
+    },
+    {
+      "learner_decision_id": "LD-ONB2-PED-AOM-OBSERVE",
+      "raw_candidates": ["Immediate antimicrobial treatment", "Observation without assured reassessment"],
+      "proposals": [],
+      "filtered_candidates": [{"candidate": "Immediate antimicrobial treatment", "reason": "The frozen map lacks the cited severity/eligibility feature needed to prove inferiority rather than a second key."}, {"candidate": "Observation without reassessment", "reason": "Same nominal action as the key but omits a required safety component; unsafe nesting."}]
+    },
+    {
+      "learner_decision_id": "LD-ONB2-PH-WORK-HISTORY",
+      "raw_candidates": ["Routine social history", "Immediate broad laboratory screening"],
+      "proposals": [],
+      "filtered_candidates": [{"candidate": "Both", "reason": "The sole claim establishes the key but does not positively ground or discriminate these alternatives."}]
+    },
+    {
+      "learner_decision_id": "LD-PH34-01",
+      "raw_candidates": ["Federal pandemic plan as a local procedure", "Provincial or territorial response plan", "Generic emergency-management structure"],
+      "proposals": [],
+      "filtered_candidates": [{"candidate": "All three", "reason": "The claim establishes multiple nested jurisdictional structures but does not supply a single scenario-specific inferior action at equivalent granularity."}]
+    },
+    {
+      "learner_decision_id": "LD-ONB2-PSY-AUD-ABSTINENCE",
+      "raw_candidates": ["Naltrexone", "Topiramate", "Gabapentin", "Disulfiram"],
+      "proposals": [
+        {
+          "proposal_id": "SP-V6-AUD-NALTREXONE", "seed_id": "SEED-V6-AUD-NALTREXONE", "candidate_concept_id": "CONCEPT-V6-AUD-NALTREXONE", "candidate": "Naltrexone", "key": "Acamprosate", "learner_decision": "Select acamprosate for abstinence when ongoing prescribed opioids preclude naltrexone.", "response_class": "PHARMACOLOGIC_ACTION", "decision_granularity": "SINGLE_NEXT_ACTION", "option_set_archetype": "NEXT_ACTION_SET", "candidate_classification": "COUNTERFACTUAL_CORRECT", "frozen_relevant_features": ["SF-ONB2-PS29-ABSTINENCE-GOAL=PRESENT", "SF-ONB2-PS29-CURRENT-OPIOID=PRESENT"], "proposed_anchor": "SF-ONB2-PS29-ABSTINENCE-GOAL positively supports naltrexone as a first-line AUD medication for an abstinence goal.", "proposed_relation": "Current opioid use makes naltrexone unsafe while acamprosate remains the source-supported first-line abstinence option.", "evidence_refs": ["CLM-ONB2-AUD-GOAL", "CLM-ONB2-AUD-OPIOIDS", "CLM-V6-AUD-FIRST-LINE"], "author_verdict": "PROPOSED"
+        }
+      ],
+      "filtered_candidates": [{"candidate": "Topiramate and gabapentin", "reason": "Alternative agents may become appropriate after first-line failure, contraindication, or preference, but the frozen case supplies no positive agent-specific anchor and acamprosate is not contraindicated."}, {"candidate": "Disulfiram", "reason": "No scoped evidence supports a safe candidate-specific relation in this case."}]
+    },
+    {
+      "learner_decision_id": "LD-ONB2-PSY-AUD-INTERVIEW",
+      "raw_candidates": ["Repeat screening instrument", "Laboratory biomarker testing"],
+      "proposals": [],
+      "filtered_candidates": [{"candidate": "Both", "reason": "The frozen feature map contains no applicable anchor and the cited claim only states the diagnostic interview requirement."}]
+    },
+    {
+      "learner_decision_id": "LD-ONB2-SURG-CROUP-DISCHARGE",
+      "raw_candidates": ["Immediate discharge", "Admission", "Longer observation"],
+      "proposals": [],
+      "filtered_candidates": [{"candidate": "All three", "reason": "The frozen map omits observation duration and therefore cannot establish the source-defined rebound window or safe inferiority."}]
+    },
+    {
+      "learner_decision_id": "LD-ONB2-SURG-CROUP-DX",
+      "raw_candidates": ["Bacterial tracheitis", "Deep neck infection", "Epiglottitis", "Foreign-body aspiration", "Acute allergic reaction"],
+      "proposals": [],
+      "filtered_candidates": [{"candidate": "Bacterial tracheitis, deep neck infection, epiglottitis, acute allergic reaction", "reason": "The frozen map lacks positive stridor/red-flag features that would anchor these candidates."}, {"candidate": "Foreign-body aspiration", "reason": "Hoarseness may overlap, but the cited correctness condition requires a choking episode/decreased air entry absent from the frozen map; one candidate is insufficient for a contrast set."}]
+    }
+  ],
+  "raw_seed_candidates": 31,
+  "seed_proposals": 6,
+  "new_external_research_requests": 3,
+  "graph_unique_proposals": 0,
+  "tn_fts_unique_proposals": 0
+}

@@ -1,0 +1,2901 @@
+{
+  "schema_version": "DISCOVERY_V3_WRONG_DECISION_DIAGNOSIS_V1",
+  "scope": "DISCOVERY_V3_DIAGNOSTIC_TRANSFER_12",
+  "transfer12_sha256": "9c738a1500da7b57d0a209ffc6937411f94208628fac75e3ba3cc75108ca2ee7",
+  "discovery_v3_content_sha256": "7c71a13e1f8f253434735defb8d5acee0918627f8716a3a7a053ed4b60915f16",
+  "semantic_review_content_sha256": "64c42c9cf9dac719a0da4a11c94e4870159ea15852490157ba310f924524ff23",
+  "wrong_decision_candidate_count": 52,
+  "new_semantic_diagnostic_review_limit": 12,
+  "new_semantic_diagnostic_reviews_used": 8,
+  "representative_semantic_reviews": [
+    {
+      "opportunity_id": "RDY-MED-03",
+      "classification": "WRONG_DECISION_INTENT",
+      "rationale": "The learner must classify stability within known ischemic symptoms; the candidates name alternative etiologic diagnoses, so the earliest mismatch is the act being decided.",
+      "applied_to_candidate_count": 10
+    },
+    {
+      "opportunity_id": "RDY-PED-05",
+      "classification": "WRONG_TARGET_CONDITION",
+      "rationale": "The learner must act on febrile sickle-cell disease; the candidates are acute cardiac or infant-respiratory actions for other conditions.",
+      "applied_to_candidate_count": 9
+    },
+    {
+      "opportunity_id": "RDY-OBGYN-05",
+      "classification": "WRONG_TARGET_CONDITION",
+      "rationale": "The learner is selecting therapy for menopausal vasomotor symptoms; the candidates are authored for depressive illness.",
+      "applied_to_candidate_count": 2
+    },
+    {
+      "opportunity_id": "RDY-OBGYN-06",
+      "classification": "WRONG_TARGET_CONDITION",
+      "rationale": "The learner is selecting nonsurgical management for pelvic-organ prolapse; the candidate is coronary reperfusion.",
+      "applied_to_candidate_count": 1
+    },
+    {
+      "opportunity_id": "RDY-SURG-09",
+      "classification": "WRONG_DECISION_INTENT",
+      "rationale": "The diagnosis of diverticulitis is given and the learner must classify complication/severity; the candidates instead name alternative diagnoses.",
+      "applied_to_candidate_count": 10
+    },
+    {
+      "opportunity_id": "RDY-PSY-04",
+      "classification": "WRONG_TARGET_CONDITION",
+      "rationale": "The learner is selecting medication for panic disorder; the candidates treat acute cardiovascular or infant-respiratory conditions.",
+      "applied_to_candidate_count": 9
+    },
+    {
+      "opportunity_id": "RDY-PHELO-09",
+      "classification": "WRONG_ETHICAL_LEGAL_ACTION",
+      "rationale": "Clinical-AI governance review and statutory MAID eligibility answer different ethical/legal actions despite sharing a coarse value token.",
+      "applied_to_candidate_count": 1
+    },
+    {
+      "opportunity_id": "RDY-PHELO-10",
+      "classification": "WRONG_ETHICAL_LEGAL_ACTION",
+      "rationale": "The learner must classify a legal relationship or state action; the candidates classify medical diagnoses.",
+      "applied_to_candidate_count": 10
+    }
+  ],
+  "taxonomy_counts": {
+    "WRONG_CLINICAL_STAGE": 0,
+    "WRONG_DECISION_INTENT": 20,
+    "WRONG_TARGET_CONDITION": 21,
+    "WRONG_PATIENT_POPULATION": 0,
+    "WRONG_ANATOMIC_TARGET": 0,
+    "WRONG_CAUSAL_ROLE": 0,
+    "WRONG_DIAGNOSTIC_PURPOSE": 0,
+    "WRONG_MANAGEMENT_PURPOSE": 0,
+    "WRONG_PREVENTION_PURPOSE": 0,
+    "WRONG_MONITORING_PURPOSE": 0,
+    "WRONG_ETHICAL_LEGAL_ACTION": 11,
+    "TOO_GENERIC_FOR_DECISION": 0,
+    "SEMANTICALLY_RELATED_BUT_DIFFERENT_DECISION": 0,
+    "OTHER": 0,
+    "UNCERTAIN": 0
+  },
+  "dominant_v3_semantic_gap": "MULTIPLE_COMPARABLE_CAUSES",
+  "dominant_gap_evidence": {
+    "decision_intent_count": 20,
+    "target_condition_count": 21,
+    "ethical_legal_action_count": 11,
+    "interpretation": "V3 lacks both the act being decided and the target decision domain; neither response class nor granularity represents those distinctions."
+  },
+  "rows": [
+    {
+      "opportunity_id": "RDY-MED-03",
+      "discipline": "MED",
+      "study_unit_id": "SU-C-20",
+      "learner_decision_id": "LD-RDY-MED-03",
+      "learner_decision": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "key": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "candidate_id": "CONCEPT-G2-AORTIC-DISSECTION",
+      "candidate_label": "Acute aortic dissection",
+      "candidate_response_classes": [
+        "HEMODYNAMIC_INSTABILITY"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-C-33"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T01-DISSECTION"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The learner must classify stability within known ischemic symptoms; the candidates name alternative etiologic diagnoses, so the earliest mismatch is the act being decided.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-MED-03",
+      "discipline": "MED",
+      "study_unit_id": "SU-C-20",
+      "learner_decision_id": "LD-RDY-MED-03",
+      "learner_decision": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "key": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "candidate_id": "CONCEPT-G2-PE",
+      "candidate_label": "Pulmonary embolism",
+      "candidate_response_classes": [
+        "ACUTE_RESPIRATORY_DISTRESS",
+        "HEMODYNAMIC_INSTABILITY"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [
+          "TNC-3cfe27f350468287b1885d3b"
+        ],
+        "chapters": [
+          "ER"
+        ],
+        "study_unit_ids": [
+          "SU-ER-22",
+          "SU-R-13"
+        ],
+        "section_paths": [
+          "Emergency Medicine > Medical Emergencies > Anaphylaxis and Allergic Reactions"
+        ],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "CANONICAL_CONCEPT_MENTION",
+            "chunk_id": "TNC-3cfe27f350468287b1885d3b",
+            "tn_node_id": "ER.S04.T01",
+            "subheading": "Presentation",
+            "section_path": "Emergency Medicine > Medical Emergencies > Anaphylaxis and Allergic Reactions",
+            "concept_provenance": "{\"decision_granularity\": \"SINGLE_DIAGNOSIS\", \"option_set_archetypes\": [\"DIAGNOSIS_SET\"], \"seed_ids\": [\"SEED-G2-MED-T01-PE\"], \"source_packs\": [\"research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json\"], \"study_unit_id\": \"SU-R-13\"}"
+          },
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T01-PE"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The learner must classify stability within known ischemic symptoms; the candidates name alternative etiologic diagnoses, so the earliest mismatch is the act being decided.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-MED-03",
+      "discipline": "MED",
+      "study_unit_id": "SU-C-20",
+      "learner_decision_id": "LD-RDY-MED-03",
+      "learner_decision": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "key": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "candidate_id": "CONCEPT-G2-PERICARDITIS",
+      "candidate_label": "Acute pericarditis",
+      "candidate_response_classes": [
+        "LOCALIZED_INFLAMMATION"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [
+          "TNC-245df6678284afef0249088b",
+          "TNC-81282ffc2ef8a30a6cc00e55",
+          "TNC-86b804c1e7dbb83929087aa2"
+        ],
+        "chapters": [
+          "C"
+        ],
+        "study_unit_ids": [
+          "SU-C-30",
+          "SU-C-33",
+          "SU-C-34",
+          "SU-C-35"
+        ],
+        "section_paths": [
+          "Cardiology and Cardiac Surgery > Pericardial Disease > Acute Pericarditis"
+        ],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "CANONICAL_CONCEPT_MENTION",
+            "chunk_id": "TNC-245df6678284afef0249088b",
+            "tn_node_id": "C.S12.T01",
+            "subheading": "Clinical Presentation, Investigations, and Diagnosis",
+            "section_path": "Cardiology and Cardiac Surgery > Pericardial Disease > Acute Pericarditis",
+            "concept_provenance": "{\"decision_granularity\": \"SINGLE_DIAGNOSIS\", \"option_set_archetypes\": [\"DIAGNOSIS_SET\"], \"seed_ids\": [\"SEED-G2-MED-T01-PERICARDITIS\"], \"source_packs\": [\"research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json\"], \"study_unit_id\": \"SU-C-30\"}"
+          },
+          {
+            "source": "CANONICAL_CONCEPT_MENTION",
+            "chunk_id": "TNC-81282ffc2ef8a30a6cc00e55",
+            "tn_node_id": "C.S12.T01",
+            "subheading": "Clinical Presentation, Investigations, and Diagnosis",
+            "section_path": "Cardiology and Cardiac Surgery > Pericardial Disease > Acute Pericarditis",
+            "concept_provenance": "{\"decision_granularity\": \"SINGLE_DIAGNOSIS\", \"option_set_archetypes\": [\"DIAGNOSIS_SET\"], \"seed_ids\": [\"SEED-G2-MED-T01-PERICARDITIS\"], \"source_packs\": [\"research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json\"], \"study_unit_id\": \"SU-C-30\"}"
+          },
+          {
+            "source": "CANONICAL_CONCEPT_MENTION",
+            "chunk_id": "TNC-86b804c1e7dbb83929087aa2",
+            "tn_node_id": "C.S12.T01",
+            "subheading": "Signs and Symptoms",
+            "section_path": "Cardiology and Cardiac Surgery > Pericardial Disease > Acute Pericarditis",
+            "concept_provenance": "{\"decision_granularity\": \"SINGLE_DIAGNOSIS\", \"option_set_archetypes\": [\"DIAGNOSIS_SET\"], \"seed_ids\": [\"SEED-G2-MED-T01-PERICARDITIS\"], \"source_packs\": [\"research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json\"], \"study_unit_id\": \"SU-C-30\"}"
+          },
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T01-PERICARDITIS"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": true
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The learner must classify stability within known ischemic symptoms; the candidates name alternative etiologic diagnoses, so the earliest mismatch is the act being decided.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-MED-03",
+      "discipline": "MED",
+      "study_unit_id": "SU-C-20",
+      "learner_decision_id": "LD-RDY-MED-03",
+      "learner_decision": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "key": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "candidate_id": "CONCEPT-R4-SU-E-30-HYPOTHYROID",
+      "candidate_label": "Depressive syndrome due to hypothyroidism",
+      "candidate_response_classes": [
+        "ACUTE_METABOLIC_DERANGEMENT",
+        "PERSISTENT_MOOD_DISTURBANCE"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-E-30"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-PSY-T01-MEDICAL"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The learner must classify stability within known ischemic symptoms; the candidates name alternative etiologic diagnoses, so the earliest mismatch is the act being decided.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-MED-03",
+      "discipline": "MED",
+      "study_unit_id": "SU-C-20",
+      "learner_decision_id": "LD-RDY-MED-03",
+      "learner_decision": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "key": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "candidate_id": "CONCEPT-R4-SU-ER-09-TORSION",
+      "candidate_label": "Ovarian torsion",
+      "candidate_response_classes": [
+        "ACUTE_ABDOMINAL_OR_PELVIC_PAIN"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-ER-09"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-SURG-T01-TORSION"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The learner must classify stability within known ischemic symptoms; the candidates name alternative etiologic diagnoses, so the earliest mismatch is the act being decided.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-MED-03",
+      "discipline": "MED",
+      "study_unit_id": "SU-C-20",
+      "learner_decision_id": "LD-RDY-MED-03",
+      "learner_decision": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "key": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "candidate_id": "CONCEPT-R4-SU-GY-19-PID",
+      "candidate_label": "Pelvic inflammatory disease",
+      "candidate_response_classes": [
+        "ACUTE_ABDOMINAL_OR_PELVIC_PAIN",
+        "LOCALIZED_INFLAMMATION",
+        "SYSTEMIC_INFLAMMATORY_ILLNESS"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-GY-19"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-SURG-T01-PID"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The learner must classify stability within known ischemic symptoms; the candidates name alternative etiologic diagnoses, so the earliest mismatch is the act being decided.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-MED-03",
+      "discipline": "MED",
+      "study_unit_id": "SU-C-20",
+      "learner_decision_id": "LD-RDY-MED-03",
+      "learner_decision": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "key": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "candidate_id": "CONCEPT-R4-SU-GY-19-TOA",
+      "candidate_label": "Tubo-ovarian abscess",
+      "candidate_response_classes": [
+        "ACUTE_ABDOMINAL_OR_PELVIC_PAIN",
+        "PALPABLE_MASS_OR_FLUID_COLLECTION",
+        "SYSTEMIC_INFLAMMATORY_ILLNESS"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-GY-19"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-SURG-T01-TOA"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The learner must classify stability within known ischemic symptoms; the candidates name alternative etiologic diagnoses, so the earliest mismatch is the act being decided.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-MED-03",
+      "discipline": "MED",
+      "study_unit_id": "SU-C-20",
+      "learner_decision_id": "LD-RDY-MED-03",
+      "learner_decision": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "key": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "candidate_id": "CONCEPT-R4-SU-H-02-ANEMIA",
+      "candidate_label": "Depressive syndrome due to anaemia",
+      "candidate_response_classes": [
+        "PERSISTENT_MOOD_DISTURBANCE"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-H-02"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-PSY-T01-ANEMIA"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The learner must classify stability within known ischemic symptoms; the candidates name alternative etiologic diagnoses, so the earliest mismatch is the act being decided.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-MED-03",
+      "discipline": "MED",
+      "study_unit_id": "SU-C-20",
+      "learner_decision_id": "LD-RDY-MED-03",
+      "learner_decision": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "key": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "candidate_id": "CONCEPT-R4-SU-MI-31-IBC",
+      "candidate_label": "Inflammatory breast cancer",
+      "candidate_response_classes": [
+        "LOCALIZED_INFLAMMATION",
+        "PALPABLE_MASS_OR_FLUID_COLLECTION"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-MI-31"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-OB-T01-IBC"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The learner must classify stability within known ischemic symptoms; the candidates name alternative etiologic diagnoses, so the earliest mismatch is the act being decided.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-MED-03",
+      "discipline": "MED",
+      "study_unit_id": "SU-C-20",
+      "learner_decision_id": "LD-RDY-MED-03",
+      "learner_decision": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "key": "Distinguish a stable exertional angina pattern from new, worsening, rest, or unstable ischemic symptoms that require acute-coronary-syndrome assessment.",
+      "candidate_id": "CONCEPT-R4-SU-OB-54-ABSCESS",
+      "candidate_label": "Lactational breast abscess",
+      "candidate_response_classes": [
+        "LOCALIZED_INFLAMMATION",
+        "PALPABLE_MASS_OR_FLUID_COLLECTION",
+        "SYSTEMIC_INFLAMMATORY_ILLNESS"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-OB-54"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-OB-T01-ABSCESS"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The learner must classify stability within known ischemic symptoms; the candidates name alternative etiologic diagnoses, so the earliest mismatch is the act being decided.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-OBGYN-05",
+      "discipline": "OBGYN",
+      "study_unit_id": "SU-GY-24",
+      "learner_decision_id": "LD-RDY-OBGYN-05",
+      "learner_decision": "For bothersome menopausal vasomotor symptoms, consider menopausal hormone therapy after individualized contraindication and risk-benefit assessment.",
+      "key": "For bothersome menopausal vasomotor symptoms, consider menopausal hormone therapy after individualized contraindication and risk-benefit assessment.",
+      "candidate_id": "CONCEPT-G2-ANTIDEPRESSANT-ALONE",
+      "candidate_label": "A first-line antidepressant alone",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_TREATMENT"
+      ],
+      "candidate_decision_granularities": [
+        "MANAGEMENT_STRATEGY"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-PS-61"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "ACTION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": null,
+            "seed_id": "SEED-G2-PSY-T03-AD-ALONE"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_TREATMENT",
+        "decision_granularity": "MANAGEMENT_STRATEGY",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner is selecting therapy for menopausal vasomotor symptoms; the candidates are authored for depressive illness.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-OBGYN-05",
+      "discipline": "OBGYN",
+      "study_unit_id": "SU-GY-24",
+      "learner_decision_id": "LD-RDY-OBGYN-05",
+      "learner_decision": "For bothersome menopausal vasomotor symptoms, consider menopausal hormone therapy after individualized contraindication and risk-benefit assessment.",
+      "key": "For bothersome menopausal vasomotor symptoms, consider menopausal hormone therapy after individualized contraindication and risk-benefit assessment.",
+      "candidate_id": "CONCEPT-R4-SU-PS-12-COMBINED",
+      "candidate_label": "Combined antidepressant and psychotherapy from the outset",
+      "candidate_response_classes": [
+        "COMBINED_TREATMENT",
+        "PHARMACOLOGIC_TREATMENT"
+      ],
+      "candidate_decision_granularities": [
+        "MANAGEMENT_STRATEGY"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-PS-12"
+        ],
+        "section_paths": [],
+        "graph_identity": null,
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-PSY-T03-COMBINED"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_TREATMENT",
+        "decision_granularity": "MANAGEMENT_STRATEGY",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner is selecting therapy for menopausal vasomotor symptoms; the candidates are authored for depressive illness.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-OBGYN-06",
+      "discipline": "OBGYN",
+      "study_unit_id": "SU-GY-26",
+      "learner_decision_id": "LD-RDY-OBGYN-06",
+      "learner_decision": "Offer a vaginal pessary as a nonsurgical symptom-management option for pelvic organ prolapse when consistent with patient goals.",
+      "key": "Offer a vaginal pessary as a nonsurgical symptom-management option for pelvic organ prolapse when consistent with patient goals.",
+      "candidate_id": "CONCEPT-G2-PPCI-TRANSFER",
+      "candidate_label": "Transfer immediately for primary percutaneous coronary intervention without giving fibrinolysis",
+      "candidate_response_classes": [
+        "PROCEDURAL_INTERVENTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-C-21"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "ACTION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T03-PPCI-ONLY"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PROCEDURAL_INTERVENTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner is selecting nonsurgical management for pelvic-organ prolapse; the candidate is coronary reperfusion.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PED-05",
+      "discipline": "PED",
+      "study_unit_id": "SU-P-081",
+      "learner_decision_id": "LD-RDY-PED-05",
+      "learner_decision": "Treat fever in a child with sickle cell disease as an emergency requiring prompt blood culture and broad-spectrum antibiotics.",
+      "key": "Treat fever in a child with sickle cell disease as an emergency requiring prompt blood culture and broad-spectrum antibiotics.",
+      "candidate_id": "CONCEPT-G2-BETA-BLOCKER",
+      "candidate_label": "Give intravenous metoprolol to reduce myocardial oxygen demand",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_ACTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-C-21"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "ACTION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T02-BETA-BLOCKER"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_ACTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner must act on febrile sickle-cell disease; the candidates are acute cardiac or infant-respiratory actions for other conditions.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PED-05",
+      "discipline": "PED",
+      "study_unit_id": "SU-P-081",
+      "learner_decision_id": "LD-RDY-PED-05",
+      "learner_decision": "Treat fever in a child with sickle cell disease as an emergency requiring prompt blood culture and broad-spectrum antibiotics.",
+      "key": "Treat fever in a child with sickle cell disease as an emergency requiring prompt blood culture and broad-spectrum antibiotics.",
+      "candidate_id": "CONCEPT-G2-DIURETIC",
+      "candidate_label": "Give intravenous furosemide for the raised jugular venous pressure",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_ACTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-C-21"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "ACTION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T02-DIURETIC"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_ACTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner must act on febrile sickle-cell disease; the candidates are acute cardiac or infant-respiratory actions for other conditions.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PED-05",
+      "discipline": "PED",
+      "study_unit_id": "SU-P-081",
+      "learner_decision_id": "LD-RDY-PED-05",
+      "learner_decision": "Treat fever in a child with sickle cell disease as an emergency requiring prompt blood culture and broad-spectrum antibiotics.",
+      "key": "Treat fever in a child with sickle cell disease as an emergency requiring prompt blood culture and broad-spectrum antibiotics.",
+      "candidate_id": "CONCEPT-G2-LYSIS-DEFERRED-ANGIO",
+      "candidate_label": "Give fibrinolysis now and arrange angiography in three to five days if she remains stable",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_ACTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-C-21"
+        ],
+        "section_paths": [],
+        "graph_identity": null,
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T03-DEFERRED-ANGIO"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_ACTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner must act on febrile sickle-cell disease; the candidates are acute cardiac or infant-respiratory actions for other conditions.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PED-05",
+      "discipline": "PED",
+      "study_unit_id": "SU-P-081",
+      "learner_decision_id": "LD-RDY-PED-05",
+      "learner_decision": "Treat fever in a child with sickle cell disease as an emergency requiring prompt blood culture and broad-spectrum antibiotics.",
+      "key": "Treat fever in a child with sickle cell disease as an emergency requiring prompt blood culture and broad-spectrum antibiotics.",
+      "candidate_id": "CONCEPT-G2-LYSIS-RESCUE-ONLY",
+      "candidate_label": "Give fibrinolysis now and transfer only if the electrocardiogram fails to show resolution",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_ACTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-C-21"
+        ],
+        "section_paths": [],
+        "graph_identity": null,
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T03-RESCUE-ONLY"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_ACTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner must act on febrile sickle-cell disease; the candidates are acute cardiac or infant-respiratory actions for other conditions.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PED-05",
+      "discipline": "PED",
+      "study_unit_id": "SU-P-081",
+      "learner_decision_id": "LD-RDY-PED-05",
+      "learner_decision": "Treat fever in a child with sickle cell disease as an emergency requiring prompt blood culture and broad-spectrum antibiotics.",
+      "key": "Treat fever in a child with sickle cell disease as an emergency requiring prompt blood culture and broad-spectrum antibiotics.",
+      "candidate_id": "CONCEPT-G2-NITRATE",
+      "candidate_label": "Give sublingual nitroglycerin for the ischaemic pain",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_ACTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-C-21"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "ACTION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T02-NITRATE"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_ACTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner must act on febrile sickle-cell disease; the candidates are acute cardiac or infant-respiratory actions for other conditions.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PED-05",
+      "discipline": "PED",
+      "study_unit_id": "SU-P-081",
+      "learner_decision_id": "LD-RDY-PED-05",
+      "learner_decision": "Treat fever in a child with sickle cell disease as an emergency requiring prompt blood culture and broad-spectrum antibiotics.",
+      "key": "Treat fever in a child with sickle cell disease as an emergency requiring prompt blood culture and broad-spectrum antibiotics.",
+      "candidate_id": "CONCEPT-G2-VASOPRESSOR",
+      "candidate_label": "Start a norepinephrine infusion",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_ACTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-C-21"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "ACTION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T02-VASOPRESSOR"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_ACTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner must act on febrile sickle-cell disease; the candidates are acute cardiac or infant-respiratory actions for other conditions.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PED-05",
+      "discipline": "PED",
+      "study_unit_id": "SU-P-081",
+      "learner_decision_id": "LD-RDY-PED-05",
+      "learner_decision": "Treat fever in a child with sickle cell disease as an emergency requiring prompt blood culture and broad-spectrum antibiotics.",
+      "key": "Treat fever in a child with sickle cell disease as an emergency requiring prompt blood culture and broad-spectrum antibiotics.",
+      "candidate_id": "CONCEPT-R4-SU-P-146-SALBUTAMOL",
+      "candidate_label": "Nebulized salbutamol",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_ACTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-P-146"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "ACTION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-PED-T03-SALBUTAMOL"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_ACTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner must act on febrile sickle-cell disease; the candidates are acute cardiac or infant-respiratory actions for other conditions.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PED-05",
+      "discipline": "PED",
+      "study_unit_id": "SU-P-081",
+      "learner_decision_id": "LD-RDY-PED-05",
+      "learner_decision": "Treat fever in a child with sickle cell disease as an emergency requiring prompt blood culture and broad-spectrum antibiotics.",
+      "key": "Treat fever in a child with sickle cell disease as an emergency requiring prompt blood culture and broad-spectrum antibiotics.",
+      "candidate_id": "CONCEPT-R4-SU-P-147-EPINEPHRINE",
+      "candidate_label": "Nebulized epinephrine",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_ACTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-P-147"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "ACTION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-PED-T03-EPINEPHRINE"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_ACTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner must act on febrile sickle-cell disease; the candidates are acute cardiac or infant-respiratory actions for other conditions.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PED-05",
+      "discipline": "PED",
+      "study_unit_id": "SU-P-081",
+      "learner_decision_id": "LD-RDY-PED-05",
+      "learner_decision": "Treat fever in a child with sickle cell disease as an emergency requiring prompt blood culture and broad-spectrum antibiotics.",
+      "key": "Treat fever in a child with sickle cell disease as an emergency requiring prompt blood culture and broad-spectrum antibiotics.",
+      "candidate_id": "CONCEPT-R4-SU-P-147-HYPERTONIC",
+      "candidate_label": "Nebulized 3% hypertonic saline",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_ACTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-P-147"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "ACTION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-PED-T03-HYPERTONIC"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_ACTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner must act on febrile sickle-cell disease; the candidates are acute cardiac or infant-respiratory actions for other conditions.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PHELO-09",
+      "discipline": "PHELO",
+      "study_unit_id": "SU-ELOM-19",
+      "learner_decision_id": "LD-RDY-PHELO-09",
+      "learner_decision": "Before using clinical AI, assess privacy, equity, safety, accountability, transparency, and the adequacy of human oversight.",
+      "key": "Before using clinical AI, assess privacy, equity, safety, accountability, transparency, and the adequacy of human oversight.",
+      "candidate_id": "RDY-PHELO-08__bill_c14_maid",
+      "candidate_label": "Apply Bill C-14 / MAID eligibility criteria",
+      "candidate_response_classes": [
+        "AUTONOMY"
+      ],
+      "candidate_decision_granularities": [
+        "ETHICAL_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [
+          "TNC-a6fe91d7fcec6142dbb5232b"
+        ],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-ELOM-09"
+        ],
+        "section_paths": [],
+        "graph_identity": null,
+        "provenance": [
+          {
+            "source": "REUSABLE_CONTRAST_CACHE_V1",
+            "seed_id": "SEED-DEV12-PHELO08-BILLC14-MAID",
+            "relation_id": "CCR2-DEV12-PHELO08-BILLC14-MAID"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "ETHICAL_ACTION",
+        "decision_granularity": "ETHICAL_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_ETHICAL_LEGAL_ACTION",
+      "diagnostic_group_rationale": "Clinical-AI governance review and statutory MAID eligibility answer different ethical/legal actions despite sharing a coarse value token.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PHELO-10",
+      "discipline": "PHELO",
+      "study_unit_id": "SU-ELOM-25",
+      "learner_decision_id": "LD-RDY-PHELO-10",
+      "learner_decision": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "key": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "candidate_id": "CONCEPT-G2-AORTIC-DISSECTION",
+      "candidate_label": "Acute aortic dissection",
+      "candidate_response_classes": [
+        "HEMODYNAMIC_INSTABILITY"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-C-33"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T01-DISSECTION"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_ETHICAL_LEGAL_ACTION",
+      "diagnostic_group_rationale": "The learner must classify a legal relationship or state action; the candidates classify medical diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PHELO-10",
+      "discipline": "PHELO",
+      "study_unit_id": "SU-ELOM-25",
+      "learner_decision_id": "LD-RDY-PHELO-10",
+      "learner_decision": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "key": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "candidate_id": "CONCEPT-G2-PE",
+      "candidate_label": "Pulmonary embolism",
+      "candidate_response_classes": [
+        "ACUTE_RESPIRATORY_DISTRESS",
+        "HEMODYNAMIC_INSTABILITY"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [
+          "TNC-3cfe27f350468287b1885d3b"
+        ],
+        "chapters": [
+          "ER"
+        ],
+        "study_unit_ids": [
+          "SU-ER-22",
+          "SU-R-13"
+        ],
+        "section_paths": [
+          "Emergency Medicine > Medical Emergencies > Anaphylaxis and Allergic Reactions"
+        ],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "CANONICAL_CONCEPT_MENTION",
+            "chunk_id": "TNC-3cfe27f350468287b1885d3b",
+            "tn_node_id": "ER.S04.T01",
+            "subheading": "Presentation",
+            "section_path": "Emergency Medicine > Medical Emergencies > Anaphylaxis and Allergic Reactions",
+            "concept_provenance": "{\"decision_granularity\": \"SINGLE_DIAGNOSIS\", \"option_set_archetypes\": [\"DIAGNOSIS_SET\"], \"seed_ids\": [\"SEED-G2-MED-T01-PE\"], \"source_packs\": [\"research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json\"], \"study_unit_id\": \"SU-R-13\"}"
+          },
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T01-PE"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_ETHICAL_LEGAL_ACTION",
+      "diagnostic_group_rationale": "The learner must classify a legal relationship or state action; the candidates classify medical diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PHELO-10",
+      "discipline": "PHELO",
+      "study_unit_id": "SU-ELOM-25",
+      "learner_decision_id": "LD-RDY-PHELO-10",
+      "learner_decision": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "key": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "candidate_id": "CONCEPT-G2-PERICARDITIS",
+      "candidate_label": "Acute pericarditis",
+      "candidate_response_classes": [
+        "LOCALIZED_INFLAMMATION"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [
+          "TNC-245df6678284afef0249088b",
+          "TNC-81282ffc2ef8a30a6cc00e55",
+          "TNC-86b804c1e7dbb83929087aa2"
+        ],
+        "chapters": [
+          "C"
+        ],
+        "study_unit_ids": [
+          "SU-C-30",
+          "SU-C-33",
+          "SU-C-34",
+          "SU-C-35"
+        ],
+        "section_paths": [
+          "Cardiology and Cardiac Surgery > Pericardial Disease > Acute Pericarditis"
+        ],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "CANONICAL_CONCEPT_MENTION",
+            "chunk_id": "TNC-245df6678284afef0249088b",
+            "tn_node_id": "C.S12.T01",
+            "subheading": "Clinical Presentation, Investigations, and Diagnosis",
+            "section_path": "Cardiology and Cardiac Surgery > Pericardial Disease > Acute Pericarditis",
+            "concept_provenance": "{\"decision_granularity\": \"SINGLE_DIAGNOSIS\", \"option_set_archetypes\": [\"DIAGNOSIS_SET\"], \"seed_ids\": [\"SEED-G2-MED-T01-PERICARDITIS\"], \"source_packs\": [\"research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json\"], \"study_unit_id\": \"SU-C-30\"}"
+          },
+          {
+            "source": "CANONICAL_CONCEPT_MENTION",
+            "chunk_id": "TNC-81282ffc2ef8a30a6cc00e55",
+            "tn_node_id": "C.S12.T01",
+            "subheading": "Clinical Presentation, Investigations, and Diagnosis",
+            "section_path": "Cardiology and Cardiac Surgery > Pericardial Disease > Acute Pericarditis",
+            "concept_provenance": "{\"decision_granularity\": \"SINGLE_DIAGNOSIS\", \"option_set_archetypes\": [\"DIAGNOSIS_SET\"], \"seed_ids\": [\"SEED-G2-MED-T01-PERICARDITIS\"], \"source_packs\": [\"research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json\"], \"study_unit_id\": \"SU-C-30\"}"
+          },
+          {
+            "source": "CANONICAL_CONCEPT_MENTION",
+            "chunk_id": "TNC-86b804c1e7dbb83929087aa2",
+            "tn_node_id": "C.S12.T01",
+            "subheading": "Signs and Symptoms",
+            "section_path": "Cardiology and Cardiac Surgery > Pericardial Disease > Acute Pericarditis",
+            "concept_provenance": "{\"decision_granularity\": \"SINGLE_DIAGNOSIS\", \"option_set_archetypes\": [\"DIAGNOSIS_SET\"], \"seed_ids\": [\"SEED-G2-MED-T01-PERICARDITIS\"], \"source_packs\": [\"research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json\"], \"study_unit_id\": \"SU-C-30\"}"
+          },
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T01-PERICARDITIS"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_ETHICAL_LEGAL_ACTION",
+      "diagnostic_group_rationale": "The learner must classify a legal relationship or state action; the candidates classify medical diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PHELO-10",
+      "discipline": "PHELO",
+      "study_unit_id": "SU-ELOM-25",
+      "learner_decision_id": "LD-RDY-PHELO-10",
+      "learner_decision": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "key": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "candidate_id": "CONCEPT-R4-SU-E-30-HYPOTHYROID",
+      "candidate_label": "Depressive syndrome due to hypothyroidism",
+      "candidate_response_classes": [
+        "ACUTE_METABOLIC_DERANGEMENT",
+        "PERSISTENT_MOOD_DISTURBANCE"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-E-30"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-PSY-T01-MEDICAL"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_ETHICAL_LEGAL_ACTION",
+      "diagnostic_group_rationale": "The learner must classify a legal relationship or state action; the candidates classify medical diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PHELO-10",
+      "discipline": "PHELO",
+      "study_unit_id": "SU-ELOM-25",
+      "learner_decision_id": "LD-RDY-PHELO-10",
+      "learner_decision": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "key": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "candidate_id": "CONCEPT-R4-SU-ER-09-TORSION",
+      "candidate_label": "Ovarian torsion",
+      "candidate_response_classes": [
+        "ACUTE_ABDOMINAL_OR_PELVIC_PAIN"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-ER-09"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-SURG-T01-TORSION"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_ETHICAL_LEGAL_ACTION",
+      "diagnostic_group_rationale": "The learner must classify a legal relationship or state action; the candidates classify medical diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PHELO-10",
+      "discipline": "PHELO",
+      "study_unit_id": "SU-ELOM-25",
+      "learner_decision_id": "LD-RDY-PHELO-10",
+      "learner_decision": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "key": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "candidate_id": "CONCEPT-R4-SU-GY-19-PID",
+      "candidate_label": "Pelvic inflammatory disease",
+      "candidate_response_classes": [
+        "ACUTE_ABDOMINAL_OR_PELVIC_PAIN",
+        "LOCALIZED_INFLAMMATION",
+        "SYSTEMIC_INFLAMMATORY_ILLNESS"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-GY-19"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-SURG-T01-PID"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_ETHICAL_LEGAL_ACTION",
+      "diagnostic_group_rationale": "The learner must classify a legal relationship or state action; the candidates classify medical diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PHELO-10",
+      "discipline": "PHELO",
+      "study_unit_id": "SU-ELOM-25",
+      "learner_decision_id": "LD-RDY-PHELO-10",
+      "learner_decision": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "key": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "candidate_id": "CONCEPT-R4-SU-GY-19-TOA",
+      "candidate_label": "Tubo-ovarian abscess",
+      "candidate_response_classes": [
+        "ACUTE_ABDOMINAL_OR_PELVIC_PAIN",
+        "PALPABLE_MASS_OR_FLUID_COLLECTION",
+        "SYSTEMIC_INFLAMMATORY_ILLNESS"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-GY-19"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-SURG-T01-TOA"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_ETHICAL_LEGAL_ACTION",
+      "diagnostic_group_rationale": "The learner must classify a legal relationship or state action; the candidates classify medical diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PHELO-10",
+      "discipline": "PHELO",
+      "study_unit_id": "SU-ELOM-25",
+      "learner_decision_id": "LD-RDY-PHELO-10",
+      "learner_decision": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "key": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "candidate_id": "CONCEPT-R4-SU-H-02-ANEMIA",
+      "candidate_label": "Depressive syndrome due to anaemia",
+      "candidate_response_classes": [
+        "PERSISTENT_MOOD_DISTURBANCE"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-H-02"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-PSY-T01-ANEMIA"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_ETHICAL_LEGAL_ACTION",
+      "diagnostic_group_rationale": "The learner must classify a legal relationship or state action; the candidates classify medical diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PHELO-10",
+      "discipline": "PHELO",
+      "study_unit_id": "SU-ELOM-25",
+      "learner_decision_id": "LD-RDY-PHELO-10",
+      "learner_decision": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "key": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "candidate_id": "CONCEPT-R4-SU-MI-31-IBC",
+      "candidate_label": "Inflammatory breast cancer",
+      "candidate_response_classes": [
+        "LOCALIZED_INFLAMMATION",
+        "PALPABLE_MASS_OR_FLUID_COLLECTION"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-MI-31"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-OB-T01-IBC"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_ETHICAL_LEGAL_ACTION",
+      "diagnostic_group_rationale": "The learner must classify a legal relationship or state action; the candidates classify medical diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PHELO-10",
+      "discipline": "PHELO",
+      "study_unit_id": "SU-ELOM-25",
+      "learner_decision_id": "LD-RDY-PHELO-10",
+      "learner_decision": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "key": "Classify a dispute between individuals as civil law, prohibited conduct against public safety as criminal law, and review of government action as administrative law.",
+      "candidate_id": "CONCEPT-R4-SU-OB-54-ABSCESS",
+      "candidate_label": "Lactational breast abscess",
+      "candidate_response_classes": [
+        "LOCALIZED_INFLAMMATION",
+        "PALPABLE_MASS_OR_FLUID_COLLECTION",
+        "SYSTEMIC_INFLAMMATORY_ILLNESS"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-OB-54"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-OB-T01-ABSCESS"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_ETHICAL_LEGAL_ACTION",
+      "diagnostic_group_rationale": "The learner must classify a legal relationship or state action; the candidates classify medical diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PSY-04",
+      "discipline": "PSY",
+      "study_unit_id": "SU-PS-15",
+      "learner_decision_id": "LD-RDY-PSY-04",
+      "learner_decision": "For panic disorder requiring medication, use an SSRI or SNRI as a first-line option and begin cautiously because early activation can worsen anxiety.",
+      "key": "For panic disorder requiring medication, use an SSRI or SNRI as a first-line option and begin cautiously because early activation can worsen anxiety.",
+      "candidate_id": "CONCEPT-G2-BETA-BLOCKER",
+      "candidate_label": "Give intravenous metoprolol to reduce myocardial oxygen demand",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_ACTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-C-21"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "ACTION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T02-BETA-BLOCKER"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_ACTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner is selecting medication for panic disorder; the candidates treat acute cardiovascular or infant-respiratory conditions.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PSY-04",
+      "discipline": "PSY",
+      "study_unit_id": "SU-PS-15",
+      "learner_decision_id": "LD-RDY-PSY-04",
+      "learner_decision": "For panic disorder requiring medication, use an SSRI or SNRI as a first-line option and begin cautiously because early activation can worsen anxiety.",
+      "key": "For panic disorder requiring medication, use an SSRI or SNRI as a first-line option and begin cautiously because early activation can worsen anxiety.",
+      "candidate_id": "CONCEPT-G2-DIURETIC",
+      "candidate_label": "Give intravenous furosemide for the raised jugular venous pressure",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_ACTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-C-21"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "ACTION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T02-DIURETIC"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_ACTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner is selecting medication for panic disorder; the candidates treat acute cardiovascular or infant-respiratory conditions.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PSY-04",
+      "discipline": "PSY",
+      "study_unit_id": "SU-PS-15",
+      "learner_decision_id": "LD-RDY-PSY-04",
+      "learner_decision": "For panic disorder requiring medication, use an SSRI or SNRI as a first-line option and begin cautiously because early activation can worsen anxiety.",
+      "key": "For panic disorder requiring medication, use an SSRI or SNRI as a first-line option and begin cautiously because early activation can worsen anxiety.",
+      "candidate_id": "CONCEPT-G2-LYSIS-DEFERRED-ANGIO",
+      "candidate_label": "Give fibrinolysis now and arrange angiography in three to five days if she remains stable",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_ACTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-C-21"
+        ],
+        "section_paths": [],
+        "graph_identity": null,
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T03-DEFERRED-ANGIO"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_ACTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner is selecting medication for panic disorder; the candidates treat acute cardiovascular or infant-respiratory conditions.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PSY-04",
+      "discipline": "PSY",
+      "study_unit_id": "SU-PS-15",
+      "learner_decision_id": "LD-RDY-PSY-04",
+      "learner_decision": "For panic disorder requiring medication, use an SSRI or SNRI as a first-line option and begin cautiously because early activation can worsen anxiety.",
+      "key": "For panic disorder requiring medication, use an SSRI or SNRI as a first-line option and begin cautiously because early activation can worsen anxiety.",
+      "candidate_id": "CONCEPT-G2-LYSIS-RESCUE-ONLY",
+      "candidate_label": "Give fibrinolysis now and transfer only if the electrocardiogram fails to show resolution",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_ACTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-C-21"
+        ],
+        "section_paths": [],
+        "graph_identity": null,
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T03-RESCUE-ONLY"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_ACTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner is selecting medication for panic disorder; the candidates treat acute cardiovascular or infant-respiratory conditions.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PSY-04",
+      "discipline": "PSY",
+      "study_unit_id": "SU-PS-15",
+      "learner_decision_id": "LD-RDY-PSY-04",
+      "learner_decision": "For panic disorder requiring medication, use an SSRI or SNRI as a first-line option and begin cautiously because early activation can worsen anxiety.",
+      "key": "For panic disorder requiring medication, use an SSRI or SNRI as a first-line option and begin cautiously because early activation can worsen anxiety.",
+      "candidate_id": "CONCEPT-G2-NITRATE",
+      "candidate_label": "Give sublingual nitroglycerin for the ischaemic pain",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_ACTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-C-21"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "ACTION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T02-NITRATE"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_ACTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner is selecting medication for panic disorder; the candidates treat acute cardiovascular or infant-respiratory conditions.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PSY-04",
+      "discipline": "PSY",
+      "study_unit_id": "SU-PS-15",
+      "learner_decision_id": "LD-RDY-PSY-04",
+      "learner_decision": "For panic disorder requiring medication, use an SSRI or SNRI as a first-line option and begin cautiously because early activation can worsen anxiety.",
+      "key": "For panic disorder requiring medication, use an SSRI or SNRI as a first-line option and begin cautiously because early activation can worsen anxiety.",
+      "candidate_id": "CONCEPT-G2-VASOPRESSOR",
+      "candidate_label": "Start a norepinephrine infusion",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_ACTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-C-21"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "ACTION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T02-VASOPRESSOR"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_ACTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner is selecting medication for panic disorder; the candidates treat acute cardiovascular or infant-respiratory conditions.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PSY-04",
+      "discipline": "PSY",
+      "study_unit_id": "SU-PS-15",
+      "learner_decision_id": "LD-RDY-PSY-04",
+      "learner_decision": "For panic disorder requiring medication, use an SSRI or SNRI as a first-line option and begin cautiously because early activation can worsen anxiety.",
+      "key": "For panic disorder requiring medication, use an SSRI or SNRI as a first-line option and begin cautiously because early activation can worsen anxiety.",
+      "candidate_id": "CONCEPT-R4-SU-P-146-SALBUTAMOL",
+      "candidate_label": "Nebulized salbutamol",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_ACTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-P-146"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "ACTION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-PED-T03-SALBUTAMOL"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_ACTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner is selecting medication for panic disorder; the candidates treat acute cardiovascular or infant-respiratory conditions.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PSY-04",
+      "discipline": "PSY",
+      "study_unit_id": "SU-PS-15",
+      "learner_decision_id": "LD-RDY-PSY-04",
+      "learner_decision": "For panic disorder requiring medication, use an SSRI or SNRI as a first-line option and begin cautiously because early activation can worsen anxiety.",
+      "key": "For panic disorder requiring medication, use an SSRI or SNRI as a first-line option and begin cautiously because early activation can worsen anxiety.",
+      "candidate_id": "CONCEPT-R4-SU-P-147-EPINEPHRINE",
+      "candidate_label": "Nebulized epinephrine",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_ACTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-P-147"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "ACTION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-PED-T03-EPINEPHRINE"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_ACTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner is selecting medication for panic disorder; the candidates treat acute cardiovascular or infant-respiratory conditions.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-PSY-04",
+      "discipline": "PSY",
+      "study_unit_id": "SU-PS-15",
+      "learner_decision_id": "LD-RDY-PSY-04",
+      "learner_decision": "For panic disorder requiring medication, use an SSRI or SNRI as a first-line option and begin cautiously because early activation can worsen anxiety.",
+      "key": "For panic disorder requiring medication, use an SSRI or SNRI as a first-line option and begin cautiously because early activation can worsen anxiety.",
+      "candidate_id": "CONCEPT-R4-SU-P-147-HYPERTONIC",
+      "candidate_label": "Nebulized 3% hypertonic saline",
+      "candidate_response_classes": [
+        "PHARMACOLOGIC_ACTION"
+      ],
+      "candidate_decision_granularities": [
+        "SINGLE_NEXT_ACTION"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-P-147"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "ACTION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-PED-T03-HYPERTONIC"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PHARMACOLOGIC_ACTION",
+        "decision_granularity": "SINGLE_NEXT_ACTION",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_TARGET_CONDITION",
+      "diagnostic_group_rationale": "The learner is selecting medication for panic disorder; the candidates treat acute cardiovascular or infant-respiratory conditions.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-SURG-09",
+      "discipline": "SURG",
+      "study_unit_id": "SU-GS-38",
+      "learner_decision_id": "LD-RDY-SURG-09",
+      "learner_decision": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "key": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "candidate_id": "CONCEPT-G2-AORTIC-DISSECTION",
+      "candidate_label": "Acute aortic dissection",
+      "candidate_response_classes": [
+        "HEMODYNAMIC_INSTABILITY"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-C-33"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T01-DISSECTION"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The diagnosis of diverticulitis is given and the learner must classify complication/severity; the candidates instead name alternative diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-SURG-09",
+      "discipline": "SURG",
+      "study_unit_id": "SU-GS-38",
+      "learner_decision_id": "LD-RDY-SURG-09",
+      "learner_decision": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "key": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "candidate_id": "CONCEPT-G2-PE",
+      "candidate_label": "Pulmonary embolism",
+      "candidate_response_classes": [
+        "ACUTE_RESPIRATORY_DISTRESS",
+        "HEMODYNAMIC_INSTABILITY"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [
+          "TNC-3cfe27f350468287b1885d3b"
+        ],
+        "chapters": [
+          "ER"
+        ],
+        "study_unit_ids": [
+          "SU-ER-22",
+          "SU-R-13"
+        ],
+        "section_paths": [
+          "Emergency Medicine > Medical Emergencies > Anaphylaxis and Allergic Reactions"
+        ],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "CANONICAL_CONCEPT_MENTION",
+            "chunk_id": "TNC-3cfe27f350468287b1885d3b",
+            "tn_node_id": "ER.S04.T01",
+            "subheading": "Presentation",
+            "section_path": "Emergency Medicine > Medical Emergencies > Anaphylaxis and Allergic Reactions",
+            "concept_provenance": "{\"decision_granularity\": \"SINGLE_DIAGNOSIS\", \"option_set_archetypes\": [\"DIAGNOSIS_SET\"], \"seed_ids\": [\"SEED-G2-MED-T01-PE\"], \"source_packs\": [\"research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json\"], \"study_unit_id\": \"SU-R-13\"}"
+          },
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T01-PE"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The diagnosis of diverticulitis is given and the learner must classify complication/severity; the candidates instead name alternative diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-SURG-09",
+      "discipline": "SURG",
+      "study_unit_id": "SU-GS-38",
+      "learner_decision_id": "LD-RDY-SURG-09",
+      "learner_decision": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "key": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "candidate_id": "CONCEPT-G2-PERICARDITIS",
+      "candidate_label": "Acute pericarditis",
+      "candidate_response_classes": [
+        "LOCALIZED_INFLAMMATION"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [
+          "TNC-245df6678284afef0249088b",
+          "TNC-81282ffc2ef8a30a6cc00e55",
+          "TNC-86b804c1e7dbb83929087aa2"
+        ],
+        "chapters": [
+          "C"
+        ],
+        "study_unit_ids": [
+          "SU-C-30",
+          "SU-C-33",
+          "SU-C-34",
+          "SU-C-35"
+        ],
+        "section_paths": [
+          "Cardiology and Cardiac Surgery > Pericardial Disease > Acute Pericarditis"
+        ],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "CANONICAL_CONCEPT_MENTION",
+            "chunk_id": "TNC-245df6678284afef0249088b",
+            "tn_node_id": "C.S12.T01",
+            "subheading": "Clinical Presentation, Investigations, and Diagnosis",
+            "section_path": "Cardiology and Cardiac Surgery > Pericardial Disease > Acute Pericarditis",
+            "concept_provenance": "{\"decision_granularity\": \"SINGLE_DIAGNOSIS\", \"option_set_archetypes\": [\"DIAGNOSIS_SET\"], \"seed_ids\": [\"SEED-G2-MED-T01-PERICARDITIS\"], \"source_packs\": [\"research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json\"], \"study_unit_id\": \"SU-C-30\"}"
+          },
+          {
+            "source": "CANONICAL_CONCEPT_MENTION",
+            "chunk_id": "TNC-81282ffc2ef8a30a6cc00e55",
+            "tn_node_id": "C.S12.T01",
+            "subheading": "Clinical Presentation, Investigations, and Diagnosis",
+            "section_path": "Cardiology and Cardiac Surgery > Pericardial Disease > Acute Pericarditis",
+            "concept_provenance": "{\"decision_granularity\": \"SINGLE_DIAGNOSIS\", \"option_set_archetypes\": [\"DIAGNOSIS_SET\"], \"seed_ids\": [\"SEED-G2-MED-T01-PERICARDITIS\"], \"source_packs\": [\"research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json\"], \"study_unit_id\": \"SU-C-30\"}"
+          },
+          {
+            "source": "CANONICAL_CONCEPT_MENTION",
+            "chunk_id": "TNC-86b804c1e7dbb83929087aa2",
+            "tn_node_id": "C.S12.T01",
+            "subheading": "Signs and Symptoms",
+            "section_path": "Cardiology and Cardiac Surgery > Pericardial Disease > Acute Pericarditis",
+            "concept_provenance": "{\"decision_granularity\": \"SINGLE_DIAGNOSIS\", \"option_set_archetypes\": [\"DIAGNOSIS_SET\"], \"seed_ids\": [\"SEED-G2-MED-T01-PERICARDITIS\"], \"source_packs\": [\"research/qgen/generalization/competitive_contrast_seed_pack_g2_targeted.json\"], \"study_unit_id\": \"SU-C-30\"}"
+          },
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_g2_targeted",
+            "seed_id": "SEED-G2-MED-T01-PERICARDITIS"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The diagnosis of diverticulitis is given and the learner must classify complication/severity; the candidates instead name alternative diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-SURG-09",
+      "discipline": "SURG",
+      "study_unit_id": "SU-GS-38",
+      "learner_decision_id": "LD-RDY-SURG-09",
+      "learner_decision": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "key": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "candidate_id": "CONCEPT-R4-SU-E-30-HYPOTHYROID",
+      "candidate_label": "Depressive syndrome due to hypothyroidism",
+      "candidate_response_classes": [
+        "ACUTE_METABOLIC_DERANGEMENT",
+        "PERSISTENT_MOOD_DISTURBANCE"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-E-30"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-PSY-T01-MEDICAL"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The diagnosis of diverticulitis is given and the learner must classify complication/severity; the candidates instead name alternative diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-SURG-09",
+      "discipline": "SURG",
+      "study_unit_id": "SU-GS-38",
+      "learner_decision_id": "LD-RDY-SURG-09",
+      "learner_decision": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "key": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "candidate_id": "CONCEPT-R4-SU-ER-09-TORSION",
+      "candidate_label": "Ovarian torsion",
+      "candidate_response_classes": [
+        "ACUTE_ABDOMINAL_OR_PELVIC_PAIN"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-ER-09"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-SURG-T01-TORSION"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The diagnosis of diverticulitis is given and the learner must classify complication/severity; the candidates instead name alternative diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-SURG-09",
+      "discipline": "SURG",
+      "study_unit_id": "SU-GS-38",
+      "learner_decision_id": "LD-RDY-SURG-09",
+      "learner_decision": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "key": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "candidate_id": "CONCEPT-R4-SU-GY-19-PID",
+      "candidate_label": "Pelvic inflammatory disease",
+      "candidate_response_classes": [
+        "ACUTE_ABDOMINAL_OR_PELVIC_PAIN",
+        "LOCALIZED_INFLAMMATION",
+        "SYSTEMIC_INFLAMMATORY_ILLNESS"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-GY-19"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-SURG-T01-PID"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The diagnosis of diverticulitis is given and the learner must classify complication/severity; the candidates instead name alternative diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-SURG-09",
+      "discipline": "SURG",
+      "study_unit_id": "SU-GS-38",
+      "learner_decision_id": "LD-RDY-SURG-09",
+      "learner_decision": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "key": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "candidate_id": "CONCEPT-R4-SU-GY-19-TOA",
+      "candidate_label": "Tubo-ovarian abscess",
+      "candidate_response_classes": [
+        "ACUTE_ABDOMINAL_OR_PELVIC_PAIN",
+        "PALPABLE_MASS_OR_FLUID_COLLECTION",
+        "SYSTEMIC_INFLAMMATORY_ILLNESS"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-GY-19"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-SURG-T01-TOA"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The diagnosis of diverticulitis is given and the learner must classify complication/severity; the candidates instead name alternative diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-SURG-09",
+      "discipline": "SURG",
+      "study_unit_id": "SU-GS-38",
+      "learner_decision_id": "LD-RDY-SURG-09",
+      "learner_decision": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "key": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "candidate_id": "CONCEPT-R4-SU-H-02-ANEMIA",
+      "candidate_label": "Depressive syndrome due to anaemia",
+      "candidate_response_classes": [
+        "PERSISTENT_MOOD_DISTURBANCE"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-H-02"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-PSY-T01-ANEMIA"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The diagnosis of diverticulitis is given and the learner must classify complication/severity; the candidates instead name alternative diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-SURG-09",
+      "discipline": "SURG",
+      "study_unit_id": "SU-GS-38",
+      "learner_decision_id": "LD-RDY-SURG-09",
+      "learner_decision": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "key": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "candidate_id": "CONCEPT-R4-SU-MI-31-IBC",
+      "candidate_label": "Inflammatory breast cancer",
+      "candidate_response_classes": [
+        "LOCALIZED_INFLAMMATION",
+        "PALPABLE_MASS_OR_FLUID_COLLECTION"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-MI-31"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-OB-T01-IBC"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The diagnosis of diverticulitis is given and the learner must classify complication/severity; the candidates instead name alternative diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    },
+    {
+      "opportunity_id": "RDY-SURG-09",
+      "discipline": "SURG",
+      "study_unit_id": "SU-GS-38",
+      "learner_decision_id": "LD-RDY-SURG-09",
+      "learner_decision": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "key": "In acute diverticulitis, use clinical and imaging severity to distinguish uncomplicated disease from abscess, obstruction, fistula, or perforation requiring escalation.",
+      "candidate_id": "CONCEPT-R4-SU-OB-54-ABSCESS",
+      "candidate_label": "Lactational breast abscess",
+      "candidate_response_classes": [
+        "LOCALIZED_INFLAMMATION",
+        "PALPABLE_MASS_OR_FLUID_COLLECTION",
+        "SYSTEMIC_INFLAMMATORY_ILLNESS"
+      ],
+      "candidate_decision_granularities": [
+        "DIAGNOSIS"
+      ],
+      "candidate_source_metadata": {
+        "source_ids": [],
+        "chapters": [],
+        "study_unit_ids": [
+          "SU-OB-54"
+        ],
+        "section_paths": [],
+        "graph_identity": {
+          "concept_type": "CONDITION",
+          "vocabulary_source": "CURATED_CONTRAST_SEED"
+        },
+        "provenance": [
+          {
+            "source": "INDEPENDENTLY_APPROVED_SEED",
+            "pack_id": "competitive_contrast_seed_pack_r4",
+            "seed_id": "SEED-OB-T01-ABSCESS"
+          }
+        ]
+      },
+      "v3_admission_and_ranking": {
+        "demanded_response_class": "PLAUSIBLE_DIAGNOSTIC_ENTITY",
+        "decision_granularity": "DIAGNOSIS",
+        "ranking_signals": {
+          "response_class_match": true,
+          "granularity_match": true,
+          "semantic_family_match": false,
+          "same_study_unit": false,
+          "same_chapter": false
+        }
+      },
+      "previous_clinical_verdict": "WRONG_DECISION",
+      "previous_clinical_reason": "The typed concept shares a coarse closed response/granularity class but does not compete for this learner decision, population, organ system, or legal/clinical classification.",
+      "earliest_semantic_mismatch": "WRONG_DECISION_INTENT",
+      "diagnostic_group_rationale": "The diagnosis of diverticulitis is given and the learner must classify complication/severity; the candidates instead name alternative diagnoses.",
+      "classification_basis": "FROZEN_VERDICT_PLUS_REPRESENTATIVE_OPPORTUNITY_GROUP_REVIEW"
+    }
+  ],
+  "content_sha256": "08e3c2d1fd1a1e3cd6782b455fe52ffeee6c4e6774ecaa5dd23819387ba62704"
+}
