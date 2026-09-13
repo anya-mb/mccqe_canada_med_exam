@@ -31,6 +31,12 @@ FINAL_VERDICTS = (
     "NEEDS_HUMAN_ADJUDICATION",
 )
 
+EXPECTED_MUTATION_RESULT_KEYS = frozenset({
+    "wrong_key_detected", "second_key_detected", "unsupported_claim_detected",
+    "false_citation_detected", "outdated_guidance_detected", "tn_conflict_detected",
+    "canadian_guideline_conflict_detected",
+})
+
 
 def _canonical(value: Any) -> str:
     return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
@@ -167,6 +173,11 @@ def append_ledger_entry(ledger: Mapping[str, Any], entry: Mapping[str, Any]) -> 
 
 def verify_ledger_chain(ledger: Mapping[str, Any]) -> list[str]:
     errors: list[str] = []
+    expected_content_hash = canonical_hash({
+        key: value for key, value in ledger.items() if key != "content_sha256"
+    })
+    if ledger.get("content_sha256") != expected_content_hash:
+        errors.append("LEDGER_CONTENT_HASH_MISMATCH")
     prior = None
     for index, entry in enumerate(ledger.get("entries", [])):
         if entry.get("previous_entry_sha256") != prior:
@@ -306,6 +317,18 @@ def build_external_verifier_dry_run_manifest(root: Path) -> dict[str, Any]:
         raise VerificationError("EXTERNAL_DRY_RUN_REQUIRES_EXACTLY_SIX_PACKAGES")
     if any(not row.get("non_production_validation_item") for row in packages["packages"]):
         raise VerificationError("EXTERNAL_DRY_RUN_PACKAGE_IS_NOT_NONPRODUCTION")
+    ledger_errors = verify_ledger_chain(ledger)
+    if ledger_errors:
+        raise VerificationError(ledger_errors[0])
+    computed_mutation_hash = canonical_hash({
+        key: value for key, value in mutations.items() if key != "content_sha256"
+    })
+    if mutations.get("content_sha256") != computed_mutation_hash:
+        raise VerificationError("MUTATION_RESULT_HASH_MISMATCH")
+    if set(mutations.get("results", {})) != EXPECTED_MUTATION_RESULT_KEYS:
+        raise VerificationError("MUTATION_RESULT_KEYS_MISMATCH")
+    if not all(value is True for value in mutations["results"].values()):
+        raise VerificationError("MUTATION_DETECTION_FAILED")
     package_rows = [{
         "item_id": row["item_id"],
         "discipline": row["discipline"],
@@ -324,7 +347,7 @@ def build_external_verifier_dry_run_manifest(root: Path) -> dict[str, Any]:
         "verification_ledger_content_sha256": ledger.get("content_sha256"),
         "verification_ledger_file_sha256": hashlib.sha256(ledger_path.read_bytes()).hexdigest(),
         "external_verifier_prompt_file_sha256": hashlib.sha256(prompt_path.read_bytes()).hexdigest(),
-        "ledger_chain_errors": verify_ledger_chain(ledger),
+        "ledger_chain_errors": ledger_errors,
         "mutation_tests": deepcopy(mutations["results"]),
         "packages": package_rows,
         "launch_policy": "RUN_EACH_PACKAGE_IN_A_SEPARATE_CODEX_SESSION_USING_THE_FROZEN_EXTERNAL_VERIFIER_PROMPT",

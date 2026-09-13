@@ -3,6 +3,7 @@ from __future__ import annotations
 from copy import deepcopy
 import json
 from pathlib import Path
+import shutil
 
 import jsonschema
 import pytest
@@ -158,6 +159,9 @@ def test_ledger_is_append_only_hash_chained_and_detects_tampering():
     tampered = deepcopy(one)
     tampered["entries"][0]["final_verification_status"] = "REJECT_WRONG_KEY"
     assert verify_ledger_chain(tampered)
+    top_level_tampered = deepcopy(one)
+    top_level_tampered["status"] = "CORRUPTED"
+    assert "LEDGER_CONTENT_HASH_MISMATCH" in verify_ledger_chain(top_level_tampered)
 
 
 def test_disagreement_packet_requires_third_distinct_session():
@@ -245,3 +249,58 @@ def test_external_verifier_dry_run_manifest_pins_six_packages_without_self_verdi
     assert all(manifest["mutation_tests"].values())
     assert manifest["authoring_session_verdict"] == "NOT_AUTHORIZED"
     assert "VERIFIED_ACCEPT" not in {row.get("verdict") for row in manifest["packages"]}
+
+
+def test_external_verifier_manifest_rejects_tampered_or_incomplete_integrity_receipts(tmp_path):
+    verification_dir = tmp_path / "research/qgen/independent_verification_v1"
+    verification_dir.mkdir(parents=True)
+    (tmp_path / "docs/qgen").mkdir(parents=True)
+    (tmp_path / "schemas").mkdir()
+    for name in (
+        "validation_item_packages.json",
+        "production_item_verification_ledger_v1.json",
+        "verification_mutation_results.json",
+    ):
+        shutil.copy(ROOT / "research/qgen/independent_verification_v1" / name, verification_dir / name)
+    shutil.copy(
+        ROOT / "docs/qgen/INDEPENDENT_PRODUCTION_ITEM_VERIFIER_PROMPT.md",
+        tmp_path / "docs/qgen/INDEPENDENT_PRODUCTION_ITEM_VERIFIER_PROMPT.md",
+    )
+    shutil.copy(
+        ROOT / "schemas/production-item-verification-package-v1.schema.json",
+        tmp_path / "schemas/production-item-verification-package-v1.schema.json",
+    )
+
+    ledger_path = verification_dir / "production_item_verification_ledger_v1.json"
+    ledger = json.loads(ledger_path.read_text())
+    ledger["status"] = "CORRUPTED"
+    ledger_path.write_text(json.dumps(ledger))
+    with pytest.raises(VerificationError, match="LEDGER_CONTENT_HASH_MISMATCH"):
+        build_external_verifier_dry_run_manifest(tmp_path)
+
+    shutil.copy(
+        ROOT / "research/qgen/independent_verification_v1/production_item_verification_ledger_v1.json",
+        ledger_path,
+    )
+    mutation_path = verification_dir / "verification_mutation_results.json"
+    mutations = json.loads(mutation_path.read_text())
+    mutations["results"].pop("wrong_key_detected")
+    mutations["content_sha256"] = canonical_hash({
+        key: value for key, value in mutations.items() if key != "content_sha256"
+    })
+    mutation_path.write_text(json.dumps(mutations))
+    with pytest.raises(VerificationError, match="MUTATION_RESULT_KEYS_MISMATCH"):
+        build_external_verifier_dry_run_manifest(tmp_path)
+
+    shutil.copy(
+        ROOT / "research/qgen/independent_verification_v1/verification_mutation_results.json",
+        mutation_path,
+    )
+    mutations = json.loads(mutation_path.read_text())
+    mutations["results"]["wrong_key_detected"] = False
+    mutations["content_sha256"] = canonical_hash({
+        key: value for key, value in mutations.items() if key != "content_sha256"
+    })
+    mutation_path.write_text(json.dumps(mutations))
+    with pytest.raises(VerificationError, match="MUTATION_DETECTION_FAILED"):
+        build_external_verifier_dry_run_manifest(tmp_path)

@@ -1,0 +1,477 @@
+{
+  "allowed_relations": [
+    "EQUIVALENT",
+    "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+    "REGISTRY_NARROWER_THAN_BENCHMARK",
+    "VARIANT_OF_SAME_DECISION",
+    "RELATED_BUT_DISTINCT",
+    "NEAR_DUPLICATE",
+    "DUPLICATE",
+    "UNRELATED",
+    "UNCERTAIN"
+  ],
+  "atomic_opportunity_contract": {
+    "broad_row_policy": "REQUIRES_DECOMPOSITION_UNTIL_ONE_DECISION_RULE_IS_EXPLICIT",
+    "compound_policy": "ONE_ROW_CANNOT_REQUIRE_TWO_INDEPENDENTLY_SCOREABLE_RESPONSES",
+    "containment_policy": "DIAGNOSTIC_UNTIL_BROADER_ENDPOINT_IS_ADJUDICATED_ATOMIC",
+    "content_sha256": "c250e20c3da4e109c06c856c573e0e0006ab959ffd26faeccd2c55ebf3237e9a",
+    "definition": "Given one clinically material state, the learner must produce one response whose correctness turns on one coherent reasoning target.",
+    "distinct_opportunity_contract": "A distinction is a new opportunity only when it materially changes the correct answer or action, principal learner decision, required clinical knowledge, clinical-stage decision, management or investigation pathway, recognized complication, legal or ethical duty, or decision-changing population context.",
+    "do_not_split_when": [
+      "ALTERNATE_EVIDENCE_PATH_TO_SAME_DECISION",
+      "SYNONYMOUS_ACTION_VERB",
+      "ITEM_FORM_OR_STEM_WRAPPER",
+      "DIFFICULTY_OR_DISTRACTOR_CHANGE",
+      "COSMETIC_DEMOGRAPHIC_VARIANT"
+    ],
+    "identity_dimensions": [
+      "clinical_topic_or_concept",
+      "response_class",
+      "learner_decision_or_intent",
+      "key_concept_or_action",
+      "clinical_stage_only_when_decision_changing",
+      "population_context_only_when_decision_changing",
+      "severity_only_when_decision_changing",
+      "material_decision_changing_state",
+      "MCC_physician_activity_and_objective_mapping"
+    ],
+    "item_variant_contract": "A distinction remains an item variant when it changes only patient identity, incidental demographics, wording, symptom order, non-load-bearing values, surface history, option order, or an equivalent presentation without changing the tested learner decision.",
+    "lineage_invariant": "PRESERVED_ROWS_INHERIT_PRIOR_EDGES_UNTIL_VERSIONED_READJUDICATION",
+    "monotonicity_invariant": "ADDING_REGISTRY_CANDIDATES_CANNOT_LOWER_BEST_RELATION_RANK",
+    "pairwise_relations": [
+      "EQUIVALENT",
+      "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+      "REGISTRY_NARROWER_THAN_BENCHMARK",
+      "VARIANT_OF_SAME_DECISION",
+      "RELATED_BUT_DISTINCT",
+      "NEAR_DUPLICATE",
+      "DUPLICATE",
+      "UNRELATED",
+      "UNCERTAIN"
+    ],
+    "precision_policy": "SAME_EQUIVALENCE_EDGE_GRAPH_AS_RECALL",
+    "question_seed_boundary": "Evidence-path, vignette-form, difficulty, distractor, and cosmetic presentation choices belong in the Question Seed or item variant layer, not opportunity identity.",
+    "relationship_taxonomy": [
+      "EQUIVALENT",
+      "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+      "REGISTRY_NARROWER_THAN_BENCHMARK",
+      "VARIANT_OF_SAME_DECISION",
+      "RELATED_BUT_DISTINCT",
+      "NEAR_DUPLICATE",
+      "DUPLICATE",
+      "UNRELATED",
+      "UNCERTAIN"
+    ],
+    "schema_version": "1.0",
+    "scope": "ATOMIC_MCCQE_QUESTION_OPPORTUNITY_CONTRACT_V1",
+    "split_when": [
+      "DIFFERENT_RESPONSE_CLASS",
+      "INDEPENDENTLY_SCOREABLE_DECISION",
+      "MATERIAL_CONTEXT_CHANGES_CORRECT_RESPONSE",
+      "SEQUENTIAL_DECISION_WITH_DISTINCT_OUTCOME"
+    ],
+    "strict_match_relation": "EQUIVALENT",
+    "topic_support_policy": "REPORT_SEPARATELY_NEVER_CALL_PRECISION"
+  },
+  "content_sha256": "ee632b84511dabe026fc3b0e789fa59ff523f752ef1cde588a914051c4fc2e25",
+  "direction_contract": "A_IS_BENCHMARK_OR_REFERENCE_SIDE_AND_B_IS_REGISTRY_CANDIDATE_SIDE",
+  "pairs": [
+    {
+      "curriculum_context": {
+        "discipline": "SURG",
+        "family_a": "BEST_NEXT_INVESTIGATION",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-U-10",
+        "study_unit_id_b": "SU-U-10"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "8"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Renal Mass and Renal Neoplasms",
+        "discipline": "SURG",
+        "key_concept_or_action": "Renal Mass and Renal Neoplasms — recognition",
+        "learner_decision": "Apply recognition reasoning for Renal Mass and Renal Neoplasms.",
+        "opportunity_family": "BEST_NEXT_INVESTIGATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the recognition decision for Renal Mass and Renal Neoplasms.",
+        "response_class": "INVESTIGATION",
+        "severity_context": "NA",
+        "study_unit": "Renal Mass and Renal Neoplasms",
+        "study_unit_id": "SU-U-10"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "8"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Renal Mass and Renal Neoplasms",
+        "discipline": "SURG",
+        "key_concept_or_action": "Renal Mass and Renal Neoplasms — a renal mass/neoplasm presentation",
+        "learner_decision": "Recognize a renal mass/neoplasm presentation.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Recognize a renal mass/neoplasm presentation.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Renal Mass and Renal Neoplasms",
+        "study_unit_id": "SU-U-10"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-1C15235E0D646665"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "SURG",
+        "family_a": "FOLLOW_UP",
+        "family_b": "FOLLOW_UP",
+        "study_unit_id_a": "SU-OP-56",
+        "study_unit_id_b": "SU-OP-56"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "109"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "FOLLOW_UP",
+        "clinical_topic": "Hyphema",
+        "discipline": "SURG",
+        "key_concept_or_action": "Hyphema — management",
+        "learner_decision": "Apply management reasoning for Hyphema.",
+        "opportunity_family": "FOLLOW_UP",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the management decision for Hyphema.",
+        "response_class": "FOLLOW_UP_PLAN",
+        "severity_context": "NA",
+        "study_unit": "Hyphema",
+        "study_unit_id": "SU-OP-56"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "109"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "FOLLOW_UP",
+        "clinical_topic": "Hyphema",
+        "discipline": "SURG",
+        "key_concept_or_action": "Hyphema — with activity restriction, upright positioning, and ophthalmology follow-up (avoiding NSAIDs/aspirin)",
+        "learner_decision": "manage with activity restriction, upright positioning, and ophthalmology follow-up (avoiding NSAIDs/aspirin).",
+        "opportunity_family": "FOLLOW_UP",
+        "population_context": "NA",
+        "primary_reasoning_target": "manage with activity restriction, upright positioning, and ophthalmology follow-up (avoiding NSAIDs/aspirin).",
+        "response_class": "FOLLOW_UP_PLAN",
+        "severity_context": "NA",
+        "study_unit": "Hyphema",
+        "study_unit_id": "SU-OP-56"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-7B374FCE31EB45DA"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "SURG",
+        "family_a": "COUNSELLING",
+        "family_b": "COUNSELLING",
+        "study_unit_id_a": "SU-OP-37",
+        "study_unit_id_b": "SU-OP-37"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "115-2"
+        ],
+        "MCC_physician_activity": "Communication",
+        "clinical_stage": "DETERIORATION_OR_COMPLICATION",
+        "clinical_topic": "Age-Related Macular Degeneration",
+        "discipline": "SURG",
+        "key_concept_or_action": "Age-Related Macular Degeneration — differential",
+        "learner_decision": "Apply differential reasoning for Age-Related Macular Degeneration.",
+        "opportunity_family": "COUNSELLING",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the differential decision for Age-Related Macular Degeneration.",
+        "response_class": "COMMUNICATION_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Age-Related Macular Degeneration",
+        "study_unit_id": "SU-OP-37"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "115-2"
+        ],
+        "MCC_physician_activity": "Communication",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Age-Related Macular Degeneration",
+        "discipline": "SURG",
+        "key_concept_or_action": "Age-Related Macular Degeneration — on Amsler-grid self-monitoring",
+        "learner_decision": "counsel on Amsler-grid self-monitoring.",
+        "opportunity_family": "COUNSELLING",
+        "population_context": "NA",
+        "primary_reasoning_target": "counsel on Amsler-grid self-monitoring.",
+        "response_class": "COMMUNICATION_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Age-Related Macular Degeneration",
+        "study_unit_id": "SU-OP-37"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-8F02731EA054FBD4"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "COMPLICATION_RECOGNITION",
+        "family_b": "INTERPRET_TEST_RESULT",
+        "study_unit_id_a": "SU-A-12",
+        "study_unit_id_b": "SU-A-12"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "19",
+          "27"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "DETERIORATION_OR_COMPLICATION",
+        "clinical_topic": "Oxygen Therapy and Mechanical Ventilation",
+        "discipline": "MED",
+        "key_concept_or_action": "Oxygen Therapy and Mechanical Ventilation — vent complications",
+        "learner_decision": "Apply vent complications reasoning for Oxygen Therapy and Mechanical Ventilation.",
+        "opportunity_family": "COMPLICATION_RECOGNITION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the vent complications decision for Oxygen Therapy and Mechanical Ventilation.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Oxygen Therapy and Mechanical Ventilation",
+        "study_unit_id": "SU-A-12"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "19",
+          "27"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Oxygen Therapy and Mechanical Ventilation",
+        "discipline": "MED",
+        "key_concept_or_action": "Oxygen Therapy and Mechanical Ventilation — abnormal ETCO2 trends against their common causes (Table 3)",
+        "learner_decision": "interpret abnormal ETCO2 trends against their common causes (Table 3).",
+        "opportunity_family": "INTERPRET_TEST_RESULT",
+        "population_context": "NA",
+        "primary_reasoning_target": "interpret abnormal ETCO2 trends against their common causes (Table 3).",
+        "response_class": "INTERPRETATION",
+        "severity_context": "NA",
+        "study_unit": "Oxygen Therapy and Mechanical Ventilation",
+        "study_unit_id": "SU-A-12"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-93DC8BEE7C951BB1"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "OBGYN",
+        "family_a": "EMERGENCY_STABILIZATION",
+        "family_b": "INITIAL_MANAGEMENT",
+        "study_unit_id_a": "SU-GY-29",
+        "study_unit_id_b": "SU-GY-29"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "112",
+          "2"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "EMERGENCY_PRESENTATION",
+        "clinical_topic": "Uterine (Endometrial) Cancer",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Uterine (Endometrial) Cancer — workup",
+        "learner_decision": "Apply workup reasoning for Uterine (Endometrial) Cancer.",
+        "opportunity_family": "EMERGENCY_STABILIZATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the workup decision for Uterine (Endometrial) Cancer.",
+        "response_class": "ACTION",
+        "severity_context": "NA",
+        "study_unit": "Uterine (Endometrial) Cancer",
+        "study_unit_id": "SU-GY-29"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "112",
+          "2"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Uterine (Endometrial) Cancer",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Uterine (Endometrial) Cancer — appropriate first-line investigation (endometrial biopsy/imaging)",
+        "learner_decision": "Initiate appropriate first-line investigation (endometrial biopsy/imaging).",
+        "opportunity_family": "INITIAL_MANAGEMENT",
+        "population_context": "NA",
+        "primary_reasoning_target": "Initiate appropriate first-line investigation (endometrial biopsy/imaging).",
+        "response_class": "ACTION",
+        "severity_context": "NA",
+        "study_unit": "Uterine (Endometrial) Cancer",
+        "study_unit_id": "SU-GY-29"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-9B75BDCB94E84FA9"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "SURG",
+        "family_a": "PREVENTION",
+        "family_b": "COUNSELLING",
+        "study_unit_id_a": "SU-OT-25",
+        "study_unit_id_b": "SU-OT-25"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "40"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "PRECLINICAL_OR_PREVENTIVE",
+        "clinical_topic": "Noise-Induced Sensorineural Hearing Loss",
+        "discipline": "SURG",
+        "key_concept_or_action": "Noise-Induced Sensorineural Hearing Loss — prevention",
+        "learner_decision": "Apply prevention reasoning for Noise-Induced Sensorineural Hearing Loss.",
+        "opportunity_family": "PREVENTION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the prevention decision for Noise-Induced Sensorineural Hearing Loss.",
+        "response_class": "PREVENTIVE_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Noise-Induced Sensorineural Hearing Loss",
+        "study_unit_id": "SU-OT-25"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "40"
+        ],
+        "MCC_physician_activity": "Communication",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Noise-Induced Sensorineural Hearing Loss",
+        "discipline": "SURG",
+        "key_concept_or_action": "Noise-Induced Sensorineural Hearing Loss — on hearing protection as primary prevention",
+        "learner_decision": "counsel on hearing protection as primary prevention.",
+        "opportunity_family": "COUNSELLING",
+        "population_context": "NA",
+        "primary_reasoning_target": "counsel on hearing protection as primary prevention.",
+        "response_class": "COMMUNICATION_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Noise-Induced Sensorineural Hearing Loss",
+        "study_unit_id": "SU-OT-25"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-9FD2B5D8E9C28140"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "OBGYN",
+        "family_a": "CAPACITY_CONSENT",
+        "family_b": "INITIAL_MANAGEMENT",
+        "study_unit_id_a": "SU-GY-11",
+        "study_unit_id_b": "SU-GY-11"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "121-1",
+          "81"
+        ],
+        "MCC_physician_activity": "Professional Behaviours",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Termination of Pregnancy",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Termination of Pregnancy — counselling and referral",
+        "learner_decision": "Apply counselling and referral reasoning for Termination of Pregnancy.",
+        "opportunity_family": "CAPACITY_CONSENT",
+        "population_context": "PREGNANCY_OR_POSTPARTUM",
+        "primary_reasoning_target": "Differentiate the counselling and referral decision for Termination of Pregnancy.",
+        "response_class": "ETHICAL_LEGAL_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Termination of Pregnancy",
+        "study_unit_id": "SU-GY-11"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "121-1",
+          "81"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Termination of Pregnancy",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Termination of Pregnancy — referral within the applicable gestational-age and access framework",
+        "learner_decision": "initiate referral within the applicable gestational-age and access framework.",
+        "opportunity_family": "INITIAL_MANAGEMENT",
+        "population_context": "PREGNANCY_OR_POSTPARTUM",
+        "primary_reasoning_target": "initiate referral within the applicable gestational-age and access framework.",
+        "response_class": "ACTION",
+        "severity_context": "NA",
+        "study_unit": "Termination of Pregnancy",
+        "study_unit_id": "SU-GY-11"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-F958FEC666052730"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "SURG",
+        "family_a": "SCREENING",
+        "family_b": "RED_FLAG_RECOGNITION",
+        "study_unit_id_a": "SU-OP-44",
+        "study_unit_id_b": "SU-OP-44"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "115-2",
+          "130"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "PRECLINICAL_OR_PREVENTIVE",
+        "clinical_topic": "Ocular Manifestations of Diabetes Mellitus (Diabetic Retinopathy)",
+        "discipline": "SURG",
+        "key_concept_or_action": "Ocular Manifestations of Diabetes Mellitus (Diabetic Retinopathy) — screening",
+        "learner_decision": "Apply screening reasoning for Ocular Manifestations of Diabetes Mellitus (Diabetic Retinopathy).",
+        "opportunity_family": "SCREENING",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the screening decision for Ocular Manifestations of Diabetes Mellitus (Diabetic Retinopathy).",
+        "response_class": "PREVENTIVE_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Ocular Manifestations of Diabetes Mellitus (Diabetic Retinopathy)",
+        "study_unit_id": "SU-OP-44"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "115-2",
+          "130"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "EMERGENCY_PRESENTATION",
+        "clinical_topic": "Ocular Manifestations of Diabetes Mellitus (Diabetic Retinopathy)",
+        "discipline": "SURG",
+        "key_concept_or_action": "Ocular Manifestations of Diabetes Mellitus (Diabetic Retinopathy) — proliferative retinopathy/macular edema as requiring urgent ophthalmology referral",
+        "learner_decision": "recognize proliferative retinopathy/macular edema as requiring urgent ophthalmology referral.",
+        "opportunity_family": "RED_FLAG_RECOGNITION",
+        "population_context": "NA",
+        "primary_reasoning_target": "recognize proliferative retinopathy/macular edema as requiring urgent ophthalmology referral.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Ocular Manifestations of Diabetes Mellitus (Diabetic Retinopathy)",
+        "study_unit_id": "SU-OP-44"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-FB21C56F8C586B18"
+    }
+  ],
+  "reviewer_blindness": "PRIVATE_MINING_SIGNALS_PROVENANCE_PRIOR_OUTCOMES_AND_MATCHER_OUTPUTS_WITHHELD",
+  "schema_version": "5.0",
+  "scope": "FRESH_V5_VALIDATION_SUPPLEMENT_BLINDED_REVIEW_INPUT",
+  "source_candidate_pool_sha256": "e330516cd6e1980851680f1dbe2a644481b96378dd718700be325d082e101c39",
+  "wave": 2
+}

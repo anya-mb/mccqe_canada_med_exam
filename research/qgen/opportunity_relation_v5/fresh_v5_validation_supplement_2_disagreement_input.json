@@ -1,0 +1,313 @@
+{
+  "allowed_relations": [
+    "EQUIVALENT",
+    "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+    "REGISTRY_NARROWER_THAN_BENCHMARK",
+    "VARIANT_OF_SAME_DECISION",
+    "RELATED_BUT_DISTINCT",
+    "NEAR_DUPLICATE",
+    "DUPLICATE",
+    "UNRELATED",
+    "UNCERTAIN"
+  ],
+  "atomic_opportunity_contract": {
+    "broad_row_policy": "REQUIRES_DECOMPOSITION_UNTIL_ONE_DECISION_RULE_IS_EXPLICIT",
+    "compound_policy": "ONE_ROW_CANNOT_REQUIRE_TWO_INDEPENDENTLY_SCOREABLE_RESPONSES",
+    "containment_policy": "DIAGNOSTIC_UNTIL_BROADER_ENDPOINT_IS_ADJUDICATED_ATOMIC",
+    "content_sha256": "c250e20c3da4e109c06c856c573e0e0006ab959ffd26faeccd2c55ebf3237e9a",
+    "definition": "Given one clinically material state, the learner must produce one response whose correctness turns on one coherent reasoning target.",
+    "distinct_opportunity_contract": "A distinction is a new opportunity only when it materially changes the correct answer or action, principal learner decision, required clinical knowledge, clinical-stage decision, management or investigation pathway, recognized complication, legal or ethical duty, or decision-changing population context.",
+    "do_not_split_when": [
+      "ALTERNATE_EVIDENCE_PATH_TO_SAME_DECISION",
+      "SYNONYMOUS_ACTION_VERB",
+      "ITEM_FORM_OR_STEM_WRAPPER",
+      "DIFFICULTY_OR_DISTRACTOR_CHANGE",
+      "COSMETIC_DEMOGRAPHIC_VARIANT"
+    ],
+    "identity_dimensions": [
+      "clinical_topic_or_concept",
+      "response_class",
+      "learner_decision_or_intent",
+      "key_concept_or_action",
+      "clinical_stage_only_when_decision_changing",
+      "population_context_only_when_decision_changing",
+      "severity_only_when_decision_changing",
+      "material_decision_changing_state",
+      "MCC_physician_activity_and_objective_mapping"
+    ],
+    "item_variant_contract": "A distinction remains an item variant when it changes only patient identity, incidental demographics, wording, symptom order, non-load-bearing values, surface history, option order, or an equivalent presentation without changing the tested learner decision.",
+    "lineage_invariant": "PRESERVED_ROWS_INHERIT_PRIOR_EDGES_UNTIL_VERSIONED_READJUDICATION",
+    "monotonicity_invariant": "ADDING_REGISTRY_CANDIDATES_CANNOT_LOWER_BEST_RELATION_RANK",
+    "pairwise_relations": [
+      "EQUIVALENT",
+      "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+      "REGISTRY_NARROWER_THAN_BENCHMARK",
+      "VARIANT_OF_SAME_DECISION",
+      "RELATED_BUT_DISTINCT",
+      "NEAR_DUPLICATE",
+      "DUPLICATE",
+      "UNRELATED",
+      "UNCERTAIN"
+    ],
+    "precision_policy": "SAME_EQUIVALENCE_EDGE_GRAPH_AS_RECALL",
+    "question_seed_boundary": "Evidence-path, vignette-form, difficulty, distractor, and cosmetic presentation choices belong in the Question Seed or item variant layer, not opportunity identity.",
+    "relationship_taxonomy": [
+      "EQUIVALENT",
+      "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+      "REGISTRY_NARROWER_THAN_BENCHMARK",
+      "VARIANT_OF_SAME_DECISION",
+      "RELATED_BUT_DISTINCT",
+      "NEAR_DUPLICATE",
+      "DUPLICATE",
+      "UNRELATED",
+      "UNCERTAIN"
+    ],
+    "schema_version": "1.0",
+    "scope": "ATOMIC_MCCQE_QUESTION_OPPORTUNITY_CONTRACT_V1",
+    "split_when": [
+      "DIFFERENT_RESPONSE_CLASS",
+      "INDEPENDENTLY_SCOREABLE_DECISION",
+      "MATERIAL_CONTEXT_CHANGES_CORRECT_RESPONSE",
+      "SEQUENTIAL_DECISION_WITH_DISTINCT_OUTCOME"
+    ],
+    "strict_match_relation": "EQUIVALENT",
+    "topic_support_policy": "REPORT_SEPARATELY_NEVER_CALL_PRECISION"
+  },
+  "content_sha256": "888a1d89b536628c46df10d42c6ef25cdfba688970c8e9a78931a595d69e5d0a",
+  "disagreement_count": 4,
+  "pairs": [
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "ADVERSE_EFFECT_RECOGNITION",
+        "family_b": "ADVERSE_EFFECT_RECOGNITION",
+        "study_unit_id_a": "SU-ER-33",
+        "study_unit_id_b": "SU-ER-33"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "38"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Dermatologic Emergencies (SJS/TEN, DRESS Syndrome)",
+        "discipline": "MED",
+        "key_concept_or_action": "Dermatologic Emergencies (SJS/TEN, DRESS Syndrome) — scar recognition",
+        "learner_decision": "Apply scar recognition reasoning for Dermatologic Emergencies (SJS/TEN, DRESS Syndrome).",
+        "opportunity_family": "ADVERSE_EFFECT_RECOGNITION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the scar recognition decision for Dermatologic Emergencies (SJS/TEN, DRESS Syndrome).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "SEVERE_OR_UNSTABLE",
+        "study_unit": "Dermatologic Emergencies (SJS/TEN, DRESS Syndrome)",
+        "study_unit_id": "SU-ER-33"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "38"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "DETERIORATION_OR_COMPLICATION",
+        "clinical_topic": "Dermatologic Emergencies (SJS/TEN, DRESS Syndrome)",
+        "discipline": "MED",
+        "key_concept_or_action": "Dermatologic Emergencies (SJS/TEN, DRESS Syndrome) — scar recognition",
+        "learner_decision": "Apply scar recognition reasoning for Dermatologic Emergencies (SJS/TEN, DRESS Syndrome).",
+        "opportunity_family": "ADVERSE_EFFECT_RECOGNITION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the scar recognition decision for Dermatologic Emergencies (SJS/TEN, DRESS Syndrome).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "SEVERE_OR_UNSTABLE",
+        "study_unit": "Dermatologic Emergencies (SJS/TEN, DRESS Syndrome)",
+        "study_unit_id": "SU-ER-33"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-07B4609FA15B9E9F",
+      "primary_verdict": {
+        "justification": "Scar recognition is identical, but initial-presentation versus complication staging creates an unresolved clinical-state conflict.",
+        "relation": "NEAR_DUPLICATE"
+      },
+      "secondary_verdict": {
+        "justification": "Both target identical scar recognition in dermatologic emergencies, while the complication-stage presentation supplies a distinct non-decision-changing wrapper.",
+        "relation": "VARIANT_OF_SAME_DECISION"
+      }
+    },
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-D-17",
+        "study_unit_id_b": "SU-D-17"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "38"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Pemphigus Vulgaris and Pemphigus Foliaceus",
+        "discipline": "MED",
+        "key_concept_or_action": "Pemphigus Vulgaris and Pemphigus Foliaceus — pv management",
+        "learner_decision": "Apply pv management reasoning for Pemphigus Vulgaris and Pemphigus Foliaceus.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the pv management decision for Pemphigus Vulgaris and Pemphigus Foliaceus.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Pemphigus Vulgaris and Pemphigus Foliaceus",
+        "study_unit_id": "SU-D-17"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "38"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Pemphigus Vulgaris and Pemphigus Foliaceus",
+        "discipline": "MED",
+        "key_concept_or_action": "Pemphigus Vulgaris and Pemphigus Foliaceus — pv diagnosis",
+        "learner_decision": "Apply pv diagnosis reasoning for Pemphigus Vulgaris and Pemphigus Foliaceus.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the pv diagnosis decision for Pemphigus Vulgaris and Pemphigus Foliaceus.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Pemphigus Vulgaris and Pemphigus Foliaceus",
+        "study_unit_id": "SU-D-17"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-1BF82C1BDC7859D4",
+      "primary_verdict": {
+        "justification": "Pemphigus management and diagnosis are distinct modalities, while the benchmark remains coded as diagnosis.",
+        "relation": "NEAR_DUPLICATE"
+      },
+      "secondary_verdict": {
+        "justification": "Managing pemphigus vulgaris and diagnosing it are independently scoreable sequential decisions.",
+        "relation": "RELATED_BUT_DISTINCT"
+      }
+    },
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-ID-17",
+        "study_unit_id_b": "SU-ID-17"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "113",
+          "36-2"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Syphilis",
+        "discipline": "MED",
+        "key_concept_or_action": "Syphilis — management",
+        "learner_decision": "Apply management reasoning for Syphilis.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the management decision for Syphilis.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Syphilis",
+        "study_unit_id": "SU-ID-17"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "113",
+          "36-2"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Syphilis",
+        "discipline": "MED",
+        "key_concept_or_action": "Syphilis — diagnosis",
+        "learner_decision": "Apply diagnosis reasoning for Syphilis.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the diagnosis decision for Syphilis.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Syphilis",
+        "study_unit_id": "SU-ID-17"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-CD80634299E5C536",
+      "primary_verdict": {
+        "justification": "Syphilis management and diagnosis are distinct modalities, while the benchmark retains diagnosis-family and diagnosis-response metadata.",
+        "relation": "NEAR_DUPLICATE"
+      },
+      "secondary_verdict": {
+        "justification": "Managing syphilis and diagnosing it are distinct sequential decisions despite identical diagnosis metadata.",
+        "relation": "RELATED_BUT_DISTINCT"
+      }
+    },
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-R-32",
+        "study_unit_id_b": "SU-R-32"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "19",
+          "98"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Sleep-Related Hypoventilation Syndromes",
+        "discipline": "MED",
+        "key_concept_or_action": "Sleep-Related Hypoventilation Syndromes — recognition",
+        "learner_decision": "Apply recognition reasoning for Sleep-Related Hypoventilation Syndromes.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the recognition decision for Sleep-Related Hypoventilation Syndromes.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "SEVERE_OR_UNSTABLE",
+        "study_unit": "Sleep-Related Hypoventilation Syndromes",
+        "study_unit_id": "SU-R-32"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "19",
+          "98"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Sleep-Related Hypoventilation Syndromes",
+        "discipline": "MED",
+        "key_concept_or_action": "Sleep-Related Hypoventilation Syndromes — assessment",
+        "learner_decision": "Apply assessment reasoning for Sleep-Related Hypoventilation Syndromes.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the assessment decision for Sleep-Related Hypoventilation Syndromes.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Sleep-Related Hypoventilation Syndromes",
+        "study_unit_id": "SU-R-32"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-D1309B1EBA137027",
+      "primary_verdict": {
+        "justification": "Recognition and assessment materially overlap, but the broader assessment wording leaves atomic scope unresolved.",
+        "relation": "NEAR_DUPLICATE"
+      },
+      "secondary_verdict": {
+        "justification": "Recognizing a sleep-related hypoventilation syndrome and performing its broader assessment are distinct clinical decisions, with different supplied severity contexts.",
+        "relation": "RELATED_BUT_DISTINCT"
+      }
+    }
+  ],
+  "primary_reviewer_id": "FRESH_V5_REVIEWER_A",
+  "schema_version": "5.0",
+  "scope": "FRESH_V5_VALIDATION_SUPPLEMENT_2_DISAGREEMENT_INPUT",
+  "secondary_reviewer_id": "FRESH_V5_REVIEWER_B",
+  "source_input_sha256": "1b7a174400c13e32ded0c6ae87b8ec6c5d20f40d71fa44d660ca7b99562bf7d3"
+}

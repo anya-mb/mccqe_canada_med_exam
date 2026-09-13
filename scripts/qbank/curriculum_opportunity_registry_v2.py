@@ -88,13 +88,29 @@ def verify_safe_resume(
         ).stdout.strip()
     except (OSError, subprocess.CalledProcessError) as exc:
         raise RegistryV2Error("cannot verify STARTING_HEAD") from exc
-    if head != EXPECTED_HEAD:
-        raise RegistryV2Error(f"STARTING_HEAD mismatch: expected {EXPECTED_HEAD}, actual {head}")
+    try:
+        ancestry = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", EXPECTED_HEAD, head],
+            cwd=root,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise RegistryV2Error("cannot verify historical starting-head ancestry") from exc
+    if ancestry.returncode != 0:
+        raise RegistryV2Error(
+            "CURRENT_HEAD_NOT_DESCENDANT_OF_HISTORICAL_STARTING_HEAD: "
+            f"historical {EXPECTED_HEAD}, current {head}"
+        )
 
     milestone = _load(root, "reports/curriculum_question_opportunity_registry_v1_milestone.json")
     result.update(
         {
-            "STARTING_HEAD": head,
+            "STARTING_HEAD": EXPECTED_HEAD,
+            "HISTORICAL_STARTING_HEAD": EXPECTED_HEAD,
+            "CURRENT_REPOSITORY_HEAD": head,
+            "HEAD_DESCENDS_FROM_HISTORICAL_BASELINE": True,
             "TOTAL_IN_SCOPE_STUDY_UNITS": milestone["TOTAL_IN_SCOPE_STUDY_UNITS"],
             "BASE_OPPORTUNITIES": milestone["BASE_OPPORTUNITIES"],
             "HISTORICAL_SAFETY": milestone["HISTORICAL_SAFETY_REGRESSION"],

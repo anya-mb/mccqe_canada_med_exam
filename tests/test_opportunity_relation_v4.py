@@ -137,6 +137,19 @@ def test_gold_v3_wave1_miner_surfaces_real_structural_strata_without_semantic_la
             assert row["opportunity_a"].get("opportunity_family") == row["opportunity_b"].get("opportunity_family")
 
 
+def test_later_gold_v3_wave_excludes_prior_semantic_pairs_even_when_wave_ids_differ():
+    first = mine_relation_gold_v3_candidates(ROOT, wave=1)
+    blocked_signature = first["pairs"][0]["unordered_semantic_signature"]
+    second = mine_relation_gold_v3_candidates(
+        ROOT,
+        wave=2,
+        prior_semantic_signatures={blocked_signature},
+    )
+    assert blocked_signature not in {
+        row["unordered_semantic_signature"] for row in second["pairs"]
+    }
+
+
 def test_gold_v3_review_packet_hides_mining_intent_and_freezes_contract():
     pool = mine_relation_gold_v3_candidates(ROOT, wave=1)
     packet = build_relation_gold_v3_review_packet(pool, ROOT)
@@ -286,9 +299,16 @@ def test_gold_v3_partition_is_disjoint_grouped_and_preserves_variant_heldout_sup
                 "discipline": ("MED", "PED", "OBGYN", "SURG", "PSY", "PHELO")[index % 6],
                 "family_a": f"F{index % 10}", "family_b": f"F{index % 10}",
                 "study_unit_id_a": f"SU-{index:03d}", "study_unit_id_b": f"SU-{index:03d}",
+                "endpoint_a_sha256": f"EA-{index:03d}", "endpoint_b_sha256": f"EB-{index:03d}",
             })
             index += 1
-    frozen = freeze_relation_gold_v3_partitions({"content_sha256": "b" * 64, "reviews": rows})
+    # These two rows must remain together through their shared cross-unit endpoint.
+    rows[0]["study_unit_id_b"] = rows[1]["study_unit_id_a"]
+    rows[0]["endpoint_b_sha256"] = rows[1]["endpoint_a_sha256"]
+    frozen = freeze_relation_gold_v3_partitions(
+        {"content_sha256": "b" * 64, "reviews": rows},
+        calibration_exposed_pair_ids={rows[0]["pair_id"]},
+    )
     assert sum(frozen["partition_counts"].values()) == len(rows)
     assert set(frozen["partition_counts"]) == {"CALIBRATION", "VALIDATION", "FINAL_HELDOUT"}
     assert abs(frozen["partition_counts"]["CALIBRATION"] - 50) <= 3
@@ -298,9 +318,20 @@ def test_gold_v3_partition_is_disjoint_grouped_and_preserves_variant_heldout_sup
     assert frozen["partition_relation_counts"]["FINAL_HELDOUT"]["VARIANT_OF_SAME_DECISION"] >= 4
     assert frozen["partition_relation_counts"]["FINAL_HELDOUT"]["EQUIVALENT"] >= 4
     assert frozen["heldout_support_gate"] == "PASS"
+    assert next(row for row in frozen["rows"] if row["pair_id"] == rows[0]["pair_id"])["partition"] == "CALIBRATION"
+    assert next(row for row in frozen["rows"] if row["pair_id"] == rows[1]["pair_id"])["partition"] == "CALIBRATION"
     assignment = {}
+    endpoint_assignment = {}
     for row in frozen["rows"]:
-        assert assignment.setdefault(row["study_unit_id_a"], row["partition"]) == row["partition"]
+        for key in ("study_unit_id_a", "study_unit_id_b"):
+            assert assignment.setdefault(row[key], row["partition"]) == row["partition"]
+        for key in ("endpoint_a_sha256", "endpoint_b_sha256"):
+            assert endpoint_assignment.setdefault(row[key], row["partition"]) == row["partition"]
+    assert frozen["cross_partition_study_unit_overlap"] == []
+    assert frozen["cross_partition_endpoint_overlap"] == []
+    assert all(set(frozen["partition_discipline_counts"][name]) == {
+        "MED", "PED", "OBGYN", "SURG", "PSY", "PHELO"
+    } for name in ("CALIBRATION", "VALIDATION", "FINAL_HELDOUT"))
 
 
 def test_matcher_prediction_packet_contains_frozen_endpoints_without_gold_labels():

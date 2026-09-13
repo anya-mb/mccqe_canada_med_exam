@@ -1,4 +1,5 @@
 from pathlib import Path
+import subprocess
 
 import pytest
 from jsonschema import Draft202012Validator
@@ -37,6 +38,9 @@ def test_safe_resume_verifies_canonical_v1_content_hashes_and_counts():
     report = verify_safe_resume(ROOT)
 
     assert report["STARTING_HEAD"] == "01eff40984bee76418c7fab82a1ded9fbfa2d9e5"
+    assert report["HISTORICAL_STARTING_HEAD"] == "01eff40984bee76418c7fab82a1ded9fbfa2d9e5"
+    assert report["CURRENT_REPOSITORY_HEAD"] == "b0cd30f36d307e2881d6b85d189dded8cde11518"
+    assert report["HEAD_DESCENDS_FROM_HISTORICAL_BASELINE"] is True
     assert report["CURRICULUM_SNAPSHOT_SHA256"] == "70c0875060e8aa5ae8563b70074fa365941b2eb7d4a2a32a2a6ed0fe776817a9"
     assert report["OPPORTUNITY_REGISTRY_V1_SHA256"] == "aa465f77c65ba21955e01c3ddf0f32de18022d6a76583bf1ed1da34e62a5e11e"
     assert report["QUESTION_BANK_ALLOCATION_PLAN_V1_SHA256"] == "73fbf8675c9221d98c5fe18edbce4edf7d45b5f451d61a6aeb6a511cd117c50b"
@@ -45,6 +49,22 @@ def test_safe_resume_verifies_canonical_v1_content_hashes_and_counts():
     assert report["BASE_OPPORTUNITIES"] == 1541
     assert report["HISTORICAL_SAFETY"] == "PASS"
     assert report["COPYRIGHT"] == "PASS"
+
+
+def test_safe_resume_fails_closed_when_current_head_is_not_a_descendant(monkeypatch):
+    current_head = "f" * 40
+
+    def fake_run(command, **kwargs):
+        if command == ["git", "rev-parse", "HEAD"]:
+            return subprocess.CompletedProcess(command, 0, stdout=current_head + "\n")
+        if command[:2] == ["git", "merge-base"]:
+            return subprocess.CompletedProcess(command, 1, stdout="", stderr="")
+        raise AssertionError(command)
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+
+    with pytest.raises(RegistryV2Error, match="CURRENT_HEAD_NOT_DESCENDANT_OF_HISTORICAL_STARTING_HEAD"):
+        verify_safe_resume(ROOT)
 
 
 def test_safe_resume_fails_closed_when_artifact_declares_wrong_hash(tmp_path):

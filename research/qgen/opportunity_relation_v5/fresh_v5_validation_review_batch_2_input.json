@@ -1,0 +1,1905 @@
+{
+  "allowed_relations": [
+    "EQUIVALENT",
+    "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+    "REGISTRY_NARROWER_THAN_BENCHMARK",
+    "VARIANT_OF_SAME_DECISION",
+    "RELATED_BUT_DISTINCT",
+    "NEAR_DUPLICATE",
+    "DUPLICATE",
+    "UNRELATED",
+    "UNCERTAIN"
+  ],
+  "atomic_opportunity_contract": {
+    "broad_row_policy": "REQUIRES_DECOMPOSITION_UNTIL_ONE_DECISION_RULE_IS_EXPLICIT",
+    "compound_policy": "ONE_ROW_CANNOT_REQUIRE_TWO_INDEPENDENTLY_SCOREABLE_RESPONSES",
+    "containment_policy": "DIAGNOSTIC_UNTIL_BROADER_ENDPOINT_IS_ADJUDICATED_ATOMIC",
+    "content_sha256": "c250e20c3da4e109c06c856c573e0e0006ab959ffd26faeccd2c55ebf3237e9a",
+    "definition": "Given one clinically material state, the learner must produce one response whose correctness turns on one coherent reasoning target.",
+    "distinct_opportunity_contract": "A distinction is a new opportunity only when it materially changes the correct answer or action, principal learner decision, required clinical knowledge, clinical-stage decision, management or investigation pathway, recognized complication, legal or ethical duty, or decision-changing population context.",
+    "do_not_split_when": [
+      "ALTERNATE_EVIDENCE_PATH_TO_SAME_DECISION",
+      "SYNONYMOUS_ACTION_VERB",
+      "ITEM_FORM_OR_STEM_WRAPPER",
+      "DIFFICULTY_OR_DISTRACTOR_CHANGE",
+      "COSMETIC_DEMOGRAPHIC_VARIANT"
+    ],
+    "identity_dimensions": [
+      "clinical_topic_or_concept",
+      "response_class",
+      "learner_decision_or_intent",
+      "key_concept_or_action",
+      "clinical_stage_only_when_decision_changing",
+      "population_context_only_when_decision_changing",
+      "severity_only_when_decision_changing",
+      "material_decision_changing_state",
+      "MCC_physician_activity_and_objective_mapping"
+    ],
+    "item_variant_contract": "A distinction remains an item variant when it changes only patient identity, incidental demographics, wording, symptom order, non-load-bearing values, surface history, option order, or an equivalent presentation without changing the tested learner decision.",
+    "lineage_invariant": "PRESERVED_ROWS_INHERIT_PRIOR_EDGES_UNTIL_VERSIONED_READJUDICATION",
+    "monotonicity_invariant": "ADDING_REGISTRY_CANDIDATES_CANNOT_LOWER_BEST_RELATION_RANK",
+    "pairwise_relations": [
+      "EQUIVALENT",
+      "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+      "REGISTRY_NARROWER_THAN_BENCHMARK",
+      "VARIANT_OF_SAME_DECISION",
+      "RELATED_BUT_DISTINCT",
+      "NEAR_DUPLICATE",
+      "DUPLICATE",
+      "UNRELATED",
+      "UNCERTAIN"
+    ],
+    "precision_policy": "SAME_EQUIVALENCE_EDGE_GRAPH_AS_RECALL",
+    "question_seed_boundary": "Evidence-path, vignette-form, difficulty, distractor, and cosmetic presentation choices belong in the Question Seed or item variant layer, not opportunity identity.",
+    "relationship_taxonomy": [
+      "EQUIVALENT",
+      "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+      "REGISTRY_NARROWER_THAN_BENCHMARK",
+      "VARIANT_OF_SAME_DECISION",
+      "RELATED_BUT_DISTINCT",
+      "NEAR_DUPLICATE",
+      "DUPLICATE",
+      "UNRELATED",
+      "UNCERTAIN"
+    ],
+    "schema_version": "1.0",
+    "scope": "ATOMIC_MCCQE_QUESTION_OPPORTUNITY_CONTRACT_V1",
+    "split_when": [
+      "DIFFERENT_RESPONSE_CLASS",
+      "INDEPENDENTLY_SCOREABLE_DECISION",
+      "MATERIAL_CONTEXT_CHANGES_CORRECT_RESPONSE",
+      "SEQUENTIAL_DECISION_WITH_DISTINCT_OUTCOME"
+    ],
+    "strict_match_relation": "EQUIVALENT",
+    "topic_support_policy": "REPORT_SEPARATELY_NEVER_CALL_PRECISION"
+  },
+  "content_sha256": "0fb2c25454f18b7d88ba3c4a8cfbbbe8ebdb7b5fe585d777f2eae2966671c404",
+  "direction_contract": "A_IS_BENCHMARK_OR_REFERENCE_SIDE_AND_B_IS_REGISTRY_CANDIDATE_SIDE",
+  "pairs": [
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "BEST_NEXT_INVESTIGATION",
+        "family_b": "BEST_NEXT_INVESTIGATION",
+        "study_unit_id_a": "SU-G-07",
+        "study_unit_id_b": "SU-G-07"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "14",
+          "26"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Esophageal Motor Disorders",
+        "discipline": "MED",
+        "key_concept_or_action": "Esophageal Motor Disorders — motor disorder recognition",
+        "learner_decision": "Apply motor disorder recognition reasoning for Esophageal Motor Disorders.",
+        "opportunity_family": "BEST_NEXT_INVESTIGATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the motor disorder recognition decision for Esophageal Motor Disorders.",
+        "response_class": "INVESTIGATION",
+        "severity_context": "NA",
+        "study_unit": "Esophageal Motor Disorders",
+        "study_unit_id": "SU-G-07"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "14",
+          "26"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Esophageal Motor Disorders",
+        "discipline": "MED",
+        "key_concept_or_action": "Esophageal Motor Disorders — appropriate initial investigation (e.g., manometry, barium swallow)",
+        "learner_decision": "select appropriate initial investigation (e.g., manometry, barium swallow).",
+        "opportunity_family": "BEST_NEXT_INVESTIGATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "select appropriate initial investigation (e.g., manometry, barium swallow).",
+        "response_class": "INVESTIGATION",
+        "severity_context": "NA",
+        "study_unit": "Esophageal Motor Disorders",
+        "study_unit_id": "SU-G-07"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-3F0DD163C2DA0D9B"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "PSY",
+        "family_a": "SCREENING",
+        "family_b": "SCREENING",
+        "study_unit_id_a": "SU-PS-46",
+        "study_unit_id_b": "SU-PS-46"
+      },
+      "opportunity_a": {
+        "clinical_stage": "SCREENING",
+        "discipline": "PSY",
+        "opportunity_family": "SCREENING",
+        "population_context": "PATIENT_WITH_SEXUAL_DYSFUNCTION",
+        "primary_reasoning_target": "Reason from vignette evidence to identify medical contributors.",
+        "principal_decision": "Identify medical contributors.",
+        "response_class": "PREVENTIVE_ACTION",
+        "study_unit_id": "SU-PS-46"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "94"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "PRECLINICAL_OR_PREVENTIVE",
+        "clinical_topic": "Sexual Dysfunction",
+        "discipline": "PSY",
+        "key_concept_or_action": "Sexual Dysfunction — for contributing medical, psychiatric, and medication (e.g., SSRI) causes",
+        "learner_decision": "screen for contributing medical, psychiatric, and medication (e.g., SSRI) causes.",
+        "opportunity_family": "SCREENING",
+        "population_context": "NA",
+        "primary_reasoning_target": "screen for contributing medical, psychiatric, and medication (e.g., SSRI) causes.",
+        "response_class": "PREVENTIVE_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Sexual Dysfunction",
+        "study_unit_id": "SU-PS-46"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-409961AEF9501A18"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "PSY",
+        "family_a": "EMERGENCY_STABILIZATION",
+        "family_b": "RED_FLAG_RECOGNITION",
+        "study_unit_id_a": "SU-PS-22",
+        "study_unit_id_b": "SU-PS-22"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "128"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "EMERGENCY_PRESENTATION",
+        "clinical_topic": "Post-Traumatic Stress Disorder",
+        "discipline": "PSY",
+        "key_concept_or_action": "Post-Traumatic Stress Disorder — safety",
+        "learner_decision": "Apply safety reasoning for Post-Traumatic Stress Disorder.",
+        "opportunity_family": "EMERGENCY_STABILIZATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the safety decision for Post-Traumatic Stress Disorder.",
+        "response_class": "ACTION",
+        "severity_context": "NA",
+        "study_unit": "Post-Traumatic Stress Disorder",
+        "study_unit_id": "SU-PS-22"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "128"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "EMERGENCY_PRESENTATION",
+        "clinical_topic": "Post-Traumatic Stress Disorder",
+        "discipline": "PSY",
+        "key_concept_or_action": "Post-Traumatic Stress Disorder — need for urgent care",
+        "learner_decision": "identify need for urgent care.",
+        "opportunity_family": "RED_FLAG_RECOGNITION",
+        "population_context": "NA",
+        "primary_reasoning_target": "identify need for urgent care.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Post-Traumatic Stress Disorder",
+        "study_unit_id": "SU-PS-22"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-40F66A0DA1298911"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "OBGYN",
+        "family_a": "COUNSELLING",
+        "family_b": "COUNSELLING",
+        "study_unit_id_a": "SU-GY-12",
+        "study_unit_id_b": "SU-GY-12"
+      },
+      "opportunity_a": {
+        "clinical_stage": "COUNSELLING",
+        "discipline": "OBGYN",
+        "opportunity_family": "COUNSELLING",
+        "population_context": "PATIENT_WITH_FIRST_TRIMESTER_BLEEDING",
+        "primary_reasoning_target": "Reason from vignette evidence to provide grief counselling.",
+        "principal_decision": "Provide grief counselling.",
+        "response_class": "COMMUNICATION_ACTION",
+        "study_unit_id": "SU-GY-12"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "81"
+        ],
+        "MCC_physician_activity": "Communication",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Early Pregnancy Loss and First-Trimester Bleeding",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Early Pregnancy Loss and First-Trimester Bleeding — management",
+        "learner_decision": "Apply management reasoning for Early Pregnancy Loss and First-Trimester Bleeding.",
+        "opportunity_family": "COUNSELLING",
+        "population_context": "PREGNANCY_OR_POSTPARTUM",
+        "primary_reasoning_target": "Differentiate the management decision for Early Pregnancy Loss and First-Trimester Bleeding.",
+        "response_class": "COMMUNICATION_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Early Pregnancy Loss and First-Trimester Bleeding",
+        "study_unit_id": "SU-GY-12"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-440778520AC35279"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "DIFFERENTIAL_DIAGNOSIS",
+        "family_b": "DIFFERENTIAL_DIAGNOSIS",
+        "study_unit_id_a": "SU-C-04",
+        "study_unit_id_b": "SU-C-04"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "106"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Syncope and Loss of Consciousness (Cardiac Differential)",
+        "discipline": "MED",
+        "key_concept_or_action": "Syncope and Loss of Consciousness (Cardiac Differential) — investigation",
+        "learner_decision": "Apply investigation reasoning for Syncope and Loss of Consciousness (Cardiac Differential).",
+        "opportunity_family": "DIFFERENTIAL_DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the investigation decision for Syncope and Loss of Consciousness (Cardiac Differential).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Syncope and Loss of Consciousness (Cardiac Differential)",
+        "study_unit_id": "SU-C-04"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "106"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Syncope and Loss of Consciousness (Cardiac Differential)",
+        "discipline": "MED",
+        "key_concept_or_action": "Syncope and Loss of Consciousness (Cardiac Differential) — recognition",
+        "learner_decision": "Apply recognition reasoning for Syncope and Loss of Consciousness (Cardiac Differential).",
+        "opportunity_family": "DIFFERENTIAL_DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the recognition decision for Syncope and Loss of Consciousness (Cardiac Differential).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Syncope and Loss of Consciousness (Cardiac Differential)",
+        "study_unit_id": "SU-C-04"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-4461CC027711F74B"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "ADVERSE_EFFECT_RECOGNITION",
+        "family_b": "ADVERSE_EFFECT_RECOGNITION",
+        "study_unit_id_a": "SU-CP-12",
+        "study_unit_id_b": "SU-CP-12"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "125"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Therapeutic Drug Monitoring",
+        "discipline": "MED",
+        "key_concept_or_action": "Therapeutic Drug Monitoring — tdm indications",
+        "learner_decision": "Apply tdm indications reasoning for Therapeutic Drug Monitoring.",
+        "opportunity_family": "ADVERSE_EFFECT_RECOGNITION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the tdm indications decision for Therapeutic Drug Monitoring.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Therapeutic Drug Monitoring",
+        "study_unit_id": "SU-CP-12"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "125"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "DETERIORATION_OR_COMPLICATION",
+        "clinical_topic": "Therapeutic Drug Monitoring",
+        "discipline": "MED",
+        "key_concept_or_action": "Therapeutic Drug Monitoring — which clinical scenarios warrant therapeutic drug monitoring (low therapeutic index, unpredictable dose-response, high consequence of toxicity/failure, wide interpatient PK variability)",
+        "learner_decision": "Recognize which clinical scenarios warrant therapeutic drug monitoring (low therapeutic index, unpredictable dose-response, high consequence of toxicity/failure, wide interpatient PK variability).",
+        "opportunity_family": "ADVERSE_EFFECT_RECOGNITION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Recognize which clinical scenarios warrant therapeutic drug monitoring (low therapeutic index, unpredictable dose-response, high consequence of toxicity/failure, wide interpatient PK variability).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Therapeutic Drug Monitoring",
+        "study_unit_id": "SU-CP-12"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-451CA50031AD9885"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "PHELO",
+        "family_a": "SYSTEM_ORGANIZATION",
+        "family_b": "SYSTEM_ORGANIZATION",
+        "study_unit_id_a": "SU-ELOM-02",
+        "study_unit_id_b": "SU-ELOM-02"
+      },
+      "opportunity_a": {
+        "clinical_stage": "SYSTEM_NAVIGATION",
+        "discipline": "PHELO",
+        "opportunity_family": "SYSTEM_ORGANIZATION",
+        "population_context": "PATIENT_NAVIGATING_CANADIAN_HEALTH_CARE",
+        "primary_reasoning_target": "Reason from vignette evidence to distinguish public financing from care delivery.",
+        "principal_decision": "Distinguish public financing from care delivery.",
+        "response_class": "SYSTEM_ACTION",
+        "study_unit_id": "SU-ELOM-02"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "78-1"
+        ],
+        "MCC_physician_activity": "Professional Behaviours",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Canadian Healthcare System: Structure, Funding, and Delivery",
+        "discipline": "PHELO",
+        "key_concept_or_action": "Canadian Healthcare System: Structure, Funding, and Delivery — system navigation",
+        "learner_decision": "Apply system navigation reasoning for Canadian Healthcare System: Structure, Funding, and Delivery.",
+        "opportunity_family": "SYSTEM_ORGANIZATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the system navigation decision for Canadian Healthcare System: Structure, Funding, and Delivery.",
+        "response_class": "SYSTEM_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Canadian Healthcare System: Structure, Funding, and Delivery",
+        "study_unit_id": "SU-ELOM-02"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-45F9CEC2EAE43216"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "PSY",
+        "family_a": "SCREENING",
+        "family_b": "SCREENING",
+        "study_unit_id_a": "SU-PS-26",
+        "study_unit_id_b": "SU-PS-26"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "58-3"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "PRECLINICAL_OR_PREVENTIVE",
+        "clinical_topic": "Major or Mild Neurocognitive Disorder (Dementia)",
+        "discipline": "PSY",
+        "key_concept_or_action": "Major or Mild Neurocognitive Disorder (Dementia) — reversible causes",
+        "learner_decision": "Apply reversible causes reasoning for Major or Mild Neurocognitive Disorder (Dementia).",
+        "opportunity_family": "SCREENING",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the reversible causes decision for Major or Mild Neurocognitive Disorder (Dementia).",
+        "response_class": "PREVENTIVE_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Major or Mild Neurocognitive Disorder (Dementia)",
+        "study_unit_id": "SU-PS-26"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "58-3"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "PRECLINICAL_OR_PREVENTIVE",
+        "clinical_topic": "Major or Mild Neurocognitive Disorder (Dementia)",
+        "discipline": "PSY",
+        "key_concept_or_action": "Major or Mild Neurocognitive Disorder (Dementia) — reversible causes",
+        "learner_decision": "Apply reversible causes reasoning for Major or Mild Neurocognitive Disorder (Dementia).",
+        "opportunity_family": "SCREENING",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the reversible causes decision for Major or Mild Neurocognitive Disorder (Dementia).",
+        "response_class": "PREVENTIVE_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Major or Mild Neurocognitive Disorder (Dementia)",
+        "study_unit_id": "SU-PS-26"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-470407867DBB96D0"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "SURG",
+        "family_a": "EMERGENCY_STABILIZATION",
+        "family_b": "DIFFERENTIAL_DIAGNOSIS",
+        "study_unit_id_a": "SU-OP-20",
+        "study_unit_id_b": "SU-OP-20"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "30"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "EMERGENCY_PRESENTATION",
+        "clinical_topic": "Conjunctivitis",
+        "discipline": "SURG",
+        "key_concept_or_action": "Conjunctivitis — differential",
+        "learner_decision": "Apply differential reasoning for Conjunctivitis.",
+        "opportunity_family": "EMERGENCY_STABILIZATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the differential decision for Conjunctivitis.",
+        "response_class": "ACTION",
+        "severity_context": "SEVERE_OR_UNSTABLE",
+        "study_unit": "Conjunctivitis",
+        "study_unit_id": "SU-OP-20"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "30"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "EMERGENCY_PRESENTATION",
+        "clinical_topic": "Conjunctivitis",
+        "discipline": "SURG",
+        "key_concept_or_action": "Conjunctivitis — differential",
+        "learner_decision": "Apply differential reasoning for Conjunctivitis.",
+        "opportunity_family": "DIFFERENTIAL_DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the differential decision for Conjunctivitis.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "SEVERE_OR_UNSTABLE",
+        "study_unit": "Conjunctivitis",
+        "study_unit_id": "SU-OP-20"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-4B5094ED074F2CA5"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "PSY",
+        "family_a": "RED_FLAG_RECOGNITION",
+        "family_b": "RED_FLAG_RECOGNITION",
+        "study_unit_id_a": "SU-PS-04",
+        "study_unit_id_b": "SU-PS-04"
+      },
+      "opportunity_a": {
+        "clinical_stage": "TRIAGE",
+        "discipline": "PSY",
+        "opportunity_family": "RED_FLAG_RECOGNITION",
+        "population_context": "PATIENT_UNDERGOING_SUICIDE_RISK_ASSESSMENT",
+        "primary_reasoning_target": "Reason from vignette evidence to distinguish passive from active ideation.",
+        "principal_decision": "Distinguish passive from active ideation.",
+        "response_class": "DIAGNOSIS",
+        "study_unit_id": "SU-PS-04"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "59-1"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "EMERGENCY_PRESENTATION",
+        "clinical_topic": "Suicide Risk Assessment and Management",
+        "discipline": "PSY",
+        "key_concept_or_action": "Suicide Risk Assessment and Management — when urgent intervention is required",
+        "learner_decision": "identify when urgent intervention is required.",
+        "opportunity_family": "RED_FLAG_RECOGNITION",
+        "population_context": "NA",
+        "primary_reasoning_target": "identify when urgent intervention is required.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Suicide Risk Assessment and Management",
+        "study_unit_id": "SU-PS-04"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-4DBF47951573EEB4"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-RH-08",
+        "study_unit_id_b": "SU-RH-08"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "50-2"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Rheumatoid arthritis",
+        "discipline": "MED",
+        "key_concept_or_action": "Rheumatoid arthritis — recognize",
+        "learner_decision": "Apply recognize reasoning for Rheumatoid arthritis.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the recognize decision for Rheumatoid arthritis.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Rheumatoid arthritis",
+        "study_unit_id": "SU-RH-08"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "50-2"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Rheumatoid arthritis",
+        "discipline": "MED",
+        "key_concept_or_action": "Rheumatoid arthritis — manage",
+        "learner_decision": "Apply manage reasoning for Rheumatoid arthritis.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the manage decision for Rheumatoid arthritis.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Rheumatoid arthritis",
+        "study_unit_id": "SU-RH-08"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-4E5214F3BF23A927"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "SURG",
+        "family_a": "INITIAL_MANAGEMENT",
+        "family_b": "INITIAL_MANAGEMENT",
+        "study_unit_id_a": "SU-U-08",
+        "study_unit_id_b": "SU-GS-10"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "110-1"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Urologic Urinary Infection and Inflammation",
+        "discipline": "SURG",
+        "key_concept_or_action": "Urologic Urinary Infection and Inflammation — initial management/referral",
+        "learner_decision": "arrange initial management/referral.",
+        "opportunity_family": "INITIAL_MANAGEMENT",
+        "population_context": "NA",
+        "primary_reasoning_target": "arrange initial management/referral.",
+        "response_class": "ACTION",
+        "severity_context": "SEVERE_OR_UNSTABLE",
+        "study_unit": "Urologic Urinary Infection and Inflammation",
+        "study_unit_id": "SU-U-08"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "14",
+          "27",
+          "7"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Postoperative Respiratory Complications (Dyspnea, Atelectasis, Pneumonia, Pulmonary Embolism)",
+        "discipline": "SURG",
+        "key_concept_or_action": "Postoperative Respiratory Complications (Dyspnea, Atelectasis, Pneumonia, Pulmonary Embolism) — management of postoperative dyspnea, atelectasis, pneumonia, and pulmonary embolism",
+        "learner_decision": "initiate management of postoperative dyspnea, atelectasis, pneumonia, and pulmonary embolism.",
+        "opportunity_family": "INITIAL_MANAGEMENT",
+        "population_context": "NA",
+        "primary_reasoning_target": "initiate management of postoperative dyspnea, atelectasis, pneumonia, and pulmonary embolism.",
+        "response_class": "ACTION",
+        "severity_context": "NA",
+        "study_unit": "Postoperative Respiratory Complications (Dyspnea, Atelectasis, Pneumonia, Pulmonary Embolism)",
+        "study_unit_id": "SU-GS-10"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-4E7FEAB4423DD8B7"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "PSY",
+        "family_a": "INTERPRET_TEST_RESULT",
+        "family_b": "DIFFERENTIAL_DIAGNOSIS",
+        "study_unit_id_a": "SU-PS-04",
+        "study_unit_id_b": "SU-PS-04"
+      },
+      "opportunity_a": {
+        "clinical_stage": "INVESTIGATION",
+        "discipline": "PSY",
+        "opportunity_family": "INTERPRET_TEST_RESULT",
+        "population_context": "PATIENT_UNDERGOING_SUICIDE_RISK_ASSESSMENT",
+        "primary_reasoning_target": "Reason from vignette evidence to integrate factors into a clinical risk formulation.",
+        "principal_decision": "Integrate factors into a clinical risk formulation.",
+        "response_class": "INTERPRETATION",
+        "study_unit_id": "SU-PS-04"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "59-1"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Suicide Risk Assessment and Management",
+        "discipline": "PSY",
+        "key_concept_or_action": "Suicide Risk Assessment and Management — risk stratification",
+        "learner_decision": "Apply risk stratification reasoning for Suicide Risk Assessment and Management.",
+        "opportunity_family": "DIFFERENTIAL_DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the risk stratification decision for Suicide Risk Assessment and Management.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Suicide Risk Assessment and Management",
+        "study_unit_id": "SU-PS-04"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-53F9D5C155BBB1EE"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "PHELO",
+        "family_a": "EPIDEMIOLOGY_EBM",
+        "family_b": "EPIDEMIOLOGY_EBM",
+        "study_unit_id_a": "SU-PH-23",
+        "study_unit_id_b": "SU-PH-23"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "78-2"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Critical Appraisal and Levels of Evidence",
+        "discipline": "PHELO",
+        "key_concept_or_action": "Critical Appraisal and Levels of Evidence — critical appraisal",
+        "learner_decision": "Apply critical appraisal reasoning for Critical Appraisal and Levels of Evidence.",
+        "opportunity_family": "EPIDEMIOLOGY_EBM",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the critical appraisal decision for Critical Appraisal and Levels of Evidence.",
+        "response_class": "DATA_INTERPRETATION",
+        "severity_context": "NA",
+        "study_unit": "Critical Appraisal and Levels of Evidence",
+        "study_unit_id": "SU-PH-23"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "78-2"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Critical Appraisal and Levels of Evidence",
+        "discipline": "PHELO",
+        "key_concept_or_action": "Critical Appraisal and Levels of Evidence — levels of evidence",
+        "learner_decision": "Apply levels of evidence reasoning for Critical Appraisal and Levels of Evidence.",
+        "opportunity_family": "EPIDEMIOLOGY_EBM",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the levels of evidence decision for Critical Appraisal and Levels of Evidence.",
+        "response_class": "DATA_INTERPRETATION",
+        "severity_context": "NA",
+        "study_unit": "Critical Appraisal and Levels of Evidence",
+        "study_unit_id": "SU-PH-23"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-54D638857A3C983D"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "PHELO",
+        "family_a": "PROFESSIONALISM",
+        "family_b": "ETHICAL_LEGAL_ACTION",
+        "study_unit_id_a": "SU-ELOM-03",
+        "study_unit_id_b": "SU-ELOM-03"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "121-5"
+        ],
+        "MCC_physician_activity": "Professional Behaviours",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Legal Foundation of Canadian Healthcare",
+        "discipline": "PHELO",
+        "key_concept_or_action": "Legal Foundation of Canadian Healthcare — legal professional action",
+        "learner_decision": "Apply legal professional action reasoning for Legal Foundation of Canadian Healthcare.",
+        "opportunity_family": "PROFESSIONALISM",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the legal professional action decision for Legal Foundation of Canadian Healthcare.",
+        "response_class": "ETHICAL_LEGAL_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Legal Foundation of Canadian Healthcare",
+        "study_unit_id": "SU-ELOM-03"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "121-5"
+        ],
+        "MCC_physician_activity": "Professional Behaviours",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Legal Foundation of Canadian Healthcare",
+        "discipline": "PHELO",
+        "key_concept_or_action": "Legal Foundation of Canadian Healthcare — legal professional action",
+        "learner_decision": "Apply legal professional action reasoning for Legal Foundation of Canadian Healthcare.",
+        "opportunity_family": "ETHICAL_LEGAL_ACTION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the legal professional action decision for Legal Foundation of Canadian Healthcare.",
+        "response_class": "ETHICAL_LEGAL_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Legal Foundation of Canadian Healthcare",
+        "study_unit_id": "SU-ELOM-03"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-573696D5A435D403"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "FOLLOW_UP",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-MI-04",
+        "study_unit_id_b": "SU-MI-04"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "27"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "FOLLOW_UP",
+        "clinical_topic": "Recognition of Airspace and Parenchymal Lung Abnormalities (Atelectasis, Consolidation/Pneumonia, Pulmonary Nodule)",
+        "discipline": "MED",
+        "key_concept_or_action": "Recognition of Airspace and Parenchymal Lung Abnormalities (Atelectasis, Consolidation/Pneumonia, Pulmonary Nodule) — management",
+        "learner_decision": "Apply management reasoning for Recognition of Airspace and Parenchymal Lung Abnormalities (Atelectasis, Consolidation/Pneumonia, Pulmonary Nodule).",
+        "opportunity_family": "FOLLOW_UP",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the management decision for Recognition of Airspace and Parenchymal Lung Abnormalities (Atelectasis, Consolidation/Pneumonia, Pulmonary Nodule).",
+        "response_class": "FOLLOW_UP_PLAN",
+        "severity_context": "NA",
+        "study_unit": "Recognition of Airspace and Parenchymal Lung Abnormalities (Atelectasis, Consolidation/Pneumonia, Pulmonary Nodule)",
+        "study_unit_id": "SU-MI-04"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "27"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Recognition of Airspace and Parenchymal Lung Abnormalities (Atelectasis, Consolidation/Pneumonia, Pulmonary Nodule)",
+        "discipline": "MED",
+        "key_concept_or_action": "Recognition of Airspace and Parenchymal Lung Abnormalities (Atelectasis, Consolidation/Pneumonia, Pulmonary Nodule) — CT",
+        "learner_decision": "Determine CT for when a solitary pulmonary nodule requires further imaging.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Determine CT for when a solitary pulmonary nodule requires further imaging.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Recognition of Airspace and Parenchymal Lung Abnormalities (Atelectasis, Consolidation/Pneumonia, Pulmonary Nodule)",
+        "study_unit_id": "SU-MI-04"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-5867110FE83DCC14"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "PSY",
+        "family_a": "INITIAL_MANAGEMENT",
+        "family_b": "SCREENING",
+        "study_unit_id_a": "SU-PS-04",
+        "study_unit_id_b": "SU-PS-04"
+      },
+      "opportunity_a": {
+        "clinical_stage": "INITIAL_MANAGEMENT",
+        "discipline": "PSY",
+        "opportunity_family": "INITIAL_MANAGEMENT",
+        "population_context": "PATIENT_UNDERGOING_SUICIDE_RISK_ASSESSMENT",
+        "primary_reasoning_target": "Reason from vignette evidence to construct an outpatient safety plan when discharge is safe.",
+        "principal_decision": "Construct an outpatient safety plan when discharge is safe.",
+        "response_class": "ACTION",
+        "study_unit_id": "SU-PS-04"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "59-1"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "PRECLINICAL_OR_PREVENTIVE",
+        "clinical_topic": "Suicide Risk Assessment and Management",
+        "discipline": "PSY",
+        "key_concept_or_action": "Suicide Risk Assessment and Management — risk screening",
+        "learner_decision": "Apply risk screening reasoning for Suicide Risk Assessment and Management.",
+        "opportunity_family": "SCREENING",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the risk screening decision for Suicide Risk Assessment and Management.",
+        "response_class": "PREVENTIVE_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Suicide Risk Assessment and Management",
+        "study_unit_id": "SU-PS-04"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-58C1C1E46308D44A"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "PHELO",
+        "family_a": "CONFIDENTIALITY",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-ELOM-19",
+        "study_unit_id_b": "SU-ELOM-19"
+      },
+      "opportunity_a": {
+        "clinical_stage": "PRIVACY",
+        "discipline": "PHELO",
+        "opportunity_family": "CONFIDENTIALITY",
+        "population_context": "PATIENT_OR_CLINIC_USING_DIGITAL_HEALTH",
+        "primary_reasoning_target": "Reason from vignette evidence to protect digital health-information privacy and security.",
+        "principal_decision": "Protect the security of digital health information.",
+        "response_class": "ETHICAL_LEGAL_ACTION",
+        "study_unit_id": "SU-ELOM-19"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "126"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Clinical Informatics and Digital Health Ethics",
+        "discipline": "PHELO",
+        "key_concept_or_action": "Clinical Informatics and Digital Health Ethics — system navigation",
+        "learner_decision": "Apply system navigation reasoning for Clinical Informatics and Digital Health Ethics.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the system navigation decision for Clinical Informatics and Digital Health Ethics.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Clinical Informatics and Digital Health Ethics",
+        "study_unit_id": "SU-ELOM-19"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-59C18BCCCD4F7288"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "OBGYN",
+        "family_a": "MONITORING",
+        "family_b": "MONITORING",
+        "study_unit_id_a": "SU-OB-36",
+        "study_unit_id_b": "SU-OB-36"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "80-2"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "FOLLOW_UP",
+        "clinical_topic": "Fetal Monitoring in Labour",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Fetal Monitoring in Labour — efm interpretation",
+        "learner_decision": "Apply efm interpretation reasoning for Fetal Monitoring in Labour.",
+        "opportunity_family": "MONITORING",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the efm interpretation decision for Fetal Monitoring in Labour.",
+        "response_class": "MONITORING_PLAN",
+        "severity_context": "NA",
+        "study_unit": "Fetal Monitoring in Labour",
+        "study_unit_id": "SU-OB-36"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "80-2"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "LONG_TERM_MANAGEMENT",
+        "clinical_topic": "Fetal Monitoring in Labour",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Fetal Monitoring in Labour — efm interpretation",
+        "learner_decision": "Apply efm interpretation reasoning for Fetal Monitoring in Labour.",
+        "opportunity_family": "MONITORING",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the efm interpretation decision for Fetal Monitoring in Labour.",
+        "response_class": "MONITORING_PLAN",
+        "severity_context": "NA",
+        "study_unit": "Fetal Monitoring in Labour",
+        "study_unit_id": "SU-OB-36"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-5C62ECD02A98A060"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-ID-04",
+        "study_unit_id_b": "SU-ID-04"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "27",
+          "78-5"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "COVID-19",
+        "discipline": "MED",
+        "key_concept_or_action": "COVID-19 — patients eligible for antiviral therapy based on risk factors for severe outcomes",
+        "learner_decision": "identify patients eligible for antiviral therapy based on risk factors for severe outcomes.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "identify patients eligible for antiviral therapy based on risk factors for severe outcomes.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "SEVERE_OR_UNSTABLE",
+        "study_unit": "COVID-19",
+        "study_unit_id": "SU-ID-04"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "27",
+          "78-5"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "COVID-19",
+        "discipline": "MED",
+        "key_concept_or_action": "COVID-19 — COVID-19's clinical presentation",
+        "learner_decision": "Recognize COVID-19's clinical presentation.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Recognize COVID-19's clinical presentation.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "SEVERE_OR_UNSTABLE",
+        "study_unit": "COVID-19",
+        "study_unit_id": "SU-ID-04"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-5CC926E2AF2BABFF"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "OBGYN",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-GY-12",
+        "study_unit_id_b": "SU-GY-12"
+      },
+      "opportunity_a": {
+        "clinical_stage": "ASSESSMENT",
+        "discipline": "OBGYN",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "PATIENT_WITH_FIRST_TRIMESTER_BLEEDING",
+        "primary_reasoning_target": "Reason from vignette evidence to classify threatened, inevitable, incomplete, complete, or missed loss.",
+        "principal_decision": "Classify threatened, inevitable, incomplete, complete, or missed loss.",
+        "response_class": "DIAGNOSIS",
+        "study_unit_id": "SU-GY-12"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "81"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Early Pregnancy Loss and First-Trimester Bleeding",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Early Pregnancy Loss and First-Trimester Bleeding — diagnosis",
+        "learner_decision": "Apply diagnosis reasoning for Early Pregnancy Loss and First-Trimester Bleeding.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "PREGNANCY_OR_POSTPARTUM",
+        "primary_reasoning_target": "Differentiate the diagnosis decision for Early Pregnancy Loss and First-Trimester Bleeding.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Early Pregnancy Loss and First-Trimester Bleeding",
+        "study_unit_id": "SU-GY-12"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-5DACEF9B4949E88E"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "PED",
+        "family_a": "PREVENTION",
+        "family_b": "INITIAL_MANAGEMENT",
+        "study_unit_id_a": "SU-P-020",
+        "study_unit_id_b": "SU-P-020"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "109-6"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "DETERIORATION_OR_COMPLICATION",
+        "clinical_topic": "Drowning/Submersion Injuries",
+        "discipline": "PED",
+        "key_concept_or_action": "Drowning/Submersion Injuries — assessment and prevention",
+        "learner_decision": "Apply assessment and prevention reasoning for Drowning/Submersion Injuries.",
+        "opportunity_family": "PREVENTION",
+        "population_context": "PEDIATRIC",
+        "primary_reasoning_target": "Differentiate the assessment and prevention decision for Drowning/Submersion Injuries.",
+        "response_class": "PREVENTIVE_ACTION",
+        "severity_context": "SEVERITY_STRATIFIED",
+        "study_unit": "Drowning/Submersion Injuries",
+        "study_unit_id": "SU-P-020"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "109-6"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "EMERGENCY_PRESENTATION",
+        "clinical_topic": "Drowning/Submersion Injuries",
+        "discipline": "PED",
+        "key_concept_or_action": "Drowning/Submersion Injuries — stabilization",
+        "learner_decision": "initiate stabilization.",
+        "opportunity_family": "INITIAL_MANAGEMENT",
+        "population_context": "PEDIATRIC",
+        "primary_reasoning_target": "initiate stabilization.",
+        "response_class": "ACTION",
+        "severity_context": "SEVERITY_STRATIFIED",
+        "study_unit": "Drowning/Submersion Injuries",
+        "study_unit_id": "SU-P-020"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-6055E71906DF9E67"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "FOLLOW_UP",
+        "family_b": "FOLLOW_UP",
+        "study_unit_id_a": "SU-MI-12",
+        "study_unit_id_b": "SU-D-06"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "2"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "FOLLOW_UP",
+        "clinical_topic": "Specific Visceral Organ Imaging (Liver, Spleen, Biliary Tree: Modality Selection and Mass Characterization)",
+        "discipline": "MED",
+        "key_concept_or_action": "Specific Visceral Organ Imaging (Liver, Spleen, Biliary Tree: Modality Selection and Mass Characterization) — diagnosis",
+        "learner_decision": "Apply diagnosis reasoning for Specific Visceral Organ Imaging (Liver, Spleen, Biliary Tree: Modality Selection and Mass Characterization).",
+        "opportunity_family": "FOLLOW_UP",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the diagnosis decision for Specific Visceral Organ Imaging (Liver, Spleen, Biliary Tree: Modality Selection and Mass Characterization).",
+        "response_class": "FOLLOW_UP_PLAN",
+        "severity_context": "NA",
+        "study_unit": "Specific Visceral Organ Imaging (Liver, Spleen, Biliary Tree: Modality Selection and Mass Characterization)",
+        "study_unit_id": "SU-MI-12"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "38"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "FOLLOW_UP",
+        "clinical_topic": "Pigmented Nevi and Acquired Pigmented Lesions",
+        "discipline": "MED",
+        "key_concept_or_action": "Pigmented Nevi and Acquired Pigmented Lesions — pigmented lesion workup",
+        "learner_decision": "Apply pigmented lesion workup reasoning for Pigmented Nevi and Acquired Pigmented Lesions.",
+        "opportunity_family": "FOLLOW_UP",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the pigmented lesion workup decision for Pigmented Nevi and Acquired Pigmented Lesions.",
+        "response_class": "FOLLOW_UP_PLAN",
+        "severity_context": "NA",
+        "study_unit": "Pigmented Nevi and Acquired Pigmented Lesions",
+        "study_unit_id": "SU-D-06"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-61797B24EA4C6599"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-A-32",
+        "study_unit_id_b": "SU-A-32"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "74-3"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Pediatric Anesthesia",
+        "discipline": "MED",
+        "key_concept_or_action": "Pediatric Anesthesia — physiologic risk",
+        "learner_decision": "Apply physiologic risk reasoning for Pediatric Anesthesia.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the physiologic risk decision for Pediatric Anesthesia.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Pediatric Anesthesia",
+        "study_unit_id": "SU-A-32"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "74-3"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Pediatric Anesthesia",
+        "discipline": "MED",
+        "key_concept_or_action": "Pediatric Anesthesia — anatomic differences",
+        "learner_decision": "Apply anatomic differences reasoning for Pediatric Anesthesia.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the anatomic differences decision for Pediatric Anesthesia.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Pediatric Anesthesia",
+        "study_unit_id": "SU-A-32"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-6272486C767B483B"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-G-26",
+        "study_unit_id_b": "SU-G-26"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "6-1"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Upper Gastrointestinal Bleeding (including Mallory-Weiss Tear)",
+        "discipline": "MED",
+        "key_concept_or_action": "Upper Gastrointestinal Bleeding (including Mallory-Weiss Tear) — the cause, severity, and complications of hematemesis or melena",
+        "learner_decision": "Diagnose the cause, severity, and complications of hematemesis or melena.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Diagnose the cause, severity, and complications of hematemesis or melena.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "SEVERITY_STRATIFIED",
+        "study_unit": "Upper Gastrointestinal Bleeding (including Mallory-Weiss Tear)",
+        "study_unit_id": "SU-G-26"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "6-1"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Upper Gastrointestinal Bleeding (including Mallory-Weiss Tear)",
+        "discipline": "MED",
+        "key_concept_or_action": "Upper Gastrointestinal Bleeding (including Mallory-Weiss Tear) — mallory weiss recognition",
+        "learner_decision": "Apply mallory weiss recognition reasoning for Upper Gastrointestinal Bleeding (including Mallory-Weiss Tear).",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the mallory weiss recognition decision for Upper Gastrointestinal Bleeding (including Mallory-Weiss Tear).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Upper Gastrointestinal Bleeding (including Mallory-Weiss Tear)",
+        "study_unit_id": "SU-G-26"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-63C914F99CC9EA1B"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-R-08",
+        "study_unit_id_b": "SU-R-08"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "18",
+          "27"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Asthma",
+        "discipline": "MED",
+        "key_concept_or_action": "Asthma — diagnosis",
+        "learner_decision": "Apply diagnosis reasoning for Asthma.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the diagnosis decision for Asthma.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Asthma",
+        "study_unit_id": "SU-R-08"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "18",
+          "27"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Asthma",
+        "discipline": "MED",
+        "key_concept_or_action": "Asthma — control and risk",
+        "learner_decision": "Apply control and risk reasoning for Asthma.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the control and risk decision for Asthma.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Asthma",
+        "study_unit_id": "SU-R-08"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-64EBD0BB5A76FEEF"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "OBGYN",
+        "family_a": "SCREENING",
+        "family_b": "SCREENING",
+        "study_unit_id_a": "SU-GY-31",
+        "study_unit_id_b": "SU-GY-31"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "112",
+          "74"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "PRECLINICAL_OR_PREVENTIVE",
+        "clinical_topic": "Cervical Cancer and Cervical Cancer Screening",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Cervical Cancer and Cervical Cancer Screening — recognition",
+        "learner_decision": "Apply recognition reasoning for Cervical Cancer and Cervical Cancer Screening.",
+        "opportunity_family": "SCREENING",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the recognition decision for Cervical Cancer and Cervical Cancer Screening.",
+        "response_class": "PREVENTIVE_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Cervical Cancer and Cervical Cancer Screening",
+        "study_unit_id": "SU-GY-31"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "112",
+          "74"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "PRECLINICAL_OR_PREVENTIVE",
+        "clinical_topic": "Cervical Cancer and Cervical Cancer Screening",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Cervical Cancer and Cervical Cancer Screening — screening",
+        "learner_decision": "Apply screening reasoning for Cervical Cancer and Cervical Cancer Screening.",
+        "opportunity_family": "SCREENING",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the screening decision for Cervical Cancer and Cervical Cancer Screening.",
+        "response_class": "PREVENTIVE_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Cervical Cancer and Cervical Cancer Screening",
+        "study_unit_id": "SU-GY-31"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-65721C2552A755D1"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "SURG",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-OR-58",
+        "study_unit_id_b": "SU-OR-58"
+      },
+      "opportunity_a": {
+        "clinical_stage": "ASSESSMENT",
+        "discipline": "SURG",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "PATIENT_WITH_HIGH_ENERGY_HINDFOOT_TRAUMA",
+        "primary_reasoning_target": "Reason from vignette evidence to recognize talar fracture.",
+        "principal_decision": "Recognize talar fracture.",
+        "response_class": "DIAGNOSIS",
+        "study_unit_id": "SU-OR-58"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "109-3"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Talar Fracture",
+        "discipline": "SURG",
+        "key_concept_or_action": "Talar Fracture — recognition",
+        "learner_decision": "Apply recognition reasoning for Talar Fracture.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the recognition decision for Talar Fracture.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Talar Fracture",
+        "study_unit_id": "SU-OR-58"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-65C1AB71C19A7F61"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "PED",
+        "family_a": "BEST_NEXT_INVESTIGATION",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-P-117",
+        "study_unit_id_b": "SU-P-117"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "64"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Apnea of Prematurity",
+        "discipline": "PED",
+        "key_concept_or_action": "Apnea of Prematurity — recognition",
+        "learner_decision": "Apply recognition reasoning for Apnea of Prematurity.",
+        "opportunity_family": "BEST_NEXT_INVESTIGATION",
+        "population_context": "PEDIATRIC",
+        "primary_reasoning_target": "Differentiate the recognition decision for Apnea of Prematurity.",
+        "response_class": "INVESTIGATION",
+        "severity_context": "NA",
+        "study_unit": "Apnea of Prematurity",
+        "study_unit_id": "SU-P-117"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "64"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Apnea of Prematurity",
+        "discipline": "PED",
+        "key_concept_or_action": "Apnea of Prematurity — apnea of prematurity vs. apnea as a sign of underlying illness (sepsis, NEC) requiring sepsis workup",
+        "learner_decision": "recognize apnea of prematurity vs. apnea as a sign of underlying illness (sepsis, NEC) requiring sepsis workup.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "PEDIATRIC",
+        "primary_reasoning_target": "recognize apnea of prematurity vs. apnea as a sign of underlying illness (sepsis, NEC) requiring sepsis workup.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Apnea of Prematurity",
+        "study_unit_id": "SU-P-117"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-6656C9422C4F0727"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "SURG",
+        "family_a": "INTERPRET_TEST_RESULT",
+        "family_b": "INTERPRET_TEST_RESULT",
+        "study_unit_id_a": "SU-OT-04",
+        "study_unit_id_b": "SU-OT-04"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "40"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Approach to Hearing Loss (Physiology, DDx, Bedside Tuning Fork Tests)",
+        "discipline": "SURG",
+        "key_concept_or_action": "Approach to Hearing Loss (Physiology, DDx, Bedside Tuning Fork Tests) — bedside tests",
+        "learner_decision": "Apply bedside tests reasoning for Approach to Hearing Loss (Physiology, DDx, Bedside Tuning Fork Tests).",
+        "opportunity_family": "INTERPRET_TEST_RESULT",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the bedside tests decision for Approach to Hearing Loss (Physiology, DDx, Bedside Tuning Fork Tests).",
+        "response_class": "INTERPRETATION",
+        "severity_context": "NA",
+        "study_unit": "Approach to Hearing Loss (Physiology, DDx, Bedside Tuning Fork Tests)",
+        "study_unit_id": "SU-OT-04"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "40"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Approach to Hearing Loss (Physiology, DDx, Bedside Tuning Fork Tests)",
+        "discipline": "SURG",
+        "key_concept_or_action": "Approach to Hearing Loss (Physiology, DDx, Bedside Tuning Fork Tests) — bedside tests",
+        "learner_decision": "Apply bedside tests reasoning for Approach to Hearing Loss (Physiology, DDx, Bedside Tuning Fork Tests).",
+        "opportunity_family": "INTERPRET_TEST_RESULT",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the bedside tests decision for Approach to Hearing Loss (Physiology, DDx, Bedside Tuning Fork Tests).",
+        "response_class": "INTERPRETATION",
+        "severity_context": "NA",
+        "study_unit": "Approach to Hearing Loss (Physiology, DDx, Bedside Tuning Fork Tests)",
+        "study_unit_id": "SU-OT-04"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-685E462118AB4BE1"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "PROFESSIONALISM",
+        "family_b": "PROFESSIONALISM",
+        "study_unit_id_a": "SU-PM-07",
+        "study_unit_id_b": "SU-PM-07"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "121-2",
+          "25"
+        ],
+        "MCC_physician_activity": "Professional Behaviours",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Communication in Palliative Care (incl. SPIKES Protocol for Breaking Bad News)",
+        "discipline": "MED",
+        "key_concept_or_action": "Communication in Palliative Care (incl. SPIKES Protocol for Breaking Bad News) — bad news",
+        "learner_decision": "Apply bad news reasoning for Communication in Palliative Care (incl. SPIKES Protocol for Breaking Bad News).",
+        "opportunity_family": "PROFESSIONALISM",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the bad news decision for Communication in Palliative Care (incl. SPIKES Protocol for Breaking Bad News).",
+        "response_class": "ETHICAL_LEGAL_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Communication in Palliative Care (incl. SPIKES Protocol for Breaking Bad News)",
+        "study_unit_id": "SU-PM-07"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "121-2",
+          "25"
+        ],
+        "MCC_physician_activity": "Professional Behaviours",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Communication in Palliative Care (incl. SPIKES Protocol for Breaking Bad News)",
+        "discipline": "MED",
+        "key_concept_or_action": "Communication in Palliative Care (incl. SPIKES Protocol for Breaking Bad News) — bad news",
+        "learner_decision": "Apply bad news reasoning for Communication in Palliative Care (incl. SPIKES Protocol for Breaking Bad News).",
+        "opportunity_family": "PROFESSIONALISM",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the bad news decision for Communication in Palliative Care (incl. SPIKES Protocol for Breaking Bad News).",
+        "response_class": "ETHICAL_LEGAL_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Communication in Palliative Care (incl. SPIKES Protocol for Breaking Bad News)",
+        "study_unit_id": "SU-PM-07"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-687BC317DF11C1B7"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "ADVERSE_EFFECT_RECOGNITION",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-A-32",
+        "study_unit_id_b": "SU-A-32"
+      },
+      "opportunity_a": {
+        "clinical_stage": "MONITORING",
+        "discipline": "MED",
+        "opportunity_family": "ADVERSE_EFFECT_RECOGNITION",
+        "population_context": "CHILD_REQUIRING_ANESTHESIA",
+        "primary_reasoning_target": "Reason from vignette evidence to recognize arrhythmia or hyperkalemia as serious complications.",
+        "principal_decision": "Recognize arrhythmia or hyperkalemia as serious complications.",
+        "response_class": "DIAGNOSIS",
+        "study_unit_id": "SU-A-32"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "74-3"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Pediatric Anesthesia",
+        "discipline": "MED",
+        "key_concept_or_action": "Pediatric Anesthesia — anatomic differences",
+        "learner_decision": "Apply anatomic differences reasoning for Pediatric Anesthesia.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the anatomic differences decision for Pediatric Anesthesia.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Pediatric Anesthesia",
+        "study_unit_id": "SU-A-32"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-6A0111AE13536099"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "OBGYN",
+        "family_a": "INITIAL_MANAGEMENT",
+        "family_b": "INITIAL_MANAGEMENT",
+        "study_unit_id_a": "SU-OB-29",
+        "study_unit_id_b": "SU-OB-29"
+      },
+      "opportunity_a": {
+        "clinical_stage": "INITIAL_MANAGEMENT",
+        "discipline": "OBGYN",
+        "opportunity_family": "INITIAL_MANAGEMENT",
+        "population_context": "PREGNANT_PATIENT_WITH_URINARY_INFECTION_RISK",
+        "primary_reasoning_target": "Reason from vignette evidence to select a pregnancy-safe antibiotic.",
+        "principal_decision": "Select a pregnancy-safe antibiotic.",
+        "response_class": "ACTION",
+        "study_unit_id": "SU-OB-29"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "110-1"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Urinary Tract Infection in Pregnancy",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Urinary Tract Infection in Pregnancy — pregnancy-safe antibiotic therapy",
+        "learner_decision": "select pregnancy-safe antibiotic therapy.",
+        "opportunity_family": "INITIAL_MANAGEMENT",
+        "population_context": "PREGNANCY_OR_POSTPARTUM",
+        "primary_reasoning_target": "select pregnancy-safe antibiotic therapy.",
+        "response_class": "ACTION",
+        "severity_context": "NA",
+        "study_unit": "Urinary Tract Infection in Pregnancy",
+        "study_unit_id": "SU-OB-29"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-6D2A64A8D98DEC85"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "OBGYN",
+        "family_a": "DIFFERENTIAL_DIAGNOSIS",
+        "family_b": "DIFFERENTIAL_DIAGNOSIS",
+        "study_unit_id_a": "SU-OB-02",
+        "study_unit_id_b": "SU-OB-02"
+      },
+      "opportunity_a": {
+        "clinical_stage": "ASSESSMENT",
+        "discipline": "OBGYN",
+        "opportunity_family": "DIFFERENTIAL_DIAGNOSIS",
+        "population_context": "PREGNANT_PATIENT_WITH_NEW_FINDINGS",
+        "primary_reasoning_target": "Reason from vignette evidence to differentiate physiologic from pathologic anemia.",
+        "principal_decision": "Differentiate physiologic from pathologic anemia.",
+        "response_class": "DIAGNOSIS",
+        "study_unit_id": "SU-OB-02"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "80-1"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Maternal Physiologic Adaptations to Pregnancy",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Maternal Physiologic Adaptations to Pregnancy — normal vs pathologic",
+        "learner_decision": "Apply normal vs pathologic reasoning for Maternal Physiologic Adaptations to Pregnancy.",
+        "opportunity_family": "DIFFERENTIAL_DIAGNOSIS",
+        "population_context": "PREGNANCY_OR_POSTPARTUM",
+        "primary_reasoning_target": "Differentiate the normal vs pathologic decision for Maternal Physiologic Adaptations to Pregnancy.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Maternal Physiologic Adaptations to Pregnancy",
+        "study_unit_id": "SU-OB-02"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-6E18B5639A1E828E"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "PED",
+        "family_a": "COMPLICATION_RECOGNITION",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-P-008",
+        "study_unit_id_b": "SU-P-008"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "71-1"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "DETERIORATION_OR_COMPLICATION",
+        "clinical_topic": "Breath Holding Spells",
+        "discipline": "PED",
+        "key_concept_or_action": "Breath Holding Spells — red flags",
+        "learner_decision": "Apply red flags reasoning for Breath Holding Spells.",
+        "opportunity_family": "COMPLICATION_RECOGNITION",
+        "population_context": "PEDIATRIC",
+        "primary_reasoning_target": "Differentiate the red flags decision for Breath Holding Spells.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Breath Holding Spells",
+        "study_unit_id": "SU-P-008"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "71-1"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Breath Holding Spells",
+        "discipline": "PED",
+        "key_concept_or_action": "Breath Holding Spells — the association with iron deficiency anemia (spells improve with iron supplementation) and the indication for cardiac evaluation (prolonged QT) when spells are atypical or there is a family history of syncope/sudden death",
+        "learner_decision": "recognize the association with iron deficiency anemia (spells improve with iron supplementation) and the indication for cardiac evaluation (prolonged QT) when spells are atypical or there is a family history of syncope/sudden death.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "PEDIATRIC",
+        "primary_reasoning_target": "recognize the association with iron deficiency anemia (spells improve with iron supplementation) and the indication for cardiac evaluation (prolonged QT) when spells are atypical or there is a family history of syncope/sudden death.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Breath Holding Spells",
+        "study_unit_id": "SU-P-008"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-6EFBA7CB695E3476"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "INITIAL_MANAGEMENT",
+        "family_b": "INITIAL_MANAGEMENT",
+        "study_unit_id_a": "SU-E-26",
+        "study_unit_id_b": "SU-E-26"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "63"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Graves' Disease",
+        "discipline": "MED",
+        "key_concept_or_action": "Graves' Disease — radioactive iodine ablation",
+        "learner_decision": "Select radioactive iodine ablation for first-line management.",
+        "opportunity_family": "INITIAL_MANAGEMENT",
+        "population_context": "NA",
+        "primary_reasoning_target": "Select radioactive iodine ablation for first-line management.",
+        "response_class": "ACTION",
+        "severity_context": "NA",
+        "study_unit": "Graves' Disease",
+        "study_unit_id": "SU-E-26"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "63"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Graves' Disease",
+        "discipline": "MED",
+        "key_concept_or_action": "Graves' Disease — antithyroid drugs",
+        "learner_decision": "Select antithyroid drugs for first-line management.",
+        "opportunity_family": "INITIAL_MANAGEMENT",
+        "population_context": "NA",
+        "primary_reasoning_target": "Select antithyroid drugs for first-line management.",
+        "response_class": "ACTION",
+        "severity_context": "NA",
+        "study_unit": "Graves' Disease",
+        "study_unit_id": "SU-E-26"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-6F77DCA33A21B381"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "PHELO",
+        "family_a": "SCREENING",
+        "family_b": "SCREENING",
+        "study_unit_id_a": "SU-PH-04",
+        "study_unit_id_b": "SU-PH-07"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "127"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "PRECLINICAL_OR_PREVENTIVE",
+        "clinical_topic": "Groups Facing Systemic Barriers, Discrimination, and Structural Violence",
+        "discipline": "PHELO",
+        "key_concept_or_action": "Groups Facing Systemic Barriers, Discrimination, and Structural Violence — screening for poverty",
+        "learner_decision": "Apply screening for poverty reasoning for Groups Facing Systemic Barriers, Discrimination, and Structural Violence.",
+        "opportunity_family": "SCREENING",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the screening for poverty decision for Groups Facing Systemic Barriers, Discrimination, and Structural Violence.",
+        "response_class": "PREVENTIVE_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Groups Facing Systemic Barriers, Discrimination, and Structural Violence",
+        "study_unit_id": "SU-PH-04"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "74",
+          "78-3"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "PRECLINICAL_OR_PREVENTIVE",
+        "clinical_topic": "Screening Principles and Screening Biases",
+        "discipline": "PHELO",
+        "key_concept_or_action": "Screening Principles and Screening Biases — screening vs diagnosis",
+        "learner_decision": "Apply screening vs diagnosis reasoning for Screening Principles and Screening Biases.",
+        "opportunity_family": "SCREENING",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the screening vs diagnosis decision for Screening Principles and Screening Biases.",
+        "response_class": "PREVENTIVE_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Screening Principles and Screening Biases",
+        "study_unit_id": "SU-PH-07"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-6FCC2C48BE845DB0"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "PSY",
+        "family_a": "DIFFERENTIAL_DIAGNOSIS",
+        "family_b": "DIFFERENTIAL_DIAGNOSIS",
+        "study_unit_id_a": "SU-PS-24",
+        "study_unit_id_b": "SU-PS-24"
+      },
+      "opportunity_a": {
+        "clinical_stage": "ASSESSMENT",
+        "discipline": "PSY",
+        "opportunity_family": "DIFFERENTIAL_DIAGNOSIS",
+        "population_context": "BEREAVED_ADULT",
+        "primary_reasoning_target": "Reason from vignette evidence to differentiate normal from prolonged or complicated grief.",
+        "principal_decision": "Differentiate normal from prolonged or complicated grief.",
+        "response_class": "DIAGNOSIS",
+        "study_unit_id": "SU-PS-24"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "59-1"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Bereavement (Normal and Complicated Grief)",
+        "discipline": "PSY",
+        "key_concept_or_action": "Bereavement (Normal and Complicated Grief) — differentiation",
+        "learner_decision": "Apply differentiation reasoning for Bereavement (Normal and Complicated Grief).",
+        "opportunity_family": "DIFFERENTIAL_DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the differentiation decision for Bereavement (Normal and Complicated Grief).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "SEVERE_OR_UNSTABLE",
+        "study_unit": "Bereavement (Normal and Complicated Grief)",
+        "study_unit_id": "SU-PS-24"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-7227FF6957FC0179"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "SURG",
+        "family_a": "INTERPRET_TEST_RESULT",
+        "family_b": "INTERPRET_TEST_RESULT",
+        "study_unit_id_a": "SU-NS-36",
+        "study_unit_id_b": "SU-NS-27"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "58-1"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Coma and Glasgow Coma Scale Assessment",
+        "discipline": "SURG",
+        "key_concept_or_action": "Coma and Glasgow Coma Scale Assessment — gcs assessment",
+        "learner_decision": "Apply gcs assessment reasoning for Coma and Glasgow Coma Scale Assessment.",
+        "opportunity_family": "INTERPRET_TEST_RESULT",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the gcs assessment decision for Coma and Glasgow Coma Scale Assessment.",
+        "response_class": "INTERPRETATION",
+        "severity_context": "SEVERITY_STRATIFIED",
+        "study_unit": "Coma and Glasgow Coma Scale Assessment",
+        "study_unit_id": "SU-NS-36"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "50-4"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Lumbar Disc Syndrome",
+        "discipline": "SURG",
+        "key_concept_or_action": "Lumbar Disc Syndrome — lumbar disc recognition",
+        "learner_decision": "Apply lumbar disc recognition reasoning for Lumbar Disc Syndrome.",
+        "opportunity_family": "INTERPRET_TEST_RESULT",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the lumbar disc recognition decision for Lumbar Disc Syndrome.",
+        "response_class": "INTERPRETATION",
+        "severity_context": "NA",
+        "study_unit": "Lumbar Disc Syndrome",
+        "study_unit_id": "SU-NS-27"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-7336932F21C63D41"
+    },
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "DIFFERENTIAL_DIAGNOSIS",
+        "family_b": "DIFFERENTIAL_DIAGNOSIS",
+        "study_unit_id_a": "SU-D-07",
+        "study_unit_id_b": "SU-D-07"
+      },
+      "opportunity_a": {
+        "clinical_stage": "ASSESSMENT",
+        "discipline": "MED",
+        "opportunity_family": "DIFFERENTIAL_DIAGNOSIS",
+        "population_context": "PATIENT_WITH_A_VASCULAR_SKIN_LESION",
+        "primary_reasoning_target": "Reason from vignette evidence to differentiate infantile hemangioma from vascular malformation.",
+        "principal_decision": "Differentiate infantile hemangioma from vascular malformation.",
+        "response_class": "DIAGNOSIS",
+        "study_unit_id": "SU-D-07"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "38"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Vascular Lesions and Malformations (Hemangioma, Vascular Malformations, Spider/Cherry Angioma, Pyogenic Granuloma)",
+        "discipline": "MED",
+        "key_concept_or_action": "Vascular Lesions and Malformations (Hemangioma, Vascular Malformations, Spider/Cherry Angioma, Pyogenic Granuloma) — vascular lesion ddx",
+        "learner_decision": "Apply vascular lesion ddx reasoning for Vascular Lesions and Malformations (Hemangioma, Vascular Malformations, Spider/Cherry Angioma, Pyogenic Granuloma).",
+        "opportunity_family": "DIFFERENTIAL_DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the vascular lesion ddx decision for Vascular Lesions and Malformations (Hemangioma, Vascular Malformations, Spider/Cherry Angioma, Pyogenic Granuloma).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Vascular Lesions and Malformations (Hemangioma, Vascular Malformations, Spider/Cherry Angioma, Pyogenic Granuloma)",
+        "study_unit_id": "SU-D-07"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-768F432C5C741969"
+    }
+  ],
+  "reviewer_blindness": "PRIVATE_MINING_SIGNALS_PROVENANCE_PRIOR_OUTCOMES_AND_MATCHER_OUTPUTS_WITHHELD",
+  "schema_version": "5.0",
+  "scope": "FRESH_V5_VALIDATION_REVIEW_BATCH_2_INPUT",
+  "source_full_review_input_sha256": "5f9cfa92237761225bdc2905707f59f7b136c4142da7158e2af9f8a3e7927e15"
+}

@@ -1,0 +1,149 @@
+{
+  "adjudicator_instruction": "CLASSIFY_INDEPENDENTLY; V5 ANALYSIS IS CONTEXT NOT A TARGET",
+  "allowed_relations": [
+    "EQUIVALENT",
+    "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+    "REGISTRY_NARROWER_THAN_BENCHMARK",
+    "VARIANT_OF_SAME_DECISION",
+    "RELATED_BUT_DISTINCT",
+    "NEAR_DUPLICATE",
+    "DUPLICATE",
+    "UNRELATED"
+  ],
+  "atomic_opportunity_contract": {
+    "broad_row_policy": "REQUIRES_DECOMPOSITION_UNTIL_ONE_DECISION_RULE_IS_EXPLICIT",
+    "compound_policy": "ONE_ROW_CANNOT_REQUIRE_TWO_INDEPENDENTLY_SCOREABLE_RESPONSES",
+    "containment_policy": "DIAGNOSTIC_UNTIL_BROADER_ENDPOINT_IS_ADJUDICATED_ATOMIC",
+    "content_sha256": "c250e20c3da4e109c06c856c573e0e0006ab959ffd26faeccd2c55ebf3237e9a",
+    "definition": "Given one clinically material state, the learner must produce one response whose correctness turns on one coherent reasoning target.",
+    "distinct_opportunity_contract": "A distinction is a new opportunity only when it materially changes the correct answer or action, principal learner decision, required clinical knowledge, clinical-stage decision, management or investigation pathway, recognized complication, legal or ethical duty, or decision-changing population context.",
+    "do_not_split_when": [
+      "ALTERNATE_EVIDENCE_PATH_TO_SAME_DECISION",
+      "SYNONYMOUS_ACTION_VERB",
+      "ITEM_FORM_OR_STEM_WRAPPER",
+      "DIFFICULTY_OR_DISTRACTOR_CHANGE",
+      "COSMETIC_DEMOGRAPHIC_VARIANT"
+    ],
+    "identity_dimensions": [
+      "clinical_topic_or_concept",
+      "response_class",
+      "learner_decision_or_intent",
+      "key_concept_or_action",
+      "clinical_stage_only_when_decision_changing",
+      "population_context_only_when_decision_changing",
+      "severity_only_when_decision_changing",
+      "material_decision_changing_state",
+      "MCC_physician_activity_and_objective_mapping"
+    ],
+    "item_variant_contract": "A distinction remains an item variant when it changes only patient identity, incidental demographics, wording, symptom order, non-load-bearing values, surface history, option order, or an equivalent presentation without changing the tested learner decision.",
+    "lineage_invariant": "PRESERVED_ROWS_INHERIT_PRIOR_EDGES_UNTIL_VERSIONED_READJUDICATION",
+    "monotonicity_invariant": "ADDING_REGISTRY_CANDIDATES_CANNOT_LOWER_BEST_RELATION_RANK",
+    "pairwise_relations": [
+      "EQUIVALENT",
+      "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+      "REGISTRY_NARROWER_THAN_BENCHMARK",
+      "VARIANT_OF_SAME_DECISION",
+      "RELATED_BUT_DISTINCT",
+      "NEAR_DUPLICATE",
+      "DUPLICATE",
+      "UNRELATED",
+      "UNCERTAIN"
+    ],
+    "precision_policy": "SAME_EQUIVALENCE_EDGE_GRAPH_AS_RECALL",
+    "question_seed_boundary": "Evidence-path, vignette-form, difficulty, distractor, and cosmetic presentation choices belong in the Question Seed or item variant layer, not opportunity identity.",
+    "relationship_taxonomy": [
+      "EQUIVALENT",
+      "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+      "REGISTRY_NARROWER_THAN_BENCHMARK",
+      "VARIANT_OF_SAME_DECISION",
+      "RELATED_BUT_DISTINCT",
+      "NEAR_DUPLICATE",
+      "DUPLICATE",
+      "UNRELATED",
+      "UNCERTAIN"
+    ],
+    "schema_version": "1.0",
+    "scope": "ATOMIC_MCCQE_QUESTION_OPPORTUNITY_CONTRACT_V1",
+    "split_when": [
+      "DIFFERENT_RESPONSE_CLASS",
+      "INDEPENDENTLY_SCOREABLE_DECISION",
+      "MATERIAL_CONTEXT_CHANGES_CORRECT_RESPONSE",
+      "SEQUENTIAL_DECISION_WITH_DISTINCT_OUTCOME"
+    ],
+    "strict_match_relation": "EQUIVALENT",
+    "topic_support_policy": "REPORT_SEPARATELY_NEVER_CALL_PRECISION"
+  },
+  "content_sha256": "3d90525d79bcdcb2ee75bf5e6aa8c4a2ae558281e9efd64534e6f12e1ca25f73",
+  "direction_contract": "A_IS_BENCHMARK_OR_REFERENCE_SIDE_AND_B_IS_REGISTRY_CANDIDATE_SIDE",
+  "gold_labels_withheld": true,
+  "pairs": [
+    {
+      "abstention_reasons": [
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "MONITORING",
+        "family_b": "INITIAL_MANAGEMENT",
+        "study_unit_id_a": "SU-E-06",
+        "study_unit_id_b": "SU-E-06"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "74"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "FOLLOW_UP",
+        "clinical_topic": "Treatment of Dyslipidemias",
+        "discipline": "MED",
+        "key_concept_or_action": "Treatment of Dyslipidemias — lipid lowering therapy",
+        "learner_decision": "Apply lipid lowering therapy reasoning for Treatment of Dyslipidemias.",
+        "opportunity_family": "MONITORING",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the lipid lowering therapy decision for Treatment of Dyslipidemias.",
+        "response_class": "MONITORING_PLAN",
+        "severity_context": "NA",
+        "study_unit": "Treatment of Dyslipidemias",
+        "study_unit_id": "SU-E-06"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "74"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Treatment of Dyslipidemias",
+        "discipline": "MED",
+        "key_concept_or_action": "Treatment of Dyslipidemias — first-line lipid-lowering pharmacotherapy (statin intensity by risk category)",
+        "learner_decision": "Select first-line lipid-lowering pharmacotherapy (statin intensity by risk category).",
+        "opportunity_family": "INITIAL_MANAGEMENT",
+        "population_context": "NA",
+        "primary_reasoning_target": "Select first-line lipid-lowering pharmacotherapy (statin intensity by risk category).",
+        "response_class": "ACTION",
+        "severity_context": "NA",
+        "study_unit": "Treatment of Dyslipidemias",
+        "study_unit_id": "SU-E-06"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-FF3066BF0DBA1046",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "YES",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "YES",
+        "insufficient_context": false,
+        "internal_conflict": false,
+        "justification": "Monitoring lipid-lowering therapy at follow-up and selecting initial statin intensity by risk category are distinct clinical-stage decisions with different answer actions.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "RELATED_BUT_DISTINCT",
+        "residual_difference": "MATERIAL",
+        "same_answer_scope": "NO",
+        "same_principal_decision": "NO"
+      },
+      "v5_tentative_relation": "RELATED_BUT_DISTINCT"
+    }
+  ],
+  "schema_version": "5.0",
+  "scope": "FRESH_V5_VALIDATION_ABSTENTION_ADJUDICATION_BATCH_4_INPUT",
+  "source_full_input_sha256": "7298a0af1b524b300eda47cecd28139020128df8dc1887fd97d2dc9dc75f7606"
+}

@@ -343,6 +343,7 @@ def _diverse_take(rows: Sequence[Mapping[str, Any]], limit: int, *, wave: int) -
 
 def mine_relation_gold_v3_candidates(
     root: Path, *, wave: int, prior_pair_ids: Iterable[str] = (),
+    prior_semantic_signatures: Iterable[str] = (),
 ) -> dict[str, Any]:
     """Mine real relation candidates using private structural strata only."""
     if wave not in {1, 2, 3}:
@@ -482,7 +483,7 @@ def mine_relation_gold_v3_candidates(
         "HARD_UNRELATED": 30,
     }
     selected: list[dict[str, Any]] = []
-    seen = set(old_signatures)
+    seen = set(old_signatures) | set(prior_semantic_signatures)
     for stratum, quota in quotas.items():
         unique = []
         for row in pools[stratum]:
@@ -706,6 +707,12 @@ def assemble_relation_gold_v3_waves(
                 "study_unit_id_b": context.get("study_unit_id_b"),
                 "family_a": context.get("family_a"),
                 "family_b": context.get("family_b"),
+                "endpoint_a_sha256": hashlib.sha256(
+                    canonical_json(_blind_projection(source[pair_id]["opportunity_a"])).encode()
+                ).hexdigest(),
+                "endpoint_b_sha256": hashlib.sha256(
+                    canonical_json(_blind_projection(source[pair_id]["opportunity_b"])).encode()
+                ).hexdigest(),
             })
     counts = Counter(row["relation"] for row in reviews)
     reviews.sort(key=lambda row: row["pair_id"])
@@ -793,21 +800,54 @@ def finalize_relation_gold_v3(assembled: Mapping[str, Any]) -> tuple[dict[str, A
     return terminal, uncertain
 
 
-def _gold_v3_group_key(row: Mapping[str, Any]) -> str:
-    unit_a = str(row.get("study_unit_id_a") or "")
-    unit_b = str(row.get("study_unit_id_b") or "")
-    if unit_a and unit_a == unit_b:
-        return f"SAME_STUDY_UNIT:{unit_a}"
-    return f"CROSS_UNIT_PAIR:{row['pair_id']}"
+def _gold_v3_leakage_groups(rows: Sequence[Mapping[str, Any]]) -> dict[str, list[dict[str, Any]]]:
+    """Return connected components for every reusable endpoint or study unit."""
+    parent = list(range(len(rows)))
+
+    def find(index: int) -> int:
+        while parent[index] != index:
+            parent[index] = parent[parent[index]]
+            index = parent[index]
+        return index
+
+    def union(left: int, right: int) -> None:
+        left_root, right_root = find(left), find(right)
+        if left_root != right_root:
+            parent[right_root] = left_root
+
+    owner: dict[tuple[str, str], int] = {}
+    for index, row in enumerate(rows):
+        keys = []
+        for field in ("study_unit_id_a", "study_unit_id_b"):
+            if row.get(field):
+                keys.append(("STUDY_UNIT", str(row[field])))
+        for field in ("endpoint_a_sha256", "endpoint_b_sha256"):
+            if row.get(field):
+                keys.append(("ENDPOINT", str(row[field])))
+        for key in keys:
+            if key in owner:
+                union(index, owner[key])
+            else:
+                owner[key] = index
+
+    components: dict[int, list[dict[str, Any]]] = defaultdict(list)
+    for index, row in enumerate(rows):
+        components[find(index)].append(dict(row))
+    result = {}
+    for component_rows in components.values():
+        pair_ids = sorted(row["pair_id"] for row in component_rows)
+        digest = hashlib.sha256(canonical_json(pair_ids).encode()).hexdigest()[:20]
+        result[f"LEAKAGE_COMPONENT:{digest}"] = component_rows
+    return result
 
 
-def freeze_relation_gold_v3_partitions(gold: Mapping[str, Any]) -> dict[str, Any]:
+def freeze_relation_gold_v3_partitions(
+    gold: Mapping[str, Any], *, calibration_exposed_pair_ids: Iterable[str] = (),
+) -> dict[str, Any]:
     rows = [row for row in gold.get("reviews", []) if row.get("relation") != "UNCERTAIN"]
     if len({row["pair_id"] for row in rows}) != len(rows):
         raise ValueError("RELATION_GOLD_V3_DUPLICATE_PAIR_ID")
-    groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for row in rows:
-        groups[_gold_v3_group_key(row)].append(dict(row))
+    groups = _gold_v3_leakage_groups(rows)
     total_by_relation = Counter(row["relation"] for row in rows)
     partitions = ("CALIBRATION", "VALIDATION", "FINAL_HELDOUT")
     weights = {"CALIBRATION": 0.50, "VALIDATION": 0.25, "FINAL_HELDOUT": 0.25}
@@ -816,16 +856,54 @@ def freeze_relation_gold_v3_partitions(gold: Mapping[str, Any]) -> dict[str, Any
         for partition in partitions
     }
     current = {partition: Counter() for partition in partitions}
+    current_disciplines = {partition: Counter() for partition in partitions}
+    current_families = {partition: Counter() for partition in partitions}
     current_sizes = Counter()
     total_rows = len(rows)
     assigned: list[dict[str, Any]] = []
     remaining_groups = dict(groups)
+    exposed_pair_ids = set(calibration_exposed_pair_ids)
+    unknown_exposures = exposed_pair_ids - {row["pair_id"] for row in rows}
+    if unknown_exposures:
+        raise ValueError("RELATION_GOLD_V3_UNKNOWN_CALIBRATION_EXPOSURE")
 
     def assign_group(group_key: str, group_rows: Sequence[Mapping[str, Any]], partition: str) -> None:
         group_counts = Counter(row["relation"] for row in group_rows)
+        group_disciplines = Counter(str(row.get("discipline") or "UNKNOWN") for row in group_rows)
+        group_families = Counter(str(row.get("family_a") or "UNKNOWN") for row in group_rows)
         current[partition].update(group_counts)
+        current_disciplines[partition].update(group_disciplines)
+        current_families[partition].update(group_families)
         current_sizes[partition] += len(group_rows)
         assigned.extend({**dict(row), "partition": partition, "leakage_group": group_key} for row in group_rows)
+
+    # If an earlier defective split exposed any pair during calibration, quarantine
+    # its complete leakage component in calibration. This preserves untouched
+    # validation and heldout evidence rather than pretending the exposure vanished.
+    for group_key, group_rows in list(remaining_groups.items()):
+        if any(row["pair_id"] in exposed_pair_ids for row in group_rows):
+            assign_group(group_key, group_rows, "CALIBRATION")
+            del remaining_groups[group_key]
+
+    # Seed every represented discipline into every split before optimizing class
+    # balance. This makes the advertised discipline stratification executable.
+    disciplines = sorted({str(row.get("discipline") or "UNKNOWN") for row in rows})
+    for partition in ("FINAL_HELDOUT", "VALIDATION", "CALIBRATION"):
+        for discipline in disciplines:
+            if current_disciplines[partition][discipline]:
+                continue
+            options = [
+                (key, group_rows) for key, group_rows in remaining_groups.items()
+                if any(str(row.get("discipline") or "UNKNOWN") == discipline for row in group_rows)
+            ]
+            if not options:
+                continue
+            group_key, group_rows = min(options, key=lambda item: (
+                len(item[1]),
+                hashlib.sha256(f"discipline-seed|{partition}|{discipline}|{item[0]}".encode()).hexdigest(),
+            ))
+            assign_group(group_key, group_rows, partition)
+            del remaining_groups[group_key]
 
     # Heldout evidence floors override the nominal 25% split. Seed whole
     # leakage groups before general balancing so a minimum-support class is
@@ -865,6 +943,8 @@ def freeze_relation_gold_v3_partitions(gold: Mapping[str, Any]) -> dict[str, Any
     )
     for group_key, group_rows in ordered_groups:
         group_counts = Counter(row["relation"] for row in group_rows)
+        group_disciplines = Counter(str(row.get("discipline") or "UNKNOWN") for row in group_rows)
+        group_families = Counter(str(row.get("family_a") or "UNKNOWN") for row in group_rows)
 
         def assignment_cost(partition: str) -> tuple[float, int]:
             cost = 0.0
@@ -875,6 +955,20 @@ def freeze_relation_gold_v3_partitions(gold: Mapping[str, Any]) -> dict[str, Any
                     if candidate_partition == partition:
                         after += group_counts[relation]
                     cost += ((after - target) / max(1.0, total_by_relation[relation])) ** 2
+                for discipline in disciplines:
+                    total = sum(1 for row in rows if str(row.get("discipline") or "UNKNOWN") == discipline)
+                    target = total * weights[candidate_partition]
+                    after = current_disciplines[candidate_partition][discipline]
+                    if candidate_partition == partition:
+                        after += group_disciplines[discipline]
+                    cost += 0.35 * ((after - target) / max(1.0, total)) ** 2
+                for family in set(current_families[candidate_partition]) | set(group_families):
+                    total = sum(1 for row in rows if str(row.get("family_a") or "UNKNOWN") == family)
+                    target = total * weights[candidate_partition]
+                    after = current_families[candidate_partition][family]
+                    if candidate_partition == partition:
+                        after += group_families[family]
+                    cost += 0.10 * ((after - target) / max(1.0, total)) ** 2
                 size_target = total_rows * weights[candidate_partition]
                 size_after = current_sizes[candidate_partition]
                 if candidate_partition == partition:
@@ -896,15 +990,38 @@ def freeze_relation_gold_v3_partitions(gold: Mapping[str, Any]) -> dict[str, Any
         for relation, floor in GOLD_V3_HELDOUT_SUPPORT_FLOORS.items()
         if relation_counts["FINAL_HELDOUT"][relation] < floor
     }
+    unit_partitions: dict[str, set[str]] = defaultdict(set)
+    endpoint_partitions: dict[str, set[str]] = defaultdict(set)
+    for row in assigned:
+        for field in ("study_unit_id_a", "study_unit_id_b"):
+            if row.get(field):
+                unit_partitions[str(row[field])].add(row["partition"])
+        for field in ("endpoint_a_sha256", "endpoint_b_sha256"):
+            if row.get(field):
+                endpoint_partitions[str(row[field])].add(row["partition"])
+    unit_overlap = sorted(key for key, values in unit_partitions.items() if len(values) > 1)
+    endpoint_overlap = sorted(key for key, values in endpoint_partitions.items() if len(values) > 1)
+    if unit_overlap or endpoint_overlap:
+        raise ValueError("RELATION_GOLD_V3_CROSS_PARTITION_LEAKAGE")
     return with_hash({
         "schema_version": "3.0",
         "scope": "RELATION_GOLD_V3_FROZEN_PARTITIONS",
         "source_gold_sha256": gold.get("content_sha256"),
         "frozen_before_matcher_development": True,
-        "split_unit": "SAME_STUDY_UNIT_GROUP_OTHERWISE_CROSS_UNIT_PAIR",
+        "calibration_exposure_quarantine_applied": bool(exposed_pair_ids),
+        "calibration_exposed_pair_count": len(exposed_pair_ids),
+        "split_unit": "CONNECTED_COMPONENT_OF_SHARED_STUDY_UNITS_OR_EXACT_ENDPOINT_PROJECTIONS",
         "stratification_dimensions": ["RELATION", "DISCIPLINE", "FAMILY_WHERE_POSSIBLE"],
         "partition_counts": {partition: partition_counts[partition] for partition in partitions},
         "partition_relation_counts": relation_counts,
+        "partition_discipline_counts": {
+            partition: dict(sorted(current_disciplines[partition].items())) for partition in partitions
+        },
+        "partition_family_counts": {
+            partition: dict(sorted(current_families[partition].items())) for partition in partitions
+        },
+        "cross_partition_study_unit_overlap": unit_overlap,
+        "cross_partition_endpoint_overlap": endpoint_overlap,
         "heldout_support_floors": dict(GOLD_V3_HELDOUT_SUPPORT_FLOORS),
         "heldout_support_deficits": dict(sorted(heldout_deficits.items())),
         "heldout_support_gate": "PASS" if not heldout_deficits else "FAIL",

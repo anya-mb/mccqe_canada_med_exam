@@ -1,0 +1,315 @@
+{
+  "allowed_relations": [
+    "EQUIVALENT",
+    "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+    "REGISTRY_NARROWER_THAN_BENCHMARK",
+    "VARIANT_OF_SAME_DECISION",
+    "RELATED_BUT_DISTINCT",
+    "NEAR_DUPLICATE",
+    "DUPLICATE",
+    "UNRELATED",
+    "UNCERTAIN"
+  ],
+  "atomic_opportunity_contract": {
+    "broad_row_policy": "REQUIRES_DECOMPOSITION_UNTIL_ONE_DECISION_RULE_IS_EXPLICIT",
+    "compound_policy": "ONE_ROW_CANNOT_REQUIRE_TWO_INDEPENDENTLY_SCOREABLE_RESPONSES",
+    "containment_policy": "DIAGNOSTIC_UNTIL_BROADER_ENDPOINT_IS_ADJUDICATED_ATOMIC",
+    "content_sha256": "c250e20c3da4e109c06c856c573e0e0006ab959ffd26faeccd2c55ebf3237e9a",
+    "definition": "Given one clinically material state, the learner must produce one response whose correctness turns on one coherent reasoning target.",
+    "distinct_opportunity_contract": "A distinction is a new opportunity only when it materially changes the correct answer or action, principal learner decision, required clinical knowledge, clinical-stage decision, management or investigation pathway, recognized complication, legal or ethical duty, or decision-changing population context.",
+    "do_not_split_when": [
+      "ALTERNATE_EVIDENCE_PATH_TO_SAME_DECISION",
+      "SYNONYMOUS_ACTION_VERB",
+      "ITEM_FORM_OR_STEM_WRAPPER",
+      "DIFFICULTY_OR_DISTRACTOR_CHANGE",
+      "COSMETIC_DEMOGRAPHIC_VARIANT"
+    ],
+    "identity_dimensions": [
+      "clinical_topic_or_concept",
+      "response_class",
+      "learner_decision_or_intent",
+      "key_concept_or_action",
+      "clinical_stage_only_when_decision_changing",
+      "population_context_only_when_decision_changing",
+      "severity_only_when_decision_changing",
+      "material_decision_changing_state",
+      "MCC_physician_activity_and_objective_mapping"
+    ],
+    "item_variant_contract": "A distinction remains an item variant when it changes only patient identity, incidental demographics, wording, symptom order, non-load-bearing values, surface history, option order, or an equivalent presentation without changing the tested learner decision.",
+    "lineage_invariant": "PRESERVED_ROWS_INHERIT_PRIOR_EDGES_UNTIL_VERSIONED_READJUDICATION",
+    "monotonicity_invariant": "ADDING_REGISTRY_CANDIDATES_CANNOT_LOWER_BEST_RELATION_RANK",
+    "pairwise_relations": [
+      "EQUIVALENT",
+      "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+      "REGISTRY_NARROWER_THAN_BENCHMARK",
+      "VARIANT_OF_SAME_DECISION",
+      "RELATED_BUT_DISTINCT",
+      "NEAR_DUPLICATE",
+      "DUPLICATE",
+      "UNRELATED",
+      "UNCERTAIN"
+    ],
+    "precision_policy": "SAME_EQUIVALENCE_EDGE_GRAPH_AS_RECALL",
+    "question_seed_boundary": "Evidence-path, vignette-form, difficulty, distractor, and cosmetic presentation choices belong in the Question Seed or item variant layer, not opportunity identity.",
+    "relationship_taxonomy": [
+      "EQUIVALENT",
+      "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+      "REGISTRY_NARROWER_THAN_BENCHMARK",
+      "VARIANT_OF_SAME_DECISION",
+      "RELATED_BUT_DISTINCT",
+      "NEAR_DUPLICATE",
+      "DUPLICATE",
+      "UNRELATED",
+      "UNCERTAIN"
+    ],
+    "schema_version": "1.0",
+    "scope": "ATOMIC_MCCQE_QUESTION_OPPORTUNITY_CONTRACT_V1",
+    "split_when": [
+      "DIFFERENT_RESPONSE_CLASS",
+      "INDEPENDENTLY_SCOREABLE_DECISION",
+      "MATERIAL_CONTEXT_CHANGES_CORRECT_RESPONSE",
+      "SEQUENTIAL_DECISION_WITH_DISTINCT_OUTCOME"
+    ],
+    "strict_match_relation": "EQUIVALENT",
+    "topic_support_policy": "REPORT_SEPARATELY_NEVER_CALL_PRECISION"
+  },
+  "content_sha256": "f7cfa5ec491781974f8c3dbe8fafbc588e09258aca3fd04b070cc1255a0ce2bb",
+  "disagreement_count": 4,
+  "pairs": [
+    {
+      "curriculum_context": {
+        "discipline": "SURG",
+        "family_a": "COUNSELLING",
+        "family_b": "COUNSELLING",
+        "study_unit_id_a": "SU-OP-37",
+        "study_unit_id_b": "SU-OP-37"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "115-2"
+        ],
+        "MCC_physician_activity": "Communication",
+        "clinical_stage": "DETERIORATION_OR_COMPLICATION",
+        "clinical_topic": "Age-Related Macular Degeneration",
+        "discipline": "SURG",
+        "key_concept_or_action": "Age-Related Macular Degeneration — differential",
+        "learner_decision": "Apply differential reasoning for Age-Related Macular Degeneration.",
+        "opportunity_family": "COUNSELLING",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the differential decision for Age-Related Macular Degeneration.",
+        "response_class": "COMMUNICATION_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Age-Related Macular Degeneration",
+        "study_unit_id": "SU-OP-37"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "115-2"
+        ],
+        "MCC_physician_activity": "Communication",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Age-Related Macular Degeneration",
+        "discipline": "SURG",
+        "key_concept_or_action": "Age-Related Macular Degeneration — on Amsler-grid self-monitoring",
+        "learner_decision": "counsel on Amsler-grid self-monitoring.",
+        "opportunity_family": "COUNSELLING",
+        "population_context": "NA",
+        "primary_reasoning_target": "counsel on Amsler-grid self-monitoring.",
+        "response_class": "COMMUNICATION_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Age-Related Macular Degeneration",
+        "study_unit_id": "SU-OP-37"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-8F02731EA054FBD4",
+      "primary_verdict": {
+        "justification": "The benchmark is coded as counselling but textually targets a differential, preventing safe comparison with explicit Amsler-grid counselling.",
+        "relation": "NEAR_DUPLICATE"
+      },
+      "secondary_verdict": {
+        "justification": "Differentiating age-related macular degeneration and counselling on Amsler-grid self-monitoring are distinct diagnostic and communication decisions.",
+        "relation": "RELATED_BUT_DISTINCT"
+      }
+    },
+    {
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "COMPLICATION_RECOGNITION",
+        "family_b": "INTERPRET_TEST_RESULT",
+        "study_unit_id_a": "SU-A-12",
+        "study_unit_id_b": "SU-A-12"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "19",
+          "27"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "DETERIORATION_OR_COMPLICATION",
+        "clinical_topic": "Oxygen Therapy and Mechanical Ventilation",
+        "discipline": "MED",
+        "key_concept_or_action": "Oxygen Therapy and Mechanical Ventilation — vent complications",
+        "learner_decision": "Apply vent complications reasoning for Oxygen Therapy and Mechanical Ventilation.",
+        "opportunity_family": "COMPLICATION_RECOGNITION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the vent complications decision for Oxygen Therapy and Mechanical Ventilation.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Oxygen Therapy and Mechanical Ventilation",
+        "study_unit_id": "SU-A-12"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "19",
+          "27"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Oxygen Therapy and Mechanical Ventilation",
+        "discipline": "MED",
+        "key_concept_or_action": "Oxygen Therapy and Mechanical Ventilation — abnormal ETCO2 trends against their common causes (Table 3)",
+        "learner_decision": "interpret abnormal ETCO2 trends against their common causes (Table 3).",
+        "opportunity_family": "INTERPRET_TEST_RESULT",
+        "population_context": "NA",
+        "primary_reasoning_target": "interpret abnormal ETCO2 trends against their common causes (Table 3).",
+        "response_class": "INTERPRETATION",
+        "severity_context": "NA",
+        "study_unit": "Oxygen Therapy and Mechanical Ventilation",
+        "study_unit_id": "SU-A-12"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-93DC8BEE7C951BB1",
+      "primary_verdict": {
+        "justification": "ETCO2 interpretation may identify ventilatory complications, but diagnosis versus interpretation scope and modality remain unresolved.",
+        "relation": "NEAR_DUPLICATE"
+      },
+      "secondary_verdict": {
+        "justification": "Interpreting abnormal ETCO2 trends and their causes is a specific component within the broader recognition of mechanical-ventilation complications.",
+        "relation": "REGISTRY_NARROWER_THAN_BENCHMARK"
+      }
+    },
+    {
+      "curriculum_context": {
+        "discipline": "OBGYN",
+        "family_a": "EMERGENCY_STABILIZATION",
+        "family_b": "INITIAL_MANAGEMENT",
+        "study_unit_id_a": "SU-GY-29",
+        "study_unit_id_b": "SU-GY-29"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "112",
+          "2"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "EMERGENCY_PRESENTATION",
+        "clinical_topic": "Uterine (Endometrial) Cancer",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Uterine (Endometrial) Cancer — workup",
+        "learner_decision": "Apply workup reasoning for Uterine (Endometrial) Cancer.",
+        "opportunity_family": "EMERGENCY_STABILIZATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the workup decision for Uterine (Endometrial) Cancer.",
+        "response_class": "ACTION",
+        "severity_context": "NA",
+        "study_unit": "Uterine (Endometrial) Cancer",
+        "study_unit_id": "SU-GY-29"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "112",
+          "2"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Uterine (Endometrial) Cancer",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Uterine (Endometrial) Cancer — appropriate first-line investigation (endometrial biopsy/imaging)",
+        "learner_decision": "Initiate appropriate first-line investigation (endometrial biopsy/imaging).",
+        "opportunity_family": "INITIAL_MANAGEMENT",
+        "population_context": "NA",
+        "primary_reasoning_target": "Initiate appropriate first-line investigation (endometrial biopsy/imaging).",
+        "response_class": "ACTION",
+        "severity_context": "NA",
+        "study_unit": "Uterine (Endometrial) Cancer",
+        "study_unit_id": "SU-GY-29"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-9B75BDCB94E84FA9",
+      "primary_verdict": {
+        "justification": "Both concern endometrial-cancer workup, but emergency stabilization versus initial-investigation metadata creates a load-bearing stage conflict.",
+        "relation": "NEAR_DUPLICATE"
+      },
+      "secondary_verdict": {
+        "justification": "Initiating first-line biopsy or imaging is a specific investigation decision within the benchmark's broader endometrial-cancer workup target.",
+        "relation": "REGISTRY_NARROWER_THAN_BENCHMARK"
+      }
+    },
+    {
+      "curriculum_context": {
+        "discipline": "OBGYN",
+        "family_a": "CAPACITY_CONSENT",
+        "family_b": "INITIAL_MANAGEMENT",
+        "study_unit_id_a": "SU-GY-11",
+        "study_unit_id_b": "SU-GY-11"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "121-1",
+          "81"
+        ],
+        "MCC_physician_activity": "Professional Behaviours",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Termination of Pregnancy",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Termination of Pregnancy — counselling and referral",
+        "learner_decision": "Apply counselling and referral reasoning for Termination of Pregnancy.",
+        "opportunity_family": "CAPACITY_CONSENT",
+        "population_context": "PREGNANCY_OR_POSTPARTUM",
+        "primary_reasoning_target": "Differentiate the counselling and referral decision for Termination of Pregnancy.",
+        "response_class": "ETHICAL_LEGAL_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Termination of Pregnancy",
+        "study_unit_id": "SU-GY-11"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "121-1",
+          "81"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Termination of Pregnancy",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Termination of Pregnancy — referral within the applicable gestational-age and access framework",
+        "learner_decision": "initiate referral within the applicable gestational-age and access framework.",
+        "opportunity_family": "INITIAL_MANAGEMENT",
+        "population_context": "PREGNANCY_OR_POSTPARTUM",
+        "primary_reasoning_target": "initiate referral within the applicable gestational-age and access framework.",
+        "response_class": "ACTION",
+        "severity_context": "NA",
+        "study_unit": "Termination of Pregnancy",
+        "study_unit_id": "SU-GY-11"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-F958FEC666052730",
+      "primary_verdict": {
+        "justification": "Referral overlaps the benchmark, but the benchmark compounds counselling and referral while the response modalities also conflict.",
+        "relation": "NEAR_DUPLICATE"
+      },
+      "secondary_verdict": {
+        "justification": "Initiating referral within access and gestational limits is narrower than the benchmark's compound termination-of-pregnancy counselling-and-referral target.",
+        "relation": "REGISTRY_NARROWER_THAN_BENCHMARK"
+      }
+    }
+  ],
+  "primary_reviewer_id": "FRESH_V5_REVIEWER_A",
+  "schema_version": "5.0",
+  "scope": "FRESH_V5_VALIDATION_SUPPLEMENT_DISAGREEMENT_INPUT",
+  "secondary_reviewer_id": "FRESH_V5_REVIEWER_B",
+  "source_input_sha256": "ee632b84511dabe026fc3b0e789fa59ff523f752ef1cde588a914051c4fc2e25"
+}

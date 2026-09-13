@@ -1,0 +1,90 @@
+{
+  "boundary_limit": "Raw metadata inequality is insufficient; each delta must be resolved as WRAPPER_ONLY, DECISION_CHANGING, or UNRESOLVED, and unresolved evidence must abstain.",
+  "content_sha256": "5e29b68f7166c3e1bd50febdb2842fa9226eb82c1f2819982b80dc590e833dc9",
+  "errors": [
+    {
+      "analysis": "The unchanged decision and response were recognized, but a non-decision-changing stage wrapper was incorrectly treated as permission for equivalence instead of positive variant evidence.",
+      "gold_appears_ambiguous": false,
+      "gold_relation": "VARIANT_OF_SAME_DECISION",
+      "pair_id": "RG3-W1-048C42E23EB79A6F",
+      "root_cause_categories": [
+        "VARIANT_VS_EQUIVALENCE_BOUNDARY",
+        "CONTEXT_DOES_NOT_CHANGE_DECISION",
+        "STAGE_OF_CARE_DIFFERENCE"
+      ],
+      "v4_2_prediction": "EQUIVALENT"
+    },
+    {
+      "analysis": "A generic recognition label was interpreted as narrower than a specific differential; the supplied scope does not safely establish that direction.",
+      "gold_appears_ambiguous": true,
+      "gold_relation": "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+      "pair_id": "RG3-W1-05A0F3D30ECBA875",
+      "root_cause_categories": [
+        "ANSWER_SCOPE_MISREAD",
+        "DIRECTIONAL_CONTAINMENT_ERROR",
+        "INSUFFICIENT_CONTEXT",
+        "AMBIGUOUS_GOLD"
+      ],
+      "v4_2_prediction": "REGISTRY_NARROWER_THAN_BENCHMARK"
+    },
+    {
+      "analysis": "Narrative management scope conflicts with investigation metadata, so containment cannot be safely inferred without adjudicating the endpoint modality.",
+      "gold_appears_ambiguous": true,
+      "gold_relation": "REGISTRY_NARROWER_THAN_BENCHMARK",
+      "pair_id": "RG3-W1-9AE5ED84751DC182",
+      "root_cause_categories": [
+        "ANSWER_SCOPE_MISREAD",
+        "DIRECTIONAL_CONTAINMENT_ERROR",
+        "RESPONSE_CLASS_DIFFERENCE",
+        "INSUFFICIENT_CONTEXT",
+        "AMBIGUOUS_GOLD"
+      ],
+      "v4_2_prediction": "RELATED_BUT_DISTINCT"
+    },
+    {
+      "analysis": "Shared emergency language obscured whether red-flag recognition is a proper subset of the broader emergency differential.",
+      "gold_appears_ambiguous": true,
+      "gold_relation": "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+      "pair_id": "RG3-W1-DC88D49E54D5EFDC",
+      "root_cause_categories": [
+        "ANSWER_SCOPE_MISREAD",
+        "BROADER_VS_EQUIVALENT_BOUNDARY",
+        "DIRECTIONAL_CONTAINMENT_ERROR",
+        "INSUFFICIENT_CONTEXT",
+        "AMBIGUOUS_GOLD"
+      ],
+      "v4_2_prediction": "EQUIVALENT"
+    },
+    {
+      "analysis": "The pair shares a melanoma-risk and monitoring core but has unresolved response-modality and compound-atomicity conflict.",
+      "gold_appears_ambiguous": true,
+      "gold_relation": "NEAR_DUPLICATE",
+      "pair_id": "RG3-W1-E66509C263E90628",
+      "root_cause_categories": [
+        "DECISION_IDENTITY_MISREAD",
+        "ANSWER_SCOPE_MISREAD",
+        "RESPONSE_CLASS_DIFFERENCE",
+        "INSUFFICIENT_CONTEXT",
+        "AMBIGUOUS_GOLD"
+      ],
+      "v4_2_prediction": "RELATED_BUT_DISTINCT"
+    },
+    {
+      "analysis": "The identical decision and response were recognized, but the family-wrapper delta was collapsed instead of treated as positive variant evidence.",
+      "gold_appears_ambiguous": false,
+      "gold_relation": "VARIANT_OF_SAME_DECISION",
+      "pair_id": "RG3-W1-E8BA36A35064AD2F",
+      "root_cause_categories": [
+        "VARIANT_VS_EQUIVALENCE_BOUNDARY",
+        "CONTEXT_DOES_NOT_CHANGE_DECISION"
+      ],
+      "v4_2_prediction": "EQUIVALENT"
+    }
+  ],
+  "final_heldout_data_used": false,
+  "general_boundary_representable": true,
+  "root_cause_summary": "V4.2 correctly tested whether the decision changed but did not reliably perform the second residual-delta test. Both true variants were collapsed to equivalence; four additional errors arose where answer scope, direction, modality, or atomicity was ambiguous.",
+  "schema_version": "1.0",
+  "scope": "MATCHER_V4_2_VALIDATION_ERROR_FORENSICS",
+  "validation_error_count": 6
+}

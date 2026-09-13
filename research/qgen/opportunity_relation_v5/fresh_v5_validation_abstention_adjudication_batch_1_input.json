@@ -1,0 +1,2634 @@
+{
+  "adjudicator_instruction": "CLASSIFY_INDEPENDENTLY; V5 ANALYSIS IS CONTEXT NOT A TARGET",
+  "allowed_relations": [
+    "EQUIVALENT",
+    "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+    "REGISTRY_NARROWER_THAN_BENCHMARK",
+    "VARIANT_OF_SAME_DECISION",
+    "RELATED_BUT_DISTINCT",
+    "NEAR_DUPLICATE",
+    "DUPLICATE",
+    "UNRELATED"
+  ],
+  "atomic_opportunity_contract": {
+    "broad_row_policy": "REQUIRES_DECOMPOSITION_UNTIL_ONE_DECISION_RULE_IS_EXPLICIT",
+    "compound_policy": "ONE_ROW_CANNOT_REQUIRE_TWO_INDEPENDENTLY_SCOREABLE_RESPONSES",
+    "containment_policy": "DIAGNOSTIC_UNTIL_BROADER_ENDPOINT_IS_ADJUDICATED_ATOMIC",
+    "content_sha256": "c250e20c3da4e109c06c856c573e0e0006ab959ffd26faeccd2c55ebf3237e9a",
+    "definition": "Given one clinically material state, the learner must produce one response whose correctness turns on one coherent reasoning target.",
+    "distinct_opportunity_contract": "A distinction is a new opportunity only when it materially changes the correct answer or action, principal learner decision, required clinical knowledge, clinical-stage decision, management or investigation pathway, recognized complication, legal or ethical duty, or decision-changing population context.",
+    "do_not_split_when": [
+      "ALTERNATE_EVIDENCE_PATH_TO_SAME_DECISION",
+      "SYNONYMOUS_ACTION_VERB",
+      "ITEM_FORM_OR_STEM_WRAPPER",
+      "DIFFICULTY_OR_DISTRACTOR_CHANGE",
+      "COSMETIC_DEMOGRAPHIC_VARIANT"
+    ],
+    "identity_dimensions": [
+      "clinical_topic_or_concept",
+      "response_class",
+      "learner_decision_or_intent",
+      "key_concept_or_action",
+      "clinical_stage_only_when_decision_changing",
+      "population_context_only_when_decision_changing",
+      "severity_only_when_decision_changing",
+      "material_decision_changing_state",
+      "MCC_physician_activity_and_objective_mapping"
+    ],
+    "item_variant_contract": "A distinction remains an item variant when it changes only patient identity, incidental demographics, wording, symptom order, non-load-bearing values, surface history, option order, or an equivalent presentation without changing the tested learner decision.",
+    "lineage_invariant": "PRESERVED_ROWS_INHERIT_PRIOR_EDGES_UNTIL_VERSIONED_READJUDICATION",
+    "monotonicity_invariant": "ADDING_REGISTRY_CANDIDATES_CANNOT_LOWER_BEST_RELATION_RANK",
+    "pairwise_relations": [
+      "EQUIVALENT",
+      "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+      "REGISTRY_NARROWER_THAN_BENCHMARK",
+      "VARIANT_OF_SAME_DECISION",
+      "RELATED_BUT_DISTINCT",
+      "NEAR_DUPLICATE",
+      "DUPLICATE",
+      "UNRELATED",
+      "UNCERTAIN"
+    ],
+    "precision_policy": "SAME_EQUIVALENCE_EDGE_GRAPH_AS_RECALL",
+    "question_seed_boundary": "Evidence-path, vignette-form, difficulty, distractor, and cosmetic presentation choices belong in the Question Seed or item variant layer, not opportunity identity.",
+    "relationship_taxonomy": [
+      "EQUIVALENT",
+      "REGISTRY_BROADER_CONTAINS_BENCHMARK",
+      "REGISTRY_NARROWER_THAN_BENCHMARK",
+      "VARIANT_OF_SAME_DECISION",
+      "RELATED_BUT_DISTINCT",
+      "NEAR_DUPLICATE",
+      "DUPLICATE",
+      "UNRELATED",
+      "UNCERTAIN"
+    ],
+    "schema_version": "1.0",
+    "scope": "ATOMIC_MCCQE_QUESTION_OPPORTUNITY_CONTRACT_V1",
+    "split_when": [
+      "DIFFERENT_RESPONSE_CLASS",
+      "INDEPENDENTLY_SCOREABLE_DECISION",
+      "MATERIAL_CONTEXT_CHANGES_CORRECT_RESPONSE",
+      "SEQUENTIAL_DECISION_WITH_DISTINCT_OUTCOME"
+    ],
+    "strict_match_relation": "EQUIVALENT",
+    "topic_support_policy": "REPORT_SEPARATELY_NEVER_CALL_PRECISION"
+  },
+  "content_sha256": "ac7d23c9608cc4e78783114485634b525c0fc3369c5f9a62997030a3e518dd73",
+  "direction_contract": "A_IS_BENCHMARK_OR_REFERENCE_SIDE_AND_B_IS_REGISTRY_CANDIDATE_SIDE",
+  "gold_labels_withheld": true,
+  "pairs": [
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "EMERGENCY_STABILIZATION",
+        "family_b": "DIFFERENTIAL_DIAGNOSIS",
+        "study_unit_id_a": "SU-C-03",
+        "study_unit_id_b": "SU-C-03"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "14"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "EMERGENCY_PRESENTATION",
+        "clinical_topic": "Chest Pain (Cardiac Differential)",
+        "discipline": "MED",
+        "key_concept_or_action": "Chest Pain (Cardiac Differential) — recognition",
+        "learner_decision": "Apply recognition reasoning for Chest Pain (Cardiac Differential).",
+        "opportunity_family": "EMERGENCY_STABILIZATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the recognition decision for Chest Pain (Cardiac Differential).",
+        "response_class": "ACTION",
+        "severity_context": "NA",
+        "study_unit": "Chest Pain (Cardiac Differential)",
+        "study_unit_id": "SU-C-03"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "14"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "EMERGENCY_PRESENTATION",
+        "clinical_topic": "Chest Pain (Cardiac Differential)",
+        "discipline": "MED",
+        "key_concept_or_action": "Chest Pain (Cardiac Differential) — recognition",
+        "learner_decision": "Apply recognition reasoning for Chest Pain (Cardiac Differential).",
+        "opportunity_family": "DIFFERENTIAL_DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the recognition decision for Chest Pain (Cardiac Differential).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Chest Pain (Cardiac Differential)",
+        "study_unit_id": "SU-C-03"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-002F75827B586560",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "The narrative decision is identical, but A is encoded as emergency management/action and B as differential diagnosis/diagnosis. This load-bearing modality conflict prevents safe identity classification.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "YES"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "PHELO",
+        "family_a": "ETHICAL_LEGAL_ACTION",
+        "family_b": "ETHICAL_LEGAL_ACTION",
+        "study_unit_id_a": "SU-ELOM-20",
+        "study_unit_id_b": "SU-ELOM-20"
+      },
+      "opportunity_a": {
+        "clinical_stage": "ETHICAL_LEGAL",
+        "discipline": "PHELO",
+        "opportunity_family": "ETHICAL_LEGAL_ACTION",
+        "population_context": "CLINICAL_SCENARIO_AFFECTED_BY_COLONIALISM",
+        "primary_reasoning_target": "Reason from vignette evidence to apply reconciliation commitments and Calls to Action to practice.",
+        "principal_decision": "Apply reconciliation commitments and Calls to Action to practice.",
+        "response_class": "ETHICAL_LEGAL_ACTION",
+        "study_unit_id": "SU-ELOM-20"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "127",
+          "78-9"
+        ],
+        "MCC_physician_activity": "Professional Behaviours",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "History and Impact of Colonialism, and the Movement Towards Reconciliation",
+        "discipline": "PHELO",
+        "key_concept_or_action": "History and Impact of Colonialism, and the Movement Towards Reconciliation — ethical reasoning",
+        "learner_decision": "Apply ethical reasoning reasoning for History and Impact of Colonialism, and the Movement Towards Reconciliation.",
+        "opportunity_family": "ETHICAL_LEGAL_ACTION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the ethical reasoning decision for History and Impact of Colonialism, and the Movement Towards Reconciliation.",
+        "response_class": "ETHICAL_LEGAL_ACTION",
+        "severity_context": "NA",
+        "study_unit": "History and Impact of Colonialism, and the Movement Towards Reconciliation",
+        "study_unit_id": "SU-ELOM-20"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-003BEAABC43ADA01",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "YES",
+        "insufficient_context": false,
+        "internal_conflict": false,
+        "justification": "Applying specific reconciliation commitments and Calls to Action is a different scoreable duty from generic ethical reasoning about colonialism and reconciliation; the generic label does not establish containment.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "RELATED_BUT_DISTINCT",
+        "residual_difference": "MATERIAL",
+        "same_answer_scope": "NO",
+        "same_principal_decision": "NO"
+      },
+      "v5_tentative_relation": "RELATED_BUT_DISTINCT"
+    },
+    {
+      "abstention_reasons": [
+        "VARIANT_CLASS_REQUIRES_ADJUDICATION_DURING_LABEL_INSTABILITY"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "ADVERSE_EFFECT_RECOGNITION",
+        "family_b": "ADVERSE_EFFECT_RECOGNITION",
+        "study_unit_id_a": "SU-ER-33",
+        "study_unit_id_b": "SU-ER-33"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "38"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Dermatologic Emergencies (SJS/TEN, DRESS Syndrome)",
+        "discipline": "MED",
+        "key_concept_or_action": "Dermatologic Emergencies (SJS/TEN, DRESS Syndrome) — scar recognition",
+        "learner_decision": "Apply scar recognition reasoning for Dermatologic Emergencies (SJS/TEN, DRESS Syndrome).",
+        "opportunity_family": "ADVERSE_EFFECT_RECOGNITION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the scar recognition decision for Dermatologic Emergencies (SJS/TEN, DRESS Syndrome).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "SEVERE_OR_UNSTABLE",
+        "study_unit": "Dermatologic Emergencies (SJS/TEN, DRESS Syndrome)",
+        "study_unit_id": "SU-ER-33"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "38"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "DETERIORATION_OR_COMPLICATION",
+        "clinical_topic": "Dermatologic Emergencies (SJS/TEN, DRESS Syndrome)",
+        "discipline": "MED",
+        "key_concept_or_action": "Dermatologic Emergencies (SJS/TEN, DRESS Syndrome) — scar recognition",
+        "learner_decision": "Apply scar recognition reasoning for Dermatologic Emergencies (SJS/TEN, DRESS Syndrome).",
+        "opportunity_family": "ADVERSE_EFFECT_RECOGNITION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the scar recognition decision for Dermatologic Emergencies (SJS/TEN, DRESS Syndrome).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "SEVERE_OR_UNSTABLE",
+        "study_unit": "Dermatologic Emergencies (SJS/TEN, DRESS Syndrome)",
+        "study_unit_id": "SU-ER-33"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-07B4609FA15B9E9F",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "NO",
+        "insufficient_context": false,
+        "internal_conflict": false,
+        "justification": "Both endpoints require the same scar-recognition diagnosis in the same severe dermatologic-emergency setting. The initial-presentation versus complication-stage tag supplies only a non-decision-changing wrapper.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "VARIANT_OF_SAME_DECISION",
+        "residual_difference": "WRAPPER_ONLY",
+        "same_answer_scope": "YES",
+        "same_principal_decision": "YES"
+      },
+      "v5_tentative_relation": "VARIANT_OF_SAME_DECISION"
+    },
+    {
+      "abstention_reasons": [
+        "INSUFFICIENT_CONTEXT",
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "PED",
+        "family_a": "SCREENING",
+        "family_b": "SCREENING",
+        "study_unit_id_a": "SU-P-002",
+        "study_unit_id_b": "SU-P-002"
+      },
+      "opportunity_a": {
+        "clinical_stage": "SCREENING",
+        "discipline": "PED",
+        "opportunity_family": "SCREENING",
+        "population_context": "CHILD_AT_A_WELL_CHILD_VISIT",
+        "primary_reasoning_target": "Reason from vignette evidence to assess caregivers, school, safety, and stability.",
+        "principal_decision": "Assess caregivers, school, safety, and stability.",
+        "response_class": "PREVENTIVE_ACTION",
+        "study_unit_id": "SU-P-002"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "74",
+          "74-5"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "PRECLINICAL_OR_PREVENTIVE",
+        "clinical_topic": "Well-Child Visit Overview (Approach to the Pediatric History and Periodic Health Encounter)",
+        "discipline": "PED",
+        "key_concept_or_action": "Well-Child Visit Overview (Approach to the Pediatric History and Periodic Health Encounter) — history taking",
+        "learner_decision": "Apply history taking reasoning for Well-Child Visit Overview (Approach to the Pediatric History and Periodic Health Encounter).",
+        "opportunity_family": "SCREENING",
+        "population_context": "ADOLESCENT",
+        "primary_reasoning_target": "Differentiate the history taking decision for Well-Child Visit Overview (Approach to the Pediatric History and Periodic Health Encounter).",
+        "response_class": "PREVENTIVE_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Well-Child Visit Overview (Approach to the Pediatric History and Periodic Health Encounter)",
+        "study_unit_id": "SU-P-002"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-0DC074AEA8962D54",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "UNCERTAIN",
+        "directional_containment": "UNCERTAIN",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": true,
+        "internal_conflict": false,
+        "justification": "A specifies assessment of caregivers, school, safety, and stability, whereas B supplies only generic adolescent well-child history taking. Their overlap and any proper containment cannot be resolved from the supplied scope.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "UNCERTAIN"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT",
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "PSY",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-PS-27",
+        "study_unit_id_b": "SU-PS-27"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "103"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Substance Use Disorders: General Approach and Diagnosis",
+        "discipline": "PSY",
+        "key_concept_or_action": "Substance Use Disorders: General Approach and Diagnosis — diagnosis",
+        "learner_decision": "Apply diagnosis reasoning for Substance Use Disorders: General Approach and Diagnosis.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the diagnosis decision for Substance Use Disorders: General Approach and Diagnosis.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "SEVERE_OR_UNSTABLE",
+        "study_unit": "Substance Use Disorders: General Approach and Diagnosis",
+        "study_unit_id": "SU-PS-27"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "103"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Substance Use Disorders: General Approach and Diagnosis",
+        "discipline": "PSY",
+        "key_concept_or_action": "Substance Use Disorders: General Approach and Diagnosis — history",
+        "learner_decision": "Apply history reasoning for Substance Use Disorders: General Approach and Diagnosis.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the history decision for Substance Use Disorders: General Approach and Diagnosis.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Substance Use Disorders: General Approach and Diagnosis",
+        "study_unit_id": "SU-PS-27"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-0EAA5BB1C065A2B8",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "UNCERTAIN",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "A explicitly targets diagnosis, while B's narrative targets history despite diagnosis family and response metadata; the severity tags also differ. The unresolved evidence-path-versus-separate-decision conflict is load-bearing.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "UNCERTAIN"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT",
+        "INSUFFICIENT_CONTEXT"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "PREVENTION",
+        "family_b": "COUNSELLING",
+        "study_unit_id_a": "SU-D-45",
+        "study_unit_id_b": "SU-D-45"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "38"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "PRECLINICAL_OR_PREVENTIVE",
+        "clinical_topic": "Sun Protection and Photodamage (Sunscreens, Sunburn, UV Radiation)",
+        "discipline": "MED",
+        "key_concept_or_action": "Sun Protection and Photodamage (Sunscreens, Sunburn, UV Radiation) — sun counselling",
+        "learner_decision": "Apply sun counselling reasoning for Sun Protection and Photodamage (Sunscreens, Sunburn, UV Radiation).",
+        "opportunity_family": "PREVENTION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the sun counselling decision for Sun Protection and Photodamage (Sunscreens, Sunburn, UV Radiation).",
+        "response_class": "PREVENTIVE_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Sun Protection and Photodamage (Sunscreens, Sunburn, UV Radiation)",
+        "study_unit_id": "SU-D-45"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "38"
+        ],
+        "MCC_physician_activity": "Communication",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Sun Protection and Photodamage (Sunscreens, Sunburn, UV Radiation)",
+        "discipline": "MED",
+        "key_concept_or_action": "Sun Protection and Photodamage (Sunscreens, Sunburn, UV Radiation) — patients on sun-protective behaviour and sunscreen selection  as primary prevention for photodamage and skin cancer",
+        "learner_decision": "Counsel patients on sun-protective behaviour and sunscreen selection  as primary prevention for photodamage and skin cancer.",
+        "opportunity_family": "COUNSELLING",
+        "population_context": "NA",
+        "primary_reasoning_target": "Counsel patients on sun-protective behaviour and sunscreen selection  as primary prevention for photodamage and skin cancer.",
+        "response_class": "COMMUNICATION_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Sun Protection and Photodamage (Sunscreens, Sunburn, UV Radiation)",
+        "study_unit_id": "SU-D-45"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-0EEBC19FBB47922A",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": true,
+        "internal_conflict": true,
+        "justification": "Both narratives concern sun counselling, but A is encoded as preventive management and B as communication with a more explicit counselling payload. Generic wording does not resolve whether the answer scopes are coextensive.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "YES"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "VARIANT_CLASS_REQUIRES_ADJUDICATION_DURING_LABEL_INSTABILITY"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "MONITORING",
+        "family_b": "MONITORING",
+        "study_unit_id_a": "SU-MG-10",
+        "study_unit_id_b": "SU-MG-10"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "36"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "FOLLOW_UP",
+        "clinical_topic": "Familial Cancer Syndromes (Li-Fraumeni, Lynch, FAP, Hereditary Breast/Ovarian Cancer, Von Hippel-Lindau, Cowden, Neurofibromatosis)",
+        "discipline": "MED",
+        "key_concept_or_action": "Familial Cancer Syndromes (Li-Fraumeni, Lynch, FAP, Hereditary Breast/Ovarian Cancer, Von Hippel-Lindau, Cowden, Neurofibromatosis) — recognition",
+        "learner_decision": "Apply recognition reasoning for Familial Cancer Syndromes (Li-Fraumeni, Lynch, FAP, Hereditary Breast/Ovarian Cancer, Von Hippel-Lindau, Cowden, Neurofibromatosis).",
+        "opportunity_family": "MONITORING",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the recognition decision for Familial Cancer Syndromes (Li-Fraumeni, Lynch, FAP, Hereditary Breast/Ovarian Cancer, Von Hippel-Lindau, Cowden, Neurofibromatosis).",
+        "response_class": "MONITORING_PLAN",
+        "severity_context": "NA",
+        "study_unit": "Familial Cancer Syndromes (Li-Fraumeni, Lynch, FAP, Hereditary Breast/Ovarian Cancer, Von Hippel-Lindau, Cowden, Neurofibromatosis)",
+        "study_unit_id": "SU-MG-10"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "36"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "LONG_TERM_MANAGEMENT",
+        "clinical_topic": "Familial Cancer Syndromes (Li-Fraumeni, Lynch, FAP, Hereditary Breast/Ovarian Cancer, Von Hippel-Lindau, Cowden, Neurofibromatosis)",
+        "discipline": "MED",
+        "key_concept_or_action": "Familial Cancer Syndromes (Li-Fraumeni, Lynch, FAP, Hereditary Breast/Ovarian Cancer, Von Hippel-Lindau, Cowden, Neurofibromatosis) — recognition",
+        "learner_decision": "Apply recognition reasoning for Familial Cancer Syndromes (Li-Fraumeni, Lynch, FAP, Hereditary Breast/Ovarian Cancer, Von Hippel-Lindau, Cowden, Neurofibromatosis).",
+        "opportunity_family": "MONITORING",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the recognition decision for Familial Cancer Syndromes (Li-Fraumeni, Lynch, FAP, Hereditary Breast/Ovarian Cancer, Von Hippel-Lindau, Cowden, Neurofibromatosis).",
+        "response_class": "MONITORING_PLAN",
+        "severity_context": "NA",
+        "study_unit": "Familial Cancer Syndromes (Li-Fraumeni, Lynch, FAP, Hereditary Breast/Ovarian Cancer, Von Hippel-Lindau, Cowden, Neurofibromatosis)",
+        "study_unit_id": "SU-MG-10"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-11A42486354F31A9",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "NO",
+        "insufficient_context": false,
+        "internal_conflict": false,
+        "justification": "The monitoring decision and answer scope are identical; follow-up versus long-term-management staging is a positive but non-decision-changing presentation wrapper.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "VARIANT_OF_SAME_DECISION",
+        "residual_difference": "WRAPPER_ONLY",
+        "same_answer_scope": "YES",
+        "same_principal_decision": "YES"
+      },
+      "v5_tentative_relation": "VARIANT_OF_SAME_DECISION"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT",
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-ID-17",
+        "study_unit_id_b": "SU-ID-17"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "113",
+          "36-2"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Syphilis",
+        "discipline": "MED",
+        "key_concept_or_action": "Syphilis — management",
+        "learner_decision": "Apply management reasoning for Syphilis.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the management decision for Syphilis.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Syphilis",
+        "study_unit_id": "SU-ID-17"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "113",
+          "36-2"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Syphilis",
+        "discipline": "MED",
+        "key_concept_or_action": "Syphilis — staged syphilis (primary/secondary/latent/tertiary/neurosyphilis) using the Public-Health-Lab serology algorithm",
+        "learner_decision": "Diagnose staged syphilis (primary/secondary/latent/tertiary/neurosyphilis) using the Public-Health-Lab serology algorithm.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Diagnose staged syphilis (primary/secondary/latent/tertiary/neurosyphilis) using the Public-Health-Lab serology algorithm.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Syphilis",
+        "study_unit_id": "SU-ID-17"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-124962021F36B09C",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "A's narrative says syphilis management while its family, activity, and response class say diagnosis; B explicitly diagnoses staged syphilis by serology. That modality conflict prevents deciding whether B is an elaboration or a distinct decision.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "UNCERTAIN"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "INSUFFICIENT_CONTEXT",
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "SCREENING",
+        "family_b": "SCREENING",
+        "study_unit_id_a": "SU-FM-05",
+        "study_unit_id_b": "SU-FM-05"
+      },
+      "opportunity_a": {
+        "clinical_stage": "SCREENING",
+        "discipline": "MED",
+        "opportunity_family": "SCREENING",
+        "population_context": "ASYMPTOMATIC_ADULT_FOR_COLORECTAL_SCREENING",
+        "primary_reasoning_target": "Reason from vignette evidence to determine screening eligibility from age and risk profile.",
+        "principal_decision": "Determine screening eligibility from age and risk profile.",
+        "response_class": "PREVENTIVE_ACTION",
+        "study_unit_id": "SU-FM-05"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "74"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "PRECLINICAL_OR_PREVENTIVE",
+        "clinical_topic": "Colorectal Cancer Screening Guidelines",
+        "discipline": "MED",
+        "key_concept_or_action": "Colorectal Cancer Screening Guidelines — screening recommendations",
+        "learner_decision": "Apply screening recommendations reasoning for Colorectal Cancer Screening Guidelines.",
+        "opportunity_family": "SCREENING",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the screening recommendations decision for Colorectal Cancer Screening Guidelines.",
+        "response_class": "PREVENTIVE_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Colorectal Cancer Screening Guidelines",
+        "study_unit_id": "SU-FM-05"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-12E6D970AEAD1507",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "UNCERTAIN",
+        "directional_containment": "UNCERTAIN",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": true,
+        "internal_conflict": false,
+        "justification": "A isolates colorectal-screening eligibility by age and risk, while B states generic screening recommendations. The generic registry label does not establish whether it has the same scope or properly contains A.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "UNCERTAIN"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT",
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "COMMUNICATION",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-MCC-001",
+        "study_unit_id_b": "SU-MCC-001"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "21-1"
+        ],
+        "MCC_physician_activity": "Communication",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Adults with developmental disabilities",
+        "discipline": "MED",
+        "key_concept_or_action": "Adults with developmental disabilities — assessment and communication",
+        "learner_decision": "Apply assessment and communication reasoning for Adults with developmental disabilities.",
+        "opportunity_family": "COMMUNICATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the assessment and communication decision for Adults with developmental disabilities.",
+        "response_class": "COMMUNICATION_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Adults with developmental disabilities",
+        "study_unit_id": "SU-MCC-001"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "21-1"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Adults with developmental disabilities",
+        "discipline": "MED",
+        "key_concept_or_action": "Adults with developmental disabilities — common physical, mental, and behavioural concerns, including atypical serious illness or pain and risk of abuse or neglect",
+        "learner_decision": "recognize common physical, mental, and behavioural concerns, including atypical serious illness or pain and risk of abuse or neglect.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "recognize common physical, mental, and behavioural concerns, including atypical serious illness or pain and risk of abuse or neglect.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Adults with developmental disabilities",
+        "study_unit_id": "SU-MCC-001"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-18370660092F3374",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "YES",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "A combines assessment language with a communication family and response, whereas B asks diagnostic recognition of common concerns and abuse or neglect. The supplied operations remain separately scoreable, and broad-row language does not prove containment.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "RELATED_BUT_DISTINCT",
+        "residual_difference": "MATERIAL",
+        "same_answer_scope": "NO",
+        "same_principal_decision": "NO"
+      },
+      "v5_tentative_relation": "RELATED_BUT_DISTINCT"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT",
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "OBGYN",
+        "family_a": "COMPLICATION_RECOGNITION",
+        "family_b": "COMPLICATION_RECOGNITION",
+        "study_unit_id_a": "SU-OB-23",
+        "study_unit_id_b": "SU-OB-23"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "80-2"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "DETERIORATION_OR_COMPLICATION",
+        "clinical_topic": "Multi-Fetal Gestation (Twin Pregnancy) including Twin-Twin Transfusion Syndrome",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Multi-Fetal Gestation (Twin Pregnancy) including Twin-Twin Transfusion Syndrome — twin pregnancy management",
+        "learner_decision": "Apply twin pregnancy management reasoning for Multi-Fetal Gestation (Twin Pregnancy) including Twin-Twin Transfusion Syndrome.",
+        "opportunity_family": "COMPLICATION_RECOGNITION",
+        "population_context": "PREGNANCY_OR_POSTPARTUM",
+        "primary_reasoning_target": "Differentiate the twin pregnancy management decision for Multi-Fetal Gestation (Twin Pregnancy) including Twin-Twin Transfusion Syndrome.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Multi-Fetal Gestation (Twin Pregnancy) including Twin-Twin Transfusion Syndrome",
+        "study_unit_id": "SU-OB-23"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "80-2"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "DETERIORATION_OR_COMPLICATION",
+        "clinical_topic": "Multi-Fetal Gestation (Twin Pregnancy) including Twin-Twin Transfusion Syndrome",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Multi-Fetal Gestation (Twin Pregnancy) including Twin-Twin Transfusion Syndrome — twin-twin transfusion syndrome as a monochorionic-specific complication requiring specialized referral",
+        "learner_decision": "recognize twin-twin transfusion syndrome as a monochorionic-specific complication requiring specialized referral.",
+        "opportunity_family": "COMPLICATION_RECOGNITION",
+        "population_context": "PREGNANCY_OR_POSTPARTUM",
+        "primary_reasoning_target": "recognize twin-twin transfusion syndrome as a monochorionic-specific complication requiring specialized referral.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Multi-Fetal Gestation (Twin Pregnancy) including Twin-Twin Transfusion Syndrome",
+        "study_unit_id": "SU-OB-23"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-18A173AEABFC83DA",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "YES",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "YES",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "Generic twin-pregnancy management and recognition of monochorionic twin-twin transfusion syndrome requiring referral are distinct decisions. A's management narrative conflicts with diagnostic complication-recognition metadata.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "RELATED_BUT_DISTINCT",
+        "residual_difference": "MATERIAL",
+        "same_answer_scope": "NO",
+        "same_principal_decision": "NO"
+      },
+      "v5_tentative_relation": "RELATED_BUT_DISTINCT"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT",
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-D-17",
+        "study_unit_id_b": "SU-D-17"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "38"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Pemphigus Vulgaris and Pemphigus Foliaceus",
+        "discipline": "MED",
+        "key_concept_or_action": "Pemphigus Vulgaris and Pemphigus Foliaceus — pv management",
+        "learner_decision": "Apply pv management reasoning for Pemphigus Vulgaris and Pemphigus Foliaceus.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the pv management decision for Pemphigus Vulgaris and Pemphigus Foliaceus.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Pemphigus Vulgaris and Pemphigus Foliaceus",
+        "study_unit_id": "SU-D-17"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "38"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Pemphigus Vulgaris and Pemphigus Foliaceus",
+        "discipline": "MED",
+        "key_concept_or_action": "Pemphigus Vulgaris and Pemphigus Foliaceus — pv diagnosis",
+        "learner_decision": "Apply pv diagnosis reasoning for Pemphigus Vulgaris and Pemphigus Foliaceus.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the pv diagnosis decision for Pemphigus Vulgaris and Pemphigus Foliaceus.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Pemphigus Vulgaris and Pemphigus Foliaceus",
+        "study_unit_id": "SU-D-17"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-1BF82C1BDC7859D4",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "A's narrative targets pemphigus management while its family, activity, and response class encode diagnosis; B explicitly targets diagnosis. The load-bearing modality conflict prevents deciding between identity and distinctness.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "UNCERTAIN"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT"
+      ],
+      "curriculum_context": {
+        "discipline": "SURG",
+        "family_a": "BEST_NEXT_INVESTIGATION",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-U-10",
+        "study_unit_id_b": "SU-U-10"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "8"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Renal Mass and Renal Neoplasms",
+        "discipline": "SURG",
+        "key_concept_or_action": "Renal Mass and Renal Neoplasms — recognition",
+        "learner_decision": "Apply recognition reasoning for Renal Mass and Renal Neoplasms.",
+        "opportunity_family": "BEST_NEXT_INVESTIGATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the recognition decision for Renal Mass and Renal Neoplasms.",
+        "response_class": "INVESTIGATION",
+        "severity_context": "NA",
+        "study_unit": "Renal Mass and Renal Neoplasms",
+        "study_unit_id": "SU-U-10"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "8"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Renal Mass and Renal Neoplasms",
+        "discipline": "SURG",
+        "key_concept_or_action": "Renal Mass and Renal Neoplasms — a renal mass/neoplasm presentation",
+        "learner_decision": "Recognize a renal mass/neoplasm presentation.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Recognize a renal mass/neoplasm presentation.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Renal Mass and Renal Neoplasms",
+        "study_unit_id": "SU-U-10"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-1C15235E0D646665",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "A's narrative says recognition of a renal mass, matching B, but A's family and response require investigation while B requires diagnosis. This unresolved modality conflict blocks safe equivalence.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "YES"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT"
+      ],
+      "curriculum_context": {
+        "discipline": "OBGYN",
+        "family_a": "BEST_NEXT_INVESTIGATION",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-OB-15",
+        "study_unit_id_b": "SU-OB-15"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "82"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Preterm Labour",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Preterm Labour — ptl management",
+        "learner_decision": "Apply ptl management reasoning for Preterm Labour.",
+        "opportunity_family": "BEST_NEXT_INVESTIGATION",
+        "population_context": "NEONATE",
+        "primary_reasoning_target": "Differentiate the ptl management decision for Preterm Labour.",
+        "response_class": "INVESTIGATION",
+        "severity_context": "NA",
+        "study_unit": "Preterm Labour",
+        "study_unit_id": "SU-OB-15"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "82"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Preterm Labour",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Preterm Labour — maternal/fetal risk",
+        "learner_decision": "assess maternal/fetal risk.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NEONATE",
+        "primary_reasoning_target": "assess maternal/fetal risk.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Preterm Labour",
+        "study_unit_id": "SU-OB-15"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-1FC4F66A5F92008F",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "YES",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "Choosing an investigation or management step for preterm labour and assessing maternal-fetal risk are separately scoreable operations. A's management wording conflicts with investigation metadata, but does not collapse the decisions.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "RELATED_BUT_DISTINCT",
+        "residual_difference": "MATERIAL",
+        "same_answer_scope": "NO",
+        "same_principal_decision": "NO"
+      },
+      "v5_tentative_relation": "RELATED_BUT_DISTINCT"
+    },
+    {
+      "abstention_reasons": [
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "PHELO",
+        "family_a": "CONFIDENTIALITY",
+        "family_b": "CONFIDENTIALITY",
+        "study_unit_id_a": "SU-ELOM-08",
+        "study_unit_id_b": "SU-ELOM-08"
+      },
+      "opportunity_a": {
+        "MCC_physician_activity": "Professional Behaviours",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Confidentiality",
+        "discipline": "PHELO",
+        "key_concept_or_action": "Confidentiality — legal professional action",
+        "learner_decision": "Apply legal professional action reasoning for Confidentiality.",
+        "opportunity_family": "CONFIDENTIALITY",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the legal professional action decision for Confidentiality.",
+        "response_class": "ETHICAL_LEGAL_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Confidentiality",
+        "study_unit_id": "SU-ELOM-08"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_physician_activity": "Professional Behaviours",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Confidentiality",
+        "discipline": "PHELO",
+        "key_concept_or_action": "Confidentiality — patient confidentiality",
+        "learner_decision": "Maintain patient confidentiality.",
+        "opportunity_family": "CONFIDENTIALITY",
+        "population_context": "NA",
+        "primary_reasoning_target": "Maintain patient confidentiality.",
+        "response_class": "ETHICAL_LEGAL_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Confidentiality",
+        "study_unit_id": "SU-ELOM-08"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-200CF65697188D90",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "NO",
+        "insufficient_context": false,
+        "internal_conflict": false,
+        "justification": "Within the supplied confidentiality opportunity, applying the legal-professional action and maintaining patient confidentiality express the same duty and materially coextensive answer scope.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "EQUIVALENT",
+        "residual_difference": "SYNONYMY_ONLY",
+        "same_answer_scope": "YES",
+        "same_principal_decision": "YES"
+      },
+      "v5_tentative_relation": "EQUIVALENT"
+    },
+    {
+      "abstention_reasons": [
+        "INSUFFICIENT_CONTEXT",
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "INITIAL_MANAGEMENT",
+        "family_b": "INITIAL_MANAGEMENT",
+        "study_unit_id_a": "SU-E-26",
+        "study_unit_id_b": "SU-E-26"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "63"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Graves' Disease",
+        "discipline": "MED",
+        "key_concept_or_action": "Graves' Disease — first-line management  for Graves' disease based on patient factors",
+        "learner_decision": "Select first-line management  for Graves' disease based on patient factors.",
+        "opportunity_family": "INITIAL_MANAGEMENT",
+        "population_context": "NA",
+        "primary_reasoning_target": "Select first-line management  for Graves' disease based on patient factors.",
+        "response_class": "ACTION",
+        "severity_context": "NA",
+        "study_unit": "Graves' Disease",
+        "study_unit_id": "SU-E-26"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "63"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Graves' Disease",
+        "discipline": "MED",
+        "key_concept_or_action": "Graves' Disease — or surgery",
+        "learner_decision": "Select or surgery for first-line management.",
+        "opportunity_family": "INITIAL_MANAGEMENT",
+        "population_context": "NA",
+        "primary_reasoning_target": "Select or surgery for first-line management.",
+        "response_class": "ACTION",
+        "severity_context": "NA",
+        "study_unit": "Graves' Disease",
+        "study_unit_id": "SU-E-26"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-294DF309C4FB9D57",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "UNCERTAIN",
+        "directional_containment": "UNCERTAIN",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": true,
+        "internal_conflict": false,
+        "justification": "Both endpoints concern first-line Graves management, but B is a malformed fragment ('or surgery') and omits the patient-factor state needed to establish its answer scope or containment.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "YES"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-R-05",
+        "study_unit_id_b": "SU-R-05"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "18",
+          "27"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Basic Chest Radiograph Patterns",
+        "discipline": "MED",
+        "key_concept_or_action": "Basic Chest Radiograph Patterns — pattern recognition",
+        "learner_decision": "Apply pattern recognition reasoning for Basic Chest Radiograph Patterns.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the pattern recognition decision for Basic Chest Radiograph Patterns.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Basic Chest Radiograph Patterns",
+        "study_unit_id": "SU-R-05"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "18",
+          "27"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Basic Chest Radiograph Patterns",
+        "discipline": "MED",
+        "key_concept_or_action": "Basic Chest Radiograph Patterns — next step",
+        "learner_decision": "Apply next step reasoning for Basic Chest Radiograph Patterns.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the next step decision for Basic Chest Radiograph Patterns.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Basic Chest Radiograph Patterns",
+        "study_unit_id": "SU-R-05"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-29E337C92667B673",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "YES",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "Recognizing a chest-radiograph pattern and selecting a next step are separate sequential decisions. B's next-step narrative conflicts with its diagnosis family and response metadata, but the operations remain distinct.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "RELATED_BUT_DISTINCT",
+        "residual_difference": "MATERIAL",
+        "same_answer_scope": "NO",
+        "same_principal_decision": "NO"
+      },
+      "v5_tentative_relation": "RELATED_BUT_DISTINCT"
+    },
+    {
+      "abstention_reasons": [
+        "INSUFFICIENT_CONTEXT",
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "PHELO",
+        "family_a": "COUNSELLING",
+        "family_b": "COMMUNICATION",
+        "study_unit_id_a": "SU-ELOM-13",
+        "study_unit_id_b": "SU-ELOM-13"
+      },
+      "opportunity_a": {
+        "clinical_stage": "COUNSELLING",
+        "discipline": "PHELO",
+        "opportunity_family": "COUNSELLING",
+        "population_context": "PATIENT_APPROACHING_END_OF_LIFE",
+        "primary_reasoning_target": "Reason from vignette evidence to provide culturally sensitive emotional, physical, and spiritual support.",
+        "principal_decision": "Provide culturally sensitive spiritual support at end of life.",
+        "response_class": "COMMUNICATION_ACTION",
+        "study_unit_id": "SU-ELOM-13"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "25"
+        ],
+        "MCC_physician_activity": "Communication",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "End-of-Life Care",
+        "discipline": "PHELO",
+        "key_concept_or_action": "End-of-Life Care — communication",
+        "learner_decision": "Apply communication reasoning for End-of-Life Care.",
+        "opportunity_family": "COMMUNICATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the communication decision for End-of-Life Care.",
+        "response_class": "COMMUNICATION_ACTION",
+        "severity_context": "NA",
+        "study_unit": "End-of-Life Care",
+        "study_unit_id": "SU-ELOM-13"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-29FA4DB3E5509AB2",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "UNCERTAIN",
+        "directional_containment": "UNCERTAIN",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": true,
+        "internal_conflict": false,
+        "justification": "A specifies culturally sensitive spiritual support at end of life, while B provides only generic end-of-life communication. The supplied generic label cannot establish identity or a proper broader registry scope.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "UNCERTAIN"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "INTERPRET_TEST_RESULT",
+        "family_b": "DIFFERENTIAL_DIAGNOSIS",
+        "study_unit_id_a": "SU-C-03",
+        "study_unit_id_b": "SU-C-03"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "14"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Chest Pain (Cardiac Differential)",
+        "discipline": "MED",
+        "key_concept_or_action": "Chest Pain (Cardiac Differential) — investigation",
+        "learner_decision": "Apply investigation reasoning for Chest Pain (Cardiac Differential).",
+        "opportunity_family": "INTERPRET_TEST_RESULT",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the investigation decision for Chest Pain (Cardiac Differential).",
+        "response_class": "INTERPRETATION",
+        "severity_context": "NA",
+        "study_unit": "Chest Pain (Cardiac Differential)",
+        "study_unit_id": "SU-C-03"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "14"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Chest Pain (Cardiac Differential)",
+        "discipline": "MED",
+        "key_concept_or_action": "Chest Pain (Cardiac Differential) — investigation",
+        "learner_decision": "Apply investigation reasoning for Chest Pain (Cardiac Differential).",
+        "opportunity_family": "DIFFERENTIAL_DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the investigation decision for Chest Pain (Cardiac Differential).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Chest Pain (Cardiac Differential)",
+        "study_unit_id": "SU-C-03"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-2C93A90AB2AF1E38",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "The narrative investigation target is identical, but A requires interpretation and B is encoded as differential diagnosis. This load-bearing response-modality conflict prevents safe identity classification.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "YES"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT",
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "PSY",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-PS-12",
+        "study_unit_id_b": "SU-PS-12"
+      },
+      "opportunity_a": {
+        "clinical_stage": "ASSESSMENT",
+        "discipline": "PSY",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "ADULT_WITH_DEPRESSIVE_SYMPTOMS",
+        "primary_reasoning_target": "Reason from vignette evidence to diagnose major depressive disorder.",
+        "principal_decision": "Diagnose major depressive disorder.",
+        "response_class": "DIAGNOSIS",
+        "study_unit_id": "SU-PS-12"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "59-1"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Depressive Disorders (Major Depressive Disorder, Persistent Depressive Disorder)",
+        "discipline": "PSY",
+        "key_concept_or_action": "Depressive Disorders (Major Depressive Disorder, Persistent Depressive Disorder) — management",
+        "learner_decision": "Apply management reasoning for Depressive Disorders (Major Depressive Disorder, Persistent Depressive Disorder).",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the management decision for Depressive Disorders (Major Depressive Disorder, Persistent Depressive Disorder).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Depressive Disorders (Major Depressive Disorder, Persistent Depressive Disorder)",
+        "study_unit_id": "SU-PS-12"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-2EF2DCD36B6C9457",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "A explicitly diagnoses major depressive disorder, while B's narrative says management despite diagnosis family and response metadata and a broader depressive-disorders topic. The conflict prevents resolving identity versus distinctness.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "UNCERTAIN"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "EMERGENCY_STABILIZATION",
+        "family_b": "EMERGENCY_STABILIZATION",
+        "study_unit_id_a": "SU-A-33",
+        "study_unit_id_b": "SU-A-33"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "107-1"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "EMERGENCY_PRESENTATION",
+        "clinical_topic": "Malignant Hyperthermia",
+        "discipline": "MED",
+        "key_concept_or_action": "Malignant Hyperthermia — recognition",
+        "learner_decision": "Apply recognition reasoning for Malignant Hyperthermia.",
+        "opportunity_family": "EMERGENCY_STABILIZATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the recognition decision for Malignant Hyperthermia.",
+        "response_class": "ACTION",
+        "severity_context": "SEVERE_OR_UNSTABLE",
+        "study_unit": "Malignant Hyperthermia",
+        "study_unit_id": "SU-A-33"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "107-1"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "EMERGENCY_PRESENTATION",
+        "clinical_topic": "Malignant Hyperthermia",
+        "discipline": "MED",
+        "key_concept_or_action": "Malignant Hyperthermia — immediate MH management",
+        "learner_decision": "Initiate immediate MH management .",
+        "opportunity_family": "EMERGENCY_STABILIZATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Initiate immediate MH management .",
+        "response_class": "ACTION",
+        "severity_context": "NA",
+        "study_unit": "Malignant Hyperthermia",
+        "study_unit_id": "SU-A-33"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-2EFC5B1F2799A7B8",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "YES",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "Recognizing malignant hyperthermia and initiating its immediate management are separate sequential decisions. A's recognition narrative conflicts with its action response metadata but remains distinct from treatment.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "RELATED_BUT_DISTINCT",
+        "residual_difference": "MATERIAL",
+        "same_answer_scope": "NO",
+        "same_principal_decision": "NO"
+      },
+      "v5_tentative_relation": "RELATED_BUT_DISTINCT"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT"
+      ],
+      "curriculum_context": {
+        "discipline": "PED",
+        "family_a": "PREVENTION",
+        "family_b": "DIFFERENTIAL_DIAGNOSIS",
+        "study_unit_id_a": "SU-P-103",
+        "study_unit_id_b": "SU-P-103"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "107-1",
+          "38"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "PRECLINICAL_OR_PREVENTIVE",
+        "clinical_topic": "Infectious Pediatric Exanthems (Differential Diagnosis)",
+        "discipline": "PED",
+        "key_concept_or_action": "Infectious Pediatric Exanthems (Differential Diagnosis) — differential",
+        "learner_decision": "Apply differential reasoning for Infectious Pediatric Exanthems (Differential Diagnosis).",
+        "opportunity_family": "PREVENTION",
+        "population_context": "PEDIATRIC",
+        "primary_reasoning_target": "Differentiate the differential decision for Infectious Pediatric Exanthems (Differential Diagnosis).",
+        "response_class": "PREVENTIVE_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Infectious Pediatric Exanthems (Differential Diagnosis)",
+        "study_unit_id": "SU-P-103"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "107-1",
+          "38"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "PRECLINICAL_OR_PREVENTIVE",
+        "clinical_topic": "Infectious Pediatric Exanthems (Differential Diagnosis)",
+        "discipline": "PED",
+        "key_concept_or_action": "Infectious Pediatric Exanthems (Differential Diagnosis) — differential",
+        "learner_decision": "Apply differential reasoning for Infectious Pediatric Exanthems (Differential Diagnosis).",
+        "opportunity_family": "DIFFERENTIAL_DIAGNOSIS",
+        "population_context": "PEDIATRIC",
+        "primary_reasoning_target": "Differentiate the differential decision for Infectious Pediatric Exanthems (Differential Diagnosis).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Infectious Pediatric Exanthems (Differential Diagnosis)",
+        "study_unit_id": "SU-P-103"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-2F79AD3D2DCDAAEF",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "The differential narrative is identical, but A is encoded as prevention/preventive action and B as differential diagnosis/diagnosis. The modality conflict is load-bearing and unresolved.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "YES"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "INSUFFICIENT_CONTEXT",
+        "INTERNAL_SEMANTIC_CONFLICT",
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "PED",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-P-010",
+        "study_unit_id_b": "SU-P-010"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "60"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Dentition and Caries",
+        "discipline": "PED",
+        "key_concept_or_action": "Dentition and Caries — anticipatory guidance",
+        "learner_decision": "Apply anticipatory guidance reasoning for Dentition and Caries.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "PEDIATRIC",
+        "primary_reasoning_target": "Differentiate the anticipatory guidance decision for Dentition and Caries.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Dentition and Caries",
+        "study_unit_id": "SU-P-010"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "60"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Dentition and Caries",
+        "discipline": "PED",
+        "key_concept_or_action": "Dentition and Caries — normal primary-tooth eruption timing and early childhood caries risk factors  as an anticipatory-guidance topic",
+        "learner_decision": "Recognize normal primary-tooth eruption timing and early childhood caries risk factors  as an anticipatory-guidance topic.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "PEDIATRIC",
+        "primary_reasoning_target": "Recognize normal primary-tooth eruption timing and early childhood caries risk factors  as an anticipatory-guidance topic.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Dentition and Caries",
+        "study_unit_id": "SU-P-010"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-320279C0509F0468",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "UNCERTAIN",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": true,
+        "internal_conflict": true,
+        "justification": "A provides generic anticipatory-guidance reasoning while B combines eruption timing and caries risk factors; both are encoded as diagnosis despite guidance semantics. The compound scope and modality conflict prevent safe identity or containment.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "UNCERTAIN"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "VARIANT_CLASS_REQUIRES_ADJUDICATION_DURING_LABEL_INSTABILITY"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "ADVERSE_EFFECT_RECOGNITION",
+        "family_b": "ADVERSE_EFFECT_RECOGNITION",
+        "study_unit_id_a": "SU-CP-13",
+        "study_unit_id_b": "SU-CP-13"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "125"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "LONG_TERM_MANAGEMENT",
+        "clinical_topic": "Adverse Drug Reactions: Classification and Clinical Approach",
+        "discipline": "MED",
+        "key_concept_or_action": "Adverse Drug Reactions: Classification and Clinical Approach — adr classification",
+        "learner_decision": "Apply adr classification reasoning for Adverse Drug Reactions: Classification and Clinical Approach.",
+        "opportunity_family": "ADVERSE_EFFECT_RECOGNITION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the adr classification decision for Adverse Drug Reactions: Classification and Clinical Approach.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Adverse Drug Reactions: Classification and Clinical Approach",
+        "study_unit_id": "SU-CP-13"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "125"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "DETERIORATION_OR_COMPLICATION",
+        "clinical_topic": "Adverse Drug Reactions: Classification and Clinical Approach",
+        "discipline": "MED",
+        "key_concept_or_action": "Adverse Drug Reactions: Classification and Clinical Approach — adr classification",
+        "learner_decision": "Apply adr classification reasoning for Adverse Drug Reactions: Classification and Clinical Approach.",
+        "opportunity_family": "ADVERSE_EFFECT_RECOGNITION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the adr classification decision for Adverse Drug Reactions: Classification and Clinical Approach.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Adverse Drug Reactions: Classification and Clinical Approach",
+        "study_unit_id": "SU-CP-13"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-35905B96C13758CC",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "NO",
+        "insufficient_context": false,
+        "internal_conflict": false,
+        "justification": "Both endpoints require the same adverse-reaction classification with the same answer scope. Long-term-management versus complication staging is a non-decision-changing wrapper for that classification.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "VARIANT_OF_SAME_DECISION",
+        "residual_difference": "WRAPPER_ONLY",
+        "same_answer_scope": "YES",
+        "same_principal_decision": "YES"
+      },
+      "v5_tentative_relation": "VARIANT_OF_SAME_DECISION"
+    },
+    {
+      "abstention_reasons": [
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT",
+        "VARIANT_CLASS_REQUIRES_ADJUDICATION_DURING_LABEL_INSTABILITY"
+      ],
+      "curriculum_context": {
+        "discipline": "PSY",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-PS-56",
+        "study_unit_id_b": "SU-PS-56"
+      },
+      "opportunity_a": {
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Oppositional Defiant Disorder",
+        "discipline": "PSY",
+        "key_concept_or_action": "Oppositional Defiant Disorder — diagnosis",
+        "learner_decision": "Apply diagnosis reasoning for Oppositional Defiant Disorder.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the diagnosis decision for Oppositional Defiant Disorder.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Oppositional Defiant Disorder",
+        "study_unit_id": "SU-PS-56"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Oppositional Defiant Disorder",
+        "discipline": "PSY",
+        "key_concept_or_action": "Oppositional Defiant Disorder — ODD (pattern of angry/irritable mood, argumentative/defiant behaviour, or vindictiveness for >=6 mo)",
+        "learner_decision": "Diagnose ODD (pattern of angry/irritable mood, argumentative/defiant behaviour, or vindictiveness for >=6 mo).",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Diagnose ODD (pattern of angry/irritable mood, argumentative/defiant behaviour, or vindictiveness for >=6 mo).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Oppositional Defiant Disorder",
+        "study_unit_id": "SU-PS-56"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-381C6528A15206AB",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "NO",
+        "insufficient_context": false,
+        "internal_conflict": false,
+        "justification": "Both endpoints require diagnosing oppositional defiant disorder; B supplies the characteristic symptom-duration pattern as a positive evidence-path realization without changing the diagnosis or answer scope.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "VARIANT_OF_SAME_DECISION",
+        "residual_difference": "EVIDENCE_PATH",
+        "same_answer_scope": "YES",
+        "same_principal_decision": "YES"
+      },
+      "v5_tentative_relation": "VARIANT_OF_SAME_DECISION"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-D-27",
+        "study_unit_id_b": "SU-D-27"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "38"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Bacterial Skin and Soft Tissue Infections (Impetigo, Erysipelas, Cellulitis, Folliculitis/Furuncle/Carbuncle, Skin Abscess)",
+        "discipline": "MED",
+        "key_concept_or_action": "Bacterial Skin and Soft Tissue Infections (Impetigo, Erysipelas, Cellulitis, Folliculitis/Furuncle/Carbuncle, Skin Abscess) — when incision-and-drainage alone suffices versus when adjunctive antibiotics are indicated",
+        "learner_decision": "determine when incision-and-drainage alone suffices versus when adjunctive antibiotics are indicated.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "determine when incision-and-drainage alone suffices versus when adjunctive antibiotics are indicated.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Bacterial Skin and Soft Tissue Infections (Impetigo, Erysipelas, Cellulitis, Folliculitis/Furuncle/Carbuncle, Skin Abscess)",
+        "study_unit_id": "SU-D-27"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "38"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Bacterial Skin and Soft Tissue Infections (Impetigo, Erysipelas, Cellulitis, Folliculitis/Furuncle/Carbuncle, Skin Abscess)",
+        "discipline": "MED",
+        "key_concept_or_action": "Bacterial Skin and Soft Tissue Infections (Impetigo, Erysipelas, Cellulitis, Folliculitis/Furuncle/Carbuncle, Skin Abscess) — impetigo recognition",
+        "learner_decision": "Apply impetigo recognition reasoning for Bacterial Skin and Soft Tissue Infections (Impetigo, Erysipelas, Cellulitis, Folliculitis/Furuncle/Carbuncle, Skin Abscess).",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the impetigo recognition decision for Bacterial Skin and Soft Tissue Infections (Impetigo, Erysipelas, Cellulitis, Folliculitis/Furuncle/Carbuncle, Skin Abscess).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Bacterial Skin and Soft Tissue Infections (Impetigo, Erysipelas, Cellulitis, Folliculitis/Furuncle/Carbuncle, Skin Abscess)",
+        "study_unit_id": "SU-D-27"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-39448DF4072A2375",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "YES",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "Choosing incision and drainage alone versus adjunctive antibiotics is a management decision, whereas recognizing impetigo is a diagnostic decision. A's management narrative conflicts with its diagnosis metadata, but the two operations remain distinct.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "RELATED_BUT_DISTINCT",
+        "residual_difference": "MATERIAL",
+        "same_answer_scope": "NO",
+        "same_principal_decision": "NO"
+      },
+      "v5_tentative_relation": "RELATED_BUT_DISTINCT"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT"
+      ],
+      "curriculum_context": {
+        "discipline": "PHELO",
+        "family_a": "SYSTEM_ORGANIZATION",
+        "family_b": "ETHICAL_LEGAL_ACTION",
+        "study_unit_id_a": "SU-ELOM-20",
+        "study_unit_id_b": "SU-ELOM-20"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "127",
+          "78-9"
+        ],
+        "MCC_physician_activity": "Professional Behaviours",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "History and Impact of Colonialism, and the Movement Towards Reconciliation",
+        "discipline": "PHELO",
+        "key_concept_or_action": "History and Impact of Colonialism, and the Movement Towards Reconciliation — ethical reasoning",
+        "learner_decision": "Apply ethical reasoning reasoning for History and Impact of Colonialism, and the Movement Towards Reconciliation.",
+        "opportunity_family": "SYSTEM_ORGANIZATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the ethical reasoning decision for History and Impact of Colonialism, and the Movement Towards Reconciliation.",
+        "response_class": "SYSTEM_ACTION",
+        "severity_context": "NA",
+        "study_unit": "History and Impact of Colonialism, and the Movement Towards Reconciliation",
+        "study_unit_id": "SU-ELOM-20"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "127",
+          "78-9"
+        ],
+        "MCC_physician_activity": "Professional Behaviours",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "History and Impact of Colonialism, and the Movement Towards Reconciliation",
+        "discipline": "PHELO",
+        "key_concept_or_action": "History and Impact of Colonialism, and the Movement Towards Reconciliation — ethical reasoning",
+        "learner_decision": "Apply ethical reasoning reasoning for History and Impact of Colonialism, and the Movement Towards Reconciliation.",
+        "opportunity_family": "ETHICAL_LEGAL_ACTION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the ethical reasoning decision for History and Impact of Colonialism, and the Movement Towards Reconciliation.",
+        "response_class": "ETHICAL_LEGAL_ACTION",
+        "severity_context": "NA",
+        "study_unit": "History and Impact of Colonialism, and the Movement Towards Reconciliation",
+        "study_unit_id": "SU-ELOM-20"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-3BFF31FA17E30C03",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "The narrative ethical-reasoning decision is identical, but A is encoded as system organization/action and B as ethical-legal action. This load-bearing modality conflict prevents safe identity classification.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "YES"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "INSUFFICIENT_CONTEXT",
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "INITIAL_MANAGEMENT",
+        "family_b": "INITIAL_MANAGEMENT",
+        "study_unit_id_a": "SU-R-29",
+        "study_unit_id_b": "SU-R-29"
+      },
+      "opportunity_a": {
+        "clinical_stage": "INITIAL_MANAGEMENT",
+        "discipline": "MED",
+        "opportunity_family": "INITIAL_MANAGEMENT",
+        "population_context": "ADULT_WITH_ACUTE_HYPOXEMIC_RESPIRATORY_FAILURE",
+        "primary_reasoning_target": "Reason from vignette evidence to treat the precipitating cause.",
+        "principal_decision": "Treat the precipitating cause.",
+        "response_class": "ACTION",
+        "study_unit_id": "SU-R-29"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "19",
+          "27"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Acute Respiratory Distress Syndrome",
+        "discipline": "MED",
+        "key_concept_or_action": "Acute Respiratory Distress Syndrome — initial management",
+        "learner_decision": "Apply initial management reasoning for Acute Respiratory Distress Syndrome.",
+        "opportunity_family": "INITIAL_MANAGEMENT",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the initial management decision for Acute Respiratory Distress Syndrome.",
+        "response_class": "ACTION",
+        "severity_context": "NA",
+        "study_unit": "Acute Respiratory Distress Syndrome",
+        "study_unit_id": "SU-R-29"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-3ED1D26BF391FAF8",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "UNCERTAIN",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": true,
+        "internal_conflict": false,
+        "justification": "Treating the precipitating cause is plausibly part of ARDS initial management, but B's generic management label does not establish a coextensive or properly broader answer scope.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "UNCERTAIN"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT",
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "BEST_NEXT_INVESTIGATION",
+        "family_b": "BEST_NEXT_INVESTIGATION",
+        "study_unit_id_a": "SU-G-07",
+        "study_unit_id_b": "SU-G-07"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "14",
+          "26"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Esophageal Motor Disorders",
+        "discipline": "MED",
+        "key_concept_or_action": "Esophageal Motor Disorders — motor disorder recognition",
+        "learner_decision": "Apply motor disorder recognition reasoning for Esophageal Motor Disorders.",
+        "opportunity_family": "BEST_NEXT_INVESTIGATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the motor disorder recognition decision for Esophageal Motor Disorders.",
+        "response_class": "INVESTIGATION",
+        "severity_context": "NA",
+        "study_unit": "Esophageal Motor Disorders",
+        "study_unit_id": "SU-G-07"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "14",
+          "26"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Esophageal Motor Disorders",
+        "discipline": "MED",
+        "key_concept_or_action": "Esophageal Motor Disorders — appropriate initial investigation (e.g., manometry, barium swallow)",
+        "learner_decision": "select appropriate initial investigation (e.g., manometry, barium swallow).",
+        "opportunity_family": "BEST_NEXT_INVESTIGATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "select appropriate initial investigation (e.g., manometry, barium swallow).",
+        "response_class": "INVESTIGATION",
+        "severity_context": "NA",
+        "study_unit": "Esophageal Motor Disorders",
+        "study_unit_id": "SU-G-07"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-3F0DD163C2DA0D9B",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "UNCERTAIN",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "A's narrative targets motor-disorder recognition while its family and response require investigation; B explicitly selects the initial investigation. The unresolved recognition-versus-test-selection conflict blocks identity and containment.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "UNCERTAIN"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "PSY",
+        "family_a": "EMERGENCY_STABILIZATION",
+        "family_b": "RED_FLAG_RECOGNITION",
+        "study_unit_id_a": "SU-PS-22",
+        "study_unit_id_b": "SU-PS-22"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "128"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "EMERGENCY_PRESENTATION",
+        "clinical_topic": "Post-Traumatic Stress Disorder",
+        "discipline": "PSY",
+        "key_concept_or_action": "Post-Traumatic Stress Disorder — safety",
+        "learner_decision": "Apply safety reasoning for Post-Traumatic Stress Disorder.",
+        "opportunity_family": "EMERGENCY_STABILIZATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the safety decision for Post-Traumatic Stress Disorder.",
+        "response_class": "ACTION",
+        "severity_context": "NA",
+        "study_unit": "Post-Traumatic Stress Disorder",
+        "study_unit_id": "SU-PS-22"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "128"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "EMERGENCY_PRESENTATION",
+        "clinical_topic": "Post-Traumatic Stress Disorder",
+        "discipline": "PSY",
+        "key_concept_or_action": "Post-Traumatic Stress Disorder — need for urgent care",
+        "learner_decision": "identify need for urgent care.",
+        "opportunity_family": "RED_FLAG_RECOGNITION",
+        "population_context": "NA",
+        "primary_reasoning_target": "identify need for urgent care.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Post-Traumatic Stress Disorder",
+        "study_unit_id": "SU-PS-22"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-40F66A0DA1298911",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "YES",
+        "insufficient_context": false,
+        "internal_conflict": false,
+        "justification": "Applying emergency safety or stabilization reasoning and identifying whether urgent care is needed are distinct sequential action and recognition decisions.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "RELATED_BUT_DISTINCT",
+        "residual_difference": "MATERIAL",
+        "same_answer_scope": "NO",
+        "same_principal_decision": "NO"
+      },
+      "v5_tentative_relation": "RELATED_BUT_DISTINCT"
+    },
+    {
+      "abstention_reasons": [
+        "INSUFFICIENT_CONTEXT",
+        "INTERNAL_SEMANTIC_CONFLICT",
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "OBGYN",
+        "family_a": "COUNSELLING",
+        "family_b": "COUNSELLING",
+        "study_unit_id_a": "SU-GY-12",
+        "study_unit_id_b": "SU-GY-12"
+      },
+      "opportunity_a": {
+        "clinical_stage": "COUNSELLING",
+        "discipline": "OBGYN",
+        "opportunity_family": "COUNSELLING",
+        "population_context": "PATIENT_WITH_FIRST_TRIMESTER_BLEEDING",
+        "primary_reasoning_target": "Reason from vignette evidence to provide grief counselling.",
+        "principal_decision": "Provide grief counselling.",
+        "response_class": "COMMUNICATION_ACTION",
+        "study_unit_id": "SU-GY-12"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "81"
+        ],
+        "MCC_physician_activity": "Communication",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Early Pregnancy Loss and First-Trimester Bleeding",
+        "discipline": "OBGYN",
+        "key_concept_or_action": "Early Pregnancy Loss and First-Trimester Bleeding — management",
+        "learner_decision": "Apply management reasoning for Early Pregnancy Loss and First-Trimester Bleeding.",
+        "opportunity_family": "COUNSELLING",
+        "population_context": "PREGNANCY_OR_POSTPARTUM",
+        "primary_reasoning_target": "Differentiate the management decision for Early Pregnancy Loss and First-Trimester Bleeding.",
+        "response_class": "COMMUNICATION_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Early Pregnancy Loss and First-Trimester Bleeding",
+        "study_unit_id": "SU-GY-12"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-440778520AC35279",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "UNCERTAIN",
+        "directional_containment": "UNCERTAIN",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": true,
+        "internal_conflict": true,
+        "justification": "A specifies grief counselling after first-trimester bleeding, while B says generic management despite counselling and communication metadata. The supplied scope cannot resolve whether grief counselling is the intended B decision or only one component.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "UNCERTAIN"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "DIFFERENTIAL_DIAGNOSIS",
+        "family_b": "DIFFERENTIAL_DIAGNOSIS",
+        "study_unit_id_a": "SU-C-04",
+        "study_unit_id_b": "SU-C-04"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "106"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Syncope and Loss of Consciousness (Cardiac Differential)",
+        "discipline": "MED",
+        "key_concept_or_action": "Syncope and Loss of Consciousness (Cardiac Differential) — investigation",
+        "learner_decision": "Apply investigation reasoning for Syncope and Loss of Consciousness (Cardiac Differential).",
+        "opportunity_family": "DIFFERENTIAL_DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the investigation decision for Syncope and Loss of Consciousness (Cardiac Differential).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Syncope and Loss of Consciousness (Cardiac Differential)",
+        "study_unit_id": "SU-C-04"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "106"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Syncope and Loss of Consciousness (Cardiac Differential)",
+        "discipline": "MED",
+        "key_concept_or_action": "Syncope and Loss of Consciousness (Cardiac Differential) — recognition",
+        "learner_decision": "Apply recognition reasoning for Syncope and Loss of Consciousness (Cardiac Differential).",
+        "opportunity_family": "DIFFERENTIAL_DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the recognition decision for Syncope and Loss of Consciousness (Cardiac Differential).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Syncope and Loss of Consciousness (Cardiac Differential)",
+        "study_unit_id": "SU-C-04"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-4461CC027711F74B",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "YES",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "Investigating syncope and recognizing its cause are separate sequential decisions. A's investigation narrative conflicts with its differential-diagnosis response metadata, but the decision difference remains independently scoreable.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "RELATED_BUT_DISTINCT",
+        "residual_difference": "MATERIAL",
+        "same_answer_scope": "NO",
+        "same_principal_decision": "NO"
+      },
+      "v5_tentative_relation": "RELATED_BUT_DISTINCT"
+    },
+    {
+      "abstention_reasons": [
+        "VARIANT_CLASS_REQUIRES_ADJUDICATION_DURING_LABEL_INSTABILITY"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "ADVERSE_EFFECT_RECOGNITION",
+        "family_b": "ADVERSE_EFFECT_RECOGNITION",
+        "study_unit_id_a": "SU-CP-12",
+        "study_unit_id_b": "SU-CP-12"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "125"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Therapeutic Drug Monitoring",
+        "discipline": "MED",
+        "key_concept_or_action": "Therapeutic Drug Monitoring — tdm indications",
+        "learner_decision": "Apply tdm indications reasoning for Therapeutic Drug Monitoring.",
+        "opportunity_family": "ADVERSE_EFFECT_RECOGNITION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the tdm indications decision for Therapeutic Drug Monitoring.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Therapeutic Drug Monitoring",
+        "study_unit_id": "SU-CP-12"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "125"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "DETERIORATION_OR_COMPLICATION",
+        "clinical_topic": "Therapeutic Drug Monitoring",
+        "discipline": "MED",
+        "key_concept_or_action": "Therapeutic Drug Monitoring — which clinical scenarios warrant therapeutic drug monitoring (low therapeutic index, unpredictable dose-response, high consequence of toxicity/failure, wide interpatient PK variability)",
+        "learner_decision": "Recognize which clinical scenarios warrant therapeutic drug monitoring (low therapeutic index, unpredictable dose-response, high consequence of toxicity/failure, wide interpatient PK variability).",
+        "opportunity_family": "ADVERSE_EFFECT_RECOGNITION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Recognize which clinical scenarios warrant therapeutic drug monitoring (low therapeutic index, unpredictable dose-response, high consequence of toxicity/failure, wide interpatient PK variability).",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Therapeutic Drug Monitoring",
+        "study_unit_id": "SU-CP-12"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-451CA50031AD9885",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "NO",
+        "insufficient_context": false,
+        "internal_conflict": false,
+        "justification": "Both endpoints require recognizing when therapeutic drug monitoring is indicated; B supplies concrete warranting scenarios as a positive evidence-path realization without changing the answer scope.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "VARIANT_OF_SAME_DECISION",
+        "residual_difference": "EVIDENCE_PATH",
+        "same_answer_scope": "YES",
+        "same_principal_decision": "YES"
+      },
+      "v5_tentative_relation": "VARIANT_OF_SAME_DECISION"
+    },
+    {
+      "abstention_reasons": [
+        "INSUFFICIENT_CONTEXT",
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "PHELO",
+        "family_a": "SYSTEM_ORGANIZATION",
+        "family_b": "SYSTEM_ORGANIZATION",
+        "study_unit_id_a": "SU-ELOM-02",
+        "study_unit_id_b": "SU-ELOM-02"
+      },
+      "opportunity_a": {
+        "clinical_stage": "SYSTEM_NAVIGATION",
+        "discipline": "PHELO",
+        "opportunity_family": "SYSTEM_ORGANIZATION",
+        "population_context": "PATIENT_NAVIGATING_CANADIAN_HEALTH_CARE",
+        "primary_reasoning_target": "Reason from vignette evidence to distinguish public financing from care delivery.",
+        "principal_decision": "Distinguish public financing from care delivery.",
+        "response_class": "SYSTEM_ACTION",
+        "study_unit_id": "SU-ELOM-02"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "78-1"
+        ],
+        "MCC_physician_activity": "Professional Behaviours",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Canadian Healthcare System: Structure, Funding, and Delivery",
+        "discipline": "PHELO",
+        "key_concept_or_action": "Canadian Healthcare System: Structure, Funding, and Delivery — system navigation",
+        "learner_decision": "Apply system navigation reasoning for Canadian Healthcare System: Structure, Funding, and Delivery.",
+        "opportunity_family": "SYSTEM_ORGANIZATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the system navigation decision for Canadian Healthcare System: Structure, Funding, and Delivery.",
+        "response_class": "SYSTEM_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Canadian Healthcare System: Structure, Funding, and Delivery",
+        "study_unit_id": "SU-ELOM-02"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-45F9CEC2EAE43216",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "UNCERTAIN",
+        "directional_containment": "UNCERTAIN",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": true,
+        "internal_conflict": false,
+        "justification": "A isolates the distinction between public financing and care delivery, while B gives only generic Canadian-system navigation. The generic label cannot establish identity or a broader registry answer scope.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "UNCERTAIN"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT"
+      ],
+      "curriculum_context": {
+        "discipline": "SURG",
+        "family_a": "EMERGENCY_STABILIZATION",
+        "family_b": "DIFFERENTIAL_DIAGNOSIS",
+        "study_unit_id_a": "SU-OP-20",
+        "study_unit_id_b": "SU-OP-20"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "30"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "EMERGENCY_PRESENTATION",
+        "clinical_topic": "Conjunctivitis",
+        "discipline": "SURG",
+        "key_concept_or_action": "Conjunctivitis — differential",
+        "learner_decision": "Apply differential reasoning for Conjunctivitis.",
+        "opportunity_family": "EMERGENCY_STABILIZATION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the differential decision for Conjunctivitis.",
+        "response_class": "ACTION",
+        "severity_context": "SEVERE_OR_UNSTABLE",
+        "study_unit": "Conjunctivitis",
+        "study_unit_id": "SU-OP-20"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "30"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "EMERGENCY_PRESENTATION",
+        "clinical_topic": "Conjunctivitis",
+        "discipline": "SURG",
+        "key_concept_or_action": "Conjunctivitis — differential",
+        "learner_decision": "Apply differential reasoning for Conjunctivitis.",
+        "opportunity_family": "DIFFERENTIAL_DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the differential decision for Conjunctivitis.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "SEVERE_OR_UNSTABLE",
+        "study_unit": "Conjunctivitis",
+        "study_unit_id": "SU-OP-20"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-4B5094ED074F2CA5",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "The conjunctivitis differential narrative is identical, but A is encoded as emergency management/action and B as differential diagnosis/diagnosis. The modality conflict is load-bearing and unresolved.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "YES"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "DIAGNOSIS",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-RH-08",
+        "study_unit_id_b": "SU-RH-08"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "50-2"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Rheumatoid arthritis",
+        "discipline": "MED",
+        "key_concept_or_action": "Rheumatoid arthritis — recognize",
+        "learner_decision": "Apply recognize reasoning for Rheumatoid arthritis.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the recognize decision for Rheumatoid arthritis.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Rheumatoid arthritis",
+        "study_unit_id": "SU-RH-08"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "50-2"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Rheumatoid arthritis",
+        "discipline": "MED",
+        "key_concept_or_action": "Rheumatoid arthritis — manage",
+        "learner_decision": "Apply manage reasoning for Rheumatoid arthritis.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the manage decision for Rheumatoid arthritis.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Rheumatoid arthritis",
+        "study_unit_id": "SU-RH-08"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-4E5214F3BF23A927",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "YES",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "Recognizing rheumatoid arthritis and managing it are distinct sequential decisions. B's management narrative conflicts with diagnosis family and response metadata, but does not erase the independent decision difference.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "RELATED_BUT_DISTINCT",
+        "residual_difference": "MATERIAL",
+        "same_answer_scope": "NO",
+        "same_principal_decision": "NO"
+      },
+      "v5_tentative_relation": "RELATED_BUT_DISTINCT"
+    },
+    {
+      "abstention_reasons": [
+        "INSUFFICIENT_CONTEXT"
+      ],
+      "curriculum_context": {
+        "discipline": "PSY",
+        "family_a": "INTERPRET_TEST_RESULT",
+        "family_b": "DIFFERENTIAL_DIAGNOSIS",
+        "study_unit_id_a": "SU-PS-04",
+        "study_unit_id_b": "SU-PS-04"
+      },
+      "opportunity_a": {
+        "clinical_stage": "INVESTIGATION",
+        "discipline": "PSY",
+        "opportunity_family": "INTERPRET_TEST_RESULT",
+        "population_context": "PATIENT_UNDERGOING_SUICIDE_RISK_ASSESSMENT",
+        "primary_reasoning_target": "Reason from vignette evidence to integrate factors into a clinical risk formulation.",
+        "principal_decision": "Integrate factors into a clinical risk formulation.",
+        "response_class": "INTERPRETATION",
+        "study_unit_id": "SU-PS-04"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "59-1"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Suicide Risk Assessment and Management",
+        "discipline": "PSY",
+        "key_concept_or_action": "Suicide Risk Assessment and Management — risk stratification",
+        "learner_decision": "Apply risk stratification reasoning for Suicide Risk Assessment and Management.",
+        "opportunity_family": "DIFFERENTIAL_DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the risk stratification decision for Suicide Risk Assessment and Management.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Suicide Risk Assessment and Management",
+        "study_unit_id": "SU-PS-04"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-53F9D5C155BBB1EE",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "UNCERTAIN",
+        "insufficient_context": true,
+        "internal_conflict": false,
+        "justification": "Integrating suicide-risk factors into a clinical formulation and risk stratification materially overlap, but the supplied interpretation-versus-diagnosis modalities leave their answer scopes and independent scoreability unresolved.",
+        "near_duplicate_signal": "YES",
+        "predicted_relation": "NEAR_DUPLICATE",
+        "residual_difference": "UNRESOLVED",
+        "same_answer_scope": "UNCERTAIN",
+        "same_principal_decision": "UNCERTAIN"
+      },
+      "v5_tentative_relation": "NEAR_DUPLICATE"
+    },
+    {
+      "abstention_reasons": [
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "PHELO",
+        "family_a": "EPIDEMIOLOGY_EBM",
+        "family_b": "EPIDEMIOLOGY_EBM",
+        "study_unit_id_a": "SU-PH-23",
+        "study_unit_id_b": "SU-PH-23"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "78-2"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Critical Appraisal and Levels of Evidence",
+        "discipline": "PHELO",
+        "key_concept_or_action": "Critical Appraisal and Levels of Evidence — critical appraisal",
+        "learner_decision": "Apply critical appraisal reasoning for Critical Appraisal and Levels of Evidence.",
+        "opportunity_family": "EPIDEMIOLOGY_EBM",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the critical appraisal decision for Critical Appraisal and Levels of Evidence.",
+        "response_class": "DATA_INTERPRETATION",
+        "severity_context": "NA",
+        "study_unit": "Critical Appraisal and Levels of Evidence",
+        "study_unit_id": "SU-PH-23"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "78-2"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Critical Appraisal and Levels of Evidence",
+        "discipline": "PHELO",
+        "key_concept_or_action": "Critical Appraisal and Levels of Evidence — levels of evidence",
+        "learner_decision": "Apply levels of evidence reasoning for Critical Appraisal and Levels of Evidence.",
+        "opportunity_family": "EPIDEMIOLOGY_EBM",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the levels of evidence decision for Critical Appraisal and Levels of Evidence.",
+        "response_class": "DATA_INTERPRETATION",
+        "severity_context": "NA",
+        "study_unit": "Critical Appraisal and Levels of Evidence",
+        "study_unit_id": "SU-PH-23"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-54D638857A3C983D",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "YES",
+        "insufficient_context": false,
+        "internal_conflict": false,
+        "justification": "Critically appraising evidence and identifying or applying levels of evidence require distinct EBM judgments despite their shared study unit and response modality.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "RELATED_BUT_DISTINCT",
+        "residual_difference": "MATERIAL",
+        "same_answer_scope": "NO",
+        "same_principal_decision": "NO"
+      },
+      "v5_tentative_relation": "RELATED_BUT_DISTINCT"
+    },
+    {
+      "abstention_reasons": [
+        "EQUIVALENT_IDENTITY_METADATA_DELTA",
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "PHELO",
+        "family_a": "PROFESSIONALISM",
+        "family_b": "ETHICAL_LEGAL_ACTION",
+        "study_unit_id_a": "SU-ELOM-03",
+        "study_unit_id_b": "SU-ELOM-03"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "121-5"
+        ],
+        "MCC_physician_activity": "Professional Behaviours",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Legal Foundation of Canadian Healthcare",
+        "discipline": "PHELO",
+        "key_concept_or_action": "Legal Foundation of Canadian Healthcare — legal professional action",
+        "learner_decision": "Apply legal professional action reasoning for Legal Foundation of Canadian Healthcare.",
+        "opportunity_family": "PROFESSIONALISM",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the legal professional action decision for Legal Foundation of Canadian Healthcare.",
+        "response_class": "ETHICAL_LEGAL_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Legal Foundation of Canadian Healthcare",
+        "study_unit_id": "SU-ELOM-03"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "121-5"
+        ],
+        "MCC_physician_activity": "Professional Behaviours",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Legal Foundation of Canadian Healthcare",
+        "discipline": "PHELO",
+        "key_concept_or_action": "Legal Foundation of Canadian Healthcare — legal professional action",
+        "learner_decision": "Apply legal professional action reasoning for Legal Foundation of Canadian Healthcare.",
+        "opportunity_family": "ETHICAL_LEGAL_ACTION",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the legal professional action decision for Legal Foundation of Canadian Healthcare.",
+        "response_class": "ETHICAL_LEGAL_ACTION",
+        "severity_context": "NA",
+        "study_unit": "Legal Foundation of Canadian Healthcare",
+        "study_unit_id": "SU-ELOM-03"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-573696D5A435D403",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "NO",
+        "insufficient_context": false,
+        "internal_conflict": false,
+        "justification": "The legal-professional action, response class, topic, stage, and answer scope are identical; professionalism versus ethical-legal family naming does not alter the supplied decision.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "EQUIVALENT",
+        "residual_difference": "NONE",
+        "same_answer_scope": "YES",
+        "same_principal_decision": "YES"
+      },
+      "v5_tentative_relation": "EQUIVALENT"
+    },
+    {
+      "abstention_reasons": [
+        "INTERNAL_SEMANTIC_CONFLICT",
+        "SEMANTIC_CLASSIFIER_DISAGREEMENT"
+      ],
+      "curriculum_context": {
+        "discipline": "MED",
+        "family_a": "FOLLOW_UP",
+        "family_b": "DIAGNOSIS",
+        "study_unit_id_a": "SU-MI-04",
+        "study_unit_id_b": "SU-MI-04"
+      },
+      "opportunity_a": {
+        "MCC_objective_ids": [
+          "27"
+        ],
+        "MCC_physician_activity": "Management",
+        "clinical_stage": "FOLLOW_UP",
+        "clinical_topic": "Recognition of Airspace and Parenchymal Lung Abnormalities (Atelectasis, Consolidation/Pneumonia, Pulmonary Nodule)",
+        "discipline": "MED",
+        "key_concept_or_action": "Recognition of Airspace and Parenchymal Lung Abnormalities (Atelectasis, Consolidation/Pneumonia, Pulmonary Nodule) — management",
+        "learner_decision": "Apply management reasoning for Recognition of Airspace and Parenchymal Lung Abnormalities (Atelectasis, Consolidation/Pneumonia, Pulmonary Nodule).",
+        "opportunity_family": "FOLLOW_UP",
+        "population_context": "NA",
+        "primary_reasoning_target": "Differentiate the management decision for Recognition of Airspace and Parenchymal Lung Abnormalities (Atelectasis, Consolidation/Pneumonia, Pulmonary Nodule).",
+        "response_class": "FOLLOW_UP_PLAN",
+        "severity_context": "NA",
+        "study_unit": "Recognition of Airspace and Parenchymal Lung Abnormalities (Atelectasis, Consolidation/Pneumonia, Pulmonary Nodule)",
+        "study_unit_id": "SU-MI-04"
+      },
+      "opportunity_a_role": "BENCHMARK_OR_REFERENCE",
+      "opportunity_b": {
+        "MCC_objective_ids": [
+          "27"
+        ],
+        "MCC_physician_activity": "Assessment/Diagnosis",
+        "clinical_stage": "INITIAL_PRESENTATION",
+        "clinical_topic": "Recognition of Airspace and Parenchymal Lung Abnormalities (Atelectasis, Consolidation/Pneumonia, Pulmonary Nodule)",
+        "discipline": "MED",
+        "key_concept_or_action": "Recognition of Airspace and Parenchymal Lung Abnormalities (Atelectasis, Consolidation/Pneumonia, Pulmonary Nodule) — CT",
+        "learner_decision": "Determine CT for when a solitary pulmonary nodule requires further imaging.",
+        "opportunity_family": "DIAGNOSIS",
+        "population_context": "NA",
+        "primary_reasoning_target": "Determine CT for when a solitary pulmonary nodule requires further imaging.",
+        "response_class": "DIAGNOSIS",
+        "severity_context": "NA",
+        "study_unit": "Recognition of Airspace and Parenchymal Lung Abnormalities (Atelectasis, Consolidation/Pneumonia, Pulmonary Nodule)",
+        "study_unit_id": "SU-MI-04"
+      },
+      "opportunity_b_role": "REGISTRY_CANDIDATE",
+      "pair_id": "RG3-W2-5867110FE83DCC14",
+      "v5_structured_semantic_analysis": {
+        "context_changes_correct_action": "NO",
+        "directional_containment": "NONE",
+        "independently_scoreable_difference": "YES",
+        "insufficient_context": false,
+        "internal_conflict": true,
+        "justification": "Generic follow-up management of lung abnormalities and deciding whether a solitary pulmonary nodule requires CT are separately scoreable decisions. B's imaging decision conflicts with diagnosis response metadata.",
+        "near_duplicate_signal": "NO",
+        "predicted_relation": "RELATED_BUT_DISTINCT",
+        "residual_difference": "MATERIAL",
+        "same_answer_scope": "NO",
+        "same_principal_decision": "NO"
+      },
+      "v5_tentative_relation": "RELATED_BUT_DISTINCT"
+    }
+  ],
+  "schema_version": "5.0",
+  "scope": "FRESH_V5_VALIDATION_ABSTENTION_ADJUDICATION_BATCH_1_INPUT",
+  "source_full_input_sha256": "7298a0af1b524b300eda47cecd28139020128df8dc1887fd97d2dc9dc75f7606"
+}
