@@ -39,7 +39,12 @@ def test_safe_resume_verifies_canonical_v1_content_hashes_and_counts():
 
     assert report["STARTING_HEAD"] == "01eff40984bee76418c7fab82a1ded9fbfa2d9e5"
     assert report["HISTORICAL_STARTING_HEAD"] == "01eff40984bee76418c7fab82a1ded9fbfa2d9e5"
-    assert report["CURRENT_REPOSITORY_HEAD"] == "b0cd30f36d307e2881d6b85d189dded8cde11518"
+    # HEAD advances with every commit, so pin the safety property rather than a
+    # literal digest: the reported head must be the real one, and it must descend
+    # from the frozen historical baseline.
+    assert report["CURRENT_REPOSITORY_HEAD"] == subprocess.run(
+        ["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True, check=True,
+    ).stdout.strip()
     assert report["HEAD_DESCENDS_FROM_HISTORICAL_BASELINE"] is True
     assert report["CURRICULUM_SNAPSHOT_SHA256"] == "70c0875060e8aa5ae8563b70074fa365941b2eb7d4a2a32a2a6ed0fe776817a9"
     assert report["OPPORTUNITY_REGISTRY_V1_SHA256"] == "aa465f77c65ba21955e01c3ddf0f32de18022d6a76583bf1ed1da34e62a5e11e"

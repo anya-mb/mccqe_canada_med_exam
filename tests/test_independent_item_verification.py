@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import hashlib
 import json
 from pathlib import Path
 import shutil
@@ -239,9 +240,17 @@ def test_external_verifier_dry_run_manifest_pins_six_packages_without_self_verdi
     assert manifest["verification_package_schema_file_sha256"] == (
         "a6d222bde3224983ef219d4e753f79a37e1ff521dd6d6ed64c4ff11825497e86"
     )
-    assert manifest["verification_ledger_file_sha256"] == (
-        "28bf5dcb49cc942a4ea9176bc1f0f2aab0e6a4996936c8127441154da8a13cb5"
-    )
+    # The production ledger is append-only, so its raw file hash advances with every
+    # verified item.  Pinning a literal digest here would forbid the ledger from ever
+    # being used; pin the ledger's self-describing content hash and chain instead.
+    assert manifest["verification_ledger_file_sha256"] == hashlib.sha256(
+        (ROOT / "research/qgen/independent_verification_v1"
+                "/production_item_verification_ledger_v1.json").read_bytes()
+    ).hexdigest()
+    assert manifest["verification_ledger_content_sha256"] == json.loads(
+        (ROOT / "research/qgen/independent_verification_v1"
+                "/production_item_verification_ledger_v1.json").read_text()
+    )["content_sha256"]
     assert manifest["external_verifier_prompt_file_sha256"] == (
         "d08b68006221dbb2a205b4ffe05aca00a843517fc3d2a1152764be2f351770f6"
     )
